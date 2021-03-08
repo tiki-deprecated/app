@@ -17,15 +17,15 @@ class App extends StatelessWidget {
 
   MaterialApp androidApp(BuildContext context) {
     return MaterialApp(
-      home: ScreenIntro(),
       title: _title,
+      home: ScreenIntro(),
     );
   }
 
   CupertinoApp iosApp(BuildContext context) {
     return CupertinoApp(
-      home: ScreenIntro(),
       title: _title,
+      home: ScreenIntro(),
     );
   }
 }
