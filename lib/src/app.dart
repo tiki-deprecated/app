@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/src/features/flutter_fire/flutter_fire.dart';
 import 'package:app/src/screens/screen_intro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +19,14 @@ class App extends StatelessWidget {
   MaterialApp androidApp(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: ScreenIntro(),
+      home: FlutterFire(),
     );
   }
 
   CupertinoApp iosApp(BuildContext context) {
     return CupertinoApp(
       title: _title,
-      home: ScreenIntro(),
+      home: FlutterFire(),
     );
   }
 }
