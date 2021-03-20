@@ -2,7 +2,10 @@ import 'dart:ui';
 
 class IntroSliderModelContent {
   Color background;
-  String text;
+  String title;
+  String subtitle;
+  String buttonText;
 
-  IntroSliderModelContent(this.background, this.text);
+  IntroSliderModelContent(
+      this.background, this.title, this.subtitle, this.buttonText);
 }

@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 
 class IntroSlider extends StatelessWidget {
   final IntroSliderModel _init;
+  final Widget _destination;
 
-  IntroSlider(this._init);
+  IntroSlider(this._init, this._destination);
 
   @override
   Widget build(BuildContext context) {
     return IntroSliderBlocProvider(
       _init,
-      child: IntroSliderUI(),
+      child: IntroSliderUI(_destination),
     );
   }
 }
