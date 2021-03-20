@@ -6,6 +6,7 @@ import 'package:app/src/features/intro_slider/intro_slider_model_content.dart';
 import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_login.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
+import 'package:app/src/utilities/relative_size.dart';
 import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +33,13 @@ class ScreenIntro extends PlatformScaffold {
 
   @override
   Scaffold androidScaffold(BuildContext context) {
+    RelativeSize().init(context);
     return Scaffold(body: _stack(context));
   }
 
   @override
   CupertinoPageScaffold iosScaffold(BuildContext context) {
+    RelativeSize().init(context);
     return CupertinoPageScaffold(child: _stack(context));
   }
 

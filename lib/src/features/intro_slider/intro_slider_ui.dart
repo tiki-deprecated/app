@@ -2,6 +2,7 @@ import 'package:app/src/constants/constants_colors.dart';
 import 'package:app/src/features/intro_slider/intro_slider_bloc.dart';
 import 'package:app/src/features/intro_slider/intro_slider_bloc_provider.dart';
 import 'package:app/src/features/intro_slider/intro_slider_model.dart';
+import 'package:app/src/utilities/relative_size.dart';
 import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,15 +21,15 @@ class _IntroSliderUI extends State<IntroSliderUI> {
   IntroSliderBloc _introSliderBloc;
   Widget _destination;
 
-  static final double _lrPadding = 30;
-  static final double _vMargin = 20;
-  static final double _vMarginStart = 300;
-  static final double _fsizeTitle = 40;
-  static final double _fsizeSubtitle = 20;
-  static final double _fsizeButton = 22;
-  static final double _sizeDot = 8;
-  static final double _heightButton = 50;
-  static final double _widthButton = 175;
+  static final double _lrPadding = 8 * RelativeSize.safeBlockHorizontal;
+  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
+  static final double _vMarginStart = 35 * RelativeSize.safeBlockVertical;
+  static final double _fsizeTitle = 10 * RelativeSize.safeBlockHorizontal;
+  static final double _fsizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
+  static final double _fsizeButton = 6 * RelativeSize.safeBlockHorizontal;
+  static final double _sizeDot = 1 * RelativeSize.safeBlockVertical;
+  static final double _heightButton = 8 * RelativeSize.safeBlockVertical;
+  static final double _widthButton = 50 * RelativeSize.safeBlockHorizontal;
 
   _IntroSliderUI(this._destination);
 
