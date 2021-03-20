@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 class IntroSliderBloc {
   IntroSliderModel introSliderModel = IntroSliderModel([], 0);
-  BehaviorSubject<IntroSliderModel> _subjectIntroSlider;
+  BehaviorSubject<IntroSliderModel>? _subjectIntroSlider;
 
   IntroSliderBloc(this.introSliderModel) {
     _subjectIntroSlider =
@@ -11,23 +11,23 @@ class IntroSliderBloc {
   }
 
   Observable<IntroSliderModel> get introSliderObservable =>
-      _subjectIntroSlider.stream;
+      _subjectIntroSlider!.stream;
 
   void increment() {
     if (introSliderModel.pos < introSliderModel.content.length - 1) {
       introSliderModel.pos++;
-      _subjectIntroSlider.sink.add(introSliderModel);
+      _subjectIntroSlider!.sink.add(introSliderModel);
     }
   }
 
   void decrement() {
     if (introSliderModel.pos > 0) {
       introSliderModel.pos--;
-      _subjectIntroSlider.sink.add(introSliderModel);
+      _subjectIntroSlider!.sink.add(introSliderModel);
     }
   }
 
   void dispose() {
-    _subjectIntroSlider.close();
+    _subjectIntroSlider!.close();
   }
 }

@@ -18,7 +18,7 @@ class IntroSliderUI extends StatefulWidget {
 }
 
 class _IntroSliderUI extends State<IntroSliderUI> {
-  IntroSliderBloc _introSliderBloc;
+  IntroSliderBloc? _introSliderBloc;
   Widget _destination;
 
   static final double _lrPadding = 8 * RelativeSize.safeBlockHorizontal;
@@ -35,34 +35,34 @@ class _IntroSliderUI extends State<IntroSliderUI> {
 
   @override
   Widget build(BuildContext context) {
-    _introSliderBloc = IntroSliderBlocProvider.of(context).bloc;
+    _introSliderBloc = IntroSliderBlocProvider.of(context)!.bloc;
     return GestureDetector(
         onHorizontalDragEnd: (details) {
-          if (details.primaryVelocity > 0) _introSliderBloc.decrement();
-          if (details.primaryVelocity < 0) _introSliderBloc.increment();
+          if (details.primaryVelocity! > 0) _introSliderBloc!.decrement();
+          if (details.primaryVelocity! < 0) _introSliderBloc!.increment();
         },
         child: StreamBuilder(
-            stream: _introSliderBloc.introSliderObservable,
-            initialData: _introSliderBloc.introSliderModel,
+            stream: _introSliderBloc!.introSliderObservable,
+            initialData: _introSliderBloc!.introSliderModel,
             builder: (context, AsyncSnapshot<IntroSliderModel> snapshot) {
               return Row(children: [
                 Expanded(
                     child: Container(
-                        color:
-                            snapshot.data.content[snapshot.data.pos].background,
+                        color: snapshot
+                            .data!.content[snapshot.data!.pos].background,
                         padding: EdgeInsets.only(
                             left: _lrPadding, right: _lrPadding),
                         child: Column(children: [
                           _title(
-                              snapshot.data.content[snapshot.data.pos].title),
+                              snapshot.data!.content[snapshot.data!.pos].title),
                           _subtitle(snapshot
-                              .data.content[snapshot.data.pos].subtitle),
-                          _positionDots(snapshot.data.pos),
+                              .data!.content[snapshot.data!.pos].subtitle),
+                          _positionDots(snapshot.data!.pos),
                           _button(
                               snapshot
-                                  .data.content[snapshot.data.pos].buttonText,
-                              destination: snapshot.data.pos >=
-                                      snapshot.data.content.length - 1
+                                  .data!.content[snapshot.data!.pos].buttonText,
+                              destination: snapshot.data!.pos >=
+                                      snapshot.data!.content.length - 1
                                   ? _destination
                                   : null)
                         ])))
@@ -72,7 +72,7 @@ class _IntroSliderUI extends State<IntroSliderUI> {
 
   @override
   void dispose() {
-    _introSliderBloc.dispose();
+    _introSliderBloc!.dispose();
     super.dispose();
   }
 
@@ -121,7 +121,7 @@ class _IntroSliderUI extends State<IntroSliderUI> {
     );
   }
 
-  Widget _button(String text, {Widget destination}) {
+  Widget _button(String text, {Widget? destination}) {
     return Container(
         margin: EdgeInsets.only(top: _vMargin * 2),
         child: Align(
@@ -145,7 +145,7 @@ class _IntroSliderUI extends State<IntroSliderUI> {
                   if (destination != null)
                     Navigator.push(context, platformPageRoute(destination));
                   else
-                    _introSliderBloc.increment();
+                    _introSliderBloc!.increment();
                 })));
   }
 }

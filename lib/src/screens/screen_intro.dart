@@ -16,17 +16,17 @@ class ScreenIntro extends PlatformScaffold {
   final IntroSliderModel sliderModelConfig = IntroSliderModel([
     IntroSliderModelContent(
         ConstantsColors.SUNGLOW,
-        ConstantsStrings.INTRO_1_HEADER,
+        ConstantsStrings.INTRO_1_TITLE,
         ConstantsStrings.INTRO_1_SUBTITLE,
         ConstantsStrings.INTRO_1_BUTTON_TEXT),
     IntroSliderModelContent(
         ConstantsColors.KOURNIKOVA,
-        ConstantsStrings.INTRO_2_HEADER,
+        ConstantsStrings.INTRO_2_TITLE,
         ConstantsStrings.INTRO_2_SUBTITLE,
         ConstantsStrings.INTRO_2_BUTTON_TEXT),
     IntroSliderModelContent(
         ConstantsColors.MACARONI_AND_CHEESE,
-        ConstantsStrings.INTRO_3_HEADER,
+        ConstantsStrings.INTRO_3_TITLE,
         ConstantsStrings.INTRO_3_SUBTITLE,
         ConstantsStrings.INTRO_3_BUTTON_TEXT)
   ], 0);
@@ -51,7 +51,7 @@ class ScreenIntro extends PlatformScaffold {
           child: Image(image: AssetImage('res/images/intro-blob.png'))),
       Align(
           alignment: Alignment.bottomRight,
-          child: Image(image: AssetImage('res/images/intro-1-pineapple.png'))),
+          child: Image(image: AssetImage('res/images/intro-pineapple-30.png'))),
       Align(
           alignment: Alignment(0.85, -0.85),
           child: TextButton(

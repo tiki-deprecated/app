@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 class IntroSliderBlocProvider extends InheritedWidget {
   final IntroSliderBloc _bloc;
 
-  final Widget child;
-  IntroSliderBlocProvider(IntroSliderModel init, {Key key, this.child})
+  IntroSliderBlocProvider(IntroSliderModel init,
+      {Key? key, required Widget child})
       : _bloc = IntroSliderBloc(init),
         super(key: key, child: child);
 
   IntroSliderBloc get bloc => _bloc;
 
-  static IntroSliderBlocProvider of(BuildContext context) {
+  static IntroSliderBlocProvider? of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<IntroSliderBlocProvider>();
   }

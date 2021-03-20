@@ -1,8 +1,8 @@
 import 'package:app/src/utilities/platform_scaffold.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class ScreenHome extends PlatformScaffold {
   @override
@@ -27,7 +27,7 @@ class ScreenHome extends PlatformScaffold {
       provisional: false,
       sound: true,
     );
-    String token = await messaging.getToken();
+    String token = (await messaging.getToken())!;
     print(token);
   }
 }
