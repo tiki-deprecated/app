@@ -2,6 +2,7 @@ import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
 import 'package:app/src/features/magic_link/magic_link.dart';
+import 'package:app/src/screens/screen_login_email.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
 import 'package:app/src/utilities/relative_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,9 +17,7 @@ class ScreenLogin extends PlatformScaffold {
   static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
   static final double _fsizeTitle = 10 * RelativeSize.safeBlockHorizontal;
   static final double _fsizeEmailCta = 5 * RelativeSize.safeBlockHorizontal;
-
-  static final String _titleText = ConstantStrings.loginTitle;
-  static final String _emailCtaText = ConstantStrings.loginEmailCta;
+  static final Widget _onSubmit = ScreenLoginEmail();
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -45,7 +44,8 @@ class ScreenLogin extends PlatformScaffold {
                 _title(),
                 _emailCta(),
                 Container(
-                    margin: EdgeInsets.only(top: _vMargin), child: MagicLink())
+                    margin: EdgeInsets.only(top: _vMargin),
+                    child: MagicLink(_onSubmit))
               ])))
     ]);
   }
@@ -75,7 +75,7 @@ class ScreenLogin extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginStart),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(_titleText,
+            child: Text(ConstantStrings.loginTitle,
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: _fsizeTitle,
@@ -88,7 +88,7 @@ class ScreenLogin extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(_emailCtaText,
+            child: Text(ConstantStrings.loginEmailCta,
                 style: TextStyle(
                     fontSize: _fsizeEmailCta,
                     fontWeight: FontWeight.w600,

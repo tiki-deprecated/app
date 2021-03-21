@@ -10,20 +10,21 @@ import 'package:app/src/constants/constant_strings.dart';
 import 'package:app/src/features/magic_link/magic_link_bloc.dart';
 import 'package:app/src/features/magic_link/magic_link_bloc_provider.dart';
 import 'package:app/src/features/magic_link/magic_link_model.dart';
-import 'package:app/src/screens/screen_create_account.dart';
 import 'package:app/src/utilities/relative_size.dart';
 import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MagicLinkUI extends StatefulWidget {
+  final Widget _onSubmit;
+
+  MagicLinkUI(this._onSubmit);
+
   @override
-  _MagicLinkUI createState() => _MagicLinkUI();
+  _MagicLinkUI createState() => _MagicLinkUI(_onSubmit);
 }
 
 class _MagicLinkUI extends State<MagicLinkUI> {
-  MagicLinkBloc _magicLinkBloc;
-
   static final double _hPadding = 4 * RelativeSize.safeBlockHorizontal;
   static final double _vPadding = 2 * RelativeSize.safeBlockVertical;
   static final double _fSizeInput = 5 * RelativeSize.safeBlockHorizontal;
@@ -32,6 +33,11 @@ class _MagicLinkUI extends State<MagicLinkUI> {
   static final double _vMarginButton = 6 * RelativeSize.safeBlockVertical;
   static final double _widthButton = 50 * RelativeSize.safeBlockHorizontal;
   static final double _heightButton = 8 * RelativeSize.safeBlockVertical;
+
+  final Widget _onSubmit;
+  MagicLinkBloc _magicLinkBloc;
+
+  _MagicLinkUI(this._onSubmit);
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +138,7 @@ class _MagicLinkUI extends State<MagicLinkUI> {
               primary:
                   isReady ? ConstantColors.mardiGras : ConstantColors.mamba),
           onPressed: () {
-            if (isReady)
-              Navigator.push(context, platformPageRoute(ScreenCreateAccount()));
+            if (isReady) Navigator.push(context, platformPageRoute(_onSubmit));
           },
           child: Container(
             width: _widthButton,

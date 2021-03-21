@@ -9,8 +9,12 @@ import 'package:flutter/cupertino.dart';
 import 'magic_link_bloc_provider.dart';
 
 class MagicLink extends StatelessWidget {
+  final Widget _onSubmit;
+
+  MagicLink(this._onSubmit);
+
   @override
   Widget build(BuildContext context) {
-    return MagicLinkBlocProvider(child: MagicLinkUI());
+    return MagicLinkBlocProvider(child: MagicLinkUI(_onSubmit));
   }
 }

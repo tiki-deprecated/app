@@ -26,4 +26,10 @@ class ConstantStrings {
   static const String loginEmailPlaceholder = 'Your email';
   static const String loginError = 'Please enter a valid email';
   static const String loginSubmit = 'CONTINUE';
+
+  // LOGIN EMAIL PAGE
+  static const String loginEmailTitle = 'Great, now check your inbox';
+  static const String loginEmailSubtitle =
+      'I’ve sent you an email with a link to login';
+  static const String loginEmailButton = 'GO TO INBOX';
 }
