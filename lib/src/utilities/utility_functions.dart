@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 
 Route<T> platformPageRoute<T>(
   Widget destination, {
-  RouteSettings? settings,
-  String? title,
+  RouteSettings settings,
+  String title,
   bool maintainState = true,
   bool fullscreenDialog = false,
 }) {

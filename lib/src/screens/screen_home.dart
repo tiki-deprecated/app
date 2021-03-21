@@ -27,7 +27,7 @@ class ScreenHome extends PlatformScaffold {
       provisional: false,
       sound: true,
     );
-    String token = (await messaging.getToken())!;
+    String token = await messaging.getToken();
     print(token);
   }
 }

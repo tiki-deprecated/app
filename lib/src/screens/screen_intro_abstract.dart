@@ -3,16 +3,17 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constants_colors.dart';
+import 'package:app/src/constants/constant_colors.dart';
+import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
 import 'package:app/src/utilities/relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 abstract class ScreenIntroAbstract extends PlatformScaffold {
-  static final double lrPadding = 8 * RelativeSize.safeBlockHorizontal;
+  static final double hPadding =
+      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
   static final double vMargin = 2.5 * RelativeSize.safeBlockVertical;
   static final double vMarginStart = 35 * RelativeSize.safeBlockVertical;
   static final double fsizeTitle = 10 * RelativeSize.safeBlockHorizontal;
@@ -50,8 +51,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: fsizeTitle,
-                    fontWeight: FontWeight.bold,
-                    color: ConstantsColors.MARDI_GRAS))));
+                    fontWeight: FontWeight.bold))));
   }
 
   Widget subtitle() {
@@ -60,10 +60,8 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(_subtitleText,
-                style: GoogleFonts.nunitoSans(
-                    fontSize: fsizeSubtitle,
-                    fontWeight: FontWeight.bold,
-                    color: ConstantsColors.MARDI_GRAS))));
+                style: TextStyle(
+                    fontSize: fsizeSubtitle, fontWeight: FontWeight.bold))));
   }
 
   Widget dots() {
@@ -80,9 +78,9 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
     return Container(
       height: sizeDot,
       width: sizeDot,
-      margin: EdgeInsets.only(left: sizeDot * 0.5, right: sizeDot * 0.5),
+      margin: EdgeInsets.symmetric(horizontal: sizeDot * 0.5),
       decoration: BoxDecoration(
-          color: active ? ConstantsColors.MARDI_GRAS : Colors.white,
+          color: active ? ConstantColors.mardiGras : Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(sizeDot * 2))),
     );
   }
@@ -97,13 +95,13 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                     shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(vMargin * 2))),
-                    primary: ConstantsColors.MARDI_GRAS),
+                    primary: ConstantColors.mardiGras),
                 child: Container(
                     width: widthButton,
                     height: heightButton,
                     child: Center(
                         child: Text(_buttonText,
-                            style: GoogleFonts.nunitoSans(
+                            style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: fsizeButton,
                                 letterSpacing: 1)))),
