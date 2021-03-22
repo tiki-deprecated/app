@@ -7,6 +7,7 @@ import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_strings.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
 import 'package:app/src/screens/screen_intro_earn.dart';
+import 'package:app/src/screens/screen_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,6 +15,7 @@ class ScreenIntroControl extends ScreenIntroAbstract {
   static final int _dotFilled = 1;
   static final int _dotTotal = 3;
   static final Widget _nextScreen = ScreenIntroEarn();
+  static final Widget _skipTo = ScreenLogin();
   static final Color _backgroundColor = ConstantColors.sunglow;
 
   ScreenIntroControl()
@@ -58,8 +60,13 @@ class ScreenIntroControl extends ScreenIntroAbstract {
           child: Container(
               padding: EdgeInsets.symmetric(
                   horizontal: ScreenIntroAbstract.hPadding),
-              child: Column(
-                  children: [title(), subtitle(), dots(), button(context)])))
+              child: Column(children: [
+                skip(context, _skipTo),
+                title(),
+                subtitle(),
+                dots(),
+                button(context)
+              ])))
     ]);
   }
 }

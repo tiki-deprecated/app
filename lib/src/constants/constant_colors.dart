@@ -25,8 +25,10 @@ class ConstantColors {
   static const Color serenade = Color(0xFFFFF5E9);
 
   //GREYS
+  static const Color silverChalice = Color(0xFFAFAFAF);
   static const Color gray = Color(0xFF8D8D8D);
   static const Color mamba = Color(0xFF978B99);
+  static const Color boulder = Color(0xFF797979);
   static const Color emperor = Color(0xFF545454);
 
   //GREENS

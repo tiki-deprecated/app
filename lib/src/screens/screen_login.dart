@@ -8,8 +8,9 @@ import 'package:app/src/utilities/relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//TODO need a Terms of Service link on this page (or in email?)
 class ScreenLogin extends PlatformScaffold {
-  static final double _lrPadding =
+  static final double _hPadding =
       ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
   static final double _vMarginStart = 25 * RelativeSize.safeBlockVertical;
   static final double _vMarginBlob = 46 * RelativeSize.blockSizeVertical;
@@ -39,7 +40,7 @@ class ScreenLogin extends PlatformScaffold {
     return Row(children: [
       Expanded(
           child: Container(
-              padding: EdgeInsets.only(left: _lrPadding, right: _lrPadding),
+              padding: EdgeInsets.symmetric(horizontal: _hPadding),
               child: Column(children: [
                 _title(),
                 _emailCta(),
@@ -64,7 +65,7 @@ class ScreenLogin extends PlatformScaffold {
           child: Align(
               alignment: Alignment.topRight,
               child:
-                  Image(image: AssetImage('res/images/pineapple-login.png'))),
+                  Image(image: AssetImage('res/images/login-pineapple.png'))),
         ),
       ],
     );

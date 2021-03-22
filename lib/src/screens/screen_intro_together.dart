@@ -15,6 +15,7 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
   static final int _dotFilled = 3;
   static final int _dotTotal = 3;
   static final Widget _nextScreen = ScreenLogin();
+  static final Widget _skipTo = ScreenLogin();
   static final Color _backgroundColor = ConstantColors.macaroniAndCheese;
 
   ScreenIntroTogether()
@@ -54,8 +55,13 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
           child: Container(
               padding: EdgeInsets.symmetric(
                   horizontal: ScreenIntroAbstract.hPadding),
-              child: Column(
-                  children: [title(), subtitle(), dots(), button(context)])))
+              child: Column(children: [
+                skip(context, _skipTo),
+                title(),
+                subtitle(),
+                dots(),
+                button(context)
+              ])))
     ]);
   }
 }

@@ -146,7 +146,11 @@ class _MagicLinkUI extends State<MagicLinkUI> {
             child: Center(
               child: Text(
                 ConstantStrings.loginSubmit,
-                style: TextStyle(color: Colors.white, fontSize: _fSizeButton),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: _fSizeButton,
+                    letterSpacing: 0.05 * RelativeSize.safeBlockHorizontal,
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ),
