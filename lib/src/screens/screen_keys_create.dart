@@ -6,7 +6,10 @@
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/screens/screen_keys.dart';
+import 'package:app/src/features/security_keys_new/security_keys_new.dart';
+import 'package:app/src/features/security_keys_new/security_keys_new_model.dart';
+import 'package:app/src/screens/screen_keys_load.dart';
+import 'package:app/src/screens/screen_keys_save.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
 import 'package:app/src/utilities/relative_size.dart';
 import 'package:app/src/utilities/utility_functions.dart';
@@ -20,12 +23,9 @@ class ScreenKeysCreate extends PlatformScaffold {
   static final double _hPadding =
       ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
   static final double _vMarginStart = 15 * RelativeSize.safeBlockVertical;
-  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
   static final double _vMarginLoad = 8 * RelativeSize.safeBlockVertical;
-  static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
   static final double _fSizeLoad = 5 * RelativeSize.safeBlockHorizontal;
-  static final Widget _toLoad = ScreenKeys();
+  static final Widget _toLoad = ScreenKeysLoad();
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -63,44 +63,14 @@ class ScreenKeysCreate extends PlatformScaffold {
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: _hPadding),
               child: Column(children: [
-                _title(),
-                _subtitle(),
                 Container(
                   margin: EdgeInsets.only(top: _vMarginStart),
-                  child: Image(
-                    image: AssetImage('res/images/keys-create-pineapple.png'),
-                  ),
+                  child:
+                      SecurityKeysNew((model) => _onComplete(context, model)),
                 ),
                 _restoreButton(context, _toLoad)
               ])))
     ]);
-  }
-
-  Widget _title() {
-    return Container(
-        margin: EdgeInsets.only(top: _vMarginStart),
-        child: Align(
-            alignment: Alignment.center,
-            child: Text(ConstantStrings.keysCreateTitle,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Koara',
-                    fontSize: _fSizeTitle,
-                    fontWeight: FontWeight.bold,
-                    color: ConstantColors.mardiGras))));
-  }
-
-  Widget _subtitle() {
-    return Container(
-        margin: EdgeInsets.only(top: _vMargin),
-        child: Align(
-            alignment: Alignment.center,
-            child: Text(ConstantStrings.keysCreateSubtitle,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: _fSizeSubtitle,
-                    fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
   }
 
   Widget _restoreButton(BuildContext context, Widget to) {
@@ -118,5 +88,12 @@ class ScreenKeysCreate extends PlatformScaffold {
                             color: ConstantColors.orange,
                             fontWeight: FontWeight.bold,
                             fontSize: _fSizeLoad))))));
+  }
+
+  void _onComplete(BuildContext context, SecurityKeysNewModel model) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        platformPageRoute(ScreenKeysSave(model.keys)),
+        (Route<dynamic> route) => false);
   }
 }

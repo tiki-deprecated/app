@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uni_links/uni_links.dart';
 
 Route<T> platformPageRoute<T>(
   Widget destination, {
@@ -24,4 +25,12 @@ Route<T> platformPageRoute<T>(
         settings: settings,
         maintainState: maintainState,
         fullscreenDialog: fullscreenDialog);
+}
+
+Future<Null> initUniLinks() async {
+  String initialLink = await getInitialLink();
+  getLinksStream().listen((String link) {
+    print('hmm something');
+  });
+  print('hot diggidy');
 }

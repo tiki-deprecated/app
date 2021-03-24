@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/features/flutter_fire/flutter_fire.dart';
+import 'package:app/src/utilities/entry_point.dart';
+import 'package:app/src/utilities/provider_chain.dart';
 import 'package:app/src/utilities/relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +14,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget platform;
     if (Platform.isIOS)
-      return iosApp(context);
+      platform = iosApp(context);
     else
-      return androidApp(context);
+      platform = androidApp(context);
+    return providerChain(platform);
   }
 
   MaterialApp androidApp(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: FlutterFire(),
+      home: entryPoint(),
       theme: ThemeData(
           textTheme:
               GoogleFonts.nunitoSansTextTheme(Theme.of(context).textTheme)),
@@ -32,7 +35,7 @@ class App extends StatelessWidget {
   CupertinoApp iosApp(BuildContext context) {
     return CupertinoApp(
         title: _title,
-        home: FlutterFire(),
+        home: entryPoint(),
         theme: CupertinoThemeData(
             textTheme: CupertinoTextThemeData(
                 textStyle: GoogleFonts.nunitoSans(

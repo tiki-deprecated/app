@@ -1,18 +1,12 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:android_intent/android_intent.dart';
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/screens/screen_keys_create.dart';
+import 'package:app/src/features/deeplink_inbox/deeplink_inbox.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
 import 'package:app/src/utilities/relative_size.dart';
-import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ScreenLoginEmail extends PlatformScaffold {
   static final double _hPadding =
@@ -21,9 +15,6 @@ class ScreenLoginEmail extends PlatformScaffold {
   static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
   static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
   static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeButton = 6 * RelativeSize.safeBlockHorizontal;
-  static final double _heightButton = 8 * RelativeSize.safeBlockVertical;
-  static final double _widthButton = 50 * RelativeSize.safeBlockHorizontal;
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -49,12 +40,7 @@ class ScreenLoginEmail extends PlatformScaffold {
               child: Column(children: [
                 _title(),
                 _subtitle(),
-                Container(
-                  margin: EdgeInsets.only(top: _vMargin * 1.5),
-                  child: Image(
-                    image: AssetImage('res/images/login-email-pineapple.png'),
-                  ),
-                ),
+                _image(),
                 _button(context)
               ])))
     ]);
@@ -105,48 +91,18 @@ class ScreenLoginEmail extends PlatformScaffold {
                     color: ConstantColors.emperor))));
   }
 
+  Widget _image() {
+    return Container(
+      margin: EdgeInsets.only(top: _vMargin * 1.5),
+      child: Image(
+        image: AssetImage('res/images/login-email-pineapple.png'),
+      ),
+    );
+  }
+
   Widget _button(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: _vMargin * 3),
-        child: Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(_vMargin * 2))),
-                  primary: ConstantColors.mardiGras),
-              child: Container(
-                  width: _widthButton,
-                  height: _heightButton,
-                  child: Center(
-                      child: Text(ConstantStrings.loginEmailButton,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: _fSizeButton,
-                              letterSpacing:
-                                  0.05 * RelativeSize.safeBlockHorizontal)))),
-              //onPressed: () => openInbox()
-              onPressed: () {
-                Navigator.push(context, platformPageRoute(ScreenKeysCreate()));
-              },
-            )));
-  }
-
-  //TODO move to BLOC
-  void openInbox() {
-    if (Platform.isAndroid) {
-      AndroidIntent intent = AndroidIntent(
-        action: 'android.intent.action.MAIN',
-        category: 'android.intent.category.APP_EMAIL',
-      );
-      intent.launch().catchError((e) {
-        log("Unable to launch inbox", error: e);
-      });
-    } else if (Platform.isIOS) {
-      launch("message://").catchError((e) {
-        log("Unable to launch inbox", error: e);
-      });
-    }
+        child: Align(alignment: Alignment.center, child: DeeplinkInbox()));
   }
 }

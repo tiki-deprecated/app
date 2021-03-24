@@ -45,6 +45,10 @@ class ConstantStrings {
   static const String keysSave = "SAVE TO PHONE";
   static const String keysSkip = "SKIP SAVING";
   static const String keysRestore = 'Already have an account?';
+  static const String keysID = 'TIKI ID';
+  static const String keysDataKey = 'DATA KEY';
+  static const String keysSignKey = 'SIGN KEY';
+  static const String keysCopy = 'COPY';
 
   // KEYS LOAD PAGE
   static const String keysLoadTitle = 'Enter your keys';
@@ -54,5 +58,6 @@ class ConstantStrings {
   static const String keysLoadButtonScan = 'SCAN';
   static const String keysLoadButtonSubmit = 'SUBMIT';
   static const String keysLoadPlaceholderID = 'Your TIKI ID';
-  static const String keysLoadPlaceholderKey = 'Secret Key';
+  static const String keysLoadPlaceholderDataKey = 'Data Key';
+  static const String keysLoadPlaceholderSignKey = 'Sign Key';
 }

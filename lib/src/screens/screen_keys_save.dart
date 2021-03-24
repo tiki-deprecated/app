@@ -6,6 +6,11 @@
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/features/security_keys_backup/security_keys_backup.dart';
+import 'package:app/src/repositories/security_keys/security_keys_bloc.dart';
+import 'package:app/src/repositories/security_keys/security_keys_bloc_provider.dart';
+import 'package:app/src/repositories/security_keys/security_keys_model.dart';
+import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_keys_load.dart';
 import 'package:app/src/utilities/platform_scaffold.dart';
 import 'package:app/src/utilities/relative_size.dart';
@@ -16,21 +21,21 @@ import 'package:flutter/src/material/scaffold.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 
-class ScreenKeys extends PlatformScaffold {
+class ScreenKeysSave extends PlatformScaffold {
   static final double _hPadding =
       ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
   static final double _vMarginStart = 15 * RelativeSize.safeBlockVertical;
   static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double _vMarginLoad = 8 * RelativeSize.safeBlockVertical;
   static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
   static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
   static final double _fSizeLoad = 5 * RelativeSize.safeBlockHorizontal;
   static final double _fSizeSkip = 4 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeButton = 6 * RelativeSize.safeBlockHorizontal;
-  static final double _heightButton = 8 * RelativeSize.safeBlockVertical;
-  static final double _widthButton = 50 * RelativeSize.safeBlockHorizontal;
   static final Widget _toLoad = ScreenKeysLoad();
-  static final Widget _toHome = ScreenKeysLoad();
+  static final Widget _toHome = ScreenHome();
+
+  final SecurityKeysModel _newModel;
+
+  ScreenKeysSave(this._newModel);
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -44,7 +49,16 @@ class ScreenKeys extends PlatformScaffold {
 
   Widget _stack(BuildContext context) {
     return Stack(
-      children: [_background(), _foreground(context)],
+      children: [
+        _background(),
+        LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return SingleChildScrollView(
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: _foreground(context)));
+        })
+      ],
     );
   }
 
@@ -63,18 +77,17 @@ class ScreenKeys extends PlatformScaffold {
   }
 
   Widget _foreground(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: _hPadding),
-              child: Column(children: [
-                _title(),
-                _subtitle(),
-                _saveButton(context),
-                _skipButton(context, _toLoad),
-                _restoreButton(context, _toHome)
-              ])))
-    ]);
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: _hPadding),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          _title(),
+          _subtitle(),
+          Container(
+              margin: EdgeInsets.only(top: _vMargin),
+              child: SecurityKeysBackup(_onBackupComplete, keys: _newModel)),
+          _skipButton(context),
+          _restoreButton(context, _toLoad)
+        ]));
   }
 
   Widget _title() {
@@ -105,62 +118,42 @@ class ScreenKeys extends PlatformScaffold {
   }
 
   Widget _restoreButton(BuildContext context, Widget to) {
-    return Expanded(
-        child: Container(
-            margin: EdgeInsets.only(bottom: _vMarginLoad),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, platformPageRoute(to));
-                    },
-                    child: Text(ConstantStrings.keysRestore,
-                        style: TextStyle(
-                            color: ConstantColors.orange,
-                            fontWeight: FontWeight.bold,
-                            fontSize: _fSizeLoad))))));
+    return Container(
+        margin: EdgeInsets.only(top: _vMargin, bottom: 3 * _vMargin),
+        child: Align(
+            alignment: Alignment.center,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(context, platformPageRoute(to));
+                },
+                child: Text(ConstantStrings.keysRestore,
+                    style: TextStyle(
+                        color: ConstantColors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: _fSizeLoad)))));
   }
 
-  Widget _skipButton(BuildContext context, Widget to) {
-    return Expanded(
-        child: Container(
-            margin: EdgeInsets.only(top: _vMargin),
-            child: Align(
-                alignment: Alignment.topCenter,
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, platformPageRoute(to));
-                    },
-                    child: Text(ConstantStrings.keysSkip,
-                        style: TextStyle(
-                            color: ConstantColors.boulder,
-                            fontWeight: FontWeight.bold,
-                            fontSize: _fSizeSkip))))));
-  }
-
-  //TODO move to BLOC
-  Widget _saveButton(BuildContext context) {
+  Widget _skipButton(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(_vMargin * 2))),
-                  primary: ConstantColors.mardiGras),
-              child: Container(
-                  width: _widthButton,
-                  height: _heightButton,
-                  child: Center(
-                      child: Text(ConstantStrings.keysSave,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: _fSizeButton,
-                              letterSpacing:
-                                  0.05 * RelativeSize.safeBlockHorizontal)))),
-              onPressed: () {},
-            )));
+            alignment: Alignment.topCenter,
+            child: TextButton(
+                onPressed: () {
+                  _onBackupComplete(context);
+                },
+                child: Text(ConstantStrings.keysSkip,
+                    style: TextStyle(
+                        color: ConstantColors.boulder,
+                        fontWeight: FontWeight.bold,
+                        fontSize: _fSizeSkip)))));
+  }
+
+  Future<void> _onBackupComplete(BuildContext context) async {
+    SecurityKeysBloc securityKeysBloc =
+        SecurityKeysBlocProvider.of(context).bloc;
+    await securityKeysBloc.write("mike@mytiki.com", _newModel, overwrite: true);
+    Navigator.pushAndRemoveUntil(
+        context, platformPageRoute(_toHome), (Route<dynamic> route) => false);
   }
 }
