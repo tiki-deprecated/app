@@ -6,15 +6,15 @@
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/features/security_keys_backup/security_keys_backup.dart';
-import 'package:app/src/repositories/security_keys/security_keys_bloc.dart';
-import 'package:app/src/repositories/security_keys/security_keys_bloc_provider.dart';
-import 'package:app/src/repositories/security_keys/security_keys_model.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
+import 'package:app/src/platform/platform_page_route.dart';
+import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_keys_load.dart';
-import 'package:app/src/utilities/platform_scaffold.dart';
-import 'package:app/src/utilities/relative_size.dart';
-import 'package:app/src/utilities/utility_functions.dart';
+import 'package:app/src/ui/ui_security_backup/ui_security_backup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/cupertino/page_scaffold.dart';
 import 'package:flutter/src/material/scaffold.dart';
@@ -23,17 +23,20 @@ import 'package:flutter/widgets.dart';
 
 class ScreenKeysSave extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
-  static final double _vMarginStart = 15 * RelativeSize.safeBlockVertical;
-  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeLoad = 5 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeSkip = 4 * RelativeSize.safeBlockHorizontal;
+      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _vMarginStart =
+      15 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double _fSizeTitle =
+      10 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fSizeSubtitle =
+      5 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fSizeLoad = 5 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fSizeSkip = 4 * PlatformRelativeSize.safeBlockHorizontal;
   static final Widget _toLoad = ScreenKeysLoad();
   static final Widget _toHome = ScreenHome();
 
-  final SecurityKeysModel _newModel;
+  final HelperSecurityKeysModel _newModel;
 
   ScreenKeysSave(this._newModel);
 
@@ -84,7 +87,7 @@ class ScreenKeysSave extends PlatformScaffold {
           _subtitle(),
           Container(
               margin: EdgeInsets.only(top: _vMargin),
-              child: SecurityKeysBackup(_onBackupComplete, keys: _newModel)),
+              child: UISecurityBackup(_onBackupComplete, provided: _newModel)),
           _skipButton(context),
           _restoreButton(context, _toLoad)
         ]));
@@ -150,9 +153,9 @@ class ScreenKeysSave extends PlatformScaffold {
   }
 
   Future<void> _onBackupComplete(BuildContext context) async {
-    SecurityKeysBloc securityKeysBloc =
-        SecurityKeysBlocProvider.of(context).bloc;
-    await securityKeysBloc.write("mike@mytiki.com", _newModel, overwrite: true);
+    HelperSecurityKeysBloc securityKeysBloc =
+        HelperSecurityKeysBlocProvider.of(context).bloc;
+    await securityKeysBloc.save(_newModel);
     Navigator.pushAndRemoveUntil(
         context, platformPageRoute(_toHome), (Route<dynamic> route) => false);
   }

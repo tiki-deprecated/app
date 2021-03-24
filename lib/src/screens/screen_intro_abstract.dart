@@ -5,26 +5,31 @@
 
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/utilities/platform_scaffold.dart';
-import 'package:app/src/utilities/relative_size.dart';
-import 'package:app/src/utilities/utility_functions.dart';
+import 'package:app/src/platform/platform_page_route.dart';
+import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ScreenIntroAbstract extends PlatformScaffold {
   static final double hPadding =
-      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
-  static final double vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double vMarginSkip = 8 * RelativeSize.safeBlockVertical;
-  static final double vMarginTitle = 20 * RelativeSize.safeBlockVertical;
-  static final double fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
-  static final double fSizeButton = 6 * RelativeSize.safeBlockHorizontal;
-  static final double fSizeSkip = 4 * RelativeSize.safeBlockHorizontal;
-  static final double sizeDot = 1 * RelativeSize.safeBlockVertical;
-  static final double heightButton = 8 * RelativeSize.safeBlockVertical;
-  static final double widthButton = 50 * RelativeSize.safeBlockHorizontal;
+      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+  static final double vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double vMarginSkip = 8 * PlatformRelativeSize.safeBlockVertical;
+  static final double vMarginTitle =
+      20 * PlatformRelativeSize.safeBlockVertical;
+  static final double fSizeTitle =
+      10 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double fSizeSubtitle =
+      5 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double fSizeButton =
+      6 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double fSizeSkip = 4 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double sizeDot = 1 * PlatformRelativeSize.safeBlockVertical;
+  static final double heightButton = 8 * PlatformRelativeSize.safeBlockVertical;
+  static final double widthButton =
+      50 * PlatformRelativeSize.safeBlockHorizontal;
 
   final String _titleText;
   final String _subtitleText;
@@ -107,8 +112,8 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: fSizeButton,
-                              letterSpacing:
-                                  0.05 * RelativeSize.safeBlockHorizontal,
+                              letterSpacing: 0.05 *
+                                  PlatformRelativeSize.safeBlockHorizontal,
                             )))),
                 onPressed: () {
                   buttonPressed(context);

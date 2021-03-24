@@ -1,20 +1,23 @@
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/features/deeplink_inbox/deeplink_inbox.dart';
-import 'package:app/src/utilities/platform_scaffold.dart';
-import 'package:app/src/utilities/relative_size.dart';
+import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
+import 'package:app/src/ui/ui_deeplink_inbox/ui_deeplink_inbox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenLoginEmail extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
-  static final double _vMarginStart = 15 * RelativeSize.safeBlockVertical;
-  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
+      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _vMarginStart =
+      15 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double _fSizeTitle =
+      10 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fSizeSubtitle =
+      5 * PlatformRelativeSize.safeBlockHorizontal;
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -103,6 +106,6 @@ class ScreenLoginEmail extends PlatformScaffold {
   Widget _button(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: _vMargin * 3),
-        child: Align(alignment: Alignment.center, child: DeeplinkInbox()));
+        child: Align(alignment: Alignment.center, child: UIDeeplinkInbox()));
   }
 }

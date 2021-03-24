@@ -5,9 +5,9 @@
 
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
 import 'package:app/src/screens/screen_login.dart';
-import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

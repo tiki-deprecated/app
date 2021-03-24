@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utilities/platform_scaffold.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

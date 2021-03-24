@@ -6,23 +6,25 @@
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/features/security_keys_load/security_keys_load.dart';
-import 'package:app/src/repositories/security_keys/security_keys_bloc_provider.dart';
+import 'package:app/src/platform/platform_page_route.dart';
+import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_home.dart';
-import 'package:app/src/utilities/platform_scaffold.dart';
-import 'package:app/src/utilities/relative_size.dart';
-import 'package:app/src/utilities/utility_functions.dart';
+import 'package:app/src/ui/ui_security_restore/ui_security_restore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenKeysLoad extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
-  static final double _vMarginStart = 15 * RelativeSize.safeBlockVertical;
-  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double _fSizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double _fSizeSubtitle = 5 * RelativeSize.safeBlockHorizontal;
+      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _vMarginStart =
+      15 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double _fSizeTitle =
+      10 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fSizeSubtitle =
+      5 * PlatformRelativeSize.safeBlockHorizontal;
   final Widget _toHome = ScreenHome();
 
   @override
@@ -80,7 +82,7 @@ class ScreenKeysLoad extends PlatformScaffold {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _title(),
         _subtitle(),
-        SecurityKeysLoad(SecurityKeysBlocProvider.of(context).bloc, (keys) {
+        UISecurityRestore((keys) {
           Navigator.pushAndRemoveUntil(
               context, platformPageRoute(_toHome), (route) => false);
         })

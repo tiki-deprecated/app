@@ -1,36 +1,13 @@
-import 'dart:io';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:uni_links/uni_links.dart';
+import 'dart:convert';
 
-Route<T> platformPageRoute<T>(
-  Widget destination, {
-  RouteSettings settings,
-  String title,
-  bool maintainState = true,
-  bool fullscreenDialog = false,
-}) {
-  if (Platform.isIOS)
-    return CupertinoPageRoute(
-        builder: (context) => destination,
-        settings: settings,
-        title: title,
-        maintainState: maintainState,
-        fullscreenDialog: fullscreenDialog);
+Map jsonDecodeNullSafe(String source) {
+  if (source == null)
+    return null;
   else
-    return MaterialPageRoute(
-        builder: (context) => destination,
-        settings: settings,
-        maintainState: maintainState,
-        fullscreenDialog: fullscreenDialog);
-}
-
-Future<Null> initUniLinks() async {
-  String initialLink = await getInitialLink();
-  getLinksStream().listen((String link) {
-    print('hmm something');
-  });
-  print('hot diggidy');
+    return jsonDecode(source);
 }
