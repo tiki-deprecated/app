@@ -9,14 +9,14 @@ import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 
 class HelperSecurityKeys extends StatelessWidget {
-  final child;
-  HelperSecurityKeys(this.child);
+  final _child;
+  HelperSecurityKeys({Widget child}) : this._child = child;
 
   @override
   Widget build(BuildContext context) {
     return HelperSecurityKeysBlocProvider(
         RepoSSUserBlocProvider.of(context).bloc,
         RepoSSSecurityKeysBlocProvider.of(context).bloc,
-        child: child);
+        child: _child);
   }
 }

@@ -144,7 +144,12 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
               primary:
                   isReady ? ConstantColors.mardiGras : ConstantColors.mamba),
           onPressed: () {
-            if (isReady) Navigator.push(context, platformPageRoute(_onSubmit));
+            if (isReady) {
+              _magicLinkBloc.send().then((success) {
+                if (success)
+                  Navigator.push(context, platformPageRoute(_onSubmit));
+              });
+            }
           },
           child: Container(
             width: _widthButton,

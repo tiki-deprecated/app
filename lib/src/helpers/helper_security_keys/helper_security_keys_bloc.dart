@@ -24,11 +24,14 @@ class HelperSecurityKeysBloc {
   BehaviorSubject<HelperSecurityKeysModel> _subjectModel;
 
   HelperSecurityKeysBloc(this.repoSSUserBloc, this.repoSSSecurityKeysBloc) {
-    HelperSecurityKeysModel model = HelperSecurityKeysModel();
     _subjectModel = BehaviorSubject.seeded(model);
   }
 
   Observable<HelperSecurityKeysModel> get observable => _subjectModel.stream;
+
+  void dispose() {
+    _subjectModel.close();
+  }
 
   Future<void> load() async {
     RepoSSUserModel user = await repoSSUserBloc.find();

@@ -10,7 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class RepoSSUser extends StatelessWidget {
   final Widget _child;
   final FlutterSecureStorage _secureStorage;
-  RepoSSUser(this._secureStorage, this._child);
+  RepoSSUser(this._secureStorage, {Widget child}) : this._child = child;
 
   @override
   Widget build(BuildContext context) {

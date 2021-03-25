@@ -26,6 +26,7 @@ class ConstantColors {
 
   //GREYS
   static const Color gallery = Color(0xFFF0F0F0);
+  static const Color alto = Color(0xFFD8D8D8);
   static const Color silverChalice = Color(0xFFAFAFAF);
   static const Color gray = Color(0xFF8D8D8D);
   static const Color mamba = Color(0xFF978B99);

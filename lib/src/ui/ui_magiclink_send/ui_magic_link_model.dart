@@ -5,8 +5,10 @@
 
 class UIMagicLinkModel {
   String email;
+  String salt;
   bool isError = false;
   bool isReady = false;
 
-  UIMagicLinkModel({this.email, this.isError = false, this.isReady = false});
+  UIMagicLinkModel(
+      {this.email, this.salt, this.isError = false, this.isReady = false});
 }

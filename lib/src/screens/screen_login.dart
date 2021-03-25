@@ -1,10 +1,15 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_login_email.dart';
-import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_view.dart';
+import 'package:app/src/ui/ui_magiclink_send/ui_magic_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +56,7 @@ class ScreenLogin extends PlatformScaffold {
                 _emailCta(),
                 Container(
                     margin: EdgeInsets.only(top: _vMargin),
-                    child: UIMagicLinkView(_onSubmit))
+                    child: UIMagicLink(_onSubmit))
               ])))
     ]);
   }

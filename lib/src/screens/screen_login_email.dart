@@ -1,12 +1,17 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/ui/ui_deeplink_inbox/ui_deeplink_inbox.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ScreenLoginEmail extends PlatformScaffold {
   static final double _hPadding =

@@ -60,4 +60,7 @@ class ConstantStrings {
   static const String keysLoadPlaceholderID = 'Your TIKI ID';
   static const String keysLoadPlaceholderDataKey = 'Data Key';
   static const String keysLoadPlaceholderSignKey = 'Sign Key';
+
+  // HOME PAGE
+  static const String homeTitle = 'We\'re stronger together';
 }

@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/repos/repo_bouncer_otp/repo_bouncer_otp_bloc_provider.dart';
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_view.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,6 +16,7 @@ class UIMagicLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UIMagicLinkBlocProvider(child: UIMagicLinkView(_onSubmit));
+    return UIMagicLinkBlocProvider(RepoBouncerOtpBlocProvider.of(context).bloc,
+        child: UIMagicLinkView(_onSubmit));
   }
 }
