@@ -1,22 +1,33 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_sizes.dart';
 import 'package:app/src/constants/constant_strings.dart';
-import 'package:app/src/features/magic_link/magic_link.dart';
+import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_login_email.dart';
-import 'package:app/src/utilities/platform_scaffold.dart';
-import 'package:app/src/utilities/relative_size.dart';
+import 'package:app/src/ui/ui_magiclink_send/ui_magic_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//TODO need a Terms of Service link on this page (or in email?)
 class ScreenLogin extends PlatformScaffold {
-  static final double _lrPadding =
-      ConstantSizes.hPadding * RelativeSize.safeBlockHorizontal;
-  static final double _vMarginStart = 25 * RelativeSize.safeBlockVertical;
-  static final double _vMarginBlob = 46 * RelativeSize.blockSizeVertical;
-  static final double _vMarginPineapple = 4 * RelativeSize.safeBlockVertical;
-  static final double _vMargin = 2.5 * RelativeSize.safeBlockVertical;
-  static final double _fsizeTitle = 10 * RelativeSize.safeBlockHorizontal;
-  static final double _fsizeEmailCta = 5 * RelativeSize.safeBlockHorizontal;
+  static final double _hPadding =
+      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _vMarginStart =
+      25 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMarginBlob =
+      46 * PlatformRelativeSize.blockSizeVertical;
+  static final double _vMarginPineapple =
+      4 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double _fsizeTitle =
+      10 * PlatformRelativeSize.safeBlockHorizontal;
+  static final double _fsizeEmailCta =
+      5 * PlatformRelativeSize.safeBlockHorizontal;
   static final Widget _onSubmit = ScreenLoginEmail();
 
   @override
@@ -39,13 +50,13 @@ class ScreenLogin extends PlatformScaffold {
     return Row(children: [
       Expanded(
           child: Container(
-              padding: EdgeInsets.only(left: _lrPadding, right: _lrPadding),
+              padding: EdgeInsets.symmetric(horizontal: _hPadding),
               child: Column(children: [
                 _title(),
                 _emailCta(),
                 Container(
                     margin: EdgeInsets.only(top: _vMargin),
-                    child: MagicLink(_onSubmit))
+                    child: UIMagicLink(_onSubmit))
               ])))
     ]);
   }
@@ -64,7 +75,7 @@ class ScreenLogin extends PlatformScaffold {
           child: Align(
               alignment: Alignment.topRight,
               child:
-                  Image(image: AssetImage('res/images/pineapple-login.png'))),
+                  Image(image: AssetImage('res/images/login-pineapple.png'))),
         ),
       ],
     );

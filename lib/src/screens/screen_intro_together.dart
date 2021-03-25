@@ -5,9 +5,9 @@
 
 import 'package:app/src/constants/constant_colors.dart';
 import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
 import 'package:app/src/screens/screen_login.dart';
-import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,6 +15,7 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
   static final int _dotFilled = 3;
   static final int _dotTotal = 3;
   static final Widget _nextScreen = ScreenLogin();
+  static final Widget _skipTo = ScreenLogin();
   static final Color _backgroundColor = ConstantColors.macaroniAndCheese;
 
   ScreenIntroTogether()
@@ -54,8 +55,13 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
           child: Container(
               padding: EdgeInsets.symmetric(
                   horizontal: ScreenIntroAbstract.hPadding),
-              child: Column(
-                  children: [title(), subtitle(), dots(), button(context)])))
+              child: Column(children: [
+                skip(context, _skipTo),
+                title(),
+                subtitle(),
+                dots(),
+                button(context)
+              ])))
     ]);
   }
 }
