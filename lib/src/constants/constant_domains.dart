@@ -4,6 +4,6 @@
  */
 
 class ConstantDomains {
-  static final String bouncer = "192.168.1.173:10227";
+  static final String bouncer = "bouncer.mytiki.com";
   static final String website = "api.mytiki.com";
 }

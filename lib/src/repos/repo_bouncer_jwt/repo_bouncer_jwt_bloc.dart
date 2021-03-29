@@ -18,7 +18,7 @@ class RepoBouncerJwtBloc {
   Future<UtilityAPIRsp<RepoBouncerJwtModelRsp>> otp(
       RepoBouncerJwtModelReq req) async {
     http.Response rsp = await http.post(
-        Uri.http(ConstantDomains.bouncer, _path),
+        Uri.https(ConstantDomains.bouncer, _path),
         headers: jsonHeaders(),
         body: jsonEncode(req.toJson()));
     Map rspMap = jsonDecode(rsp.body);
