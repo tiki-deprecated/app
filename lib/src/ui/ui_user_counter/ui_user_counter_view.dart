@@ -34,7 +34,7 @@ class _UIUserCounterView extends State<UIUserCounterView> {
                     fontFamily: 'Koara',
                     fontWeight: FontWeight.bold,
                     fontSize: _fSizeCount)),
-            Text("people already use TIKI",
+            Text("people joined the TIKI tribe",
                 style: TextStyle(
                     fontSize: _fSizeText,
                     fontWeight: FontWeight.w900,
