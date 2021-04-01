@@ -20,7 +20,7 @@ jobs:
       - uses: dopplerhq/cli-action@v1
       - run: doppler run --command="echo \$ANDROID_SIGNER_B64 | base64 --decode > android/android_signer.jks & printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' \$ANDROID_SIGNER_SECRET \$ANDROID_SIGNER_SECRET > android/keystore.properties"
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
       - run: flutter pub get
       #- run: flutter test
       - run: flutter build appbundle
