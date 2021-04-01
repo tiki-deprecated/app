@@ -22,7 +22,7 @@ jobs:
       - run: flutter build appbundle
       - run: flutter build ipa
       - uses: ncipollo/release-action@v1
-      - with:
+        with:
           artifacts: "build/app/bundle/release/*.aab,build/ios/archive/*.xcarchive"
           replacesArtifacts: false
           token: ${{ secrets.GH_TOKEN }}
