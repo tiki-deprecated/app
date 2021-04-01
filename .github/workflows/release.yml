@@ -7,7 +7,7 @@ on: push
 
 jobs:
   build:
-    name: Android (APK)
+    name: Flutter (.aab & .xarchive)
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +17,10 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.0.0'
+      - uses: dopplerhq/cli-action@v1
+      - run: doppler run --command="echo \$ANDROID_SIGNER_B64 | base64 --decode > android/android_signer.jks & printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' \$ANDROID_SIGNER_SECRET \$ANDROID_SIGNER_SECRET > android/keystore.properties"
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       - run: flutter pub get
       #- run: flutter test
       - run: flutter build appbundle
