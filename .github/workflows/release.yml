@@ -42,10 +42,10 @@ jobs:
         run: echo ${{ secrets.IOS_DIST_PROFILE_B64 }} | base64 --decode > ios/Distribution.mobileprovision
 
       - name: iOS Keychain
-        run:  sh ios/ci/install-certificates.sh
+        run: sh .github/scripts/install-certificates.sh
 
       - name: iOS Distribution Profile
-        run: sh ios/ci/install-provisions.sh
+        run: sh .github/scripts/install-provisions.sh
 
       - name: Flutter Dependencies
         run: flutter pub get
