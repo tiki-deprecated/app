@@ -31,5 +31,7 @@ Runner/GeneratedPluginRegistrant.*
 !default.pbxuser
 !default.perspectivev3
 
-**.cer
-**.mobileprovision
+ci/*.cer
+ci/*.mobileprovision
+ci/*.p12
+!ci/AppleWWDRCAG3.cer

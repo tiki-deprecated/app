@@ -38,16 +38,16 @@ jobs:
         run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
 
       - name: iOS Development Certificate
-        run: echo ${{ env.IOS_DEV_CERT_B64 }} | base64 --decode > ios/ci/development.cer
+        run: echo ${{ env.IOS_DEV_CERT_B64 }} | base64 --decode > ios/ci/Development.p12
 
       - name: iOS Distribution Certificate
-        run: echo ${{ env.IOS_DIST_CERT_B64 }} | base64 --decode > ios/ci/distribution.cer
+        run: echo ${{ env.IOS_DIST_CERT_B64 }} | base64 --decode > ios/ci/Distribution.p12
 
       - name: iOS Development Profile
-        run: echo ${{ env.IOS_DEV_PROFILE_B64 }} | base64 --decode > ios/ci/development.mobileprovision
+        run: echo ${{ env.IOS_DEV_PROFILE_B64 }} | base64 --decode > ios/ci/Development.mobileprovision
 
       - name: iOS Distribution Profile
-        run: echo ${{ env.IOS_DIST_PROFILE_B64 }} | base64 --decode > ios/ci/distribution.mobileprovision
+        run: echo ${{ env.IOS_DIST_PROFILE_B64 }} | base64 --decode > ios/ci/Distribution.mobileprovision
 
       - name: iOS Keychain
         run:  sh ios/ci/install-certificates.sh

@@ -9,11 +9,12 @@
 
 security create-keychain -p "" build.keychain
 
-security import "ios/ci/development.cer" -k ~/Library/Keychains/build.keychain -P "" -A
-security import "ios/ci/distribution.cer" -k ~/Library/Keychains/build.keychain -P "" -A
+security import "ios/ci/AppleWWDRCAG3.cer" -k ~/Library/Keychains/build.keychain -P "" -A
+security import "ios/ci/Development.p12" -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+security import "ios/ci/Distribution.p12" -t agg -k ~/Library/Keychains/build.keychain -P "" -A
 
 security list-keychains -s ~/Library/Keychains/build.keychain
 security default-keychain -s ~/Library/Keychains/build.keychain
 security unlock-keychain -p "" ~/Library/Keychains/build.keychain
 
-security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
