@@ -16,4 +16,4 @@ security list-keychains -s ~/Library/Keychains/build.keychain
 security default-keychain -s ~/Library/Keychains/build.keychain
 security unlock-keychain -p "" ~/Library/Keychains/build.keychain
 
-security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
+security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
