@@ -18,11 +18,11 @@ jobs:
         with:
           flutter-version: '2.0.0'
       - uses: dopplerhq/cli-action@v1
-      - run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV;
-      - run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
-      - run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties"
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
+      - run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV;
+      - run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
+      - run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ env.IOS_CERTIFICATES_B64 }}
