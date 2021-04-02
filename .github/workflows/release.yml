@@ -37,7 +37,7 @@ jobs:
           doppler secrets get IOS_PRIVATE_KEY --plain >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
 
       - name: Android Keystore
         run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
