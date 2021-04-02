@@ -31,29 +31,29 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
 
-      - name: Multiline Secret
-        run: |
-          echo 'IOS_PRIVATE_KEY<<EOF' >> $GITHUB_ENV
-          doppler secrets get IOS_PRIVATE_KEY --plain >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-        env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
-
       - name: Android Keystore
         run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
 
       - name: Android keystore.properties
         run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
 
-      - uses: yukiarrr/ios-build-action@v1.3.3
-        with:
-          project-path: ios/Runner.xcodeproj
-          p12-key-base64: ${{ env.IOS_CERTIFICATES_SECRET }}
-          p12-cer-base64: ${{ env.IOS_CERTIFICATES_B64 }}
-          mobileprovision-base64: ${{ env.IOS_PROVISION_B64 }}
-          code-signing-identity: ${{ env.IOS_SIGN_IDENTITY }}
-          team-id: ${{ env.IOS_TEAM_ID }}
-          workspace-path: ios/Runner.xcworkspace
+      - name: iOS Development Certificate
+        run: echo ${{ env.IOS_DEV_CERT_B64 }} | base64 --decode > ios/ci/development.cer
+
+      - name: iOS Distribution Certificate
+        run: echo ${{ env.IOS_DIST_CERT_B64 }} | base64 --decode > ios/ci/distribution.cer
+
+      - name: iOS Development Profile
+        run: echo ${{ env.IOS_DEV_PROFILE_B64 }} | base64 --decode > ios/ci/development.mobileprovision
+
+      - name: iOS Distribution Profile
+        run: echo ${{ env.IOS_DIST_PROFILE_B64 }} | base64 --decode > ios/ci/distribution.mobileprovision
+
+      - name: iOS Keychain
+        run:  sh ios/ci/install-certificates.sh
+
+      - name: iOS Distribution Profile
+        run: sh ios/ci/install-provisions.sh
 
       - name: Flutter Dependencies
         run: flutter pub get
