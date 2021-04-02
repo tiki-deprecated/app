@@ -9,8 +9,8 @@
 
 security create-keychain -p "" build.keychain
 
-security import "ios/ci/development.cer" -k "$KEYCHAIN" -P "" -A
-security import "ios/ci/distribution.cer" -k "$KEYCHAIN" -P "" -A
+security import "ios/ci/development.cer" -k ~/Library/Keychains/build.keychain -P "" -A
+security import "ios/ci/distribution.cer" -k ~/Library/Keychains/build.keychain -P "" -A
 
 security list-keychains -s ~/Library/Keychains/build.keychain
 security default-keychain -s ~/Library/Keychains/build.keychain
