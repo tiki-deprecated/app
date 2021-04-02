@@ -45,19 +45,15 @@ jobs:
       - name: Android keystore.properties
         run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
 
-      - name: IOS Certificates
-        uses: Apple-Actions/import-codesign-certs@v1
+      - uses: yukiarrr/ios-build-action@v1.3.3
         with:
-          p12-file-base64: ${{ env.IOS_CERTIFICATES_B64 }}
-          p12-password: ${{ env.IOS_CERTIFICATES_SECRET }}
-
-      - name: IOS Provisiong Profile
-        uses: Apple-Actions/download-provisioning-profiles@v1
-        with:
-          bundle-id: com.mytiki.app
-          issuer-id: ${{ env.IOS_ISSUER_ID }}
-          api-key-id: ${{ env.IOS_KEY_ID }}
-          api-private-key: ${{ env.IOS_PRIVATE_KEY }}
+          project-path: ios/Runner.xcodeproj
+          p12-key-base64: ${{ env.IOS_CERTIFICATES_SECRET }}
+          p12-cer-base64: ${{ env.IOS_CERTIFICATES_B64 }}
+          mobileprovision-base64: ${{ env.IOS_PROVISION_B64 }}
+          code-signing-identity: ${{ env.IOS_SIGN_IDENTITY }}
+          team-id: ${{ env.IOS_TEAM_ID }}
+          workspace-path: io/Runner.xcworkspace
 
       - name: Flutter Dependencies
         run: flutter pub get
