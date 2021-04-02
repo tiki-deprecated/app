@@ -59,7 +59,7 @@ jobs:
         run: flutter pub get
 
       - name: Build App Bundle (Android)
-        run: flutter build appbundle --build-number=${ GITHUB_RUN_ID }${ GITHUB_RUN_NUMBER }
+        run: flutter build appbundle --build-number=$GITHUB_RUN_ID$GITHUB_RUN_NUMBER
 
       - name: Build IPA (IOS)
         run: flutter build ipa --build-number=${{ env.GITHUB_RUN_ID }}${{ env.GITHUB_RUN_NUMBER }}
