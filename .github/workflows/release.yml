@@ -10,34 +10,61 @@ jobs:
     name: Flutter (.aab & .xarchive)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Java 11
+        uses: actions/setup-java@v1
         with:
           java-version: '11.x'
-      - uses: subosito/flutter-action@v1
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.0.0'
-      - uses: dopplerhq/cli-action@v1
+
+      - name: Install Doppler
+        uses: dopplerhq/cli-action@v1
+
+      - name: Donwload Secrets
+        run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
-      - run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV;
-      - run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
-      - run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
-      - uses: Apple-Actions/import-codesign-certs@v1
+
+      - name: Android Keystore
+        run: echo ${{ env.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
+
+      - name: Android keystore.properties
+        run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ env.ANDROID_SIGNER_SECRET }} ${{ env.ANDROID_SIGNER_SECRET }} > android/keystore.properties
+
+      - name: IOS Certificates
+        uses: Apple-Actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ env.IOS_CERTIFICATES_B64 }}
           p12-password: ${{ env.IOS_CERTIFICATES_SECRET }}
-      - uses: Apple-Actions/download-provisioning-profiles@v1
+
+      - name: IOS Provisiong Profile
+        uses: Apple-Actions/download-provisioning-profiles@v1
         with:
           bundle-id: com.mytiki.app
           issuer-id: ${{ env.IOS_ISSUER_ID }}
           api-key-id: ${{ env.IOS_KEY_ID }}
           api-private-key: ${{ env.IOS_PRIVATE_KEY }}
-      - run: flutter pub get
-      #- run: flutter test
-      - run: flutter build appbundle --build-number=${{ env.GITHUB_RUN_ID }}${{ env.GITHUB_RUN_NUMBER }}
-      - run: flutter build ipa --build-number=${{ env.GITHUB_RUN_ID }}${{ env.GITHUB_RUN_NUMBER }}
-      - uses: ncipollo/release-action@v1
+
+      - name: Flutter Dependencies
+        run: flutter pub get
+
+    # - name: Flutter Test
+     #  run: flutter test
+
+      - name: Build App Bundle (Android)
+        run: flutter build appbundle --build-number=${{ env.GITHUB_RUN_ID }}${{ env.GITHUB_RUN_NUMBER }}
+
+      - name: Build IPA (IOS)
+        run: flutter build ipa --build-number=${{ env.GITHUB_RUN_ID }}${{ env.GITHUB_RUN_NUMBER }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/bundle/release/*.aab,build/ios/archive/*.xcarchive"
           replacesArtifacts: false
