@@ -23,31 +23,38 @@ jobs:
         with:
           flutter-version: '2.0.0'
 
-      - name: Install Doppler
-        uses: dopplerhq/cli-action@v1
-
-      - name: Donwload Secrets
-        run: doppler secrets download --no-file --format env-no-quotes >> $GITHUB_ENV
-        env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
-
       - name: Android Keystore
-        run: sh .github/scripts/install-keystore.sh
+        run: echo ${{ secrets.ANDROID_SIGNER_B64}} | base64 --decode > android/android_signer.jks
 
-      - name: iOS Keychain
-        run: sh .github/scripts/install-certificates.sh
+      - name: Android keystore.properties
+        run: printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' ${{ secrets.ANDROID_SIGNER_SECRET }} ${{ secrets.ANDROID_SIGNER_SECRET }} > android/keystore.properties
+
+      - name: iOS Development Certificate
+        run: echo ${{ secrets.IOS_DEV_CERT_B64 }} | base64 --decode > ios/Development.p12
+
+      - name: iOS Distribution Certificate
+        run: echo ${{ secrets.IOS_DIST_CERT_B64 }} | base64 --decode > ios/Distribution.p12
+
+      - name: iOS Development Profile
+        run: echo ${{ secrets.IOS_DEV_PROFILE_B64 }} | base64 --decode > ios/Development.mobileprovision
 
       - name: iOS Distribution Profile
-        run: sh .github/scripts/install-provisions.sh
+        run: echo ${{ secrets.IOS_DIST_PROFILE_B64 }} | base64 --decode > ios/Distribution.mobileprovision
+
+      - name: iOS Keychain
+        run:  sh ios/ci/install-certificates.sh
+
+      - name: iOS Distribution Profile
+        run: sh ios/ci/install-provisions.sh
 
       - name: Flutter Dependencies
         run: flutter pub get
 
       - name: Build App Bundle (Android)
-        run: flutter build appbundle --build-number=$GITHUB_RUN_ID$GITHUB_RUN_NUMBER
+        run: flutter build appbundle --build-number=42$GITHUB_RUN_NUMBER
 
       - name: Build IPA (IOS)
-        run: flutter build ipa --build-number=42${{ env.GITHUB_RUN_NUMBER }}
+        run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER
 
       - name: Create Release
         uses: ncipollo/release-action@v1

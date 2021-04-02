@@ -7,9 +7,6 @@
 
 # (h/t) https://medium.com/@karaiskc/archive-and-export-ios-app-with-github-actions-b44f676e4bf9
 
-echo ${{ env.IOS_DEV_CERT_B64 }} | base64 --decode > ios/Development.p12
-echo ${{ env.IOS_DIST_CERT_B64 }} | base64 --decode > ios/Distribution.p12
-
 security create-keychain -p "" build.keychain
 
 security import "ios/AppleWWDRCAG3.cer" -k ~/Library/Keychains/build.keychain -P "" -A
