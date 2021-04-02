@@ -53,7 +53,7 @@ jobs:
           mobileprovision-base64: ${{ env.IOS_PROVISION_B64 }}
           code-signing-identity: ${{ env.IOS_SIGN_IDENTITY }}
           team-id: ${{ env.IOS_TEAM_ID }}
-          workspace-path: io/Runner.xcworkspace
+          workspace-path: ios/Runner.xcworkspace
 
       - name: Flutter Dependencies
         run: flutter pub get
