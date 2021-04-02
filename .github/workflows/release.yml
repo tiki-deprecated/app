@@ -54,7 +54,7 @@ jobs:
         run: flutter build appbundle --build-number=42$GITHUB_RUN_NUMBER
 
       - name: Build IPA (IOS)
-        run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER
+        run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER --verbose
 
       - name: Create Release
         uses: ncipollo/release-action@v1
