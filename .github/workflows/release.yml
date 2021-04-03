@@ -91,15 +91,12 @@ jobs:
 
       - name: Deploy to Testflight
         env:
-          CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }}
-          CONNECT_API_ISSUER: ${{ secrets.CONNECT_API_ISSUER }}
-          CONNET_API_PRIVATE_BASE64: ${{ secrets.CONNET_API_PRIVATE_BASE64 }}
+          CONNECT_USERNAME: ${{ secrets.CONNECT_USERNAME }}
+          CONNECT_PASSWORD: ${{ secrets.CONNECT_PASSWORD }}
         run: |
-          mkdir -p ~/.appstoreconnect/private_keys
-          echo -n "$CONNET_API_PRIVATE_BASE64" | base64 --decode --output ~/.appstoreconnect/private_keys/AuthKey_$CONNECT_API_KEY.p8
           xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/release/
-          xcrun altool --validate-app -t ios -f build/ios/release/app.ipa --apiKey "$CONNECT_API_KEY" --apiIssuer "$CONNECT_API_ISSUER" --verbose
-          xcrun altool --upload-app -t ios -f build/ios/release/app.ipa --apiKey "$CONNECT_API_KEY" --apiIssuer "$CONNECT_API_ISSUER" --verbose
+          xcrun altool --validate-app -t ios -f build/ios/release/app.ipa -u "$CONNECT_USERNAME" -p "$CONNECT_PASSWORD"
+          xcrun altool --upload-app -t ios -f build/ios/release/app.ipa -u "$CONNECT_USERNAME" -p "$CONNECT_PASSWORD"
 
       - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
