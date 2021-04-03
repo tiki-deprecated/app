@@ -90,7 +90,15 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Deploy to Testflight
-        run: xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive
+        env:
+          CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }}
+          CONNECT_API_ISSUER: ${{ secrets.CONNECT_API_ISSUER }}
+          CONNET_API_PRIVATE_BASE64: ${{ secrets.CONNET_API_PRIVATE_BASE64 }}
+        run: |
+          mkdir ~/private_keys
+          echo -n "$CONNET_API_PRIVATE_BASE64" | base64 --decode --output ~/private_keys/connectApiPrivateKey.p8
+          xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/release/
+          xcrun altool --upload-app -t ios -f build/ios/release/app.ipa --apiKey "$CONNECT_API_KEY" --apiIssuer "$CONNECT_API_ISSUER"
 
       - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
