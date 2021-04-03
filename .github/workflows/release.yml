@@ -25,7 +25,7 @@ jobs:
 
       - name: Android Keystore
         env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64}}
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64}}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           # create keystore
