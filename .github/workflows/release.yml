@@ -56,6 +56,9 @@ jobs:
       - name: Pod Install (IOS)
         run: pod install --project-directory=ios/
 
+      - name: Codesign (IOS)
+        run: codesign --keychain build.keychain
+
       - name: Build IPA (IOS)
         run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER --verbose
 
