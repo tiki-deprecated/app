@@ -57,7 +57,7 @@ jobs:
         run: pod install --project-directory=ios/
 
       - name: Build IPA (IOS)
-        run: flutter build ios --build-number=42$GITHUB_RUN_NUMBER --verbose
+        run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER --verbose
 
       - name: Create Release
         uses: ncipollo/release-action@v1
