@@ -88,4 +88,14 @@ jobs:
           artifacts: "build/app/bundle/release/*.aab,build/ios/archive/*.xcarchive"
           replacesArtifacts: false
           token: ${{ secrets.GH_TOKEN }}
-          
+
+      - name: Deploy to Testflight
+        run: xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive
+
+      - name: Deploy to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.PLAY_SERVICE_JSON }}
+          packageName: com.mytiki.app
+          releaseFile: build/app/outputs/bundle/release/app-release.aab
+          track: internal
