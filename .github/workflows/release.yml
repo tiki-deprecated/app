@@ -29,10 +29,10 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           # create keystore
-          echo $ANDROID_SIGNER_B64 | base64 --decode > android/android_signer.jks
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > android/android_signer.jks
 
           # build properties file
-          printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' $ANDROID_SIGNER_SECRET $ANDROID_SIGNER_SECRET > android/keystore.properties
+          printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' $KEYSTORE_PASSWORD $KEYSTORE_PASSWORD > android/keystore.properties
 
       - name: iOS Signing
         env:
