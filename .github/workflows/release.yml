@@ -96,7 +96,7 @@ jobs:
           CONNET_API_PRIVATE_BASE64: ${{ secrets.CONNET_API_PRIVATE_BASE64 }}
         run: |
           mkdir ~/private_keys
-          echo -n "$CONNET_API_PRIVATE_BASE64" | base64 --decode --output ~/private_keys/connectApiPrivateKey.p8
+          echo -n "$CONNET_API_PRIVATE_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$CONNECT_API_KEY.p8
           xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/release/
           xcrun altool --upload-app -t ios -f build/ios/release/app.ipa --apiKey "$CONNECT_API_KEY" --apiIssuer "$CONNECT_API_ISSUER"
 
