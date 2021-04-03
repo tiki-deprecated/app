@@ -25,8 +25,8 @@ jobs:
 
       - name: Android Keystore
         env:
-          ANDROID_SIGNER_B64: ${{ secrets.ANDROID_SIGNER_B64}}
-          ANDROID_SIGNER_SECRET: ${{ secrets.ANDROID_SIGNER_SECRET }}
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64}}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           # create keystore
           echo $ANDROID_SIGNER_B64 | base64 --decode > android/android_signer.jks
@@ -37,18 +37,24 @@ jobs:
       - name: iOS Signing
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          DISTRIBUTE_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTE_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          DISTRIBUTE_PROVISION_PROFILE_BASE64: ${{ secrets.DISTRIBUTE_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          BUILD_CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          DISTRIBUTE_CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          BUILD_PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          DISTRIBUTE_PP_PATH=$RUNNER_TEMP/distribute_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $BUILD_CERTIFICATE_PATH
+          echo -n "$DISTRIBUTE_CERTIFICATE_BASE64" | base64 --decode --output $DISTRIBUTE_CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $BUILD_PP_PATH
+          echo -n "$DISTRIBUTE_PROVISION_PROFILE_BASE64" | base64 --decode --output $DISTRIBUTE_PP_PATH
 
           # create temporary keychain
           security create-keychain -p $KEYCHAIN_PASSWORD $KEYCHAIN_PATH
@@ -56,12 +62,14 @@ jobs:
           security unlock-keychain -p $KEYCHAIN_PASSWORD $KEYCHAIN_PATH
 
           # import certificate to keychain
-          security import $CERTIFICATE_PATH -P $P12_PASSWORD -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $BUILD_CERTIFICATE_PATH -P $P12_PASSWORD -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $DISTRIBUTE_CERTIFICATE_PATH -P $P12_PASSWORD -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $BUILD_PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $DISTRIBUTE_PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Flutter Dependencies
         run: |
