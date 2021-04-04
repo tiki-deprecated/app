@@ -23,18 +23,22 @@ jobs:
         with:
           flutter-version: '2.0.0'
 
-      - name: Android Keystore
+      - name: Android Config
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64}}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          PLAY_SERVICE_BASE64: ${{ secrets.PLAY_SERVICE_BASE64 }}
         run: |
           # create keystore
-          echo $KEYSTORE_BASE64 | base64 --decode > android/android_signer.jks
+          echo -n "$KEYSTORE_BASE64" | base64 --decode --output android/android_signer.jks
 
           # build properties file
           printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=key\nstoreFile=../android_signer.jks' $KEYSTORE_PASSWORD $KEYSTORE_PASSWORD > android/keystore.properties
 
-      - name: iOS Signing
+          # store play service json
+          echo -n "$PLAY_SERVICE_BASE64" | base64 --decode --output android/play_service.json
+
+      - name: iOS Config
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           DISTRIBUTE_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTE_CERTIFICATE_BASE64 }}
@@ -101,7 +105,7 @@ jobs:
       - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.PLAY_SERVICE_JSON }}
+          serviceAccountJson: android/play_service.json
           packageName: com.mytiki.app
           releaseFile: build/app/outputs/bundle/release/app-release.aab
           track: internal
