@@ -3,7 +3,7 @@ description: CODE NAME TIKI BAR
 
 publish_to: 'none'
 
-version: 0.0.1+6
+version: 0.0.2+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
