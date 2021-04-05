@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
@@ -48,7 +48,7 @@ class ScreenHome extends PlatformScaffold {
 
   Widget _background() {
     return Stack(children: [
-      Center(child: Container(color: ConstantColors.serenade)),
+      Center(child: Container(color: ConfigColors.serenade)),
       Align(
           alignment: Alignment.topRight,
           child: Image(image: AssetImage('res/images/home-blob-tr.png'))),
@@ -80,7 +80,7 @@ class ScreenHome extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginTitle),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.homeTitle,
+            child: Text(ConfigStrings.homeTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Koara',
@@ -99,7 +99,7 @@ class ScreenHome extends PlatformScaffold {
               style: TextStyle(
                   fontSize: _fSizePlaceholder,
                   fontWeight: FontWeight.w600,
-                  color: ConstantColors.emperor),
+                  color: ConfigColors.emperor),
             ),
             Text(
               "Next:",
@@ -107,20 +107,20 @@ class ScreenHome extends PlatformScaffold {
               style: TextStyle(
                   fontSize: _fSizePlaceholder,
                   fontWeight: FontWeight.w600,
-                  color: ConstantColors.emperor),
+                  color: ConfigColors.emperor),
             ),
             Container(
                 margin: EdgeInsets.only(top: 0.25 * _vMargin),
                 padding: EdgeInsets.symmetric(
                     vertical: _vPaddingReferral, horizontal: _hPaddingReferral),
                 decoration: BoxDecoration(
-                    border: Border.all(color: ConstantColors.alto),
+                    border: Border.all(color: ConfigColors.alto),
                     borderRadius: BorderRadius.all(Radius.circular(_vMargin))),
                 child: Text("REFERRAL CODES",
                     style: TextStyle(
                         fontSize: _fSizePlaceholder,
                         fontWeight: FontWeight.w900,
-                        color: ConstantColors.stratos)))
+                        color: ConfigColors.stratos)))
           ],
         ));
   }
@@ -135,7 +135,7 @@ class ScreenHome extends PlatformScaffold {
                     shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(_vMargin * 2))),
-                    primary: ConstantColors.mardiGras),
+                    primary: ConfigColors.mardiGras),
                 child: Container(
                   width: _widthButton,
                   height: _heightButton,

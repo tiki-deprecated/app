@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ConstantDomains {
+class ConfigDomains {
   static final String bouncer = "bouncer.mytiki.com";
   static final String website = "api.mytiki.com";
 }

@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:flutter/widgets.dart';
@@ -42,13 +42,13 @@ class UISecurityCreateView extends StatelessWidget {
   Widget _title() {
     return Align(
         alignment: Alignment.center,
-        child: Text(ConstantStrings.keysCreateTitle,
+        child: Text(ConfigStrings.keysCreateTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontFamily: 'Koara',
                 fontSize: _fSizeTitle,
                 fontWeight: FontWeight.bold,
-                color: ConstantColors.mardiGras)));
+                color: ConfigColors.mardiGras)));
   }
 
   Widget _subtitle() {
@@ -56,11 +56,11 @@ class UISecurityCreateView extends StatelessWidget {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.keysCreateSubtitle,
+            child: Text(ConfigStrings.keysCreateSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
+                    color: ConfigColors.emperor))));
   }
 }

@@ -5,8 +5,8 @@
 
 import 'dart:io';
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_bloc.dart';
@@ -69,22 +69,21 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
   Widget _iosInput({bool isError = false}) {
     return CupertinoTextField(
       padding: EdgeInsets.symmetric(horizontal: _hPadding, vertical: _vPadding),
-      placeholder: ConstantStrings.loginEmailPlaceholder,
+      placeholder: ConfigStrings.loginEmailPlaceholder,
       autocorrect: false,
       autofocus: true,
       placeholderStyle: TextStyle(
-          color: ConstantColors.gray,
+          color: ConfigColors.gray,
           fontWeight: FontWeight.bold,
           fontSize: _fSizeInput),
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
-      cursorColor: ConstantColors.orange,
+      cursorColor: ConfigColors.orange,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
               bottom: BorderSide(
-                  color: isError
-                      ? ConstantColors.grenadier
-                      : ConstantColors.mardiGras,
+                  color:
+                      isError ? ConfigColors.grenadier : ConfigColors.mardiGras,
                   width: 2,
                   style: BorderStyle.solid))),
       onChanged: (input) => _magicLinkBloc.checkInput(input),
@@ -94,23 +93,22 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
   Widget _androidInput({bool isError = false}) {
     return TextField(
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
-      cursorColor: ConstantColors.orange,
+      cursorColor: ConfigColors.orange,
       autocorrect: false,
       autofocus: true,
       decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: _hPadding, vertical: _vPadding),
-          hintText: ConstantStrings.loginEmailPlaceholder,
+          hintText: ConfigStrings.loginEmailPlaceholder,
           hintStyle: TextStyle(
-              color: ConstantColors.gray,
+              color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
           fillColor: Colors.white,
           border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: isError
-                      ? ConstantColors.grenadier
-                      : ConstantColors.mardiGras,
+                  color:
+                      isError ? ConfigColors.grenadier : ConfigColors.mardiGras,
                   width: 2,
                   style: BorderStyle.solid))),
       onChanged: (input) => _magicLinkBloc.checkInput(input),
@@ -123,13 +121,12 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              ConstantStrings.loginError,
+              ConfigStrings.loginError,
               style: TextStyle(
                   fontSize: isError ? _fSizeError : 0,
                   fontWeight: FontWeight.w500,
-                  color: isError
-                      ? ConstantColors.grenadier
-                      : ConstantColors.serenade),
+                  color:
+                      isError ? ConfigColors.grenadier : ConfigColors.serenade),
             )));
   }
 
@@ -141,8 +138,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
               shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(_vMarginButton))),
-              primary:
-                  isReady ? ConstantColors.mardiGras : ConstantColors.mamba),
+              primary: isReady ? ConfigColors.mardiGras : ConfigColors.mamba),
           onPressed: () {
             if (isReady) {
               _magicLinkBloc.send().then((success) {
@@ -156,7 +152,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
             height: _heightButton,
             child: Center(
               child: Text(
-                ConstantStrings.loginSubmit,
+                ConfigStrings.loginSubmit,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: _fSizeButton,

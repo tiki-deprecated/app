@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
@@ -23,7 +23,7 @@ import 'package:flutter/widgets.dart';
 
 class ScreenKeysSave extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
       15 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
@@ -69,7 +69,7 @@ class ScreenKeysSave extends PlatformScaffold {
     return Stack(
       children: [
         Container(
-          color: ConstantColors.serenade,
+          color: ConfigColors.serenade,
         ),
         Container(
             child: Align(
@@ -98,13 +98,13 @@ class ScreenKeysSave extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginStart),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.keysTitle,
+            child: Text(ConfigStrings.keysTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: _fSizeTitle,
                     fontWeight: FontWeight.bold,
-                    color: ConstantColors.mardiGras))));
+                    color: ConfigColors.mardiGras))));
   }
 
   Widget _subtitle() {
@@ -112,12 +112,12 @@ class ScreenKeysSave extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.keysSubtitle,
+            child: Text(ConfigStrings.keysSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
+                    color: ConfigColors.emperor))));
   }
 
   Widget _restoreButton(BuildContext context, Widget to) {
@@ -129,9 +129,9 @@ class ScreenKeysSave extends PlatformScaffold {
                 onPressed: () {
                   Navigator.push(context, platformPageRoute(to));
                 },
-                child: Text(ConstantStrings.keysRestore,
+                child: Text(ConfigStrings.keysRestore,
                     style: TextStyle(
-                        color: ConstantColors.orange,
+                        color: ConfigColors.orange,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeLoad)))));
   }
@@ -145,9 +145,9 @@ class ScreenKeysSave extends PlatformScaffold {
                 onPressed: () {
                   _onBackupComplete(context);
                 },
-                child: Text(ConstantStrings.keysSkip,
+                child: Text(ConfigStrings.keysSkip,
                     style: TextStyle(
-                        color: ConstantColors.boulder,
+                        color: ConfigColors.boulder,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeSkip)))));
   }

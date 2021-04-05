@@ -5,6 +5,8 @@
 
 import 'dart:convert';
 
+import 'package:package_info/package_info.dart';
+
 Map jsonDecodeNullSafe(String source) {
   if (source == null)
     return null;
@@ -21,3 +23,15 @@ Map<String, String> jsonHeaders({Map provided, String auth}) {
   header["Cache-Control"] = "no-cache";
   return header;
 }
+
+Future<String> version() async {
+  return (await PackageInfo.fromPlatform()).version;
+}
+
+Future<String> versionPlusBuild() async {
+  PackageInfo info = await PackageInfo.fromPlatform();
+  return info.version + "+" + info.buildNumber;
+}
+
+const String appEnv = String.fromEnvironment('com.mytiki.app.environment',
+    defaultValue: 'public');

@@ -3,19 +3,19 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/ui/ui_deeplink_inbox/ui_deeplink_inbox.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ScreenLoginEmail extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
       15 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
@@ -58,7 +58,7 @@ class ScreenLoginEmail extends PlatformScaffold {
     return Stack(
       children: [
         Container(
-          color: ConstantColors.serenade,
+          color: ConfigColors.serenade,
         ),
         Container(
             child: Align(
@@ -79,12 +79,12 @@ class ScreenLoginEmail extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginStart),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(ConstantStrings.loginEmailTitle,
+            child: Text(ConfigStrings.loginEmailTitle,
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: _fSizeTitle,
                     fontWeight: FontWeight.bold,
-                    color: ConstantColors.mardiGras))));
+                    color: ConfigColors.mardiGras))));
   }
 
   Widget _subtitle() {
@@ -92,11 +92,11 @@ class ScreenLoginEmail extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(ConstantStrings.loginEmailSubtitle,
+            child: Text(ConfigStrings.loginEmailSubtitle,
                 style: TextStyle(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
+                    color: ConfigColors.emperor))));
   }
 
   Widget _image() {

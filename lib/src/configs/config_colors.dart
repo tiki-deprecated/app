@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-class ConstantColors {
+class ConfigColors {
   //YELLOWS
   static const Color fireBush = Color(0xFFE89933);
   static const Color sunglow = Color(0xFFFFD225);

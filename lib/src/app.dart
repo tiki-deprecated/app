@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/src/constants/constant_colors.dart';
+import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/entry.dart';
 import 'package:app/src/inject.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
@@ -41,7 +41,7 @@ class App extends StatelessWidget {
             textTheme: CupertinoTextThemeData(
                 textStyle: GoogleFonts.nunitoSans(
                     fontWeight: FontWeight.normal,
-                    color: ConstantColors.mardiGras,
+                    color: ConfigColors.mardiGras,
                     fontSize: _fSize))));
   }
 }

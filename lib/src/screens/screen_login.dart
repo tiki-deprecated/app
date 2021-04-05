@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_login_email.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 //TODO need a Terms of Service link on this page (or in email?)
 class ScreenLogin extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
       25 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMarginBlob =
@@ -65,7 +65,7 @@ class ScreenLogin extends PlatformScaffold {
     return Stack(
       children: [
         Container(
-          color: ConstantColors.serenade,
+          color: ConfigColors.serenade,
         ),
         Container(
             margin: EdgeInsets.only(top: _vMarginBlob),
@@ -86,12 +86,12 @@ class ScreenLogin extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginStart),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(ConstantStrings.loginTitle,
+            child: Text(ConfigStrings.loginTitle,
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: _fsizeTitle,
                     fontWeight: FontWeight.bold,
-                    color: ConstantColors.mardiGras))));
+                    color: ConfigColors.mardiGras))));
   }
 
   Widget _emailCta() {
@@ -99,10 +99,10 @@ class ScreenLogin extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(ConstantStrings.loginEmailCta,
+            child: Text(ConfigStrings.loginEmailCta,
                 style: TextStyle(
                     fontSize: _fsizeEmailCta,
                     fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
+                    color: ConfigColors.emperor))));
   }
 }

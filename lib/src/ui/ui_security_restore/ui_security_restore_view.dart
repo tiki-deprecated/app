@@ -5,8 +5,8 @@
 
 import 'dart:io';
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/ui/ui_security_restore/ui_security_restore_bloc.dart';
 import 'package:app/src/ui/ui_security_restore/ui_security_restore_bloc_provider.dart';
@@ -53,25 +53,24 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
     _securityKeysLoadBloc = UISecurityRestoreBlocProvider.of(context).bloc;
     return Column(children: [
       //TODO load files
-      /*_loadButton(ConstantStrings.keysLoadButtonUpload,
+      /*_loadButton(ConfigStrings.keysLoadButtonUpload,
           'res/images/icon-upload-image.png', () {
         _securityKeysLoadBloc.loadFromFile();
       }),*/
       _loadButton(
-          ConstantStrings.keysLoadButtonScan, 'res/images/icon-qr-code.png',
-          () {
+          ConfigStrings.keysLoadButtonScan, 'res/images/icon-qr-code.png', () {
         _securityKeysLoadBloc.scan().then((keys) {
           if (keys != null) this._onComplete(keys);
         });
       }),
       _divider(),
-      _textInput(ConstantStrings.keysLoadPlaceholderID, (input) {
+      _textInput(ConfigStrings.keysLoadPlaceholderID, (input) {
         id = input;
       }),
-      _textInput(ConstantStrings.keysLoadPlaceholderDataKey, (input) {
+      _textInput(ConfigStrings.keysLoadPlaceholderDataKey, (input) {
         dataKey = input;
       }),
-      _textInput(ConstantStrings.keysLoadPlaceholderSignKey, (input) {
+      _textInput(ConfigStrings.keysLoadPlaceholderSignKey, (input) {
         signKey = input;
       }),
       _submit(context, isReady: true)
@@ -93,7 +92,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
                     shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(_vMargin * 2))),
-                    primary: ConstantColors.mardiGras),
+                    primary: ConfigColors.mardiGras),
                 child: Container(
                     width: _widthButton,
                     height: _heightButton,
@@ -119,7 +118,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
     return Container(
       height: 2,
       margin: EdgeInsets.only(top: 2 * _vMargin, bottom: _vMargin),
-      color: ConstantColors.silverChalice,
+      color: ConfigColors.silverChalice,
     );
   }
 
@@ -138,16 +137,16 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
       placeholder: placeholder,
       autocorrect: false,
       placeholderStyle: TextStyle(
-          color: ConstantColors.gray,
+          color: ConfigColors.gray,
           fontWeight: FontWeight.bold,
           fontSize: _fSizeInput),
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
-      cursorColor: ConstantColors.orange,
+      cursorColor: ConfigColors.orange,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
               bottom: BorderSide(
-                  color: ConstantColors.mardiGras,
+                  color: ConfigColors.mardiGras,
                   width: 2,
                   style: BorderStyle.solid))),
       onChanged: onChanged,
@@ -157,20 +156,20 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
   Widget _androidInput(String placeholder, Function(String) onChanged) {
     return TextField(
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
-      cursorColor: ConstantColors.orange,
+      cursorColor: ConfigColors.orange,
       autocorrect: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: _hPaddingTextField, vertical: _vPaddingTextField),
           hintText: placeholder,
           hintStyle: TextStyle(
-              color: ConstantColors.gray,
+              color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
           fillColor: Colors.white,
           border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: ConstantColors.mardiGras,
+                  color: ConfigColors.mardiGras,
                   width: 2,
                   style: BorderStyle.solid))),
       onChanged: onChanged,
@@ -185,8 +184,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
               shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(_vMargin * 4))),
-              primary:
-                  isReady ? ConstantColors.mardiGras : ConstantColors.mamba),
+              primary: isReady ? ConfigColors.mardiGras : ConfigColors.mamba),
           onPressed: () {
             _securityKeysLoadBloc.manual(id, dataKey, signKey).then((keys) {
               if (keys != null) _onComplete(keys);
@@ -196,7 +194,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
             width: _widthButton,
             height: _heightButton,
             child: Center(
-              child: Text(ConstantStrings.keysLoadButtonSubmit,
+              child: Text(ConfigStrings.keysLoadButtonSubmit,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: _fSizeButton,

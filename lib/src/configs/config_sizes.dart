@@ -3,6 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ConstantSizes {
+class ConfigSizes {
   static const double hPadding = 8;
 }

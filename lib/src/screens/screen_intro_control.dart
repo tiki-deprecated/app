@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
 import 'package:app/src/screens/screen_intro_earn.dart';
 import 'package:app/src/screens/screen_login.dart';
@@ -16,11 +16,11 @@ class ScreenIntroControl extends ScreenIntroAbstract {
   static final int _dotTotal = 3;
   static final Widget _nextScreen = ScreenIntroEarn();
   static final Widget _skipTo = ScreenLogin();
-  static final Color _backgroundColor = ConstantColors.sunglow;
+  static final Color _backgroundColor = ConfigColors.sunglow;
 
   ScreenIntroControl()
-      : super(ConstantStrings.intro1Title, ConstantStrings.intro1Subtitle,
-            ConstantStrings.intro1ButtonText, _dotFilled, _dotTotal);
+      : super(ConfigStrings.intro1Title, ConfigStrings.intro1Subtitle,
+            ConfigStrings.intro1ButtonText, _dotFilled, _dotTotal);
 
   @override
   Widget stack(BuildContext context) {
