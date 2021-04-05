@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -19,16 +19,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="logo-bkg" translatesAutoresizingMaskIntoConstraints="NO" id="p3Q-y6-GMW">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="logo-bkg" translatesAutoresizingMaskIntoConstraints="NO" id="p3Q-y6-GMW">
                                 <rect key="frame" x="49" y="317" width="316" height="263"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="blob-br" translatesAutoresizingMaskIntoConstraints="NO" id="rxA-Id-IL7">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="blob-br" translatesAutoresizingMaskIntoConstraints="NO" id="rxA-Id-IL7">
                                 <rect key="frame" x="333" y="805" width="81" height="91"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="YRO-k0-Ey4">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" image="logo" id="YRO-k0-Ey4">
                                 <rect key="frame" x="126" y="419" width="162" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blob-tl" translatesAutoresizingMaskIntoConstraints="NO" id="3ib-QB-3um">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="292"/>
@@ -49,8 +50,8 @@
     </scenes>
     <resources>
         <image name="blob-br" width="81" height="91"/>
-        <image name="blob-tl" width="69.5" height="290.5"/>
-        <image name="logo" width="161.5" height="58"/>
-        <image name="logo-bkg" width="315" height="262.5"/>
+        <image name="blob-tl" width="69.666664123535156" height="290.33334350585938"/>
+        <image name="logo" width="161.66667175292969" height="58.333332061767578"/>
+        <image name="logo-bkg" width="315" height="262.66665649414062"/>
     </resources>
 </document>
