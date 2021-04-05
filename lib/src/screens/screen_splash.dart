@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
+import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/helpers/helper_login_router/helper_login_router_bloc_provider.dart';
 import 'package:app/src/helpers/helper_login_router/helper_login_router_model.dart';
 import 'package:app/src/helpers/helper_login_router/helper_login_router_model_state.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenSplash extends PlatformScaffold {
-  static final Color _backgroundColor = ConstantColors.sunglow;
+  static final Color _backgroundColor = ConfigColors.sunglow;
   static final Widget _loggedIn = ScreenHome();
   static final Widget _loggedOut = ScreenIntroControl();
   static final Widget _create = ScreenKeysCreate();

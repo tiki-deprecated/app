@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
@@ -14,7 +14,7 @@ import 'package:flutter/widgets.dart';
 
 abstract class ScreenIntroAbstract extends PlatformScaffold {
   static final double hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
   static final double vMarginSkip = 8 * PlatformRelativeSize.safeBlockVertical;
   static final double vMarginTitle =
@@ -88,7 +88,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
       width: sizeDot,
       margin: EdgeInsets.symmetric(horizontal: sizeDot * 0.5),
       decoration: BoxDecoration(
-          color: active ? ConstantColors.mardiGras : Colors.white,
+          color: active ? ConfigColors.mardiGras : Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(sizeDot * 2))),
     );
   }
@@ -103,7 +103,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                     shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.all(Radius.circular(vMargin * 2))),
-                    primary: ConstantColors.mardiGras),
+                    primary: ConfigColors.mardiGras),
                 child: Container(
                     width: widthButton,
                     height: heightButton,

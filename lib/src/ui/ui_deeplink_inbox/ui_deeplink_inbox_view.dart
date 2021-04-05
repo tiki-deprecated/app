@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/screens/screen_keys_create.dart';
@@ -30,12 +30,12 @@ class UIDeeplinkInboxView extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(_heightButton))),
-            primary: ConstantColors.mardiGras),
+            primary: ConfigColors.mardiGras),
         child: Container(
             width: _widthButton,
             height: _heightButton,
             child: Center(
-                child: Text(ConstantStrings.loginEmailButton,
+                child: Text(ConfigStrings.loginEmailButton,
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: _fSizeButton,

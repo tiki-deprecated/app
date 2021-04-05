@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ConstantStrings {
+class ConfigStrings {
   // INTRO PAGES
   static const String intro1Title = 'Take control of your data';
   static const String intro1Subtitle =
