@@ -50,7 +50,7 @@ class ScreenIntroControl extends ScreenIntroAbstract {
           child: Image(image: AssetImage('res/images/intro-blob.png'))),
       Align(
           alignment: Alignment.bottomRight,
-          child: Image(image: AssetImage('res/images/intro-pineapple-30.png'))),
+          child: Image(image: AssetImage('res/images/intro-pineapple.png'))),
     ]);
   }
 
