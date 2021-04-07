@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/helpers/helper_deep_link/helper_deep_link_bloc_provider.dart';
-import 'package:app/src/helpers/helper_login/helper_login_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 
 class HelperDeepLink extends StatelessWidget {
@@ -14,7 +13,6 @@ class HelperDeepLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelperDeepLinkBlocProvider(HelperLoginBlocProvider.of(context).bloc,
-        child: _child);
+    return HelperDeepLinkBlocProvider(child: _child);
   }
 }

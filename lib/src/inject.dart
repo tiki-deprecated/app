@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/helpers/helper_login/helper_login.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt.dart';
 import 'package:app/src/repos/repo_bouncer_otp/repo_bouncer_otp.dart';
@@ -23,6 +22,5 @@ Widget chain(BuildContext context, {Key key, Widget child}) {
               child: RepoBouncerJwt(
                   child: RepoWebsiteUsers(
                       child: HelperSecurityKeys(
-                          child: HelperLogin(
-                              child: HelperDeepLink(child: child))))))));
+                          child: HelperDeepLink(child: child)))))));
 }

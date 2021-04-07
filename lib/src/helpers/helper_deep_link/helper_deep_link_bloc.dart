@@ -3,13 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/helpers/helper_login/helper_login_bloc.dart';
+import 'package:app/src/platform/platform_page_route.dart';
+import 'package:app/src/screens/screen_login_otp.dart';
 import 'package:uni_links/uni_links.dart';
 
-class HelperDeepLinkBloc {
-  HelperLoginBloc _loginRouterBloc;
+import '../../app.dart';
 
-  HelperDeepLinkBloc(this._loginRouterBloc) {
+class HelperDeepLinkBloc {
+  HelperDeepLinkBloc() {
     getInitialLink().then((link) => _processDeeplink(link));
     getLinksStream().listen((link) => _processDeeplink(link));
   }
@@ -19,7 +20,8 @@ class HelperDeepLinkBloc {
       Uri uri = Uri.parse(link);
       if (uri != null && uri.authority == "bouncer") {
         String otp = uri.queryParameters["otp"];
-        await _loginRouterBloc.beginOtp(otp);
+        navigatorKey.currentState.pushAndRemoveUntil(
+            platformPageRoute(ScreenLoginOtp(otp)), (_) => false);
       }
     }
   }

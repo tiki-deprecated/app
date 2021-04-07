@@ -8,15 +8,23 @@ import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_bloc_provider.da
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 
-class HelperLogin extends StatelessWidget {
-  final Widget _child;
+import 'helper_login_view.dart';
 
-  HelperLogin({Widget child}) : this._child = child;
+class HelperLogin extends StatelessWidget {
+  final Widget _loggedIn;
+  final Widget _creating;
+  final Widget _loggedOut;
+  final Widget _pending;
+  final String _otp;
+
+  HelperLogin(this._otp, this._loggedIn, this._creating, this._loggedOut,
+      this._pending);
 
   @override
   Widget build(BuildContext context) {
     return HelperLoginBlocProvider(RepoSSUserBlocProvider.of(context).bloc,
         RepoBouncerJwtBlocProvider.of(context).bloc,
-        child: _child);
+        child:
+            HelperLoginView(_otp, _loggedIn, _creating, _loggedOut, _pending));
   }
 }

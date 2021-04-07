@@ -4,11 +4,7 @@
  */
 
 import 'package:app/src/configs/config_colors.dart';
-import 'package:app/src/helpers/helper_login/helper_login_bloc.dart';
-import 'package:app/src/helpers/helper_login/helper_login_bloc_provider.dart';
-import 'package:app/src/helpers/helper_login/helper_login_model.dart';
-import 'package:app/src/helpers/helper_login/helper_login_model_state.dart';
-import 'package:app/src/helpers/helper_login/helper_login_view.dart';
+import 'package:app/src/helpers/helper_login/helper_login.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_intro_control.dart';
@@ -22,7 +18,10 @@ class ScreenLoginOtp extends PlatformScaffold {
   static final Widget _loggedIn = ScreenHome();
   static final Widget _loggedOut = ScreenIntroControl();
   static final Widget _creating = ScreenKeysCreate();
-  
+
+  final String _otp;
+  ScreenLoginOtp(this._otp);
+
   @override
   Scaffold androidScaffold(BuildContext context) {
     return Scaffold(body: login(context));
@@ -34,7 +33,7 @@ class ScreenLoginOtp extends PlatformScaffold {
   }
 
   Widget login(BuildContext context) {
-    return HelperLoginView(_loggedIn, _creating, _loggedOut, _stack(context));
+    return HelperLogin(_otp, _loggedIn, _creating, _loggedOut, _stack(context));
   }
 
   Widget _stack(BuildContext context) {

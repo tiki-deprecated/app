@@ -5,38 +5,34 @@
 
 import 'package:flutter/widgets.dart';
 
+import 'helper_login_bloc_provider.dart';
+import 'helper_login_model.dart';
+import 'helper_login_model_state.dart';
+
 class HelperLoginView extends StatelessWidget {
   final Widget _loggedIn;
   final Widget _creating;
   final Widget _loggedOut;
   final Widget _pending;
+  final String _otp;
 
-  HelperLoginView(
-      this._loggedIn, this._creating, this._loggedOut, this._pending);
+  HelperLoginView(this._otp, this._loggedIn, this._creating, this._loggedOut,
+      this._pending);
 
-  /*@override
+  @override
   Widget build(BuildContext context) {
-    HelperLoginBloc _bloc = HelperLoginBlocProvider.of(context).bloc;
-    return StreamBuilder(
-        stream: _bloc.observable,
-        initialData: _bloc.helperLoginModel,
+    return FutureBuilder<HelperLoginModel>(
+        future: HelperLoginBlocProvider.of(context).bloc.loginOtp(_otp),
         builder: (context, AsyncSnapshot<HelperLoginModel> snapshot) {
-          if (snapshot.data.semaphore == false && snapshot.data.otp != null)
-            _bloc.completeOtp();
-          else if (snapshot.data.state == HelperLoginModelState.loggedIn)
-            return _loggedIn;
-          else if (snapshot.data.state == HelperLoginModelState.creating)
-            return _creating;
-          else if (snapshot.data.state == HelperLoginModelState.loggedOut)
-            return _loggedOut;
+          if (snapshot.data != null) {
+            if (snapshot.data.state == HelperLoginModelState.loggedIn)
+              return _loggedIn;
+            else if (snapshot.data.state == HelperLoginModelState.creating)
+              return _creating;
+            else if (snapshot.data.state == HelperLoginModelState.loggedOut)
+              return _loggedOut;
+          }
           return _pending;
         });
-  }*/
-
-  /*@override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: HelperLoginBlocProvider.of(context).bloc.beginOtp(otp),
-        builder: (context, AsyncSnapshot<HelperLoginModel> snapshot) {});
-  }*/
+  }
 }
