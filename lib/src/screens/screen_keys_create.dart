@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
@@ -21,7 +21,7 @@ import 'package:flutter/widgets.dart';
 
 class ScreenKeysCreate extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
       15 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMarginLoad = 8 * PlatformRelativeSize.safeBlockVertical;
@@ -48,7 +48,7 @@ class ScreenKeysCreate extends PlatformScaffold {
     return Stack(
       children: [
         Container(
-          color: ConstantColors.serenade,
+          color: ConfigColors.serenade,
         ),
         Container(
             child: Align(
@@ -84,9 +84,9 @@ class ScreenKeysCreate extends PlatformScaffold {
                     onPressed: () {
                       Navigator.push(context, platformPageRoute(to));
                     },
-                    child: Text(ConstantStrings.keysCreateRestore,
+                    child: Text(ConfigStrings.keysCreateRestore,
                         style: TextStyle(
-                            color: ConstantColors.orange,
+                            color: ConfigColors.orange,
                             fontWeight: FontWeight.bold,
                             fontSize: _fSizeLoad))))));
   }

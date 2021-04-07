@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_sizes.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_sizes.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
@@ -17,7 +17,7 @@ import 'package:flutter/widgets.dart';
 
 class ScreenKeysLoad extends PlatformScaffold {
   static final double _hPadding =
-      ConstantSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
+      ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
       15 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
@@ -66,7 +66,7 @@ class ScreenKeysLoad extends PlatformScaffold {
     return Stack(
       children: [
         Container(
-          color: ConstantColors.serenade,
+          color: ConfigColors.serenade,
         ),
         Container(
             child: Align(
@@ -95,13 +95,13 @@ class ScreenKeysLoad extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMarginStart),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.keysLoadTitle,
+            child: Text(ConfigStrings.keysLoadTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Koara',
                     fontSize: _fSizeTitle,
                     fontWeight: FontWeight.bold,
-                    color: ConstantColors.mardiGras))));
+                    color: ConfigColors.mardiGras))));
   }
 
   Widget _subtitle() {
@@ -109,11 +109,11 @@ class ScreenKeysLoad extends PlatformScaffold {
         margin: EdgeInsets.symmetric(vertical: _vMargin),
         child: Align(
             alignment: Alignment.center,
-            child: Text(ConstantStrings.keysLoadSubtitle,
+            child: Text(ConfigStrings.keysLoadSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
-                    color: ConstantColors.emperor))));
+                    color: ConfigColors.emperor))));
   }
 }

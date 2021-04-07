@@ -5,8 +5,8 @@
 
 import 'dart:developer';
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc_provider.dart';
@@ -40,7 +40,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
       8 * PlatformRelativeSize.safeBlockVertical;
   static final double _heightQR = 30 * PlatformRelativeSize.safeBlockVertical;
   static final double _widthButton =
-      50 * PlatformRelativeSize.safeBlockHorizontal;
+      55 * PlatformRelativeSize.safeBlockHorizontal;
 
   final Function _onSave;
 
@@ -69,14 +69,14 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: _fSizeFailed,
-                              color: ConstantColors.orange,
+                              color: ConfigColors.orange,
                               fontWeight: FontWeight.bold)),
                     );
                   }))),
-      _copyField(ConstantStrings.keysID, _securityKeysBackupBloc.keys.address),
-      _copyField(ConstantStrings.keysDataKey,
+      _copyField(ConfigStrings.keysID, _securityKeysBackupBloc.keys.address),
+      _copyField(ConfigStrings.keysDataKey,
           _securityKeysBackupBloc.keys.dataKey.encodedPrivate),
-      _copyField(ConstantStrings.keysSignKey,
+      _copyField(ConfigStrings.keysSignKey,
           _securityKeysBackupBloc.keys.signKey.encodedPrivate),
       _saveButton(context)
     ]);
@@ -88,7 +88,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: ConstantColors.silverChalice,
+            color: ConfigColors.silverChalice,
           ),
           borderRadius: BorderRadius.all(Radius.circular(_fSizeCopy * 0.4))),
       child: Row(
@@ -98,7 +98,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
             child: Text(label + " : ",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    color: ConstantColors.gray,
+                    color: ConfigColors.gray,
                     fontSize: _fSizeCopy,
                     fontWeight: FontWeight.bold)),
           ),
@@ -108,16 +108,16 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          color: ConstantColors.stratos,
+                          color: ConfigColors.stratos,
                           fontSize: _fSizeCopy,
                           fontWeight: FontWeight.bold)))),
           Container(
               decoration: BoxDecoration(
                   border: Border(
-                      left: BorderSide(color: ConstantColors.silverChalice))),
+                      left: BorderSide(color: ConfigColors.silverChalice))),
               child: Container(
                   decoration: BoxDecoration(
-                    color: ConstantColors.gallery,
+                    color: ConfigColors.gallery,
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(_fSizeCopy * 0.4),
                         bottomRight: Radius.circular(_fSizeCopy * 0.4)),
@@ -135,9 +135,9 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                                   horizontal: _hPaddingButton),
                               child: Row(
                                 children: [
-                                  Text(ConstantStrings.keysCopy,
+                                  Text(ConfigStrings.keysCopy,
                                       style: TextStyle(
-                                          color: ConstantColors.stratos,
+                                          color: ConfigColors.stratos,
                                           fontSize: _fSizeCopy,
                                           fontWeight: FontWeight.bold)),
                                   Container(
@@ -163,12 +163,12 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(_vMarginButton * 2))),
-                  primary: ConstantColors.mardiGras),
+                  primary: ConfigColors.mardiGras),
               child: Container(
                   width: _widthButton,
                   height: _heightButton,
                   child: Center(
-                      child: Text(ConstantStrings.keysSave,
+                      child: Text(ConfigStrings.keysSave,
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: _fSizeButton,

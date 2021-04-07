@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/constants/constant_colors.dart';
-import 'package:app/src/constants/constant_strings.dart';
+import 'package:app/src/configs/config_colors.dart';
+import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
 import 'package:app/src/screens/screen_login.dart';
@@ -16,11 +16,11 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
   static final int _dotTotal = 3;
   static final Widget _nextScreen = ScreenLogin();
   static final Widget _skipTo = ScreenLogin();
-  static final Color _backgroundColor = ConstantColors.macaroniAndCheese;
+  static final Color _backgroundColor = ConfigColors.macaroniAndCheese;
 
   ScreenIntroTogether()
-      : super(ConstantStrings.intro3Title, ConstantStrings.intro3Subtitle,
-            ConstantStrings.intro3ButtonText, _dotFilled, _dotTotal);
+      : super(ConfigStrings.intro3Title, ConfigStrings.intro3Subtitle,
+            ConfigStrings.intro3ButtonText, _dotFilled, _dotTotal);
 
   @override
   Widget stack(BuildContext context) {
@@ -45,7 +45,7 @@ class ScreenIntroTogether extends ScreenIntroAbstract {
           child: Image(image: AssetImage('res/images/intro-blob.png'))),
       Align(
           alignment: Alignment.bottomRight,
-          child: Image(image: AssetImage('res/images/intro-pineapple-90.png'))),
+          child: Image(image: AssetImage('res/images/intro-pineapple.png'))),
     ]);
   }
 
