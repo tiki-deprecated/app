@@ -40,7 +40,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
       8 * PlatformRelativeSize.safeBlockVertical;
   static final double _heightQR = 30 * PlatformRelativeSize.safeBlockVertical;
   static final double _widthButton =
-      50 * PlatformRelativeSize.safeBlockHorizontal;
+      55 * PlatformRelativeSize.safeBlockHorizontal;
 
   final Function _onSave;
 
