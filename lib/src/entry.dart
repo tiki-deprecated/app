@@ -3,19 +3,23 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/helpers/helper_login_router/helper_login_router_bloc_provider.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
+import 'package:app/src/screens/screen_home.dart';
+import 'package:app/src/screens/screen_intro_control.dart';
 import 'package:flutter/widgets.dart';
 
-class EntryPoint extends StatelessWidget {
-  final Widget _child;
+class Entry extends StatelessWidget {
+  final RepoSSUserModel _user;
 
-  EntryPoint(this._child);
+  Entry(this._user);
 
   @override
   Widget build(BuildContext context) {
     PlatformRelativeSize().init(context);
-    HelperLoginRouterBlocProvider.of(context).bloc.login();
-    return _child;
+    if (_user != null && _user.loggedIn)
+      return ScreenHome();
+    else
+      return ScreenIntroControl();
   }
 }
