@@ -109,3 +109,12 @@ jobs:
           artifacts: "build/app/outputs/bundle/release/*.aab,build/ios/release/app.ipa"
           replacesArtifacts: false
           token: ${{ secrets.GH_TOKEN }}
+
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: 'my-tiki'
+          SENTRY_PROJECT: 'app'
+        with:
+          environment: public
