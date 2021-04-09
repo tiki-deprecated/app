@@ -34,7 +34,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
   static final double _fSizeButton =
       6 * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginButton =
-      6 * PlatformRelativeSize.safeBlockVertical;
+      4 * PlatformRelativeSize.safeBlockVertical;
   static final double _widthButton =
       50 * PlatformRelativeSize.safeBlockHorizontal;
   static final double _heightButton =
@@ -104,8 +104,15 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
               color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
+          filled: true,
           fillColor: Colors.white,
-          border: UnderlineInputBorder(
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color:
+                      isError ? ConfigColors.grenadier : ConfigColors.mardiGras,
+                  width: 2,
+                  style: BorderStyle.solid)),
+          focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color:
                       isError ? ConfigColors.grenadier : ConfigColors.mardiGras,
