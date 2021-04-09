@@ -166,8 +166,14 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
               color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
+          filled: true,
           fillColor: Colors.white,
-          border: UnderlineInputBorder(
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: ConfigColors.mardiGras,
+                  width: 2,
+                  style: BorderStyle.solid)),
+          focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: ConfigColors.mardiGras,
                   width: 2,

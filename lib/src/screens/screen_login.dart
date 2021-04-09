@@ -18,12 +18,14 @@ class ScreenLogin extends PlatformScaffold {
   static final double _hPadding =
       ConfigSizes.hPadding * PlatformRelativeSize.safeBlockHorizontal;
   static final double _vMarginStart =
-      25 * PlatformRelativeSize.safeBlockVertical;
+      15 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMarginBlob =
       46 * PlatformRelativeSize.blockSizeVertical;
   static final double _vMarginPineapple =
       4 * PlatformRelativeSize.safeBlockVertical;
   static final double _vMargin = 2.5 * PlatformRelativeSize.safeBlockVertical;
+  static final double _vMarginTitleRight =
+      15 * PlatformRelativeSize.safeBlockHorizontal;
   static final double _fsizeTitle =
       10 * PlatformRelativeSize.safeBlockHorizontal;
   static final double _fsizeEmailCta =
@@ -83,7 +85,7 @@ class ScreenLogin extends PlatformScaffold {
 
   Widget _title() {
     return Container(
-        margin: EdgeInsets.only(top: _vMarginStart),
+        margin: EdgeInsets.only(top: _vMarginStart, right: _vMarginTitleRight),
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(ConfigStrings.loginTitle,
