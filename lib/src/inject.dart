@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt.dart';
 import 'package:app/src/repos/repo_bouncer_otp/repo_bouncer_otp.dart';
 import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys.dart';
@@ -22,5 +23,6 @@ Widget chain(BuildContext context, {Key key, Widget child}) {
               child: RepoBouncerJwt(
                   child: RepoWebsiteUsers(
                       child: HelperSecurityKeys(
-                          child: HelperDeepLink(child: child)))))));
+                          child: HelperDeepLink(
+                              child: RepoAmplitude(child: child))))))));
 }

@@ -33,5 +33,6 @@ Future<String> versionPlusBuild() async {
   return info.version + "+" + info.buildNumber;
 }
 
+const String appEnvPublic = 'public';
 const String appEnv = String.fromEnvironment('com.mytiki.app.environment',
-    defaultValue: 'public');
+    defaultValue: appEnvPublic);

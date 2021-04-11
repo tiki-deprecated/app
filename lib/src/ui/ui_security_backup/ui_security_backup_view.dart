@@ -8,6 +8,9 @@ import 'dart:developer';
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_const.dart'
+    as AmpConst;
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -176,6 +179,11 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                                   PlatformRelativeSize.safeBlockHorizontal)))),
               onPressed: () {
                 _securityKeysBackupBloc.download(_qrCodeKey);
+                RepoAmplitudeBlocProvider.of(context)
+                    .bloc
+                    .event(AmpConst.createAccountE, properties: {
+                  AmpConst.createAccountPBackup: AmpConst.createAccountVDownload
+                });
                 _onSave(context);
               },
             )));
