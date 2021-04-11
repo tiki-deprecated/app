@@ -12,7 +12,7 @@ class RepoAmplitudeBloc {
   static final String _apiKeyPublic = '1899ef0929b6700fffbb438c1df4fe2f';
   static final String _apiKeyTest = '6f52993a138d9209786c76a03c4e25cf';
   final Amplitude _amplitude;
-  Map<String, dynamic> _userProperties;
+  Map<String, dynamic> _userProperties = Map();
 
   RepoAmplitudeBloc()
       : _amplitude = Amplitude.getInstance(
