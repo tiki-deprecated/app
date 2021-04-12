@@ -34,5 +34,13 @@ Future<String> versionPlusBuild() async {
 }
 
 const String appEnvPublic = 'public';
+const String appEnvLocal = 'local';
 const String appEnv = String.fromEnvironment('com.mytiki.app.environment',
     defaultValue: appEnvPublic);
+
+Uri envAwareUri(String authority, String unencodedPath,
+    [Map<String, dynamic> queryParameters]) {
+  return appEnv == appEnvLocal
+      ? Uri.http(authority, unencodedPath, queryParameters)
+      : Uri.https(authority, unencodedPath, queryParameters);
+}

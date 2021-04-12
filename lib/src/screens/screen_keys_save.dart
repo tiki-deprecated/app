@@ -16,9 +16,14 @@ import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude_const.dart'
     as AmpConst;
+import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc.dart';
+import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc_provider.dart';
+import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_model_req.dart';
+import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_model_rsp.dart';
 import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_keys_load.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup.dart';
+import 'package:app/src/utilities/utility_api_rsp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -167,6 +172,15 @@ class ScreenKeysSave extends PlatformScaffold {
     await securityKeysBloc.save(_newModel);
     _repoAmplitudeBloc.updateUser(
         {AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()});
+
+    //todo -> move this into blockchain helper
+    RepoBlockchainAddressBloc blockchain =
+        RepoBlockchainAddressBlocProvider.of(context).bloc;
+    UtilityAPIRsp<RepoBlockchainAddressModelRsp> rsp = await blockchain.issue(
+        RepoBlockchainAddressModelReq(
+            _newModel.dataKey.encodedPublic, _newModel.signKey.encodedPublic));
+    RepoBlockchainAddressModelRsp addressRsp = rsp.data;
+
     Navigator.pushAndRemoveUntil(
         context, platformPageRoute(_toHome), (Route<dynamic> route) => false);
   }

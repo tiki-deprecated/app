@@ -29,16 +29,16 @@ class HelperAuthProxyBloc {
         await _repoSSUserBloc.setLoggedIn(false);
         navigatorKey.currentState
             .pushAndRemoveUntil(platformPageRoute(ScreenLogin()), (_) => false);
-      }
+      }else {
+        UtilityAPIRsp<RepoBouncerJwtModelRsp> refreshRsp =
+        await _repoBouncerJwtBloc
+            .refresh(RepoBouncerJwtModelReqRefresh(user.refresh));
 
-      UtilityAPIRsp<RepoBouncerJwtModelRsp> refreshRsp =
-          await _repoBouncerJwtBloc
-              .refresh(RepoBouncerJwtModelReqRefresh(user.refresh));
-
-      if (refreshRsp.code == 200) {
-        RepoBouncerJwtModelRsp jwt = refreshRsp.data;
-        _repoSSUserBloc.setTokens(jwt.accessToken, jwt.refreshToken);
-        rsp = await request();
+        if (refreshRsp.code == 200) {
+          RepoBouncerJwtModelRsp jwt = refreshRsp.data;
+          _repoSSUserBloc.setTokens(jwt.accessToken, jwt.refreshToken);
+          rsp = await request();
+        }
       }
     }
     return rsp;

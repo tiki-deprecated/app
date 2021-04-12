@@ -18,7 +18,7 @@ class RepoBouncerOtpBloc {
   Future<UtilityAPIRsp<RepoBouncerOtpModelRsp>> email(
       RepoBouncerOtpModelReq req) async {
     http.Response rsp = await http.post(
-        Uri.https(Domains.of(Domains.bouncer), _path),
+        envAwareUri(Domains.of(Domains.bouncer), _path),
         headers: jsonHeaders(),
         body: jsonEncode(req.toJson()));
     Map rspMap = jsonDecode(rsp.body);

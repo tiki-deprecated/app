@@ -10,13 +10,15 @@ class RepoSSSecurityKeysModel {
   String signPublicKey;
   String dataPrivateKey;
   String dataPublicKey;
+  bool registered;
 
   RepoSSSecurityKeysModel(this.uuid,
       {this.address,
       this.signPrivateKey,
       this.signPublicKey,
       this.dataPrivateKey,
-      this.dataPublicKey});
+      this.dataPublicKey,
+      this.registered});
 
   RepoSSSecurityKeysModel.fromJson(Map<String, dynamic> json) {
     if (json != null) {
@@ -26,6 +28,7 @@ class RepoSSSecurityKeysModel {
       this.signPublicKey = json['signPublicKey'];
       this.dataPrivateKey = json['dataPrivateKey'];
       this.dataPublicKey = json['dataPublicKey'];
+      this.registered = json['registered'];
     }
   }
 
@@ -35,6 +38,7 @@ class RepoSSSecurityKeysModel {
         'signPrivateKey': signPrivateKey,
         'signPublicKey': signPublicKey,
         'dataPrivateKey': dataPrivateKey,
-        'dataPublicKey': dataPublicKey
+        'dataPublicKey': dataPublicKey,
+        'registerd': registered
       };
 }

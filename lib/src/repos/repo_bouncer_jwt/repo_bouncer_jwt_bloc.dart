@@ -21,7 +21,7 @@ class RepoBouncerJwtBloc {
   Future<UtilityAPIRsp<RepoBouncerJwtModelRsp>> otp(
       RepoBouncerJwtModelReqOtp req) async {
     http.Response rsp = await http.post(
-        Uri.https(Domains.of(Domains.bouncer), _pathOtp),
+        envAwareUri(Domains.of(Domains.bouncer), _pathOtp),
         headers: jsonHeaders(),
         body: jsonEncode(req.toJson()));
     Map rspMap = jsonDecode(rsp.body);
@@ -32,7 +32,7 @@ class RepoBouncerJwtBloc {
   Future<UtilityAPIRsp<RepoBouncerJwtModelRsp>> refresh(
       RepoBouncerJwtModelReqRefresh req) async {
     http.Response rsp = await http.post(
-        Uri.https(Domains.of(Domains.bouncer), _pathRefresh),
+        envAwareUri(Domains.of(Domains.bouncer), _pathRefresh),
         headers: jsonHeaders(),
         body: jsonEncode(req.toJson()));
     Map rspMap = jsonDecode(rsp.body);

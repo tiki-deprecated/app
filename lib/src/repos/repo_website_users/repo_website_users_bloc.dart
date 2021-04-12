@@ -15,7 +15,7 @@ class RepoWebsiteUsersBloc {
 
   Future<RepoWebsiteUsersRsp> get() async {
     http.Response rsp = await http.get(
-        Uri.https(Domains.of(Domains.website), _path),
+        envAwareUri(Domains.of(Domains.website), _path),
         headers: jsonHeaders());
     Map rspMap = jsonDecode(rsp.body);
     return RepoWebsiteUsersRsp.fromJson(rspMap);
