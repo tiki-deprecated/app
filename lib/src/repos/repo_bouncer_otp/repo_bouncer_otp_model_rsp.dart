@@ -18,6 +18,9 @@ class RepoBouncerOtpModelRsp {
     }
   }
 
-  Map<String, dynamic> toJson() =>
-      {'salt': salt, 'issued': issued, 'expires': expires};
+  Map<String, dynamic> toJson() => {
+        'salt': salt,
+        'issued': issued?.toUtc()?.toIso8601String(),
+        'expires': expires?.toUtc()?.toIso8601String()
+      };
 }

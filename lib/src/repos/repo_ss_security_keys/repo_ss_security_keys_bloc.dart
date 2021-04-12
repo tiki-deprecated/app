@@ -12,6 +12,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class RepoSSSecurityKeysBloc {
   static final String _keyPrefix = "com.mytiki.app.";
   final FlutterSecureStorage _secureStorage;
+  RepoSSSecurityKeysModel _repoSSSecurityKeysModel;
 
   RepoSSSecurityKeysBloc(this._secureStorage);
 

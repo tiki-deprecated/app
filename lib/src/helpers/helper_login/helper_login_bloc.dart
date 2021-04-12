@@ -6,7 +6,7 @@
 import 'package:app/src/helpers/helper_login/helper_login_model.dart';
 import 'package:app/src/helpers/helper_login/helper_login_model_state.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_bloc.dart';
-import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_req.dart';
+import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_req_otp.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_rsp.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
@@ -17,15 +17,15 @@ import 'package:uuid/uuid.dart';
 class HelperLoginBloc {
   RepoSSUserBloc _repoSSUserBloc;
   RepoBouncerJwtBloc _repoBouncerJwtBloc;
-  HelperLoginModel helperLoginModel = HelperLoginModel();
+  HelperLoginModel _helperLoginModel = HelperLoginModel();
   SharedPreferences _sharedPreferences;
 
   HelperLoginBloc(this._repoSSUserBloc, this._repoBouncerJwtBloc);
 
   Future<HelperLoginModel> loginOtp(String otp) async {
-    if (helperLoginModel.semaphore == false) {
-      helperLoginModel.semaphore = true;
-      helperLoginModel.otp = otp;
+    if (_helperLoginModel.semaphore == false) {
+      _helperLoginModel.semaphore = true;
+      _helperLoginModel.otp = otp;
       RepoSSUserModel user = await getLoggedInUser(_repoSSUserBloc);
       if (user != null) {
         return HelperLoginModel(
@@ -59,7 +59,7 @@ class HelperLoginBloc {
   }
 
   Future<HelperLoginModel> _executeOtp() async {
-    if (helperLoginModel.otp == null) return null;
+    if (_helperLoginModel.otp == null) return null;
     if (_sharedPreferences == null)
       _sharedPreferences = await SharedPreferences.getInstance();
 
@@ -68,7 +68,7 @@ class HelperLoginBloc {
     if (magicLinkEmail == null || magicLinkSalt == null) return null;
 
     UtilityAPIRsp<RepoBouncerJwtModelRsp> rsp = await _repoBouncerJwtBloc
-        .otp(RepoBouncerJwtModelReq(helperLoginModel.otp, magicLinkSalt));
+        .otp(RepoBouncerJwtModelReqOtp(_helperLoginModel.otp, magicLinkSalt));
     if (rsp.code != 200) return null;
 
     RepoBouncerJwtModelRsp jwt = rsp.data;
