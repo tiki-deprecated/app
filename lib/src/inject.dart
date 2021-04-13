@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/helpers/helper_auth_proxy/helper_auth_proxy.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude.dart';
 import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address.dart';
@@ -30,7 +31,7 @@ Widget chain(BuildContext context, {Widget child}) {
 Widget _ss({Widget child}) {
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
   return RepoSSSecurityKeys(secureStorage,
-      child: RepoSSUser(secureStorage, child: child));
+      child: RepoSSUser(secureStorage, child: HelperLogout(child: child)));
 }
 
 Widget _bouncer({Widget child}) {

@@ -6,6 +6,8 @@
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_sizes.dart';
 import 'package:app/src/configs/config_strings.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
@@ -16,14 +18,9 @@ import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude_const.dart'
     as AmpConst;
-import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc.dart';
-import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc_provider.dart';
-import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_model_req.dart';
-import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_model_rsp.dart';
 import 'package:app/src/screens/screen_home.dart';
 import 'package:app/src/screens/screen_keys_load.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup.dart';
-import 'package:app/src/utilities/utility_api_rsp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -151,13 +148,13 @@ class ScreenKeysSave extends PlatformScaffold {
         child: Align(
             alignment: Alignment.topCenter,
             child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   _repoAmplitudeBloc.event(AmpConst.createAccountE,
                       properties: {
                         AmpConst.createAccountPBackup:
                             AmpConst.createAccountVDownload
                       });
-                  _onBackupComplete(context);
+                  await _onBackupComplete(context);
                 },
                 child: Text(ConfigStrings.keysSkip,
                     style: TextStyle(
@@ -169,19 +166,20 @@ class ScreenKeysSave extends PlatformScaffold {
   Future<void> _onBackupComplete(BuildContext context) async {
     HelperSecurityKeysBloc securityKeysBloc =
         HelperSecurityKeysBlocProvider.of(context).bloc;
-    await securityKeysBloc.save(_newModel);
-    _repoAmplitudeBloc.updateUser(
-        {AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()});
+    HelperLogoutBloc helperLogoutBloc =
+        HelperLogoutBlocProvider.of(context).bloc;
 
-    //todo -> move this into blockchain helper
-    RepoBlockchainAddressBloc blockchain =
-        RepoBlockchainAddressBlocProvider.of(context).bloc;
-    UtilityAPIRsp<RepoBlockchainAddressModelRsp> rsp = await blockchain.issue(
-        RepoBlockchainAddressModelReq(
-            _newModel.dataKey.encodedPublic, _newModel.signKey.encodedPublic));
-    RepoBlockchainAddressModelRsp addressRsp = rsp.data;
-
-    Navigator.pushAndRemoveUntil(
-        context, platformPageRoute(_toHome), (Route<dynamic> route) => false);
+    await securityKeysBloc.save(_newModel).then(
+        (_) async => await securityKeysBloc.register().then((_) {
+              _repoAmplitudeBloc.updateUser({
+                AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()
+              });
+              Navigator.pushAndRemoveUntil(context, platformPageRoute(_toHome),
+                  (Route<dynamic> route) => false);
+            },
+                onError: (error, stackTrace) async => await helperLogoutBloc
+                    .logoutWithException("Failed to register keys")),
+        onError: (error, stackTrace) async => await helperLogoutBloc
+            .logoutWithException("Failed to register keys"));
   }
 }

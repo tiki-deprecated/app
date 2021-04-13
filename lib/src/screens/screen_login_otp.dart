@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenLoginOtp extends PlatformScaffold {
-  static final Color _backgroundColor = ConfigColors.sunglow;
+  static const Color _backgroundColor = ConfigColors.sunglow;
   static final Widget _loggedIn = ScreenHome();
   static final Widget _loggedOut = ScreenIntroControl();
   static final Widget _creating = ScreenKeysCreate();

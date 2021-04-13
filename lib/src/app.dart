@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
-  static final _title = 'TIKI';
+  static const _title = 'TIKI';
   static final double _fSize = 4 * PlatformRelativeSize.safeBlockHorizontal;
   final RepoSSUserModel _user;
 

@@ -12,6 +12,7 @@ import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
 import 'package:app/src/screens/screen_login.dart';
 import 'package:app/src/utilities/utility_api_rsp.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class HelperAuthProxyBloc {
   final RepoBouncerJwtBloc _repoBouncerJwtBloc;
@@ -26,13 +27,16 @@ class HelperAuthProxyBloc {
       RepoSSUserModel user = await _repoSSUserBloc.find();
       if (user == null || user.loggedIn == false || user.refresh == null) {
         //TODO add a logout helper bloc.
+        Sentry.captureMessage(
+            "Attempt to access a secure endpoint with a non-existent or a not logged-in user",
+            level: SentryLevel.warning);
         await _repoSSUserBloc.setLoggedIn(false);
         navigatorKey.currentState
             .pushAndRemoveUntil(platformPageRoute(ScreenLogin()), (_) => false);
-      }else {
+      } else {
         UtilityAPIRsp<RepoBouncerJwtModelRsp> refreshRsp =
-        await _repoBouncerJwtBloc
-            .refresh(RepoBouncerJwtModelReqRefresh(user.refresh));
+            await _repoBouncerJwtBloc
+                .refresh(RepoBouncerJwtModelReqRefresh(user.refresh));
 
         if (refreshRsp.code == 200) {
           RepoBouncerJwtModelRsp jwt = refreshRsp.data;

@@ -39,6 +39,6 @@ class RepoSSSecurityKeysModel {
         'signPublicKey': signPublicKey,
         'dataPrivateKey': dataPrivateKey,
         'dataPublicKey': dataPublicKey,
-        'registerd': registered
+        'registered': registered
       };
 }

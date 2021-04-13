@@ -10,7 +10,7 @@ import 'package:app/src/utilities/utility_functions.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RepoSSUserBloc {
-  static final String _key = "com.mytiki.app.user";
+  static const String _key = "com.mytiki.app.user";
   final FlutterSecureStorage _secureStorage;
   RepoSSUserModel _repoSSUserModel;
 
@@ -19,14 +19,12 @@ class RepoSSUserBloc {
   Future<RepoSSUserModel> save(RepoSSUserModel user) async {
     await _secureStorage.write(key: _key, value: jsonEncode(user.toJson()));
     _repoSSUserModel = await _find();
-    return user;
+    return _repoSSUserModel;
   }
 
   Future<RepoSSUserModel> find() async {
-    if (_repoSSUserModel != null)
-      return _repoSSUserModel;
-    else
-      return await _find();
+    if (_repoSSUserModel == null) _repoSSUserModel = await _find();
+    return _repoSSUserModel;
   }
 
   Future<RepoSSUserModel> setTokens(String bearer, String refresh) async {

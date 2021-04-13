@@ -11,7 +11,7 @@ import 'package:app/src/utilities/utility_functions.dart';
 import 'package:http/http.dart' as http;
 
 class RepoWebsiteUsersBloc {
-  static final String _path = '/0-0-3/signup/count';
+  static const String _path = '/0-0-3/signup/count';
 
   Future<RepoWebsiteUsersRsp> get() async {
     http.Response rsp = await http.get(
