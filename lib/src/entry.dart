@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
@@ -21,7 +22,7 @@ class Entry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlatformRelativeSize().init(context);
-    return FutureBuilder<void>(
+    return HelperDynamicLink(FutureBuilder<void>(
         future: RepoAmplitudeBlocProvider.of(context).bloc.init(),
         builder: (context, AsyncSnapshot<void> snapshot) {
           if (_user != null && _user.loggedIn) {
@@ -32,7 +33,7 @@ class Entry extends StatelessWidget {
                 });
           } else
             return ScreenIntroControl();
-        });
+        }));
   }
 
   Future<void> registerKeys(BuildContext context) async {

@@ -26,15 +26,22 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.mytiki.app</string>
+			<string>Bundle ID</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tiki</string>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mytiki.app</string>
+		<string>https://mytiki.com</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,7 +51,7 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Restore a user&apos;s account from backup QR code</string>
@@ -70,8 +77,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>
 </plist>

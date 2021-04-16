@@ -5,6 +5,7 @@ import 'package:app/src/entry.dart';
 import 'package:app/src/inject.dart' as Inject;
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
+import 'package:app/src/screens/screen_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +26,10 @@ class App extends StatelessWidget {
   MaterialApp androidApp(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: Entry(_user),
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => Entry(_user), // Default home route
+        '/helloworld': (BuildContext context) => ScreenLogin(),
+      },
       navigatorKey: navigatorKey,
       theme: ThemeData(
           textTheme:
@@ -36,7 +40,10 @@ class App extends StatelessWidget {
   CupertinoApp iosApp(BuildContext context) {
     return CupertinoApp(
         title: _title,
-        home: Entry(_user),
+        routes: <String, WidgetBuilder>{
+          '/': (BuildContext context) => Entry(_user), // Default home route
+          '/helloworld': (BuildContext context) => ScreenLogin(),
+        },
         navigatorKey: navigatorKey,
         theme: CupertinoThemeData(
             textTheme: CupertinoTextThemeData(

@@ -53,6 +53,7 @@ app.*.map.json
 
 # Firebase
 **/GoogleService-Info.plist
+**/google-services.json
 
 # Android Signing
 **.jks
