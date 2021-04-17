@@ -12,6 +12,7 @@ import 'package:app/src/ui/ui_deeplink_inbox/ui_deeplink_inbox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScreenLoginEmail extends PlatformScaffold {
   static final double _hPadding =
@@ -93,7 +94,7 @@ class ScreenLoginEmail extends PlatformScaffold {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(ConfigStrings.loginEmailSubtitle,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));

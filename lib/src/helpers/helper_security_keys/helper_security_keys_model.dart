@@ -12,6 +12,7 @@ class HelperSecurityKeysModel {
   String address;
   HelperSecurityKeysModelKP<RSAPublicKey, RSAPrivateKey> dataKey;
   HelperSecurityKeysModelKP<ECPublicKey, ECPrivateKey> signKey;
+  String refer;
 
   HelperSecurityKeysModel()
       : this.signKey = HelperSecurityKeysModelKP<ECPublicKey, ECPrivateKey>(),

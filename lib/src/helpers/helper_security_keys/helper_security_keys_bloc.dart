@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_exception.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
 import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc.dart';
@@ -13,7 +14,6 @@ import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys_model.
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
 import 'package:app/src/utilities/utility_api_rsp.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'helper_security_keys_crypto.dart';
 
@@ -28,38 +28,25 @@ class HelperSecurityKeysBloc {
   final RepoSSSecurityKeysBloc _repoSSSecurityKeysBloc;
   final RepoSSUserBloc _repoSSUserBloc;
   final RepoBlockchainAddressBloc _repoBlockchainAddressBloc;
-
-  HelperSecurityKeysModel model = HelperSecurityKeysModel();
-  BehaviorSubject<HelperSecurityKeysModel> _subjectModel;
+  final HelperDynamicLinkBloc _helperDynamicLinkBloc;
 
   HelperSecurityKeysBloc(this._repoSSUserBloc, this._repoSSSecurityKeysBloc,
-      this._repoBlockchainAddressBloc) {
-    _subjectModel = BehaviorSubject.seeded(model);
-  }
+      this._repoBlockchainAddressBloc, this._helperDynamicLinkBloc);
 
-  Observable<HelperSecurityKeysModel> get observable => _subjectModel.stream;
-
-  void dispose() {
-    _subjectModel.close();
-  }
-
-  Future<void> load() async {
-    if (model.address == null) {
-      RepoSSUserModel user = await _repoSSUserBloc.find();
-      if (user == null || user.uuid == null)
-        throw HelperSecurityKeysException(_noUserErrorMsg).sentry();
-      else if (!user.loggedIn)
-        throw HelperSecurityKeysException(_userNotLoggedInMsg).sentry();
-      else {
-        RepoSSSecurityKeysModel keys =
-            await _repoSSSecurityKeysBloc.find(user.uuid);
-        model = _from(keys);
-      }
-      _subjectModel.sink.add(model);
+  Future<HelperSecurityKeysModel> load() async {
+    RepoSSUserModel user = await _repoSSUserBloc.find();
+    if (user == null || user.uuid == null)
+      throw HelperSecurityKeysException(_noUserErrorMsg).sentry();
+    else if (!user.loggedIn)
+      throw HelperSecurityKeysException(_userNotLoggedInMsg).sentry();
+    else {
+      RepoSSSecurityKeysModel keys =
+          await _repoSSSecurityKeysBloc.find(user.uuid);
+      return _from(keys);
     }
   }
 
-  Future<void> save(HelperSecurityKeysModel keys) async {
+  Future<HelperSecurityKeysModel> save(HelperSecurityKeysModel keys) async {
     RepoSSUserModel user = await _repoSSUserBloc.find();
     if (user == null || user.uuid == null)
       throw HelperSecurityKeysException(_noUserErrorMsg).sentry();
@@ -68,9 +55,8 @@ class HelperSecurityKeysBloc {
     else {
       RepoSSSecurityKeysModel ssKeys =
           await _repoSSSecurityKeysBloc.save(_to(user.uuid, keys));
-      model = _from(ssKeys);
+      return _from(ssKeys);
     }
-    _subjectModel.sink.add(model);
   }
 
   Future<HelperSecurityKeysModel> create() async {
@@ -89,25 +75,26 @@ class HelperSecurityKeysBloc {
     return keys;
   }
 
-  Future<void> register() async {
-    await load();
+  Future<HelperSecurityKeysModel> register() async {
     RepoSSUserModel user = await _repoSSUserBloc.find();
-    RepoSSSecurityKeysModel keys = _to(user.uuid, model);
+    RepoSSSecurityKeysModel keys = _to(user.uuid, await load());
     if (user == null || user.loggedIn == false || user.uuid == null)
       throw HelperSecurityKeysException(_noUserErrorMsg).sentry();
     if (keys != null) {
       UtilityAPIRsp<RepoBlockchainAddressModelRsp> rsp =
           await _repoBlockchainAddressBloc.issue(RepoBlockchainAddressModelReq(
-              keys.dataPublicKey, keys.signPublicKey));
+              keys.dataPublicKey, keys.signPublicKey,
+              referFrom: _helperDynamicLinkBloc.model.blockchain.ref));
       if (rsp.code == 200) {
         RepoBlockchainAddressModelRsp addressModelRsp = rsp.data;
         if (addressModelRsp.address != keys.address)
           throw HelperSecurityKeysException(_addressMismatchErrorMsg).sentry();
         keys.registered = true;
+        keys.refer = addressModelRsp.refer;
         RepoSSSecurityKeysModel ssKeys =
             await _repoSSSecurityKeysBloc.save(keys);
-        model = _from(ssKeys);
-        _subjectModel.sink.add(model);
+        _helperDynamicLinkBloc.createReferralLink(keys.refer);
+        return _from(ssKeys);
       } else
         throw HelperSecurityKeysException(
                 _failedRegisterErrorMsg + " Code:" + rsp.code.toString())
@@ -123,6 +110,7 @@ class HelperSecurityKeysBloc {
     keys.signKey.encodedPublic = ss.signPublicKey;
     keys.dataKey.encodedPublic = ss.dataPublicKey;
     keys.dataKey.encodedPrivate = ss.dataPrivateKey;
+    keys.refer = ss.refer;
     return keys;
   }
 
@@ -132,6 +120,7 @@ class HelperSecurityKeysBloc {
         dataPrivateKey: helper.dataKey.encodedPrivate,
         dataPublicKey: helper.dataKey.encodedPublic,
         signPrivateKey: helper.signKey.encodedPrivate,
-        signPublicKey: helper.signKey.encodedPublic);
+        signPublicKey: helper.signKey.encodedPublic,
+        refer: helper.refer);
   }
 }

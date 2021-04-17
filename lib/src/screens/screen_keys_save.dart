@@ -24,6 +24,7 @@ import 'package:app/src/ui/ui_security_backup/ui_security_backup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScreenKeysSave extends PlatformScaffold {
   static final double _hPadding =
@@ -120,7 +121,7 @@ class ScreenKeysSave extends PlatformScaffold {
             alignment: Alignment.center,
             child: Text(ConfigStrings.keysSubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));
@@ -136,7 +137,7 @@ class ScreenKeysSave extends PlatformScaffold {
                   Navigator.push(context, platformPageRoute(to));
                 },
                 child: Text(ConfigStrings.keysRestore,
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         color: ConfigColors.orange,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeLoad)))));
@@ -157,7 +158,7 @@ class ScreenKeysSave extends PlatformScaffold {
                   await _onBackupComplete(context);
                 },
                 child: Text(ConfigStrings.keysSkip,
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         color: ConfigColors.boulder,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeSkip)))));

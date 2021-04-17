@@ -16,15 +16,15 @@ import 'package:app/src/repos/repo_website_users/repo_website_users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'helpers/helper_deep_link/helper_deep_link.dart';
+import 'helpers/helper_dynamic_link/helper_dynamic_link.dart';
 
 Widget chain(BuildContext context, {Widget child}) {
   return _ss(
-      child: _bouncer(
-          child: _blockchain(
-              child: RepoWebsiteUsers(
-                  child: HelperSecurityKeys(
-                      child: HelperDeepLink(
+      child: HelperDynamicLink(
+          child: _bouncer(
+              child: _blockchain(
+                  child: RepoWebsiteUsers(
+                      child: HelperSecurityKeys(
                           child: RepoAmplitude(child: child)))))));
 }
 

@@ -11,6 +11,7 @@ import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 abstract class ScreenIntroAbstract extends PlatformScaffold {
   static final double hPadding =
@@ -68,7 +69,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(_subtitleText,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: fSizeSubtitle, fontWeight: FontWeight.bold))));
   }
 
@@ -109,7 +110,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                     height: heightButton,
                     child: Center(
                         child: Text(_buttonText,
-                            style: TextStyle(
+                            style: GoogleFonts.nunitoSans(
                               fontWeight: FontWeight.w700,
                               fontSize: fSizeButton,
                               letterSpacing: 0.05 *
@@ -130,7 +131,7 @@ abstract class ScreenIntroAbstract extends PlatformScaffold {
                   Navigator.push(context, platformPageRoute(to));
                 },
                 child: Text('Skip',
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: fSizeSkip)))));

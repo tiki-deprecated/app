@@ -8,6 +8,7 @@ import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/ui/ui_user_counter/ui_user_counter_model.dart';
 import 'package:app/src/ui/ui_user_counter/ui_user_counter_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UIUserCounterView extends StatefulWidget {
   @override
@@ -35,9 +36,9 @@ class _UIUserCounterView extends State<UIUserCounterView> {
                     fontWeight: FontWeight.bold,
                     fontSize: _fSizeCount)),
             Text("people joined the TIKI tribe",
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeText,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                     color: ConfigColors.stratos))
           ]);
         });

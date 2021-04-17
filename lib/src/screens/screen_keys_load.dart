@@ -14,6 +14,7 @@ import 'package:app/src/ui/ui_security_restore/ui_security_restore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScreenKeysLoad extends PlatformScaffold {
   static final double _hPadding =
@@ -111,7 +112,7 @@ class ScreenKeysLoad extends PlatformScaffold {
             alignment: Alignment.center,
             child: Text(ConfigStrings.keysLoadSubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));

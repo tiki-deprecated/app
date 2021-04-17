@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
 import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc.dart';
 import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys_bloc.dart';
@@ -16,10 +17,11 @@ class HelperSecurityKeysBlocProvider extends InheritedWidget {
       RepoSSUserBloc ssUserBloc,
       RepoSSSecurityKeysBloc ssSecurityKeysBloc,
       RepoBlockchainAddressBloc repoBlockchainAddressBloc,
+      HelperDynamicLinkBloc helperDynamicLinkBloc,
       {Key key,
       Widget child})
-      : _bloc = HelperSecurityKeysBloc(
-            ssUserBloc, ssSecurityKeysBloc, repoBlockchainAddressBloc),
+      : _bloc = HelperSecurityKeysBloc(ssUserBloc, ssSecurityKeysBloc,
+            repoBlockchainAddressBloc, helperDynamicLinkBloc),
         super(key: key, child: child);
 
   HelperSecurityKeysBloc get bloc => _bloc;

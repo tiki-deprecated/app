@@ -12,6 +12,7 @@ import 'package:app/src/ui/ui_security_restore/ui_security_restore_bloc.dart';
 import 'package:app/src/ui/ui_security_restore/ui_security_restore_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UISecurityRestoreView extends StatefulWidget {
   final Function _onComplete;
@@ -101,7 +102,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
                       Expanded(
                           child: Text(text,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: GoogleFonts.nunitoSans(
                                   fontWeight: FontWeight.w700,
                                   fontSize: _fSizeButton,
                                   letterSpacing: 0.05 *
@@ -136,11 +137,12 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
           horizontal: _hPaddingTextField, vertical: _vPaddingTextField),
       placeholder: placeholder,
       autocorrect: false,
-      placeholderStyle: TextStyle(
+      placeholderStyle: GoogleFonts.nunitoSans(
           color: ConfigColors.gray,
           fontWeight: FontWeight.bold,
           fontSize: _fSizeInput),
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
+      style: GoogleFonts.nunitoSans(
+          fontWeight: FontWeight.bold, fontSize: _fSizeInput),
       cursorColor: ConfigColors.orange,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -155,14 +157,15 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
 
   Widget _androidInput(String placeholder, Function(String) onChanged) {
     return TextField(
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
+      style: GoogleFonts.nunitoSans(
+          fontWeight: FontWeight.bold, fontSize: _fSizeInput),
       cursorColor: ConfigColors.orange,
       autocorrect: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: _hPaddingTextField, vertical: _vPaddingTextField),
           hintText: placeholder,
-          hintStyle: TextStyle(
+          hintStyle: GoogleFonts.nunitoSans(
               color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
@@ -201,7 +204,7 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
             height: _heightButton,
             child: Center(
               child: Text(ConfigStrings.keysLoadButtonSubmit,
-                  style: TextStyle(
+                  style: GoogleFonts.nunitoSans(
                       color: Colors.white,
                       fontSize: _fSizeButton,
                       letterSpacing:

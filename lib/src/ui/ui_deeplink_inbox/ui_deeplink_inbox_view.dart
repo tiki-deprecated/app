@@ -11,6 +11,7 @@ import 'package:app/src/screens/screen_keys_create.dart';
 import 'package:app/src/ui/ui_deeplink_inbox/ui_deeplink_inbox_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'ui_deeplink_inbox_bloc.dart';
 
@@ -36,7 +37,7 @@ class UIDeeplinkInboxView extends StatelessWidget {
             height: _heightButton,
             child: Center(
                 child: Text(ConfigStrings.loginEmailButton,
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         fontWeight: FontWeight.w700,
                         fontSize: _fSizeButton,
                         letterSpacing:

@@ -6,15 +6,18 @@
 class RepoBlockchainAddressModelReq {
   String dataKey;
   String signKey;
+  String referFrom;
 
-  RepoBlockchainAddressModelReq(this.dataKey, this.signKey);
+  RepoBlockchainAddressModelReq(this.dataKey, this.signKey, {this.referFrom});
 
   RepoBlockchainAddressModelReq.fromJson(Map<String, dynamic> json) {
     if (json != null) {
       this.dataKey = json['dataKey'];
       this.signKey = json['signKey'];
+      this.referFrom = json['referFrom'];
     }
   }
 
-  Map<String, dynamic> toJson() => {'dataKey': dataKey, 'signKey': signKey};
+  Map<String, dynamic> toJson() =>
+      {'dataKey': dataKey, 'signKey': signKey, 'referFrom': referFrom};
 }

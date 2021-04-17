@@ -16,6 +16,7 @@ import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc_provider.d
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class UISecurityBackupView extends StatefulWidget {
@@ -70,7 +71,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                       child: Text(
                           "Failed to generate QR code. Contact Support.",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.nunitoSans(
                               fontSize: _fSizeFailed,
                               color: ConfigColors.orange,
                               fontWeight: FontWeight.bold)),
@@ -100,7 +101,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
             padding: EdgeInsets.only(left: _hPaddingButton),
             child: Text(label + " : ",
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     color: ConfigColors.gray,
                     fontSize: _fSizeCopy,
                     fontWeight: FontWeight.bold)),
@@ -110,7 +111,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                   child: Text(value,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: GoogleFonts.nunitoSans(
                           color: ConfigColors.stratos,
                           fontSize: _fSizeCopy,
                           fontWeight: FontWeight.bold)))),
@@ -139,7 +140,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                               child: Row(
                                 children: [
                                   Text(ConfigStrings.keysCopy,
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunitoSans(
                                           color: ConfigColors.stratos,
                                           fontSize: _fSizeCopy,
                                           fontWeight: FontWeight.bold)),
@@ -172,7 +173,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                   height: _heightButton,
                   child: Center(
                       child: Text(ConfigStrings.keysSave,
-                          style: TextStyle(
+                          style: GoogleFonts.nunitoSans(
                               fontWeight: FontWeight.w700,
                               fontSize: _fSizeButton,
                               letterSpacing: 0.05 *
