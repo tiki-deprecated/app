@@ -80,20 +80,24 @@ class HelperSecurityKeysBloc {
     RepoSSSecurityKeysModel keys = _to(user.uuid, await load());
     if (user == null || user.loggedIn == false || user.uuid == null)
       throw HelperSecurityKeysException(_noUserErrorMsg).sentry();
-    if (keys != null) {
+    if (keys != null &&
+        keys.signPublicKey != null &&
+        keys.dataPublicKey != null &&
+        keys.address != null) {
       UtilityAPIRsp<RepoBlockchainAddressModelRsp> rsp =
           await _repoBlockchainAddressBloc.issue(RepoBlockchainAddressModelReq(
               keys.dataPublicKey, keys.signPublicKey,
-              referFrom: _helperDynamicLinkBloc.model.blockchain.ref));
+              referFrom: _helperDynamicLinkBloc.model?.blockchain?.ref));
       if (rsp.code == 200) {
         RepoBlockchainAddressModelRsp addressModelRsp = rsp.data;
         if (addressModelRsp.address != keys.address)
           throw HelperSecurityKeysException(_addressMismatchErrorMsg).sentry();
+        Uri referLink =
+            await _helperDynamicLinkBloc.createReferralLink(keys.address);
         keys.registered = true;
-        keys.refer = addressModelRsp.refer;
+        keys.refer = referLink.toString();
         RepoSSSecurityKeysModel ssKeys =
             await _repoSSSecurityKeysBloc.save(keys);
-        _helperDynamicLinkBloc.createReferralLink(keys.refer);
         return _from(ssKeys);
       } else
         throw HelperSecurityKeysException(

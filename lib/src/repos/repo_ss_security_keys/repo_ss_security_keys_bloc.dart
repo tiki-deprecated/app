@@ -33,4 +33,12 @@ class RepoSSSecurityKeysBloc {
         jsonDecodeNullSafe(await _secureStorage.read(key: _keyPrefix + uuid));
     return RepoSSSecurityKeysModel.fromJson(jsonMap);
   }
+
+  bool isValid(RepoSSSecurityKeysModel keys) {
+    return (keys != null &&
+        keys.uuid != null &&
+        keys.address != null &&
+        keys.signPrivateKey != null &&
+        keys.dataPrivateKey != null);
+  }
 }

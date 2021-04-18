@@ -5,6 +5,8 @@
 
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_strings.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
 import 'package:app/src/screens/screen_intro_abstract.dart';
@@ -90,37 +92,47 @@ class ScreenHome extends PlatformScaffold {
         margin: EdgeInsets.only(top: _vMargin),
         child: Align(
             alignment: Alignment.center,
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(_vMargin * 2))),
-                    primary: ConfigColors.mardiGras),
-                child: Container(
-                  width: _widthButton,
-                  height: _heightButton,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("SHARE",
-                          style: GoogleFonts.nunitoSans(
-                            fontWeight: FontWeight.w700,
-                            fontSize: _fSizeButton,
-                            letterSpacing:
-                                0.05 * PlatformRelativeSize.safeBlockHorizontal,
-                          )),
-                      Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  3 * PlatformRelativeSize.safeBlockHorizontal),
-                          child: Image(
-                              image: AssetImage("res/images/icon-share.png")))
-                    ],
-                  ),
-                ),
-                onPressed: () {
-                  Share.share("You need to see this! https://mytiki.com/app",
-                      subject: "You wont believe what they're building.");
+            child: FutureBuilder(
+                future: HelperSecurityKeysBlocProvider.of(context).bloc.load(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<HelperSecurityKeysModel> snapshot) {
+                  String refer = snapshot.data?.refer == null
+                      ? "https://mytiki.app"
+                      : snapshot.data.refer;
+                  return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(_vMargin * 2))),
+                          primary: ConfigColors.mardiGras),
+                      child: Container(
+                        width: _widthButton,
+                        height: _heightButton,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("SHARE",
+                                style: GoogleFonts.nunitoSans(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: _fSizeButton,
+                                  letterSpacing: 0.05 *
+                                      PlatformRelativeSize.safeBlockHorizontal,
+                                )),
+                            Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3 *
+                                        PlatformRelativeSize
+                                            .safeBlockHorizontal),
+                                child: Image(
+                                    image: AssetImage(
+                                        "res/images/icon-share.png")))
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        Share.share("You need to see this! " + refer,
+                            subject: "You wont believe what they're building.");
+                      });
                 })));
   }
 }

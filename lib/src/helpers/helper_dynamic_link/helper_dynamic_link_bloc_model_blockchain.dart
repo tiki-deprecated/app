@@ -4,9 +4,7 @@
  */
 
 class HelperDynamicLinkBlocModelBlockchain {
-  final String _ref;
+  String ref;
 
-  HelperDynamicLinkBlocModelBlockchain({String ref}) : this._ref = ref;
-
-  String get ref => _ref;
+  HelperDynamicLinkBlocModelBlockchain({this.ref});
 }

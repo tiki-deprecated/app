@@ -4,9 +4,7 @@
  */
 
 class HelperDynamicLinkBlocModelBouncer {
-  final String _otp;
+  String otp;
 
-  HelperDynamicLinkBlocModelBouncer({String otp}) : this._otp = otp;
-
-  String get otp => _otp;
+  HelperDynamicLinkBlocModelBouncer({this.otp});
 }

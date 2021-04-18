@@ -67,8 +67,7 @@ class _UIReferBlocView extends State<UIReferBlocView> {
         margin: EdgeInsets.only(top: _vMargin),
         child: OutlinedButton(
             onPressed: () async {
-              Clipboard.setData(
-                  new ClipboardData(text: "https://mytiki.app/" + _refer));
+              Clipboard.setData(new ClipboardData(text: _refer));
             },
             style: OutlinedButton.styleFrom(
                 side: BorderSide(color: ConfigColors.alto),
@@ -95,7 +94,9 @@ class _UIReferBlocView extends State<UIReferBlocView> {
                         _refer = snapshot.data?.refer == null
                             ? "...."
                             : snapshot.data.refer;
-                        return Text(_refer,
+                        return Text(
+                            _refer.replaceAll(
+                                new RegExp(r'https://mytiki.app/'), ''),
                             style: GoogleFonts.nunitoSans(
                                 fontSize: _fSizePlaceholder,
                                 fontWeight: FontWeight.bold,

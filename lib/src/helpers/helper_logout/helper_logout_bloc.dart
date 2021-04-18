@@ -24,8 +24,6 @@ class HelperLogoutBloc {
     await _repoSSUserBloc.setLoggedIn(false);
     navigatorKey.currentState
         .pushAndRemoveUntil(platformPageRoute(ScreenLogin()), (_) => false);
-    return HelperLogoutException(
-            "Attempt to register a blockchain address for a non-existent or a not logged-in user")
-        .sentry();
+    return HelperLogoutException(message).sentry();
   }
 }

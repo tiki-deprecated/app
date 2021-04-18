@@ -171,16 +171,19 @@ class ScreenKeysSave extends PlatformScaffold {
         HelperLogoutBlocProvider.of(context).bloc;
 
     await securityKeysBloc.save(_newModel).then(
-        (_) async => await securityKeysBloc.register().then((_) {
+        (HelperSecurityKeysModel saved) async => await securityKeysBloc
+                .register()
+                .then((HelperSecurityKeysModel registered) {
               _repoAmplitudeBloc.updateUser({
                 AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()
               });
-              Navigator.pushAndRemoveUntil(context, platformPageRoute(_toHome),
-                  (Route<dynamic> route) => false);
-            },
-                onError: (error, stackTrace) async => await helperLogoutBloc
-                    .logoutWithException("Failed to register keys")),
-        onError: (error, stackTrace) async => await helperLogoutBloc
-            .logoutWithException("Failed to register keys"));
+              Navigator.pushAndRemoveUntil(
+                  context, platformPageRoute(_toHome), (_) => false);
+            }, onError: (error, stackTrace) async {
+              await helperLogoutBloc
+                  .logoutWithException("Failed to register keys");
+            }), onError: (error, stackTrace) async {
+      await helperLogoutBloc.logoutWithException("Failed to register keys");
+    });
   }
 }

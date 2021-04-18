@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/app.dart';
-import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc.dart';
 import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc_model_blockchain.dart';
 import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc_model_bouncer.dart';
 import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc_provider.dart';
@@ -25,13 +24,10 @@ class _HelperDynamicLinkView extends State<HelperDynamicLinkRouter> {
   static const String _dlPathBouncer = "/app/bouncer";
   static const String _dlPathBlockchain = "/app/blockchain";
 
-  HelperDynamicLinkBloc _bloc;
-
   _HelperDynamicLinkView({Widget child}) : this._child = child;
 
   @override
   Widget build(BuildContext context) {
-    _bloc = HelperDynamicLinkBlocProvider.of(context).bloc;
     return _child;
   }
 
@@ -70,16 +66,22 @@ class _HelperDynamicLinkView extends State<HelperDynamicLinkRouter> {
   void _routeBouncer(Uri link) {
     String otp = link.queryParameters["otp"];
     if (otp != null && otp.isNotEmpty) {
-      _bloc.initBouncer(HelperDynamicLinkBlocModelBouncer(otp: otp));
-      Navigator.pushNamed(context, App.appPathLoginOtp);
+      HelperDynamicLinkBlocProvider.of(navigatorKey.currentContext)
+          .bloc
+          .initBouncer(HelperDynamicLinkBlocModelBouncer(otp: otp));
+      navigatorKey.currentState
+          .pushNamedAndRemoveUntil(App.appPathLoginOtp, (_) => false);
     }
   }
 
   void _routeBlockchain(Uri link) {
     String ref = link.queryParameters["ref"];
     if (ref != null && ref.isNotEmpty) {
-      _bloc.initBlockchain(HelperDynamicLinkBlocModelBlockchain(ref: ref));
-      Navigator.pushNamed(context, App.appPathEntry);
+      HelperDynamicLinkBlocProvider.of(navigatorKey.currentContext)
+          .bloc
+          .initBlockchain(HelperDynamicLinkBlocModelBlockchain(ref: ref));
+      navigatorKey.currentState
+          .pushNamedAndRemoveUntil(App.appPathEntry, (_) => false);
     }
   }
 }

@@ -23,7 +23,7 @@ class RepoSSUserBloc {
   }
 
   Future<RepoSSUserModel> find() async {
-    if (_repoSSUserModel == null) _repoSSUserModel = await _find();
+    if (!isValid(_repoSSUserModel)) _repoSSUserModel = await _find();
     return _repoSSUserModel;
   }
 
@@ -43,5 +43,9 @@ class RepoSSUserBloc {
   Future<RepoSSUserModel> _find() async {
     Map jsonMap = jsonDecodeNullSafe(await _secureStorage.read(key: _key));
     return RepoSSUserModel.fromJson(jsonMap);
+  }
+
+  bool isValid(RepoSSUserModel user) {
+    return (user != null && user.uuid != null && user.email != null);
   }
 }
