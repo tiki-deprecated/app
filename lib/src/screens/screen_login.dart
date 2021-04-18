@@ -12,6 +12,7 @@ import 'package:app/src/screens/screen_login_email.dart';
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //TODO need a Terms of Service link on this page (or in email?)
 class ScreenLogin extends PlatformScaffold {
@@ -102,7 +103,7 @@ class ScreenLogin extends PlatformScaffold {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(ConfigStrings.loginEmailCta,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fsizeEmailCta,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));

@@ -8,6 +8,7 @@ import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UISecurityCreateView extends StatelessWidget {
   static final double _vMarginImage =
@@ -58,7 +59,7 @@ class UISecurityCreateView extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(ConfigStrings.keysCreateSubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));

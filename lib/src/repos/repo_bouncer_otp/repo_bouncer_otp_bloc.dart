@@ -5,7 +5,7 @@
 
 import 'dart:convert';
 
-import 'package:app/src/configs/config_domains.dart';
+import 'package:app/src/configs/config_domains.dart' as Domains;
 import 'package:app/src/repos/repo_bouncer_otp/repo_bouncer_otp_model_req.dart';
 import 'package:app/src/repos/repo_bouncer_otp/repo_bouncer_otp_model_rsp.dart';
 import 'package:app/src/utilities/utility_api_rsp.dart';
@@ -17,8 +17,10 @@ class RepoBouncerOtpBloc {
 
   Future<UtilityAPIRsp<RepoBouncerOtpModelRsp>> email(
       RepoBouncerOtpModelReq req) async {
-    http.Response rsp = await http.post(Uri.https(ConfigDomains.bouncer, _path),
-        headers: jsonHeaders(), body: jsonEncode(req.toJson()));
+    http.Response rsp = await http.post(
+        envAwareUri(Domains.of(Domains.bouncer), _path),
+        headers: jsonHeaders(),
+        body: jsonEncode(req.toJson()));
     Map rspMap = jsonDecode(rsp.body);
     return UtilityAPIRsp.fromJson(
         rspMap, (json) => RepoBouncerOtpModelRsp.fromJson(json));

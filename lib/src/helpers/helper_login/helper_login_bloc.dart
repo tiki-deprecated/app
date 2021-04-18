@@ -6,8 +6,10 @@
 import 'package:app/src/helpers/helper_login/helper_login_model.dart';
 import 'package:app/src/helpers/helper_login/helper_login_model_state.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_bloc.dart';
-import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_req.dart';
+import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_req_otp.dart';
 import 'package:app/src/repos/repo_bouncer_jwt/repo_bouncer_jwt_model_rsp.dart';
+import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys_bloc.dart';
+import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys_model.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_model.dart';
 import 'package:app/src/utilities/utility_api_rsp.dart';
@@ -16,18 +18,20 @@ import 'package:uuid/uuid.dart';
 
 class HelperLoginBloc {
   RepoSSUserBloc _repoSSUserBloc;
+  RepoSSSecurityKeysBloc _repoSSSecurityKeysBloc;
   RepoBouncerJwtBloc _repoBouncerJwtBloc;
-  HelperLoginModel helperLoginModel = HelperLoginModel();
+  HelperLoginModel _helperLoginModel = HelperLoginModel();
   SharedPreferences _sharedPreferences;
 
-  HelperLoginBloc(this._repoSSUserBloc, this._repoBouncerJwtBloc);
+  HelperLoginBloc(this._repoSSUserBloc, this._repoBouncerJwtBloc,
+      this._repoSSSecurityKeysBloc);
 
   Future<HelperLoginModel> loginOtp(String otp) async {
-    if (helperLoginModel.semaphore == false) {
-      helperLoginModel.semaphore = true;
-      helperLoginModel.otp = otp;
-      RepoSSUserModel user = await getLoggedInUser(_repoSSUserBloc);
-      if (user != null) {
+    if (_helperLoginModel.semaphore == false) {
+      _helperLoginModel.semaphore = true;
+      _helperLoginModel.otp = otp;
+      RepoSSUserModel user = await _repoSSUserBloc.find();
+      if (user != null && user.loggedIn) {
         return HelperLoginModel(
             email: user.email,
             bearer: user.bearer,
@@ -46,29 +50,27 @@ class HelperLoginBloc {
     return null;
   }
 
-  static Future<RepoSSUserModel> getLoggedInUser(
-      RepoSSUserBloc repoSSUserBloc) async {
+  static Future<RepoSSUserModel> getLoggedInUser(RepoSSUserBloc repoSSUserBloc,
+      RepoSSSecurityKeysBloc repoSSSecurityKeysBloc) async {
     RepoSSUserModel user = await repoSSUserBloc.find();
-    if (user != null &&
-        user.email != null &&
-        user.uuid != null &&
-        user.loggedIn == true) {
-      return user;
+    if (repoSSUserBloc.isValid(user) && user.loggedIn) {
+      RepoSSSecurityKeysModel keys =
+          await repoSSSecurityKeysBloc.find(user.uuid);
+      if (repoSSSecurityKeysBloc.isValid(keys)) return user;
     }
     return null;
   }
 
   Future<HelperLoginModel> _executeOtp() async {
-    if (helperLoginModel.otp == null) return null;
+    if (_helperLoginModel.otp == null) return null;
     if (_sharedPreferences == null)
       _sharedPreferences = await SharedPreferences.getInstance();
-
     String magicLinkEmail = _sharedPreferences.get("magic_link.email");
     String magicLinkSalt = _sharedPreferences.get("magic_link.salt");
     if (magicLinkEmail == null || magicLinkSalt == null) return null;
 
     UtilityAPIRsp<RepoBouncerJwtModelRsp> rsp = await _repoBouncerJwtBloc
-        .otp(RepoBouncerJwtModelReq(helperLoginModel.otp, magicLinkSalt));
+        .otp(RepoBouncerJwtModelReqOtp(_helperLoginModel.otp, magicLinkSalt));
     if (rsp.code != 200) return null;
 
     RepoBouncerJwtModelRsp jwt = rsp.data;
@@ -79,11 +81,22 @@ class HelperLoginBloc {
         bearer: jwt.accessToken,
         refresh: jwt.refreshToken));
 
+    bool previouslyLoggedIn = false;
+    RepoSSUserModel localUser = await _repoSSUserBloc.find();
+    if (_repoSSUserBloc.isValid(localUser) &&
+        localUser.email == magicLinkEmail) {
+      RepoSSSecurityKeysModel localKeys =
+          await _repoSSSecurityKeysBloc.find(localUser.uuid);
+      if (_repoSSSecurityKeysBloc.isValid(localKeys)) previouslyLoggedIn = true;
+    }
+
     return HelperLoginModel(
         email: magicLinkEmail,
         refresh: jwt.refreshToken,
         bearer: jwt.accessToken,
-        state: HelperLoginModelState.creating,
+        state: previouslyLoggedIn
+            ? HelperLoginModelState.loggedIn
+            : HelperLoginModelState.creating,
         semaphore: false);
   }
 }

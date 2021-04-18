@@ -6,6 +6,8 @@
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_sizes.dart';
 import 'package:app/src/configs/config_strings.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
@@ -22,6 +24,7 @@ import 'package:app/src/ui/ui_security_backup/ui_security_backup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScreenKeysSave extends PlatformScaffold {
   static final double _hPadding =
@@ -118,7 +121,7 @@ class ScreenKeysSave extends PlatformScaffold {
             alignment: Alignment.center,
             child: Text(ConfigStrings.keysSubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));
@@ -134,7 +137,7 @@ class ScreenKeysSave extends PlatformScaffold {
                   Navigator.push(context, platformPageRoute(to));
                 },
                 child: Text(ConfigStrings.keysRestore,
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         color: ConfigColors.orange,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeLoad)))));
@@ -146,16 +149,16 @@ class ScreenKeysSave extends PlatformScaffold {
         child: Align(
             alignment: Alignment.topCenter,
             child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   _repoAmplitudeBloc.event(AmpConst.createAccountE,
                       properties: {
                         AmpConst.createAccountPBackup:
                             AmpConst.createAccountVDownload
                       });
-                  _onBackupComplete(context);
+                  await _onBackupComplete(context);
                 },
                 child: Text(ConfigStrings.keysSkip,
-                    style: TextStyle(
+                    style: GoogleFonts.nunitoSans(
                         color: ConfigColors.boulder,
                         fontWeight: FontWeight.bold,
                         fontSize: _fSizeSkip)))));
@@ -164,10 +167,23 @@ class ScreenKeysSave extends PlatformScaffold {
   Future<void> _onBackupComplete(BuildContext context) async {
     HelperSecurityKeysBloc securityKeysBloc =
         HelperSecurityKeysBlocProvider.of(context).bloc;
-    await securityKeysBloc.save(_newModel);
-    _repoAmplitudeBloc.updateUser(
-        {AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()});
-    Navigator.pushAndRemoveUntil(
-        context, platformPageRoute(_toHome), (Route<dynamic> route) => false);
+    HelperLogoutBloc helperLogoutBloc =
+        HelperLogoutBlocProvider.of(context).bloc;
+
+    await securityKeysBloc.save(_newModel).then(
+        (HelperSecurityKeysModel saved) async => await securityKeysBloc
+                .register()
+                .then((HelperSecurityKeysModel registered) {
+              _repoAmplitudeBloc.updateUser({
+                AmpConst.userPCreated: DateTime.now().toUtc().toIso8601String()
+              });
+              Navigator.pushAndRemoveUntil(
+                  context, platformPageRoute(_toHome), (_) => false);
+            }, onError: (error, stackTrace) async {
+              await helperLogoutBloc
+                  .logoutWithException("Failed to register keys");
+            }), onError: (error, stackTrace) async {
+      await helperLogoutBloc.logoutWithException("Failed to register keys");
+    });
   }
 }
