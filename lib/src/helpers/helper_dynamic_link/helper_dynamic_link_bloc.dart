@@ -37,8 +37,8 @@ class HelperDynamicLinkBloc {
             fallbackUrl:
                 Uri.parse('https://testflight.apple.com/join/pUcjaGK8')),
         socialMetaTagParameters: SocialMetaTagParameters(
-            title: 'Join TIKI!',
-            description: "It's YOUR data. You can take back control.",
+            title: 'Welcome to TIKI!',
+            description: "It's YOUR data. Take back control of it.",
             imageUrl: Uri.parse(
                 'https://mytiki.com/og-img-d9216d73be474034a8208d3c613f72a8.png')));
 

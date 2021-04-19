@@ -130,8 +130,7 @@ class ScreenHome extends PlatformScaffold {
                         ),
                       ),
                       onPressed: () {
-                        Share.share("You need to see this! " + refer,
-                            subject: "You wont believe what they're building.");
+                        Share.share(refer, subject: "You need to see this.");
                       });
                 })));
   }
