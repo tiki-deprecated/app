@@ -18,6 +18,7 @@ import 'package:flutter/src/cupertino/page_scaffold.dart';
 import 'package:flutter/src/material/scaffold.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScreenKeysCreate extends PlatformScaffold {
   static final double _hPadding =
@@ -85,7 +86,7 @@ class ScreenKeysCreate extends PlatformScaffold {
                       Navigator.push(context, platformPageRoute(to));
                     },
                     child: Text(ConfigStrings.keysCreateRestore,
-                        style: TextStyle(
+                        style: GoogleFonts.nunitoSans(
                             color: ConfigColors.orange,
                             fontWeight: FontWeight.bold,
                             fontSize: _fSizeLoad))))));

@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
+import 'package:app/src/repos/repo_blockchain_address/repo_blockchain_address_bloc_provider.dart';
 import 'package:app/src/repos/repo_ss_security_keys/repo_ss_security_keys_bloc_provider.dart';
 import 'package:app/src/repos/repo_ss_user/repo_ss_user_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +19,8 @@ class HelperSecurityKeys extends StatelessWidget {
     return HelperSecurityKeysBlocProvider(
         RepoSSUserBlocProvider.of(context).bloc,
         RepoSSSecurityKeysBlocProvider.of(context).bloc,
+        RepoBlockchainAddressBlocProvider.of(context).bloc,
+        HelperDynamicLinkBlocProvider.of(context).bloc,
         child: _child);
   }
 }

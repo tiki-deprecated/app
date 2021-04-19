@@ -9,11 +9,15 @@ import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_const.dart'
+    as AmpConst;
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_bloc.dart';
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_bloc_provider.dart';
 import 'package:app/src/ui/ui_magiclink_send/ui_magic_link_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UIMagicLinkView extends StatefulWidget {
   final Widget _onSubmit;
@@ -72,11 +76,12 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
       placeholder: ConfigStrings.loginEmailPlaceholder,
       autocorrect: false,
       autofocus: true,
-      placeholderStyle: TextStyle(
+      placeholderStyle: GoogleFonts.nunitoSans(
           color: ConfigColors.gray,
           fontWeight: FontWeight.bold,
           fontSize: _fSizeInput),
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
+      style: GoogleFonts.nunitoSans(
+          fontWeight: FontWeight.bold, fontSize: _fSizeInput),
       cursorColor: ConfigColors.orange,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -92,7 +97,8 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
 
   Widget _androidInput({bool isError = false}) {
     return TextField(
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fSizeInput),
+      style: GoogleFonts.nunitoSans(
+          fontWeight: FontWeight.bold, fontSize: _fSizeInput),
       cursorColor: ConfigColors.orange,
       autocorrect: false,
       autofocus: true,
@@ -100,7 +106,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
           contentPadding:
               EdgeInsets.symmetric(horizontal: _hPadding, vertical: _vPadding),
           hintText: ConfigStrings.loginEmailPlaceholder,
-          hintStyle: TextStyle(
+          hintStyle: GoogleFonts.nunitoSans(
               color: ConfigColors.gray,
               fontWeight: FontWeight.bold,
               fontSize: _fSizeInput),
@@ -129,7 +135,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
             alignment: Alignment.centerLeft,
             child: Text(
               ConfigStrings.loginError,
-              style: TextStyle(
+              style: GoogleFonts.nunitoSans(
                   fontSize: isError ? _fSizeError : 0,
                   fontWeight: FontWeight.w500,
                   color:
@@ -149,6 +155,9 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
           onPressed: () {
             if (isReady) {
               _magicLinkBloc.send().then((success) {
+                RepoAmplitudeBlocProvider.of(context).bloc.event(
+                    AmpConst.requestOtpE,
+                    properties: {AmpConst.requestOtpPSuccess: success});
                 if (success)
                   Navigator.push(context, platformPageRoute(_onSubmit));
               });
@@ -160,7 +169,7 @@ class _UIMagicLinkView extends State<UIMagicLinkView> {
             child: Center(
               child: Text(
                 ConfigStrings.loginSubmit,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     color: Colors.white,
                     fontSize: _fSizeButton,
                     letterSpacing:

@@ -8,11 +8,15 @@ import 'dart:developer';
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_strings.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_bloc_provider.dart';
+import 'package:app/src/repos/repo_amplitude/repo_amplitude_const.dart'
+    as AmpConst;
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc.dart';
 import 'package:app/src/ui/ui_security_backup/ui_security_backup_bloc_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class UISecurityBackupView extends StatefulWidget {
@@ -67,7 +71,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                       child: Text(
                           "Failed to generate QR code. Contact Support.",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.nunitoSans(
                               fontSize: _fSizeFailed,
                               color: ConfigColors.orange,
                               fontWeight: FontWeight.bold)),
@@ -97,7 +101,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
             padding: EdgeInsets.only(left: _hPaddingButton),
             child: Text(label + " : ",
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: GoogleFonts.nunitoSans(
                     color: ConfigColors.gray,
                     fontSize: _fSizeCopy,
                     fontWeight: FontWeight.bold)),
@@ -107,7 +111,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                   child: Text(value,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: GoogleFonts.nunitoSans(
                           color: ConfigColors.stratos,
                           fontSize: _fSizeCopy,
                           fontWeight: FontWeight.bold)))),
@@ -136,7 +140,7 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                               child: Row(
                                 children: [
                                   Text(ConfigStrings.keysCopy,
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunitoSans(
                                           color: ConfigColors.stratos,
                                           fontSize: _fSizeCopy,
                                           fontWeight: FontWeight.bold)),
@@ -169,13 +173,18 @@ class _UISecurityBackupView extends State<UISecurityBackupView> {
                   height: _heightButton,
                   child: Center(
                       child: Text(ConfigStrings.keysSave,
-                          style: TextStyle(
+                          style: GoogleFonts.nunitoSans(
                               fontWeight: FontWeight.w700,
                               fontSize: _fSizeButton,
                               letterSpacing: 0.05 *
                                   PlatformRelativeSize.safeBlockHorizontal)))),
               onPressed: () {
                 _securityKeysBackupBloc.download(_qrCodeKey);
+                RepoAmplitudeBlocProvider.of(context)
+                    .bloc
+                    .event(AmpConst.createAccountE, properties: {
+                  AmpConst.createAccountPBackup: AmpConst.createAccountVDownload
+                });
                 _onSave(context);
               },
             )));

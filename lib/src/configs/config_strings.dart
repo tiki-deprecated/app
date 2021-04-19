@@ -63,4 +63,6 @@ class ConfigStrings {
 
   // HOME PAGE
   static const String homeTitle = 'We\'re stronger together';
+  static const String homeReferLine1 = 'Share your TIKI code and get';
+  static const String homeReferLine2 = '\$2 for every 10 people who join.';
 }

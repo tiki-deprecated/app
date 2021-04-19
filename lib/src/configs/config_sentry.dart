@@ -9,7 +9,7 @@ const String dsn = 'dsn';
 const String environment = 'environment';
 
 T of<T>(String key) {
-  return (appEnv == 'public' ? _publicConfig : _localConfig)[key];
+  return (appEnv == appEnvPublic ? _publicConfig : _localConfig)[key];
 }
 
 const Map<String, Object> _publicConfig = {

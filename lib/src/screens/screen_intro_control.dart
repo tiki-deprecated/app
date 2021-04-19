@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ScreenIntroControl extends ScreenIntroAbstract {
-  static final int _dotFilled = 1;
-  static final int _dotTotal = 3;
+  static const int _dotFilled = 1;
+  static const int _dotTotal = 3;
   static final Widget _nextScreen = ScreenIntroEarn();
   static final Widget _skipTo = ScreenLogin();
   static final Color _backgroundColor = ConfigColors.sunglow;

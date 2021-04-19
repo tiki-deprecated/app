@@ -19,7 +19,7 @@ class UISecurityBackupBloc {
   UISecurityBackupBloc(HelperSecurityKeysBloc helperSecurityKeysBloc,
       {HelperSecurityKeysModel provided}) {
     _keys = provided;
-    helperSecurityKeysBloc.observable.listen((keys) {
+    helperSecurityKeysBloc.load().then((keys) {
       _keys = keys;
     });
   }

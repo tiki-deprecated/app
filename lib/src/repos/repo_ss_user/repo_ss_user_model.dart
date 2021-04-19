@@ -23,7 +23,7 @@ class RepoSSUserModel {
       this.uuid = json['uuid'];
       this.loggedIn = json['loggedIn'];
       this.bearer = json['bearer'];
-      this.refresh = json['refrehs'];
+      this.refresh = json['refresh'];
     }
   }
 
