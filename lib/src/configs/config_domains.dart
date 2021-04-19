@@ -15,7 +15,7 @@ String of(String key) {
 
 const Map<String, String> _publicConfig = {
   bouncer: "bouncer.mytiki.com",
-  blockchain: "bouncer.mytiki.com",
+  blockchain: "blockchain.mytiki.com",
   website: "api.mytiki.com",
 };
 
