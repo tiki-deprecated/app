@@ -54,9 +54,9 @@
 		<false/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Restore a user&apos;s account from backup QR code</string>
+	<string>Restore a user's account from backup QR code</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Restore a user&apos;s account from backup QR code</string>
+	<string>Restore a user's account from backup QR code</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
