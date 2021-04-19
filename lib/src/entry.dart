@@ -38,6 +38,7 @@ class Entry extends StatelessWidget {
             }));
   }
 
+  //TODO Deprecate in next release
   Future<void> registerKeys(BuildContext context) async {
     RepoSSSecurityKeysModel keys =
         await RepoSSSecurityKeysBlocProvider.of(context).bloc.find(_user.uuid);

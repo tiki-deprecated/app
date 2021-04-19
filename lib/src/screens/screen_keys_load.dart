@@ -6,6 +6,11 @@
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_sizes.dart';
 import 'package:app/src/configs/config_strings.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc.dart';
+import 'package:app/src/helpers/helper_logout/helper_logout_bloc_provider.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc_provider.dart';
+import 'package:app/src/helpers/helper_security_keys/helper_security_keys_model.dart';
 import 'package:app/src/platform/platform_page_route.dart';
 import 'package:app/src/platform/platform_relative_size.dart';
 import 'package:app/src/platform/platform_scaffold.dart';
@@ -83,10 +88,7 @@ class ScreenKeysLoad extends PlatformScaffold {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _title(),
         _subtitle(),
-        UISecurityRestore((keys) {
-          Navigator.pushAndRemoveUntil(
-              context, platformPageRoute(_toHome), (route) => false);
-        })
+        UISecurityRestore((keys) => _onLoadComplete(context, keys))
       ]),
     );
   }
@@ -116,5 +118,21 @@ class ScreenKeysLoad extends PlatformScaffold {
                     fontSize: _fSizeSubtitle,
                     fontWeight: FontWeight.w600,
                     color: ConfigColors.emperor))));
+  }
+
+  Future<void> _onLoadComplete(
+      BuildContext context, HelperSecurityKeysModel keysModel) async {
+    HelperSecurityKeysBloc securityKeysBloc =
+        HelperSecurityKeysBlocProvider.of(context).bloc;
+    HelperLogoutBloc helperLogoutBloc =
+        HelperLogoutBlocProvider.of(context).bloc;
+
+    await securityKeysBloc.save(keysModel).then(
+        (HelperSecurityKeysModel saved) {
+      Navigator.pushAndRemoveUntil(
+          context, platformPageRoute(_toHome), (_) => false);
+    }, onError: (error, stackTrace) async {
+      await helperLogoutBloc.logoutWithException("Failed to register keys");
+    });
   }
 }
