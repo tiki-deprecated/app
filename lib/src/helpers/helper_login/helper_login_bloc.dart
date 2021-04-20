@@ -30,8 +30,14 @@ class HelperLoginBloc {
     if (_helperLoginModel.semaphore == false) {
       _helperLoginModel.semaphore = true;
       _helperLoginModel.otp = otp;
+      bool previouslyLoggedIn = false;
       RepoSSUserModel user = await _repoSSUserBloc.find();
-      if (user != null && user.loggedIn) {
+      if (_repoSSUserBloc.isValid(user) && user.loggedIn) {
+        RepoSSSecurityKeysModel keys =
+            await _repoSSSecurityKeysBloc.find(user.uuid);
+        if (_repoSSSecurityKeysBloc.isValid(keys)) previouslyLoggedIn = true;
+      }
+      if (previouslyLoggedIn) {
         return HelperLoginModel(
             email: user.email,
             bearer: user.bearer,

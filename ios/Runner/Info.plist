@@ -51,12 +51,12 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Restore a user's account from backup QR code</string>
+	<string>Restore a user account from backup QR code</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Restore a user's account from backup QR code</string>
+	<string>Restore a user account from backup QR code</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
