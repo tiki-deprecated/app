@@ -66,15 +66,22 @@ class _UISecurityRestoreView extends State<UISecurityRestoreView> {
       }),
       _divider(),
       _textInput(ConfigStrings.keysLoadPlaceholderID, (input) {
-        id = input;
+        setState(() {
+          id = (input.length == 64 ? input : null);
+        });
       }),
       _textInput(ConfigStrings.keysLoadPlaceholderDataKey, (input) {
-        dataKey = input;
+        setState(() {
+          dataKey = (input.length == 1624 ? input : null);
+        });
       }),
       _textInput(ConfigStrings.keysLoadPlaceholderSignKey, (input) {
-        signKey = input;
+        setState(() {
+          signKey = (input.length == 92 ? input : null);
+        });
       }),
-      _submit(context, isReady: true)
+      _submit(context,
+          isReady: (id != null && dataKey != null && signKey != null))
     ]);
   }
 

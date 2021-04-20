@@ -6,6 +6,7 @@
 import 'package:app/src/configs/config_colors.dart';
 import 'package:app/src/configs/config_sizes.dart';
 import 'package:app/src/configs/config_strings.dart';
+import 'package:app/src/helpers/helper_dynamic_link/helper_dynamic_link_bloc_provider.dart';
 import 'package:app/src/helpers/helper_logout/helper_logout_bloc.dart';
 import 'package:app/src/helpers/helper_logout/helper_logout_bloc_provider.dart';
 import 'package:app/src/helpers/helper_security_keys/helper_security_keys_bloc.dart';
@@ -126,7 +127,10 @@ class ScreenKeysLoad extends PlatformScaffold {
         HelperSecurityKeysBlocProvider.of(context).bloc;
     HelperLogoutBloc helperLogoutBloc =
         HelperLogoutBlocProvider.of(context).bloc;
-
+    Uri refer = await HelperDynamicLinkBlocProvider.of(context)
+        .bloc
+        .createReferralLink(keysModel.address);
+    keysModel.refer = refer.toString();
     await securityKeysBloc.save(keysModel).then(
         (HelperSecurityKeysModel saved) {
       Navigator.pushAndRemoveUntil(
