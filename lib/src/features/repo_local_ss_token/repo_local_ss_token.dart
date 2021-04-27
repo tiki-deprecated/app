@@ -1,0 +1,18 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'package:app/src/features/repo_local_ss_token/repo_local_ss_token_model.dart';
+import 'package:app/src/utils/helper/helper_repo_local_ss_crud.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+class RepoLocalSsToken extends HelperRepoLocalSsCrud<RepoLocalSsTokenModel> {
+  static const String _table = "token";
+  static const String _version = "0.0.1";
+
+  RepoLocalSsToken({FlutterSecureStorage secureStorage})
+      : super(_table, _version, (RepoLocalSsTokenModel model) => model.toJson(),
+            (Map<String, dynamic> json) => RepoLocalSsTokenModel.fromJson(json),
+            secureStorage: secureStorage);
+}

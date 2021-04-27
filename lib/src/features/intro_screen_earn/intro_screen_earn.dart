@@ -3,14 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/config/config_color.dart';
-import 'package:app_stash/src/config/config_string.dart';
-import 'package:app_stash/src/screen/screen_intro_abstract.dart';
-import 'package:app_stash/src/screen/screen_intro_together.dart';
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/config/config_string.dart';
+import 'package:app/src/features/intro_screen_together/intro_screen_together.dart';
 import 'package:flutter/widgets.dart';
 
-class ScreenIntroEarn extends ScreenIntroAbstract {
-  ScreenIntroEarn()
+import '../intro_screen/intro_screen.dart';
+
+class IntroScreenEarn extends IntroScreen {
+  IntroScreenEarn()
       : super(ConfigColor.kournikova, ConfigString.introEarn.title,
             ConfigString.introEarn.subtitle, ConfigString.introEarn.button, 1);
 
@@ -20,7 +21,7 @@ class ScreenIntroEarn extends ScreenIntroAbstract {
         context,
         PageRouteBuilder(
             pageBuilder: (context, animation1, animation2) =>
-                ScreenIntroTogether(),
+                IntroScreenTogether(),
             transitionDuration: Duration(seconds: 0),
             reverseTransitionDuration: Duration(seconds: 0)));
   }

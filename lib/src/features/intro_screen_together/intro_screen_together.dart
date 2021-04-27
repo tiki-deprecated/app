@@ -3,14 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/config/config_color.dart';
-import 'package:app_stash/src/config/config_string.dart';
-import 'package:app_stash/src/platform/platform_page_route.dart';
-import 'package:app_stash/src/screen/screen_intro_abstract.dart';
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/config/config_string.dart';
+import 'package:app/src/utils/platform/platform_page_route.dart';
 import 'package:flutter/widgets.dart';
 
-class ScreenIntroTogether extends ScreenIntroAbstract {
-  ScreenIntroTogether()
+import '../intro_screen/intro_screen.dart';
+
+class IntroScreenTogether extends IntroScreen {
+  IntroScreenTogether()
       : super(
             ConfigColor.macaroniAndCheese,
             ConfigString.introTogether.title,

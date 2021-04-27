@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/config/config_color.dart';
-import 'package:app_stash/src/platform/platform_relative_size.dart';
-import 'package:app_stash/src/ui/ui_dots_cubit_example/ui_dots_cubit.dart';
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/features/ui_dots_cubit_example/ui_dots_cubit.dart';
+import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

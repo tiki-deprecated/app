@@ -5,11 +5,13 @@
 
 import 'dart:io';
 
-import 'package:app_stash/src/config/config_color.dart';
-import 'package:app_stash/src/config/config_navigate.dart';
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/config/config_navigate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'provide.dart';
 
 class App extends StatelessWidget {
   static const _title = 'TIKI';
@@ -17,7 +19,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      Platform.isIOS ? iosApp(context) : androidApp(context);
+      Provide.chain(Platform.isIOS ? iosApp(context) : androidApp(context));
 
   MaterialApp androidApp(BuildContext context) {
     return MaterialApp(

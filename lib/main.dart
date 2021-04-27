@@ -1,5 +1,5 @@
-import 'package:app_stash/src/app.dart';
-import 'package:app_stash/src/config/config_sentry.dart';
+import 'package:app/src/app.dart';
+import 'package:app/src/config/config_sentry.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';

@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/entry.dart';
-import 'package:app_stash/src/screen/screen_intro_control.dart';
-import 'package:app_stash/src/screen/screen_intro_earn.dart';
-import 'package:app_stash/src/screen/screen_intro_together.dart';
+import 'package:app/src/entry.dart';
+import 'package:app/src/features/intro_screen_control/intro_screen_control.dart';
+import 'package:app/src/features/intro_screen_earn/intro_screen_earn.dart';
+import 'package:app/src/features/intro_screen_together/intro_screen_together.dart';
+import 'package:app/src/features/login_email_screen/login_email_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class ConfigNavigate {
@@ -19,7 +20,10 @@ class ConfigNavigate {
   static Map<String, WidgetBuilder> routeTable(BuildContext context) {
     return {
       path.entry: (BuildContext context) => Entry(), //Entry(_user),
-      path.loginOtp: (BuildContext context) => screen.loginOtp
+      path.introControl: (BuildContext context) => screen.introControl,
+      path.introEarn: (BuildContext context) => screen.introEarn,
+      path.introTogether: (BuildContext context) => screen.introTogether,
+      path.loginEmail: (BuildContext context) => screen.loginEmail,
     };
   }
 }
@@ -31,17 +35,17 @@ class _ConfigNavigatePath {
   final String introEarn = "/intro/earn";
   final String introTogether = "/intro/together";
 
-  final String loginOtp = "/login/otp";
+  final String loginEmail = "/login/email";
 
   const _ConfigNavigatePath();
 }
 
 class _ConfigNavigateScreen {
-  final Widget introControl = ScreenIntroControl();
-  final Widget introEarn = ScreenIntroEarn();
-  final Widget introTogether = ScreenIntroTogether();
+  final Widget introControl = IntroScreenControl();
+  final Widget introEarn = IntroScreenEarn();
+  final Widget introTogether = IntroScreenTogether();
 
-  final Widget loginOtp = Text("");
+  final Widget loginEmail = LoginEmailScreen();
 
   _ConfigNavigateScreen();
 }

@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/config/config_color.dart';
-import 'package:app_stash/src/platform/platform_relative_size.dart';
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UiBigButton extends StatelessWidget {
+class IntroScreenButton extends StatelessWidget {
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
@@ -16,11 +16,11 @@ class UiBigButton extends StatelessWidget {
       10 * PlatformRelativeSize.blockHorizontal;
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
+  static final double _buttonWidth = 50 * PlatformRelativeSize.blockHorizontal;
 
   final String text;
   final void Function(BuildContext context) onPressed;
-  final double fixedWidth;
-  UiBigButton(this.text, this.onPressed, {this.fixedWidth});
+  IntroScreenButton(this.text, this.onPressed);
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +34,8 @@ class UiBigButton extends StatelessWidget {
           direction: Axis.vertical,
           children: [
             Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: _marginVertical,
-                    horizontal: fixedWidth != null ? 0 : _marginHorizontal),
-                width: fixedWidth != null ? fixedWidth : null,
+                margin: EdgeInsets.symmetric(vertical: _marginVertical),
+                width: _buttonWidth,
                 child: Center(
                     child: Text(text,
                         style: TextStyle(

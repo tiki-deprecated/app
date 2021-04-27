@@ -9,12 +9,13 @@ class ConfigString {
   static const _ConfigStringIntroEarn introEarn = _ConfigStringIntroEarn();
   static const _ConfigStringIntroTogether introTogether =
       _ConfigStringIntroTogether();
+  static const _ConfigStringLoginEmail loginEmail = _ConfigStringLoginEmail();
 }
 
 class _ConfigStringIntroControl {
   final String title = "Take control of your data";
   final String subtitle =
-      "TIKI is a free app that allows you to see, control and monetise your data.";
+      "TIKI is a free app that allows you to see, control and monetize your data.";
   final String button = "NEXT";
 
   const _ConfigStringIntroControl();
@@ -23,7 +24,7 @@ class _ConfigStringIntroControl {
 class _ConfigStringIntroEarn {
   final String title = "Start earning money";
   final String subtitle =
-      "You can also choose to earn  money from your data. This is optional.";
+      "You can also choose to earn money from your data. This is optional.";
   final String button = "NEXT";
 
   const _ConfigStringIntroEarn();
@@ -36,4 +37,14 @@ class _ConfigStringIntroTogether {
   final String button = "GET STARTED";
 
   const _ConfigStringIntroTogether();
+}
+
+class _ConfigStringLoginEmail {
+  final String title = "Hey, nice to see you here";
+  final String cta = "Enter your email below to begin.";
+  final String placeholder = "Your email";
+  final String error = "Please enter a valid email";
+  final String button = "CONTINUE";
+
+  const _ConfigStringLoginEmail();
 }

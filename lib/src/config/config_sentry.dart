@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app_stash/src/config/config_environment.dart';
+import 'package:app/src/config/config_environment.dart';
 
 class ConfigSentry {
   static const String dsn = ConfigEnvironment.isPublic
