@@ -5,18 +5,24 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_string.dart';
+import 'package:app/src/features/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginEmailFormError extends StatelessWidget {
+class LoginEmailScreenError extends StatelessWidget {
   static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
-  final bool isError;
-
-  LoginEmailFormError({this.isError = false});
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LoginOtpReqBloc, LoginOtpReqState>(
+        builder: (BuildContext context, LoginOtpReqState state) {
+      return _text(state is LoginOtpReqStateFailure);
+    });
+  }
+
+  Widget _text(bool isError) {
     return Align(
         alignment: Alignment.centerLeft,
         child: Text(

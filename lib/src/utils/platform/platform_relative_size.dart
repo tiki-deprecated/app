@@ -15,7 +15,8 @@ class PlatformRelativeSize {
   static double blockHorizontal = 0;
   static double blockVertical = 0;
 
-  static double marginHorizontal = 8 * blockHorizontal;
+  static double marginHorizontalNoBack = 8 * blockHorizontal;
+  static double marginHorizontal = 4 * blockHorizontal;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);

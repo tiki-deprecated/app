@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/repo_local_ss_user/repo_local_ss_user_model.dart';
 import 'package:app/src/utils/helper/helper_repo_local_ss_crud.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'repo_local_ss_user_model.dart';
 
 class RepoLocalSsUser extends HelperRepoLocalSsCrud<RepoLocalSsUserModel> {
   static const String _table = "user";

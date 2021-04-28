@@ -1,9 +1,10 @@
-import 'package:app/src/app.dart';
-import 'package:app/src/config/config_sentry.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+
+import 'src/app.dart';
+import 'src/config/config_sentry.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

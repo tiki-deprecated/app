@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/repo_local_ss_token/repo_local_ss_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'repo_local_ss_token.dart';
 
 class RepoLocalSsTokenProvider extends InheritedWidget {
   final RepoLocalSsToken _repo;

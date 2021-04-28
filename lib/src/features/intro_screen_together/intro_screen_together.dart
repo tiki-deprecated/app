@@ -5,7 +5,6 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_string.dart';
-import 'package:app/src/utils/platform/platform_page_route.dart';
 import 'package:flutter/widgets.dart';
 
 import '../intro_screen/intro_screen.dart';
@@ -21,11 +20,11 @@ class IntroScreenTogether extends IntroScreen {
 
   @override
   void onButtonPressed(BuildContext context) {
-    Navigator.push(context, PlatformPageRoute.screen(skipTo));
+    Navigator.of(context).pushNamed(skipToPath);
   }
 
   @override
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
-    if (dragEndDetails.primaryVelocity > 0) Navigator.pop(context);
+    if (dragEndDetails.primaryVelocity > 0) Navigator.of(context).pop();
   }
 }

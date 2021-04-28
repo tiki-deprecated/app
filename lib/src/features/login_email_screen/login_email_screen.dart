@@ -3,16 +3,24 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'dart:io';
+
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/login_email_form/login_email_form.dart';
-import 'package:app/src/features/login_email_screen/login_email_screen_cta.dart';
-import 'package:app/src/features/login_email_screen/login_email_screen_title.dart';
+import 'package:app/src/features/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'login_email_screen_button.dart';
+import 'login_email_screen_cta.dart';
+import 'login_email_screen_error.dart';
+import 'login_email_screen_input_android.dart';
+import 'login_email_screen_input_ios.dart';
+import 'login_email_screen_title.dart';
 
 class LoginEmailScreen extends PlatformScaffold {
   static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
@@ -20,7 +28,9 @@ class LoginEmailScreen extends PlatformScaffold {
   static final double _marginRightTitle =
       15 * PlatformRelativeSize.blockHorizontal;
   static final double _marginTopBlob = 46 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopForm = 2.5 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopInput =
+      2.5 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopButton = 4 * PlatformRelativeSize.blockVertical;
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -34,7 +44,12 @@ class LoginEmailScreen extends PlatformScaffold {
 
   Widget _screen(BuildContext context) {
     return Stack(
-      children: [_background(), _foreground(context)],
+      children: [
+        _background(),
+        BlocProvider(
+            create: (BuildContext context) => LoginOtpReqBloc.provide(context),
+            child: _foreground(context))
+      ],
     );
   }
 
@@ -48,9 +63,8 @@ class LoginEmailScreen extends PlatformScaffold {
             margin: EdgeInsets.only(top: _marginTopBlob),
             child: HelperImage('login-blob')),
         Container(
-            child: Align(
-                alignment: Alignment.topRight,
-                child: HelperImage('login-pineapple'))),
+            alignment: Alignment.topRight,
+            child: HelperImage('login-pineapple')),
       ],
     );
   }
@@ -60,22 +74,26 @@ class LoginEmailScreen extends PlatformScaffold {
       Expanded(
           child: Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal),
+                  horizontal: PlatformRelativeSize.marginHorizontalNoBack),
               child: Column(children: [
                 Container(
                     margin: EdgeInsets.only(
                         top: _marginTopTitle, right: _marginRightTitle),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: LoginEmailScreenTitle())),
+                    alignment: Alignment.centerLeft,
+                    child: LoginEmailScreenTitle()),
                 Container(
                     margin: EdgeInsets.only(top: _marginTopCta),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: LoginEmailScreenCta())),
+                    alignment: Alignment.centerLeft,
+                    child: LoginEmailScreenCta()),
                 Container(
-                    margin: EdgeInsets.only(top: _marginTopForm),
-                    child: LoginEmailForm())
+                    margin: EdgeInsets.only(top: _marginTopInput),
+                    child: Platform.isIOS
+                        ? LoginEmailScreenInputIos()
+                        : LoginEmailScreenInputAndroid()),
+                LoginEmailScreenError(),
+                Container(
+                    margin: EdgeInsets.only(top: _marginTopButton),
+                    child: LoginEmailScreenButton())
               ])))
     ]);
   }

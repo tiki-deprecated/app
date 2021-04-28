@@ -3,8 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/repo_api_bouncer_otp/repo_api_bouncer_otp.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'repo_api_bouncer_otp.dart';
 
 class RepoApiBouncerOtpProvider extends InheritedWidget {
   final RepoApiBouncerOtp _repo;

@@ -3,11 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/intro_screen/intro_screen_dots.dart';
-import 'package:app/src/features/intro_screen/intro_screen_skip.dart';
-import 'package:app/src/features/intro_screen/intro_screen_subtitle.dart';
-import 'package:app/src/features/intro_screen/intro_screen_title.dart';
-import 'package:app/src/features/login_email_screen/login_email_screen.dart';
+import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
@@ -15,6 +11,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'intro_screen_button.dart';
+import 'intro_screen_dots.dart';
+import 'intro_screen_skip.dart';
+import 'intro_screen_subtitle.dart';
+import 'intro_screen_title.dart';
 
 abstract class IntroScreen extends PlatformScaffold {
   static final double _marginTopText = 2.5 * PlatformRelativeSize.blockVertical;
@@ -23,7 +23,7 @@ abstract class IntroScreen extends PlatformScaffold {
   static final double _marginTopSkip = 8 * PlatformRelativeSize.blockVertical;
 
   static const int screenTotal = 3;
-  final Widget skipTo = LoginEmailScreen();
+  final String skipToPath = ConfigNavigate.path.loginEmail;
 
   final Color backgroundColor;
   final String title;
@@ -66,12 +66,12 @@ abstract class IntroScreen extends PlatformScaffold {
       Expanded(
           child: Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal),
+                  horizontal: PlatformRelativeSize.marginHorizontalNoBack),
               child: Column(children: [
                 Container(
                     margin: EdgeInsets.only(top: _marginTopSkip),
                     alignment: Alignment.topRight,
-                    child: IntroScreenSkip(skipTo)),
+                    child: IntroScreenSkip(skipToPath)),
                 Container(
                     margin: EdgeInsets.only(top: _marginTopTitle),
                     alignment: Alignment.centerLeft,

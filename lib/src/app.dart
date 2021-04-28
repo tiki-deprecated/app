@@ -5,12 +5,12 @@
 
 import 'dart:io';
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_navigate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'config/config_color.dart';
+import 'config/config_navigate.dart';
 import 'provide.dart';
 
 class App extends StatelessWidget {

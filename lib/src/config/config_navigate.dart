@@ -8,6 +8,7 @@ import 'package:app/src/features/intro_screen_control/intro_screen_control.dart'
 import 'package:app/src/features/intro_screen_earn/intro_screen_earn.dart';
 import 'package:app/src/features/intro_screen_together/intro_screen_together.dart';
 import 'package:app/src/features/login_email_screen/login_email_screen.dart';
+import 'package:app/src/features/login_inbox_screen/login_inbox_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class ConfigNavigate {
@@ -24,6 +25,7 @@ class ConfigNavigate {
       path.introEarn: (BuildContext context) => screen.introEarn,
       path.introTogether: (BuildContext context) => screen.introTogether,
       path.loginEmail: (BuildContext context) => screen.loginEmail,
+      path.loginInbox: (BuildContext context) => screen.loginInbox,
     };
   }
 }
@@ -36,6 +38,7 @@ class _ConfigNavigatePath {
   final String introTogether = "/intro/together";
 
   final String loginEmail = "/login/email";
+  final String loginInbox = "/login/inbox";
 
   const _ConfigNavigatePath();
 }
@@ -46,6 +49,7 @@ class _ConfigNavigateScreen {
   final Widget introTogether = IntroScreenTogether();
 
   final Widget loginEmail = LoginEmailScreen();
+  final Widget loginInbox = LoginInboxScreen();
 
   _ConfigNavigateScreen();
 }

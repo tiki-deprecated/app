@@ -10,6 +10,7 @@ class ConfigString {
   static const _ConfigStringIntroTogether introTogether =
       _ConfigStringIntroTogether();
   static const _ConfigStringLoginEmail loginEmail = _ConfigStringLoginEmail();
+  static const _ConfigStringLoginInbox loginInbox = _ConfigStringLoginInbox();
 }
 
 class _ConfigStringIntroControl {
@@ -47,4 +48,14 @@ class _ConfigStringLoginEmail {
   final String button = "CONTINUE";
 
   const _ConfigStringLoginEmail();
+}
+
+class _ConfigStringLoginInbox {
+  final String title = "Great, now check your inbox";
+  final String sentTo = "I sent an email with a link to";
+  final String didReceive = "Didn't receive it?";
+  final String resend = "Resend now";
+  final String back = "Back";
+
+  const _ConfigStringLoginInbox();
 }

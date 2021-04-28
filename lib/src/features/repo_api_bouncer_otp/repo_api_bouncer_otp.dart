@@ -6,11 +6,12 @@
 import 'dart:convert';
 
 import 'package:app/src/config/config_domain.dart';
-import 'package:app/src/features/repo_api_bouncer_otp/repo_api_bouncer_otp_req.dart';
-import 'package:app/src/features/repo_api_bouncer_otp/repo_api_bouncer_otp_rsp.dart';
 import 'package:app/src/utils/helper/helper_api_rsp.dart';
 import 'package:app/src/utils/helper/helper_headers.dart';
 import 'package:http/http.dart' as http;
+
+import 'repo_api_bouncer_otp_req.dart';
+import 'repo_api_bouncer_otp_rsp.dart';
 
 class RepoApiBouncerOtp {
   static const String _path = '/api/latest/otp/email';

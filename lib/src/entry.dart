@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/intro_screen_control/intro_screen_control.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'features/intro_screen_control/intro_screen_control.dart';
+import 'utils/platform/platform_relative_size.dart';
 
 class Entry extends StatelessWidget {
   @override
