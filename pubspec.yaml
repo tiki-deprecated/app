@@ -13,12 +13,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.0
   firebase_core: ^1.0.4
+  firebase_dynamic_links: ^2.0.2
   flutter_bloc: ^7.0.0
   flutter_secure_storage: ^4.2.0
   http: ^0.13.1
   package_info: ^2.0.0
   sentry_flutter: ^5.0.0
   shared_preferences: ^2.0.5
+  pointycastle: ^3.0.1
+  qr_flutter: ^4.0.0
+  share: ^2.0.1
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:

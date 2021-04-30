@@ -15,7 +15,7 @@ class PlatformRelativeSize {
   static double blockHorizontal = 0;
   static double blockVertical = 0;
 
-  static double marginHorizontalNoBack = 8 * blockHorizontal;
+  static double marginHorizontal2x = 8 * blockHorizontal;
   static double marginHorizontal = 4 * blockHorizontal;
 
   void init(BuildContext context) {

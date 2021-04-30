@@ -4,11 +4,13 @@
  */
 
 import 'package:app/src/entry.dart';
-import 'package:app/src/features/intro_screen_control/intro_screen_control.dart';
-import 'package:app/src/features/intro_screen_earn/intro_screen_earn.dart';
-import 'package:app/src/features/intro_screen_together/intro_screen_together.dart';
-import 'package:app/src/features/login_email_screen/login_email_screen.dart';
-import 'package:app/src/features/login_inbox_screen/login_inbox_screen.dart';
+import 'package:app/src/features/intro/intro_screen_control/intro_screen_control.dart';
+import 'package:app/src/features/intro/intro_screen_earn/intro_screen_earn.dart';
+import 'package:app/src/features/intro/intro_screen_together/intro_screen_together.dart';
+import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
+import 'package:app/src/features/login/login_email_screen/login_email_screen.dart';
+import 'package:app/src/features/login/login_inbox_screen/login_inbox_screen.dart';
+import 'package:app/src/features/login/login_otp_screen/login_otp_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class ConfigNavigate {
@@ -26,6 +28,8 @@ class ConfigNavigate {
       path.introTogether: (BuildContext context) => screen.introTogether,
       path.loginEmail: (BuildContext context) => screen.loginEmail,
       path.loginInbox: (BuildContext context) => screen.loginInbox,
+      path.loginOtp: (BuildContext context) => screen.loginOtp,
+      path.keysNew: (BuildContext context) => screen.keysNew,
     };
   }
 }
@@ -39,6 +43,9 @@ class _ConfigNavigatePath {
 
   final String loginEmail = "/login/email";
   final String loginInbox = "/login/inbox";
+  final String loginOtp = "/login/otp";
+
+  final String keysNew = "/keys/new";
 
   const _ConfigNavigatePath();
 }
@@ -50,6 +57,9 @@ class _ConfigNavigateScreen {
 
   final Widget loginEmail = LoginEmailScreen();
   final Widget loginInbox = LoginInboxScreen();
+  final Widget loginOtp = LoginOtpScreen();
+
+  final Widget keysNew = KeysNewScreen();
 
   _ConfigNavigateScreen();
 }

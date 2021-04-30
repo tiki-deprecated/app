@@ -11,6 +11,7 @@ class ConfigString {
       _ConfigStringIntroTogether();
   static const _ConfigStringLoginEmail loginEmail = _ConfigStringLoginEmail();
   static const _ConfigStringLoginInbox loginInbox = _ConfigStringLoginInbox();
+  static const _ConfigStringKeysNew keysNew = _ConfigStringKeysNew();
 }
 
 class _ConfigStringIntroControl {
@@ -58,4 +59,25 @@ class _ConfigStringLoginInbox {
   final String back = "Back";
 
   const _ConfigStringLoginInbox();
+}
+
+class _ConfigStringKeysNew {
+  final String genTitle = "Just one sec..";
+  final String genSubtitle = "I'm securing your account";
+  final String saveTitle = "Save your keys";
+  final String saveSubtitle =
+      "We advise you to save your TIKI keys for when you swap mobile devices.";
+  final String restoreButton = "Already have an account?";
+  final String copyButton = "COPY";
+  final String copyId = "TIKI ID";
+  final String copyDataKey = "DATA KEY";
+  final String copySignKey = "SIGN KEY";
+  final String saveButton = "SAVE & CONTINUE";
+  final String skipButton = "SKIP SAVING";
+  final String downloadTitle = "TIKI Keys";
+  final String downloadSubtitle =
+      "These are your security keys. Save them somewhere safe. DO NOT SHARE.";
+  final String downloadId = "TIKI ID: ";
+
+  const _ConfigStringKeysNew();
 }
