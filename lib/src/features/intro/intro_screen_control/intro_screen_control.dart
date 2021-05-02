@@ -5,19 +5,18 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:flutter/widgets.dart';
 
 import '../intro_screen/intro_screen.dart';
 
 class IntroScreenControl extends IntroScreen {
+  static const String _title = "Take control of your data";
+  static const String _subtitle =
+      "TIKI is a free app that allows you to see, control and monetize your data.";
+  static const String _button = "NEXT";
+
   IntroScreenControl()
-      : super(
-            ConfigColor.sunglow,
-            ConfigString.introControl.title,
-            ConfigString.introControl.subtitle,
-            ConfigString.introControl.button,
-            0);
+      : super(ConfigColor.sunglow, _title, _subtitle, _button, 0);
 
   @override
   void onButtonPressed(BuildContext context) {

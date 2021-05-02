@@ -4,14 +4,14 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
-import 'package:app/src/features/keys/keys_new/keys_new_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class KeysNewScreenSaveDownload extends StatelessWidget {
+class KeysNewScreenSaveContinue extends StatelessWidget {
+  static const String _text = "CONTINUE";
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
@@ -22,12 +22,20 @@ class KeysNewScreenSaveDownload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
+        builder: (BuildContext context, KeysNewScreenState state) {
+      return _button(
+          context, state is KeysNewScreenInProgress ? state.isBackedUp : false);
+    });
+  }
+
+  Widget _button(BuildContext context, bool isActive) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(10 * PlatformRelativeSize.blockVertical))),
-            primary: ConfigColor.mardiGras),
+            primary: isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
         child: Wrap(
           direction: Axis.vertical,
           children: [
@@ -35,7 +43,7 @@ class KeysNewScreenSaveDownload extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                     vertical: _marginVertical, horizontal: _marginHorizontal),
                 child: Center(
-                    child: Text(ConfigString.keysNew.saveButton,
+                    child: Text(_text,
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: _fontSize,
@@ -44,7 +52,9 @@ class KeysNewScreenSaveDownload extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          BlocProvider.of<KeysNewBloc>(context).add(KeysNewDownloaded());
+          if (isActive)
+            BlocProvider.of<KeysNewScreenBloc>(context)
+                .add(KeysNewScreenContinue());
         });
   }
 }

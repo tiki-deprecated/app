@@ -4,19 +4,14 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
-import 'package:app/src/features/keys/keys_new/keys_new_bloc.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum KeysNewScreenSaveCopyEnum { id, data, sign }
-
-class KeysNewScreenSaveCopy extends StatelessWidget {
-  static final double _fontSize = 4.5 * PlatformRelativeSize.blockHorizontal;
+class KeysNewScreenSaveCopyButton extends StatelessWidget {
+  static const String _buttonText = "COPY";
   static final double _borderRadius = 2 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingLeft = 2 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingHorizontal =
@@ -24,28 +19,13 @@ class KeysNewScreenSaveCopy extends StatelessWidget {
   static final double _paddingHorizontalIcon =
       1 * PlatformRelativeSize.blockHorizontal;
 
-  final KeysNewScreenSaveCopyEnum _e;
+  final String label;
+  final String value;
 
-  KeysNewScreenSaveCopy(this._e);
+  KeysNewScreenSaveCopyButton(this.label, this.value);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KeysNewBloc, KeysNewState>(
-        builder: (BuildContext context, KeysNewState state) {
-      switch (_e) {
-        case KeysNewScreenSaveCopyEnum.id:
-          return _copy(ConfigString.keysNew.copyId, state.address);
-        case KeysNewScreenSaveCopyEnum.data:
-          return _copy(ConfigString.keysNew.copyDataKey, state.dataPrivate);
-        case KeysNewScreenSaveCopyEnum.sign:
-          return _copy(ConfigString.keysNew.copySignKey, state.signPrivate);
-        default:
-          return _copy("ERR", "CONTACT SUPPORT");
-      }
-    });
-  }
-
-  Widget _copy(String label, String value) {
     return Container(
       decoration: BoxDecoration(
           color: ConfigColor.white,
@@ -57,22 +37,13 @@ class KeysNewScreenSaveCopy extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(left: _paddingLeft),
-            child: Text(label + " : ",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: ConfigColor.gray,
-                    fontSize: _fontSize,
-                    fontWeight: FontWeight.bold)),
+            child: Text(label + " : ", textAlign: TextAlign.left),
           ),
           Flexible(
               child: Container(
                   child: Text(value,
                       overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: ConfigColor.stratos,
-                          fontSize: _fontSize,
-                          fontWeight: FontWeight.bold)))),
+                      textAlign: TextAlign.left))),
           Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -97,11 +68,7 @@ class KeysNewScreenSaveCopy extends StatelessWidget {
                                   horizontal: _paddingHorizontal),
                               child: Row(
                                 children: [
-                                  Text(ConfigString.keysNew.copyButton,
-                                      style: TextStyle(
-                                          color: ConfigColor.stratos,
-                                          fontSize: _fontSize,
-                                          fontWeight: FontWeight.bold)),
+                                  Text(_buttonText),
                                   Container(
                                       margin: EdgeInsets.symmetric(
                                           horizontal: _paddingHorizontalIcon),

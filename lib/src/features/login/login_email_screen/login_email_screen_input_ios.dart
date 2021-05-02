@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginEmailScreenInputIos extends StatelessWidget {
+  static const String _placeholder = "Your email";
   static final double _paddingHorizontal =
       4 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingVertical = 2 * PlatformRelativeSize.blockVertical;
@@ -29,7 +29,7 @@ class LoginEmailScreenInputIos extends StatelessWidget {
     return CupertinoTextField(
       padding: EdgeInsets.symmetric(
           horizontal: _paddingHorizontal, vertical: _paddingVertical),
-      placeholder: ConfigString.loginEmail.placeholder,
+      placeholder: _placeholder,
       autocorrect: false,
       autofocus: true,
       placeholderStyle: TextStyle(

@@ -5,15 +5,18 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:flutter/widgets.dart';
 
 import '../intro_screen/intro_screen.dart';
 
 class IntroScreenEarn extends IntroScreen {
+  static const String _title = "Start earning money";
+  static const String _subtitle =
+      "You can also choose to earn money from your data. This is optional.";
+  static const String _button = "NEXT";
+
   IntroScreenEarn()
-      : super(ConfigColor.kournikova, ConfigString.introEarn.title,
-            ConfigString.introEarn.subtitle, ConfigString.introEarn.button, 1);
+      : super(ConfigColor.kournikova, _title, _subtitle, _button, 1);
 
   @override
   void onButtonPressed(BuildContext context) {

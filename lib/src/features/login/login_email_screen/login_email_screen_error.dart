@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,21 +11,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginEmailScreenError extends StatelessWidget {
+  static const String _text = "Please enter a valid email";
   static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginOtpReqBloc, LoginOtpReqState>(
         builder: (BuildContext context, LoginOtpReqState state) {
-      return _text(state is LoginOtpReqStateFailure);
+      return _textWidget(state is LoginOtpReqStateFailure);
     });
   }
 
-  Widget _text(bool isError) {
+  Widget _textWidget(bool isError) {
     return Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          ConfigString.loginEmail.error,
+          _text,
           style: TextStyle(
               fontSize: isError ? _fontSize : 0,
               fontWeight: FontWeight.w500,

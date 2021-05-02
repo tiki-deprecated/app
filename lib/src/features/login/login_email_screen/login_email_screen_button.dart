@@ -5,7 +5,6 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginEmailScreenButton extends StatelessWidget {
+  static const String _text = "CONTINUE";
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
@@ -47,7 +47,7 @@ class LoginEmailScreenButton extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                     vertical: _marginVertical, horizontal: _marginHorizontal),
                 child: Center(
-                    child: Text(ConfigString.loginEmail.button,
+                    child: Text(_text,
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: _fontSize,

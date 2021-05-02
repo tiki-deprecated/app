@@ -24,6 +24,7 @@ dependencies:
   qr_flutter: ^4.0.0
   share: ^2.0.1
   path_provider: ^2.0.1
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:

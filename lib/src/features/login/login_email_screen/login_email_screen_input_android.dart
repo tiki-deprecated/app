@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginEmailScreenInputAndroid extends StatelessWidget {
+  static const String _placeholder = "Your email";
   static final double _paddingHorizontal =
       4 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingVertical = 4 * PlatformRelativeSize.blockVertical;
@@ -34,7 +34,7 @@ class LoginEmailScreenInputAndroid extends StatelessWidget {
       decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: _paddingHorizontal, vertical: _paddingVertical),
-          hintText: ConfigString.loginEmail.placeholder,
+          hintText: _placeholder,
           hintStyle: TextStyle(
               color: ConfigColor.gray,
               fontWeight: FontWeight.bold,

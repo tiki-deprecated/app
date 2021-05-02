@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/keys/keys_new/keys_new_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -29,7 +29,7 @@ class _KeysNewScreenGen extends State<KeysNewScreenGen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<KeysNewBloc>(context).add(KeysNewGenerated());
+    BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenGenerated());
   }
 
   @override

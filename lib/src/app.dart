@@ -26,6 +26,11 @@ class App extends StatelessWidget {
         title: _title,
         routes: ConfigNavigate.routeTable(context),
         navigatorKey: ConfigNavigate.key,
+        localizationsDelegates: [
+          DefaultMaterialLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate,
+        ],
         theme: ThemeData(
             fontFamily: _nunitoSans,
             textTheme: Theme.of(context).textTheme.apply(
@@ -38,6 +43,11 @@ class App extends StatelessWidget {
         title: _title,
         routes: ConfigNavigate.routeTable(context),
         navigatorKey: ConfigNavigate.key,
+        localizationsDelegates: [
+          DefaultMaterialLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate,
+        ],
         theme: CupertinoThemeData(
             textTheme: CupertinoTextThemeData(
                 textStyle: TextStyle(

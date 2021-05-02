@@ -4,19 +4,18 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_string.dart';
 import 'package:flutter/widgets.dart';
 
 import '../intro_screen/intro_screen.dart';
 
 class IntroScreenTogether extends IntroScreen {
+  static const String _title = "We're stronger together";
+  static const String _subtitle =
+      "You are now part of the TIKI tribe! I’m Tiki and I am here to help you take back your share.";
+  static const String _button = "NEXT";
+
   IntroScreenTogether()
-      : super(
-            ConfigColor.macaroniAndCheese,
-            ConfigString.introTogether.title,
-            ConfigString.introTogether.subtitle,
-            ConfigString.introTogether.button,
-            2);
+      : super(ConfigColor.macaroniAndCheese, _title, _subtitle, _button, 2);
 
   @override
   void onButtonPressed(BuildContext context) {
