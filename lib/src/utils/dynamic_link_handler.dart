@@ -62,10 +62,10 @@ class _DynamicLinkHandler extends State<DynamicLinkHandler> {
   void _handleBouncer(Uri link) {
     String otp = link.queryParameters["otp"];
     if (otp != null && otp.isNotEmpty) {
+      BlocProvider.of<LoginOtpValidCubit>(ConfigNavigate.key.currentContext)
+          .update(otp);
       Navigator.of(ConfigNavigate.key.currentContext).pushNamedAndRemoveUntil(
           ConfigNavigate.path.loginOtp, (route) => false);
-      BlocProvider.of<LoginOtpValidCubit>(ConfigNavigate.key.currentContext)
-          .execute(otp);
     }
   }
 

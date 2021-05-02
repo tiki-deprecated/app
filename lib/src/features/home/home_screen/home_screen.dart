@@ -9,6 +9,7 @@ import 'package:app/src/features/home/home_screen/home_screen_counter.dart';
 import 'package:app/src/features/home/home_screen/home_screen_refer.dart';
 import 'package:app/src/features/home/home_screen/home_screen_share.dart';
 import 'package:app/src/features/home/home_screen/home_screen_title.dart';
+import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,11 +17,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'home_screen_logout.dart';
+
 class HomeScreen extends PlatformScaffold {
   static final double _marginTopTitle = 20 * PlatformRelativeSize.blockVertical;
   static final double _marginTopCount = 8 * PlatformRelativeSize.blockVertical;
   static final double _marginTopRefer = 8 * PlatformRelativeSize.blockVertical;
   static final double _marginTopShare = 8 * PlatformRelativeSize.blockVertical;
+  static final double _marginBottomLogOut =
+      4 * PlatformRelativeSize.blockVertical;
 
   @override
   Scaffold androidScaffold(BuildContext context) {
@@ -39,12 +44,10 @@ class HomeScreen extends PlatformScaffold {
   Widget _background() {
     return Stack(children: [
       Center(child: Container(color: ConfigColor.serenade)),
-      Align(
-          alignment: Alignment.topRight,
-          child: Image(image: AssetImage('res/images/home-blob-tr.png'))),
+      Align(alignment: Alignment.topRight, child: HelperImage("home-blob-tr")),
       Align(
           alignment: Alignment.bottomRight,
-          child: Image(image: AssetImage('res/images/home-pineapple.png')))
+          child: HelperImage("home-pineapple"))
     ]);
   }
 
@@ -71,8 +74,13 @@ class HomeScreen extends PlatformScaffold {
                     child: HomeScreenRefer()),
                 Container(
                     margin: EdgeInsets.only(top: _marginTopShare),
-                    alignment: Alignment.center,
-                    child: HomeScreenShare())
+                    alignment: Alignment.topCenter,
+                    child: HomeScreenShare()),
+                Expanded(
+                    child: Container(
+                        alignment: Alignment.bottomCenter,
+                        margin: EdgeInsets.only(bottom: _marginBottomLogOut),
+                        child: HomeScreenLogout()))
               ])))
     ]);
   }

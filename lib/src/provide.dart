@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/features/repo/repo_api_website_users/repo_api_website_users.dart';
+import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -36,6 +37,9 @@ class Provide {
       ),
       RepositoryProvider<RepoLocalSsOtp>(
         create: (context) => RepoLocalSsOtp(secureStorage: secureStorage),
+      ),
+      RepositoryProvider<RepoLocalSsCurrent>(
+        create: (context) => RepoLocalSsCurrent(secureStorage: secureStorage),
       ),
       RepositoryProvider<RepoApiBouncerOtp>(
         create: (context) => RepoApiBouncerOtp(),

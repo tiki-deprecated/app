@@ -17,11 +17,18 @@ class LoginOtpValidInitial extends LoginOtpValidState {
 }
 
 class LoginOtpValidInProgress extends LoginOtpValidState {
-  const LoginOtpValidInProgress() : super();
+  final String otp;
+
+  const LoginOtpValidInProgress(this.otp) : super();
+
+  @override
+  List<Object> get props => [otp];
 }
 
 class LoginOtpValidSuccess extends LoginOtpValidState {
-  const LoginOtpValidSuccess() : super();
+  final bool hasKeys;
+
+  const LoginOtpValidSuccess(this.hasKeys) : super();
 }
 
 class LoginOtpValidFailure extends LoginOtpValidState {

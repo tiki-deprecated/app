@@ -6,12 +6,12 @@
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/widgets.dart';
 
-import '../keys_new_screen_gen/keys_new_screen_gen_restore.dart';
 import 'keys_new_screen_save_bk_copy.dart';
 import 'keys_new_screen_save_bk_download.dart';
 import 'keys_new_screen_save_bk_qr.dart';
 import 'keys_new_screen_save_bk_send.dart';
 import 'keys_new_screen_save_continue.dart';
+import 'keys_new_screen_save_restore.dart';
 import 'keys_new_screen_save_skip.dart';
 import 'keys_new_screen_save_subtitle.dart';
 import 'keys_new_screen_save_title.dart';
@@ -74,7 +74,7 @@ class KeysNewScreenSave extends StatelessWidget {
                     child: KeysNewScreenSaveSkip()),
                 Container(
                     margin: EdgeInsets.only(bottom: _marginBottomButton),
-                    child: KeysNewScreenGenRestore())
+                    child: KeysNewScreenSaveRestore())
               ])))
     ]);
   }

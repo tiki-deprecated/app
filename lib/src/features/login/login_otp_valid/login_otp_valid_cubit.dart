@@ -10,6 +10,8 @@ import 'package:app/src/features/repo/repo_local_ss_otp/repo_local_ss_otp.dart';
 import 'package:app/src/features/repo/repo_local_ss_otp/repo_local_ss_otp_model.dart';
 import 'package:app/src/features/repo/repo_local_ss_token/repo_local_ss_token.dart';
 import 'package:app/src/features/repo/repo_local_ss_token/repo_local_ss_token_model.dart';
+import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user.dart';
+import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user_model.dart';
 import 'package:app/src/utils/helper/helper_api_rsp.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -23,34 +25,54 @@ class LoginOtpValidCubit extends Cubit<LoginOtpValidState> {
   final RepoApiBouncerJwt _repoApiBouncerJwt;
   final RepoLocalSsOtp _repoLocalSsOtp;
   final RepoLocalSsToken _repoLocalSsToken;
+  final RepoLocalSsUser _repoLocalSsUser;
 
-  LoginOtpValidCubit(
-      this._repoApiBouncerJwt, this._repoLocalSsOtp, this._repoLocalSsToken)
+  LoginOtpValidCubit(this._repoApiBouncerJwt, this._repoLocalSsOtp,
+      this._repoLocalSsToken, this._repoLocalSsUser)
       : super(LoginOtpValidInitial());
 
   LoginOtpValidCubit.provide(BuildContext context)
       : _repoApiBouncerJwt = RepositoryProvider.of<RepoApiBouncerJwt>(context),
         _repoLocalSsOtp = RepositoryProvider.of<RepoLocalSsOtp>(context),
         _repoLocalSsToken = RepositoryProvider.of<RepoLocalSsToken>(context),
+        _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
         super(LoginOtpValidInitial());
 
+  Future<void> update(String otp) async {
+    emit(LoginOtpValidInProgress(otp));
+  }
+
   Future<void> execute(String otp) async {
-    emit(LoginOtpValidInProgress());
     RepoLocalSsOtpModel model = await _repoLocalSsOtp.find(_ssKey);
-    HelperApiRsp<RepoApiBouncerJwtRsp> rsp =
-        await _repoApiBouncerJwt.otp(RepoApiBouncerJwtReqOtp(otp, model.salt));
-    if (rsp.code == 200) {
-      RepoApiBouncerJwtRsp rspData = rsp.data;
-      await _repoLocalSsToken.save(
-          model.email,
-          RepoLocalSsTokenModel(
-              bearer: rspData.accessToken,
-              refresh: rspData.refreshToken,
-              expiresIn: rspData.expiresIn));
-      emit(LoginOtpValidSuccess());
-    } else {
-      _repoLocalSsOtp.delete(_ssKey);
+    if (model.email != null && model.salt != null) {
+      HelperApiRsp<RepoApiBouncerJwtRsp> rsp = await _repoApiBouncerJwt
+          .otp(RepoApiBouncerJwtReqOtp(otp, model.salt));
+      if (rsp.code == 200) {
+        RepoApiBouncerJwtRsp rspData = rsp.data;
+        await _repoLocalSsToken.save(
+            model.email,
+            RepoLocalSsTokenModel(
+                bearer: rspData.accessToken,
+                refresh: rspData.refreshToken,
+                expiresIn: rspData.expiresIn));
+
+        RepoLocalSsUserModel user = await _repoLocalSsUser.find(model.email);
+        if (user != null && user.address != null) {
+          await _repoLocalSsUser.save(
+              model.email,
+              RepoLocalSsUserModel(
+                  email: model.email, address: user.address, isLoggedIn: true));
+          emit(LoginOtpValidSuccess(true));
+        } else {
+          await _repoLocalSsUser.save(model.email,
+              RepoLocalSsUserModel(email: model.email, isLoggedIn: false));
+          emit(LoginOtpValidSuccess(false));
+        }
+      } else {
+        _repoLocalSsOtp.delete(_ssKey);
+        emit(LoginOtpValidFailure());
+      }
+    } else
       emit(LoginOtpValidFailure());
-    }
   }
 }

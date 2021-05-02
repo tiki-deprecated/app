@@ -5,6 +5,7 @@
 
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/login/login_otp_valid/login_otp_valid_cubit.dart';
+import 'package:app/src/utils/helper/helper_log_out.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/src/cupertino/page_scaffold.dart';
 import 'package:flutter/src/material/scaffold.dart';
@@ -17,22 +18,24 @@ import 'login_otp_screen_load.dart';
 class LoginOtpScreen extends PlatformScaffold {
   @override
   Scaffold androidScaffold(BuildContext context) {
-    return Scaffold(body: LoginOtpScreenLoad());
+    return Scaffold(body: _screen(context));
   }
 
   @override
   CupertinoPageScaffold iosScaffold(BuildContext context) {
-    return CupertinoPageScaffold(child: LoginOtpScreenLoad());
+    return CupertinoPageScaffold(child: _screen(context));
   }
 
   Widget _screen(BuildContext context) {
     return BlocListener<LoginOtpValidCubit, LoginOtpValidState>(
         listener: (BuildContext context, LoginOtpValidState state) {
-          if (state is LoginOtpValidSuccess)
-            Navigator.of(context)
-                .pushNamed(ConfigNavigate.path.loginEmail); //TODO fix path
-          else if (state is LoginOtpValidFailure)
-            Navigator.of(context).pushNamed(ConfigNavigate.path.loginEmail);
+          if (state is LoginOtpValidSuccess) {
+            if (state.hasKeys)
+              Navigator.of(context).pushNamed(ConfigNavigate.path.home);
+            else
+              Navigator.of(context).pushNamed(ConfigNavigate.path.keysNew);
+          } else if (state is LoginOtpValidFailure)
+            HelperLogOut.provide(context).current(context);
         },
         child: LoginOtpScreenLoad());
   }

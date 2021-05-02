@@ -5,8 +5,12 @@
 
 import 'dart:async';
 
+import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current.dart';
+import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
 import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys.dart';
 import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys_model.dart';
+import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user.dart';
+import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user_model.dart';
 import 'package:app/src/utils/helper/helper_crypto.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -22,11 +26,18 @@ part 'keys_new_screen_state.dart';
 class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
   static const fileName = "tiki-do-not-share.png";
   final RepoLocalSsKeys _repoLocalSsKeys;
+  final RepoLocalSsUser _repoLocalSsUser;
+  final RepoLocalSsCurrent _repoLocalSsCurrent;
 
-  KeysNewScreenBloc(this._repoLocalSsKeys) : super(KeysNewScreenInitial());
+  KeysNewScreenBloc(
+      this._repoLocalSsKeys, this._repoLocalSsUser, this._repoLocalSsCurrent)
+      : super(KeysNewScreenInitial());
 
   KeysNewScreenBloc.provide(BuildContext context)
       : _repoLocalSsKeys = RepositoryProvider.of<RepoLocalSsKeys>(context),
+        _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
+        _repoLocalSsCurrent =
+            RepositoryProvider.of<RepoLocalSsCurrent>(context),
         super(KeysNewScreenInitial());
 
   @override
@@ -65,20 +76,19 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
 
   Stream<KeysNewScreenState> _mapSkippedToState(
       KeysNewScreenSkipped skipped) async* {
-    await _repoLocalSsKeys.save(
-        state.address,
-        RepoLocalSsKeysModel(
-            address: state.address,
-            dataPrivateKey: state.dataPrivate,
-            dataPublicKey: state.dataPublic,
-            signPrivateKey: state.signPrivate,
-            signPublicKey: state.signPublic));
+    await _saveAndLogIn();
     yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
         state.signPublic, state.signPrivate, state.address);
   }
 
   Stream<KeysNewScreenState> _mapContinueToState(
       KeysNewScreenContinue skipped) async* {
+    await _saveAndLogIn();
+    yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
+        state.signPublic, state.signPrivate, state.address);
+  }
+
+  Future<void> _saveAndLogIn() async {
     await _repoLocalSsKeys.save(
         state.address,
         RepoLocalSsKeysModel(
@@ -87,7 +97,11 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
             dataPublicKey: state.dataPublic,
             signPrivateKey: state.signPrivate,
             signPublicKey: state.signPublic));
-    yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
-        state.signPublic, state.signPrivate, state.address);
+    RepoLocalSsCurrentModel current =
+        await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
+    await _repoLocalSsUser.save(
+        current.email,
+        RepoLocalSsUserModel(
+            email: current.email, address: state.address, isLoggedIn: true));
   }
 }
