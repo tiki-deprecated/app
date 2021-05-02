@@ -8,7 +8,7 @@ class RepoLocalSsKeysModel {
   String signPrivateKey;
   String signPublicKey;
   String dataPrivateKey;
-  String dataPublicKey; //TODO referral
+  String dataPublicKey;
 
   RepoLocalSsKeysModel(
       {this.address,
@@ -32,6 +32,6 @@ class RepoLocalSsKeysModel {
         'signPrivateKey': signPrivateKey,
         'signPublicKey': signPublicKey,
         'dataPrivateKey': dataPrivateKey,
-        'dataPublicKey': dataPublicKey
+        'dataPublicKey': dataPublicKey,
       };
 }

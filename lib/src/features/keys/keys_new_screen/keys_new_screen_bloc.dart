@@ -5,12 +5,17 @@
 
 import 'dart:async';
 
+import 'package:app/src/features/keys/keys_referral/keys_referral_cubit.dart';
+import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
+import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
+import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
 import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys.dart';
 import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys_model.dart';
 import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user.dart';
 import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user_model.dart';
+import 'package:app/src/utils/helper/helper_api_rsp.dart';
 import 'package:app/src/utils/helper/helper_crypto.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -19,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/ecc/api.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'keys_new_screen_event.dart';
 part 'keys_new_screen_state.dart';
@@ -28,9 +34,15 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
   final RepoLocalSsKeys _repoLocalSsKeys;
   final RepoLocalSsUser _repoLocalSsUser;
   final RepoLocalSsCurrent _repoLocalSsCurrent;
+  final KeysReferralCubit _keysReferralCubit;
+  final RepoApiBlockchainAddress _repoApiBlockchainAddress;
 
   KeysNewScreenBloc(
-      this._repoLocalSsKeys, this._repoLocalSsUser, this._repoLocalSsCurrent)
+      this._repoLocalSsKeys,
+      this._repoLocalSsUser,
+      this._repoLocalSsCurrent,
+      this._keysReferralCubit,
+      this._repoApiBlockchainAddress)
       : super(KeysNewScreenInitial());
 
   KeysNewScreenBloc.provide(BuildContext context)
@@ -38,6 +50,9 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
         _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
         _repoLocalSsCurrent =
             RepositoryProvider.of<RepoLocalSsCurrent>(context),
+        _keysReferralCubit = BlocProvider.of<KeysReferralCubit>(context),
+        _repoApiBlockchainAddress =
+            RepositoryProvider.of<RepoApiBlockchainAddress>(context),
         super(KeysNewScreenInitial());
 
   @override
@@ -76,32 +91,51 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
 
   Stream<KeysNewScreenState> _mapSkippedToState(
       KeysNewScreenSkipped skipped) async* {
-    await _saveAndLogIn();
-    yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
-        state.signPublic, state.signPrivate, state.address);
+    if (await _saveAndLogIn()) {
+      yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
+          state.signPublic, state.signPrivate, state.address);
+    } else
+      yield KeysNewScreenFailure(state.dataPublic, state.dataPrivate,
+          state.signPublic, state.signPrivate, state.address);
   }
 
   Stream<KeysNewScreenState> _mapContinueToState(
       KeysNewScreenContinue skipped) async* {
-    await _saveAndLogIn();
-    yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
-        state.signPublic, state.signPrivate, state.address);
+    if (await _saveAndLogIn()) {
+      yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
+          state.signPublic, state.signPrivate, state.address);
+    } else {
+      yield KeysNewScreenFailure(state.dataPublic, state.dataPrivate,
+          state.signPublic, state.signPrivate, state.address);
+    }
   }
 
-  Future<void> _saveAndLogIn() async {
-    await _repoLocalSsKeys.save(
-        state.address,
-        RepoLocalSsKeysModel(
-            address: state.address,
-            dataPrivateKey: state.dataPrivate,
-            dataPublicKey: state.dataPublic,
-            signPrivateKey: state.signPrivate,
-            signPublicKey: state.signPublic));
-    RepoLocalSsCurrentModel current =
-        await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-    await _repoLocalSsUser.save(
-        current.email,
-        RepoLocalSsUserModel(
-            email: current.email, address: state.address, isLoggedIn: true));
+  Future<bool> _saveAndLogIn() async {
+    HelperApiRsp<RepoApiBlockchainAddressRsp> rsp =
+        await _repoApiBlockchainAddress.issue(RepoApiBlockchainAddressReq(
+            state.dataPublic, state.signPublic,
+            referFrom: _keysReferralCubit.state.referer));
+    if (rsp.code == 200 && rsp.data.address == state.address) {
+      await _repoLocalSsKeys.save(
+          state.address,
+          RepoLocalSsKeysModel(
+              address: state.address,
+              dataPrivateKey: state.dataPrivate,
+              dataPublicKey: state.dataPublic,
+              signPrivateKey: state.signPrivate,
+              signPublicKey: state.signPublic));
+
+      RepoLocalSsCurrentModel current =
+          await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
+      await _repoLocalSsUser.save(
+          current.email,
+          RepoLocalSsUserModel(
+              email: current.email, address: state.address, isLoggedIn: true));
+      return true;
+    } else {
+      Sentry.captureMessage("Failed to register keys with blockchain",
+          level: SentryLevel.error);
+      return false;
+    }
   }
 }

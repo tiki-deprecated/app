@@ -4,7 +4,8 @@
  */
 
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/features/login/login_otp_valid/login_otp_valid_cubit.dart';
+import 'package:app/src/features/keys/keys_referral/keys_referral_cubit.dart';
+import 'package:app/src/features/login/login_otp_valid/login_otp_valid_bloc.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,8 +63,8 @@ class _DynamicLinkHandler extends State<DynamicLinkHandler> {
   void _handleBouncer(Uri link) {
     String otp = link.queryParameters["otp"];
     if (otp != null && otp.isNotEmpty) {
-      BlocProvider.of<LoginOtpValidCubit>(ConfigNavigate.key.currentContext)
-          .update(otp);
+      BlocProvider.of<LoginOtpValidBloc>(ConfigNavigate.key.currentContext)
+          .add(LoginOtpValidChanged(otp));
       Navigator.of(ConfigNavigate.key.currentContext).pushNamedAndRemoveUntil(
           ConfigNavigate.path.loginOtp, (route) => false);
     }
@@ -72,7 +73,7 @@ class _DynamicLinkHandler extends State<DynamicLinkHandler> {
   void _handleBlockchain(Uri link) {
     String ref = link.queryParameters["ref"];
     if (ref != null && ref.isNotEmpty) {
-      throw UnimplementedError();
+      BlocProvider.of<KeysReferralCubit>(context).updateReferer(ref);
     }
   }
 }

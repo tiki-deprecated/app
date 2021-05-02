@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/features/login/login_otp_valid/login_otp_valid_cubit.dart';
+import 'package:app/src/features/login/login_otp_valid/login_otp_valid_bloc.dart';
 import 'package:app/src/utils/helper/helper_log_out.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/src/cupertino/page_scaffold.dart';
@@ -27,7 +27,7 @@ class LoginOtpScreen extends PlatformScaffold {
   }
 
   Widget _screen(BuildContext context) {
-    return BlocListener<LoginOtpValidCubit, LoginOtpValidState>(
+    return BlocListener<LoginOtpValidBloc, LoginOtpValidState>(
         listener: (BuildContext context, LoginOtpValidState state) {
           if (state is LoginOtpValidSuccess) {
             if (state.hasKeys)

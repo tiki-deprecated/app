@@ -41,3 +41,9 @@ class KeysNewScreenSuccess extends KeysNewScreenState {
       String signPublic, String signPrivate, String address)
       : super(dataPublic, dataPrivate, signPublic, signPrivate, address);
 }
+
+class KeysNewScreenFailure extends KeysNewScreenState {
+  const KeysNewScreenFailure(String dataPublic, String dataPrivate,
+      String signPublic, String signPrivate, String address)
+      : super(dataPublic, dataPrivate, signPublic, signPrivate, address);
+}

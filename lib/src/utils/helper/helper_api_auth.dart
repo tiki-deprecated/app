@@ -17,21 +17,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-class HelperAuthProxy {
+class HelperApiAuth {
   final RepoLocalSsCurrent _repoLocalSsCurrent;
   final RepoLocalSsToken _repoLocalSsToken;
   final RepoApiBouncerJwt _repoApiBouncerJwt;
 
-  HelperAuthProxy(this._repoLocalSsCurrent, this._repoLocalSsToken,
+  HelperApiAuth(this._repoLocalSsCurrent, this._repoLocalSsToken,
       this._repoApiBouncerJwt);
 
-  HelperAuthProxy.provide(BuildContext context)
+  HelperApiAuth.provide(BuildContext context)
       : _repoLocalSsCurrent =
             RepositoryProvider.of<RepoLocalSsCurrent>(context),
         _repoLocalSsToken = RepositoryProvider.of<RepoLocalSsToken>(context),
         _repoApiBouncerJwt = RepositoryProvider.of<RepoApiBouncerJwt>(context);
 
-  Future<HelperApiRsp<T>> execute<T>(
+  Future<HelperApiRsp<T>> proxy<T>(
       Future<HelperApiRsp<T>> Function() request) async {
     HelperApiRsp<T> rsp = await request();
     if (rsp.code == 401) {
@@ -59,5 +59,17 @@ class HelperAuthProxy {
       }
     }
     return rsp;
+  }
+
+  Future<String> bearer() async {
+    RepoLocalSsCurrentModel current =
+        await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
+    RepoLocalSsTokenModel token = await _repoLocalSsToken.find(current.email);
+    return token.bearer;
+  }
+
+  Future<String> bearerForUser(String email) async {
+    RepoLocalSsTokenModel token = await _repoLocalSsToken.find(email);
+    return token.bearer;
   }
 }

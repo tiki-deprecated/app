@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-part of 'login_otp_valid_cubit.dart';
+part of 'login_otp_valid_bloc.dart';
 
 abstract class LoginOtpValidState extends Equatable {
   const LoginOtpValidState();

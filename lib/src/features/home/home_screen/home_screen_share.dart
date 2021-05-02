@@ -4,9 +4,11 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/features/keys/keys_referral/keys_referral_cubit.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
 
 class HomeScreenShare extends StatelessWidget {
@@ -22,6 +24,13 @@ class HomeScreenShare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<KeysReferralCubit, KeysReferralState>(
+        builder: (BuildContext context, KeysReferralState state) {
+          return _button(state.link);
+        });
+  }
+
+  Widget _button(Uri link) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -44,7 +53,7 @@ class HomeScreenShare extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          Share.share("https://mytiki.com", subject: _shareText);
+          Share.share(link.toString(), subject: _shareText);
         });
   }
 }
