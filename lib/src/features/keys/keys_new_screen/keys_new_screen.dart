@@ -61,7 +61,7 @@ class KeysNewScreen extends PlatformScaffold {
     return BlocConsumer<KeysNewScreenBloc, KeysNewScreenState>(
       listener: (BuildContext context, KeysNewScreenState screenState) {
         if (screenState is KeysNewScreenSuccess)
-          Navigator.pushNamed(context, ConfigNavigate.path.introControl);
+          Navigator.of(context).pushNamedAndRemoveUntil(ConfigNavigate.path.home, (route) => false);
       },
       builder: (BuildContext context, KeysNewScreenState screenState) {
         if (screenState is KeysNewScreenInitial)

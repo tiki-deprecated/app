@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,10 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
                                   Container(
                                       margin: EdgeInsets.symmetric(
                                           horizontal: _paddingHorizontalIcon),
-                                      child: HelperImage("icon-copy"))
+                                      child: Image(
+                                          image: AssetImage(
+                                              "res/images/icon-copy.png"),
+                                          color: IconTheme.of(context).color))
                                 ],
                               ))))))
         ],

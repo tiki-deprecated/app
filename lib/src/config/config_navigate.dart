@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/entry.dart';
+import 'package:app/src/features/home/home_screen/home_screen.dart';
 import 'package:app/src/features/intro/intro_screen_control/intro_screen_control.dart';
 import 'package:app/src/features/intro/intro_screen_earn/intro_screen_earn.dart';
 import 'package:app/src/features/intro/intro_screen_together/intro_screen_together.dart';
@@ -30,6 +31,7 @@ class ConfigNavigate {
       path.loginInbox: (BuildContext context) => screen.loginInbox,
       path.loginOtp: (BuildContext context) => screen.loginOtp,
       path.keysNew: (BuildContext context) => screen.keysNew,
+      path.home: (BuildContext context) => screen.home
     };
   }
 }
@@ -47,6 +49,8 @@ class _ConfigNavigatePath {
 
   final String keysNew = "/keys/new";
 
+  final String home = "/home";
+
   const _ConfigNavigatePath();
 }
 
@@ -60,6 +64,8 @@ class _ConfigNavigateScreen {
   final Widget loginOtp = LoginOtpScreen();
 
   final Widget keysNew = KeysNewScreen();
+
+  final Widget home = HomeScreen();
 
   _ConfigNavigateScreen();
 }

@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/features/repo/repo_api_website_users/repo_api_website_users.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -41,6 +42,9 @@ class Provide {
       ),
       RepositoryProvider<RepoApiBouncerJwt>(
         create: (context) => RepoApiBouncerJwt(),
+      ),
+      RepositoryProvider<RepoApiWebsiteUsers>(
+        create: (context) => RepoApiWebsiteUsers(),
       ),
     ], child: child);
   }
