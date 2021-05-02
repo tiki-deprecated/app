@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
 import 'package:app/src/features/repo/repo_api_website_users/repo_api_website_users.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current.dart';
 import 'package:flutter/widgets.dart';
@@ -49,6 +50,9 @@ class Provide {
       ),
       RepositoryProvider<RepoApiWebsiteUsers>(
         create: (context) => RepoApiWebsiteUsers(),
+      ),
+      RepositoryProvider<RepoApiBlockchainAddress>(
+        create: (context) => RepoApiBlockchainAddress.provide(context),
       ),
     ], child: child);
   }
