@@ -26,6 +26,7 @@ dependencies:
   path_provider: ^2.0.1
   url_launcher: ^6.0.3
   barcode_scan: ^3.0.1
+  android_intent: ^2.0.0
 
 dev_dependencies:
   flutter_test:

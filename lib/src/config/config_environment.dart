@@ -9,7 +9,7 @@ class ConfigEnvironment {
   static const envPublic = 'public';
 
   static const String appEnv =
-      String.fromEnvironment(_propertyEnv, defaultValue: envLocal);
+      String.fromEnvironment(_propertyEnv, defaultValue: envPublic);
 
   static const bool isPublic = appEnv == envPublic;
 }

@@ -17,8 +17,8 @@ import 'keys_new_screen_save_subtitle.dart';
 import 'keys_new_screen_save_title.dart';
 
 class KeysNewScreenSave extends StatelessWidget {
-  static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopSubtitle =
+  static final double _marginTopTitle = 10 * PlatformRelativeSize.blockVertical;
+  static final double _marginVerticalSubtitle =
       2.5 * PlatformRelativeSize.blockVertical;
   static final double _marginBottomButton =
       5 * PlatformRelativeSize.blockVertical;
@@ -40,7 +40,8 @@ class KeysNewScreenSave extends StatelessWidget {
                     alignment: Alignment.center,
                     child: KeysNewScreenSaveTitle()),
                 Container(
-                    margin: EdgeInsets.only(top: _marginTopSubtitle),
+                    margin:
+                        EdgeInsets.symmetric(vertical: _marginVerticalSubtitle),
                     alignment: Alignment.center,
                     child: KeysNewScreenSaveSubtitle()),
                 Expanded(

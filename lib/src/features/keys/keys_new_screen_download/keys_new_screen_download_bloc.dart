@@ -50,7 +50,13 @@ class KeysNewScreenDownloadBloc
     if (Platform.isIOS)
       documents = await getApplicationDocumentsDirectory();
     else
-      documents = await getExternalStorageDirectory();
+      documents = Directory((await getExternalStorageDirectory())
+              .parent
+              .parent
+              .parent
+              .parent
+              .path +
+          "/Download");
 
     String path = documents.path + '/' + fileName;
     File imgFile = new File(path);

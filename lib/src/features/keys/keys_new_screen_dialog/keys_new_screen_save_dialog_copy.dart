@@ -46,7 +46,7 @@ class KeysNewScreenSaveDialogCopy extends StatelessWidget {
   }
 
   Widget _content() {
-    return Column(children: [
+    return Column(mainAxisSize: MainAxisSize.min, children: [
       Container(
         margin: EdgeInsets.symmetric(vertical: _marginVerticalText),
         child: Text(_subtitle),

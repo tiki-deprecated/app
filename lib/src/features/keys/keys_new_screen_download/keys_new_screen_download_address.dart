@@ -10,14 +10,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KeysNewScreenDownloadAddress extends StatelessWidget {
-  static const String _text = "COPY";
+  static const String _text = "TIKI ID: ";
   static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
       builder: (BuildContext context, KeysNewScreenState state) {
-        return Text(_text,
+        return Text(_text + state.address,
             softWrap: true,
             style: TextStyle(
                 fontSize: _fontSize,

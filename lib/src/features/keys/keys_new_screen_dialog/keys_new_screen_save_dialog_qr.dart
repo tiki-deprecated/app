@@ -13,7 +13,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 class KeysNewScreenSaveDialogQr extends StatelessWidget {
   static const String _title = "QR Code";
-  static final double _height = 28 * PlatformRelativeSize.blockVertical;
+  static final double _size = 28 * PlatformRelativeSize.blockVertical;
 
   final String id;
   final String dataKey;
@@ -39,7 +39,9 @@ class KeysNewScreenSaveDialogQr extends StatelessWidget {
 
   Widget _content() {
     return Container(
-        height: _height,
+        alignment: Alignment.center,
+        height: _size,
+        width: _size,
         child: QrImage(
             version: QrVersions.auto,
             data: id + "." + dataKey + "." + signKey,

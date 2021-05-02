@@ -36,8 +36,8 @@ class App extends StatelessWidget {
           DefaultWidgetsLocalizations.delegate,
         ],
         theme: ThemeData(
-            fontFamily: _nunitoSans,
             textTheme: Theme.of(context).textTheme.apply(
+                fontFamily: _nunitoSans,
                 bodyColor: ConfigColor.mardiGras,
                 displayColor: ConfigColor.mardiGras)));
   }

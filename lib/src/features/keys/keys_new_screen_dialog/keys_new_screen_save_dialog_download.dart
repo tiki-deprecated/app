@@ -5,19 +5,20 @@
 
 import 'dart:io';
 
+import 'package:android_intent/android_intent.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class KeysNewScreenSaveDialogDownload extends StatelessWidget {
   static const String _title = "Location Saved";
-  static const String _locationAndroid = "Location";
+  static const String _locationAndroid =
+      "Files > Downloads > tiki-do-not-share.png";
   static const String _locationIOS =
       "Files > On My iPhone > TIKI > tiki-do-not-share.png";
   static const String _open = "Go to File";
-  static final double _marginVerticalText =
-      1 * PlatformRelativeSize.blockVertical;
 
   final String path;
 
@@ -55,7 +56,18 @@ class KeysNewScreenSaveDialogDownload extends StatelessWidget {
     return TextButton(
       child: Text(_open),
       onPressed: () async {
-        await launch("shareddocuments://" + path);
+        if (Platform.isAndroid) {
+          AndroidIntent intent = AndroidIntent(
+            action: "android.intent.action.VIEW",
+            data: path,
+            type: "image/png",
+          );
+          intent.launch().catchError((e) {
+            Sentry.captureException(Exception("Failed to open Files app"),
+                stackTrace: StackTrace.current);
+          });
+        } else
+          await launch("shareddocuments://" + path);
       },
     );
   }
