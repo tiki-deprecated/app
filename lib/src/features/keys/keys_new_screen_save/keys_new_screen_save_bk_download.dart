@@ -5,9 +5,11 @@
 
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen_download/keys_new_screen_download_bloc.dart';
+import 'package:app/src/utils/helper/helper_permission.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'keys_new_screen_save_bk.dart';
 
@@ -26,9 +28,11 @@ class KeysNewScreenSaveBkDownload extends KeysNewScreenSaveBk {
   }
 
   @override
-  void onPressed(BuildContext context, KeysNewScreenState state) {
-    BlocProvider.of<KeysNewScreenDownloadBloc>(context)
-        .add(KeysNewScreenDownloaded(false));
-    BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
+  void onPressed(BuildContext context, KeysNewScreenState state) async {
+    if (await HelperPermission.request(Permission.storage)) {
+      BlocProvider.of<KeysNewScreenDownloadBloc>(context)
+          .add(KeysNewScreenDownloaded(false));
+      BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
+    }
   }
 }

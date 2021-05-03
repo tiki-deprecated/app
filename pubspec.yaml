@@ -27,6 +27,7 @@ dependencies:
   url_launcher: ^6.0.3
   barcode_scan: ^3.0.1
   android_intent: ^2.0.0
+  permission_handler: ^7.1.0
 
 dev_dependencies:
   flutter_test:
