@@ -115,7 +115,6 @@ class KeysRestoreScreen extends PlatformScaffold {
                   margin: EdgeInsets.only(top: _marginTopSubmit),
                   child: KeysRestoreScreenSubmit())
             ]))
-        //UISecurityRestore((keys) => _onLoadComplete(context, keys))*/
       ]),
     );
   }
