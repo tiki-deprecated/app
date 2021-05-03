@@ -60,7 +60,7 @@ class KeysNewScreenDownloadBloc
 
     String path = documents.path + '/' + fileName;
     File imgFile = new File(path);
-    await imgFile.writeAsBytes(pngBytes);
+    await imgFile.writeAsBytes(pngBytes, flush: true);
     yield KeysNewScreenDownloadSuccess(rendered.shouldShare, path);
   }
 }
