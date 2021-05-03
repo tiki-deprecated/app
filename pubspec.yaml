@@ -1,9 +1,7 @@
 name: app
-description: CODE NAME TIKI BAR
-
+description: It's your data. Take back control.
+version: 1.0.0+1
 publish_to: 'none'
-
-version: 0.0.6+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -12,30 +10,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  uuid: ^3.0.2 #ok
-  rxdart: ^0.21.0
-  qr_flutter: ^4.0.0
-  google_fonts: ^2.0.0 #ok
-  file_picker: ^3.0.0
-  url_launcher: ^6.0.2
-  qr_code_tools: ^0.0.7
-  pointycastle: ^2.0.1 #ok
-  path_provider: ^2.0.1
-  android_intent: ^2.0.0
-  cupertino_icons: ^1.0.2 #ok
-  #firebase_messaging: ^9.0.0
-  flutter_secure_storage: ^4.1.0 #ok
-  barcode_scan: ^3.0.1
-  uni_links: ^0.4.0
-  http: ^0.13.1 #ok
-  shared_preferences: ^2.0.5 #ok
-  share: ^2.0.1
-  sentry_flutter: ^5.0.0 #ok
+  cupertino_icons: ^1.0.2
+  equatable: ^2.0.0
+  firebase_core: ^1.0.4
+  firebase_dynamic_links: ^2.0.2
+  flutter_bloc: ^7.0.0
+  flutter_secure_storage: ^4.2.0
+  http: ^0.13.1
   package_info: ^2.0.0
-  amplitude_flutter: ^2.0.0 #ok
-  firebase_core: ^1.0.3 #ok
-  firebase_dynamic_links: ^2.0.0 #ok
-
+  sentry_flutter: ^5.0.0
+  shared_preferences: ^2.0.5
+  pointycastle: ^3.0.1
+  qr_flutter: ^4.0.0
+  share: ^2.0.1
+  path_provider: ^2.0.1
+  url_launcher: ^6.0.3
+  barcode_scan: ^3.0.1
+  android_intent: ^2.0.0
+  permission_handler: ^7.1.0
 
 dev_dependencies:
   flutter_test:
@@ -43,10 +35,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
   assets:
     - res/images/
-
   fonts:
     - family: Koara
       fonts:
@@ -55,3 +45,40 @@ flutter:
         - asset: res/fonts/Koara-Regular.ttf
         - asset: res/fonts/Koara-Light.ttf
           weight: 300
+    - family: NunitoSans
+      fonts:
+        - asset: res/fonts/NunitoSans-Black.ttf
+          weight: 900
+        - asset: res/fonts/NunitoSans-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: res/fonts/NunitoSans-ExtraBold.ttf
+          weight: 800
+        - asset: res/fonts/NunitoSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: res/fonts/NunitoSans-Bold.ttf
+          weight: 700
+        - asset: res/fonts/NunitoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: res/fonts/NunitoSans-SemiBold.ttf
+          weight: 600
+        - asset: res/fonts/NunitoSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: res/fonts/NunitoSans-Regular.ttf
+          weight: 400
+        - asset: res/fonts/NunitoSans-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: res/fonts/NunitoSans-Light.ttf
+          weight: 300
+        - asset: res/fonts/NunitoSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: res/fonts/NunitoSans-ExtraLight.ttf
+          weight: 200
+        - asset: res/fonts/NunitoSans-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
