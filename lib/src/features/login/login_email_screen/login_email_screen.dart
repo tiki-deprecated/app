@@ -63,7 +63,8 @@ class LoginEmailScreen extends PlatformScaffold {
   }
 
   Widget _foreground(BuildContext context) {
-    return Row(children: [
+    return SingleChildScrollView(
+        child: Row(children: [
       Expanded(
           child: Container(
               padding: EdgeInsets.symmetric(
@@ -88,6 +89,6 @@ class LoginEmailScreen extends PlatformScaffold {
                     margin: EdgeInsets.only(top: _marginTopButton),
                     child: LoginEmailScreenButton())
               ])))
-    ]);
+    ]));
   }
 }
