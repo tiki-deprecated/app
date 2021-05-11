@@ -11,7 +11,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// The login screen button.
+///
+/// The button that starts the login proccess. Uses bloc pattern.
+///
+/// * See also [LoginOtpReqBloc]
 class LoginEmailScreenButton extends StatelessWidget {
+
   static const String _text = "CONTINUE";
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
@@ -23,14 +29,18 @@ class LoginEmailScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _blocConsumer(context);
+  }
+
+  BlocConsumer _blocConsumer(BuildContext context) {
     return BlocConsumer<LoginOtpReqBloc, LoginOtpReqState>(
-        listener: (BuildContext context, LoginOtpReqState state) {
-      if (state is LoginOtpReqStateSuccess)
-        Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
-    }, builder: (BuildContext context, LoginOtpReqState state) {
-      return _button(
-          context, state is LoginOtpReqStateInProgress ? state.isValid : false);
-    });
+        listener: _blocConsumerListener, builder: _blocConsumerBuilder);
+  }
+
+  Widget _blocConsumerBuilder(BuildContext context, LoginOtpReqState state) {
+    bool isButtonActive =
+    state is LoginOtpReqStateInProgress ? state.isValid : false;
+    return _button(context, isButtonActive);
   }
 
   Widget _button(BuildContext context, bool isActive) {
@@ -55,11 +65,17 @@ class LoginEmailScreenButton extends StatelessWidget {
                         ))))
           ],
         ),
-        onPressed: () {
-          if (isActive) {
-            LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
-            bloc.add(LoginOtpReqSubmitted(bloc.state.email));
-          }
-        });
+        onPressed: isActive ? () => _submitLogin(context) : null);
   }
+
+  _submitLogin(BuildContext context) {
+    LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
+    bloc.add(LoginOtpReqSubmitted(bloc.state.email));
+  }
+
+  _blocConsumerListener(BuildContext context, LoginOtpReqState state) {
+    if (state is LoginOtpReqStateSuccess)
+      Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
+  }
+
 }
