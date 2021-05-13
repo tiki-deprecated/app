@@ -1,4 +1,8 @@
 PODS:
+  - Amplitude (7.2.0)
+  - amplitude_flutter (0.0.1):
+    - Amplitude (= 7.2.0)
+    - Flutter
   - barcode_scan (0.0.1):
     - Flutter
     - MTBBarcodeScanner
@@ -67,6 +71,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - barcode_scan (from `.symlinks/plugins/barcode_scan/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
@@ -83,6 +88,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Amplitude
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -96,6 +102,8 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
+  amplitude_flutter:
+    :path: ".symlinks/plugins/amplitude_flutter/ios"
   barcode_scan:
     :path: ".symlinks/plugins/barcode_scan/ios"
   firebase_core:
@@ -124,6 +132,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
+  Amplitude: c948c6f99c7f798c196523b2a5584367401d910f
+  amplitude_flutter: 5c934cf8331619b62bbd5a69f3cfea9090b3ca94
   barcode_scan: a5c27959edfafaa0c771905bad0b29d6d39e4479
   Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
   firebase_core: 84dcd80ac6d29c3d1039071b7306ee99688eb9c7
