@@ -12,8 +12,6 @@ class IntroScreenButton extends StatelessWidget {
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
-  static final double _marginHorizontal =
-      10 * PlatformRelativeSize.blockHorizontal;
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
   static final double _buttonWidth = 50 * PlatformRelativeSize.blockHorizontal;
