@@ -26,7 +26,7 @@ class HomeScreenShare extends StatelessWidget {
     });
   }
 
-  _share() {
+  _share(BuildContext context) {
     Share.share(_state.link.toString(), subject: _shareText);
   }
 }
