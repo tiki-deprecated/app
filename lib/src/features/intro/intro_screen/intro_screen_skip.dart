@@ -3,27 +3,25 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/widgets/tiki_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// The [IntroScreen] skipper link.
 class IntroScreenSkip extends StatelessWidget {
-  static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
+  static final int _fontSize = 4;
 
   final String toPath;
+
   IntroScreenSkip(this.toPath);
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(toPath);
-        },
-        child: Text('Skip',
-            style: TextStyle(
-                color: ConfigColor.black,
-                fontWeight: FontWeight.bold,
-                fontSize: _fontSize)));
+    return TikiTextButton(
+      "Skip",
+      () => Navigator.of(context).pushNamed(toPath),
+      fontWeight: FontWeight.bold,
+      fontSize: _fontSize,
+    );
   }
 }
