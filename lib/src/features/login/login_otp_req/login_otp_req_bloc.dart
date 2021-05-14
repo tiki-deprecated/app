@@ -9,6 +9,7 @@ import 'package:app/src/features/repo/repo_local_ss_otp/repo_local_ss_otp.dart';
 import 'package:app/src/features/repo/repo_local_ss_otp/repo_local_ss_otp_model.dart';
 import 'package:app/src/utils/helper/helper_api_rsp.dart';
 import 'package:bloc/bloc.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,9 +64,7 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
     }
   }
 
-  bool _isValid(String s) {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(s);
+  bool _isValid(String email) {
+    return EmailValidator.validate(email);
   }
 }
