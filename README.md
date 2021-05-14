@@ -5,6 +5,7 @@
 **No** secrets.  **Real** transparency. **Open source** by design.
 
 Everything that we do in our app is here. And you are welcome to explore it and contribute.
+
 -----
 #### Our Mission
 

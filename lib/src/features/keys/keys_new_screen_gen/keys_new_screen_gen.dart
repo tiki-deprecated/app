@@ -4,10 +4,10 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import 'keys_new_screen_gen_restore.dart';
 import 'keys_new_screen_gen_subtitle.dart';
@@ -50,7 +50,7 @@ class _KeysNewScreenGen extends State<KeysNewScreenGen> {
                 Expanded(
                     child: Container(
                         alignment: Alignment.center,
-                        child: HelperImage("keys-create-pineapple"))),
+                        child: Lottie.asset("res/animation/Securing_account_with_blob.json"))),
                 Container(
                     margin: EdgeInsets.only(bottom: _marginBottomButton),
                     child: KeysNewScreenGenRestore())

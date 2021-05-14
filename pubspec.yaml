@@ -27,6 +27,7 @@ dependencies:
   android_intent: ^2.0.0
   permission_handler: ^7.1.0
   email_validator: ^2.0.1
+  lottie: ^1.0.1
   amplitude_flutter: ^2.0.0
 
 dev_dependencies:
@@ -37,6 +38,7 @@ flutter:
   uses-material-design: true
   assets:
     - res/images/
+    - res/animation/
   fonts:
     - family: Koara
       fonts:
