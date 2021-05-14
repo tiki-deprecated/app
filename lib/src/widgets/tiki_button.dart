@@ -30,7 +30,7 @@ class TikiTextButton extends StatelessWidget {
         padding: _getPadding(),
         color: backgroundColor,
         child: TextButton(
-        onPressed: isActive ? callback() : null,
+        onPressed: isActive ? callback : null,
         child: Text(this.text,
             style: TextStyle(
                 color: this.color,

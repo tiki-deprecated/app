@@ -19,6 +19,12 @@ class TikiAnalytics {
   ///
   /// Initializes the analytics environment depending on the [environment] parameter and
   /// loads the instance into [_logger] or [_loggerTest].
+  /// With Amplitude we need to use these to keep users untrackable:
+  /// ```
+  /// //to disables IDFA, IDFV, city, IP address and location tracking
+  /// await amplitude.enableCoppaControl();
+  /// await amplitude.setUserId(null); // forces autogeneration of random id
+  /// ```
   static Future<void> _init({test = false}) async {
     const bool test = environment == ConfigEnvironment.envLocal;
     const prodApiKey = "1899ef0929b6700fffbb438c1df4fe2f";
@@ -26,6 +32,8 @@ class TikiAnalytics {
     var project = test ? "App-test" : "App";
     String apiKey = test ? testApiKey : prodApiKey;
     final Amplitude _logger = Amplitude.getInstance(instanceName: project);
+    _logger.enableCoppaControl();
+    _logger.setUserId(null);
     _logger.init(apiKey);
     _logger.logEvent('Amplitude startup');
   }
