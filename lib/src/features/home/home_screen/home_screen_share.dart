@@ -22,11 +22,11 @@ class HomeScreenShare extends StatelessWidget {
     return BlocBuilder<KeysReferralCubit, KeysReferralState>(
         builder: (BuildContext context, KeysReferralState state) {
       _state = state;
-      return BigButton("SHARE", true, _share);
+      return BigButton("SHARE", true, _share, trailing: Icon(Icons.share));
     });
   }
 
-  _share(BuildContext context) {
+  _share(_) {
     Share.share(_state.link.toString(), subject: _shareText);
   }
 }

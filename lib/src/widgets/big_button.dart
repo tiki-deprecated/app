@@ -7,6 +7,8 @@ class BigButton extends StatelessWidget{
   final Function _callback;
   final bool _isActive;
   final String _text;
+  final Widget trailing;
+  final Widget leading;
 
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
@@ -16,29 +18,37 @@ class BigButton extends StatelessWidget{
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
 
-  const BigButton(this._text,  this._isActive, this._callback);
+  const BigButton(this._text,  this._isActive, this._callback, {this.trailing, this.leading});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
+          padding:  EdgeInsets.symmetric(vertical: _marginVertical, horizontal: _marginHorizontal),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(10 * PlatformRelativeSize.blockVertical))),
             primary: _isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
-        child: Wrap(
-          direction: Axis.vertical,
+
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: _marginVertical, horizontal: _marginHorizontal),
-                child: Center(
-                    child: Text(_text,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: _fontSize,
-                          letterSpacing: _letterSpacing,
-                        ))))
+            leading ?? Container(),
+            Wrap(
+              direction: Axis.vertical,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(right:PlatformRelativeSize.marginHorizontal),
+                  child: Text(_text,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: _fontSize,
+                              letterSpacing: _letterSpacing,
+                            )))
+              ],
+            ),
+            trailing ?? Container()
           ],
         ),
         onPressed: _isActive ? () => _callback(context) : null
