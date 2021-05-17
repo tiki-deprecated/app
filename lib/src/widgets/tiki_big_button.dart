@@ -2,7 +2,7 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
 
-class BigButton extends StatelessWidget{
+class TikiBigButton extends StatelessWidget{
 
   final Function _callback;
   final bool _isActive;
@@ -18,7 +18,7 @@ class BigButton extends StatelessWidget{
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
 
-  const BigButton(this._text,  this._isActive, this._callback, {this.trailing, this.leading});
+  const TikiBigButton(this._text,  this._isActive, this._callback, {this.trailing, this.leading});
 
   @override
   Widget build(BuildContext context) {

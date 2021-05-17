@@ -6,7 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/widgets.dart';
 
-import '../intro_screen/intro_screen.dart';
+import 'intro_screen.dart';
 
 class IntroScreenTogether extends IntroScreen {
   static const String _title = "We're stronger together";

@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
-import 'package:app/src/widgets/big_button.dart';
+import 'package:app/src/widgets/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +19,7 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
         builder: (BuildContext context, KeysNewScreenState state) {
           bool isActive = state is KeysNewScreenInProgress ? state.isBackedUp : false;
-      return BigButton("CONTINUE", isActive, _continueAfterSave);
+      return TikiBigButton("CONTINUE", isActive, _continueAfterSave);
     });
   }
 

@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/features/keys/keys_referral/keys_referral_cubit.dart';
-import 'package:app/src/widgets/big_button.dart';
+import 'package:app/src/widgets/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +22,7 @@ class HomeScreenShare extends StatelessWidget {
     return BlocBuilder<KeysReferralCubit, KeysReferralState>(
         builder: (BuildContext context, KeysReferralState state) {
       _state = state;
-      return BigButton("SHARE", true, _share, trailing: Icon(Icons.share));
+      return TikiBigButton("SHARE", true, _share, trailing: Icon(Icons.share));
     });
   }
 

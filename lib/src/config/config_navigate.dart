@@ -5,9 +5,9 @@
 
 import 'package:app/src/entry.dart';
 import 'package:app/src/features/home/home_screen/home_screen.dart';
-import 'package:app/src/features/intro/intro_screen_control/intro_screen_control.dart';
-import 'package:app/src/features/intro/intro_screen_earn/intro_screen_earn.dart';
-import 'package:app/src/features/intro/intro_screen_together/intro_screen_together.dart';
+import 'package:app/src/features/intro/intro_screen/intro_screen_control.dart';
+import 'package:app/src/features/intro/intro_screen/intro_screen_earn.dart';
+import 'package:app/src/features/intro/intro_screen/intro_screen_together.dart';
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
 import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen.dart';
 import 'package:app/src/features/login/login_email_screen/login_email_screen.dart';

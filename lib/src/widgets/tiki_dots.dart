@@ -5,13 +5,13 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class IntroScreenDots extends StatelessWidget {
+class TikiDots extends StatelessWidget {
   final int size;
   final int pos;
 
-  IntroScreenDots(this.size, this.pos);
+  TikiDots(this.size, this.pos);
 
   @override
   Widget build(BuildContext context) {
