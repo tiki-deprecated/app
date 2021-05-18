@@ -11,6 +11,7 @@ import 'package:app/src/features/keys/keys_new_screen_download/keys_new_screen_d
 import 'package:app/src/features/keys/keys_new_screen_download/keys_new_screen_download_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen_gen/keys_new_screen_gen.dart';
 import 'package:app/src/features/keys/keys_new_screen_save/keys_new_screen_save.dart';
+import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,16 +58,21 @@ class KeysNewScreen extends PlatformScaffold {
     );
   }
 
+  // TODO check if is new user and call
+  // TikiAnalytics.getLogger().regenerateDeviceId();
   Widget _foreground() {
     return BlocConsumer<KeysNewScreenBloc, KeysNewScreenState>(
       listener: (BuildContext context, KeysNewScreenState screenState) {
         if (screenState is KeysNewScreenSuccess)
-          Navigator.of(context).pushNamedAndRemoveUntil(ConfigNavigate.path.home, (route) => false);
+          TikiAnalytics.getLogger().logEvent('KEYS_CREATED');
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            ConfigNavigate.path.home, (route) => false);
       },
       builder: (BuildContext context, KeysNewScreenState screenState) {
-        if (screenState is KeysNewScreenInitial)
+        if (screenState is KeysNewScreenInitial) {
+          TikiAnalytics.getLogger().logEvent('CREATE_KEYS');
           return KeysNewScreenGen();
-        else
+        } else {
           return BlocConsumer<KeysNewScreenDownloadBloc,
                   KeysNewScreenDownloadState>(
               listener: (BuildContext context,
@@ -74,11 +80,15 @@ class KeysNewScreen extends PlatformScaffold {
                   downloadStateListener(context, downloadState),
               builder: (BuildContext context,
                   KeysNewScreenDownloadState downloadState) {
-                if (downloadState is KeysNewScreenDownloadInProgress)
+                if (downloadState is KeysNewScreenDownloadInProgress){
+                  TikiAnalytics.getLogger().logEvent('DOWNLOAD_KEYS');
                   return KeysNewScreenDownload();
-                else
+                }else {
+                  TikiAnalytics.getLogger().logEvent('SAVE_KEYS');
                   return KeysNewScreenSave();
+                }
               });
+        }
       },
     );
   }

@@ -8,10 +8,10 @@ class TikiForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Container(
+    return Container(
             padding: EdgeInsets.symmetric(
                 horizontal: PlatformRelativeSize.marginHorizontal2x),
-            child: Column(children: this.children)));
+            child: SingleChildScrollView(
+                child: Column(children: this.children)));
   }
 }

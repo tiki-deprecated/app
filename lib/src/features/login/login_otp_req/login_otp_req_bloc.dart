@@ -58,11 +58,9 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
           RepoLocalSsOtpModel(email: submitted.email, salt: rspData.salt));
       await _repoLocalSsCurrent.save(RepoLocalSsCurrent.key,
           RepoLocalSsCurrentModel(email: submitted.email));
-      print("success");
-      //yield LoginOtpReqStateSuccess(submitted.email);
+      yield LoginOtpReqStateSuccess(submitted.email);
     } else {
-      print("error");
-      //yield LoginOtpReqStateFailure(submitted.email);
+      yield LoginOtpReqStateFailure(submitted.email);
     }
   }
 

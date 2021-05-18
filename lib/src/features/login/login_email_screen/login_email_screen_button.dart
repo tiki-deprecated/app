@@ -3,10 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/widgets/components/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +46,7 @@ class LoginEmailScreenButton extends StatelessWidget {
   }
 
   _submitLogin(BuildContext context) {
+    TikiAnalytics.getLogger().logEvent('EMAIL_SUBMITTED');
     Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
     LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
     bloc.add(LoginOtpReqSubmitted(bloc.state.email));

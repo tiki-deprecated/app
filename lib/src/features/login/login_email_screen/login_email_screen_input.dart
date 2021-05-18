@@ -3,9 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_big_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

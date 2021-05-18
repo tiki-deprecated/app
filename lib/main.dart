@@ -22,7 +22,7 @@ import 'src/config/config_sentry.dart';
 /// [SentryFlutter] enables Sentry.io monitoring in the app.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await TikiAnalytics.getLogger();
+  TikiAnalytics.getLogger();
   await Firebase.initializeApp();
   FlutterSecureStorage secureStorage = FlutterSecureStorage();
   HelperLogIn helperLogIn = HelperLogIn.auto(secureStorage);
