@@ -11,8 +11,8 @@ import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys.dart
 import 'package:app/src/features/repo/repo_local_ss_keys/repo_local_ss_keys_model.dart';
 import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user.dart';
 import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user_model.dart';
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bloc/bloc.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
