@@ -19,17 +19,19 @@ class TikiScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GestureDetector(
-            child: Stack(children: [background, _foreground(context)]),
-            onVerticalDragEnd: (dragEndDetails) => onVerticalDrag != null
-                ? onVerticalDrag(context, dragEndDetails)
-                : null,
-            onHorizontalDragEnd: (dragEndDetails) => onHorizontalDrag != null
-                ? onHorizontalDrag(context, dragEndDetails)
-                : null));
+        body: Center(
+            child: GestureDetector(
+                child: Stack(children: [background, _foreground(context)]),
+                onVerticalDragEnd: (dragEndDetails) => onVerticalDrag != null
+                    ? onVerticalDrag(context, dragEndDetails)
+                    : null,
+                onHorizontalDragEnd: (dragEndDetails) =>
+                    onHorizontalDrag != null
+                        ? onHorizontalDrag(context, dragEndDetails)
+                        : null)));
   }
 
   Widget _foreground(BuildContext context) {
-    return TikiForeground(children: foregroundChildren);
+    return SafeArea(child: TikiForeground(children: foregroundChildren));
   }
 }

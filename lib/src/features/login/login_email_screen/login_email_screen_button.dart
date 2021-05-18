@@ -31,8 +31,8 @@ class LoginEmailScreenButton extends StatelessWidget {
   }
 
   _blocConsumerListener(BuildContext context, LoginOtpReqState state) {
-    if (state is LoginOtpReqStateSuccess)
-      Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
+    if (state is LoginOtpReqStateFailure)
+      Navigator.of(context).pushNamed(ConfigNavigate.path.loginEmail);
   }
 
   Widget _blocConsumerBuilder(BuildContext context, LoginOtpReqState state) {

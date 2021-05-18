@@ -6,7 +6,6 @@
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/login/login_otp_valid/login_otp_valid_bloc.dart';
 import 'package:app/src/utils/helper/helper_log_out.dart';
-import 'package:app/src/utils/platform/platform_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,18 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'login_otp_screen_load.dart';
 
-class LoginOtpScreen extends PlatformScaffold {
+class LoginOtpScreen extends StatelessWidget {
   @override
-  Scaffold androidScaffold(BuildContext context) {
-    return Scaffold(body: _screen(context));
-  }
-
-  @override
-  CupertinoPageScaffold iosScaffold(BuildContext context) {
-    return CupertinoPageScaffold(child: _screen(context));
-  }
-
-  Widget _screen(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocListener<LoginOtpValidBloc, LoginOtpValidState>(
         listener: (BuildContext context, LoginOtpValidState state) {
           if (state is LoginOtpValidSuccess) {

@@ -29,10 +29,12 @@ class KeysNewScreenSave extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: PlatformRelativeSize.marginHorizontal2x),
-        child: SingleChildScrollView(
+    return Row(children: [
+    Expanded(
+    child: Container(
+    padding: EdgeInsets.symmetric(
+        horizontal: PlatformRelativeSize.marginHorizontal2x),
+    child: SingleChildScrollView(
             child: Column(children: [
           Container(
               margin: EdgeInsets.only(top: _marginTopTitle),
@@ -69,6 +71,6 @@ class KeysNewScreenSave extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(bottom: _marginBottomButton),
               child: KeysNewScreenSaveRestore())
-        ])));
+        ]))))]);
   }
 }
