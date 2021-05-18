@@ -9,8 +9,9 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/tiki_subtitle.dart';
-import 'package:app/src/widgets/tiki_title.dart';
+import 'package:app/src/widgets/components/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_title.dart';
+import 'package:app/src/widgets/screens/foreground.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,13 +50,7 @@ class LoginEmailScreen extends StatelessWidget {
   }
 
   Widget _foreground(BuildContext context) {
-    return SingleChildScrollView(
-        child: Row(children: [
-          Expanded(
-              child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PlatformRelativeSize.marginHorizontal2x),
-                  child: Column(children: [
+    return TikiForeground(children: [
                   Container(
                   margin: EdgeInsets.only(
                   top: _marginTopTitle, right: _marginRightTitle),
@@ -67,15 +62,13 @@ class LoginEmailScreen extends StatelessWidget {
                   child: TikiSubtitle(_subtitle, fontWeight: FontWeight.w600)),
               Container(
                   margin: EdgeInsets.only(top: _marginTopInput),
-                  child: LoginEmailScreenInput()
-                      : LoginEmailScreenInputAndroid()),
+                  child: LoginEmailScreenInput(),
+              ),
           LoginEmailScreenError(),
           Container(
               margin: EdgeInsets.only(top: _marginTopButton),
               child: LoginEmailScreenButton())
-        ])))]
-    )
-    );
+    ]);
   }
 
   @override

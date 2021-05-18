@@ -6,13 +6,14 @@
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/tiki_big_button.dart';
-import 'package:app/src/widgets/tiki_text_button.dart';
-import 'package:app/src/widgets/tiki_dots.dart';
-import 'package:app/src/widgets/tiki_subtitle.dart';
-import 'package:app/src/widgets/tiki_title.dart';
+import 'package:app/src/widgets/components/tiki_big_button.dart';
+import 'package:app/src/widgets/components/tiki_dots.dart';
+import 'package:app/src/widgets/components/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_text_button.dart';
+import 'package:app/src/widgets/components/tiki_title.dart';
+import 'package:app/src/widgets/screens/background.dart';
+import 'package:app/src/widgets/screens/foreground.dart';
 import 'package:flutter/material.dart';
-
 
 abstract class IntroScreen extends StatelessWidget {
   static final double _marginTopText = 2.5 * PlatformRelativeSize.blockVertical;
@@ -36,53 +37,45 @@ abstract class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GestureDetector(
-            child: Stack(children: [_background(), _foreground(context)]),
+            child:
+                Stack(children: [_background(context), _foreground(context)]),
             onHorizontalDragEnd: (dragEndDetails) =>
-                onHorizontalDrag(context, dragEndDetails))
+                onHorizontalDrag(context, dragEndDetails)));
+  }
+
+  Widget _background(BuildContext context) {
+    return TikiBackground(
+      backgroundColor: backgroundColor,
+      bottomLeft: HelperImage('intro-blob'),
+      bottomRight: HelperImage('intro-pineapple'),
     );
   }
 
-  Widget _background() {
-    return Stack(children: [
-      Center(child: Container(color: backgroundColor)),
-      Align(alignment: Alignment.bottomLeft, child: HelperImage('intro-blob')),
-      Align(
-          alignment: Alignment.bottomRight,
-          child: HelperImage('intro-pineapple')),
-    ]);
-  }
-
   Widget _foreground(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal2x),
-              child: Column(children: [
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopSkip),
-                    alignment: Alignment.topRight,
-                    child: TikiTextButton(
-                      "Skip",
-                      _skipFunction,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 4,
-                    )),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopTitle),
-                    alignment: Alignment.centerLeft,
-                    child: TikiTitle(title)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopText),
-                    child: TikiSubtitle(subtitle)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopText),
-                    child: TikiDots(screenTotal, screenPos)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopButton),
-                    alignment: Alignment.centerLeft,
-                    child: TikiBigButton(button, true, onButtonPressed))
-              ])))
+    return TikiForeground(children: [
+      Container(
+          margin: EdgeInsets.only(top: _marginTopSkip),
+          alignment: Alignment.topRight,
+          child: TikiTextButton(
+            "Skip",
+            _skipFunction,
+            fontWeight: FontWeight.bold,
+            fontSize: 4,
+          )),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopTitle),
+          alignment: Alignment.centerLeft,
+          child: TikiTitle(title)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText),
+          child: TikiSubtitle(subtitle)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText),
+          child: TikiDots(screenTotal, screenPos)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopButton),
+          alignment: Alignment.centerLeft,
+          child: TikiBigButton(button, true, onButtonPressed)),
     ]);
   }
 
@@ -90,8 +83,7 @@ abstract class IntroScreen extends StatelessWidget {
 
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails);
 
-
   _skipFunction(context) {
-      Navigator.of(context).pushNamed(skipToPath);
+    Navigator.of(context).pushNamed(skipToPath);
   }
 }

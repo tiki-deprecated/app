@@ -35,12 +35,11 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
         super(LoginOtpReqStateInitial());
 
   @override
-  Stream<LoginOtpReqState> mapEventToState(
-    LoginOtpReqEvent event,
-  ) async* {
+  Stream<LoginOtpReqState> mapEventToState(LoginOtpReqEvent event) async* {
     if (event is LoginOtpReqChanged)
       yield* _mapChangedToState(event);
-    else if (event is LoginOtpReqSubmitted) yield* _mapSubmittedToState(event);
+    else if (event is LoginOtpReqSubmitted)
+      yield* _mapSubmittedToState(event);
   }
 
   Stream<LoginOtpReqState> _mapChangedToState(
@@ -50,6 +49,7 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
 
   Stream<LoginOtpReqState> _mapSubmittedToState(
       LoginOtpReqSubmitted submitted) async* {
+    print("mapsubmitted");
     HelperApiRsp<RepoApiBouncerOtpRsp> rsp =
         await _repoApiBouncerOtp.email(RepoApiBouncerOtpReq(submitted.email));
     if (rsp.code == 200) {
@@ -58,9 +58,11 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
           RepoLocalSsOtpModel(email: submitted.email, salt: rspData.salt));
       await _repoLocalSsCurrent.save(RepoLocalSsCurrent.key,
           RepoLocalSsCurrentModel(email: submitted.email));
-      yield LoginOtpReqStateSuccess(submitted.email);
+      print("success");
+      //yield LoginOtpReqStateSuccess(submitted.email);
     } else {
-      yield LoginOtpReqStateFailure(submitted.email);
+      print("error");
+      //yield LoginOtpReqStateFailure(submitted.email);
     }
   }
 

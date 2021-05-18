@@ -16,6 +16,7 @@ class TikiDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(size, (i) => _dot(i == pos ? true : false)));
   }
 

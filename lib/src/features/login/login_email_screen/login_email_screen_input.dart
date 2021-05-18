@@ -6,7 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/tiki_big_input.dart';
+import 'package:app/src/widgets/components/tiki_big_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +25,7 @@ class LoginEmailScreenInput extends StatelessWidget {
     });
   }
 
-  onChanged(input, context) {
+  onChanged(context, input) {
     BlocProvider.of<LoginOtpReqBloc>(context)
         .add(LoginOtpReqChanged(input));
   }
