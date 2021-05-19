@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/features/home/home_screen/home_screen.dart';
+import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
 import 'package:app/src/features/login/login_email_screen/login_email_screen.dart';
 import 'package:app/src/utils/dynamic_link_handler.dart';
 import 'package:app/src/utils/helper/helper_log_in.dart';
@@ -25,11 +26,10 @@ class Entry extends StatelessWidget {
 
   Widget _route() {
     if (_helperLogIn.isReturning()) {
-      //
       if (_helperLogIn.isLoggedIn()) {
         return HomeScreen();
       } else if (_helperLogIn.current.email != null) {
-        return LoginEmailScreen();
+        return KeysNewScreen();
       } else {
         return LoginEmailScreen();
       }

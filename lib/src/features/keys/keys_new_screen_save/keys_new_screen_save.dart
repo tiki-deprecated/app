@@ -4,17 +4,14 @@
  */
 
 import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/widgets/components/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_title.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'keys_new_screen_save_bk_copy.dart';
-import 'keys_new_screen_save_bk_download.dart';
-import 'keys_new_screen_save_bk_qr.dart';
-import 'keys_new_screen_save_bk_send.dart';
 import 'keys_new_screen_save_continue.dart';
 import 'keys_new_screen_save_restore.dart';
 import 'keys_new_screen_save_skip.dart';
-import 'keys_new_screen_save_subtitle.dart';
-import 'keys_new_screen_save_title.dart';
 
 class KeysNewScreenSave extends StatelessWidget {
   static final double _marginTopTitle = 10 * PlatformRelativeSize.blockVertical;
@@ -36,42 +33,14 @@ class KeysNewScreenSave extends StatelessWidget {
                   horizontal: PlatformRelativeSize.marginHorizontal2x),
               child: SingleChildScrollView(
                   child: Column(children: [
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopTitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenSaveTitle()),
-                Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: _marginVerticalSubtitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenSaveSubtitle()),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: KeysNewScreenSaveBkCopy()),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: 2 * PlatformRelativeSize.blockVertical),
-                    alignment: Alignment.centerLeft,
-                    child: KeysNewScreenSaveBkDownload()),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: 2 * PlatformRelativeSize.blockVertical),
-                    alignment: Alignment.centerLeft,
-                    child: KeysNewScreenSaveBkSend()),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(
-                        top: 2 * PlatformRelativeSize.blockVertical),
-                    child: KeysNewScreenSaveBkQr()),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopDownload),
-                    child: KeysNewScreenSaveContinue()),
-                Container(
-                    margin: EdgeInsets.symmetric(vertical: _marginVerticalSkip),
-                    child: KeysNewScreenSaveSkip()),
-                Container(
-                    margin: EdgeInsets.only(bottom: _marginBottomButton),
-                    child: KeysNewScreenSaveRestore())
+                TikiTitle("Backup your account"),
+                TikiSubtitle(
+                    "We recommend you to securely save your key in case you change your device."),
+                Card(child: Text("Save securely")),
+                Card(child: Text("Download")),
+                KeysNewScreenSaveContinue(),
+                KeysNewScreenSaveSkip(),
+                KeysNewScreenSaveRestore()
               ]))))
     ]);
   }

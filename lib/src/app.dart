@@ -22,11 +22,8 @@ class App extends StatelessWidget {
   App(this._helperIsLoggedIn);
 
   @override
-  Widget build(BuildContext context) =>
-      Provide.chain(Platform.isIOS ? iosApp(context) : androidApp(context));
-
-  MaterialApp androidApp(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => Provide.chain(
+      MaterialApp(
         title: _title,
         routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
         navigatorKey: ConfigNavigate.key,
@@ -39,22 +36,5 @@ class App extends StatelessWidget {
             textTheme: Theme.of(context).textTheme.apply(
                 fontFamily: _nunitoSans,
                 bodyColor: ConfigColor.mardiGras,
-                displayColor: ConfigColor.mardiGras)));
-  }
-
-  CupertinoApp iosApp(BuildContext context) {
-    return CupertinoApp(
-        title: _title,
-        routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
-        navigatorKey: ConfigNavigate.key,
-        localizationsDelegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        theme: CupertinoThemeData(
-            textTheme: CupertinoTextThemeData(
-                textStyle: TextStyle(
-                    color: ConfigColor.mardiGras, fontFamily: _nunitoSans))));
-  }
+                displayColor: ConfigColor.mardiGras))));
 }
