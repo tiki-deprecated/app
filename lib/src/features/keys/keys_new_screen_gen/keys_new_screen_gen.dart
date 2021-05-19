@@ -47,9 +47,10 @@ class _KeysNewScreenGen extends State<KeysNewScreenGen> {
                     margin: EdgeInsets.only(top: _marginTopSubtitle),
                     alignment: Alignment.center,
                     child: KeysNewScreenGenSubtitle()),
-               Container(
-                        alignment: Alignment.center,
-                        child: Lottie.asset("res/animation/Securing_account_with_blob.json")),
+                Container(
+                    alignment: Alignment.center,
+                    child: Lottie.asset(
+                        "res/animation/Securing_account_with_blob.json")),
                 Container(
                     margin: EdgeInsets.only(bottom: _marginBottomButton),
                     child: KeysNewScreenGenRestore())

@@ -40,7 +40,7 @@ class _HomeScreenReferCode extends State<HomeScreenReferCode> {
     });
   }
 
-  Widget _button(Uri link) {
+  Widget _button(Uri? link) {
     return OutlinedButton(
         onPressed: () async {
           Clipboard.setData(new ClipboardData(text: link.toString()));

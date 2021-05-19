@@ -6,12 +6,12 @@
 part of 'home_counter_cubit.dart';
 
 abstract class HomeCounterState extends Equatable {
-  final int count;
+  final int? count;
 
   const HomeCounterState(this.count);
 
   @override
-  List<Object> get props => [count];
+  List<Object?> get props => [count];
 }
 
 class HomeCounterInitial extends HomeCounterState {
@@ -19,9 +19,9 @@ class HomeCounterInitial extends HomeCounterState {
 }
 
 class HomeCounterSuccess extends HomeCounterState {
-  const HomeCounterSuccess(int count) : super(count);
+  const HomeCounterSuccess(int? count) : super(count);
 }
 
 class HomeCounterFailure extends HomeCounterState {
-  const HomeCounterFailure(int count) : super(count);
+  const HomeCounterFailure(int? count) : super(count);
 }

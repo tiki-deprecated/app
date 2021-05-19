@@ -14,7 +14,7 @@ import 'package:share/share.dart';
 ///
 /// It handles the "share your code" action and renders the button.
 class HomeScreenShare extends StatelessWidget {
-  static KeysReferralState _state;
+  static late KeysReferralState _state;
   static const String _shareText = "It's your data. Get paid for it.";
 
   @override

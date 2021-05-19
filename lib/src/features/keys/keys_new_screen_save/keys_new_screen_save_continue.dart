@@ -13,19 +13,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///
 /// Navigates to Home Screen after saving the keys.
 class KeysNewScreenSaveContinue extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
         builder: (BuildContext context, KeysNewScreenState state) {
-          bool isActive = state is KeysNewScreenInProgress ? state.isBackedUp : false;
+      bool isActive =
+          state is KeysNewScreenInProgress ? state.isBackedUp : false;
       return TikiBigButton("CONTINUE", isActive, _continueAfterSave);
     });
   }
 
   _continueAfterSave(BuildContext context) {
-    BlocProvider.of<KeysNewScreenBloc>(context)
-        .add(KeysNewScreenContinue());
+    BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenContinue());
   }
 }
-

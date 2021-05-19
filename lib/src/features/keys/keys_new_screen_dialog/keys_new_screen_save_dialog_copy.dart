@@ -23,9 +23,9 @@ class KeysNewScreenSaveDialogCopy extends StatelessWidget {
       1 * PlatformRelativeSize.blockVertical;
   static final double _marginTopCopy = 1 * PlatformRelativeSize.blockVertical;
 
-  final String id;
-  final String dataKey;
-  final String signKey;
+  final String? id;
+  final String? dataKey;
+  final String? signKey;
 
   KeysNewScreenSaveDialogCopy(this.id, this.dataKey, this.signKey);
 

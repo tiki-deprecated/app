@@ -20,8 +20,11 @@ class KeysNewScreenQr extends StatelessWidget {
         builder: (BuildContext context, KeysNewScreenState state) {
       return QrImage(
           version: QrVersions.auto,
-          data:
-              state.address + "." + state.dataPrivate + "." + state.signPrivate,
+          data: state.address! +
+              "." +
+              state.dataPrivate! +
+              "." +
+              state.signPrivate!,
           errorStateBuilder: (context, error) {
             Sentry.captureException(
                 Exception("Failed to generate QR code: " + error.toString()),

@@ -15,16 +15,16 @@ class HomeScreenLogout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TikiTextButton(
-        _text,
-        _logout,
-        fontSize: 4,
-        fontWeight: FontWeight.bold,
-        color: ConfigColor.grenadier,
-        trailing: HelperImage("icon-logout"),
+      _text,
+      _logout,
+      fontSize: 4,
+      fontWeight: FontWeight.bold,
+      color: ConfigColor.grenadier,
+      trailing: HelperImage("icon-logout"),
     );
   }
 
   _logout(context) {
-      HelperLogOut.provide(context).current(context);
+    HelperLogOut.provide(context).current(context);
   }
 }

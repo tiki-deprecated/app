@@ -68,21 +68,21 @@ class LoginOtpValidBloc extends Bloc<LoginOtpValidEvent, LoginOtpValidState> {
       if (rsp.code == 200) {
         RepoApiBouncerJwtRsp rspData = rsp.data;
         await _repoLocalSsToken.save(
-            model.email,
+            model.email!,
             RepoLocalSsTokenModel(
                 bearer: rspData.accessToken,
                 refresh: rspData.refreshToken,
                 expiresIn: rspData.expiresIn));
 
-        RepoLocalSsUserModel user = await _repoLocalSsUser.find(model.email);
-        if (user != null && user.address != null) {
+        RepoLocalSsUserModel user = await _repoLocalSsUser.find(model.email!);
+        if (user.address != null) {
           await _repoLocalSsUser.save(
-              model.email,
+              model.email!,
               RepoLocalSsUserModel(
                   email: model.email, address: user.address, isLoggedIn: true));
           emit(LoginOtpValidSuccess(true));
         } else {
-          await _repoLocalSsUser.save(model.email,
+          await _repoLocalSsUser.save(model.email!,
               RepoLocalSsUserModel(email: model.email, isLoggedIn: false));
           emit(LoginOtpValidSuccess(false));
         }

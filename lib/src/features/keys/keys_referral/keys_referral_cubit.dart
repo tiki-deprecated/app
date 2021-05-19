@@ -43,12 +43,12 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
     if (state.link == null) {
       RepoLocalSsCurrentModel current =
           await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-      RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email);
+      RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email!);
       if (user.referral == null) {
         final DynamicLinkParameters parameters = DynamicLinkParameters(
             uriPrefix: 'https://mytiki.app',
             link: Uri.parse(
-                'https://mytiki.com/app/blockchain?ref=' + user.address),
+                'https://mytiki.com/app/blockchain?ref=' + user.address!),
             dynamicLinkParametersOptions: DynamicLinkParametersOptions(
               shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
             ),
@@ -69,7 +69,7 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
         final ShortDynamicLink shortLink = await parameters.buildShortLink();
         Uri referral = shortLink.shortUrl;
         user.referral = referral;
-        await _repoLocalSsUser.save(user.email, user);
+        await _repoLocalSsUser.save(user.email!, user);
         emit(KeysReferralSuccess(state.referer, referral, 0));
       } else
         emit(KeysReferralSuccess(state.referer, user.referral, 0));
@@ -80,7 +80,7 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
   Future<void> getCount() async {
     RepoLocalSsCurrentModel current =
         await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-    RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email);
+    RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email!);
     HelperApiRsp<RepoApiBlockchainAddressReferRsp> apiRsp =
         await _repoApiBlockchainAddress.referCount(user.address);
     if (apiRsp.code == 200) {

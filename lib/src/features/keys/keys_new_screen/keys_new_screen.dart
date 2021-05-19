@@ -34,7 +34,7 @@ class KeysNewScreen extends StatelessWidget {
         ],
         child: TikiScaffold(
           foregroundChildren: [keysCreationBlocConsumer()],
-          background: _background(),
+          background: _background() as TikiBackground?,
         ));
   }
 
@@ -50,7 +50,7 @@ class KeysNewScreen extends StatelessWidget {
   void keysCreationListener(
       BuildContext context, KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenSuccess) {
-      TikiAnalytics.getLogger().logEvent('KEYS_CREATED');
+      TikiAnalytics.getLogger()!.logEvent('KEYS_CREATED');
       Navigator.of(context)
           .pushNamedAndRemoveUntil(ConfigNavigate.path.home, (route) => false);
     }
@@ -60,7 +60,7 @@ class KeysNewScreen extends StatelessWidget {
   Widget keysCreationBuilder(
       BuildContext context, KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenInitial) {
-      TikiAnalytics.getLogger().logEvent('CREATE_KEYS');
+      TikiAnalytics.getLogger()!.logEvent('CREATE_KEYS');
       return KeysNewScreenGen();
     } else {
       return BlocConsumer<KeysNewScreenDownloadBloc,
@@ -73,10 +73,10 @@ class KeysNewScreen extends StatelessWidget {
   Widget downloadBuilder(
       BuildContext context, KeysNewScreenDownloadState downloadState) {
     if (downloadState is KeysNewScreenDownloadInProgress) {
-      TikiAnalytics.getLogger().logEvent('DOWNLOAD_KEYS');
+      TikiAnalytics.getLogger()!.logEvent('DOWNLOAD_KEYS');
       return KeysNewScreenDownload();
     } else {
-      TikiAnalytics.getLogger().logEvent('SAVE_KEYS');
+      TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
       return KeysNewScreenSave();
     }
   }

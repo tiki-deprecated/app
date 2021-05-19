@@ -12,8 +12,8 @@ class RepoLocalSsKeys extends RepoLocalSsCrud<RepoLocalSsKeysModel> {
   static const String _table = "keys";
   static const String _version = "0.0.1";
 
-  RepoLocalSsKeys({FlutterSecureStorage secureStorage})
+  RepoLocalSsKeys({FlutterSecureStorage? secureStorage})
       : super(_table, _version, (RepoLocalSsKeysModel model) => model.toJson(),
-            (Map<String, dynamic> json) => RepoLocalSsKeysModel.fromJson(json),
+            (Map<String, dynamic>? json) => RepoLocalSsKeysModel.fromJson(json),
             secureStorage: secureStorage);
 }

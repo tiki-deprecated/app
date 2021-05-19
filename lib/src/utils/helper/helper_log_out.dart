@@ -32,9 +32,9 @@ class HelperLogOut {
   Future<void> current(BuildContext context) async {
     RepoLocalSsCurrentModel current =
         await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-    RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email);
+    RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email!);
     user.isLoggedIn = false;
-    await _repoLocalSsUser.save(current.email, user);
+    await _repoLocalSsUser.save(current.email!, user);
     Navigator.of(context).pushNamedAndRemoveUntil(
         ConfigNavigate.path.loginEmail, (route) => false);
   }

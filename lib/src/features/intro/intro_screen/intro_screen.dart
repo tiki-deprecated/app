@@ -39,42 +39,41 @@ abstract class IntroScreen extends StatelessWidget {
     TikiBackground background = TikiBackground(
         backgroundColor: backgroundColor,
         bottomLeft: HelperImage('intro-blob'),
-        bottomRight: HelperImage('intro-pineapple')
-    );
+        bottomRight: HelperImage('intro-pineapple'));
 
     return TikiScaffold(
-        background: background,
-        foregroundChildren: _foreground(context),
-        onHorizontalDrag: onHorizontalDrag,
+      background: background,
+      foregroundChildren: _foreground(context),
+      onHorizontalDrag: onHorizontalDrag,
     );
   }
 
   List<Widget> _foreground(BuildContext context) {
-    return <Widget> [
-        Container(
-            margin: EdgeInsets.only(top: _marginTopSkip),
-            alignment: Alignment.topRight,
-            child: TikiTextButton(
-              "Skip",
-              _skipFunction,
-              fontWeight: FontWeight.bold,
-              fontSize: 4,
-            )),
-        Container(
-            margin: EdgeInsets.only(top: _marginTopTitle),
-            alignment: Alignment.centerLeft,
-            child: TikiTitle(title)),
-        Container(
-            margin: EdgeInsets.only(top: _marginTopText),
-            child: TikiSubtitle(subtitle)),
-        Container(
-            margin: EdgeInsets.only(top: _marginTopText),
-            child: TikiDots(screenTotal, screenPos)),
-        Container(
-            margin: EdgeInsets.only(top: _marginTopButton),
-            alignment: Alignment.centerLeft,
-            child: TikiBigButton(button, true, onButtonPressed)),
-      ];
+    return <Widget>[
+      Container(
+          margin: EdgeInsets.only(top: _marginTopSkip),
+          alignment: Alignment.topRight,
+          child: TikiTextButton(
+            "Skip",
+            _skipFunction,
+            fontWeight: FontWeight.bold,
+            fontSize: 4,
+          )),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopTitle),
+          alignment: Alignment.centerLeft,
+          child: TikiTitle(title)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText),
+          child: TikiSubtitle(subtitle)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText),
+          child: TikiDots(screenTotal, screenPos)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopButton),
+          alignment: Alignment.centerLeft,
+          child: TikiBigButton(button, true, onButtonPressed)),
+    ];
   }
 
   void onButtonPressed(BuildContext context);
@@ -82,7 +81,7 @@ abstract class IntroScreen extends StatelessWidget {
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails);
 
   _skipFunction(context) {
-    TikiAnalytics.getLogger().logEvent('INTRO_SKIPPED');
+    TikiAnalytics.getLogger()!.logEvent('INTRO_SKIPPED');
     Navigator.of(context).pushNamed(skipToPath);
   }
 }

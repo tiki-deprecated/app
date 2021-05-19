@@ -6,14 +6,14 @@
 part of 'keys_referral_cubit.dart';
 
 abstract class KeysReferralState extends Equatable {
-  final String referer;
-  final Uri link;
-  final int count;
+  final String? referer;
+  final Uri? link;
+  final int? count;
 
   const KeysReferralState(this.referer, this.link, this.count);
 
   @override
-  List<Object> get props => [referer, link, count];
+  List<Object?> get props => [referer, link, count];
 }
 
 class KeysReferralInitial extends KeysReferralState {
@@ -25,6 +25,6 @@ class KeysReferralInProgress extends KeysReferralState {
 }
 
 class KeysReferralSuccess extends KeysReferralState {
-  const KeysReferralSuccess(String referer, Uri link, int count)
+  const KeysReferralSuccess(String? referer, Uri? link, int? count)
       : super(referer, link, count);
 }

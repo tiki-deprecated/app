@@ -20,7 +20,7 @@ class LoginInboxScreenSentTo extends StatelessWidget {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(_text,
             style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.w600)),
-        Text(state.email == null ? "" : state.email,
+        Text(state.email == null ? "" : state.email!,
             style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold))
       ]);
     });

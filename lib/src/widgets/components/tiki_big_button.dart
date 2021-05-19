@@ -2,13 +2,12 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
 
-class TikiBigButton extends StatelessWidget{
-
+class TikiBigButton extends StatelessWidget {
   final Function _callback;
   final bool _isActive;
   final String _text;
-  final Widget trailing;
-  final Widget leading;
+  final Widget? trailing;
+  final Widget? leading;
 
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
@@ -18,18 +17,19 @@ class TikiBigButton extends StatelessWidget{
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
 
-  const TikiBigButton(this._text,  this._isActive, this._callback, {this.trailing, this.leading});
+  const TikiBigButton(this._text, this._isActive, this._callback,
+      {this.trailing, this.leading});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding:  EdgeInsets.symmetric(vertical: _marginVertical, horizontal: _marginHorizontal),
+            padding: EdgeInsets.symmetric(
+                vertical: _marginVertical, horizontal: _marginHorizontal),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(10 * PlatformRelativeSize.blockVertical))),
             primary: _isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
-
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -39,20 +39,19 @@ class TikiBigButton extends StatelessWidget{
               direction: Axis.vertical,
               children: [
                 Container(
-                  padding: EdgeInsets.only(right:PlatformRelativeSize.marginHorizontal),
-                  child: Text(_text,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: _fontSize,
-                              letterSpacing: _letterSpacing,
-                            )))
+                    padding: EdgeInsets.only(
+                        right: PlatformRelativeSize.marginHorizontal),
+                    child: Text(_text,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: _fontSize,
+                          letterSpacing: _letterSpacing,
+                        )))
               ],
             ),
             trailing ?? Container()
           ],
         ),
-        onPressed: _isActive ? () => _callback(context) : null
-    );
+        onPressed: _isActive ? () => _callback(context) : null);
   }
-
 }

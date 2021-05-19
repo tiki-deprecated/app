@@ -24,6 +24,6 @@ class IntroScreenTogether extends IntroScreen {
 
   @override
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
-    if (dragEndDetails.primaryVelocity > 0) Navigator.of(context).pop();
+    if (dragEndDetails.primaryVelocity! > 0) Navigator.of(context).pop();
   }
 }

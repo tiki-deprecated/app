@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class TikiScaffold extends StatelessWidget {
   final List<Widget> foregroundChildren;
-  final Function onHorizontalDrag;
-  final Function onVerticalDrag;
-  final TikiBackground background;
+  final Function? onHorizontalDrag;
+  final Function? onVerticalDrag;
+  final TikiBackground? background;
 
   const TikiScaffold(
-      {Key key,
-      @required this.foregroundChildren,
+      {Key? key,
+      required this.foregroundChildren,
       this.background,
       this.onHorizontalDrag,
       this.onVerticalDrag})
@@ -21,13 +21,13 @@ class TikiScaffold extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: GestureDetector(
-                child: Stack(children: [background, _foreground(context)]),
+                child: Stack(children: [background!, _foreground(context)]),
                 onVerticalDragEnd: (dragEndDetails) => onVerticalDrag != null
-                    ? onVerticalDrag(context, dragEndDetails)
+                    ? onVerticalDrag!(context, dragEndDetails)
                     : null,
                 onHorizontalDragEnd: (dragEndDetails) =>
                     onHorizontalDrag != null
-                        ? onHorizontalDrag(context, dragEndDetails)
+                        ? onHorizontalDrag!(context, dragEndDetails)
                         : null)));
   }
 

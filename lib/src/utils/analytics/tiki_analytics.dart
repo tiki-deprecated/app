@@ -7,11 +7,11 @@ import 'package:app/src/config/config_environment.dart';
 /// tracking should be handled through this class to make it decoupled from remote
 /// platforms. It now uses [Amplitude] as analytics provider.
 class TikiAnalytics {
-
   /// The analytics logger.
-  static Amplitude _logger;
+  static Amplitude? _logger;
+
   /// The analytics logger for testing.
-  static Amplitude _loggerTest;
+  static Amplitude? _loggerTest;
 
   static const String environment = ConfigEnvironment.appEnv;
 
@@ -32,17 +32,17 @@ class TikiAnalytics {
     var project = test ? "App-test" : "App";
     String apiKey = test ? testApiKey : prodApiKey;
     _logger = Amplitude.getInstance(instanceName: project);
-    _logger.enableCoppaControl();
-    _logger.setUserId(null);
-    _logger.init(apiKey);
-    _logger.logEvent('Amplitude startup');
+    _logger!.enableCoppaControl();
+    _logger!.setUserId(null);
+    _logger!.init(apiKey);
+    _logger!.logEvent('Amplitude startup');
   }
 
   /// Gets the logger instance.
-  static Amplitude getLogger() {
+  static Amplitude? getLogger() {
     const bool test = environment == ConfigEnvironment.envLocal;
     var logger = test ? _loggerTest : _logger;
-    if(logger == null){
+    if (logger == null) {
       _init();
     }
     return logger;

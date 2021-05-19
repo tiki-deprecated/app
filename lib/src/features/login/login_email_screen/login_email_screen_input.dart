@@ -16,15 +16,14 @@ class LoginEmailScreenInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginOtpReqBloc, LoginOtpReqState>(
         builder: (BuildContext context, LoginOtpReqState state) {
-      return TikiBigInput(placeholder: _placeholder,
+      return TikiBigInput(
+          placeholder: _placeholder,
           isError: state is LoginOtpReqStateFailure,
-          onChanged: onChanged
-      );
+          onChanged: onChanged);
     });
   }
 
   onChanged(context, input) {
-    BlocProvider.of<LoginOtpReqBloc>(context)
-        .add(LoginOtpReqChanged(input));
+    BlocProvider.of<LoginOtpReqBloc>(context).add(LoginOtpReqChanged(input));
   }
 }

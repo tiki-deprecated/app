@@ -29,6 +29,6 @@ class IntroScreenControl extends IntroScreen {
 
   @override
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
-    if (dragEndDetails.primaryVelocity < 0) onButtonPressed(context);
+    if (dragEndDetails.primaryVelocity! < 0) onButtonPressed(context);
   }
 }

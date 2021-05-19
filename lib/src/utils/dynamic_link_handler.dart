@@ -12,23 +12,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DynamicLinkHandler extends StatefulWidget {
-  final Widget _child;
-  DynamicLinkHandler({Widget child}) : this._child = child;
+  final Widget? _child;
+  DynamicLinkHandler({Widget? child}) : this._child = child;
 
   @override
   State<StatefulWidget> createState() => _DynamicLinkHandler(child: _child);
 }
 
 class _DynamicLinkHandler extends State<DynamicLinkHandler> {
-  final Widget _child;
+  final Widget? _child;
   static const String _dlPathBouncer = "/app/bouncer";
   static const String _dlPathBlockchain = "/app/blockchain";
 
-  _DynamicLinkHandler({Widget child}) : this._child = child;
+  _DynamicLinkHandler({Widget? child}) : this._child = child;
 
   @override
   Widget build(BuildContext context) {
-    return _child;
+    return _child!;
   }
 
   @override
@@ -39,16 +39,16 @@ class _DynamicLinkHandler extends State<DynamicLinkHandler> {
 
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLink) async {
-      final Uri deepLink = dynamicLink?.link;
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+      final Uri? deepLink = dynamicLink?.link;
       if (deepLink != null) _handle(deepLink);
     }, onError: (OnLinkErrorException e) async {
       await Sentry.captureException(e, stackTrace: StackTrace.current);
     });
 
-    final PendingDynamicLinkData data =
+    final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deepLink = data?.link;
+    final Uri? deepLink = data?.link;
     if (deepLink != null) _handle(deepLink);
   }
 
@@ -61,17 +61,17 @@ class _DynamicLinkHandler extends State<DynamicLinkHandler> {
   }
 
   void _handleBouncer(Uri link) {
-    String otp = link.queryParameters["otp"];
+    String? otp = link.queryParameters["otp"];
     if (otp != null && otp.isNotEmpty) {
-      BlocProvider.of<LoginOtpValidBloc>(ConfigNavigate.key.currentContext)
+      BlocProvider.of<LoginOtpValidBloc>(ConfigNavigate.key.currentContext!)
           .add(LoginOtpValidChanged(otp));
-      Navigator.of(ConfigNavigate.key.currentContext).pushNamedAndRemoveUntil(
+      Navigator.of(ConfigNavigate.key.currentContext!).pushNamedAndRemoveUntil(
           ConfigNavigate.path.loginOtp, (route) => false);
     }
   }
 
   void _handleBlockchain(Uri link) {
-    String ref = link.queryParameters["ref"];
+    String? ref = link.queryParameters["ref"];
     if (ref != null && ref.isNotEmpty) {
       BlocProvider.of<KeysReferralCubit>(context).updateReferer(ref);
     }

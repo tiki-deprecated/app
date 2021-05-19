@@ -17,7 +17,7 @@ class KeysNewScreenDownloadAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
       builder: (BuildContext context, KeysNewScreenState state) {
-        return Text(_text + state.address,
+        return Text(_text + state.address!,
             softWrap: true,
             style: TextStyle(
                 fontSize: _fontSize,

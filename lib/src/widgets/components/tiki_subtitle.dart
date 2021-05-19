@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TikiSubtitle extends StatelessWidget {
-  final double fontSize;
+  final double? fontSize;
   final String text;
   final FontWeight fontWeight;
 

@@ -55,16 +55,17 @@ class HomeScreen extends StatelessWidget {
           margin: EdgeInsets.only(top: _marginTopShare),
           alignment: Alignment.topCenter,
           child: HomeScreenShare()),
-     Container(
-              alignment: Alignment.bottomCenter,
-              margin: EdgeInsets.only(bottom: _marginBottomLogOut),
-              child: HomeScreenLogout())
+      Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.only(bottom: _marginBottomLogOut),
+          child: HomeScreenLogout())
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(
-        foregroundChildren: _foreground(context), background: _background());
+        foregroundChildren: _foreground(context),
+        background: _background() as TikiBackground?);
   }
 }

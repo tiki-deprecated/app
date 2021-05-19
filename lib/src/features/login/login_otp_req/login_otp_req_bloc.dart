@@ -38,8 +38,7 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
   Stream<LoginOtpReqState> mapEventToState(LoginOtpReqEvent event) async* {
     if (event is LoginOtpReqChanged)
       yield* _mapChangedToState(event);
-    else if (event is LoginOtpReqSubmitted)
-      yield* _mapSubmittedToState(event);
+    else if (event is LoginOtpReqSubmitted) yield* _mapSubmittedToState(event);
   }
 
   Stream<LoginOtpReqState> _mapChangedToState(

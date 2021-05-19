@@ -34,7 +34,7 @@ class _HomeScreenReferCount extends State<HomeScreenReferCount> {
     });
   }
 
-  Widget _count(int count) {
+  Widget _count(int? count) {
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
           margin: EdgeInsets.only(right: _marginRight),

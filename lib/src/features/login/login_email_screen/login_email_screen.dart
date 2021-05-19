@@ -53,7 +53,6 @@ class LoginEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     TikiBackground background = TikiBackground(
         backgroundColor: ConfigColor.serenade,
         topRight: HelperImage('login-pineapple'),

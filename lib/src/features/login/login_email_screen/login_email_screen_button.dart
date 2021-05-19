@@ -17,7 +17,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///
 /// * See also [LoginOtpReqBloc]
 class LoginEmailScreenButton extends StatelessWidget {
-
   static const String _text = "CONTINUE";
 
   @override
@@ -37,7 +36,7 @@ class LoginEmailScreenButton extends StatelessWidget {
 
   Widget _blocConsumerBuilder(BuildContext context, LoginOtpReqState state) {
     bool isButtonActive =
-    state is LoginOtpReqStateInProgress ? state.isValid : false;
+        state is LoginOtpReqStateInProgress ? state.isValid : false;
     return _button(context, isButtonActive);
   }
 
@@ -46,7 +45,7 @@ class LoginEmailScreenButton extends StatelessWidget {
   }
 
   _submitLogin(BuildContext context) {
-    TikiAnalytics.getLogger().logEvent('EMAIL_SUBMITTED');
+    TikiAnalytics.getLogger()!.logEvent('EMAIL_SUBMITTED');
     Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
     LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
     bloc.add(LoginOtpReqSubmitted(bloc.state.email));

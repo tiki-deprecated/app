@@ -4,11 +4,11 @@
  */
 
 class Migrate0To001User {
-  String email;
-  String uuid;
-  bool loggedIn = false;
-  String bearer;
-  String refresh;
+  String? email;
+  String? uuid;
+  bool? loggedIn = false;
+  String? bearer;
+  String? refresh;
 
   Migrate0To001User(
       {this.email,
@@ -17,7 +17,7 @@ class Migrate0To001User {
       this.bearer,
       this.refresh});
 
-  Migrate0To001User.fromJson(Map<String, dynamic> json) {
+  Migrate0To001User.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.email = json['email'];
       this.uuid = json['uuid'];

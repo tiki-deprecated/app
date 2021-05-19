@@ -104,7 +104,7 @@ class KeysRestoreScreenBloc
 
   Stream<KeysRestoreScreenState> _mapSubmittedToState(
       KeysRestoreScreenSubmitted submitted) async* {
-    await _saveAndLogIn(state.address, state.dataPrivate, state.signPrivate);
+    await _saveAndLogIn(state.address!, state.dataPrivate, state.signPrivate);
     yield KeysRestoreScreenSuccess(
       state.dataPublic,
       state.dataPrivate,
@@ -117,15 +117,16 @@ class KeysRestoreScreenBloc
   /// Verify if credentials are valid
   ///
   /// Checks if any of the keys are null and if they have the correct length.
-  bool _isValid(String address, String dataKeyPrivate, String signKeyPrivate) {
-    var addressValid =  address != null && address.length == 64;
+  bool _isValid(
+      String? address, String? dataKeyPrivate, String? signKeyPrivate) {
+    var addressValid = address != null && address.length == 64;
     var dataKeyValid = dataKeyPrivate != null && dataKeyPrivate.length == 1624;
     var signKeyValid = signKeyPrivate != null && signKeyPrivate.length == 92;
     return addressValid && dataKeyValid && signKeyValid;
   }
 
   Future<void> _saveAndLogIn(
-      String address, String dataPrivate, String signPrivate) async {
+      String address, String? dataPrivate, String? signPrivate) async {
     await _repoLocalSsKeys.save(
         address,
         RepoLocalSsKeysModel(
@@ -137,7 +138,7 @@ class KeysRestoreScreenBloc
     RepoLocalSsCurrentModel current =
         await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
     await _repoLocalSsUser.save(
-        current.email,
+        current.email!,
         RepoLocalSsUserModel(
             email: current.email, address: state.address, isLoggedIn: true));
   }

@@ -41,16 +41,18 @@ class KeysNewScreenDownloadBloc
   Stream<KeysNewScreenDownloadState> _mapRenderedToState(
       KeysNewScreenDownloadRendered rendered) async* {
     RenderRepaintBoundary renderRepaintBoundary =
-        rendered.globalKey.currentContext.findRenderObject();
+        rendered.globalKey.currentContext!.findRenderObject()
+            as RenderRepaintBoundary;
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png)
+        as FutureOr<ByteData>);
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
     Directory documents;
     if (Platform.isIOS)
       documents = await getApplicationDocumentsDirectory();
     else
-      documents = Directory((await getExternalStorageDirectory())
+      documents = Directory((await getExternalStorageDirectory())!
               .parent
               .parent
               .parent

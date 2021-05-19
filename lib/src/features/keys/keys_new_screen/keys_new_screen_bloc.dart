@@ -117,7 +117,7 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
             referFrom: _keysReferralCubit.state.referer));
     if (rsp.code == 200 && rsp.data.address == state.address) {
       await _repoLocalSsKeys.save(
-          state.address,
+          state.address!,
           RepoLocalSsKeysModel(
               address: state.address,
               dataPrivateKey: state.dataPrivate,
@@ -128,7 +128,7 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
       RepoLocalSsCurrentModel current =
           await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
       await _repoLocalSsUser.save(
-          current.email,
+          current.email!,
           RepoLocalSsUserModel(
               email: current.email, address: state.address, isLoggedIn: true));
       return true;

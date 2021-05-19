@@ -13,8 +13,8 @@ class TikiTextButton extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
   final bool isActive;
-  final Widget leading;
-  final Widget trailing;
+  final Widget? leading;
+  final Widget? trailing;
 
   const TikiTextButton(this.text, this.callback,
       {this.fontSize = 1,
@@ -25,8 +25,7 @@ class TikiTextButton extends StatelessWidget {
       this.backgroundColor = Colors.transparent,
       this.isActive = true,
       this.trailing,
-      this.leading
-      });
+      this.leading});
 
   @override
   Widget build(BuildContext context) {
@@ -35,35 +34,35 @@ class TikiTextButton extends StatelessWidget {
         padding: _getPadding(),
         color: backgroundColor,
         child: TextButton(
-        onPressed: isActive ? () => callback(context) : null,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            leading ?? Container(),
-            Text(this.text,
-                style: TextStyle(
-                    color: this.color,
-                    fontWeight: this.fontWeight,
-                    fontSize: PlatformRelativeSize.blockHorizontal * fontSize)),
-            trailing ?? Container(),
-          ],
-        )
-    ));
+            onPressed: isActive ? () => callback(context) : null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                leading ?? Container(),
+                Text(this.text,
+                    style: TextStyle(
+                        color: this.color,
+                        fontWeight: this.fontWeight,
+                        fontSize:
+                            PlatformRelativeSize.blockHorizontal * fontSize)),
+                trailing ?? Container(),
+              ],
+            )));
   }
 
   _getMargins() {
     return EdgeInsets.fromLTRB(
-        margins['left'] * PlatformRelativeSize.blockHorizontal,
-        margins['top'] * PlatformRelativeSize.blockVertical,
-        margins['right'] * PlatformRelativeSize.blockHorizontal,
-        margins['bottom'] * PlatformRelativeSize.blockVertical);
+        margins['left']! * PlatformRelativeSize.blockHorizontal,
+        margins['top']! * PlatformRelativeSize.blockVertical,
+        margins['right']! * PlatformRelativeSize.blockHorizontal,
+        margins['bottom']! * PlatformRelativeSize.blockVertical);
   }
 
   _getPadding() {
     return EdgeInsets.fromLTRB(
-        padding['left'] * PlatformRelativeSize.blockHorizontal,
-        padding['top'] * PlatformRelativeSize.blockVertical,
-        padding['right'] * PlatformRelativeSize.blockHorizontal,
-        padding['bottom'] * PlatformRelativeSize.blockVertical);
+        padding['left']! * PlatformRelativeSize.blockHorizontal,
+        padding['top']! * PlatformRelativeSize.blockVertical,
+        padding['right']! * PlatformRelativeSize.blockHorizontal,
+        padding['bottom']! * PlatformRelativeSize.blockVertical);
   }
 }

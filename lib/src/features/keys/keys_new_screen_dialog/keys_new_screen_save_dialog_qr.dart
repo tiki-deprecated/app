@@ -15,9 +15,9 @@ class KeysNewScreenSaveDialogQr extends StatelessWidget {
   static const String _title = "QR Code";
   static final double _size = 28 * PlatformRelativeSize.blockVertical;
 
-  final String id;
-  final String dataKey;
-  final String signKey;
+  final String? id;
+  final String? dataKey;
+  final String? signKey;
 
   KeysNewScreenSaveDialogQr(this.id, this.dataKey, this.signKey);
 
@@ -44,7 +44,7 @@ class KeysNewScreenSaveDialogQr extends StatelessWidget {
         width: _size,
         child: QrImage(
             version: QrVersions.auto,
-            data: id + "." + dataKey + "." + signKey,
+            data: id! + "." + dataKey! + "." + signKey!,
             errorStateBuilder: (context, error) {
               Sentry.captureException(
                   Exception("Failed to generate QR code: " + error.toString()),

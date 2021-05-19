@@ -6,12 +6,12 @@
 part of 'login_otp_req_bloc.dart';
 
 abstract class LoginOtpReqState extends Equatable {
-  final String email;
+  final String? email;
 
   const LoginOtpReqState(this.email);
 
   @override
-  List<Object> get props => [email];
+  List<Object?> get props => [email];
 }
 
 class LoginOtpReqStateInitial extends LoginOtpReqState {
@@ -24,13 +24,13 @@ class LoginOtpReqStateInProgress extends LoginOtpReqState {
   const LoginOtpReqStateInProgress(String email, this.isValid) : super(email);
 
   @override
-  List<Object> get props => [email, isValid];
+  List<Object?> get props => [email, isValid];
 }
 
 class LoginOtpReqStateSuccess extends LoginOtpReqState {
-  const LoginOtpReqStateSuccess(String email) : super(email);
+  const LoginOtpReqStateSuccess(String? email) : super(email);
 }
 
 class LoginOtpReqStateFailure extends LoginOtpReqState {
-  const LoginOtpReqStateFailure(String email) : super(email);
+  const LoginOtpReqStateFailure(String? email) : super(email);
 }

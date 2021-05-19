@@ -4,11 +4,11 @@
  */
 
 class RepoApiBlockchainAddressReferRsp {
-  int count;
+  int? count;
 
   RepoApiBlockchainAddressReferRsp({this.count});
 
-  RepoApiBlockchainAddressReferRsp.fromJson(Map<String, dynamic> json) {
+  RepoApiBlockchainAddressReferRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.count = json['count'];
     }

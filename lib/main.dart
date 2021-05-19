@@ -1,3 +1,4 @@
+import 'package:app/src/features/repo/repo_local_db/repo_local_db.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:app/src/utils/migrate/migrate_0_to_001/migrate_0_to_001.dart';
@@ -28,6 +29,7 @@ Future<void> main() async {
   HelperLogIn helperLogIn = HelperLogIn.auto(secureStorage);
   await Migrate0to001(secureStorage).migrate();
   await helperLogIn.load();
+  TikiDatabase.instance;
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn

@@ -25,11 +25,16 @@ class Entry extends StatelessWidget {
 
   Widget _route() {
     if (_helperLogIn.isReturning()) {
-      if (_helperLogIn.isLoggedIn())
+      //
+      if (_helperLogIn.isLoggedIn()) {
         return HomeScreen();
-      else
+      } else if (_helperLogIn.current.email != null) {
         return LoginEmailScreen();
-    } else
+      } else {
+        return LoginEmailScreen();
+      }
+    } else {
       return IntroScreenControl();
+    }
   }
 }

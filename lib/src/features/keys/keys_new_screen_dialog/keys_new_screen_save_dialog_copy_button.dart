@@ -19,7 +19,7 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
       1 * PlatformRelativeSize.blockHorizontal;
 
   final String label;
-  final String value;
+  final String? value;
 
   KeysNewScreenSaveCopyButton(this.label, this.value);
 
@@ -40,7 +40,7 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
           ),
           Flexible(
               child: Container(
-                  child: Text(value,
+                  child: Text(value!,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left))),
           Container(

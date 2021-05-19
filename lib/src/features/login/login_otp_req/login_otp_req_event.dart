@@ -9,7 +9,7 @@ abstract class LoginOtpReqEvent extends Equatable {
   const LoginOtpReqEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoginOtpReqChanged extends LoginOtpReqEvent {
@@ -22,10 +22,10 @@ class LoginOtpReqChanged extends LoginOtpReqEvent {
 }
 
 class LoginOtpReqSubmitted extends LoginOtpReqEvent {
-  final String email;
+  final String? email;
 
   const LoginOtpReqSubmitted(this.email) : super();
 
   @override
-  List<Object> get props => [email];
+  List<Object?> get props => [email];
 }

@@ -18,7 +18,6 @@ import 'login_inbox_screen_sent_to.dart';
 import 'login_inbox_screen_title.dart';
 
 class LoginInboxScreen extends StatelessWidget {
-  static final double _marginTopBack = 4.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopTitle = 3 * PlatformRelativeSize.blockVertical;
   static final double _marginTopResend = 2 * PlatformRelativeSize.blockVertical;
   static final double _marginBottomResend =
@@ -34,38 +33,37 @@ class LoginInboxScreen extends StatelessWidget {
   // TODO add Expanded to image
   List<Widget> _foreground(BuildContext context) {
     return [
-            IntrinsicHeight(
-              child:Expanded(
-                child: Column(children: [
-                  LoginInboxScreenBack(),
-                  Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: PlatformRelativeSize.marginHorizontal),
-                      child: Column(children: [
-                        Container(
-                          margin: EdgeInsets.only(top: _marginTopTitle),
-                          alignment: Alignment.centerLeft,
-                          child: LoginInboxScreenTitle(),
-                        ),
-                        Container(
-                            child:
-                                Center(child: HelperImage("inbox-pineapple"))),
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: LoginInboxScreenSentTo()),
-                        Container(
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.only(
-                                top: _marginTopResend,
-                                bottom: _marginBottomResend),
-                            child: LoginInboxScreenResend())
-                      ]))
-                ])))];
+      IntrinsicHeight(
+          child: Expanded(
+              child: Column(children: [
+        LoginInboxScreenBack(),
+        Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: PlatformRelativeSize.marginHorizontal),
+            child: Column(children: [
+              Container(
+                margin: EdgeInsets.only(top: _marginTopTitle),
+                alignment: Alignment.centerLeft,
+                child: LoginInboxScreenTitle(),
+              ),
+              Container(child: Center(child: HelperImage("inbox-pineapple"))),
+              Container(
+                  alignment: Alignment.topLeft,
+                  child: LoginInboxScreenSentTo()),
+              Container(
+                  alignment: Alignment.topLeft,
+                  margin: EdgeInsets.only(
+                      top: _marginTopResend, bottom: _marginBottomResend),
+                  child: LoginInboxScreenResend())
+            ]))
+      ])))
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(
-        background: _background(), foregroundChildren: _foreground(context));
+        background: _background() as TikiBackground?,
+        foregroundChildren: _foreground(context));
   }
 }
