@@ -4,10 +4,12 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/features/login/login_otp_req/login_otp_req_bloc.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginInboxScreenBack extends StatelessWidget {
   static const String _text = "Back";
@@ -19,6 +21,8 @@ class LoginInboxScreenBack extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
+        LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
+        bloc.add(LoginOtpReqChanged(bloc.state.email ?? ''));
         Navigator.of(context).pop();
       },
       child: Row(children: [

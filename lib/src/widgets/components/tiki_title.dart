@@ -8,13 +8,15 @@ import 'package:flutter/cupertino.dart';
 
 class TikiTitle extends StatelessWidget {
   static final double _fontSize = 10 * PlatformRelativeSize.blockHorizontal;
-
   final String text;
-  TikiTitle(this.text);
+  final TextAlign textAlign;
+
+  TikiTitle(this.text, {this.textAlign = TextAlign.center});
 
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        textAlign: this.textAlign,
         style: TextStyle(
             fontFamily: 'Koara',
             fontSize: _fontSize,

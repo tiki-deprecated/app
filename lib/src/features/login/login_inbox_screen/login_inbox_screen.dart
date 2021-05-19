@@ -33,30 +33,26 @@ class LoginInboxScreen extends StatelessWidget {
   // TODO add Expanded to image
   List<Widget> _foreground(BuildContext context) {
     return [
-      IntrinsicHeight(
-          child: Expanded(
-              child: Column(children: [
-        LoginInboxScreenBack(),
-        Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: PlatformRelativeSize.marginHorizontal),
-            child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(top: _marginTopTitle),
-                alignment: Alignment.centerLeft,
-                child: LoginInboxScreenTitle(),
-              ),
-              Container(child: Center(child: HelperImage("inbox-pineapple"))),
-              Container(
-                  alignment: Alignment.topLeft,
-                  child: LoginInboxScreenSentTo()),
-              Container(
-                  alignment: Alignment.topLeft,
-                  margin: EdgeInsets.only(
-                      top: _marginTopResend, bottom: _marginBottomResend),
-                  child: LoginInboxScreenResend())
-            ]))
-      ])))
+      LoginInboxScreenBack(),
+      Container(
+          height: MediaQuery.of(context).size.height,
+          margin: EdgeInsets.symmetric(
+              horizontal: PlatformRelativeSize.marginHorizontal),
+          child: Column(children: [
+            Container(
+              margin: EdgeInsets.only(top: _marginTopTitle),
+              alignment: Alignment.centerLeft,
+              child: LoginInboxScreenTitle(),
+            ),
+            Expanded(child: HelperImage("inbox-pineapple")),
+            Container(
+                alignment: Alignment.topLeft, child: LoginInboxScreenSentTo()),
+            Container(
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(
+                    top: _marginTopResend, bottom: _marginBottomResend),
+                child: LoginInboxScreenResend())
+          ]))
     ];
   }
 
