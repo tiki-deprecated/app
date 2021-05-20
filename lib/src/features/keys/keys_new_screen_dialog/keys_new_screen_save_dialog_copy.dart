@@ -3,66 +3,53 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:io';
-
+import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/widgets/components/tiki_big_button.dart';
+import 'package:app/src/widgets/components/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'keys_new_screen_save_dialog_copy_button.dart';
 
 class KeysNewScreenSaveDialogCopy extends StatelessWidget {
-  static const String _title = "Copy & Paste";
-  static const String _subtitle =
-      "the security keys below into your password manager.";
-  final String _id = "TIKI ID";
   final String _dataKey = "DATA KEY";
-  final String _signKey = "SIGN KEY";
+  final String _email = "E-mail";
 
-  static final double _marginVerticalText =
-      1 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopCopy = 1 * PlatformRelativeSize.blockVertical;
+  final String? unifiedKey;
 
-  final String? id;
-  final String? dataKey;
-  final String? signKey;
-
-  KeysNewScreenSaveDialogCopy(this.id, this.dataKey, this.signKey);
+  KeysNewScreenSaveDialogCopy(this.unifiedKey);
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS)
-      return _ios(context);
-    else
-      return _android(context);
-  }
 
-  AlertDialog _android(BuildContext context) {
-    return AlertDialog(title: Text(_title), content: _content());
-  }
-
-  CupertinoAlertDialog _ios(BuildContext context) {
-    return CupertinoAlertDialog(title: Text(_title), content: _content());
-  }
-
-  Widget _content() {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      Container(
-        margin: EdgeInsets.symmetric(vertical: _marginVerticalText),
-        child: Text(_subtitle),
-      ),
-      Container(
-        margin: EdgeInsets.only(top: _marginTopCopy),
-        child: KeysNewScreenSaveCopyButton(_id, id),
-      ),
-      Container(
-        margin: EdgeInsets.only(top: _marginTopCopy),
-        child: KeysNewScreenSaveCopyButton(_dataKey, dataKey),
-      ),
-      Container(
-        margin: EdgeInsets.only(top: _marginTopCopy),
-        child: KeysNewScreenSaveCopyButton(_signKey, signKey),
-      )
-    ]);
+    return AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        title: TikiTitle("Save securely to a pass manager", fontSize: 9),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          TikiSubtitle(
+            'Press submit to save your key to your default pass manager or copy/paste your details manually.',
+            fontWeight: FontWeight.normal,
+            fontSize: 4.5 * PlatformRelativeSize.blockHorizontal,
+          ),
+          Row(
+            children: [
+              Column(
+                children: [
+                  Text(
+                    'YOUR ACCOUNT E-MAIL AND KEY',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  // TODO KeysNewScreenSaveCopyButton(_email, helperLogIn.current.email),
+                  KeysNewScreenSaveCopyButton(_dataKey, unifiedKey),
+                ],
+              )
+            ],
+          ),
+          TikiBigButton('Continue', true, () => {})
+        ]));
   }
 }

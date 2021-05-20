@@ -7,11 +7,11 @@ import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 
 class TikiTitle extends StatelessWidget {
-  static final double _fontSize = 10 * PlatformRelativeSize.blockHorizontal;
+  final int fontSize;
   final String text;
   final TextAlign textAlign;
 
-  TikiTitle(this.text, {this.textAlign = TextAlign.center});
+  const TikiTitle(this.text, {this.textAlign = TextAlign.center, this.fontSize = 10});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TikiTitle extends StatelessWidget {
         textAlign: this.textAlign,
         style: TextStyle(
             fontFamily: 'Koara',
-            fontSize: _fontSize,
+            fontSize: fontSize * PlatformRelativeSize.blockHorizontal,
             fontWeight: FontWeight.bold));
   }
 }

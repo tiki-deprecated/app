@@ -26,6 +26,7 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: ConfigColor.white,
           border: Border.all(
@@ -38,11 +39,11 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
             padding: EdgeInsets.only(left: _paddingLeft),
             child: Text(label + " : ", textAlign: TextAlign.left),
           ),
-          Flexible(
-              child: Container(
+          Flexible(child:Container(
                   child: Text(value!,
                       overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left))),
+                      textAlign: TextAlign.left)
+          )),
           Container(
               decoration: BoxDecoration(
                   border: Border(
