@@ -51,14 +51,16 @@ class KeysNewScreenDownloadBloc
     Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     Directory documents;
-    if (Platform.isIOS) {
+    if (Platform.isIOS)
       documents = await getApplicationDocumentsDirectory();
-    }else{
-      String rootDir = (await getExternalStorageDirectory())!.path;
-      documents = await new Directory(rootDir + '/myTIKI').create(recursive:true);
-    }
-      //documents = (await getExternalStorageDirectory())!.absolute ;
-
+    else
+      documents = Directory((await getExternalStorageDirectory())!
+          .parent
+          .parent
+          .parent
+          .parent
+          .path +
+          "/Download");
 
     String path = documents.path + '/' + fileName;
     File imgFile = new File(path);
