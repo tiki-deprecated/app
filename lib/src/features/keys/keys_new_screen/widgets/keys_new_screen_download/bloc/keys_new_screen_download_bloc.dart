@@ -8,11 +8,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:app/src/utils/helper/helper_permission.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'keys_new_screen_download_event.dart';
 part 'keys_new_screen_download_state.dart';
@@ -44,25 +46,22 @@ class KeysNewScreenDownloadBloc
         rendered.globalKey.currentContext!.findRenderObject()
             as RenderRepaintBoundary;
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
-    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png)
-        as FutureOr<ByteData>);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
+    ByteData? byteData = await (image.toByteData(format: ui.ImageByteFormat.png)
+        as Future<ByteData?>);
+    Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     Directory documents;
     if (Platform.isIOS)
       documents = await getApplicationDocumentsDirectory();
     else
-      documents = Directory((await getExternalStorageDirectory())!
-              .parent
-              .parent
-              .parent
-              .parent
-              .path +
-          "/Download");
+      documents = (await getExternalStorageDirectory())!.absolute ;
 
     String path = documents.path + '/' + fileName;
     File imgFile = new File(path);
-    await imgFile.writeAsBytes(pngBytes, flush: true);
-    yield KeysNewScreenDownloadSuccess(rendered.shouldShare, path);
+    bool permission = await HelperPermission.request(Permission.storage);
+    if(permission){
+      await imgFile.writeAsBytes(pngBytes, flush: true);
+      yield KeysNewScreenDownloadSuccess(rendered.shouldShare, path);
+    }
   }
 }

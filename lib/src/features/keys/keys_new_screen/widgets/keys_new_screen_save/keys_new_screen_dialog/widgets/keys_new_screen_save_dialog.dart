@@ -11,15 +11,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 abstract class KeysNewScreenSaveDialog {
-
   AlertDialog alert(BuildContext context) {
     return AlertDialog(
-        key: getKey() ?? GlobalKey(),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0))),
         title: TikiTitle(getTitle(), fontSize: 9),
-        content: Container(
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
+        content: RepaintBoundary(
+            key: getKey() ?? GlobalKey(),
+            child: Container(
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
               TikiSubtitle(
                 getSubtitle(),
                 fontWeight: FontWeight.normal,
@@ -28,15 +28,22 @@ abstract class KeysNewScreenSaveDialog {
               Padding(padding: EdgeInsets.symmetric(vertical: 16)),
               getContainer(),
               Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-              TikiBigButton(getButtonText(), isButtonActive(), getButtonAction())
-            ])));
+              TikiBigButton(
+                  getButtonText(), isButtonActive(), getButtonAction())
+            ]))));
   }
 
   String getTitle();
+
   String getSubtitle();
+
   Widget getContainer();
+
   String getButtonText();
+
   Function getButtonAction();
+
   bool isButtonActive();
+
   GlobalKey? getKey() => null;
 }
