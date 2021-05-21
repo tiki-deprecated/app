@@ -8,11 +8,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/widgets/keys_new_screen_save_dialog.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/keys_new_screen_download.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../keys_new_screen_save_dialog.dart';
 
 class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
   final RepoLocalSsCurrentModel currentModel;

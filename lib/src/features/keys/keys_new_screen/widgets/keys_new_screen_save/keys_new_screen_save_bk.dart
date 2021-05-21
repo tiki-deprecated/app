@@ -5,8 +5,7 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/widgets/copy/keys_new_screen_save_dialog_copy.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/widgets/copy/keys_new_screen_save_dialog_copy.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
@@ -14,6 +13,8 @@ import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
 
 class KeysNewScreenSaveBk extends StatelessWidget {
   KeysNewScreenSaveBk();

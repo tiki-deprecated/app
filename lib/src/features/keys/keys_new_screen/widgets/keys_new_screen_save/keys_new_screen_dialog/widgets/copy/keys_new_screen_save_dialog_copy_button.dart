@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -4,10 +4,11 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/widgets/download/keys_new_screen_save_dialog_qr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'keys_new_screen_dialog/widgets/download/keys_new_screen_save_dialog_qr.dart';
 
 @deprecated
 class KeysNewScreenSaveBkQr {

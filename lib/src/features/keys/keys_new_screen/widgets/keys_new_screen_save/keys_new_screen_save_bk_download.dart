@@ -60,7 +60,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
     if (await HelperPermission.request(Permission.storage)) {
       BlocProvider.of<KeysNewScreenDownloadBloc>(context)
           .add(KeysNewScreenDownloaded(false));
-      BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
+     // BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
     }
   }
 }
