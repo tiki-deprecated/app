@@ -16,6 +16,7 @@ class HelperLogOut {
   final RepoLocalSsCurrent _repoLocalSsCurrent;
 
   HelperLogOut(this._repoLocalSsUser, this._repoLocalSsCurrent);
+
   HelperLogOut.provide(BuildContext context)
       : _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
         _repoLocalSsCurrent =

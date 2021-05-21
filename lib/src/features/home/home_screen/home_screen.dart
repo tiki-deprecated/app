@@ -4,11 +4,11 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/home/home_counter/home_counter_cubit.dart';
-import 'package:app/src/features/home/home_screen/home_screen_counter.dart';
-import 'package:app/src/features/home/home_screen/home_screen_refer.dart';
-import 'package:app/src/features/home/home_screen/home_screen_share.dart';
-import 'package:app/src/features/home/home_screen/home_screen_title.dart';
+import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_title.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_screen_logout.dart';
+import 'widgets/home_screen_logout.dart';
 
 class HomeScreen extends StatelessWidget {
   static final double _marginTopTitle = 20 * PlatformRelativeSize.blockVertical;

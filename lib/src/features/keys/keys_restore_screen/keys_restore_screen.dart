@@ -4,11 +4,11 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen_back.dart';
-import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen_input_id.dart';
-import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen_scan.dart';
-import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen_submit.dart';
-import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen_subtitle.dart';
+import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_back.dart';
+import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_input_id.dart';
+import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_scan.dart';
+import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_submit.dart';
+import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_subtitle.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
@@ -17,10 +17,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'keys_restore_screen_divider.dart';
-import 'keys_restore_screen_input_data.dart';
-import 'keys_restore_screen_input_sign.dart';
-import 'keys_restore_screen_title.dart';
+import 'widgets/keys_restore_screen_divider.dart';
+import 'widgets/keys_restore_screen_input_data.dart';
+import 'widgets/keys_restore_screen_input_sign.dart';
+import 'widgets/keys_restore_screen_title.dart';
 
 class KeysRestoreScreen extends StatelessWidget {
   static final double _marginTopBack = 4.5 * PlatformRelativeSize.blockVertical;

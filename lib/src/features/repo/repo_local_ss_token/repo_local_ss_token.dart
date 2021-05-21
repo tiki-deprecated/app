@@ -13,7 +13,11 @@ class RepoLocalSsToken extends RepoLocalSsCrud<RepoLocalSsTokenModel> {
   static const String _version = "0.0.1";
 
   RepoLocalSsToken({FlutterSecureStorage? secureStorage})
-      : super(_table, _version, (RepoLocalSsTokenModel model) => model.toJson(),
-            (Map<String, dynamic>? json) => RepoLocalSsTokenModel.fromJson(json),
+      : super(
+            _table,
+            _version,
+            (RepoLocalSsTokenModel model) => model.toJson(),
+            (Map<String, dynamic>? json) =>
+                RepoLocalSsTokenModel.fromJson(json),
             secureStorage: secureStorage);
 }

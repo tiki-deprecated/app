@@ -5,12 +5,12 @@
 
 import 'package:app/src/features/home/home_screen/home_screen.dart';
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
-import 'package:app/src/features/login/login_email_screen/login_email_screen.dart';
+import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen.dart';
 import 'package:app/src/utils/dynamic_link_handler.dart';
 import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'features/intro/intro_screen/intro_screen_control.dart';
+import 'features/intro/intro_screen/widgets/intro_screen_control.dart';
 import 'utils/platform/platform_relative_size.dart';
 
 class Entry extends StatelessWidget {

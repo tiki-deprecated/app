@@ -5,12 +5,12 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/features/keys/keys_new_screen/keys_new_screen_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen_dialog/keys_new_screen_save_dialog_download.dart';
-import 'package:app/src/features/keys/keys_new_screen_download/keys_new_screen_download.dart';
-import 'package:app/src/features/keys/keys_new_screen_download/keys_new_screen_download_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen_gen/keys_new_screen_gen.dart';
-import 'package:app/src/features/keys/keys_new_screen_save/keys_new_screen_save.dart';
+import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/widgets/download/keys_new_screen_save_dialog_download.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/bloc/keys_new_screen_download_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/keys_new_screen_download.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_gen/keys_new_screen_gen.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_save.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';

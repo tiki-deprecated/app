@@ -20,19 +20,18 @@ class App extends StatelessWidget {
   App(this._helperIsLoggedIn);
 
   @override
-  Widget build(BuildContext context) => Provide.chain(
-      MaterialApp(
-        title: _title,
-        routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
-        navigatorKey: ConfigNavigate.key,
-        localizationsDelegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: _nunitoSans,
-                bodyColor: ConfigColor.mardiGras,
-                displayColor: ConfigColor.mardiGras))));
+  Widget build(BuildContext context) => Provide.chain(MaterialApp(
+      title: _title,
+      routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
+      navigatorKey: ConfigNavigate.key,
+      localizationsDelegates: [
+        DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      theme: ThemeData(
+          textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: _nunitoSans,
+              bodyColor: ConfigColor.mardiGras,
+              displayColor: ConfigColor.mardiGras))));
 }

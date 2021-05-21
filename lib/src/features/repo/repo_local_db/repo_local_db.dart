@@ -8,7 +8,6 @@ import 'package:sqflite/sqflite.dart';
 /// The SQLite conector with singleton architecture. To initialize the database,
 /// just call TikiDatabase.instance.database.
 class TikiDatabase {
-
   /// Internal empty constructor
   TikiDatabase._internal();
 

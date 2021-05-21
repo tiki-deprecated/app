@@ -4,8 +4,8 @@
  */
 
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/features/keys/keys_referral/keys_referral_cubit.dart';
-import 'package:app/src/features/login/login_otp_valid/login_otp_valid_bloc.dart';
+import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
+import 'package:app/src/features/login/login_otp/login_otp_valid/bloc/login_otp_valid_bloc.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +13,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DynamicLinkHandler extends StatefulWidget {
   final Widget? _child;
+
   DynamicLinkHandler({Widget? child}) : this._child = child;
 
   @override

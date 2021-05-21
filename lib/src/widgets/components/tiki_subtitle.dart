@@ -14,7 +14,9 @@ class TikiSubtitle extends StatelessWidget {
   final TextAlign textAlign;
 
   TikiSubtitle(this.text,
-      {this.fontWeight = FontWeight.bold, this.fontSize, this.textAlign = TextAlign.center});
+      {this.fontWeight = FontWeight.bold,
+      this.fontSize,
+      this.textAlign = TextAlign.center});
 
   @override
   Widget build(BuildContext context) {

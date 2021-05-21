@@ -5,10 +5,7 @@ class AppData extends TikiDbModel {
   String? value;
 
   Map<String, Object?> toMap() {
-    var map = <String, Object?>{
-      'key': key,
-      'value': value.toString()
-    };
+    var map = <String, Object?>{'key': key, 'value': value.toString()};
     if (id != null) {
       map["id"] = id;
     }

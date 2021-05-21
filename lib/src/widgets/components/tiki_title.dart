@@ -11,7 +11,8 @@ class TikiTitle extends StatelessWidget {
   final String text;
   final TextAlign textAlign;
 
-  const TikiTitle(this.text, {this.textAlign = TextAlign.center, this.fontSize = 10});
+  const TikiTitle(this.text,
+      {this.textAlign = TextAlign.center, this.fontSize = 10});
 
   @override
   Widget build(BuildContext context) {
