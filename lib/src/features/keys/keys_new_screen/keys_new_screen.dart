@@ -72,13 +72,14 @@ class KeysNewScreen extends StatelessWidget {
   /// The [Builder] for keys download
   Widget downloadBuilder(
       BuildContext context, KeysNewScreenDownloadState downloadState) {
-    if (downloadState is KeysNewScreenDownloadInProgress) {
-      TikiAnalytics.getLogger()!.logEvent('DOWNLOAD_KEYS');
-      return KeysNewScreenDownload();
-    } else {
-      TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
-      return KeysNewScreenSave();
-    }
+        return KeysNewScreenSave();
+    // if (downloadState is KeysNewScreenDownloadInProgress) {
+    //   TikiAnalytics.getLogger()!.logEvent('DOWNLOAD_KEYS');
+    //   return KeysNewScreenDownload();
+    // } else {
+    //   TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
+    //   return KeysNewScreenSave();
+    // }
   }
 
   /// The listener for keys daonload
@@ -91,7 +92,7 @@ class KeysNewScreen extends StatelessWidget {
         showDialog<void>(
           context: context,
           builder: (BuildContext context) {
-            return KeysNewScreenSaveDialogDownload(downloadState.path);
+            return KeysNewScreenDownload();
           },
         );
     }

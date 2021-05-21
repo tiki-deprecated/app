@@ -3,72 +3,40 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:io';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
-import 'package:android_intent/android_intent.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog/widgets/keys_new_screen_save_dialog.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/keys_new_screen_download.dart';
+import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class KeysNewScreenSaveDialogDownload extends StatelessWidget {
-  static const String _title = "Location Saved";
-  static const String _locationAndroid =
-      "Files > Downloads > tiki-do-not-share.png";
-  static const String _locationIOS =
-      "Files > On My iPhone > TIKI > tiki-do-not-share.png";
-  static const String _open = "Go to File";
+class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
+  final RepoLocalSsCurrentModel currentModel;
+  final String combinedKey;
 
-  final String path;
-
-  KeysNewScreenSaveDialogDownload(this.path);
+  KeysNewScreenSaveDialogDownload(this.combinedKey, this.currentModel) : super();
 
   @override
-  Widget build(BuildContext context) {
-    if (Platform.isIOS)
-      return _ios(context);
-    else
-      return _android(context);
-  }
+  String getTitle() =>  "Save securely to a pass manager";
 
-  AlertDialog _android(BuildContext context) {
-    return AlertDialog(
-        title: Text(_title), content: _content(), actions: [_button()]);
-  }
+  @override
+  String getSubtitle() => 'Copy/paste your details manually to save your key to your pass manager.';
 
-  CupertinoAlertDialog _ios(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: Text(_title),
-      content: _content(),
-      actions: [_button()],
-    );
-  }
+  @override
+  Widget getContainer() => KeysNewScreenDownload();
 
-  Widget _content() {
-    return Container(
-        margin: EdgeInsets.only(top: 1 * PlatformRelativeSize.blockVertical),
-        child: Text(Platform.isIOS ? _locationIOS : _locationAndroid,
-            textAlign: TextAlign.justify));
-  }
+  @override
+  String getButtonText() => 'Continue';
 
-  Widget _button() {
-    return TextButton(
-      child: Text(_open),
-      onPressed: () async {
-        if (Platform.isAndroid) {
-          AndroidIntent intent = AndroidIntent(
-            action: "android.intent.action.VIEW",
-            data: path,
-            type: "image/png",
-          );
-          intent.launch().catchError((e) {
-            Sentry.captureException(Exception("Failed to open Files app"),
-                stackTrace: StackTrace.current);
-          });
-        } else
-          await launch("shareddocuments://" + path);
-      },
-    );
-  }
+  @override
+  Function getButtonAction() => Navigator.pop;
+
+  @override
+  bool isButtonActive() => true;
+
+
 }
