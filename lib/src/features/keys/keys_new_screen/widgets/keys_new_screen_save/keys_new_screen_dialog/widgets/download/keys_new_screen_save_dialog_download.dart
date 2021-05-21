@@ -19,8 +19,9 @@ class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
 
   final GlobalKey? repaintKey;
   final String dataKey;
+  final Function? printCallback;
 
-  KeysNewScreenSaveDialogDownload(this.dataKey, {this.repaintKey}) : super();
+  KeysNewScreenSaveDialogDownload(this.dataKey, {this.repaintKey, this.printCallback }) : super();
 
   @override
   String getTitle() =>  "Save securely to a pass manager";
@@ -29,7 +30,7 @@ class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
   String getSubtitle() => 'Copy/paste your details manually to save your key to your pass manager.';
 
   @override
-  Widget getContainer() => KeysNewScreenQr(dataKey);
+  Widget getContainer() => KeysNewScreenQr(dataKey, printCallback);
 
 
   @override

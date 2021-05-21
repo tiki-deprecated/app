@@ -66,13 +66,13 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
     KeysNewScreenDownloadBloc bloc =
     BlocProvider.of<KeysNewScreenDownloadBloc>(context);
     GlobalKey repaintKey = new GlobalKey();
-    bloc.add(KeysNewScreenDownloadRendered(repaintKey, bloc.state.shouldShare));
+    Function print = () => bloc.add(KeysNewScreenDownloadRendered(repaintKey, false));
 
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) =>
-          KeysNewScreenSaveDialogDownload(keyData, repaintKey: repaintKey).alert(context)
+          KeysNewScreenSaveDialogDownload(keyData, repaintKey: repaintKey, printCallback: print).alert(context)
     );
   }
 }
