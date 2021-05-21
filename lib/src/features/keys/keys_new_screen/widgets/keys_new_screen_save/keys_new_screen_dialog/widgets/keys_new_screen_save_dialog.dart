@@ -14,6 +14,7 @@ abstract class KeysNewScreenSaveDialog {
 
   AlertDialog alert(BuildContext context) {
     return AlertDialog(
+        key: getKey() ?? GlobalKey(),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0))),
         title: TikiTitle(getTitle(), fontSize: 9),
@@ -37,4 +38,5 @@ abstract class KeysNewScreenSaveDialog {
   String getButtonText();
   Function getButtonAction();
   bool isButtonActive();
+  GlobalKey? getKey() => null;
 }

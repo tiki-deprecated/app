@@ -6,6 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/bloc/keys_new_screen_download_bloc.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/widgets/download/keys_new_screen_save_dialog_download.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/helper/helper_permission.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
@@ -57,10 +58,21 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
   }
 
   void onPressed(BuildContext context, KeysNewScreenState state) async {
-    if (await HelperPermission.request(Permission.storage)) {
-      BlocProvider.of<KeysNewScreenDownloadBloc>(context)
-          .add(KeysNewScreenDownloaded(false));
-     // BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
-    }
+    String keyData = state.address! +
+        "." +
+        state.dataPrivate! +
+        "." +
+        state.signPrivate!;
+    KeysNewScreenDownloadBloc bloc =
+    BlocProvider.of<KeysNewScreenDownloadBloc>(context);
+    GlobalKey repaintKey = new GlobalKey();
+    bloc.add(KeysNewScreenDownloadRendered(repaintKey, bloc.state.shouldShare));
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) =>
+          KeysNewScreenSaveDialogDownload(keyData, repaintKey: repaintKey).alert(context)
+    );
   }
 }

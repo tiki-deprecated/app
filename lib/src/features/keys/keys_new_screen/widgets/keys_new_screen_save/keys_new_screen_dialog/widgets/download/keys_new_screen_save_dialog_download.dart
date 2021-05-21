@@ -8,18 +8,19 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/keys_new_screen_download.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/repo_local_ss_current_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/widgets/keys_new_screen_download_qr.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../keys_new_screen_save_dialog.dart';
 
 class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
-  final RepoLocalSsCurrentModel currentModel;
-  final String combinedKey;
 
-  KeysNewScreenSaveDialogDownload(this.combinedKey, this.currentModel) : super();
+  final GlobalKey? repaintKey;
+  final String dataKey;
+
+  KeysNewScreenSaveDialogDownload(this.dataKey, {this.repaintKey}) : super();
 
   @override
   String getTitle() =>  "Save securely to a pass manager";
@@ -28,7 +29,11 @@ class KeysNewScreenSaveDialogDownload extends KeysNewScreenSaveDialog{
   String getSubtitle() => 'Copy/paste your details manually to save your key to your pass manager.';
 
   @override
-  Widget getContainer() => KeysNewScreenDownload();
+  Widget getContainer() => KeysNewScreenQr(dataKey);
+
+
+  @override
+  GlobalKey? getKey() => this.repaintKey;
 
   @override
   String getButtonText() => 'Continue';

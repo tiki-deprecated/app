@@ -7,7 +7,6 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/bloc/keys_new_screen_download_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/keys_new_screen_download.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_gen/keys_new_screen_gen.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_save.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
@@ -29,7 +28,8 @@ class KeysNewScreen extends StatelessWidget {
               create: (BuildContext context) =>
                   KeysNewScreenBloc.provide(context)),
           BlocProvider(
-              create: (BuildContext context) => KeysNewScreenDownloadBloc())
+              create: (BuildContext context) =>
+                  KeysNewScreenDownloadBloc()),
         ],
         child: TikiScaffold(
           foregroundChildren: [keysCreationBlocConsumer()],
@@ -46,8 +46,8 @@ class KeysNewScreen extends StatelessWidget {
   }
 
   /// The listener for keys creation
-  void keysCreationListener(
-      BuildContext context, KeysNewScreenState screenState) {
+  void keysCreationListener(BuildContext context,
+      KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenSuccess) {
       TikiAnalytics.getLogger()!.logEvent('KEYS_CREATED');
       Navigator.of(context)
@@ -56,44 +56,31 @@ class KeysNewScreen extends StatelessWidget {
   }
 
   /// The [Builder] for keys creation.
-  Widget keysCreationBuilder(
-      BuildContext context, KeysNewScreenState screenState) {
+  Widget keysCreationBuilder(BuildContext context,
+      KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenInitial) {
       TikiAnalytics.getLogger()!.logEvent('CREATE_KEYS');
       return KeysNewScreenGen();
     } else {
       return BlocConsumer<KeysNewScreenDownloadBloc,
-              KeysNewScreenDownloadState>(
+          KeysNewScreenDownloadState>(
           listener: downloadStateListener, builder: downloadBuilder);
     }
   }
 
   /// The [Builder] for keys download
-  Widget downloadBuilder(
-      BuildContext context, KeysNewScreenDownloadState downloadState) {
-        return KeysNewScreenSave();
-    // if (downloadState is KeysNewScreenDownloadInProgress) {
-    //   TikiAnalytics.getLogger()!.logEvent('DOWNLOAD_KEYS');
-    //   return KeysNewScreenDownload();
-    // } else {
-    //   TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
-    //   return KeysNewScreenSave();
-    // }
+  Widget downloadBuilder(BuildContext context,
+      KeysNewScreenDownloadState downloadState) {
+    TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
+    return KeysNewScreenSave();
   }
 
+
   /// The listener for keys daonload
-  void downloadStateListener(
-      BuildContext context, KeysNewScreenDownloadState downloadState) {
+  void downloadStateListener(BuildContext context,
+      KeysNewScreenDownloadState downloadState) {
     if (downloadState is KeysNewScreenDownloadSuccess) {
-      if (downloadState.shouldShare)
-        Share.shareFiles([downloadState.path]);
-      else
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return KeysNewScreenDownload();
-          },
-        );
+
     }
   }
 
