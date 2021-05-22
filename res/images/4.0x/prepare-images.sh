@@ -1,5 +1,4 @@
 #!/bin/sh
-files=0
 for file in ./*.jpg ./*.png
 do
   filename=$(basename -- "$file")

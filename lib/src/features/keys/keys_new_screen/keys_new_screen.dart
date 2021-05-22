@@ -28,8 +28,7 @@ class KeysNewScreen extends StatelessWidget {
               create: (BuildContext context) =>
                   KeysNewScreenBloc.provide(context)),
           BlocProvider(
-              create: (BuildContext context) =>
-                  KeysNewScreenDownloadBloc()),
+              create: (BuildContext context) => KeysNewScreenDownloadBloc()),
           BlocProvider(
               create: (BuildContext context) =>
                   KeysNewScreenSaveDialogCopyBloc.provide(context)),
@@ -49,8 +48,8 @@ class KeysNewScreen extends StatelessWidget {
   }
 
   /// The listener for keys creation
-  void keysCreationListener(BuildContext context,
-      KeysNewScreenState screenState) {
+  void keysCreationListener(
+      BuildContext context, KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenSuccess) {
       TikiAnalytics.getLogger()!.logEvent('KEYS_CREATED');
       Navigator.of(context)
@@ -59,32 +58,29 @@ class KeysNewScreen extends StatelessWidget {
   }
 
   /// The [Builder] for keys creation.
-  Widget keysCreationBuilder(BuildContext context,
-      KeysNewScreenState screenState) {
+  Widget keysCreationBuilder(
+      BuildContext context, KeysNewScreenState screenState) {
     if (screenState is KeysNewScreenInitial) {
       TikiAnalytics.getLogger()!.logEvent('CREATE_KEYS');
       return KeysNewScreenGen();
     } else {
       return BlocConsumer<KeysNewScreenDownloadBloc,
-          KeysNewScreenDownloadState>(
+              KeysNewScreenDownloadState>(
           listener: downloadStateListener, builder: downloadBuilder);
     }
   }
 
   /// The [Builder] for keys download
-  Widget downloadBuilder(BuildContext context,
-      KeysNewScreenDownloadState downloadState) {
+  Widget downloadBuilder(
+      BuildContext context, KeysNewScreenDownloadState downloadState) {
     TikiAnalytics.getLogger()!.logEvent('SAVE_KEYS');
     return KeysNewScreenSave();
   }
 
-
   /// The listener for keys daonload
-  void downloadStateListener(BuildContext context,
-      KeysNewScreenDownloadState downloadState) {
-    if (downloadState is KeysNewScreenDownloadSuccess) {
-
-    }
+  void downloadStateListener(
+      BuildContext context, KeysNewScreenDownloadState downloadState) {
+    if (downloadState is KeysNewScreenDownloadSuccess) {}
   }
 
   Widget _background() {

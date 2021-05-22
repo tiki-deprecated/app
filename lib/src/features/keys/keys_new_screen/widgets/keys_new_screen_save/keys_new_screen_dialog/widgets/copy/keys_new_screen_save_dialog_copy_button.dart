@@ -21,8 +21,6 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
 
   final String? value;
 
-  bool copied = false;
-
   final copyCallback;
 
   KeysNewScreenSaveCopyButton(this.value, this.copyCallback);
@@ -67,7 +65,8 @@ class KeysNewScreenSaveCopyButton extends StatelessWidget {
                       onPressed: () {
                         Clipboard.setData(new ClipboardData(text: value));
                         KeysNewScreenSaveDialogCopyBloc bloc =
-                        BlocProvider.of<KeysNewScreenSaveDialogCopyBloc>(context);
+                            BlocProvider.of<KeysNewScreenSaveDialogCopyBloc>(
+                                context);
                         bloc.add(KeysNewScreenCopied());
                         copyCallback();
                       },

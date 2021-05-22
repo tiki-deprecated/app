@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/features/login/login_otp/login_otp_req/bloc/login_otp_req_bloc.dart';
-import 'package:app/src/widgets/components/tiki_big_input.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_big_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
