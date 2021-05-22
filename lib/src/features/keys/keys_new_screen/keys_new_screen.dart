@@ -8,6 +8,7 @@ import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/bloc/keys_new_screen_download_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_gen/keys_new_screen_gen.dart';
+import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_save.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:share/share.dart';
 
 class KeysNewScreen extends StatelessWidget {
   @override
@@ -30,6 +30,9 @@ class KeysNewScreen extends StatelessWidget {
           BlocProvider(
               create: (BuildContext context) =>
                   KeysNewScreenDownloadBloc()),
+          BlocProvider(
+              create: (BuildContext context) =>
+                  KeysNewScreenSaveDialogCopyBloc.provide(context)),
         ],
         child: TikiScaffold(
           foregroundChildren: [keysCreationBlocConsumer()],

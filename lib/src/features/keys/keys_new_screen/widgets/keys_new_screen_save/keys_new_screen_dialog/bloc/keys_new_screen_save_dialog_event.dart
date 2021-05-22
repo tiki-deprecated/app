@@ -9,10 +9,6 @@ abstract class KeysNewScreenSaveDialogCopyEvent {
   const KeysNewScreenSaveDialogCopyEvent();
 }
 
-class KeysNewScreenInitial extends KeysNewScreenSaveDialogCopyEvent {
-  const KeysNewScreenInitial() : super();
-}
-
 class KeysNewScreenCopied extends KeysNewScreenSaveDialogCopyEvent {
   const KeysNewScreenCopied() : super();
 }

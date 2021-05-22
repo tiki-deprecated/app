@@ -85,8 +85,8 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
 
   Stream<KeysNewScreenState> _mapBackedUpToState(
       KeysNewScreenBackedUp backedUp) async* {
-    yield KeysNewScreenInProgress(state.dataPublic, state.dataPrivate,
-        state.signPublic, state.signPrivate, state.address, true);
+    yield KeysNewScreenCanContinue(state.dataPublic, state.dataPrivate,
+        state.signPublic, state.signPrivate, state.address);
   }
 
   Stream<KeysNewScreenState> _mapSkippedToState(

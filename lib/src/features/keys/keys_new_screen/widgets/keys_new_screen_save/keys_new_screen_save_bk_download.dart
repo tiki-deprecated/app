@@ -8,23 +8,22 @@ import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_download/bloc/keys_new_screen_download_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/widgets/download/keys_new_screen_save_dialog_download.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/utils/helper/helper_permission.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class KeysNewScreenSaveBkDownload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
-        builder: (BuildContext context, KeysNewScreenState state) {
-      return _button(context, state);
-    });
+    return BlocBuilder<KeysNewScreenDownloadBloc, KeysNewScreenDownloadState>(
+        builder: (BuildContext context, KeysNewScreenDownloadState state) {
+          return _button(context, state);
+        });
   }
 
   _button(context, state) {
+    var nsState = BlocProvider.of<KeysNewScreenBloc>(context).state;
     return GestureDetector(
         child: Stack(clipBehavior: Clip.none, children: [
           Container(
@@ -51,10 +50,12 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                         fontSize: 2 * PlatformRelativeSize.blockVertical,
                         color: ConfigColor.mardiGras)),
               ])),
-          Positioned(
-              top: -30.0, right: -30.0, child: HelperImage("green-check")),
+          state is KeysNewScreenDownloaded
+              ? Positioned(
+              top: -30.0, right: -30.0, child: HelperImage("green-check"))
+              : Container(),
         ]),
-        onTap: () => onPressed(context, state));
+        onTap: () => onPressed(context, nsState));
   }
 
   void onPressed(BuildContext context, KeysNewScreenState state) async {
@@ -63,16 +64,20 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
         state.dataPrivate! +
         "." +
         state.signPrivate!;
-    KeysNewScreenDownloadBloc bloc =
-    BlocProvider.of<KeysNewScreenDownloadBloc>(context);
     GlobalKey repaintKey = new GlobalKey();
-    Function print = () => bloc.add(KeysNewScreenDownloadRendered(repaintKey, false));
-
+    Function print = () {
+      BlocProvider.of<KeysNewScreenDownloadBloc>(context).add(
+          KeysNewScreenDownloadRendered(repaintKey, false));
+      BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
+      Navigator.pop(context);
+    };
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) =>
-          KeysNewScreenSaveDialogDownload(keyData, repaintKey: repaintKey, printCallback: print).alert(context)
+            KeysNewScreenSaveDialogDownload(
+                keyData, repaintKey: repaintKey, printCallback: print).alert(
+                context)
     );
   }
 }

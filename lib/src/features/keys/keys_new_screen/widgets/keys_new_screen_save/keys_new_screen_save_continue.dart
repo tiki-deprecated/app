@@ -18,7 +18,7 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
         builder: (BuildContext context, KeysNewScreenState state) {
       bool isActive =
-          state is KeysNewScreenInProgress;
+          state is KeysNewScreenCanContinue;
       return TikiBigButton("CONTINUE", isActive, _continueAfterSave);
     });
   }

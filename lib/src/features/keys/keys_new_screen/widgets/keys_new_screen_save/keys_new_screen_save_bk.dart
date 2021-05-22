@@ -81,6 +81,12 @@ class KeysNewScreenSaveBk extends StatelessWidget {
 
   _saveKey(BuildContext context, KeysNewScreenState state,
       RepoLocalSsCurrentModel currentModel) async {
+    Function copyCallback = () {
+      KeysNewScreenSaveDialogCopyBloc bloc =
+          BlocProvider.of<KeysNewScreenSaveDialogCopyBloc>(context);
+      bloc.add(KeysNewScreenCopied());
+      BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
+    };
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -90,7 +96,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
               state.dataPrivate! +
               '.' +
               state.signPrivate!;
-          return KeysNewScreenSaveDialogCopy(key, currentModel).alert(context);
+          return KeysNewScreenSaveDialogCopy(key, currentModel,copyCallback).alert(context);
         });
   }
 }

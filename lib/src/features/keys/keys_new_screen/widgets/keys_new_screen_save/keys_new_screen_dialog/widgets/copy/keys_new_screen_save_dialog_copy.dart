@@ -12,8 +12,9 @@ import 'keys_new_screen_save_dialog_copy_button.dart';
 class KeysNewScreenSaveDialogCopy extends KeysNewScreenSaveDialog{
   final RepoLocalSsCurrentModel currentModel;
   final String combinedKey;
+  final Function copyCallback;
 
-  KeysNewScreenSaveDialogCopy(this.combinedKey, this.currentModel) : super();
+  KeysNewScreenSaveDialogCopy(this.combinedKey, this.currentModel, this.copyCallback) : super();
 
   @override
   String getTitle() =>  "Save securely to a pass manager";
@@ -28,9 +29,9 @@ class KeysNewScreenSaveDialogCopy extends KeysNewScreenSaveDialog{
             'YOUR ACCOUNT E-MAIL AND KEY',
             style: TextStyle(color: Colors.grey),
           ),
-          KeysNewScreenSaveCopyButton(currentModel.email),
+          KeysNewScreenSaveCopyButton(currentModel.email, copyCallback),
           Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-          KeysNewScreenSaveCopyButton(combinedKey),
+          KeysNewScreenSaveCopyButton(combinedKey, copyCallback),
         ]));
 
   @override
