@@ -14,7 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
+import '../bloc/keys_new_screen_save_dialog_bloc.dart';
 
 class KeysNewScreenSaveBk extends StatelessWidget {
   KeysNewScreenSaveBk();
@@ -96,7 +96,8 @@ class KeysNewScreenSaveBk extends StatelessWidget {
               state.dataPrivate! +
               '.' +
               state.signPrivate!;
-          return KeysNewScreenSaveDialogCopy(key, currentModel,copyCallback).alert(context);
+          return KeysNewScreenSaveDialogCopy(key, currentModel, copyCallback)
+              .alert(context);
         });
   }
 }

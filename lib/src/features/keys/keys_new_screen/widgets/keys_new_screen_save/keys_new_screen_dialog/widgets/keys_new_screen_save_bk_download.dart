@@ -18,8 +18,8 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenDownloadBloc, KeysNewScreenDownloadState>(
         builder: (BuildContext context, KeysNewScreenDownloadState state) {
-          return _button(context, state);
-        });
+      return _button(context, state);
+    });
   }
 
   _button(context, state) {
@@ -52,32 +52,29 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
               ])),
           state is KeysNewScreenDownloaded
               ? Positioned(
-              top: -30.0, right: -30.0, child: HelperImage("green-check"))
+                  top: -30.0, right: -30.0, child: HelperImage("green-check"))
               : Container(),
         ]),
         onTap: () => onPressed(context, nsState));
   }
 
   void onPressed(BuildContext context, KeysNewScreenState state) async {
-    String keyData = state.address! +
-        "." +
-        state.dataPrivate! +
-        "." +
-        state.signPrivate!;
+    String keyData =
+        state.address! + "." + state.dataPrivate! + "." + state.signPrivate!;
     GlobalKey repaintKey = new GlobalKey();
     Function print = () {
-      BlocProvider.of<KeysNewScreenDownloadBloc>(context).add(
-          KeysNewScreenDownloadRendered(repaintKey, false));
+      BlocProvider.of<KeysNewScreenDownloadBloc>(context)
+          .add(KeysNewScreenDownloadRendered(repaintKey, false));
       BlocProvider.of<KeysNewScreenBloc>(context).add(KeysNewScreenBackedUp());
       Navigator.pop(context);
     };
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (BuildContext context) =>
-            KeysNewScreenSaveDialogDownload(
-                keyData, repaintKey: repaintKey, printCallback: print).alert(
-                context)
-    );
+        builder: (BuildContext context) => KeysNewScreenSaveDialogDownload(
+                keyData,
+                repaintKey: repaintKey,
+                printCallback: print)
+            .alert(context));
   }
 }

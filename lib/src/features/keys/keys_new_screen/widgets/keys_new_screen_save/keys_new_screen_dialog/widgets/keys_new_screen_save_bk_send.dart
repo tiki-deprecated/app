@@ -13,15 +13,13 @@ import 'package:permission_handler/permission_handler.dart';
 
 @deprecated
 class KeysNewScreenSaveBkSend {
-
-
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
         builder: (BuildContext context, KeysNewScreenState state) {
       return Container(); //horizontalButton(context, state);
     });
   }
-  
+
   void onPressed(BuildContext context, KeysNewScreenState state) async {
     if (await HelperPermission.request(Permission.storage)) {
       BlocProvider.of<KeysNewScreenDownloadBloc>(context)

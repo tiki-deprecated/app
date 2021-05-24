@@ -46,8 +46,7 @@ class KeysNewScreenDownloadBloc
         rendered.globalKey.currentContext!.findRenderObject()
             as RenderRepaintBoundary;
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
-    ByteData? byteData = await (image.toByteData(format: ui.ImageByteFormat.png)
-        as Future<ByteData?>);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     Directory documents;
@@ -55,17 +54,17 @@ class KeysNewScreenDownloadBloc
       documents = await getApplicationDocumentsDirectory();
     else
       documents = Directory((await getExternalStorageDirectory())!
-          .parent
-          .parent
-          .parent
-          .parent
-          .path +
+              .parent
+              .parent
+              .parent
+              .parent
+              .path +
           "/Download");
 
     String path = documents.path + '/' + fileName;
     File imgFile = new File(path);
     bool permission = await HelperPermission.request(Permission.storage);
-    if(permission){
+    if (permission) {
       imgFile.writeAsBytesSync(pngBytes, flush: true);
       yield KeysNewScreenDownloadSuccess(rendered.shouldShare, path);
     }

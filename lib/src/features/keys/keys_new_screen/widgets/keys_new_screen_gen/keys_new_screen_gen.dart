@@ -9,9 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import 'keys_new_screen_gen_restore.dart';
-import 'keys_new_screen_gen_subtitle.dart';
-import 'keys_new_screen_gen_title.dart';
+import 'widgets/keys_new_screen_gen_restore.dart';
+import 'widgets/keys_new_screen_gen_subtitle.dart';
+import 'widgets/keys_new_screen_gen_title.dart';
 
 class KeysNewScreenGen extends StatefulWidget {
   @override

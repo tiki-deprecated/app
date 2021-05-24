@@ -41,8 +41,7 @@ class KeysNewScreenQr extends StatelessWidget {
                 );
               })),
       downloadBtn(context)
-    ]
-    );
+    ]);
     return screen;
   }
 

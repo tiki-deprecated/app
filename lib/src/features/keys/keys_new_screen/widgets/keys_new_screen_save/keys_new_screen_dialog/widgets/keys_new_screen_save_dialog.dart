@@ -4,9 +4,9 @@
  */
 
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/components/tiki_big_button.dart';
-import 'package:app/src/widgets/components/tiki_subtitle.dart';
-import 'package:app/src/widgets/components/tiki_title.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
+import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

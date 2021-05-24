@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
-import 'package:app/src/widgets/components/tiki_big_button.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
