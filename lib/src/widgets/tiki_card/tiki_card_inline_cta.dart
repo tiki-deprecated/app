@@ -5,7 +5,7 @@ class TikiCardInlineCta extends TikiCardCta {
   final Text headline;
   final Icon trailingIcon;
 
-  final Function callback;
+  final Function? callback;
 
   TikiCardInlineCta(this.headline, this.trailingIcon, this.callback);
 
@@ -16,7 +16,7 @@ class TikiCardInlineCta extends TikiCardCta {
       IconButton(
         padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
         icon: trailingIcon,
-        onPressed: callback,
+        onPressed: () => callback!(),
       )
     ]);
   }

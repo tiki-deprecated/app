@@ -4,14 +4,14 @@
  */
 
 class Migrate0To001Keys {
-  String uuid;
-  String address;
-  String signPrivateKey;
-  String signPublicKey;
-  String dataPrivateKey;
-  String dataPublicKey;
-  bool registered;
-  String refer;
+  String? uuid;
+  String? address;
+  String? signPrivateKey;
+  String? signPublicKey;
+  String? dataPrivateKey;
+  String? dataPublicKey;
+  bool? registered;
+  String? refer;
 
   Migrate0To001Keys(this.uuid,
       {this.address,
@@ -22,7 +22,7 @@ class Migrate0To001Keys {
       this.registered,
       this.refer});
 
-  Migrate0To001Keys.fromJson(Map<String, dynamic> json) {
+  Migrate0To001Keys.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.uuid = json['uuid'];
       this.address = json['address'];

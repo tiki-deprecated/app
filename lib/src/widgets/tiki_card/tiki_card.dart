@@ -10,7 +10,7 @@ class TikiCard extends StatelessWidget {
   final TikiCardTitle title;
   final TikiCardText text;
   final TikiCardFigure figure;
-  final TikiCardCta cta;
+  final TikiCardCta? cta;
   final Color bgcolor;
 
   const TikiCard(this.title, this.text, this.figure,

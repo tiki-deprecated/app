@@ -4,14 +4,12 @@
  */
 
 class RepoApiBouncerJwtReqRefresh {
-  String refreshToken;
+  String? refreshToken;
 
   RepoApiBouncerJwtReqRefresh(this.refreshToken);
 
   RepoApiBouncerJwtReqRefresh.fromJson(Map<String, dynamic> json) {
-    if (json != null) {
-      this.refreshToken = json['refreshToken'];
-    }
+    this.refreshToken = json['refreshToken'];
   }
 
   Map<String, dynamic> toJson() => {'refreshToken': refreshToken};

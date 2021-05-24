@@ -14,7 +14,7 @@ class ConfigDomain {
       ConfigEnvironment.isPublic ? "api.mytiki.com" : "localhost:3000";
 
   static Uri asUri(String authority, String unencodedPath,
-      [Map<String, dynamic> queryParameters]) {
+      [Map<String, dynamic>? queryParameters]) {
     return ConfigEnvironment.isPublic
         ? Uri.https(authority, unencodedPath, queryParameters)
         : Uri.http(authority, unencodedPath, queryParameters);

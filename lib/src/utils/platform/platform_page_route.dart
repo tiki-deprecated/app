@@ -12,8 +12,8 @@ import 'package:flutter/widgets.dart';
 class PlatformPageRoute {
   static Route<T> screen<T>(
     Widget destination, {
-    RouteSettings settings,
-    String title,
+    RouteSettings? settings,
+    String? title,
     bool maintainState = true,
     bool fullscreenDialog = false,
   }) {

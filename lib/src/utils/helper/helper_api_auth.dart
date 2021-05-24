@@ -37,19 +37,20 @@ class HelperApiAuth {
     if (rsp.code == 401) {
       RepoLocalSsCurrentModel current =
           await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-      RepoLocalSsTokenModel token = await _repoLocalSsToken.find(current.email);
+      RepoLocalSsTokenModel token =
+          await _repoLocalSsToken.find(current.email!);
       if (token.refresh == null) {
         Sentry.captureMessage("No refresh token. Logging out",
             level: SentryLevel.warning);
-        HelperLogOut.provide(ConfigNavigate.key.currentContext)
-            .user(ConfigNavigate.key.currentContext, current.email);
+        HelperLogOut.provide(ConfigNavigate.key.currentContext!)
+            .user(ConfigNavigate.key.currentContext!, current.email!);
       } else {
         HelperApiRsp<RepoApiBouncerJwtRsp> refreshRsp = await _repoApiBouncerJwt
             .refresh(RepoApiBouncerJwtReqRefresh(token.refresh));
         if (refreshRsp.code == 200) {
           RepoApiBouncerJwtRsp jwt = refreshRsp.data;
           _repoLocalSsToken.save(
-              current.email,
+              current.email!,
               RepoLocalSsTokenModel(
                   bearer: jwt.accessToken,
                   refresh: jwt.refreshToken,
@@ -61,14 +62,14 @@ class HelperApiAuth {
     return rsp;
   }
 
-  Future<String> bearer() async {
+  Future<String?> bearer() async {
     RepoLocalSsCurrentModel current =
         await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-    RepoLocalSsTokenModel token = await _repoLocalSsToken.find(current.email);
+    RepoLocalSsTokenModel token = await _repoLocalSsToken.find(current.email!);
     return token.bearer;
   }
 
-  Future<String> bearerForUser(String email) async {
+  Future<String?> bearerForUser(String email) async {
     RepoLocalSsTokenModel token = await _repoLocalSsToken.find(email);
     return token.bearer;
   }

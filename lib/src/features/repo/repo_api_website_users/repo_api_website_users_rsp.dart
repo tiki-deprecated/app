@@ -4,11 +4,11 @@
  */
 
 class RepoApiWebsiteUsersRsp {
-  int total;
+  int? total;
 
   RepoApiWebsiteUsersRsp({this.total});
 
-  RepoApiWebsiteUsersRsp.fromJson(Map<String, dynamic> json) {
+  RepoApiWebsiteUsersRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.total = json['total'];
     }
