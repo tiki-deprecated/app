@@ -1,7 +1,7 @@
-#TIKI Mobile App Terms and Conditions
-#####Last Updated: May 11, 2021
+# TIKI Mobile App Terms and Conditions
+### Last Updated: May 11, 2021
 
-###1. Welcome to TIKI 
+###  1. Welcome to TIKI 
 
 * We’re delighted that you downloaded our TIKI app (“App”). Before you start using our App, you must accept these terms and conditions. Please read these terms and conditions carefully, together with any other terms we make available from time to time, as they govern your use of the App. These terms and conditions tell you who we are, how you and we may change or end the contract between us, and other important information. By accepting them and using the App you’re agreeing to be bound by these terms and conditions. If you do not understand or do not wish to be bound by these terms and conditions, you should not register for a TIKI account and you should delete the App from your device. You should also read our privacy notice – see section 6. 
 
@@ -14,7 +14,7 @@
 
 * If you want to use TIKI as an organization or business (“organization”) or on behalf of an organization, these terms are not for you. Rather, you will need to accept and comply with the organizational terms and conditions presented to you when creating an organizational account or when accepting an organizational profile.
 
-###2. What TIKI does
+###  2. What TIKI does
 * TIKI helps you to take more control over the data on your mobile device and potentially get paid when you wish to share certain abstracted information about your activity on your device, whether these are purchases or “likes” for example. You control what insight (purchase) and sentiment (likes, etc.) summaries you contribute to the anonymized, aggregate cohorts TIKI creates. Likewise, you alone will decide when you want to use TIKI to identify yourself to a third party.
 
 
@@ -22,7 +22,7 @@
 
 
 * TIKI may from time to time create, develop and introduce additional features, functionality or services to the App and, if necessary, we will update these terms and conditions accordingly as required.
-###3. Before you start
+###  3. Before you start
 * Provided you accept and continue to comply with these terms and conditions, TIKI grants you a non-exclusive, non-transferable license to use our App that can be revoked at any time. 
 
 
@@ -30,7 +30,7 @@
 
 
 * Each person can only create one TIKI account.
-###4. Creating your account in TIKI
+###  4. Creating your account in TIKI
 * Having downloaded our App, to create your TIKI account you will need to enter into the App a genuine and valid email address. Your email address will be your login ID and we will use it to send you one-time password links, so that you needn’t worry about remembering or losing your password. We may change our security requirements from time to time.
 
 
@@ -44,12 +44,12 @@
 
 
 * All account creation instructions given in our App during the account creation process (and any amendments or updates to those processes) also form part of these terms and conditions.
-###4. Linking third party accounts to TIKI and sharing
+###  4. Linking third party accounts to TIKI and sharing
 * As our Product Roadmap advances, you alone will decide which of your accounts you wish to link to TIKI. That linking process should be familiar, as it will typically redirect you to the login page for that service and will return you to the App after you’ve entered your credentials. That will enable the App to identify the activities you have selected (typically product purchases or social media actions), create a summary, and share the summary as you direct. The nitty gritty of how all this works is described [here].
 
 
 * Whenever you instruct the App to share an information summary as part of a cohort, you will be paid a pro rata portion of that, depending on how much the organization paid and how many summaries are in the particular cohort. Payment goes into your crypto wallet. TIKI knows to send payment to your wallet because each wallet has a hexadecimal identifier and that wallet ID is uploaded along with the information summary. Even though the wallet ID is uploaded with your summary, TIKI does not expose to any organization that wallet ID. Furthermore, we take steps to ensure that the identifier relates to the crypto wallet and not you or your TIKI App.
-###5. Closing/deleting your TIKI account
+### 5. Closing/deleting your TIKI account
 * You’re free to close your TIKI account at any time by selecting the “Delete Account” option in “Settings” in the App’s menu. We will ask you to confirm that you have saved separately your encryption keys, because these will enable you to access your crypto wallet after you have deleted the App.
 
 
@@ -63,19 +63,19 @@
 
 
 * Whether your TIKI account is closed by you or by us, you should delete the App from your device promptly following closure of your account.
-###6. We care about your privacy and security
+### 6. We care about your privacy and security
 * We’re in the business of making sure that you can share your personal details safely and securely. So, any personal information that you provide to us will be processed strictly in line with our privacy notice, which is available at [https://www.mytiki.com/privacy](https://www.mytiki.com/privacy) as well as in the App itself.
 
 
 * From time to time we might need to involve other third parties in delivering the services that the App provide you. We reserve the right to transfer, assign, subcontract or deal in any other manner with our rights and obligations under these terms and conditions without your prior written approval.
-###7. Intellectual property
+### 7. Intellectual property
 * We are very proud of the App, and, because of our belief in transparency we have made publicly available the source code for the App. So, contrary to most companies, we are not claiming that code as proprietary.
 
 
 * However, the TIKI logo and any other TIKI product or service names, logos or slogans that may appear on the website or in the App are trademarks of TIKI. These may not be copied, imitated or used, in whole or in part, without the prior written permission of TIKI or the applicable trademark holder. You may not use any metatags or other “hidden text” utilizing “TIKI” or any other name, trademark or product or service name of TIKI without our prior written permission. In addition, the look and feel of the App is the service mark, trademark and/or trade dress of TIKI and may not be copied, imitated or used, in whole or in part, without our prior written permission. All other trademarks, registered trademarks, product names and company names or logos mentioned are the property of their respective owners. Reference to any products, services, processes or other information, by name, trademark, manufacturer, supplier, or otherwise does not constitute or imply endorsement, sponsorship or recommendation by TIKI.
-###8. Availability of TIKI
+### 8. Availability of TIKI
 * We aim to ensure that you are able to access and use the App at all times. However, your use of the App may from time to time be interrupted by maintenance, repairs or updates or other factors which we may not be able to control and we cannot guarantee to you that they will always be available. We will do our best to notify you of such situations as soon as possible after we become aware of them, but we will not be liable under any circumstances for any loss or damage caused as a result of such interruption of availability of the App, other than as set out below at section 10 (Our responsibility to you).
-###9. Mobile app store legalese
+### 9. Mobile app store legalese
 * The following additional terms and conditions apply with respect to any Mobile Application that TIKI provides to you designed for use on an Apple iOS-powered mobile device (an “iOS App”):
     * You acknowledge that these Terms are between you and TIKI only, and not with Apple, Inc. (“Apple”).
     * Your use of TIKI’s iOS App must comply with Apple’s then-current App Store Terms of Service.
@@ -92,7 +92,7 @@
     * Your use of TIKI’s Android App must comply with Google’s then-current Android Market Terms of Service.
     * Google is only a provider of the Android Market where you obtained the Android App. TIKI, and not Google, is solely responsible for TIKI’s Android App and the Services and content available thereon. Google has no obligation or liability to you with respect to TIKI’s Android App or these terms.
     * You acknowledge and agree that Google is a third-party beneficiary to the terms as they relate to TIKI’s Android App.
-###10. Some additional house rules
+### 10. Some additional house rules
 * You are at all times responsible for making informed decisions about sharing your information summaries with third parties and for considering the implications of doing so. TIKI has no control over what third parties do with the information summaries you choose to share with them through the App and therefore accepts no responsibility or liability for information misuse on their part.
 
 
@@ -108,7 +108,7 @@
     * not damage, interfere with or disrupt the integrity or performance of the App in any way;
     * not offer in any manner, sublicense, lease, sell or otherwise make available the App or any of their services to any third party without our prior written consent;
     * not use or interact with the App in any unlawful, fraudulent or dishonest way or for any improper purpose. If we know of or suspect activity by you that contravenes this section, we reserve the right to suspend your TIKI account, to report you to the relevant authority or agency, or to take such other action as we in our discretion believe is necessary for the protection of our users and/or our business or reputation, and we will keep a copy of your data for further anti-fraud procedures or as may be required by law. If false or inaccurate information is provided and fraud is identified, details may be passed to fraud prevention agencies to prevent fraud, money laundering and other criminal offences.
-###11. Our responsibility (liability) to you
+### 11. Our responsibility (liability) to you
 * WE WILL NOT BE LIABLE TO YOU FOR ANY DIRECT, INDIRECT, PUNITIVE, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES ARISING OUT OF OR IN CONNECTION WITH THE APP OR THE SERVICE, EVEN IF WE HAVE PREVIOUSLY BEEN ADVISED OF OR REASONABLY COULD HAVE FORESEEN THE POSSIBILITY OF SUCH DAMAGES, HOWEVER THEY ARISE, WHETHER IN BREACH OF CONTRACT OR IN TORT (INCLUDING NEGLIGENCE).
 
 
@@ -122,7 +122,7 @@
 
 
 * From time to time we might need to update the App, for example, to improve the services we offer to you or for security reasons. We reserve the right to update, modify or terminate the App or your access to them for any reason, without notice, at any time, and without any legal responsibility to you. To use the most up-to-date functionality of the App, you must download any updates we make available. You will be responsible for any loss or damage you may suffer by continuing to use an outdated version of the Products. We do not guarantee that the App will work with all devices and operating systems and we are not responsible for maintaining the compatibility of the App with all updated or new operating systems and devices.
-###12. Other legal points around terms and conditions
+### 12. Other legal points around terms and conditions
 * These terms and conditions constitute the entire agreement between you and us relating to your use of the App and TIKI. We reserve the right to investigate actual or potential violations of the terms and conditions and to take any action we deem appropriate, including, but not limited to, reporting any suspected unlawful activity to law enforcement officials, regulators or other third parties and disclosing any information we deem necessary or appropriate relating to user profiles, email addresses, usage histories, posted materials and IP addresses. We reserve the right to seek any and all remedies available at law and in equity for violations of the terms and conditions.
 
 

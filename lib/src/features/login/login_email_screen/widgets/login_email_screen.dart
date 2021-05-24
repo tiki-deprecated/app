@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/features/md_viewer/md_viewer.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
@@ -47,7 +48,23 @@ class LoginEmailScreen extends StatelessWidget {
       LoginEmailScreenError(),
       Container(
           margin: EdgeInsets.only(top: _marginTopButton),
-          child: LoginEmailScreenButton())
+          child: LoginEmailScreenButton()),
+      Container(
+        margin: EdgeInsets.only(top: _marginTopButton),
+        child: Expanded(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+              GestureDetector(
+                  child: Text("Terms of Service"),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MdViewer("TERMS")))),
+              GestureDetector(
+                  child: Text("Privacy Policy"),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MdViewer("PRIVACY")))),
+            ])),
+      ),
     ];
   }
 
