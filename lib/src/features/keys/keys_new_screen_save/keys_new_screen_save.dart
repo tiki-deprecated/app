@@ -29,54 +29,46 @@ class KeysNewScreenSave extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal2x),
-              child: Column(children: [
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopTitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenSaveTitle()),
-                Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: _marginVerticalSubtitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenSaveSubtitle()),
-                Expanded(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          child: KeysNewScreenSaveBkCopy()),
-                      Container(
-                          margin: EdgeInsets.only(
-                              top: 2 * PlatformRelativeSize.blockVertical),
-                          alignment: Alignment.centerLeft,
-                          child: KeysNewScreenSaveBkDownload()),
-                      Container(
-                          margin: EdgeInsets.only(
-                              top: 2 * PlatformRelativeSize.blockVertical),
-                          alignment: Alignment.centerLeft,
-                          child: KeysNewScreenSaveBkSend()),
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(
-                              top: 2 * PlatformRelativeSize.blockVertical),
-                          child: KeysNewScreenSaveBkQr())
-                    ])),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopDownload),
-                    child: KeysNewScreenSaveContinue()),
-                Container(
-                    margin: EdgeInsets.symmetric(vertical: _marginVerticalSkip),
-                    child: KeysNewScreenSaveSkip()),
-                Container(
-                    margin: EdgeInsets.only(bottom: _marginBottomButton),
-                    child: KeysNewScreenSaveRestore())
-              ])))
-    ]);
+    return Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: PlatformRelativeSize.marginHorizontal2x),
+        child: SingleChildScrollView(
+            child: Column(children: [
+          Container(
+              margin: EdgeInsets.only(top: _marginTopTitle),
+              alignment: Alignment.center,
+              child: KeysNewScreenSaveTitle()),
+          Container(
+              margin: EdgeInsets.symmetric(vertical: _marginVerticalSubtitle),
+              alignment: Alignment.center,
+              child: KeysNewScreenSaveSubtitle()),
+          Container(
+              alignment: Alignment.centerLeft,
+              child: KeysNewScreenSaveBkCopy()),
+          Container(
+              margin:
+                  EdgeInsets.only(top: 2 * PlatformRelativeSize.blockVertical),
+              alignment: Alignment.centerLeft,
+              child: KeysNewScreenSaveBkDownload()),
+          Container(
+              margin:
+                  EdgeInsets.only(top: 2 * PlatformRelativeSize.blockVertical),
+              alignment: Alignment.centerLeft,
+              child: KeysNewScreenSaveBkSend()),
+          Container(
+              alignment: Alignment.centerLeft,
+              margin:
+                  EdgeInsets.only(top: 2 * PlatformRelativeSize.blockVertical),
+              child: KeysNewScreenSaveBkQr()),
+          Container(
+              margin: EdgeInsets.only(top: _marginTopDownload),
+              child: KeysNewScreenSaveContinue()),
+          Container(
+              margin: EdgeInsets.symmetric(vertical: _marginVerticalSkip),
+              child: KeysNewScreenSaveSkip()),
+          Container(
+              margin: EdgeInsets.only(bottom: _marginBottomButton),
+              child: KeysNewScreenSaveRestore())
+        ])));
   }
 }
