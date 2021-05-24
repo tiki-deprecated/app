@@ -83,7 +83,7 @@ abstract class IntroScreen extends StatelessWidget {
             button,
             true,
             onButtonPressed,
-            textWidth: 45,
+            textWidth: 65,
           )),
     ];
   }

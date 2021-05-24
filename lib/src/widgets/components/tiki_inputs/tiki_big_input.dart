@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TikiBigInput extends StatelessWidget {
   static final double _paddingHorizontal =
       4 * PlatformRelativeSize.blockHorizontal;
-  static final double _paddingVertical = 4 * PlatformRelativeSize.blockVertical;
+  static final double _paddingVertical = 2 * PlatformRelativeSize.blockVertical;
   static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
 
   final String? placeholder;

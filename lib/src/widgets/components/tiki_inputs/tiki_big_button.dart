@@ -14,7 +14,7 @@ class TikiBigButton extends StatelessWidget {
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
   static final double _marginHorizontal =
-      5 * PlatformRelativeSize.blockHorizontal;
+      10 * PlatformRelativeSize.blockHorizontal;
   static final double _marginVertical =
       2.25 * PlatformRelativeSize.blockVertical;
 
@@ -26,7 +26,8 @@ class TikiBigButton extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(
-                vertical: _marginVertical, horizontal: _marginHorizontal),
+                vertical: _marginVertical,
+                horizontal: textWidth != null ? 0 : _marginHorizontal),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(10 * PlatformRelativeSize.blockVertical))),

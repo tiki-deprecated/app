@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/md_viewer/md_viewer.dart';
+import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen_tos.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
@@ -20,12 +20,13 @@ import 'login_email_screen_input.dart';
 
 class LoginEmailScreen extends StatelessWidget {
   static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopCta = 2.5 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopCta = 2 * PlatformRelativeSize.blockVertical;
   static final double _marginRightTitle =
       15 * PlatformRelativeSize.blockHorizontal;
   static final double _marginTopInput =
       2.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopButton = 4 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTos = 2 * PlatformRelativeSize.blockVertical;
 
   static const String _title = "Hey, nice to see you here";
   static const String _subtitle = "Enter your email below to begin.";
@@ -36,7 +37,10 @@ class LoginEmailScreen extends StatelessWidget {
           margin:
               EdgeInsets.only(top: _marginTopTitle, right: _marginRightTitle),
           alignment: Alignment.centerLeft,
-          child: TikiTitle(_title)),
+          child: TikiTitle(
+            _title,
+            textAlign: TextAlign.left,
+          )),
       Container(
           margin: EdgeInsets.only(top: _marginTopCta),
           alignment: Alignment.centerLeft,
@@ -50,21 +54,8 @@ class LoginEmailScreen extends StatelessWidget {
           margin: EdgeInsets.only(top: _marginTopButton),
           child: LoginEmailScreenButton()),
       Container(
-        margin: EdgeInsets.only(top: _marginTopButton),
-        child: Expanded(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-              GestureDetector(
-                  child: Text("Terms of Service"),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MdViewer("TERMS")))),
-              GestureDetector(
-                  child: Text("Privacy Policy"),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MdViewer("PRIVACY")))),
-            ])),
-      ),
+          margin: EdgeInsets.only(top: _marginTopTos),
+          child: LoginEmailScreenTos()),
     ];
   }
 

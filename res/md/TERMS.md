@@ -1,5 +1,5 @@
 # TIKI Mobile App Terms and Conditions
-### Last Updated: May 11, 2021
+#### Last Updated: May 11, 2021
 
 ###  1. Welcome to TIKI 
 
