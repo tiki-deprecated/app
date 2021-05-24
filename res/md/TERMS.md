@@ -44,7 +44,7 @@
 
 
 * All account creation instructions given in our App during the account creation process (and any amendments or updates to those processes) also form part of these terms and conditions.
-###  4. Linking third party accounts to TIKI and sharing
+### 4. Linking third party accounts to TIKI and sharing
 * As our Product Roadmap advances, you alone will decide which of your accounts you wish to link to TIKI. That linking process should be familiar, as it will typically redirect you to the login page for that service and will return you to the App after you’ve entered your credentials. That will enable the App to identify the activities you have selected (typically product purchases or social media actions), create a summary, and share the summary as you direct. The nitty gritty of how all this works is described [here].
 
 

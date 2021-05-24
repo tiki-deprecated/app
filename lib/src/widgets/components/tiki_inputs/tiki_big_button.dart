@@ -8,17 +8,18 @@ class TikiBigButton extends StatelessWidget {
   final String _text;
   final Widget? trailing;
   final Widget? leading;
+  final double? textWidth;
 
   static final double _letterSpacing =
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
   static final double _marginHorizontal =
-      10 * PlatformRelativeSize.blockHorizontal;
+      5 * PlatformRelativeSize.blockHorizontal;
   static final double _marginVertical =
-      2.5 * PlatformRelativeSize.blockVertical;
+      2.25 * PlatformRelativeSize.blockVertical;
 
   const TikiBigButton(this._text, this._isActive, this._callback,
-      {this.trailing, this.leading});
+      {this.trailing, this.leading, this.textWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,15 @@ class TikiBigButton extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Container(
+                    width: textWidth != null
+                        ? textWidth! * PlatformRelativeSize.blockHorizontal
+                        : null,
                     padding: EdgeInsets.only(
-                        right: PlatformRelativeSize.marginHorizontal),
+                        right: trailing != null
+                            ? PlatformRelativeSize.marginHorizontal
+                            : 0),
                     child: Text(_text,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: _fontSize,

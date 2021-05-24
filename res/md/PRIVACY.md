@@ -1,19 +1,19 @@
-#TIKI Privacy Notice
-####Effective Date: May 11, 2021
+# TIKI Privacy Notice
+#### Effective Date: May 11, 2021
 
 Thank you for your interest in TIKI. As a privacy-friendly company, we are glad you’re reading our privacy notice. We believe strongly in the principles of privacy and transparency, which should be evident if you’ve gotten this far. We publish our codebase, we publish the statistics our website collects, and because our approach is quite different from others, we have created this Privacy Notice to explain how it is that we collect so little personal data and, for the little we do collect, how we use that data.
 
 If you have questions after reading this notice, please contact us at privacy@mytiki.com. And, for a deep dive into how TIKI handles data, creates anonymous aggregate cohorts, and gets you paid when your summarized data is used, see [How It Works](https://medium.com/mytiki/tiki-proposed-architecture-25d746933dd6?source=friends_link&sk=16d9465a4a151a10558d6e934d29ca02).
 
-###Privacy and Your Information
+### Privacy and Your Information
 
 TIKI respects and values both the information you share with us and your privacy. We will not sell your personal data. For those unfamiliar with the term personal data, here is the European legal [definition](https://gdpr.eu/eu-gdpr-personal-data/), which is commonly adopted by other jurisdictions. In layman's terms, it's any data that can be used to identify you either directly or indirectly.
 
-###Scope of the Notice
+### Scope of the Notice
 
 This Privacy Notice covers all information we receive when you use our mobile app (App) and when you access our website mytiki.com (Site). This Notice also covers any personal data you send us via email. Any other communications tools used, such as Discord, LinkedIn, or Twitter, are governed by the privacy statement of the respective service provider. This policy does not cover any other information received by TIKI.
 
-###How We Collect and Use Information
+### How We Collect and Use Information
 
 TIKI has two main platforms, so to speak: we have the App, which individual consumers use, and we have browser-based tools that an organization seeking to purchase insight or sentiment data would access. Because these operate differently, we’ve separate the explanations here.
 
@@ -39,19 +39,19 @@ The Site collects three types of data, the Contact Information you may provide, 
 
 Unlike most sites, we do not use cookies or any other variety of ‘tracker’. Hence, no annoying popups and, more importantly, no creepy tracking of you.
 
-###Controlling Your Data
+### Controlling Your Data
 
 TIKI’s very mission is to help you control your data. To the extent that any personal data is captured within the App, it stays within the App on your device. You control the third party accounts that you connect or disconnect to the App and thus the data summaries that are included in any cohort. Because of our belief in transparency, you can see what these summaries are.
 
 On the Site, the only personal data is Contact Information. You have the right to access, update, or delete any of your personal data that we hold (Contact Information). If you would like to perform any of these actions or if you would like your data to be suppressed from future communications, you may do so via the Site or by contacting us at [privacy@mytiki.com](mailto:privacy@mytiki.com) for assistance.
 
-###Securing your Information
+### Securing your Information
 
 To ensure that all the information we process is secure, we have put in place commercially suitable administrative, physical, and technical to safeguard the information we collect on our Site—specific [implementation](https://github.com/tiki) details and upload to any data graph.
 
 Nonetheless, the transmission of information via the Internet is not completely secure and therefore we cannot guarantee the security of data sent to us electronically on our Site, and transmission of such data is therefore entirely at your own risk.
 
-###Third Parties
+### Third Parties
 
 Our entire business model is dedicated to not sharing personal data with any third parties. Organizations purchasing reports or access to data graphs see only the cohorts and even within each cohort individual data elements have been abstracted to limit the ability of anyone to link data to a person.
 

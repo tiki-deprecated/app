@@ -7,10 +7,10 @@ import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_dots.dart';
-import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_text_button.dart';
+import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
@@ -19,8 +19,10 @@ import 'package:flutter/material.dart';
 abstract class IntroScreen extends StatelessWidget {
   static final double _marginTopText = 2.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopButton = 5 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopTitle = 20 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopSkip = 8 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopSkip = 2 * PlatformRelativeSize.blockVertical;
+  static final double _marginRightText =
+      10 * PlatformRelativeSize.blockHorizontal;
 
   static const int screenTotal = 3;
   final String skipToPath = ConfigNavigate.path.loginEmail;
@@ -60,19 +62,29 @@ abstract class IntroScreen extends StatelessWidget {
             fontSize: 4,
           )),
       Container(
-          margin: EdgeInsets.only(top: _marginTopTitle),
+          margin:
+              EdgeInsets.only(top: _marginTopTitle, right: _marginRightText),
           alignment: Alignment.centerLeft,
-          child: TikiTitle(title)),
+          child: TikiTitle(
+            title,
+            textAlign: TextAlign.left,
+          )),
       Container(
-          margin: EdgeInsets.only(top: _marginTopText),
-          child: TikiSubtitle(subtitle)),
+          margin: EdgeInsets.only(top: _marginTopText, right: _marginRightText),
+          child: TikiSubtitle(subtitle, textAlign: TextAlign.left)),
       Container(
-          margin: EdgeInsets.only(top: _marginTopText),
+          margin: EdgeInsets.only(top: _marginTopText, right: _marginRightText),
+          alignment: Alignment.centerLeft,
           child: TikiDots(screenTotal, screenPos)),
       Container(
           margin: EdgeInsets.only(top: _marginTopButton),
           alignment: Alignment.centerLeft,
-          child: TikiBigButton(button, true, onButtonPressed)),
+          child: TikiBigButton(
+            button,
+            true,
+            onButtonPressed,
+            textWidth: 45,
+          )),
     ];
   }
 

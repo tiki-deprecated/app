@@ -36,6 +36,7 @@ class TikiTextButton extends StatelessWidget {
         child: TextButton(
             onPressed: isActive ? () => callback(context) : null,
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 leading ?? Container(),
