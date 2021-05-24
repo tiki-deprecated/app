@@ -13,6 +13,7 @@ import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_card/tiki_card.dart';
 import 'package:app/src/widgets/components/tiki_card/tiki_card_figure.dart';
+import 'package:app/src/widgets/components/tiki_card/tiki_card_grid_cta.dart';
 import 'package:app/src/widgets/components/tiki_card/tiki_card_inline_cta.dart';
 import 'package:app/src/widgets/components/tiki_card/tiki_card_row_cta.dart';
 import 'package:app/src/widgets/components/tiki_card/tiki_card_text.dart';
@@ -84,7 +85,7 @@ class HomeScreen extends StatelessWidget {
           child: TikiCard(
             TikiCardTitle("Latest News"),
             TikiCardText(
-                "For latest news and updates,\ncheck out our Medium blog."),
+                "For latest news and updates, check out our Medium blog."),
             TikiCardFigure(HelperImage("tiki-news")),
             cta: TikiCardInlineCta(
                 Text("Read More",
@@ -101,49 +102,96 @@ class HomeScreen extends StatelessWidget {
           child: TikiCard(
               TikiCardTitle("TIKI tribe"),
               TikiCardText(
-                  "Join our community of\nTIKI-nites from around\nthe globe."),
+                  "Join our community of TIKI-nites from around the globe."),
               TikiCardFigure(HelperImage("tiki-and-pals")),
               cta: TikiCardRowCta([
-                Container(
-                  color: ConfigColor.discordBlue,
+                Expanded(
+                    child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: ConfigColor.discordBlue,
+                    borderRadius:
+                        BorderRadius.only(bottomLeft: Radius.circular(24)),
+                  ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      HelperImage("discord-logo"),
+                      Container(
+                        padding: EdgeInsets.only(right: 5),
+                        height: 15,
+                        child: HelperImage("discord-logo"),
+                      ),
                       Text("Discord",
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold))
                     ],
                   ),
-                ),
-                Container(
-                    color: ConfigColor.signalBlue,
-                    child: Row(children: [
-                      HelperImage("signal-logo"),
-                      Text("Signal",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold))
-                    ])),
-                Container(
-                    color: ConfigColor.telegramBlue,
-                    child: Row(
-                      children: [
-                        HelperImage("telegram-logo"),
-                        Text("Telegram",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold))
-                      ],
-                    )),
+                )),
+                Expanded(
+                    child: Container(
+                        height: 40,
+                        color: ConfigColor.signalBlue,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(right: 5),
+                                height: 15,
+                                child: HelperImage("signal-logo"),
+                              ),
+                              Text("Signal",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold))
+                            ]))),
+                Expanded(
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(24)),
+                          color: ConfigColor.telegramBlue,
+                        ),
+                        height: 40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(right: 5),
+                              height: 15,
+                              child: HelperImage("telegram-logo"),
+                            ),
+                            Text("Telegram",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ))),
               ]))),
       Container(
           margin: EdgeInsets.only(top: _marginTopCards),
           alignment: Alignment.topCenter,
           child: TikiCard(
             TikiCardTitle("Follow us"),
-            TikiCardText("Follow TIKI on social - you\nnever know they'll do."),
+            TikiCardText("Follow TIKI on social - you never know they'll do."),
             TikiCardFigure(HelperImage("tiki-pool")),
-            cta: TikiCardInlineCta(
-                Text("Read More"), Icon(Icons.arrow_forward), () => {}),
+            cta: TikiCardGridCta([
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(left: 16, top:16, right: 8, bottom:8),
+                      child: HelperImage("facebook-button"))),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(left: 8, top:16, right: 16, bottom:8),
+                      child: HelperImage("tiktok-button"))),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(left: 16, top:8, right: 8, bottom:16),
+                      child: HelperImage("twitter-button"))),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(left: 8, top:8, right: 16, bottom:16),
+                      child: HelperImage("instagram-button"))),
+            ]),
           )),
       Container(
           alignment: Alignment.bottomCenter,

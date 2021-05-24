@@ -10,7 +10,7 @@ class TikiCardRowCta extends TikiCardCta {
   @override
   Widget getCta() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: ctas,
     );
   }

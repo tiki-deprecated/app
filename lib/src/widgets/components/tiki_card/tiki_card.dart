@@ -20,16 +20,17 @@ class TikiCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: bgcolor, borderRadius: BorderRadius.circular(24)),
+            color: bgcolor, borderRadius:
+            BorderRadius.circular(24),),
         padding: getPadding(),
-        child: Padding(
-            padding: getColumnPadding(),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                  padding: getColumnPadding(),
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -45,10 +46,10 @@ class TikiCard extends StatelessWidget {
                                   text,
                                 ])),
                         Flexible(flex: 1, child: figure)
-                      ]),
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  cta ?? Container()
-                ])));
+                      ])),
+              Padding(padding: EdgeInsets.only(top: 10)),
+              cta ?? Container()
+            ]));
   }
 
   getPadding() {
@@ -60,6 +61,6 @@ class TikiCard extends StatelessWidget {
   getColumnPadding() {
     if (this.cta == null || this.cta is TikiCardInlineCta)
       return EdgeInsets.all(0);
-    return EdgeInsets.all(16);
+    return EdgeInsets.symmetric(horizontal: 16);
   }
 }
