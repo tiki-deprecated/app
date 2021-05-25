@@ -35,8 +35,9 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
     return GestureDetector(
         child: Stack(clipBehavior: Clip.none, children: [
           Container(
-              margin: EdgeInsets.only(bottom: 40),
-              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.only(
+                  bottom: 8 * PlatformRelativeSize.blockHorizontal),
+              padding: EdgeInsets.all(4 * PlatformRelativeSize.blockHorizontal),
               decoration: BoxDecoration(
                   color: ConfigColor.gallery,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -51,7 +52,8 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                   ]),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.only(
+                        right: 4 * PlatformRelativeSize.blockHorizontal),
                     child: HelperImage("icon-download")),
                 Text("Download",
                     style: TextStyle(
@@ -59,9 +61,11 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: ConfigColor.mardiGras)),
               ])),
-          state is KeysNewScreenDialogDownloaded
+          state is KeysNewScreenDialogDownloadSuccess
               ? Positioned(
-                  top: -30.0, right: -30.0, child: HelperImage("green-check"))
+                  top: -3.5 * PlatformRelativeSize.blockVertical,
+                  right: -3.5 * PlatformRelativeSize.blockVertical,
+                  child: HelperImage("green-check"))
               : Container(),
         ]),
         onTap: () => onPressed(context));

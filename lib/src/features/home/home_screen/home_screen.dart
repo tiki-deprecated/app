@@ -25,12 +25,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/home_screen_logout.dart';
 
 class HomeScreen extends StatelessWidget {
-  static final double _marginTopTitle = 20 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopCount = 8 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle = 6 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopCount = 4 * PlatformRelativeSize.blockVertical;
   static final double _marginTopRefer = 8 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopShare = 8 * PlatformRelativeSize.blockVertical;
+  static final double _marginVerticalShare =
+      6 * PlatformRelativeSize.blockVertical;
   static final double _marginTopCards = 2 * PlatformRelativeSize.blockVertical;
-  static final double _marginBottomLogOut =
+  static final double _marginVerticalLogOut =
       4 * PlatformRelativeSize.blockVertical;
 
   Widget _background() {
@@ -57,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           margin: EdgeInsets.only(top: _marginTopRefer),
           child: HomeScreenRefer()),
       Container(
-          margin: EdgeInsets.only(top: _marginTopShare),
+          margin: EdgeInsets.symmetric(vertical: _marginVerticalShare),
           alignment: Alignment.topCenter,
           child: HomeScreenShare()),
       Container(
@@ -79,7 +80,7 @@ class HomeScreen extends StatelessWidget {
           child: TikiFollowUsCard()),
       Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(bottom: _marginBottomLogOut),
+          margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
           child: HomeScreenLogout()),
     ];
   }
