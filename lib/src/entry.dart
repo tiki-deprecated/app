@@ -21,7 +21,7 @@ class Entry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlatformRelativeSize().init(context);
-    return DynamicLinkHandler(child: KeysNewScreen()); //_route());
+    return DynamicLinkHandler(child: _route());
   }
 
   Widget _route() {
