@@ -117,7 +117,7 @@ jobs:
           artifacts: "build/app/outputs/bundle/release/*.aab,build/ios/release/app.ipa"
           replacesArtifacts: false
           token: ${{ secrets.GH_TOKEN }}
-  semtry release:
+  semtry_release:
     name: Sentry Release 
     runs-on: ubuntu-latest
     steps:
