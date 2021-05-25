@@ -7,20 +7,14 @@ class TikiCardGridCta extends TikiCardCta {
 
   TikiCardGridCta(this.ctas);
 
-  Widget buildGrid(){
+  Widget buildGrid() {
     return Column(
       children: [
         Row(
-          children: [
-            ctas[0],
-            ctas[1]
-          ],
+          children: [ctas[0], ctas[1]],
         ),
         Row(
-          children: [
-            ctas[2],
-            ctas[3]
-          ],
+          children: [ctas[2], ctas[3]],
         )
       ],
     );
@@ -28,7 +22,6 @@ class TikiCardGridCta extends TikiCardCta {
 
   @override
   Widget getCta() {
-    return Container(
-        child: buildGrid());
+    return Container(child: buildGrid());
   }
 }

@@ -19,10 +19,8 @@ class TikiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
         decoration: BoxDecoration(
-            color: bgcolor,
-            borderRadius: BorderRadius.circular(24)),
+            color: bgcolor, borderRadius: BorderRadius.circular(24)),
         padding: EdgeInsets.all(16),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

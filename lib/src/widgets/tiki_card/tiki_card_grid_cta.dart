@@ -8,7 +8,7 @@ class TikiCardGridCta extends TikiCardCta {
   TikiCardGridCta(this.ctas);
 
   @override
-  Widget _getCta() {
+  Widget getCta() {
     return GridView.count(
         primary: false,
         padding: const EdgeInsets.all(20),

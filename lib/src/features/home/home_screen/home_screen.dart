@@ -61,25 +61,22 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: HomeScreenShare()),
       Container(
-          margin: EdgeInsets.only(top: _marginTopCards),
-      alignment: Alignment.topCenter,
-      child: TikiNextReleaseCard(),
+        margin: EdgeInsets.only(top: _marginTopCards),
+        alignment: Alignment.topCenter,
+        child: TikiNextReleaseCard(),
       ),
       Container(
           margin: EdgeInsets.only(top: _marginTopCards),
           alignment: Alignment.topCenter,
-          child: TikiNewsCard()
-      ),
+          child: TikiNewsCard()),
       Container(
           margin: EdgeInsets.only(top: _marginTopCards),
           alignment: Alignment.topCenter,
-          child: TikiCommunityCard()
-      ),
+          child: TikiCommunityCard()),
       Container(
           margin: EdgeInsets.only(top: _marginTopCards),
           alignment: Alignment.topCenter,
-          child: TikiFollowUsCard()
-      ),
+          child: TikiFollowUsCard()),
       Container(
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.only(bottom: _marginBottomLogOut),
@@ -94,6 +91,3 @@ class HomeScreen extends StatelessWidget {
         background: _background() as TikiBackground?);
   }
 }
-
-
-

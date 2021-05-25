@@ -22,32 +22,41 @@ class KeysNewScreenSave extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
         builder: (BuildContext context, KeysNewScreenState state) {
-      return Column(children: [
-        Container(
-            margin: EdgeInsets.symmetric(
-                vertical: 2 * PlatformRelativeSize.blockVertical),
-            child: Center(child: HelperImage("icon-alert"))),
-        Center(child: TikiTitle("Backup\nyour account")),
-        Container(
-            margin: EdgeInsets.symmetric(
-                vertical: 2 * PlatformRelativeSize.blockVertical),
-            child: TikiSubtitle(
-              "We recommend you to securely save your key in case you change your device.",
-              fontSize: 2 * PlatformRelativeSize.blockVertical,
-              fontWeight: FontWeight.normal,
-            )),
-        Container(
-            child: Column(children: [
-          KeysNewScreenSaveBk(),
-          KeysNewScreenSaveBkDownload(),
-        ])),
-        KeysNewScreenSaveContinue(),
-        Container(
-            alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(
-                bottom: 10 * PlatformRelativeSize.blockVertical),
-            child: KeysNewScreenSaveRestore())
-      ]);
+      return Container(
+          height: MediaQuery.of(context).size.height * 0.95,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Expanded(
+                      child: Column(children: [
+                    Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 2 * PlatformRelativeSize.blockVertical),
+                        child: Center(child: HelperImage("icon-alert"))),
+                    Center(child: TikiTitle("Backup\nyour account")),
+                    Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 2 * PlatformRelativeSize.blockVertical),
+                        child: TikiSubtitle(
+                          "We recommend you to securely save your key in case you change your device.",
+                          fontSize: 2 * PlatformRelativeSize.blockVertical,
+                          fontWeight: FontWeight.normal,
+                        )),
+                    Container(
+                        child: Column(children: [
+                      KeysNewScreenSaveBk(),
+                      KeysNewScreenSaveBkDownload(),
+                    ])),
+                    KeysNewScreenSaveContinue(),
+                  ]))
+                ]),
+                Container(
+                    alignment: Alignment.bottomCenter,
+                    margin: EdgeInsets.only(
+                        bottom: 10 * PlatformRelativeSize.blockVertical),
+                    child: KeysNewScreenSaveRestore())
+              ]));
     });
   }
 }

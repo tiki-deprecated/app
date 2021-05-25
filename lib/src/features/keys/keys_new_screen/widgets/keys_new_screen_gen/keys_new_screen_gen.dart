@@ -34,27 +34,38 @@ class _KeysNewScreenGen extends State<KeysNewScreenGen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints:
-          BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-              margin: EdgeInsets.only(top: _marginTopTitle),
-              alignment: Alignment.center,
-              child: KeysNewScreenGenTitle()),
-          Container(
-              margin: EdgeInsets.only(top: _marginTopSubtitle),
-              alignment: Alignment.center,
-              child: KeysNewScreenGenSubtitle()),
-          Flexible(
-              child: Lottie.asset(
-                  "res/animation/Securing_account_with_blob.json")),
-          Container(
-              margin: EdgeInsets.only(bottom: _marginBottomButton),
-              child: KeysNewScreenGenRestore())
-        ],
-      ),
-    );
+        height: MediaQuery.of(context).size.height * 0.95,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.only(top: _marginTopTitle),
+                          child: KeysNewScreenGenTitle()),
+                      Container(
+                          margin: EdgeInsets.only(top: _marginTopSubtitle),
+                          child: KeysNewScreenGenSubtitle()),
+                    ],
+                  )
+                ],
+              ),
+              Container(
+                child: ClipRect(
+                  child: Align(
+                      alignment: Alignment.center,
+                      heightFactor: 0.5,
+                      child: Lottie.asset(
+                          "res/animation/Securing_account_with_blob.json")),
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.only(bottom: _marginBottomButton),
+                  child: KeysNewScreenGenRestore()),
+            ]));
   }
 }
