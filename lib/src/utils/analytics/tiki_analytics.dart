@@ -7,11 +7,11 @@ import 'package:app/src/config/config_environment.dart';
 /// tracking should be handled through this class to make it decoupled from remote
 /// platforms. It now uses [Amplitude] as analytics provider.
 class TikiAnalytics {
-
   /// The analytics logger.
-  static var _logger;
+  static Amplitude? _logger;
+
   /// The analytics logger for testing.
-  static var _loggerTest;
+  static Amplitude? _loggerTest;
 
   static const String environment = ConfigEnvironment.appEnv;
 
@@ -25,25 +25,26 @@ class TikiAnalytics {
   /// await amplitude.enableCoppaControl();
   /// await amplitude.setUserId(null); // forces autogeneration of random id
   /// ```
-  static Future<void> _init({test = false}) async {
+  static void _init() {
     const bool test = environment == ConfigEnvironment.envLocal;
     const prodApiKey = "1899ef0929b6700fffbb438c1df4fe2f";
     const testApiKey = "6f52993a138d9209786c76a03c4e25cf";
     var project = test ? "App-test" : "App";
     String apiKey = test ? testApiKey : prodApiKey;
-    final Amplitude _logger = Amplitude.getInstance(instanceName: project);
-    _logger.enableCoppaControl();
-    _logger.setUserId(null);
-    _logger.init(apiKey);
-    _logger.logEvent('Amplitude startup');
+    _logger = Amplitude.getInstance(instanceName: project);
+    _logger!.enableCoppaControl();
+    _logger!.setUserId(null);
+    _logger!.init(apiKey);
+    _logger!.logEvent('Amplitude startup');
   }
 
   /// Gets the logger instance.
-  static dynamic getLogger() async{
+  static Amplitude? getLogger() {
     const bool test = environment == ConfigEnvironment.envLocal;
     var logger = test ? _loggerTest : _logger;
-    if(logger == null){
-      _init(test: test);
+    if (logger == null) {
+      _init();
     }
+    return logger;
   }
 }

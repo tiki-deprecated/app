@@ -18,9 +18,9 @@ class RepoApiWebsiteUsers {
     http.Response rsp = await http.get(
         ConfigDomain.asUri(ConfigDomain.website, _path),
         headers: HelperHeaders().header);
-    Map rspMap = jsonDecode(rsp.body);
+    Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp(
         code: rsp.statusCode,
-        data: RepoApiWebsiteUsersRsp.fromJson(rspMap));
+        data: RepoApiWebsiteUsersRsp.fromJson(rspMap as Map<String, dynamic>?));
   }
 }

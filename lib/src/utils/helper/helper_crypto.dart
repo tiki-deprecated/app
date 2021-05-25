@@ -26,11 +26,11 @@ class HelperCrypto {
     algorithm.add(ASN1ObjectIdentifier.fromName('ecPublicKey'));
     algorithm.add(ASN1ObjectIdentifier.fromName('prime256v1'));
     ASN1BitString publicKeyBitString = ASN1BitString();
-    publicKeyBitString.stringValues = publicKey.Q.getEncoded(false);
+    publicKeyBitString.stringValues = publicKey.Q!.getEncoded(false);
     sequence.add(algorithm);
     sequence.add(publicKeyBitString);
     sequence.encode();
-    return base64.encode(sequence.encodedBytes);
+    return base64.encode(sequence.encodedBytes!);
   }
 
   static String encodeECDSAPrivate(ECPrivateKey privateKey) {
@@ -57,7 +57,7 @@ class HelperCrypto {
     sequence.add(algorithm);
     sequence.add(privateKeyDer);
     sequence.encode();
-    return base64.encode(sequence.encodedBytes);
+    return base64.encode(sequence.encodedBytes!);
   }
 
   static String encodeRSAPublic(RSAPublicKey publicKey) {
@@ -81,7 +81,7 @@ class HelperCrypto {
     sequence.add(algorithm);
     sequence.add(publicKeyBitString);
     sequence.encode();
-    return base64.encode(sequence.encodedBytes);
+    return base64.encode(sequence.encodedBytes!);
   }
 
   static String encodeRSAPrivate(RSAPrivateKey privateKey) {
@@ -102,11 +102,11 @@ class HelperCrypto {
     ASN1Integer prime1 = ASN1Integer(privateKey.p);
     ASN1Integer prime2 = ASN1Integer(privateKey.q);
     ASN1Integer exponent1 = ASN1Integer(
-        privateKey.privateExponent % (privateKey.p - BigInt.from(1)));
+        privateKey.privateExponent! % (privateKey.p! - BigInt.from(1)));
     ASN1Integer exponent2 = ASN1Integer(
-        privateKey.privateExponent % (privateKey.q - BigInt.from(1)));
+        privateKey.privateExponent! % (privateKey.q! - BigInt.from(1)));
     ASN1Integer coefficient =
-        ASN1Integer(privateKey.q.modInverse(privateKey.p));
+        ASN1Integer(privateKey.q!.modInverse(privateKey.p!));
     privateKeySequence.add(privateKeyVersion);
     privateKeySequence.add(modulus);
     privateKeySequence.add(publicExponent);
@@ -124,12 +124,12 @@ class HelperCrypto {
     sequence.add(algorithm);
     sequence.add(privateKeyOctet);
     sequence.encode();
-    return base64.encode(sequence.encodedBytes);
+    return base64.encode(sequence.encodedBytes!);
   }
 
   static String sha3(String raw) {
     final SHA3Digest sha3256 = SHA3Digest(256);
-    Uint8List hash = sha3256.process(utf8.encode(raw));
+    Uint8List hash = sha3256.process(utf8.encode(raw) as Uint8List);
     return hash.map((b) => '${b.toRadixString(16).padLeft(2, '0')}').join("");
   }
 

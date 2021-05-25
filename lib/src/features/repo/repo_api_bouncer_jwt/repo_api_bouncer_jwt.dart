@@ -25,9 +25,9 @@ class RepoApiBouncerJwt {
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathOtp),
         headers: HelperHeaders().header,
         body: jsonEncode(req.toJson()));
-    Map rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(
-        rspMap, (json) => RepoApiBouncerJwtRsp.fromJson(json));
+    Map? rspMap = jsonDecode(rsp.body);
+    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
+        (json) => RepoApiBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
   }
 
   Future<HelperApiRsp<RepoApiBouncerJwtRsp>> refresh(
@@ -36,8 +36,8 @@ class RepoApiBouncerJwt {
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathRefresh),
         headers: HelperHeaders().header,
         body: jsonEncode(req.toJson()));
-    Map rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(
-        rspMap, (json) => RepoApiBouncerJwtRsp.fromJson(json));
+    Map? rspMap = jsonDecode(rsp.body);
+    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
+        (json) => RepoApiBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
   }
 }

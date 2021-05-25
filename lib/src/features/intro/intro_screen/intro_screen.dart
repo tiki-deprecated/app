@@ -4,23 +4,25 @@
  */
 
 import 'package:app/src/config/config_navigate.dart';
+import 'package:app/src/utils/analytics/tiki_analytics.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/utils/platform/platform_scaffold.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/src/widgets/components/tiki_dots.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
+import 'package:app/src/widgets/components/tiki_inputs/tiki_text_button.dart';
+import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
+import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
+import 'package:app/src/widgets/screens/tiki_background.dart';
+import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/material.dart';
 
-import 'intro_screen_button.dart';
-import 'intro_screen_dots.dart';
-import 'intro_screen_skip.dart';
-import 'intro_screen_subtitle.dart';
-import 'intro_screen_title.dart';
-
-abstract class IntroScreen extends PlatformScaffold {
+abstract class IntroScreen extends StatelessWidget {
   static final double _marginTopText = 2.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopButton = 5 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopTitle = 20 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopSkip = 8 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopSkip = 2 * PlatformRelativeSize.blockVertical;
+  static final double _marginRightText =
+      10 * PlatformRelativeSize.blockHorizontal;
 
   static const int screenTotal = 3;
   final String skipToPath = ConfigNavigate.path.loginEmail;
@@ -35,62 +37,63 @@ abstract class IntroScreen extends PlatformScaffold {
       this.screenPos);
 
   @override
-  CupertinoPageScaffold iosScaffold(BuildContext context) {
-    return CupertinoPageScaffold(child: screen(context));
+  Widget build(BuildContext context) {
+    TikiBackground background = TikiBackground(
+        backgroundColor: backgroundColor,
+        bottomLeft: HelperImage('intro-blob'),
+        bottomRight: HelperImage('intro-pineapple'));
+
+    return TikiScaffold(
+      background: background,
+      foregroundChildren: _foreground(context),
+      onHorizontalDrag: onHorizontalDrag,
+    );
   }
 
-  @override
-  Scaffold androidScaffold(BuildContext context) {
-    return Scaffold(body: screen(context));
-  }
-
-  Widget screen(BuildContext context) {
-    return GestureDetector(
-        child: Stack(children: [_background(), _foreground(context)]),
-        onHorizontalDragEnd: (dragEndDetails) =>
-            onHorizontalDrag(context, dragEndDetails));
-  }
-
-  Widget _background() {
-    return Stack(children: [
-      Center(child: Container(color: backgroundColor)),
-      Align(alignment: Alignment.bottomLeft, child: HelperImage('intro-blob')),
-      Align(
-          alignment: Alignment.bottomRight,
-          child: HelperImage('intro-pineapple')),
-    ]);
-  }
-
-  Widget _foreground(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal2x),
-              child: Column(children: [
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopSkip),
-                    alignment: Alignment.topRight,
-                    child: IntroScreenSkip(skipToPath)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopTitle),
-                    alignment: Alignment.centerLeft,
-                    child: IntroScreenTitle(title)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopText),
-                    child: IntroScreenSubtitle(subtitle)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopText),
-                    child: IntroScreenDots(screenTotal, screenPos)),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopButton),
-                    alignment: Alignment.centerLeft,
-                    child: IntroScreenButton(button, onButtonPressed))
-              ])))
-    ]);
+  List<Widget> _foreground(BuildContext context) {
+    return <Widget>[
+      Container(
+          margin: EdgeInsets.only(top: _marginTopSkip),
+          alignment: Alignment.topRight,
+          child: TikiTextButton(
+            "Skip",
+            _skipFunction,
+            fontWeight: FontWeight.bold,
+            fontSize: 4,
+          )),
+      Container(
+          margin:
+              EdgeInsets.only(top: _marginTopTitle, right: _marginRightText),
+          alignment: Alignment.centerLeft,
+          child: TikiTitle(
+            title,
+            textAlign: TextAlign.left,
+          )),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText, right: _marginRightText),
+          child: TikiSubtitle(subtitle, textAlign: TextAlign.left)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopText, right: _marginRightText),
+          alignment: Alignment.centerLeft,
+          child: TikiDots(screenTotal, screenPos)),
+      Container(
+          margin: EdgeInsets.only(top: _marginTopButton),
+          alignment: Alignment.centerLeft,
+          child: TikiBigButton(
+            button,
+            true,
+            onButtonPressed,
+            textWidth: 65,
+          )),
+    ];
   }
 
   void onButtonPressed(BuildContext context);
 
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails);
+
+  _skipFunction(context) {
+    TikiAnalytics.getLogger()!.logEvent('INTRO_SKIPPED');
+    Navigator.of(context).pushNamed(skipToPath);
+  }
 }

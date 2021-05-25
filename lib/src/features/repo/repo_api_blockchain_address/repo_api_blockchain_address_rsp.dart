@@ -4,12 +4,12 @@
  */
 
 class RepoApiBlockchainAddressRsp {
-  String address;
-  DateTime issued;
+  String? address;
+  DateTime? issued;
 
   RepoApiBlockchainAddressRsp({this.address, this.issued});
 
-  RepoApiBlockchainAddressRsp.fromJson(Map<String, dynamic> json) {
+  RepoApiBlockchainAddressRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.address = json['address'];
       this.issued = DateTime.parse(json['issued']);
@@ -17,5 +17,5 @@ class RepoApiBlockchainAddressRsp {
   }
 
   Map<String, dynamic> toJson() =>
-      {'address': address, 'issued': issued?.toUtc()?.toIso8601String()};
+      {'address': address, 'issued': issued?.toUtc().toIso8601String()};
 }
