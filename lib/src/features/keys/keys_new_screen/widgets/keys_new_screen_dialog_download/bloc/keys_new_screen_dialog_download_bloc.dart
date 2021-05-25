@@ -43,25 +43,20 @@ class KeysNewScreenDialogDownloadBloc extends Bloc<
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-    Directory documents;
-    if (Platform.isIOS)
-      documents = await getApplicationDocumentsDirectory();
-    else
-      documents = Directory((await getExternalStorageDirectory())!
-              .parent
-              .parent
-              .parent
-              .parent
-              .path +
-          "/Download");
-
-    String path = documents.path + '/' + fileName;
-    File imgFile = new File(path);
     bool permission = await HelperPermission.request(Permission.storage);
     if (permission) {
-      imgFile.writeAsBytesSync(pngBytes, flush: true);
-      yield KeysNewScreenDialogDownloadSuccess(path);
+      Directory documents;
+      if (Platform.isIOS)
+        documents = await getApplicationDocumentsDirectory();
+      else {
+        documents = Directory("/storage/emulated/0/Download");
+
+        String path = documents.path + '/' + fileName;
+        File imgFile = new File(path);
+
+        imgFile.writeAsBytesSync(pngBytes, flush: true);
+        yield KeysNewScreenDialogDownloadSuccess(path);
+      }
     }
   }}
 }

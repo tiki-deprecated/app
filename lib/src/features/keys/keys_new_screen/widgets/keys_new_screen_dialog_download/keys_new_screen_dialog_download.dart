@@ -51,6 +51,7 @@ class KeysNewScreenSaveDialogDownload {
     return RepaintBoundary(
         key: repaintKey,
         child: Container(
+            color: Colors.white,
             child: Column(mainAxisSize: MainAxisSize.min, children: [
           RichText(
             textAlign: TextAlign.center,
