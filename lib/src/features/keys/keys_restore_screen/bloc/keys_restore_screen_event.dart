@@ -16,31 +16,13 @@ class KeysRestoreScreenScanned extends KeysRestoreScreenEvent {
   const KeysRestoreScreenScanned() : super();
 }
 
-class KeysRestoreScreenIdUpdated extends KeysRestoreScreenEvent {
-  final String id;
+class KeysRestoreScreenKeyUpdated extends KeysRestoreScreenEvent {
+  final String key;
 
-  const KeysRestoreScreenIdUpdated(this.id) : super();
-
-  @override
-  List<Object> get props => [id];
-}
-
-class KeysRestoreScreenDataKeyUpdated extends KeysRestoreScreenEvent {
-  final String dataKey;
-
-  const KeysRestoreScreenDataKeyUpdated(this.dataKey) : super();
+  const KeysRestoreScreenKeyUpdated(this.key) : super();
 
   @override
-  List<Object> get props => [dataKey];
-}
-
-class KeysRestoreScreenSignKeyUpdated extends KeysRestoreScreenEvent {
-  final String signKey;
-
-  const KeysRestoreScreenSignKeyUpdated(this.signKey) : super();
-
-  @override
-  List<Object> get props => [signKey];
+  List<Object> get props => [key];
 }
 
 class KeysRestoreScreenSubmitted extends KeysRestoreScreenEvent {

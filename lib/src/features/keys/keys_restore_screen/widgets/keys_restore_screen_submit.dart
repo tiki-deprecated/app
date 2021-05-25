@@ -16,7 +16,7 @@ class KeysRestoreScreenSubmit extends StatelessWidget {
       0.05 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
   static final double _marginHorizontal =
-      10 * PlatformRelativeSize.blockHorizontal;
+      20 * PlatformRelativeSize.blockHorizontal;
   static final double _marginVertical =
       2.5 * PlatformRelativeSize.blockVertical;
 

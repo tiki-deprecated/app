@@ -43,12 +43,8 @@ class KeysRestoreScreenBloc
   ) async* {
     if (event is KeysRestoreScreenScanned)
       yield* _mapScannedToState(event);
-    else if (event is KeysRestoreScreenIdUpdated)
-      yield* _mapIdUpdatedToState(event);
-    else if (event is KeysRestoreScreenDataKeyUpdated)
-      yield* _mapDataKeyUpdatedToState(event);
-    else if (event is KeysRestoreScreenSignKeyUpdated)
-      yield* _mapSignKeyUpdatedToState(event);
+    else if (event is KeysRestoreScreenKeyUpdated)
+      yield* _mapKeyUpdatedToState(event);
     else if (event is KeysRestoreScreenSubmitted)
       yield* _mapSubmittedToState(event);
   }
@@ -57,10 +53,9 @@ class KeysRestoreScreenBloc
       KeysRestoreScreenScanned scanned) async* {
     ScanResult result = await BarcodeScanner.scan();
     if (result.type == ResultType.Barcode) {
-      List<String> raw = result.rawContent.split(".");
-      String address = raw[0];
-      String dataKeyPrivate = raw[1];
-      String signKeyPrivate = raw[2];
+      String address = _address(result.rawContent);
+      String dataKeyPrivate = _dataKey(result.rawContent);
+      String signKeyPrivate = _signKey(result.rawContent);
       if (_isValid(address, dataKeyPrivate, signKeyPrivate)) {
         await _saveAndLogIn(address, dataKeyPrivate, signKeyPrivate);
         yield KeysRestoreScreenSuccess(
@@ -69,37 +64,18 @@ class KeysRestoreScreenBloc
     }
   }
 
-  Stream<KeysRestoreScreenState> _mapIdUpdatedToState(
-      KeysRestoreScreenIdUpdated idUpdated) async* {
+  Stream<KeysRestoreScreenState> _mapKeyUpdatedToState(
+      KeysRestoreScreenKeyUpdated keyUpdated) async* {
+    String address = _address(keyUpdated.key);
+    String dataKeyPrivate = _dataKey(keyUpdated.key);
+    String signKeyPrivate = _signKey(keyUpdated.key);
     yield KeysRestoreScreenInProgress(
         state.dataPublic,
-        state.dataPrivate,
+        dataKeyPrivate,
         state.signPublic,
-        state.signPrivate,
-        idUpdated.id,
-        _isValid(idUpdated.id, state.dataPrivate, state.signPrivate));
-  }
-
-  Stream<KeysRestoreScreenState> _mapDataKeyUpdatedToState(
-      KeysRestoreScreenDataKeyUpdated dataKeyUpdated) async* {
-    yield KeysRestoreScreenInProgress(
-        state.dataPublic,
-        dataKeyUpdated.dataKey,
-        state.signPublic,
-        state.signPrivate,
-        state.address,
-        _isValid(state.address, dataKeyUpdated.dataKey, state.signPrivate));
-  }
-
-  Stream<KeysRestoreScreenState> _mapSignKeyUpdatedToState(
-      KeysRestoreScreenSignKeyUpdated signKeyUpdated) async* {
-    yield KeysRestoreScreenInProgress(
-        state.dataPublic,
-        state.dataPrivate,
-        state.signPublic,
-        signKeyUpdated.signKey,
-        state.address,
-        _isValid(state.address, state.dataPrivate, signKeyUpdated.signKey));
+        signKeyPrivate,
+        address,
+        _isValid(address, dataKeyPrivate, signKeyPrivate));
   }
 
   Stream<KeysRestoreScreenState> _mapSubmittedToState(
@@ -141,5 +117,20 @@ class KeysRestoreScreenBloc
         current.email!,
         RepoLocalSsUserModel(
             email: current.email, address: state.address, isLoggedIn: true));
+  }
+
+  String _address(String s) {
+    List<String> raw = s.split(".");
+    return raw[0];
+  }
+
+  String _dataKey(String s) {
+    List<String> raw = s.split(".");
+    return raw[1];
+  }
+
+  String _signKey(String s) {
+    List<String> raw = s.split(".");
+    return raw[2];
   }
 }

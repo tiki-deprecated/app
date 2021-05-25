@@ -6,19 +6,19 @@
 import 'dart:io';
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/features/keys/keys_restore_screen/bloc/keys_restore_screen_bloc.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class KeysRestoreScreenInput extends StatelessWidget {
+class KeysRestoreScreenInput extends StatelessWidget {
   static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingHorizontal =
       4 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingVertical = 2 * PlatformRelativeSize.blockVertical;
 
-  final String placeholder;
-
-  KeysRestoreScreenInput(this.placeholder);
+  static const String _placeholder = "Your Account Key";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ abstract class KeysRestoreScreenInput extends StatelessWidget {
     return CupertinoTextField(
         padding: EdgeInsets.symmetric(
             horizontal: _paddingHorizontal, vertical: _paddingVertical),
-        placeholder: placeholder,
+        placeholder: _placeholder,
         autocorrect: false,
         placeholderStyle: TextStyle(
             color: ConfigColor.gray,
@@ -55,7 +55,7 @@ abstract class KeysRestoreScreenInput extends StatelessWidget {
       decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: _paddingHorizontal, vertical: _paddingVertical),
-          hintText: placeholder,
+          hintText: _placeholder,
           hintStyle: TextStyle(
               color: ConfigColor.gray,
               fontWeight: FontWeight.bold,
@@ -76,5 +76,8 @@ abstract class KeysRestoreScreenInput extends StatelessWidget {
     );
   }
 
-  void onChanged(BuildContext context, String s);
+  void onChanged(BuildContext context, String s) {
+    BlocProvider.of<KeysRestoreScreenBloc>(context)
+        .add(KeysRestoreScreenKeyUpdated(s));
+  }
 }
