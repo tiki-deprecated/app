@@ -9,6 +9,7 @@ import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/keys_new_screen_dialog_download_bloc.dart';
 
@@ -53,36 +54,52 @@ class KeysNewScreenSaveDialogDownload {
         child: Container(
             color: Colors.white,
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-                text: 'We recommend storing your QR key ',
-                style: _subtitleStyle(),
-                children: [
-                  TextSpan(
-                    text: 'off your phone',
-                    style: TextStyle(fontWeight: FontWeight.w900),
-                  ),
-                  TextSpan(text: ', in case you lose it.'),
-                ]),
-          ),
-          Container(
-              margin:
-                  EdgeInsets.only(top: 1 * PlatformRelativeSize.blockVertical),
-              child: Text(
-                  'Try not to store your keys on iCloud / Google Drive / Dropbox',
-                  textAlign: TextAlign.center,
-                  style: _subtitleStyle())),
-          Container(
-              padding: EdgeInsets.only(top: _marginTopQr),
-              child: KeysNewScreenDialogDownloadQr(keyData)),
-          Container(
-              padding: EdgeInsets.symmetric(vertical: _marginVerticalButton),
-              child: TikiBigButton('DOWNLOAD', true, (context) {
-                bloc.add(KeysNewScreenDialogDownloaded(repaintKey));
-                Navigator.of(context).pop();
-              }))
-        ])));
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    text: 'We recommend storing your QR key ',
+                    style: _subtitleStyle(),
+                    children: [
+                      TextSpan(
+                        text: 'off your phone',
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      TextSpan(text: ', in case you lose it.'),
+                    ]),
+              ),
+              Container(
+                  margin: EdgeInsets.only(
+                      top: 1 * PlatformRelativeSize.blockVertical),
+                  child: Text(
+                      'Try not to store your keys on iCloud / Google Drive / Dropbox',
+                      textAlign: TextAlign.center,
+                      style: _subtitleStyle())),
+              Container(
+                  padding: EdgeInsets.only(top: _marginTopQr),
+                  child: KeysNewScreenDialogDownloadQr(keyData)),
+              BlocConsumer<KeysNewScreenDialogDownloadBloc,
+                  KeysNewScreenDialogDownloadState>(
+                bloc: bloc,
+                listener: (BuildContext context,
+                    KeysNewScreenDialogDownloadState state) {
+                  if (state is KeysNewScreenDialogDownloadFailure) {
+                    Future.delayed(Duration(seconds: 1), () {
+                      bloc.add(KeysNewScreenDialogDownloaded(repaintKey));
+                    });
+                  } else if (state is KeysNewScreenDialogDownloadSuccess)
+                    Navigator.of(context).pop();
+                },
+                builder: (BuildContext context,
+                    KeysNewScreenDialogDownloadState state) {
+                  return Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: _marginVerticalButton),
+                      child: TikiBigButton('DOWNLOAD', true, (context) {
+                        bloc.add(KeysNewScreenDialogDownloaded(repaintKey));
+                      }));
+                },
+              )
+            ])));
   }
 
   TextStyle _subtitleStyle() {

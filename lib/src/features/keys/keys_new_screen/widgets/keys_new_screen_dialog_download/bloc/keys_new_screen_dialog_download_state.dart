@@ -26,3 +26,8 @@ class KeysNewScreenDialogDownloadSuccess
   @override
   List<Object> get props => [path];
 }
+
+class KeysNewScreenDialogDownloadFailure
+    extends KeysNewScreenDialogDownloadState {
+  const KeysNewScreenDialogDownloadFailure() : super();
+}
