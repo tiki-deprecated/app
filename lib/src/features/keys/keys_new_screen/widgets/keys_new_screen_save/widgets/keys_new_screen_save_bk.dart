@@ -47,11 +47,12 @@ class KeysNewScreenSaveBk extends StatelessWidget {
       KeysNewScreenDialogCopyState state,
       AsyncSnapshot<RepoLocalSsCurrentModel> currentModel) {
     return GestureDetector(
-        child: Stack(clipBehavior: Clip.none, children: [
+        child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20), child:Stack(clipBehavior: Clip.none, children: [
           Container(
               margin: EdgeInsets.only(
                   bottom: 4 * PlatformRelativeSize.blockHorizontal),
-              padding: EdgeInsets.all(4 * PlatformRelativeSize.blockHorizontal),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -92,11 +93,11 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                   ])),
           state is KeysNewScreenDialogCopySuccess && state.isKey
               ? Positioned(
-                  top: -3.5 * PlatformRelativeSize.blockVertical,
-                  right: -3.5 * PlatformRelativeSize.blockVertical,
+                  top: -35,
+                  right: -35,
                   child: HelperImage("green-check"))
               : Container(),
-        ]),
+        ])),
         onTap: () => _saveKey(context, currentModel.data!));
   }
 

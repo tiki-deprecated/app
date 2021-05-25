@@ -40,7 +40,8 @@ class KeysNewScreenSave extends StatelessWidget {
                     Center(child: TikiTitle("Backup\nyour account")),
                     Container(
                         margin: EdgeInsets.symmetric(
-                            vertical: 2 * PlatformRelativeSize.blockVertical),
+                            vertical: 2 * PlatformRelativeSize.blockVertical,
+                            horizontal: 20),
                         child: TikiSubtitle(
                           "We recommend you to securely save your key in case you change your device.",
                           fontSize: 2 * PlatformRelativeSize.blockVertical,

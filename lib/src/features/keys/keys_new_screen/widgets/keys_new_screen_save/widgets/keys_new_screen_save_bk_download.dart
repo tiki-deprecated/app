@@ -33,7 +33,8 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
 
   _button(context, state) {
     return GestureDetector(
-        child: Stack(clipBehavior: Clip.none, children: [
+        child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20), child: Stack(clipBehavior: Clip.none, children: [
           Container(
               margin: EdgeInsets.only(
                   bottom: 8 * PlatformRelativeSize.blockHorizontal),
@@ -67,7 +68,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                   right: -3.5 * PlatformRelativeSize.blockVertical,
                   child: HelperImage("green-check"))
               : Container(),
-        ]),
+        ])),
         onTap: () => onPressed(context));
   }
 
