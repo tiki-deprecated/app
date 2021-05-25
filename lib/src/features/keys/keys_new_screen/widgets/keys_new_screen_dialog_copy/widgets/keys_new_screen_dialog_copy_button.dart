@@ -17,6 +17,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
       2 * PlatformRelativeSize.blockHorizontal;
   static final double _paddingHorizontalIcon =
       1 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
 
   final String? value;
   final Function() onPressed;
@@ -53,7 +54,10 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.only(left: 8),
             child: Text(value!,
-                overflow: TextOverflow.ellipsis, textAlign: TextAlign.left)));
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: _fontSize),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left)));
   }
 
   Widget _button(
@@ -85,6 +89,8 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                           children: [
                             Text(_buttonText,
                                 style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: _fontSize,
                                     color: state
                                             is KeysNewScreenDialogCopyButtonSuccess
                                         ? ConfigColor.jade
@@ -92,12 +98,17 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                             Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: _paddingHorizontalIcon),
-                                child: state
-                                        is KeysNewScreenDialogCopyButtonSuccess
-                                    ? Icon(Icons.check, color: ConfigColor.jade)
-                                    : Image(
-                                        image: AssetImage(
-                                            "res/images/icon-copy.png")))
+                                child: Container(
+                                    width: 4 *
+                                        PlatformRelativeSize.blockHorizontal,
+                                    child: state
+                                            is KeysNewScreenDialogCopyButtonSuccess
+                                        ? Image(
+                                            image: AssetImage(
+                                                "res/images/icon-check.png"))
+                                        : Image(
+                                            image: AssetImage(
+                                                "res/images/icon-copy.png"))))
                           ],
                         ))))));
   }

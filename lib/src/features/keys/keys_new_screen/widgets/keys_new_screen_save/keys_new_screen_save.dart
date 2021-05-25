@@ -18,6 +18,9 @@ import 'widgets/keys_new_screen_save_continue.dart';
 import 'widgets/keys_new_screen_save_restore.dart';
 
 class KeysNewScreenSave extends StatelessWidget {
+  static final double _marginBottomButton =
+      5 * PlatformRelativeSize.blockVertical;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
@@ -53,8 +56,7 @@ class KeysNewScreenSave extends StatelessWidget {
                 ]),
                 Container(
                     alignment: Alignment.bottomCenter,
-                    margin: EdgeInsets.only(
-                        bottom: 10 * PlatformRelativeSize.blockVertical),
+                    margin: EdgeInsets.only(bottom: _marginBottomButton),
                     child: KeysNewScreenSaveRestore())
               ]));
     });
