@@ -28,8 +28,7 @@ class HelperMarkdown extends StatelessWidget {
           return MarkdownBody(
               selectable: true,
               onTapLink: (String text, String? href, String title) async {
-                if(await canLaunch(href!) )
-                  await launch(href);
+                if (await canLaunch(href!)) await launch(href);
               },
               styleSheet: MarkdownStyleSheet(
                 h1: TextStyle(
@@ -54,7 +53,7 @@ class HelperMarkdown extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     fontSize: _fontSizeText),
               ),
-              data: mdSource.data!); //mdSource.data
+              data: mdSource.data ?? ""); //mdSource.data
         });
   }
 

@@ -23,7 +23,6 @@ import 'widgets/keys_restore_screen_divider.dart';
 import 'widgets/keys_restore_screen_title.dart';
 
 class KeysRestoreScreen extends StatelessWidget {
-  static final double _marginTopBack = 4.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopTitle = 4 * PlatformRelativeSize.blockVertical;
   static final double _marginTopSubtitle =
       2.5 * PlatformRelativeSize.blockVertical;

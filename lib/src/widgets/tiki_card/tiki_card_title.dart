@@ -1,4 +1,3 @@
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
 
 class TikiCardTitle extends StatelessWidget {
@@ -10,11 +9,10 @@ class TikiCardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(title ?? "",
-    style: TextStyle(
-      color: textColor ?? Colors.black,
-      fontSize: 22,
-      fontWeight: FontWeight.w800,
-      fontFamily: "NunitoSans"
-    ));
+        style: TextStyle(
+            color: textColor ?? Colors.black,
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            fontFamily: "NunitoSans"));
   }
 }

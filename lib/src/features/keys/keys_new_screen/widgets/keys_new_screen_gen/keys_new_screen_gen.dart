@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -19,12 +18,6 @@ class KeysNewScreenGen extends StatefulWidget {
 }
 
 class _KeysNewScreenGen extends State<KeysNewScreenGen> {
-  static final double _marginTopTitle = 15 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopSubtitle =
-      2.5 * PlatformRelativeSize.blockVertical;
-  static final double _marginBottomButton =
-      5 * PlatformRelativeSize.blockVertical;
-
   @override
   void initState() {
     super.initState();
@@ -33,28 +26,36 @@ class _KeysNewScreenGen extends State<KeysNewScreenGen> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: PlatformRelativeSize.marginHorizontal2x),
-              child: Column(children: [
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopTitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenGenTitle()),
-                Container(
-                    margin: EdgeInsets.only(top: _marginTopSubtitle),
-                    alignment: Alignment.center,
-                    child: KeysNewScreenGenSubtitle()),
-                Container(
-                    alignment: Alignment.center,
-                    child: Lottie.asset(
-                        "res/animation/Securing_account_with_blob.json")),
-                Container(
-                    margin: EdgeInsets.only(bottom: _marginBottomButton),
-                    child: KeysNewScreenGenRestore())
-              ])))
-    ]);
+    return Container(
+        height: MediaQuery.of(context).size.height * 0.95,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(padding: EdgeInsets.only(bottom: 16)),
+                      Container(child: KeysNewScreenGenTitle()),
+                      Container(child: KeysNewScreenGenSubtitle()),
+                    ],
+                  )
+                ],
+              ),
+              Container(
+                child: ClipRect(
+                  child: Align(
+                      alignment: Alignment.center,
+                      heightFactor: 0.5,
+                      child: Lottie.asset(
+                          "res/animation/Securing_account_with_blob.json")),
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: KeysNewScreenGenRestore()),
+            ]));
   }
 }

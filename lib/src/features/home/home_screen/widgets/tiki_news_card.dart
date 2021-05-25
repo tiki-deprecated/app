@@ -9,13 +9,12 @@ import 'package:app/src/widgets/components/tiki_card/tiki_card_title.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TikiNewsCard extends StatelessWidget{
+class TikiNewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TikiCard(
       TikiCardTitle("Latest News"),
-      TikiCardText(
-          "For latest news and updates, check out our Medium blog."),
+      TikiCardText("For latest news and updates, check out our Medium blog."),
       TikiCardFigure(HelperImage("tiki-news")),
       cta: TikiCardInlineCta(
           Text("Read More",
@@ -27,7 +26,6 @@ class TikiNewsCard extends StatelessWidget{
           () => _launchUrl("https://medium.com/mytiki")),
     );
   }
-
 
   _launchUrl(String url) async {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';

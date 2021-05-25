@@ -10,7 +10,7 @@ class TikiCardInlineCta extends TikiCardCta {
   TikiCardInlineCta(this.headline, this.trailingIcon, this.callback);
 
   @override
-  Widget _getCta() {
+  Widget getCta() {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
       headline,
       IconButton(

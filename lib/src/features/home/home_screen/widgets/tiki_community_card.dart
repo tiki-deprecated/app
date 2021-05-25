@@ -17,33 +17,36 @@ class TikiCommunityCard extends StatelessWidget {
         TikiCardFigure(HelperImage("tiki-and-pals")),
         cta: TikiCardRowCta([
           Expanded(
-                  child: GestureDetector(
-                      onTap: () => _launchUrl("https://discord.com/invite/evjYQq48Be"),
-                      child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: ConfigColor.discordBlue,
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(24)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 5),
-                      height: 15,
-                      child: HelperImage("discord-logo"),
+              child: GestureDetector(
+                  onTap: () =>
+                      _launchUrl("https://discord.com/invite/evjYQq48Be"),
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: ConfigColor.discordBlue,
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(24)),
                     ),
-                    Text("Discord",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold))
-                  ],
-                ),
-              ))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(right: 5),
+                          height: 15,
+                          child: HelperImage("discord-logo"),
+                        ),
+                        Text("Discord",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))
+                      ],
+                    ),
+                  ))),
           Expanded(
-                  child: GestureDetector(
-                      onTap: () => _launchUrl("https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP"),
-                      child: Container(
+              child: GestureDetector(
+                  onTap: () => _launchUrl(
+                      "https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP"),
+                  child: Container(
                       height: 40,
                       color: ConfigColor.signalBlue,
                       child: Row(
@@ -60,9 +63,9 @@ class TikiCommunityCard extends StatelessWidget {
                                     fontWeight: FontWeight.bold))
                           ])))),
           Expanded(
-                  child: GestureDetector(
-                      onTap: () => _launchUrl("https://t.me/mytikiapp"),
-                      child: Container(
+              child: GestureDetector(
+                  onTap: () => _launchUrl("https://t.me/mytikiapp"),
+                  child: Container(
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.only(bottomRight: Radius.circular(24)),
