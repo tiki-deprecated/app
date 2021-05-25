@@ -11,7 +11,6 @@ abstract class KeysNewScreenDialogCopyState {
 
   const KeysNewScreenDialogCopyState(this.isEmail, this.isKey);
 
-  @override
   List<Object> get props => [isEmail, isKey];
 }
 
