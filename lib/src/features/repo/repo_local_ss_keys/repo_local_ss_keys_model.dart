@@ -4,11 +4,11 @@
  */
 
 class RepoLocalSsKeysModel {
-  String address;
-  String signPrivateKey;
-  String signPublicKey;
-  String dataPrivateKey;
-  String dataPublicKey;
+  String? address;
+  String? signPrivateKey;
+  String? signPublicKey;
+  String? dataPrivateKey;
+  String? dataPublicKey;
 
   RepoLocalSsKeysModel(
       {this.address,
@@ -17,7 +17,7 @@ class RepoLocalSsKeysModel {
       this.dataPrivateKey,
       this.dataPublicKey});
 
-  RepoLocalSsKeysModel.fromJson(Map<String, dynamic> json) {
+  RepoLocalSsKeysModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.address = json['address'];
       this.signPrivateKey = json['signPrivateKey'];

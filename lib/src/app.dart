@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:io';
-
 import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,39 +20,18 @@ class App extends StatelessWidget {
   App(this._helperIsLoggedIn);
 
   @override
-  Widget build(BuildContext context) =>
-      Provide.chain(Platform.isIOS ? iosApp(context) : androidApp(context));
-
-  MaterialApp androidApp(BuildContext context) {
-    return MaterialApp(
-        title: _title,
-        routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
-        navigatorKey: ConfigNavigate.key,
-        localizationsDelegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: _nunitoSans,
-                bodyColor: ConfigColor.mardiGras,
-                displayColor: ConfigColor.mardiGras)));
-  }
-
-  CupertinoApp iosApp(BuildContext context) {
-    return CupertinoApp(
-        title: _title,
-        routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
-        navigatorKey: ConfigNavigate.key,
-        localizationsDelegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        theme: CupertinoThemeData(
-            textTheme: CupertinoTextThemeData(
-                textStyle: TextStyle(
-                    color: ConfigColor.mardiGras, fontFamily: _nunitoSans))));
-  }
+  Widget build(BuildContext context) => Provide.chain(MaterialApp(
+      title: _title,
+      routes: ConfigNavigate.routeTable(context, _helperIsLoggedIn),
+      navigatorKey: ConfigNavigate.key,
+      localizationsDelegates: [
+        DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      theme: ThemeData(
+          textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: _nunitoSans,
+              bodyColor: ConfigColor.mardiGras,
+              displayColor: ConfigColor.mardiGras))));
 }

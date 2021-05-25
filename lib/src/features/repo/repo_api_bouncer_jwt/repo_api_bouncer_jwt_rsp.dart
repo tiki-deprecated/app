@@ -4,15 +4,15 @@
  */
 
 class RepoApiBouncerJwtRsp {
-  String accessToken;
-  String tokenType;
-  int expiresIn;
-  String refreshToken;
+  String? accessToken;
+  String? tokenType;
+  int? expiresIn;
+  String? refreshToken;
 
   RepoApiBouncerJwtRsp(
       {this.accessToken, this.tokenType, this.expiresIn, this.refreshToken});
 
-  RepoApiBouncerJwtRsp.fromJson(Map<String, dynamic> json) {
+  RepoApiBouncerJwtRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.accessToken = json['accessToken'];
       this.tokenType = json['tokenType'];

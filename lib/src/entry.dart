@@ -4,12 +4,13 @@
  */
 
 import 'package:app/src/features/home/home_screen/home_screen.dart';
-import 'package:app/src/features/login/login_email_screen/login_email_screen.dart';
+import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
+import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen.dart';
 import 'package:app/src/utils/dynamic_link_handler.dart';
 import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'features/intro/intro_screen_control/intro_screen_control.dart';
+import 'features/intro/intro_screen/widgets/intro_screen_control.dart';
 import 'utils/platform/platform_relative_size.dart';
 
 class Entry extends StatelessWidget {
@@ -25,11 +26,15 @@ class Entry extends StatelessWidget {
 
   Widget _route() {
     if (_helperLogIn.isReturning()) {
-      if (_helperLogIn.isLoggedIn())
+      if (_helperLogIn.isLoggedIn()) {
         return HomeScreen();
-      else
+      } else if (_helperLogIn.current.email != null) {
+        return KeysNewScreen();
+      } else {
         return LoginEmailScreen();
-    } else
+      }
+    } else {
       return IntroScreenControl();
+    }
   }
 }

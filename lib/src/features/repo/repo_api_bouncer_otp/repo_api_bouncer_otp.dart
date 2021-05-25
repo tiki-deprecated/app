@@ -23,8 +23,8 @@ class RepoApiBouncerOtp {
         headers: HelperHeaders().header,
         body: jsonEncode(req.toJson()));
 
-    Map rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(
-        rspMap, (json) => RepoApiBouncerOtpRsp.fromJson(json));
+    Map? rspMap = jsonDecode(rsp.body);
+    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
+        (json) => RepoApiBouncerOtpRsp.fromJson(json as Map<String, dynamic>?));
   }
 }

@@ -4,14 +4,12 @@
  */
 
 class RepoApiBouncerOtpReq {
-  String email;
+  String? email;
 
   RepoApiBouncerOtpReq(this.email);
 
   RepoApiBouncerOtpReq.fromJson(Map<String, dynamic> json) {
-    if (json != null) {
-      this.email = json['email'];
-    }
+    this.email = json['email'];
   }
 
   Map<String, dynamic> toJson() => {'email': email};

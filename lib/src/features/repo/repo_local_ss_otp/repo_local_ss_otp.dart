@@ -12,8 +12,8 @@ class RepoLocalSsOtp extends RepoLocalSsCrud<RepoLocalSsOtpModel> {
   static const String _table = "otp";
   static const String _version = "0.0.1";
 
-  RepoLocalSsOtp({FlutterSecureStorage secureStorage})
+  RepoLocalSsOtp({FlutterSecureStorage? secureStorage})
       : super(_table, _version, (RepoLocalSsOtpModel model) => model.toJson(),
-            (Map<String, dynamic> json) => RepoLocalSsOtpModel.fromJson(json),
+            (Map<String, dynamic>? json) => RepoLocalSsOtpModel.fromJson(json),
             secureStorage: secureStorage);
 }

@@ -13,10 +13,10 @@ abstract class RepoLocalSsCrud<T> {
   final String _version;
   final FlutterSecureStorage secureStorage;
   final Map<String, dynamic> Function(T model) _toJson;
-  final T Function(Map<String, dynamic> json) _fromJson;
+  final T Function(Map<String, dynamic>? json) _fromJson;
 
   RepoLocalSsCrud(this._table, this._version, this._toJson, this._fromJson,
-      {FlutterSecureStorage secureStorage})
+      {FlutterSecureStorage? secureStorage})
       : secureStorage =
             (secureStorage == null ? FlutterSecureStorage() : secureStorage);
 
@@ -26,10 +26,10 @@ abstract class RepoLocalSsCrud<T> {
   }
 
   Future<T> find(String key) async {
-    String raw = await secureStorage.read(key: _longKey(key));
-    Map jsonMap;
+    String? raw = await secureStorage.read(key: _longKey(key));
+    Map? jsonMap;
     if (raw != null) jsonMap = jsonDecode(raw);
-    return _fromJson(jsonMap);
+    return _fromJson(jsonMap as Map<String, dynamic>?);
   }
 
   Future<void> delete(String key) async {

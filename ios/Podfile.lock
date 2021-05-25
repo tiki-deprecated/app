@@ -3,43 +3,46 @@ PODS:
   - amplitude_flutter (0.0.1):
     - Amplitude (= 7.2.0)
     - Flutter
-  - barcode_scan (0.0.1):
+  - barcode_scan2 (0.0.1):
     - Flutter
     - MTBBarcodeScanner
     - SwiftProtobuf
-  - Firebase/CoreOnly (7.11.0):
-    - FirebaseCore (= 7.11.0)
-  - Firebase/DynamicLinks (7.11.0):
+  - Firebase/CoreOnly (8.0.0):
+    - FirebaseCore (= 8.0.0)
+  - Firebase/DynamicLinks (8.0.0):
     - Firebase/CoreOnly
-    - FirebaseDynamicLinks (~> 7.11.0)
-  - firebase_core (1.1.0):
-    - Firebase/CoreOnly (= 7.11.0)
+    - FirebaseDynamicLinks (~> 8.0.0)
+  - firebase_core (1.2.0):
+    - Firebase/CoreOnly (= 8.0.0)
     - Flutter
-  - firebase_dynamic_links (2.0.2):
-    - Firebase/DynamicLinks (= 7.11.0)
+  - firebase_dynamic_links (2.0.4):
+    - Firebase/DynamicLinks (= 8.0.0)
     - firebase_core
     - Flutter
-  - FirebaseCore (7.11.0):
-    - FirebaseCoreDiagnostics (~> 7.4)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.11.0):
-    - GoogleDataTransport (~> 8.4)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
+  - FirebaseCore (8.0.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.0.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
-  - FirebaseDynamicLinks (7.11.0):
-    - FirebaseCore (~> 7.0)
+  - FirebaseDynamicLinks (8.0.0):
+    - FirebaseCore (~> 8.0)
   - Flutter (1.0.0)
   - flutter_secure_storage (3.3.1):
     - Flutter
-  - GoogleDataTransport (8.4.0):
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - GoogleDataTransport (9.0.0):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Environment (7.4.0):
+  - GoogleUtilities/Environment (7.4.1):
     - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (7.4.0):
+  - GoogleUtilities/Logger (7.4.1):
     - GoogleUtilities/Environment
   - MTBBarcodeScanner (5.0.11)
   - nanopb (2.30908.0):
@@ -66,13 +69,16 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
-  - SwiftProtobuf (1.16.0)
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
+  - SwiftProtobuf (1.17.0)
   - url_launcher (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
-  - barcode_scan (from `.symlinks/plugins/barcode_scan/ios`)
+  - barcode_scan2 (from `.symlinks/plugins/barcode_scan2/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - Flutter (from `Flutter`)
@@ -84,6 +90,7 @@ DEPENDENCIES:
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
@@ -93,6 +100,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDynamicLinks
+    - FMDB
     - GoogleDataTransport
     - GoogleUtilities
     - MTBBarcodeScanner
@@ -104,8 +112,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplitude_flutter:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
-  barcode_scan:
-    :path: ".symlinks/plugins/barcode_scan/ios"
+  barcode_scan2:
+    :path: ".symlinks/plugins/barcode_scan2/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_dynamic_links:
@@ -128,23 +136,26 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   Amplitude: c948c6f99c7f798c196523b2a5584367401d910f
   amplitude_flutter: 5c934cf8331619b62bbd5a69f3cfea9090b3ca94
-  barcode_scan: a5c27959edfafaa0c771905bad0b29d6d39e4479
-  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
-  firebase_core: 84dcd80ac6d29c3d1039071b7306ee99688eb9c7
-  firebase_dynamic_links: e54ea29b74507402560461965d0483657dedf1b7
-  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
-  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
-  FirebaseDynamicLinks: 07f101c20bb40fd39f6b3e5278a64a5f2f660dc1
+  barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
+  Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
+  firebase_core: e4d3efb030a2b2021819f8faa538bb23deb46695
+  firebase_dynamic_links: 832d198922d1919858cca05a1b5ecd3bc1b4495a
+  FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
+  FirebaseCoreDiagnostics: a31d987ba0fe16d59886a5dbadc2f1de871f88c8
+  FirebaseDynamicLinks: 42858c22626d9c519b28e0421b2ea6bcc5a241ff
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
-  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
-  GoogleUtilities: 284cddc7fffc14ae1907efb6f78ab95c1fccaedc
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GoogleDataTransport: 11e3a5f2c190327df1a4a5d7e7ae3d4d5b9c9e4c
+  GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
@@ -156,7 +167,8 @@ SPEC CHECKSUMS:
   sentry_flutter: 5b3c6d717db5b7482504a313c831b318297d4d37
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
-  SwiftProtobuf: 4e16842b83c6fda06b10fac50d73b3f1fce8ab7b
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
 PODFILE CHECKSUM: 369a5dd265c3a98e02ffc0493427fc70d9c648fc

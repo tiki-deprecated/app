@@ -4,12 +4,12 @@
  */
 
 class RepoLocalSsOtpModel {
-  String email;
-  String salt;
+  String? email;
+  String? salt;
 
   RepoLocalSsOtpModel({this.email, this.salt});
 
-  RepoLocalSsOtpModel.fromJson(Map<String, dynamic> json) {
+  RepoLocalSsOtpModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.email = json['email'];
       this.salt = json['salt'];

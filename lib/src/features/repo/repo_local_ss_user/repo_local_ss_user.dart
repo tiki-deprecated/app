@@ -12,8 +12,8 @@ class RepoLocalSsUser extends RepoLocalSsCrud<RepoLocalSsUserModel> {
   static const String _table = "user";
   static const String _version = "0.0.1";
 
-  RepoLocalSsUser({FlutterSecureStorage secureStorage})
+  RepoLocalSsUser({FlutterSecureStorage? secureStorage})
       : super(_table, _version, (RepoLocalSsUserModel model) => model.toJson(),
-            (Map<String, dynamic> json) => RepoLocalSsUserModel.fromJson(json),
+            (Map<String, dynamic>? json) => RepoLocalSsUserModel.fromJson(json),
             secureStorage: secureStorage);
 }

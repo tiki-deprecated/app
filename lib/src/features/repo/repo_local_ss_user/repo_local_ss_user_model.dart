@@ -4,15 +4,15 @@
  */
 
 class RepoLocalSsUserModel {
-  String email;
-  String address;
-  bool isLoggedIn;
-  Uri referral;
+  String? email;
+  String? address;
+  bool? isLoggedIn;
+  Uri? referral;
 
   RepoLocalSsUserModel(
       {this.email, this.address, this.isLoggedIn, this.referral});
 
-  RepoLocalSsUserModel.fromJson(Map<String, dynamic> json) {
+  RepoLocalSsUserModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.email = json['email'];
       this.address = json['address'];

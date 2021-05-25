@@ -4,11 +4,11 @@
  */
 
 class RepoLocalSsCurrentModel {
-  String email;
+  String? email;
 
-  RepoLocalSsCurrentModel({this.email});
+  RepoLocalSsCurrentModel({required this.email});
 
-  RepoLocalSsCurrentModel.fromJson(Map<String, dynamic> json) {
+  RepoLocalSsCurrentModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.email = json['email'];
     }

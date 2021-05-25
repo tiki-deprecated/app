@@ -13,12 +13,12 @@ class RepoLocalSsCurrent extends RepoLocalSsCrud<RepoLocalSsCurrentModel> {
   static const String _table = "current";
   static const String _version = "0.0.1";
 
-  RepoLocalSsCurrent({FlutterSecureStorage secureStorage})
+  RepoLocalSsCurrent({FlutterSecureStorage? secureStorage})
       : super(
             _table,
             _version,
             (RepoLocalSsCurrentModel model) => model.toJson(),
-            (Map<String, dynamic> json) =>
+            (Map<String, dynamic>? json) =>
                 RepoLocalSsCurrentModel.fromJson(json),
             secureStorage: secureStorage);
 }

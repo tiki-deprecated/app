@@ -19,10 +19,10 @@ class HelperLogIn {
   final RepoLocalSsKeys _repoLocalSsKeys;
   final RepoLocalSsToken _repoLocalSsToken;
 
-  RepoLocalSsCurrentModel current;
-  RepoLocalSsUserModel user;
-  RepoLocalSsKeysModel keys;
-  RepoLocalSsTokenModel token;
+  late RepoLocalSsCurrentModel current;
+  RepoLocalSsUserModel? user;
+  RepoLocalSsKeysModel? keys;
+  RepoLocalSsTokenModel? token;
 
   HelperLogIn(this._repoLocalSsCurrent, this._repoLocalSsUser,
       this._repoLocalSsKeys, this._repoLocalSsToken);
@@ -36,10 +36,10 @@ class HelperLogIn {
   Future<void> load() async {
     current = await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
     if (current.email != null) {
-      user = await _repoLocalSsUser.find(current.email);
-      if (user.address != null)
-        keys = await _repoLocalSsKeys.find(user.address);
-      token = await _repoLocalSsToken.find(current.email);
+      user = await _repoLocalSsUser.find(current.email!);
+      if (user!.address != null)
+        keys = await _repoLocalSsKeys.find(user!.address!);
+      token = await _repoLocalSsToken.find(current.email!);
     }
   }
 
@@ -49,13 +49,13 @@ class HelperLogIn {
 
   bool isLoggedIn() {
     return user != null &&
-        user.isLoggedIn != null &&
-        user.isLoggedIn &&
+        user!.isLoggedIn != null &&
+        user!.isLoggedIn! &&
         keys != null &&
-        keys.address != null &&
-        keys.signPrivateKey != null &&
-        keys.dataPrivateKey != null &&
+        keys!.address != null &&
+        keys!.signPrivateKey != null &&
+        keys!.dataPrivateKey != null &&
         token != null &&
-        token.refresh != null;
+        token!.refresh != null;
   }
 }
