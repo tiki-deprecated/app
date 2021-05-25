@@ -34,41 +34,49 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
   _button(context, state) {
     return GestureDetector(
         child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20), child: Stack(clipBehavior: Clip.none, children: [
-          Container(
-              margin: EdgeInsets.only(
-                  bottom: 8 * PlatformRelativeSize.blockHorizontal),
-              padding: EdgeInsets.all(4 * PlatformRelativeSize.blockHorizontal),
-              decoration: BoxDecoration(
-                  color: ConfigColor.gallery,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: ConfigColor.alto),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      spreadRadius: 0,
-                      blurRadius: 16,
-                      offset: Offset(6, 6), // changes position of shadow
-                    ),
-                  ]),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(
-                        right: 4 * PlatformRelativeSize.blockHorizontal),
-                    child: HelperImage("icon-download")),
-                Text("Download",
-                    style: TextStyle(
-                        fontSize: 2.5 * PlatformRelativeSize.blockVertical,
-                        fontWeight: FontWeight.bold,
-                        color: ConfigColor.mardiGras)),
-              ])),
-          state is KeysNewScreenDialogDownloadSuccess
-              ? Positioned(
-                  top: -3.5 * PlatformRelativeSize.blockVertical,
-                  right: -3.5 * PlatformRelativeSize.blockVertical,
-                  child: HelperImage("green-check"))
-              : Container(),
-        ])),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Stack(clipBehavior: Clip.none, children: [
+              Container(
+                  margin: EdgeInsets.only(
+                      bottom: 8 * PlatformRelativeSize.blockHorizontal),
+                  padding:
+                      EdgeInsets.all(4 * PlatformRelativeSize.blockHorizontal),
+                  decoration: BoxDecoration(
+                      color: ConfigColor.gallery,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: ConfigColor.alto),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          spreadRadius: 0,
+                          blurRadius: 16,
+                          offset: Offset(6, 6), // changes position of shadow
+                        ),
+                      ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(
+                                right:
+                                    4 * PlatformRelativeSize.blockHorizontal),
+                            child: HelperImage("icon-download")),
+                        Text("Download",
+                            style: TextStyle(
+                                fontSize:
+                                    2.5 * PlatformRelativeSize.blockVertical,
+                                fontWeight: FontWeight.bold,
+                                color: ConfigColor.mardiGras)),
+                      ])),
+              state is KeysNewScreenDialogDownloadSuccess
+                  ? Positioned(
+                      top: 0,
+                      left: 5 * PlatformRelativeSize.blockHorizontal,
+                      child: Container(
+                          height: 5 * PlatformRelativeSize.blockVertical,
+                          child: HelperImage("green-check")))
+                  : Container(),
+            ])),
         onTap: () => onPressed(context));
   }
 
