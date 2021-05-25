@@ -39,6 +39,7 @@ class KeysNewScreenDialogDownloadBloc extends Bloc<
     RenderRepaintBoundary renderRepaintBoundary =
         downloaded.globalKey.currentContext!.findRenderObject()
             as RenderRepaintBoundary;
+    if(!renderRepaintBoundary.debugNeedsPaint){
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -62,5 +63,5 @@ class KeysNewScreenDialogDownloadBloc extends Bloc<
       imgFile.writeAsBytesSync(pngBytes, flush: true);
       yield KeysNewScreenDialogDownloadSuccess(path);
     }
-  }
+  }}
 }
