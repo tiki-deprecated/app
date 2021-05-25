@@ -20,10 +20,6 @@ class KeysNewScreenBackedUp extends KeysNewScreenEvent {
   const KeysNewScreenBackedUp() : super();
 }
 
-class KeysNewScreenSkipped extends KeysNewScreenEvent {
-  const KeysNewScreenSkipped() : super();
-}
-
 class KeysNewScreenContinue extends KeysNewScreenEvent {
   const KeysNewScreenContinue() : super();
 }

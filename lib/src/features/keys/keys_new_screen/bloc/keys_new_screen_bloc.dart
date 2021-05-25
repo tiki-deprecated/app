@@ -62,8 +62,6 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
     if (event is KeysNewScreenGenerated) yield* _mapGeneratedToState(event);
     if (event is KeysNewScreenBackedUp)
       yield* _mapBackedUpToState(event);
-    else if (event is KeysNewScreenSkipped)
-      yield* _mapSkippedToState(event);
     else if (event is KeysNewScreenContinue) yield* _mapContinueToState(event);
   }
 
@@ -85,18 +83,8 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
 
   Stream<KeysNewScreenState> _mapBackedUpToState(
       KeysNewScreenBackedUp backedUp) async* {
-    yield KeysNewScreenCanContinue(state.dataPublic, state.dataPrivate,
-        state.signPublic, state.signPrivate, state.address);
-  }
-
-  Stream<KeysNewScreenState> _mapSkippedToState(
-      KeysNewScreenSkipped skipped) async* {
-    if (await _saveAndLogIn()) {
-      yield KeysNewScreenSuccess(state.dataPublic, state.dataPrivate,
-          state.signPublic, state.signPrivate, state.address);
-    } else
-      yield KeysNewScreenFailure(state.dataPublic, state.dataPrivate,
-          state.signPublic, state.signPrivate, state.address);
+    yield KeysNewScreenInProgress(state.dataPublic, state.dataPrivate,
+        state.signPublic, state.signPrivate, state.address, true);
   }
 
   Stream<KeysNewScreenState> _mapContinueToState(

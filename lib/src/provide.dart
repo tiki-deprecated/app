@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_save/keys_new_screen_dialog/bloc/keys_new_screen_save_dialog_bloc.dart';
 import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
 import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
 import 'package:app/src/features/repo/repo_api_website_users/repo_api_website_users.dart';
@@ -67,9 +66,6 @@ class Provide {
           create: (context) => LoginOtpValidBloc.provide(context)),
       BlocProvider<KeysReferralCubit>(
           create: (context) => KeysReferralCubit.provide(context)),
-      BlocProvider<KeysNewScreenSaveDialogCopyBloc>(
-          create: (context) =>
-              KeysNewScreenSaveDialogCopyBloc.provide(context)),
     ], child: child);
   }
 }

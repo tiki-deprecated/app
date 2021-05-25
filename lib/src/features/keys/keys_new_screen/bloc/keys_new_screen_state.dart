@@ -36,16 +36,6 @@ class KeysNewScreenInProgress extends KeysNewScreenState {
       [dataPublic, dataPrivate, signPublic, signPrivate, address, isBackedUp];
 }
 
-class KeysNewScreenCanContinue extends KeysNewScreenState {
-  const KeysNewScreenCanContinue(String? dataPublic, String? dataPrivate,
-      String? signPublic, String? signPrivate, String? address)
-      : super(dataPublic, dataPrivate, signPublic, signPrivate, address);
-
-  @override
-  List<Object?> get props =>
-      [dataPublic, dataPrivate, signPublic, signPrivate, address];
-}
-
 class KeysNewScreenSuccess extends KeysNewScreenState {
   const KeysNewScreenSuccess(String? dataPublic, String? dataPrivate,
       String? signPublic, String? signPrivate, String? address)
