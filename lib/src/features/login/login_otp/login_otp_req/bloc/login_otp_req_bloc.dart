@@ -48,7 +48,6 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
 
   Stream<LoginOtpReqState> _mapSubmittedToState(
       LoginOtpReqSubmitted submitted) async* {
-    print("mapsubmitted");
     HelperApiRsp<RepoApiBouncerOtpRsp> rsp =
         await _repoApiBouncerOtp.email(RepoApiBouncerOtpReq(submitted.email));
     if (rsp.code == 200) {

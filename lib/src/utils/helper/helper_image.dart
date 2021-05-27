@@ -8,10 +8,14 @@ import 'package:flutter/cupertino.dart';
 class HelperImage extends StatelessWidget {
   final String image;
 
-  HelperImage(this.image);
+  final double? height;
+
+  final double? width;
+
+  HelperImage(this.image, {this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
-    return Image(image: AssetImage('res/images/' + image + '.png'));
+    return Image(image: AssetImage('res/images/' + image + '.png'), width: this.width, height: this.height,);
   }
 }

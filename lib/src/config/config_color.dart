@@ -34,4 +34,6 @@ class ConfigColor {
   static const Color telegramBlue = Color(0xFF0088CC);
   static const Color signalBlue = Color(0xFF3661D1);
   static const Color discordBlue = Color(0xFF7289DA);
+
+  static const Color tikiBlue = Color(0xFF00133F);
 }

@@ -41,9 +41,6 @@ class TikiBigButton extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Container(
-                    width: textWidth != null
-                        ? textWidth! * PlatformRelativeSize.blockHorizontal
-                        : null,
                     padding: EdgeInsets.only(
                         right: trailing != null
                             ? PlatformRelativeSize.marginHorizontal
