@@ -41,7 +41,7 @@ class Provide {
         create: (context) => RepoLocalSsOtp(secureStorage: secureStorage),
       ),
       RepositoryProvider<RepoLocalSsCurrent>(
-        create: (context) => RepoLocalSsCurrent(secureStorage: secureStorage),
+        create: (context) => RepoLocalSsCurrent(),
       ),
       RepositoryProvider<RepoApiBouncerOtp>(
         create: (context) => RepoApiBouncerOtp(),
