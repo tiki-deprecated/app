@@ -15,6 +15,7 @@ import 'package:app/src/features/home/home_screen/widgets/tiki_news_card.dart';
 import 'package:app/src/features/home/home_screen/widgets/tiki_release_card.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_text_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
@@ -78,12 +79,12 @@ class HomeScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
             //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
           ),
-          child: Row(
+          child: GestureDetector(child:Row(
             children: [
               HelperImage("add-email", width: 35,),
               Expanded(child:Padding(padding:EdgeInsets.symmetric(horizontal: 16),child:Text("Add your\nGmail account", style: TextStyle(fontWeight: FontWeight.bold, fontSize:18, fontFamily: "Montserrat")))),
               HelperImage("right-arrow", width: 30,)
-            ],
+            ]), onTap: () => () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SliderInfoCards())),
           )),
       Container(
           width: double.maxFinite,
