@@ -41,7 +41,7 @@ class _HomeScreenReferCode extends State<HomeScreenReferCode> {
   }
 
   Widget _button(Uri? link) {
-    return OutlinedButton(
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 60), child: OutlinedButton(
         onPressed: () async {
           Clipboard.setData(new ClipboardData(text: link.toString()));
         },
@@ -51,7 +51,7 @@ class _HomeScreenReferCode extends State<HomeScreenReferCode> {
             shape: RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.all(Radius.circular(_borderRadius)))),
-        child: Row(mainAxisSize: MainAxisSize.min, children: [
+        child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
           Text(_text,
               style: TextStyle(
                   fontSize: _fontSize,
@@ -70,8 +70,8 @@ class _HomeScreenReferCode extends State<HomeScreenReferCode> {
                   style: TextStyle(
                       fontSize: _fontSize,
                       fontWeight: FontWeight.bold,
-                      color: ConfigColor.stratos))),
+                      color: ConfigColor.tikiBlue))),
           HelperImage("icon-copy"),
-        ]));
+        ])));
   }
 }

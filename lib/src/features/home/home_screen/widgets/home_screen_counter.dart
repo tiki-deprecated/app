@@ -16,7 +16,7 @@ class HomeScreenCounter extends StatefulWidget {
 
 class _HomeScreenCounter extends State<HomeScreenCounter> {
   static final double _fontSizeCount =
-      24 * PlatformRelativeSize.blockHorizontal;
+      20 * PlatformRelativeSize.blockHorizontal;
   static final double _fontSizeText = 5 * PlatformRelativeSize.blockHorizontal;
 
   @override
@@ -39,12 +39,13 @@ class _HomeScreenCounter extends State<HomeScreenCounter> {
                 color: ConfigColor.flirt,
                 fontFamily: 'Koara',
                 fontWeight: FontWeight.bold,
-                fontSize: _fontSizeCount)),
-        Text("people joined the TIKI tribe",
+                fontSize: 80)),
+        Text("people already use TIKI",
             style: TextStyle(
-                fontSize: _fontSizeText,
+              height: 1,
+                fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: ConfigColor.stratos))
+                color: ConfigColor.tikiBlue))
       ]);
     });
   }
