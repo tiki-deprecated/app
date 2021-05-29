@@ -42,7 +42,7 @@ class _HomeScreenCounter extends State<HomeScreenCounter> {
                 fontSize: 80)),
         Text("people already use TIKI",
             style: TextStyle(
-              height: 1,
+                height: 1,
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
                 color: ConfigColor.tikiBlue))

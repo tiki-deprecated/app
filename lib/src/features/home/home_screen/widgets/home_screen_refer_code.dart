@@ -41,37 +41,39 @@ class _HomeScreenReferCode extends State<HomeScreenReferCode> {
   }
 
   Widget _button(Uri? link) {
-    return Padding(padding: EdgeInsets.symmetric(horizontal: 60), child: OutlinedButton(
-        onPressed: () async {
-          Clipboard.setData(new ClipboardData(text: link.toString()));
-        },
-        style: OutlinedButton.styleFrom(
-            side: BorderSide(color: ConfigColor.alto),
-            primary: ConfigColor.gray,
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(_borderRadius)))),
-        child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
-          Text(_text,
-              style: TextStyle(
-                  fontSize: _fontSize,
-                  fontWeight: FontWeight.bold,
-                  color: ConfigColor.gray)),
-          Container(
-              margin: EdgeInsets.only(
-                  left: _marginLeft,
-                  right: _marginRight,
-                  top: _marginVertical,
-                  bottom: _marginVertical),
-              child: Text(
-                  link
-                      .toString()
-                      .replaceAll(new RegExp(r'https://mytiki.app/'), ''),
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 60),
+        child: OutlinedButton(
+            onPressed: () async {
+              Clipboard.setData(new ClipboardData(text: link.toString()));
+            },
+            style: OutlinedButton.styleFrom(
+                side: BorderSide(color: ConfigColor.alto),
+                primary: ConfigColor.gray,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(_borderRadius)))),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(_text,
                   style: TextStyle(
                       fontSize: _fontSize,
                       fontWeight: FontWeight.bold,
-                      color: ConfigColor.tikiBlue))),
-          HelperImage("icon-copy"),
-        ])));
+                      color: ConfigColor.gray)),
+              Container(
+                  margin: EdgeInsets.only(
+                      left: _marginLeft,
+                      right: _marginRight,
+                      top: _marginVertical,
+                      bottom: _marginVertical),
+                  child: Text(
+                      link
+                          .toString()
+                          .replaceAll(new RegExp(r'https://mytiki.app/'), ''),
+                      style: TextStyle(
+                          fontSize: _fontSize,
+                          fontWeight: FontWeight.bold,
+                          color: ConfigColor.tikiBlue))),
+              HelperImage("icon-copy"),
+            ])));
   }
 }

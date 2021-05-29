@@ -16,6 +16,10 @@ class HelperImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image(image: AssetImage('res/images/' + image + '.png'), width: this.width, height: this.height,);
+    return Image(
+      image: AssetImage('res/images/' + image + '.png'),
+      width: this.width,
+      height: this.height,
+    );
   }
 }

@@ -4,28 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AddEmailCubit extends Cubit<AddEmailState> {
-
-  AddEmailCubit() : super(InitialState()) {
-    if(HelperGoogleAuth().isConnected()){
-      emit(AddedState(HelperGoogleAuth().connect()));
-    }
-  }
+  AddEmailCubit() : super(InitialState());
 
   void addAccount() async {
     try {
       emit(AddingState());
-      GoogleSignInAccount? googleAccount = HelperGoogleAuth().connect();
+      GoogleSignInAccount? googleAccount = await HelperGoogleAuth().connect();
       emit(AddedState(googleAccount));
     } catch (e) {
       emit(ErrorState());
     }
   }
 
-  void removeAccount() async{
+  void removeAccount() async {
     try {
-      emit(AddingState());
-      GoogleSignInAccount? googleAccount = HelperGoogleAuth().connect();
-      emit(AddedState(googleAccount));
+      await HelperGoogleAuth().handleSignOut();
+      print("signout");
+      emit(InitialState());
     } catch (e) {
       emit(ErrorState());
     }

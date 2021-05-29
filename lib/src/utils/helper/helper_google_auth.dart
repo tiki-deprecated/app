@@ -8,9 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 
 class HelperGoogleAuth {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: <String>[GmailApi.gmailReadonlyScope]
-  );
+  final GoogleSignIn _googleSignIn =
+      GoogleSignIn(scopes: <String>[GmailApi.gmailReadonlyScope]);
 
   GoogleSignInAccount? currentUser;
 
@@ -32,9 +31,13 @@ class HelperGoogleAuth {
     }
   }
 
-  Future<void> handleSignOut() => _googleSignIn.disconnect();
+  Future<void> handleSignOut() async {
+    print(await _googleSignIn.isSignedIn());
+    await _googleSignIn.signOut();
+    print(await _googleSignIn.isSignedIn());
+  }
 
-  isConnected(){
+  isConnected() {
     return _googleSignIn.isSignedIn();
   }
 }

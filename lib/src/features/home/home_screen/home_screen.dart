@@ -3,8 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_cubit.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/widgets/home_screen_add_email_button.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
@@ -15,8 +16,6 @@ import 'package:app/src/features/home/home_screen/widgets/tiki_news_card.dart';
 import 'package:app/src/features/home/home_screen/widgets/tiki_release_card.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/platform/platform_relative_size.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_text_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +26,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/home_screen_logout.dart';
 
 class HomeScreen extends StatelessWidget {
-  static final double _marginTopTitle = 5.5 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle =
+      5.5 * PlatformRelativeSize.blockVertical;
   static final double _marginTopCount = 4 * PlatformRelativeSize.blockVertical;
   static final double _marginTopRefer = 8 * PlatformRelativeSize.blockVertical;
   static final double _marginVerticalShare =
@@ -51,47 +51,20 @@ class HomeScreen extends StatelessWidget {
       Container(
           width: double.maxFinite,
           margin: EdgeInsets.only(top: 140, bottom: 20),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-                child: HomeScreenTitle("Get started"))
-          ])),
-      Container(child:Row(
-        children: [
-          Text("You've linked your Gmail account.",style:TextStyle(fontSize:15,fontFamily: "NunitoSans", fontWeight: FontWeight.w600)),
-          TikiTextButton(
-              "Remove",
-              () => _removeGmail(),
-              trailing: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: ConfigColor.orange,
-                ),
-                child: Icon(Icons.close,color:ConfigColor.orange),
-              )
-          )
-        ],
-      )),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Container(child: HomeScreenTitle("Get started"))])),
       Container(
-          padding:EdgeInsets.symmetric(vertical:24, horizontal: 20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
-          ),
-          child: GestureDetector(child:Row(
-            children: [
-              HelperImage("add-email", width: 35,),
-              Expanded(child:Padding(padding:EdgeInsets.symmetric(horizontal: 16),child:Text("Add your\nGmail account", style: TextStyle(fontWeight: FontWeight.bold, fontSize:18, fontFamily: "Montserrat")))),
-              HelperImage("right-arrow", width: 30,)
-            ]), onTap: () => () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SliderInfoCards())),
-          )),
+        child: BlocProvider(
+            create: (BuildContext context) => AddEmailCubit(),
+            child: AddGmailButton()),
+      ),
       Container(
           width: double.maxFinite,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-                margin: EdgeInsets.only(top: 50, bottom:20),
+                margin: EdgeInsets.only(top: 50, bottom: 20),
                 child: HomeScreenTitle("TIKI updates"))
           ])),
       Container(
@@ -113,8 +86,7 @@ class HomeScreen extends StatelessWidget {
                       child: HomeScreenCounter(),
                     )),
                 Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: HomeScreenRefer()),
+                    margin: EdgeInsets.only(top: 30), child: HomeScreenRefer()),
                 Container(
                     margin:
                         EdgeInsets.symmetric(vertical: _marginVerticalShare),
@@ -151,6 +123,4 @@ class HomeScreen extends StatelessWidget {
         foregroundChildren: _foreground(context),
         background: _background(context) as TikiBackground?);
   }
-
-  _removeGmail() {}
 }

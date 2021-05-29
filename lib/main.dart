@@ -1,12 +1,8 @@
 import 'package:app/src/app.dart';
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_sentry.dart';
 import 'package:app/src/features/repo/repo_local_db/repo_local_db.dart';
 import 'package:app/src/utils/analytics/tiki_analytics.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/helper/helper_log_in.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-abstract class AddEmailState extends Equatable{}
+abstract class AddEmailState extends Equatable {}
 
 class InitialState extends AddEmailState {
   @override
