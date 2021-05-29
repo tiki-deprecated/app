@@ -18,6 +18,10 @@ class HelperGoogleAuth {
     print("google sign In " + (currentUser?.email ?? "não autenticado"));
   }
 
+  getConnectedUser() async {
+    return await _googleSignIn.signInSilently();
+  }
+
   Future<GoogleSignInAccount?> _handleSignIn() async {
     try {
       currentUser = await _googleSignIn.signIn();

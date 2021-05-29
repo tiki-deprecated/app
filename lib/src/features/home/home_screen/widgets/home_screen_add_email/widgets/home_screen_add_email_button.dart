@@ -1,8 +1,10 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_cubit.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_state.dart';
+import 'package:app/src/utils/helper/helper_google_auth.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
+import 'package:app/src/widgets/components/tiki_info_cards/tiki_info_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +12,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AddGmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddEmailCubit, AddEmailState>(
-        builder: (BuildContext context, AddEmailState state) {
-      return _addBtn(context);
-    });
+    return BlocProvider(
+        create: (BuildContext context) => AddEmailCubit(),
+        child: BlocBuilder<AddEmailCubit, AddEmailState>(
+            builder: (BuildContext context, AddEmailState state) {
+          _getGmailCurrentUser(context);
+          return _addBtn(context);
+        }));
   }
 
   _removeGmail(context) {
@@ -27,8 +32,9 @@ class AddGmailButton extends StatelessWidget {
   }
 
   _whatGmailHolds(context) {
+    List<SliderInfoCard> cards = createCards();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SliderInfoCards()));
+        .push(MaterialPageRoute(builder: (context) => SliderInfoCards(cards)));
   }
 
   Widget _addBtn(context) {
@@ -41,36 +47,40 @@ class AddGmailButton extends StatelessWidget {
   }
 
   Widget _removeRow(context) {
-    return Row(children: [
-      Text("You've linked your Gmail account.",
-          style: TextStyle(
-              fontSize: 15,
-              fontFamily: "NunitoSans",
-              fontWeight: FontWeight.w600)),
-      GestureDetector(
-        child: Container(
-            child: Row(children: [
-          Text(" Remove",
+    return Container(
+        margin: EdgeInsets.only(bottom: 12),
+        child: Row(children: [
+          Text("You've linked your Gmail account.",
               style: TextStyle(
-                  color: ConfigColor.orange,
                   fontSize: 15,
                   fontFamily: "NunitoSans",
                   fontWeight: FontWeight.w600)),
-          Container(
-              width: 20.0,
-              height: 20.0,
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
-                border: new Border.all(
-                  color: ConfigColor.orange,
-                  width: 1.0,
-                ),
-              ),
-              child: Icon(Icons.close, size: 18, color: ConfigColor.orange)),
-        ])),
-        onTap: () => _removeGmail(context),
-      )
-    ]);
+          GestureDetector(
+            child: Container(
+                child: Row(children: [
+              Text(" Remove",
+                  style: TextStyle(
+                      color: ConfigColor.orange,
+                      fontSize: 15,
+                      fontFamily: "NunitoSans",
+                      fontWeight: FontWeight.w600)),
+              Container(
+                  width: 20.0,
+                  height: 20.0,
+                  decoration: new BoxDecoration(
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(20.0)),
+                    border: new Border.all(
+                      color: ConfigColor.orange,
+                      width: 1.0,
+                    ),
+                  ),
+                  child:
+                      Icon(Icons.close, size: 18, color: ConfigColor.orange)),
+            ])),
+            onTap: () => _removeGmail(context),
+          )
+        ]));
   }
 
   Widget _addButton(context) {
@@ -133,5 +143,21 @@ class AddGmailButton extends StatelessWidget {
           ]),
           onTap: () => _whatGmailHolds(context)),
     );
+  }
+
+  List<SliderInfoCard> createCards() {
+    return [SliderInfoCard(), SliderInfoCard(), SliderInfoCard()];
+  }
+
+  _getGmailCurrentUser(context) async {
+    AddEmailCubit cubit = BlocProvider.of<AddEmailCubit>(context);
+    HelperGoogleAuth().getConnectedUser().then((connectedUser) {
+      if (connectedUser != null) {
+        cubit.emit(AddedState(connectedUser));
+      } else {
+        cubit.emit(NotAddedState());
+      }
+      ;
+    });
   }
 }

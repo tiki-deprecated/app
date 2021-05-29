@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_cubit.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/widgets/home_screen_add_email_button.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
@@ -26,10 +25,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/home_screen_logout.dart';
 
 class HomeScreen extends StatelessWidget {
-  static final double _marginTopTitle =
-      5.5 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopCount = 4 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopRefer = 8 * PlatformRelativeSize.blockVertical;
   static final double _marginVerticalShare =
       6 * PlatformRelativeSize.blockVertical;
   static final double _marginTopCards = 2 * PlatformRelativeSize.blockVertical;
@@ -54,11 +49,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [Container(child: HomeScreenTitle("Get started"))])),
-      Container(
-        child: BlocProvider(
-            create: (BuildContext context) => AddEmailCubit(),
-            child: AddGmailButton()),
-      ),
+      Container(child: AddGmailButton()),
       Container(
           width: double.maxFinite,
           child:
