@@ -4,7 +4,7 @@ import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/
 import 'package:app/src/utils/helper/helper_google_auth.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/tiki_info_card.dart';
+import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ class AddGmailButton extends StatelessWidget {
         child: BlocBuilder<AddEmailCubit, AddEmailState>(
             builder: (BuildContext context, AddEmailState state) {
           _getGmailCurrentUser(context);
-          return _addBtn(context);
+          return state is InitialState ? CircularProgressIndicator(color: ConfigColor.mardiGras,)  : _addBtn(context);
         }));
   }
 

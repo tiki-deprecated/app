@@ -1,10 +1,14 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/tiki_info_card.dart';
+import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SliderInfoCards extends StatelessWidget {
+  final List<SliderInfoCard> cards;
+
+  const SliderInfoCards(this.cards);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Builder(builder: (BuildContext context) {
@@ -39,19 +43,10 @@ class SliderInfoCards extends StatelessWidget {
                       options: CarouselOptions(
                           viewportFraction: 0.95,
                           height: MediaQuery.of(context).size.height),
-                      items: [1, 2, 3, 4, 5].map((i) {
+                      items: this.cards.map((card) {
                         return Builder(
                           builder: (BuildContext context) {
-                            return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                padding: EdgeInsets.only(top: 16),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: SliderInfoCard());
+                            return card;
                           },
                         );
                       }).toList(),
