@@ -15,17 +15,15 @@ class CardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: constraints.maxHeight - 150,
-        child: SingleChildScrollView(
-            child: Column(children: [
-          Container(
-              margin: EdgeInsets.only(left: 25, right: 40, top: 25, bottom: 25),
-              child: this.cardContentData['cardContentData']
-                  ['richTextExplanation']),
-          _whatTheySay(),
-          _youShouldKnow(),
-          CardCta(cardCtaArgs: this.cardContentData['cardCtaData']),
-        ])));
+        child: Column(children: [
+      Container(
+          margin: EdgeInsets.only(left: 25, right: 40, top: 25, bottom: 25),
+          child: this.cardContentData['cardContentData']
+              ['richTextExplanation']),
+      _whatTheySay(),
+      _youShouldKnow(),
+      CardCta(cardCtaArgs: this.cardContentData['cardCtaData']),
+    ]));
   }
 
   _whatTheySay() {

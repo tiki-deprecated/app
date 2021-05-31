@@ -1,13 +1,20 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_cubit.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_state.dart';
 import 'package:app/src/utils/helper/helper_google_auth.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
 import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/slider_info_card.dart';
+import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AddGmailButton extends StatelessWidget {
@@ -64,40 +71,58 @@ class AddGmailButton extends StatelessWidget {
   }
 
   Widget _removeRow(context) {
+    AddedState state =
+        BlocProvider.of<AddEmailCubit>(context).state as AddedState;
+    String? gmail = state.currentUser?.email;
     return Container(
         margin: EdgeInsets.only(bottom: 12),
-        child: Row(children: [
-          Text("You've linked your Gmail account.",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: "NunitoSans",
-                  fontWeight: FontWeight.w600)),
-          GestureDetector(
-            child: Container(
-                child: Row(children: [
-              Text(" Remove",
-                  style: TextStyle(
-                      color: ConfigColor.orange,
-                      fontSize: 15,
-                      fontFamily: "NunitoSans",
-                      fontWeight: FontWeight.w600)),
-              Container(
-                  width: 20.0,
-                  height: 20.0,
-                  decoration: new BoxDecoration(
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(20.0)),
-                    border: new Border.all(
-                      color: ConfigColor.orange,
-                      width: 1.0,
-                    ),
-                  ),
-                  child:
-                      Icon(Icons.close, size: 18, color: ConfigColor.orange)),
-            ])),
-            onTap: () => _removeGmail(context),
-          )
-        ]));
+        child: RichText(
+            text: TextSpan(
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: "NunitoSans",
+                    color: Color(0xFF545454),
+                    fontWeight: FontWeight.w600),
+                text: "You've linked ",
+                children: <InlineSpan>[
+              TextSpan(
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: "NunitoSans",
+                    color: Color(0xFF545454),
+                    fontWeight: FontWeight.w600),
+                text: gmail ?? "your Gmail account. ",
+              ),
+              TextSpan(
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => _removeGmail(context),
+                style: TextStyle(
+                    color: ConfigColor.orange,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    fontFamily: "NunitoSans"),
+                text: "Remove ",
+              ),
+              WidgetSpan(
+                  alignment: ui.PlaceholderAlignment.middle,
+                  child: GestureDetector(
+                    onTap: () => _removeGmail(context),
+                    child: Container(
+                        width: 16.0,
+                        height: 16.0,
+                        decoration: new BoxDecoration(
+                          borderRadius:
+                              new BorderRadius.all(new Radius.circular(15.0)),
+                          border: new Border.all(
+                            color: ConfigColor.orange,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Center(
+                            child: Icon(Icons.close,
+                                size: 14, color: ConfigColor.orange))),
+                  )),
+            ])));
   }
 
   Widget _addButton(context) {
@@ -148,7 +173,7 @@ class AddGmailButton extends StatelessWidget {
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("See what\nGmail account",
+                    child: Text("See what data\nGmail has on you",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -179,7 +204,12 @@ class AddGmailButton extends StatelessWidget {
                   color: ConfigColor.tikiBlue),
             )
           ])),
-          Icon(Icons.share, color: ConfigColor.orange, size: 40)
+          GestureDetector(
+              onTap: () => _shareCard(
+                  message:
+                      "Gmail knows where you are when you read your emails. It's your data, start taking it back on https://www.mytiki.com",
+                  image: 'socialmedia1.png'),
+              child: Icon(Icons.share, color: ConfigColor.orange, size: 40))
         ]),
         'image': "where-you-are",
         'subtitle': "Gmail knows...",
@@ -199,6 +229,9 @@ class AddGmailButton extends StatelessWidget {
                   text: "Gmail records your ",
                   children: [
                 TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => _launchUrl(
+                          "https://en.wikipedia.org/wiki/IP_address"),
                     style: TextStyle(
                         color: ConfigColor.orange,
                         fontWeight: FontWeight.bold,
@@ -251,6 +284,8 @@ class AddGmailButton extends StatelessWidget {
                   text: "You can use a ",
                   children: [
                 TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => _launchUrl('https://nordvpn.com'),
                     style: TextStyle(
                         color: ConfigColor.orange,
                         fontWeight: FontWeight.w500,
@@ -268,6 +303,9 @@ class AddGmailButton extends StatelessWidget {
                               " to hide your IP address or, for true anonymity, switch to an ",
                           children: [
                             TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () =>
+                                      _launchUrl('https://protonmail.com'),
                                 style: TextStyle(
                                     color: ConfigColor.orange,
                                     fontWeight: FontWeight.bold,
@@ -282,15 +320,17 @@ class AddGmailButton extends StatelessWidget {
                                           fontSize: 18,
                                           fontFamily: "NunitoSans"),
                                       text:
-                                          " .\n\nGmail does not currently use additional location services, here’s how to  ",
+                                          ".\n\nGmail does not currently use additional location services, here’s how to  ",
                                       children: [
                                         TextSpan(
+                                            // just left if here to know when to reactivate
+                                            //recognizer: TapGestureRecognizer()..onTap = () => _launchUrl('https://mytiki.com/blog/how-to-block-location-services'),
                                             style: TextStyle(
-                                                color: ConfigColor.orange,
+                                                color: ConfigColor.tikiBlue,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18,
                                                 fontFamily: "NunitoSans"),
-                                            text: " block them",
+                                            text: "block them",
                                             children: [
                                               TextSpan(
                                                 style: TextStyle(
@@ -326,7 +366,12 @@ class AddGmailButton extends StatelessWidget {
                   color: ConfigColor.tikiBlue),
             )
           ])),
-          Icon(Icons.share, color: ConfigColor.orange, size: 40)
+          GestureDetector(
+              onTap: () => _shareCard(
+                  message:
+                      "Gmail knows what you've written to your friends. Find out more on wwwhttps://www.mytiki.com",
+                  image: 'socialmedia2.png'),
+              child: Icon(Icons.share, color: ConfigColor.orange, size: 40))
         ]),
         'image': "what-written",
         'subtitle': "Gmail knows...",
@@ -398,67 +443,33 @@ class AddGmailButton extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                       fontFamily: "NunitoSans"),
-                  text: "You can use a ",
+                  text: "You can turn off both,",
                   children: [
                 TextSpan(
+                    recognizer: new TapGestureRecognizer()
+                      ..onTap = () => _launchUrl(
+                          "https://support.google.com/mail/answer/10079371"),
                     style: TextStyle(
                         color: ConfigColor.orange,
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
                         fontFamily: "NunitoSans"),
-                    text: "VPN",
+                    text: " ad personalization ",
                     children: [
                       TextSpan(
-                          style: TextStyle(
-                              color: ConfigColor.tikiBlue,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
-                              fontFamily: "NunitoSans"),
-                          text:
-                              " to hide your IP address or, for true anonymity, switch to an ",
-                          children: [
-                            TextSpan(
-                                style: TextStyle(
-                                    color: ConfigColor.orange,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    fontFamily: "NunitoSans"),
-                                text: "encrypted email service",
-                                children: [
-                                  TextSpan(
-                                      style: TextStyle(
-                                          color: ConfigColor.tikiBlue,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 18,
-                                          fontFamily: "NunitoSans"),
-                                      text:
-                                          " .\n\nGmail does not currently use additional location services, here’s how to  ",
-                                      children: [
-                                        TextSpan(
-                                            style: TextStyle(
-                                                color: ConfigColor.orange,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                                fontFamily: "NunitoSans"),
-                                            text: " block them",
-                                            children: [
-                                              TextSpan(
-                                                style: TextStyle(
-                                                    color: ConfigColor.tikiBlue,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 18,
-                                                    fontFamily: "NunitoSans"),
-                                                text:
-                                                    ".\n\nIf you just hate the ads, you can turn off ad personalization for your entire Google account. ",
-                                              )
-                                            ])
-                                      ])
-                                ])
-                          ])
+                        style: TextStyle(
+                            color: ConfigColor.tikiBlue,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            fontFamily: "NunitoSans"),
+                        text:
+                            "and “smart features” to stop Google from scanning your emails.",
+                      )
                     ])
               ])),
           'buttonText': "STOP READING MY EMAILS",
-          'btnAction': () => _launchUrl("https://adssettings.google.com")
+          'btnAction': () =>
+              _launchUrl("https://support.google.com/mail/answer/10079371")
         }
       }),
       SliderInfoCard(coverData: {
@@ -476,116 +487,65 @@ class AddGmailButton extends StatelessWidget {
                   color: ConfigColor.tikiBlue),
             )
           ])),
-          Icon(Icons.share, color: ConfigColor.orange, size: 40)
+          GestureDetector(
+              onTap: () => _shareCard(
+                  message:
+                      "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
+                  image: 'socialmedia2.png'),
+              child: Icon(Icons.share, color: ConfigColor.orange, size: 40))
         ]),
-        'image': "where-you-are",
+        'image': "everything-you-do",
         'subtitle': "Gmail knows...",
-        'bigTextLighter': 'Where you are ',
-        'bigTextDarker': 'when you read your emails.',
+        'bigTextLighter': "Everything\n",
+        'bigTextDarker': 'you do in your Gmail app',
         'subText':
-            "Your Gmail account tracks your location when you open your emails...\nEvery single time you do it."
+            "Your Gmail app has quite a lot of analytics packed in and knows quite a few things...."
       }, cardData: {
         'cardContentData': {
           'richTextExplanation': RichText(
               text: TextSpan(
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: "NunitoSans"),
-                  text: "Gmail records your ",
-                  children: [
-                TextSpan(
-                    style: TextStyle(
-                        color: ConfigColor.orange,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        fontFamily: "NunitoSans"),
-                    text: "IP address",
-                    children: [
-                      TextSpan(
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18,
-                            fontFamily: "NunitoSans"),
-                        text:
-                            " every time you open your inbox or send an email.\n\nMost Google products and almost all email services do this. Some, like Outlook, but NOT Gmail, will even send your IP address to the person receiving your email.\n\nThe most common use approximates your location, pinpointing you within 3-5 miles anywhere in the world. In extreme cases, like criminal investigations, your IP address can be tied to your exact device and location by working with an Internet Service Provider.",
-                      )
-                    ])
-              ])),
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                fontFamily: "NunitoSans"),
+            text:
+                "Gmail’s app is designed to track most of the things you do with it. It tracks each action you take, on which device, OS, and time of day.\n\nFor example, when you opened the app, what you searched for and if you saw an ad were all tracked.\n\nYour audio is recorded if you use voice search or assistant with Gmail.",
+          )),
           'theysay': [
+            {'image': "person-4", 'text': "Personalized experiences"},
             {
-              'image': "info-badge",
-              'text': "Security monitoring to suspicious access"
+              'image': "circle-badge",
+              'text': "App and content recommendations"
             },
-            {
-              'image': "search-graph",
-              'text': "Analyzing patterns to develop new features and products"
-            },
+            {'image': "search", 'text': "Faster Search"},
           ],
           'youShouldKnow': [
             {
-              'image': "np-tap",
-              'text':
-                  "Used advertisers for location-based targeting and surveillance"
+              'image': "hat-n-glasses",
+              'text': "Your activity is tracked even when logged out"
             },
             {'image': "badge", 'text': "Used by law enforcement"},
             {
-              'image': "worldwide",
-              'text': "Saved for 9 months, then obscured and kept permanently"
+              'image': "bomb",
+              'text':
+                  "You can set your history to auto delete after 3, 18, or 36 months"
             }
           ]
         },
         'cardCtaData': {
           'richTextExplanation': RichText(
               text: TextSpan(
-                  style: TextStyle(
-                      color: ConfigColor.tikiBlue,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      fontFamily: "NunitoSans"),
-                  text: "You can turn off both ",
-                  children: [
-                TextSpan(
-                    style: TextStyle(
-                        color: ConfigColor.orange,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        fontFamily: "NunitoSans"),
-                    text: "VPN",
-                    children: [
-                      TextSpan(
-                          style: TextStyle(
-                              color: ConfigColor.tikiBlue,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
-                              fontFamily: "NunitoSans"),
-                          text: " ad personalization",
-                          children: [
-                            TextSpan(
-                                style: TextStyle(
-                                    color: ConfigColor.orange,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    fontFamily: "NunitoSans"),
-                                text: "encrypted email service",
-                                children: [
-                                  TextSpan(
-                                    style: TextStyle(
-                                        color: ConfigColor.tikiBlue,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 18,
-                                        fontFamily: "NunitoSans"),
-                                    text:
-                                        "  and “smart features” to stop Google from scanning your emails.",
-                                  )
-                                ])
-                          ])
-                    ])
-              ])),
-          'buttonText': "AD PERSONALIZATION",
-          'btnAction': () => _launchUrl("https://adssettings.google.com")
+            style: TextStyle(
+                color: ConfigColor.tikiBlue,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+                fontFamily: "NunitoSans"),
+            text:
+                "You can delete all activities, individual activities, set it to auto-delete, or disable activity tracking entirely.",
+          )),
+          'buttonText': "MY ACTIVITY",
+          'btnAction': () => _launchUrl("https://myactivity.google.com")
         }
       }),
     ];
@@ -593,5 +553,19 @@ class AddGmailButton extends StatelessWidget {
 
   _launchUrl(String url) async {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  _shareCard({required String message, required String image}) async {
+    final directory = (await getExternalStorageDirectory())!.path;
+    ByteData bytes = await rootBundle.load("res/images/$image");
+    var buffer = bytes.buffer;
+    String path = directory + '/tikishare.png';
+    File imgFile = new File(path);
+    Uint8List pngBytes = buffer.asUint8List();
+    imgFile.writeAsBytes(pngBytes);
+    Share.shareFiles(
+      [path],
+      text: message,
+    );
   }
 }

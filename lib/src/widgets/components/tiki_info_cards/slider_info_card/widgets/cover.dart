@@ -6,29 +6,6 @@ import 'package:flutter/material.dart';
 class Cover extends AnimatedWidget {
   final maxHeight;
   final Map coverData;
-  // final Widget topHeader = Row(
-  //     mainAxisAlignment: MainAxisAlignment.start,
-  //     children: [
-  //       Expanded(
-  //           child: Row(children: [
-  //             HelperImage("gmail-round-logo", width: 25),
-  //             Padding(padding: EdgeInsets.only(right: 8)),
-  //             Text(
-  //               "Your Gmail account",
-  //               style: TextStyle(
-  //                   fontFamily: "NunitoSans",
-  //                   fontSize: 16,
-  //                   fontWeight: FontWeight.w800,
-  //                   color: ConfigColor.tikiBlue),
-  //             )
-  //           ])),
-  //       Icon(Icons.share, color: ConfigColor.orange, size: 40)
-  //     ]);
-  // final String image = "where-you-are";
-  // final String subtitle = "Gmail knows...";
-  // final String bigTextLighter = 'Where you are ';
-  // final String bigTextDarker = 'when you read your emails.';
-  // final String subText = "Your Gmail account tracks your location when you open your emails...\nEvery single time you do it.";
 
   Cover(
       {Key? key,
@@ -60,7 +37,7 @@ class Cover extends AnimatedWidget {
                       top: _calculateAnimation(50, _controllerValue.value, 0)),
                   child: HelperImage(this.coverData['image'],
                       width: _calculateAnimation(
-                          300, _controllerValue.value, 130)))),
+                          300, _controllerValue.value, 170)))),
           Positioned(
               top: 330,
               child: Container(
@@ -82,7 +59,7 @@ class Cover extends AnimatedWidget {
                                   fontFamily: "NunitoSans")))))),
           Padding(
               padding: EdgeInsets.only(
-                  top: _calculateAnimation(370, _controllerValue.value, 0)),
+                  top: _calculateAnimation(370, _controllerValue.value, 20)),
               child: Align(
                   alignment: Alignment(
                     -_controllerValue.value,
@@ -101,7 +78,7 @@ class Cover extends AnimatedWidget {
                                   height: 1,
                                   fontFamily: "Koara",
                                   fontSize: _calculateAnimation(
-                                      45, _controllerValue.value, 30),
+                                      45, _controllerValue.value, 25),
                                   fontWeight: FontWeight.bold),
                               text: this.coverData['bigTextLighter'],
                               children: [
@@ -112,7 +89,7 @@ class Cover extends AnimatedWidget {
                                         height: 1,
                                         fontFamily: "Koara",
                                         fontSize: _calculateAnimation(
-                                            45, _controllerValue.value, 30),
+                                            45, _controllerValue.value, 25),
                                         fontWeight: FontWeight.bold))
                               ]))))),
           Padding(

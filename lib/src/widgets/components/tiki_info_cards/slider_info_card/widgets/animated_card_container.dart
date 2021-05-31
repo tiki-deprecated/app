@@ -35,7 +35,8 @@ class _AnimatedCardContainerState extends State<AnimatedCardContainer>
           minHeight: widget.constraints.maxHeight,
         ),
         color: ConfigColor.mardiGras,
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           children: [
             GestureDetector(
               onVerticalDragStart: (dragDetails) {
@@ -70,6 +71,6 @@ class _AnimatedCardContainerState extends State<AnimatedCardContainer>
             CardContent(widget.constraints, controller,
                 cardContentData: widget.cardData)
           ],
-        ));
+        )));
   }
 }

@@ -18,7 +18,7 @@ class SliderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(50)),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
         child: Container(
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.symmetric(horizontal: 5.0),
