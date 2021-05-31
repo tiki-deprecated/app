@@ -36,4 +36,5 @@ class ConfigColor {
   static const Color discordBlue = Color(0xFF7289DA);
 
   static const Color tikiBlue = Color(0xFF00133F);
+  static const Color tikiBlack = Color(0xFF1C0000);
 }
