@@ -9,7 +9,7 @@ import 'package:googleapis/gmail/v1.dart';
 
 class HelperGoogleAuth {
   final GoogleSignIn _googleSignIn =
-      GoogleSignIn(scopes: <String>[GmailApi.gmailReadonlyScope]);
+      GoogleSignIn();
 
   GoogleSignInAccount? currentUser;
 
