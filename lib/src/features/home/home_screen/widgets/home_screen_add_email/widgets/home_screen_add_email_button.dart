@@ -91,7 +91,7 @@ class AddGmailButton extends StatelessWidget {
                     fontFamily: "NunitoSans",
                     color: Color(0xFF545454),
                     fontWeight: FontWeight.w600),
-                text: gmail ?? "your Gmail account. ",
+                text: gmail ?? "your Gmail account.",
               ),
               TextSpan(
                 recognizer: TapGestureRecognizer()
@@ -101,7 +101,7 @@ class AddGmailButton extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                     fontFamily: "NunitoSans"),
-                text: "Remove ",
+                text: " Remove ",
               ),
               WidgetSpan(
                   alignment: ui.PlaceholderAlignment.middle,
@@ -556,10 +556,14 @@ class AddGmailButton extends StatelessWidget {
   }
 
   _shareCard({required String message, required String image}) async {
-    final directory = (await getExternalStorageDirectory())!.path;
+    Directory directory;
+    if (Platform.isIOS)
+      directory = await getApplicationDocumentsDirectory();
+    else
+      directory = (await getExternalStorageDirectory())!;
     ByteData bytes = await rootBundle.load("res/images/$image");
     var buffer = bytes.buffer;
-    String path = directory + '/tikishare.png';
+    String path = directory.path + '/tikishare.png';
     File imgFile = new File(path);
     Uint8List pngBytes = buffer.asUint8List();
     imgFile.writeAsBytes(pngBytes);
