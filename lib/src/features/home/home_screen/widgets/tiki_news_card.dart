@@ -12,7 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 class TikiNewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TikiCard(
+    return GestureDetector(
+        child: TikiCard(
       TikiCardTitle("Latest News"),
       TikiCardText("For latest news and updates, check out our Medium blog."),
       TikiCardFigure(HelperImage("tiki-news")),
@@ -24,7 +25,7 @@ class TikiNewsCard extends StatelessWidget {
                   color: ConfigColor.orange)),
           Icon(Icons.arrow_forward, color: ConfigColor.orange),
           () => _launchUrl("https://medium.com/mytiki")),
-    );
+        ), onTap: () => _launchUrl("https://medium.com/mytiki"));
   }
 
   _launchUrl(String url) async {

@@ -12,7 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 class TikiNextReleaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TikiCard(
+    return GestureDetector(
+        child: TikiCard(
       TikiCardTitle("Coming next"),
       TikiCardText("TIKI's next release:\nadd your Gmail account"),
       TikiCardFigure(HelperImage("add-gmail")),
@@ -24,6 +25,7 @@ class TikiNextReleaseCard extends StatelessWidget {
                   color: ConfigColor.orange)),
           Icon(Icons.arrow_forward, color: ConfigColor.orange),
           () => _launchUrl("https://mytiki.com/roadmap")),
+        ), onTap: () =>_launchUrl("https://mytiki.com/roadmap")
     );
   }
 

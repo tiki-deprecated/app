@@ -34,7 +34,9 @@ class _AnimatedCardContainerState extends State<AnimatedCardContainer>
         constraints: BoxConstraints(
           minHeight: widget.constraints.maxHeight,
         ),
-        color: ConfigColor.mardiGras,
+        color: Colors.transparent,
+        child:  ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         child: SingleChildScrollView(
             child: Column(
           children: [
@@ -71,6 +73,6 @@ class _AnimatedCardContainerState extends State<AnimatedCardContainer>
             CardContent(widget.constraints, controller,
                 cardContentData: widget.cardData)
           ],
-        )));
+        ))));
   }
 }

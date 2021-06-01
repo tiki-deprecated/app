@@ -15,6 +15,7 @@ class CardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: ConfigColor.mardiGras,
         child: Column(children: [
       Container(
           margin: EdgeInsets.only(left: 25, right: 40, top: 25, bottom: 25),
