@@ -4,21 +4,17 @@
  */
 
 import 'dart:convert';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asn1.dart';
 import 'package:pointycastle/asymmetric/api.dart';
-import 'package:pointycastle/digests/sha3.dart';
-import 'package:pointycastle/ecc/api.dart';
-import 'package:pointycastle/ecc/curves/secp256r1.dart';
+import 'package:pointycastle/export.dart';
 import 'package:pointycastle/key_generators/api.dart';
-import 'package:pointycastle/key_generators/ec_key_generator.dart';
 import 'package:pointycastle/key_generators/rsa_key_generator.dart';
-import 'package:pointycastle/random/fortuna_random.dart';
 
+<<<<<<< Updated upstream:lib/src/utils/helper/helper_crypto.dart
 class HelperCrypto {
   static String encodeECDSAPublic(ECPublicKey publicKey) {
     ASN1Sequence sequence = ASN1Sequence();
@@ -59,7 +55,11 @@ class HelperCrypto {
     sequence.encode();
     return base64.encode(sequence.encodedBytes!);
   }
+=======
+import 'helper_crypto.dart';
+>>>>>>> Stashed changes:lib/src/utils/helper/crypto/helper_crypto_rsa.dart
 
+class HelperCryptoRsa {
   static String encodeRSAPublic(RSAPublicKey publicKey) {
     ASN1Sequence sequence = ASN1Sequence();
     ASN1Sequence algorithm = ASN1Sequence();
@@ -127,6 +127,7 @@ class HelperCrypto {
     return base64.encode(sequence.encodedBytes!);
   }
 
+<<<<<<< Updated upstream:lib/src/utils/helper/helper_crypto.dart
   static String sha3(String raw) {
     final SHA3Digest sha3256 = SHA3Digest(256);
     Uint8List hash = sha3256.process(utf8.encode(raw) as Uint8List);
@@ -138,39 +139,20 @@ class HelperCrypto {
     return await compute(_createECDSA, "").then((keyPair) => keyPair);
   }
 
+=======
+>>>>>>> Stashed changes:lib/src/utils/helper/crypto/helper_crypto_rsa.dart
   static Future<AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>>
       createRSA() async {
     return await compute(_createRSA, "").then((keyPair) => keyPair);
-  }
-
-  static AsymmetricKeyPair<ECPublicKey, ECPrivateKey> _createECDSA(var dummy) {
-    final ECKeyGeneratorParameters keyGeneratorParameters =
-        ECKeyGeneratorParameters(ECCurve_secp256r1());
-    ECKeyGenerator ecKeyGenerator = ECKeyGenerator();
-    ecKeyGenerator
-        .init(ParametersWithRandom(keyGeneratorParameters, _secureRandom()));
-    AsymmetricKeyPair<PublicKey, PrivateKey> keyPair =
-        ecKeyGenerator.generateKeyPair();
-    return AsymmetricKeyPair<ECPublicKey, ECPrivateKey>(
-        keyPair.publicKey as ECPublicKey, keyPair.privateKey as ECPrivateKey);
   }
 
   static AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> _createRSA(var dummy) {
     final keyGen = RSAKeyGenerator()
       ..init(ParametersWithRandom(
           RSAKeyGeneratorParameters(BigInt.parse('65537'), 2048, 64),
-          _secureRandom()));
+          HelperCrypto.secureRandom()));
     AsymmetricKeyPair<PublicKey, PrivateKey> keyPair = keyGen.generateKeyPair();
     return AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>(
         keyPair.publicKey as RSAPublicKey, keyPair.privateKey as RSAPrivateKey);
-  }
-
-  static FortunaRandom _secureRandom() {
-    var secureRandom = new FortunaRandom();
-    var random = new Random.secure();
-    final seeds = <int>[];
-    for (int i = 0; i < 32; i++) seeds.add(random.nextInt(255));
-    secureRandom.seed(new KeyParameter(new Uint8List.fromList(seeds)));
-    return secureRandom;
   }
 }
