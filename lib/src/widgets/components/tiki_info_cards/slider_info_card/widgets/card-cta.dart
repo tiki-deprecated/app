@@ -1,6 +1,5 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CardCta extends StatelessWidget {
   final Map cardCtaArgs;

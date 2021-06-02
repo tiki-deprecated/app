@@ -2,6 +2,7 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app/src/utils/platform/platform_relative_size.dart';
 
 class Cover extends AnimatedWidget {
   final maxHeight;
@@ -20,13 +21,17 @@ class Cover extends AnimatedWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
-        height: _calculateAnimation(maxHeight, _controllerValue.value, 150),
-        padding: EdgeInsets.only(left: 25, top: 16, right: 16, bottom: 16),
+        height: _calculateAnimation(maxHeight, _controllerValue.value, PlatformRelativeSize.blockVertical*17.5),
+        padding: EdgeInsets.only(
+            left: PlatformRelativeSize.blockVertical*2.9,
+            top: PlatformRelativeSize.blockVertical*1.9,
+            right: PlatformRelativeSize.blockVertical*1.9,
+            bottom:  PlatformRelativeSize.blockVertical*1.9),
         child: Stack(fit: StackFit.expand, children: [
           Align(
               alignment: Alignment.topCenter,
               child: Container(
-                  height: _calculateAnimation(60, _controllerValue.value, 0),
+                  height: _calculateAnimation( PlatformRelativeSize.blockVertical*7, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: 1 - _controllerValue.value,
                       child: this.coverData['topHeader']))),
@@ -34,32 +39,32 @@ class Cover extends AnimatedWidget {
               alignment: Alignment(_controllerValue.value, -1),
               child: Padding(
                   padding: EdgeInsets.only(
-                      top: _calculateAnimation(50, _controllerValue.value, 0)),
+                      top: _calculateAnimation( PlatformRelativeSize.blockVertical*5.8, _controllerValue.value, 0)),
                   child: HelperImage(this.coverData['image'],
                       width: _calculateAnimation(
-                          300, _controllerValue.value, 170)))),
+                          PlatformRelativeSize.blockHorizontal*72.91, _controllerValue.value,  PlatformRelativeSize.blockVertical*19.7)))),
           Positioned(
-              top: 330,
+              top:  PlatformRelativeSize.blockVertical*38.34,
               child: Container(
-                  height: _calculateAnimation(60, _controllerValue.value, 0),
+                  height: _calculateAnimation( PlatformRelativeSize.blockVertical*7, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: _controllerValue.value * 2 <= 1
                           ? 1 - (_controllerValue.value * 2)
                           : 0,
                       child: Container(
                           height: _calculateAnimation(
-                              60, _controllerValue.value, 0),
+                              6.98, _controllerValue.value, 0),
                           margin: EdgeInsets.only(bottom: 10),
                           width: double.maxFinite,
                           child: Text(this.coverData['subtitle'],
                               style: TextStyle(
                                   color: ConfigColor.orange,
-                                  fontSize: 20,
+                                  fontSize:  PlatformRelativeSize.blockVertical*2.3,
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "NunitoSans")))))),
           Padding(
               padding: EdgeInsets.only(
-                  top: _calculateAnimation(370, _controllerValue.value, 20)),
+                  top: _calculateAnimation( PlatformRelativeSize.blockVertical*43, _controllerValue.value,  PlatformRelativeSize.blockVertical*2.32)),
               child: Align(
                   alignment: Alignment(
                     -_controllerValue.value,
@@ -69,7 +74,7 @@ class Cover extends AnimatedWidget {
                       width: _calculateAnimation(
                           MediaQuery.of(context).size.width,
                           _controllerValue.value,
-                          170),
+                          PlatformRelativeSize.blockHorizontal*41),
                       child: RichText(
                           textAlign: TextAlign.left,
                           text: TextSpan(
@@ -78,7 +83,7 @@ class Cover extends AnimatedWidget {
                                   height: 1,
                                   fontFamily: "Koara",
                                   fontSize: _calculateAnimation(
-                                      45, _controllerValue.value, 25),
+                                      PlatformRelativeSize.blockVertical*5.23, _controllerValue.value,  PlatformRelativeSize.blockVertical*2.9),
                                   fontWeight: FontWeight.bold),
                               text: this.coverData['bigTextLighter'],
                               children: [
@@ -89,30 +94,30 @@ class Cover extends AnimatedWidget {
                                         height: 1,
                                         fontFamily: "Koara",
                                         fontSize: _calculateAnimation(
-                                            45, _controllerValue.value, 25),
+                                            PlatformRelativeSize.blockVertical*5.23, _controllerValue.value,  PlatformRelativeSize.blockVertical*2.9),
                                         fontWeight: FontWeight.bold))
                               ]))))),
           Padding(
               padding: EdgeInsets.only(
-                top: 500,
+                top:  PlatformRelativeSize.blockVertical*58,
               ),
               child: Opacity(
                   opacity: _controllerValue.value * 3 <= 1
                       ? 1 - (_controllerValue.value * 3)
                       : 0,
                   child: Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: EdgeInsets.only(top:  PlatformRelativeSize.blockVertical*1.16),
                       width: double.maxFinite,
                       child: Text(this.coverData['subText'],
                           style: TextStyle(
                               color: ConfigColor.tikiBlue,
                               fontFamily: "NunitoSans",
-                              fontSize: 18,
+                              fontSize:  PlatformRelativeSize.blockVertical*2.09,
                               fontWeight: FontWeight.w600))))),
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  height: _calculateAnimation(60, _controllerValue.value, 0),
+                  height: _calculateAnimation( PlatformRelativeSize.blockVertical*6.98, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: _controllerValue.value * 2 <= 1
                           ? 1 - (_controllerValue.value * 2)
@@ -123,7 +128,7 @@ class Cover extends AnimatedWidget {
                         padding: EdgeInsets.only(bottom: 16),
                         child: HelperImage(
                           "arrow-up",
-                          width: 60,
+                          width: PlatformRelativeSize.blockHorizontal*14.5,
                         ),
                       ))))
         ]));

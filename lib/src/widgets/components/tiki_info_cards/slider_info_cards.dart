@@ -3,7 +3,6 @@ import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/slid
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SliderInfoCards extends StatelessWidget {
   final List<SliderInfoCard> cards;

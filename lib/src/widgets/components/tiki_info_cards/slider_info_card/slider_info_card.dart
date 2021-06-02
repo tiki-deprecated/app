@@ -1,11 +1,6 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/animated_card_container.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/card-content.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SliderInfoCard extends StatelessWidget {
   final Map coverData;

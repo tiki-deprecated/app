@@ -1,5 +1,6 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/card-cta.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,11 @@ class CardContent extends StatelessWidget {
       color: ConfigColor.mardiGras,
         child: Column(children: [
       Container(
-          margin: EdgeInsets.only(left: 25, right: 40, top: 25, bottom: 25),
+          margin: EdgeInsets.only(
+            left: PlatformRelativeSize.blockVertical*2.9,
+            top: PlatformRelativeSize.blockVertical*1.9,
+            right: PlatformRelativeSize.blockVertical*1.9,
+            bottom:  PlatformRelativeSize.blockVertical*1.9),
           child: this.cardContentData['cardContentData']
               ['richTextExplanation']),
       _whatTheySay(),

@@ -1,4 +1,3 @@
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 
 import 'card-content.dart';
@@ -65,11 +64,13 @@ class _AnimatedCardContainerState extends State<AnimatedCardContainer>
                   controller.animateTo(0, curve: Curves.easeOut);
                 }
               },
-              child: Cover(
+              child: Container(child:GestureDetector(
+                onTap: () => controller.value == 1 ? controller.animateTo(0) : null,
+                child: Cover(
                   controller: controller,
                   maxHeight: widget.constraints.maxHeight,
                   coverData: widget.coverData),
-            ),
+            ))),
             CardContent(widget.constraints, controller,
                 cardContentData: widget.cardData)
           ],
