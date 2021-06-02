@@ -44,7 +44,7 @@ class Cover extends AnimatedWidget {
                       width: _calculateAnimation(
                           PlatformRelativeSize.blockHorizontal*72.91, _controllerValue.value,  PlatformRelativeSize.blockVertical*19.7)))),
           Positioned(
-              top:  PlatformRelativeSize.blockVertical*38.34,
+              top:  PlatformRelativeSize.blockVertical*40,
               child: Container(
                   height: _calculateAnimation( PlatformRelativeSize.blockVertical*7, _controllerValue.value, 0),
                   child: Opacity(
@@ -64,7 +64,7 @@ class Cover extends AnimatedWidget {
                                   fontFamily: "NunitoSans")))))),
           Padding(
               padding: EdgeInsets.only(
-                  top: _calculateAnimation( PlatformRelativeSize.blockVertical*43, _controllerValue.value,  PlatformRelativeSize.blockVertical*2.32)),
+                  top: _calculateAnimation( PlatformRelativeSize.blockVertical*44, _controllerValue.value,  PlatformRelativeSize.blockVertical*2.32)),
               child: Align(
                   alignment: Alignment(
                     -_controllerValue.value,
@@ -99,7 +99,7 @@ class Cover extends AnimatedWidget {
                               ]))))),
           Padding(
               padding: EdgeInsets.only(
-                top:  PlatformRelativeSize.blockVertical*58,
+                top:  PlatformRelativeSize.blockVertical*59,
               ),
               child: Opacity(
                   opacity: _controllerValue.value * 3 <= 1
