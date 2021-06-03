@@ -26,7 +26,7 @@ class AddedState extends AddEmailState {
   AddedState(this.currentUser);
 
   @override
-  List<Object> get props => [currentUser!];
+  List<Object?> get props => [currentUser];
 }
 
 class ErrorState extends AddEmailState {
