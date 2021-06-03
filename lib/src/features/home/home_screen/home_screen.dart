@@ -105,9 +105,13 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
           child: HomeScreenLogout()),
+      Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
+          child: Text("v0.1.1",style: TextStyle(color:Colors.grey)),
+      )
     ];
   }
-
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(

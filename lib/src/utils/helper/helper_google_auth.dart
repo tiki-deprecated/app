@@ -13,8 +13,8 @@ class HelperGoogleAuth {
   GoogleSignInAccount? currentUser;
 
   connect() async {
-    currentUser = await _googleSignIn.signInSilently() ?? await _handleSignIn();
-    print("google sign In " + (currentUser?.email ?? "não autenticado"));
+    currentUser = await _handleSignIn();
+    return currentUser;
   }
 
   getConnectedUser() async {
@@ -34,10 +34,9 @@ class HelperGoogleAuth {
     }
   }
 
-  Future<void> handleSignOut() async {
-    print(await _googleSignIn.isSignedIn());
+  Future<bool> handleSignOut() async {
     await _googleSignIn.signOut();
-    print(await _googleSignIn.isSignedIn());
+    return ! await _googleSignIn.isSignedIn();
   }
 
   isConnected() {
