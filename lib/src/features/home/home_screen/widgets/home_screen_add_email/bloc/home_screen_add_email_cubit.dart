@@ -7,22 +7,12 @@ class AddEmailCubit extends Cubit<AddEmailState> {
   AddEmailCubit() : super(InitialState());
 
   void addAccount() async {
-    try {
-      emit(AddingState());
       GoogleSignInAccount? googleAccount = await HelperGoogleAuth().connect();
-      emit(AddedState(googleAccount));
-    } catch (e) {
-      emit(ErrorState());
-    }
+      if(googleAccount != null) emit(AddedState(googleAccount));
   }
 
   void removeAccount() async {
-    try {
-      await HelperGoogleAuth().handleSignOut();
-      print("signout");
-      emit(InitialState());
-    } catch (e) {
-      emit(ErrorState());
-    }
+      var result = await HelperGoogleAuth().handleSignOut();
+      if(result) emit(InitialState());
   }
 }

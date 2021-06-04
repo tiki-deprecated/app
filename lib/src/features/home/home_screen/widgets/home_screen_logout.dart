@@ -21,7 +21,7 @@ class HomeScreenLogout extends StatelessWidget {
       fontSize: 4,
       fontWeight: FontWeight.bold,
       color: ConfigColor.grenadier,
-      trailing: HelperImage("icon-logout"),
+      trailing: Padding(padding:EdgeInsets.only(left:16),child:HelperImage("icon-logout")),
     );
   }
 
