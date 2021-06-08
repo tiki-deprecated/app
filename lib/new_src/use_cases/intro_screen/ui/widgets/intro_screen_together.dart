@@ -9,10 +9,10 @@ import 'package:flutter/widgets.dart';
 import '../intro_screen.dart';
 
 class IntroScreenTogether extends IntroScreen {
-  static const String _title = "We're stronger together";
+  static const String _title = "";
   static const String _subtitle =
-      "You are now part of the TIKI tribe! I’m Tiki and I am here to help you take back your share.";
-  static const String _button = "GET STARTED";
+      "";
+  static const String _button = "";
 
   IntroScreenTogether()
       : super(ConfigColor.macaroniAndCheese, _title, _subtitle, _button, 2);

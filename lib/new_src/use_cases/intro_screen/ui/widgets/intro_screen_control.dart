@@ -9,20 +9,16 @@ import 'package:flutter/widgets.dart';
 
 import '../intro_screen.dart';
 
-class IntroScreenEarn extends IntroScreen {
-  static const String _title = "Start earning money";
-  static const String _subtitle =
-      "You can also choose to earn money from your data. This is optional.";
-  static const String _button = "NEXT";
+class IntroScreenControl extends IntroScreen {
 
-  IntroScreenEarn()
-      : super(ConfigColor.kournikova, _title, _subtitle, _button, 1);
+  IntroScreenControl()
+      : super(ConfigColor.sunglow, _title, _subtitle, _button, 0);
 
   @override
   void onButtonPressed(BuildContext context) {
     Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation1, animation2) =>
-            ConfigNavigate.screen.introTogether,
+            ConfigNavigate.screen.introEarn,
         transitionDuration: Duration(seconds: 0),
         reverseTransitionDuration: Duration(seconds: 0)));
   }
@@ -30,6 +26,5 @@ class IntroScreenEarn extends IntroScreen {
   @override
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
     if (dragEndDetails.primaryVelocity! < 0) onButtonPressed(context);
-    if (dragEndDetails.primaryVelocity! > 0) Navigator.of(context).pop();
   }
 }
