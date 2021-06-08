@@ -1,4 +1,4 @@
-import 'package:app/new_src/use_cases/intro_screen/model/intro_slide_model.dart';
+import 'package:app/new_src/use_cases/intro_screen/model/intro_screen_model_slide.dart';
 
 import '../../../model.dart';
 
