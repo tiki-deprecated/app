@@ -19,11 +19,19 @@ class IntroScreenModel extends Model {
     return _slides[_currentSlide];
   }
 
-  getNextSlide(){
+  getCurrentSlideIndex(){
+    return _currentSlide;
+  }
+
+  moveToNextSlide(){
     return _slides[++_currentSlide];
   }
 
-  getPreviousSlide(){
+  moveToPreviousSlide(){
     return _slides[--_currentSlide];
+  }
+
+  getTotalSlides() {
+    return _slides.length;
   }
 }
