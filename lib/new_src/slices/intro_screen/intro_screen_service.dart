@@ -1,7 +1,6 @@
 import 'package:app/src/config/config_navigate.dart';
 import 'package:flutter/material.dart';
 
-import '../../use_case.dart';
 import 'intro_screen_controller.dart';
 import 'intro_screen_presenter.dart';
 import 'model/intro_screen_model.dart';
@@ -9,15 +8,15 @@ import 'model/intro_screen_model_slide.dart';
 import 'res/intro_slides_colors.dart' as introSlidesColors;
 import 'res/intro_slides_strings.dart' as introSlidesStrings;
 
-class IntroScreenUseCase extends UseCase {
-  late IntroScreenPresenter _presenter;
-  late IntroScreenModel _model;
-  late IntroScreenController _controller;
+class IntroScreenService extends ChangeNotifier {
+  late IntroScreenPresenter presenter;
+  late IntroScreenModel model;
+  late IntroScreenController controller;
 
-  IntroScreenUseCase() {
-    _presenter = IntroScreenPresenter();
-    _model = IntroScreenModel();
-    _controller = IntroScreenController(this);
+  IntroScreenService() {
+    presenter = IntroScreenPresenter(this);
+    model = IntroScreenModel();
+    controller = IntroScreenController();
     this.createSlidesData();
   }
 
@@ -26,26 +25,28 @@ class IntroScreenUseCase extends UseCase {
   /// Creates the [IntroSlideModel]s that will be used in [IntroScreenModel].
   createSlidesData() {
     introSlidesStrings.slides.toList().asMap().forEach((index, strings) {
-      var slide = IntroSlideModel(
+      var slide = IntroScreenModelSlide(
           title: strings['title'],
           subtitle: strings['subtitle'],
           button: strings['button'],
           backgroundColor: introSlidesColors.colors[index]);
-      _model.addSlide(slide);
+      model.addSlide(slide);
     });
+    notifyListeners();
   }
 
   getUI() {
-    return _presenter.render(_controller, _model);
+    return presenter.render();
   }
 
   void moveToNextScreen(context) {
-    _model.moveToNextSlide();
+    model.moveToNextSlide();
     var slider = this.getUI();
     Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation1, animation2) => slider,
         transitionDuration: Duration(seconds: 0),
         reverseTransitionDuration: Duration(seconds: 0)));
+    notifyListeners();
   }
 
   void skipToLogin(context) {
@@ -53,6 +54,6 @@ class IntroScreenUseCase extends UseCase {
   }
 
   bool isLastSlide() {
-    return _model.getCurrentSlideIndex() == _model.getTotalSlides();
+    return model.getCurrentSlideIndex() == model.getTotalSlides();
   }
 }

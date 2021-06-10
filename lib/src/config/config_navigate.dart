@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/new_src/use_cases/intro_screen/intro_screen_use_case.dart';
+import 'package:app/new_src/slices/intro_screen/intro_screen_service.dart';
 import 'package:app/src/entry.dart';
 import 'package:app/src/features/home/home_screen/home_screen.dart';
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
@@ -56,7 +56,7 @@ class _ConfigNavigatePath {
 }
 
 class _ConfigNavigateScreen {
-  final Widget introControl = IntroScreenUseCase().getUI();
+  final Widget introControl = IntroScreenService().getUI();
 
   final Widget loginEmail = LoginEmailScreen();
   final Widget loginInbox = LoginInboxScreen();

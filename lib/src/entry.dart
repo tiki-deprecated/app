@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/new_src/use_cases/intro_screen/intro_screen_use_case.dart';
+import 'package:app/new_src/slices/intro_screen/intro_screen_service.dart';
 import 'package:app/src/features/home/home_screen/home_screen.dart';
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
 import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen.dart';
@@ -34,7 +34,7 @@ class Entry extends StatelessWidget {
         return LoginEmailScreen();
       }
     } else {
-      return IntroScreenUseCase().getUI();
+      return IntroScreenService().getUI();
     }
   }
 }
