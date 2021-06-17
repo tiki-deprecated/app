@@ -3,11 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/new_src/slices/intro_screen/intro_screen_service.dart';
 import 'package:app/src/entry.dart';
 import 'package:app/src/features/home/home_screen/home_screen.dart';
-import 'package:app/src/features/intro/intro_screen/widgets/intro_screen_control.dart';
-import 'package:app/src/features/intro/intro_screen/widgets/intro_screen_earn.dart';
-import 'package:app/src/features/intro/intro_screen/widgets/intro_screen_together.dart';
 import 'package:app/src/features/keys/keys_new_screen/keys_new_screen.dart';
 import 'package:app/src/features/keys/keys_restore_screen/keys_restore_screen.dart';
 import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen.dart';
@@ -28,8 +26,6 @@ class ConfigNavigate {
     return {
       path.entry: (BuildContext context) => Entry(helperLogIn),
       path.introControl: (BuildContext context) => screen.introControl,
-      path.introEarn: (BuildContext context) => screen.introEarn,
-      path.introTogether: (BuildContext context) => screen.introTogether,
       path.loginEmail: (BuildContext context) => screen.loginEmail,
       path.loginInbox: (BuildContext context) => screen.loginInbox,
       path.loginOtp: (BuildContext context) => screen.loginOtp,
@@ -60,9 +56,7 @@ class _ConfigNavigatePath {
 }
 
 class _ConfigNavigateScreen {
-  final Widget introControl = IntroScreenControl();
-  final Widget introEarn = IntroScreenEarn();
-  final Widget introTogether = IntroScreenTogether();
+  final Widget introControl = IntroScreenService().getUI();
 
   final Widget loginEmail = LoginEmailScreen();
   final Widget loginInbox = LoginInboxScreen();
