@@ -1,4 +1,4 @@
-import 'package:app/src/config/config_navigate.dart';
+
 import 'package:flutter/material.dart';
 
 import 'intro_screen_controller.dart';
@@ -8,6 +8,7 @@ import 'model/intro_screen_model_slide.dart';
 import 'res/intro_slides_colors.dart' as introSlidesColors;
 import 'res/intro_slides_strings.dart' as introSlidesStrings;
 
+/// The Intro Screen for the first time the app is opened in the device.
 class IntroScreenService extends ChangeNotifier {
   late IntroScreenPresenter presenter;
   late IntroScreenModel model;
@@ -50,7 +51,8 @@ class IntroScreenService extends ChangeNotifier {
   }
 
   void skipToLogin(context) {
-    Navigator.of(context).pushNamed(ConfigNavigate.path.loginEmail);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', ModalRoute.withName('/login'));
   }
 
   bool isLastSlide() {

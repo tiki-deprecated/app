@@ -21,6 +21,4 @@ class IntroScreenController{
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
     if (dragEndDetails.primaryVelocity! < 0) navigateToNextScreen(context);
   }
-
-
 }

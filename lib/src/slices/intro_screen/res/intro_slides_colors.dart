@@ -1,4 +1,4 @@
-import 'package:app/src/config/config_color.dart';
+import 'package:app/src/utils/config/config_color.dart';
 
 const colors = [
   ConfigColor.sunglow,
