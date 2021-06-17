@@ -12,7 +12,7 @@ import 'package:app/src/utils/helper/helper_headers.dart';
 import 'package:http/http.dart' as http;
 
 class RepoApiWebsiteUsers {
-  static const String _path = '/0-0-3/signup/count';
+  static const String _path = '/api/0-1-0/user';
 
   Future<HelperApiRsp<RepoApiWebsiteUsersRsp>> total() async {
     http.Response rsp = await http.get(
