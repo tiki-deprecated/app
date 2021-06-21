@@ -1,8 +1,3 @@
-import 'package:app/src/app.dart';
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/features/repo/repo_local_db/repo_local_db.dart';
-import 'package:app/src/utils/analytics/tiki_analytics.dart';
-import 'package:app/src/utils/helper/helper_log_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,21 +18,22 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 /// [TikiDatabase] SQLite connector
 /// [SentryFlutter] enables Sentry.io monitoring in the app.
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  TikiAnalytics.getLogger();
-  await SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp],
-  );
-  await Firebase.initializeApp();
-  FlutterSecureStorage secureStorage = FlutterSecureStorage();
-  HelperLogIn helperLogIn = HelperLogIn.auto(secureStorage);
-  await helperLogIn.load();
-  await TikiDatabase.instance!.database;
+  await initializeDependencies();
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn
         ..environment = ConfigSentry.environment
         ..release = (await PackageInfo.fromPlatform()).version
         ..sendDefaultPii = false,
-      appRunner: () => runApp(App(helperLogIn)));
+      appRunner: () => runApp(AppService().getUI()));
+}
+
+Future<void> initializeDependencies() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  TikiAnalytics.getLogger();
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  );
+  await Firebase.initializeApp();
+  await TikiDatabase.instance!.database;
 }

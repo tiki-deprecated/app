@@ -14,26 +14,25 @@ import 'package:app/src/features/repo/repo_local_ss_user/repo_local_ss_user_mode
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HelperLogIn {
-  final RepoLocalSsCurrent _repoLocalSsCurrent;
-  final RepoLocalSsUser _repoLocalSsUser;
-  final RepoLocalSsKeys _repoLocalSsKeys;
-  final RepoLocalSsToken _repoLocalSsToken;
-
+  late RepoLocalSsCurrent _repoLocalSsCurrent;
+  late RepoLocalSsUser _repoLocalSsUser;
+  late RepoLocalSsKeys _repoLocalSsKeys;
+  late RepoLocalSsToken _repoLocalSsToken;
+  late FlutterSecureStorage secureStorage;
   late RepoLocalSsCurrentModel current;
+
   RepoLocalSsUserModel? user;
   RepoLocalSsKeysModel? keys;
   RepoLocalSsTokenModel? token;
 
-  HelperLogIn(this._repoLocalSsCurrent, this._repoLocalSsUser,
-      this._repoLocalSsKeys, this._repoLocalSsToken);
+  HelperLogIn() : secureStorage = FlutterSecureStorage() {
+    _repoLocalSsCurrent = RepoLocalSsCurrent(secureStorage: secureStorage);
+    _repoLocalSsUser = RepoLocalSsUser(secureStorage: secureStorage);
+    _repoLocalSsKeys = RepoLocalSsKeys(secureStorage: secureStorage);
+    _repoLocalSsToken = RepoLocalSsToken(secureStorage: secureStorage);
+  }
 
-  HelperLogIn.auto(FlutterSecureStorage secureStorage)
-      : _repoLocalSsCurrent = RepoLocalSsCurrent(secureStorage: secureStorage),
-        _repoLocalSsUser = RepoLocalSsUser(secureStorage: secureStorage),
-        _repoLocalSsKeys = RepoLocalSsKeys(secureStorage: secureStorage),
-        _repoLocalSsToken = RepoLocalSsToken(secureStorage: secureStorage);
-
-  Future<void> load() async {
+  Future<HelperLogIn> load() async {
     current = await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
     if (current.email != null) {
       user = await _repoLocalSsUser.find(current.email!);
@@ -41,6 +40,7 @@ class HelperLogIn {
         keys = await _repoLocalSsKeys.find(user!.address!);
       token = await _repoLocalSsToken.find(current.email!);
     }
+    return this;
   }
 
   bool isReturning() {
