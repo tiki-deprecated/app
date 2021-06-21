@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/helper/helper_log_in.dart';
+import 'package:app/src/slices/app/helper_log_in.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -11,7 +11,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app_controller.dart';
 import 'app_presenter.dart';
 import 'model/app_model.dart';
-import 'model/app_routes.dart';
+import 'model/app_model_routes.dart';
 
 class AppService extends ChangeNotifier{
 
@@ -41,8 +41,8 @@ class AppService extends ChangeNotifier{
   getRoutes() {
     return {
       "/": getHome(),
-      "/login": AppRoutes.login,
-      "/keys/new": AppRoutes.keys,
+      "/login": AppModelRoutes.login,
+      "/keys/new": AppModelRoutes.keys,
     };
   }
 
@@ -51,12 +51,12 @@ class AppService extends ChangeNotifier{
       _handle(this.deepLink!);
     }else if (helperLogIn.isReturning()) {
       if (helperLogIn.isLoggedIn()) {
-        return AppRoutes.home;
+        return AppModelRoutes.home;
       } else {
-        return AppRoutes.login;
+        return AppModelRoutes.login;
       }
     } else {
-      return AppRoutes.intro;
+      return AppModelRoutes.intro;
     }
   }
 
