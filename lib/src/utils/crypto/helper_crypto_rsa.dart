@@ -13,15 +13,9 @@ import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/export.dart';
 import 'package:pointycastle/key_generators/api.dart';
 import 'package:pointycastle/key_generators/rsa_key_generator.dart';
-<<<<<<< Updated upstream
 import 'helper_crypto.dart';
 
 class HelperCryptoRsa {
-=======
-
-<<<<<<< Updated upstream:lib/src/utils/helper/helper_crypto.dart
-class HelperCrypto {
->>>>>>> Stashed changes
   static String encodeECDSAPublic(ECPublicKey publicKey) {
     ASN1Sequence sequence = ASN1Sequence();
     ASN1Sequence algorithm = ASN1Sequence();
@@ -61,15 +55,7 @@ class HelperCrypto {
     sequence.encode();
     return base64.encode(sequence.encodedBytes!);
   }
-<<<<<<< Updated upstream
 
-=======
-=======
-import 'helper_crypto.dart';
->>>>>>> Stashed changes:lib/src/utils/helper/crypto/helper_crypto_rsa.dart
-
-class HelperCryptoRsa {
->>>>>>> Stashed changes
   static String encodeRSAPublic(RSAPublicKey publicKey) {
     ASN1Sequence sequence = ASN1Sequence();
     ASN1Sequence algorithm = ASN1Sequence();
@@ -137,23 +123,6 @@ class HelperCryptoRsa {
     return base64.encode(sequence.encodedBytes!);
   }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream:lib/src/utils/helper/helper_crypto.dart
-  static String sha3(String raw) {
-    final SHA3Digest sha3256 = SHA3Digest(256);
-    Uint8List hash = sha3256.process(utf8.encode(raw) as Uint8List);
-    return hash.map((b) => '${b.toRadixString(16).padLeft(2, '0')}').join("");
-  }
-
-  static Future<AsymmetricKeyPair<ECPublicKey, ECPrivateKey>>
-      createECDSA() async {
-    return await compute(_createECDSA, "").then((keyPair) => keyPair);
-  }
-
-=======
->>>>>>> Stashed changes:lib/src/utils/helper/crypto/helper_crypto_rsa.dart
->>>>>>> Stashed changes
   static Future<AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>>
       createRSA() async {
     return await compute(_createRSA, "").then((keyPair) => keyPair);
