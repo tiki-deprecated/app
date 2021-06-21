@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/config/config_color.dart';
+import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/helper/helper_image.dart';
+import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
