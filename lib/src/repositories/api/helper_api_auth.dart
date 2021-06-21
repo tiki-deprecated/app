@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/repositories/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt.dart';
 import 'package:app/src/repositories/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_req_refresh.dart';
 import 'package:app/src/repositories/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_rsp.dart';
