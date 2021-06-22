@@ -28,7 +28,8 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
       : super(KeysReferralInitial());
 
   KeysReferralCubit.provide(BuildContext context)
-      : _repoLocalSsUser = RepositoryProvider.of<SecureStorageRepositoryUser>(context),
+      : _repoLocalSsUser =
+            RepositoryProvider.of<SecureStorageRepositoryUser>(context),
         _secureStorageRepositoryCurrent =
             RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         _repoApiBlockchainAddress =
@@ -41,8 +42,8 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
 
   Future<void> getLink() async {
     if (state.link == null) {
-      AppModelCurrent current =
-          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+      AppModelCurrent current = await _secureStorageRepositoryCurrent
+          .find(SecureStorageRepositoryCurrent.key);
       AppModelUser user = await _repoLocalSsUser.find(current.email!);
       if (user.referral == null) {
         final DynamicLinkParameters parameters = DynamicLinkParameters(
@@ -78,8 +79,8 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
   }
 
   Future<void> getCount() async {
-    AppModelCurrent current =
-        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+    AppModelCurrent current = await _secureStorageRepositoryCurrent
+        .find(SecureStorageRepositoryCurrent.key);
     AppModelUser user = await _repoLocalSsUser.find(current.email!);
     HelperApiRsp<RepoApiBlockchainAddressReferRsp> apiRsp =
         await _repoApiBlockchainAddress.referCount(user.address);

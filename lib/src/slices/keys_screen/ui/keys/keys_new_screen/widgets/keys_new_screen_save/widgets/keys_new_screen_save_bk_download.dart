@@ -67,8 +67,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
           //     state.dataPrivate! +
           //     "." +
           //     state.signPrivate!;
-          return KeysNewScreenSaveDialogDownload()
-              .alert(keyData, repaintKey);
+          return KeysNewScreenSaveDialogDownload().alert(keyData, repaintKey);
         });
   }
 }

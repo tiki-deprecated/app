@@ -36,9 +36,12 @@ class LoginOtpValidBloc extends Bloc<LoginOtpValidEvent, LoginOtpValidState> {
 
   LoginOtpValidBloc.provide(BuildContext context)
       : _repoApiBouncerJwt = RepositoryProvider.of<RepoApiBouncerJwt>(context),
-        _repoLocalSsOtp = RepositoryProvider.of<SecureStorageRepositoryOtp>(context),
-        _repoLocalSsToken = RepositoryProvider.of<SecureStorageRepositoryToken>(context),
-        _repoLocalSsUser = RepositoryProvider.of<SecureStorageRepositoryUser>(context),
+        _repoLocalSsOtp =
+            RepositoryProvider.of<SecureStorageRepositoryOtp>(context),
+        _repoLocalSsToken =
+            RepositoryProvider.of<SecureStorageRepositoryToken>(context),
+        _repoLocalSsUser =
+            RepositoryProvider.of<SecureStorageRepositoryUser>(context),
         super(LoginOtpValidInitial());
 
   @override

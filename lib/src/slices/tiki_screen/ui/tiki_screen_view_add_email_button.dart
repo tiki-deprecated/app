@@ -99,13 +99,13 @@ class AddGmailButton extends StatelessWidget {
 
   Widget _addButton(context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
-      ),
-      child: GestureDetector(
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
+        ),
+        child: GestureDetector(
           child: Row(children: [
             HelperImage(
               "add-email",
@@ -125,18 +125,18 @@ class AddGmailButton extends StatelessWidget {
             )
           ]),
           //onTap: () => _addGmail(context)), //_whatGmailHolds(context)),
-    ));
+        ));
   }
 
   Widget _seeButton(context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
-      ),
-      child: GestureDetector(
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          //boxShadow: [BoxShadow(offset: Offset(4,4), blurRadius: 20, color:Color(0x33000000))]
+        ),
+        child: GestureDetector(
           child: Row(children: [
             HelperImage(
               "eye-added-email",
@@ -156,7 +156,7 @@ class AddGmailButton extends StatelessWidget {
             )
           ]),
           //onTap: () => _whatGmailHolds(context)),
-    ));
+        ));
   }
 
   List<SliderInfoCard> createCards() {
@@ -165,11 +165,8 @@ class AddGmailButton extends StatelessWidget {
         'topHeader': Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
               child: Row(children: [
-            HelperImage("gmail-round-logo",
-                width: 6.w),
-            Padding(
-                padding: EdgeInsets.only(
-                    right: 2.w)),
+            HelperImage("gmail-round-logo", width: 6.w),
+            Padding(padding: EdgeInsets.only(right: 2.w)),
             Text(
               "Your Gmail account",
               style: TextStyle(
@@ -284,8 +281,7 @@ class AddGmailButton extends StatelessWidget {
                                 style: TextStyle(
                                     color: ConfigColor.orange,
                                     fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        2.sp,
+                                    fontSize: 2.sp,
                                     fontFamily: "NunitoSans"),
                                 text: "encrypted email service",
                                 children: [

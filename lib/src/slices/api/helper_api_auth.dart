@@ -35,8 +35,8 @@ class HelperApiAuth {
       Future<HelperApiRsp<T>> Function() request) async {
     HelperApiRsp<T> rsp = await request();
     if (rsp.code == 401) {
-      AppModelCurrent current =
-          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+      AppModelCurrent current = await _secureStorageRepositoryCurrent
+          .find(SecureStorageRepositoryCurrent.key);
       LoginScreenModelToken token =
           await _repoLocalSsToken.find(current.email!);
       if (token.refresh == null) {
@@ -63,8 +63,8 @@ class HelperApiAuth {
   }
 
   Future<String?> bearer() async {
-    AppModelCurrent current =
-        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+    AppModelCurrent current = await _secureStorageRepositoryCurrent
+        .find(SecureStorageRepositoryCurrent.key);
     LoginScreenModelToken token = await _repoLocalSsToken.find(current.email!);
     return token.bearer;
   }

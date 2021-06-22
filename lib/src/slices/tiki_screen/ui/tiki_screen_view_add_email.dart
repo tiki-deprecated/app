@@ -8,14 +8,12 @@ class TikiScreenViewAddEmail extends StatelessWidget {
 }
 
 class TikiScreenViewAddEmailButton extends StatelessWidget {
-
   const TikiScreenViewAddEmailButton();
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: _addEmail(),
-        child: true ? Text("Add") : Text("Remove"));
+        onPressed: _addEmail(), child: true ? Text("Add") : Text("Remove"));
   }
 
   _addEmail() {}

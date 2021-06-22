@@ -15,7 +15,7 @@ class LoginEmailScreenError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _textWidget(true);
-    }
+  }
 
   Widget _textWidget(bool isError) {
     return Align(

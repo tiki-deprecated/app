@@ -27,14 +27,19 @@ class AuthService {
   LoginScreenModelToken? token;
 
   AuthService() : secureStorage = FlutterSecureStorage() {
-    _secureStorageRepositoryCurrent = SecureStorageRepositoryCurrent(secureStorage: secureStorage);
-    _repoLocalSsUser = SecureStorageRepositoryUser(secureStorage: secureStorage);
-    _repoLocalSsKeys = SecureStorageRepositoryKeys(secureStorage: secureStorage);
-    _repoLocalSsToken = SecureStorageRepositoryToken(secureStorage: secureStorage);
+    _secureStorageRepositoryCurrent =
+        SecureStorageRepositoryCurrent(secureStorage: secureStorage);
+    _repoLocalSsUser =
+        SecureStorageRepositoryUser(secureStorage: secureStorage);
+    _repoLocalSsKeys =
+        SecureStorageRepositoryKeys(secureStorage: secureStorage);
+    _repoLocalSsToken =
+        SecureStorageRepositoryToken(secureStorage: secureStorage);
   }
 
   Future<AuthService> load() async {
-    current = await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+    current = await _secureStorageRepositoryCurrent
+        .find(SecureStorageRepositoryCurrent.key);
     if (current.email != null) {
       user = await _repoLocalSsUser.find(current.email!);
       if (user!.address != null)
@@ -60,11 +65,7 @@ class AuthService {
         token!.refresh != null;
   }
 
-  void logout(){
+  void logout() {}
 
-  }
-
-  void login(){
-
-  }
+  void login() {}
 }

@@ -23,18 +23,17 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: ConfigColor.white,
-                  border: Border.all(
-                    color: ConfigColor.silverChalice,
-                  ),
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(_borderRadius))),
-              child: Row(
-                children: [_text(), _button()],
-              ),
-            );
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: ConfigColor.white,
+          border: Border.all(
+            color: ConfigColor.silverChalice,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(_borderRadius))),
+      child: Row(
+        children: [_text(), _button()],
+      ),
+    );
   }
 
   Widget _text() {

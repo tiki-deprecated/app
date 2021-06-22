@@ -26,13 +26,15 @@ class KeysRestoreScreenBloc
   final SecureStorageRepositoryUser _repoLocalSsUser;
   final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
 
-  KeysRestoreScreenBloc(
-      this._repoLocalSsKeys, this._repoLocalSsUser, this._secureStorageRepositoryCurrent)
+  KeysRestoreScreenBloc(this._repoLocalSsKeys, this._repoLocalSsUser,
+      this._secureStorageRepositoryCurrent)
       : super(KeysRestoreScreenInitial());
 
   KeysRestoreScreenBloc.provide(BuildContext context)
-      : _repoLocalSsKeys = RepositoryProvider.of<SecureStorageRepositoryKeys>(context),
-        _repoLocalSsUser = RepositoryProvider.of<SecureStorageRepositoryUser>(context),
+      : _repoLocalSsKeys =
+            RepositoryProvider.of<SecureStorageRepositoryKeys>(context),
+        _repoLocalSsUser =
+            RepositoryProvider.of<SecureStorageRepositoryUser>(context),
         _secureStorageRepositoryCurrent =
             RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         super(KeysRestoreScreenInitial());
@@ -111,8 +113,8 @@ class KeysRestoreScreenBloc
             dataPublicKey: null,
             signPrivateKey: signPrivate,
             signPublicKey: null));
-    AppModelCurrent current =
-        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+    AppModelCurrent current = await _secureStorageRepositoryCurrent
+        .find(SecureStorageRepositoryCurrent.key);
     await _repoLocalSsUser.save(
         current.email!,
         AppModelUser(

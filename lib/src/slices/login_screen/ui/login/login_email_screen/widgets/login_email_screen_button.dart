@@ -20,7 +20,5 @@ class LoginEmailScreenButton extends StatelessWidget {
     return TikiBigButton(_text, true, _submitLogin);
   }
 
-
-  _submitLogin() {
-  }
+  _submitLogin() {}
 }

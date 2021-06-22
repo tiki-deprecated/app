@@ -20,22 +20,22 @@ class _TikiScreenViewCounter extends State<TikiScreenViewCounter> {
   Widget build(BuildContext context) {
     var state = '';
     return Column(children: [
-        Text("...",
-            // true //(state.count == null || state.count == 0)
-            //     ? "..."
-            //     : state.count.toString().replaceAllMapped(
-            //         new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
-            style: TextStyle(
-                color: ConfigColor.flirt,
-                fontFamily: 'Koara',
-                fontWeight: FontWeight.bold,
-                fontSize: _fontSizeCount)),
-        Text("people already use TIKI",
-            style: TextStyle(
-                height: 1,
-                fontSize: _fontSizeText,
-                fontWeight: FontWeight.w800,
-                color: ConfigColor.tikiBlue))
-      ]);
-    }
+      Text("...",
+          // true //(state.count == null || state.count == 0)
+          //     ? "..."
+          //     : state.count.toString().replaceAllMapped(
+          //         new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
+          style: TextStyle(
+              color: ConfigColor.flirt,
+              fontFamily: 'Koara',
+              fontWeight: FontWeight.bold,
+              fontSize: _fontSizeCount)),
+      Text("people already use TIKI",
+          style: TextStyle(
+              height: 1,
+              fontSize: _fontSizeText,
+              fontWeight: FontWeight.w800,
+              color: ConfigColor.tikiBlue))
+    ]);
   }
+}

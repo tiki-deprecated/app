@@ -6,7 +6,6 @@ import 'app_model_routes.dart';
 import 'app_model_user.dart';
 
 class AppModel {
-
   static const String title = "TIKI";
   static const String fontFamily = "NunitoSans";
   static const Color displayColor = ConfigColor.mardiGras;

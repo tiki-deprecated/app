@@ -24,8 +24,9 @@ class KeysNewScreenSaveBk extends StatelessWidget {
     return BlocProvider(
         create: (context) => KeysNewScreenDialogCopyBloc(),
         child: FutureBuilder(
-            future: RepositoryProvider.of<SecureStorageRepositoryCurrent>(context)
-                .find(SecureStorageRepositoryCurrent.key),
+            future:
+                RepositoryProvider.of<SecureStorageRepositoryCurrent>(context)
+                    .find(SecureStorageRepositoryCurrent.key),
             builder: (BuildContext context,
                 AsyncSnapshot<AppModelCurrent> currentModel) {
               return BlocConsumer<KeysNewScreenDialogCopyBloc,

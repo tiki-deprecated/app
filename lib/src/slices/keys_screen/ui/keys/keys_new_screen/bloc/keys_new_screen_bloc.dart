@@ -35,13 +35,9 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
   final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
   final RepoApiBlockchainAddress _repoApiBlockchainAddress;
 
-  KeysNewScreenBloc(
-      this._repoLocalSsKeys,
-      this._repoLocalSsUser,
-      this._secureStorageRepositoryCurrent,
-      this._repoApiBlockchainAddress)
+  KeysNewScreenBloc(this._repoLocalSsKeys, this._repoLocalSsUser,
+      this._secureStorageRepositoryCurrent, this._repoApiBlockchainAddress)
       : super(KeysNewScreenInitial());
-
 
   @override
   Stream<KeysNewScreenState> mapEventToState(
@@ -103,8 +99,8 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
               signPrivateKey: state.signPrivate,
               signPublicKey: state.signPublic));
 
-      AppModelCurrent current =
-          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+      AppModelCurrent current = await _secureStorageRepositoryCurrent
+          .find(SecureStorageRepositoryCurrent.key);
       await _repoLocalSsUser.save(
           current.email!,
           AppModelUser(

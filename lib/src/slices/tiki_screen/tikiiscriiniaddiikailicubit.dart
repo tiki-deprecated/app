@@ -1,5 +1,3 @@
-
-
 // class AddEmailCubit extends Cubit<AddEmailState> {
 //   AddEmailCubit() : super(InitialState());
 //

@@ -18,7 +18,6 @@ class TikiScreenViewShare extends StatelessWidget {
     return TikiBigButton("SHARE", true, _share, trailing: Icon(Icons.share));
   }
 
-
   _share(_) {
     // Share.share(_state.link.toString(), subject: _shareText);
   }

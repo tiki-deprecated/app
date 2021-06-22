@@ -12,9 +12,6 @@ class LoginEmailScreenInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TikiBigInput(
-          placeholder: _placeholder,
-          onChanged: () => {});
-    }
+    return TikiBigInput(placeholder: _placeholder, onChanged: () => {});
   }
-
+}

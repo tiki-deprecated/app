@@ -23,13 +23,14 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
   final SecureStorageRepositoryOtp _repoLocalSsOtp;
   final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
 
-  LoginOtpReqBloc(
-      this._repoApiBouncerOtp, this._repoLocalSsOtp, this._secureStorageRepositoryCurrent)
+  LoginOtpReqBloc(this._repoApiBouncerOtp, this._repoLocalSsOtp,
+      this._secureStorageRepositoryCurrent)
       : super(LoginOtpReqStateInitial());
 
   LoginOtpReqBloc.provide(BuildContext context)
       : _repoApiBouncerOtp = RepositoryProvider.of<RepoApiBouncerOtp>(context),
-        _repoLocalSsOtp = RepositoryProvider.of<SecureStorageRepositoryOtp>(context),
+        _repoLocalSsOtp =
+            RepositoryProvider.of<SecureStorageRepositoryOtp>(context),
         _secureStorageRepositoryCurrent =
             RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         super(LoginOtpReqStateInitial());
@@ -54,7 +55,8 @@ class LoginOtpReqBloc extends Bloc<LoginOtpReqEvent, LoginOtpReqState> {
       RepoApiBouncerOtpRsp rspData = rsp.data;
       await _repoLocalSsOtp.save(_ssKey,
           LoginScreenModelOtp(email: submitted.email, salt: rspData.salt));
-      await _secureStorageRepositoryCurrent.save(SecureStorageRepositoryCurrent.key,
+      await _secureStorageRepositoryCurrent.save(
+          SecureStorageRepositoryCurrent.key,
           AppModelCurrent(email: submitted.email));
       yield LoginOtpReqStateSuccess(submitted.email);
     } else {

@@ -21,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
-
 class TikiScreenLayout extends StatelessWidget {
   static final double _marginVerticalShare = 6.h;
   static final double _marginTopCards = 2.h;
@@ -68,9 +67,9 @@ class TikiScreenLayout extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.only(top: 24),
-                    child: TikiScreenViewCounter(),
-                    ),
+                  margin: EdgeInsets.only(top: 24),
+                  child: TikiScreenViewCounter(),
+                ),
                 Container(
                     margin: EdgeInsets.only(top: 30),
                     child: TikiScreenViewRefer()),

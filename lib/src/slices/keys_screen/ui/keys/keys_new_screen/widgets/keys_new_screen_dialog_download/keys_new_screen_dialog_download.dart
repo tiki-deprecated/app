@@ -10,7 +10,6 @@ import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-
 class KeysNewScreenSaveDialogDownload {
   static final double _marginTopTitle = 8.h;
   static final double _marginHorizontalTitle = 6.w;
@@ -69,12 +68,9 @@ class KeysNewScreenSaveDialogDownload {
                   padding: EdgeInsets.only(top: _marginTopQr),
                   child: KeysNewScreenDialogDownloadQr(keyData)),
               Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: _marginVerticalButton),
-                      child: TikiBigButton('DOWNLOAD', true, () => {})
-              )
-
-
+                  padding:
+                      EdgeInsets.symmetric(vertical: _marginVerticalButton),
+                  child: TikiBigButton('DOWNLOAD', true, () => {}))
             ])));
   }
 

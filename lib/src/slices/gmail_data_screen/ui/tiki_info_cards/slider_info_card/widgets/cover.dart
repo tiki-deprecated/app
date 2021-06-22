@@ -21,21 +21,14 @@ class Cover extends AnimatedWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
-        height: _calculateAnimation(maxHeight, _controllerValue.value,
-            17.5.h),
+        height: _calculateAnimation(maxHeight, _controllerValue.value, 17.5.h),
         padding: EdgeInsets.only(
-            left: 2.9.h,
-            top: 1.9.h,
-            right: 1.9.h,
-            bottom: 1.9.h),
+            left: 2.9.h, top: 1.9.h, right: 1.9.h, bottom: 1.9.h),
         child: Stack(fit: StackFit.expand, children: [
           Align(
               alignment: Alignment.topCenter,
               child: Container(
-                  height: _calculateAnimation(
-                      7.h,
-                      _controllerValue.value,
-                      0),
+                  height: _calculateAnimation(7.h, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: 1 - _controllerValue.value,
                       child: this.coverData['topHeader']))),
@@ -44,21 +37,14 @@ class Cover extends AnimatedWidget {
               child: Padding(
                   padding: EdgeInsets.only(
                       top: _calculateAnimation(
-                          5.8.h,
-                          _controllerValue.value,
-                          0)),
+                          5.8.h, _controllerValue.value, 0)),
                   child: HelperImage(this.coverData['image'],
                       width: _calculateAnimation(
-                          72.91.w,
-                          _controllerValue.value,
-                          19.7.h)))),
+                          72.91.w, _controllerValue.value, 19.7.h)))),
           Positioned(
               top: 40.h,
               child: Container(
-                  height: _calculateAnimation(
-                      7.h,
-                      _controllerValue.value,
-                      0),
+                  height: _calculateAnimation(7.h, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: _controllerValue.value * 2 <= 1
                           ? 1 - (_controllerValue.value * 2)
@@ -71,16 +57,13 @@ class Cover extends AnimatedWidget {
                           child: Text(this.coverData['subtitle'],
                               style: TextStyle(
                                   color: ConfigColor.orange,
-                                  fontSize:
-                                      2.3.sp,
+                                  fontSize: 2.3.sp,
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "NunitoSans")))))),
           Padding(
               padding: EdgeInsets.only(
                   top: _calculateAnimation(
-                      44.h,
-                      _controllerValue.value,
-                      2.32.h)),
+                      44.h, _controllerValue.value, 2.32.h)),
               child: Align(
                   alignment: Alignment(
                     -_controllerValue.value,
@@ -99,9 +82,7 @@ class Cover extends AnimatedWidget {
                                   height: 1,
                                   fontFamily: "Koara",
                                   fontSize: _calculateAnimation(
-                                      5.23.h,
-                                      _controllerValue.value,
-                                      2.9.h),
+                                      5.23.h, _controllerValue.value, 2.9.h),
                                   fontWeight: FontWeight.bold),
                               text: this.coverData['bigTextLighter'],
                               children: [
@@ -111,10 +92,8 @@ class Cover extends AnimatedWidget {
                                         color: ConfigColor.tikiBlue,
                                         height: 1,
                                         fontFamily: "Koara",
-                                        fontSize: _calculateAnimation(
-                                            5.23.sp,
-                                            _controllerValue.value,
-                                            2.9.sp),
+                                        fontSize: _calculateAnimation(5.23.sp,
+                                            _controllerValue.value, 2.9.sp),
                                         fontWeight: FontWeight.bold))
                               ]))))),
           Padding(
@@ -126,23 +105,19 @@ class Cover extends AnimatedWidget {
                       ? 1 - (_controllerValue.value * 3)
                       : 0,
                   child: Container(
-                      margin: EdgeInsets.only(
-                          top: 1.16.h),
+                      margin: EdgeInsets.only(top: 1.16.h),
                       width: double.maxFinite,
                       child: Text(this.coverData['subText'],
                           style: TextStyle(
                               color: ConfigColor.tikiBlue,
                               fontFamily: "NunitoSans",
-                              fontSize:
-                                  2.09.h,
+                              fontSize: 2.09.h,
                               fontWeight: FontWeight.w600))))),
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  height: _calculateAnimation(
-                      6.98.h,
-                      _controllerValue.value,
-                      0),
+                  height:
+                      _calculateAnimation(6.98.h, _controllerValue.value, 0),
                   child: Opacity(
                       opacity: _controllerValue.value * 2 <= 1
                           ? 1 - (_controllerValue.value * 2)

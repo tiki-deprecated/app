@@ -26,7 +26,5 @@ class TikiScreenViewLogout extends StatelessWidget {
     );
   }
 
-  _logout(context) {
-
-  }
+  _logout(context) {}
 }

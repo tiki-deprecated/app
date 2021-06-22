@@ -31,8 +31,8 @@ class KeysRestoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(
-            background: _background() as TikiBackground?,
-            foregroundChildren: _foreground(context));
+        background: _background() as TikiBackground?,
+        foregroundChildren: _foreground(context));
   }
 
   Widget _background() {

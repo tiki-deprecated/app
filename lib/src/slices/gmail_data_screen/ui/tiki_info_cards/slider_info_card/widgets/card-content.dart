@@ -21,10 +21,7 @@ class CardContent extends StatelessWidget {
         child: Column(children: [
           Container(
               margin: EdgeInsets.only(
-                  left: 2.9.h,
-                  top: 1.9.h,
-                  right: 1.9.h,
-                  bottom: 1.9.h),
+                  left: 2.9.h, top: 1.9.h, right: 1.9.h, bottom: 1.9.h),
               child: this.cardContentData['cardContentData']
                   ['richTextExplanation']),
           _whatTheySay(),

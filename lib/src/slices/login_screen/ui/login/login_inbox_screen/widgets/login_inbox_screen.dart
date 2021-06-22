@@ -34,8 +34,7 @@ class LoginInboxScreen extends StatelessWidget {
       TikiBackButton(),
       Container(
           height: MediaQuery.of(context).size.height,
-          margin: EdgeInsets.symmetric(
-              horizontal: 2.w),
+          margin: EdgeInsets.symmetric(horizontal: 2.w),
           child: Column(children: [
             Container(
               margin: EdgeInsets.only(top: _marginTopTitle),

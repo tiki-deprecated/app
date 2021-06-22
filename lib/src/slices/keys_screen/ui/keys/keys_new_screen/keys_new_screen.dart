@@ -17,9 +17,9 @@ class KeysNewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(
-          foregroundChildren: [KeysNewScreenSave()],
-          background: _background() as TikiBackground?,
-        );
+      foregroundChildren: [KeysNewScreenSave()],
+      background: _background() as TikiBackground?,
+    );
   }
 
   Widget _background() {

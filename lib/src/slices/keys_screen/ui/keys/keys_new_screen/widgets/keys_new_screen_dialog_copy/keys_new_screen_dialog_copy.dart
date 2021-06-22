@@ -48,13 +48,10 @@ class KeysNewScreenDialogCopy {
               style: TextStyle(
                   color: ConfigColor.gray, fontWeight: FontWeight.bold),
             ),
-            KeysNewScreenDialogCopyButton(currentModel.email,
-                () => {}),
+            KeysNewScreenDialogCopyButton(currentModel.email, () => {}),
             Padding(
                 padding: EdgeInsets.symmetric(vertical: _marginVerticalField)),
-            KeysNewScreenDialogCopyButton(
-                combinedKey, () => {}
-            ),
+            KeysNewScreenDialogCopyButton(combinedKey, () => {}),
           ],
         ),
       ),

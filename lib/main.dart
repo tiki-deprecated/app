@@ -10,7 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-
 /// The dart entrypoint
 ///
 /// Initializes the app execution and configurates its dependencies.
