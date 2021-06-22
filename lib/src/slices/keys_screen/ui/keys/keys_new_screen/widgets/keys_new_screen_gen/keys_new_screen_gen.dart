@@ -4,10 +4,10 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sizer/sizer.dart';
 
 import 'widgets/keys_new_screen_gen_restore.dart';
 import 'widgets/keys_new_screen_gen_subtitle.dart';
@@ -20,10 +20,8 @@ class KeysNewScreenGen extends StatefulWidget {
 
 class _KeysNewScreenGen extends State<KeysNewScreenGen> {
   static final double _marginTopTitle = 9.h;
-  static final double _marginTopSubtitle =
-      2.5.h;
-  static final double _marginBottomButton =
-      5.h;
+  static final double _marginTopSubtitle = 2.5.h;
+  static final double _marginBottomButton = 5.h;
 
   @override
   void initState() {

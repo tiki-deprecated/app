@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppModel{
+class AppModel {
   late Color displayColor;
   late Color bodyColor;
   late String fontFamily;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TikiScreenService{
+class TikiScreenService {
   Widget getUI() {
     return Container();
   }

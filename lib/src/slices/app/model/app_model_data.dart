@@ -1,10 +1,7 @@
-
-
-class AppModelData{
+class AppModelData {
   int? id;
   String? key;
   String? value;
-
 
   Map<String, Object?> toMap() {
     var map = <String, Object?>{'key': key, 'value': value.toString()};

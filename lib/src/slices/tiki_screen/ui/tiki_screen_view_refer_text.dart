@@ -4,8 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiScreenViewReferText extends StatelessWidget {
   static const String _textLine1 = "Share your TIKI code and get";

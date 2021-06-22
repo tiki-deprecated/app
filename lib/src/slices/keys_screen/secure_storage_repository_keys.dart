@@ -7,7 +7,8 @@ import 'package:app/src/repositories/secure_storage/secure_storage_repository.da
 import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SecureStorageRepositoryKeys extends SecureStorageRepository<KeysScreenModel> {
+class SecureStorageRepositoryKeys
+    extends SecureStorageRepository<KeysScreenModel> {
   static const String _table = "keys";
   static const String _version = "0.0.1";
 

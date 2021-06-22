@@ -3,8 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 
 class TikiBigInput extends StatelessWidget {
-  static final double _paddingHorizontal =
-      4.w;
+  static final double _paddingHorizontal = 4.w;
   static final double _paddingVertical = 2.h;
   static final double _fontSize = 5.w;
 

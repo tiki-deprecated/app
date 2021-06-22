@@ -8,7 +8,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../login_screen/model/login_screen_model_otp.dart';
 
-class SecureStorageRepositoryOtp extends SecureStorageRepository<LoginScreenModelOtp> {
+class SecureStorageRepositoryOtp
+    extends SecureStorageRepository<LoginScreenModelOtp> {
   static const String _table = "otp";
   static const String _version = "0.0.1";
 

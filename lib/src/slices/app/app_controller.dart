@@ -1,1 +1,1 @@
-class AppController{}
+class AppController {}

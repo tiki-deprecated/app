@@ -1,4 +1,3 @@
-class KeysScreenService{
+class KeysScreenService {
   getUI() {}
-  
 }

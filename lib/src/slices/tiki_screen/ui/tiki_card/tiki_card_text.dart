@@ -1,5 +1,5 @@
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiCardText extends StatelessWidget {
   final String text;
@@ -8,7 +8,6 @@ class TikiCardText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: TextStyle(fontSize: 4.w));
+    return Text(text, style: TextStyle(fontSize: 4.w));
   }
 }

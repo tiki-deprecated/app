@@ -12,7 +12,8 @@ class DatabaseRepository {
   DatabaseRepository._internal();
 
   /// The database singleton.
-  static final DatabaseRepository? _tikiDatabase = new DatabaseRepository._internal();
+  static final DatabaseRepository? _tikiDatabase =
+      new DatabaseRepository._internal();
 
   /// The database singleton instance getter.
   static DatabaseRepository? get instance => _tikiDatabase;

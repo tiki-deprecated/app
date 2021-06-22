@@ -15,7 +15,8 @@ abstract class SecureStorageRepository<T> {
   final Map<String, dynamic> Function(T model) _toJson;
   final T Function(Map<String, dynamic>? json) _fromJson;
 
-  SecureStorageRepository(this._table, this._version, this._toJson, this._fromJson,
+  SecureStorageRepository(
+      this._table, this._version, this._toJson, this._fromJson,
       {FlutterSecureStorage? secureStorage})
       : secureStorage =
             (secureStorage == null ? FlutterSecureStorage() : secureStorage);

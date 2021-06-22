@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class KeysNewScreenGenTitle extends StatelessWidget {
   static const String _text = "Just one sec..";

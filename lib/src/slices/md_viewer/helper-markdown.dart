@@ -7,11 +7,11 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelperMarkdown extends StatelessWidget {
-  static final double _fontSizeHeading =
-      10.w;
+  static final double _fontSizeHeading = 10.w;
   static final double _fontSizeText = 4.w;
 
   final String source;

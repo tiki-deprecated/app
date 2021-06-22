@@ -9,8 +9,7 @@ class AppModelUser {
   bool? isLoggedIn;
   Uri? referral;
 
-  AppModelUser(
-      {this.email, this.address, this.isLoggedIn, this.referral});
+  AppModelUser({this.email, this.address, this.isLoggedIn, this.referral});
 
   AppModelUser.fromJson(Map<String, dynamic>? json) {
     if (json != null) {

@@ -5,12 +5,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../intro_screen_service.dart';
 import 'intro_screen_layout_background.dart';
 import 'intro_screen_layout_foreground.dart';
 
 class IntroScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var controller =
@@ -18,14 +18,11 @@ class IntroScreen extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: GestureDetector(
-                child: Stack(
-                    children: [
-                      IntroScreenBackgroundView(),
-                      IntroScreenForegroundView()
-                    ]),
+                child: Stack(children: [
+                  IntroScreenBackgroundView(),
+                  IntroScreenForegroundView()
+                ]),
                 onHorizontalDragEnd: (dragEndDetails) =>
-                    controller.onHorizontalDrag(context, dragEndDetails)
-            )
-    ));
+                    controller.onHorizontalDrag(context, dragEndDetails))));
   }
 }

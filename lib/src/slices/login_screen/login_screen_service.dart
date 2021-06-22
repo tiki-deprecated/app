@@ -1,4 +1,3 @@
-class LoginScreenService{
+class LoginScreenService {
   getUI() {}
-
 }

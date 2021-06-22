@@ -8,15 +8,11 @@ import 'app_service.dart';
 import 'ui/app_layout.dart';
 
 class AppPresenter {
-
   final AppService appService;
 
   AppPresenter(this.appService);
 
-  ChangeNotifierProvider<AppService> render(){
-    return ChangeNotifierProvider.value(
-        value: appService,
-        child: App()
-    );
+  ChangeNotifierProvider<AppService> render() {
+    return ChangeNotifierProvider.value(value: appService, child: App());
   }
 }

@@ -4,8 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenTitle extends StatelessWidget {
   static const String _text = "Enter your keys";

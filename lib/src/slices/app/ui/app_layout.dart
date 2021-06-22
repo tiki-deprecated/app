@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<AppService>(context, listen: false);
@@ -24,10 +23,7 @@ class App extends StatelessWidget {
           DefaultWidgetsLocalizations.delegate,
         ],
         theme: ThemeData(
-            textTheme: Theme
-                .of(context)
-                .textTheme
-                .apply(
+            textTheme: Theme.of(context).textTheme.apply(
                 fontFamily: model.fontFamily,
                 bodyColor: model.bodyColor,
                 displayColor: model.displayColor)));

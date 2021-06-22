@@ -6,11 +6,11 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../intro_screen_service.dart';
 import 'package:sizer/sizer.dart';
 
-class IntroScreenDots extends StatelessWidget{
+import '../intro_screen_service.dart';
+
+class IntroScreenDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
@@ -19,8 +19,7 @@ class IntroScreenDots extends StatelessWidget{
     return Container(
         margin: EdgeInsets.only(top: marginTop, right: marginRight),
         alignment: Alignment.centerLeft,
-        child: tikiDots(
-            service.model.getTotalSlides(),
+        child: tikiDots(service.model.getTotalSlides(),
             service.model.getCurrentSlideIndex()));
   }
 
@@ -40,5 +39,4 @@ class IntroScreenDots extends StatelessWidget{
           borderRadius: BorderRadius.all(Radius.circular(size * 2))),
     );
   }
-
 }

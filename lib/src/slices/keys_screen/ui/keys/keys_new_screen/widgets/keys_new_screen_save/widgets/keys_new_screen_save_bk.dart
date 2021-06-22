@@ -6,13 +6,13 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/keys_new_screen_dialog_copy.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
+import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../keys_new_screen_dialog_copy/bloc/keys_new_screen_dialog_copy_bloc.dart';
 
@@ -51,8 +51,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
-                  margin: EdgeInsets.only(
-                      bottom: 4.w),
+                  margin: EdgeInsets.only(bottom: 4.w),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -71,10 +70,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                            padding: EdgeInsets.only(
-                                top: 0.5.h,
-                                right:
-                                    4.w),
+                            padding: EdgeInsets.only(top: 0.5.h, right: 4.w),
                             child: HelperImage("lock-icon")),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,8 +94,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                       top: 0.25.h,
                       left: 6.w,
                       child: Container(
-                          height: 5.h,
-                          child: HelperImage("green-check")))
+                          height: 5.h, child: HelperImage("green-check")))
                   : Container(),
             ])),
         onTap: () => _saveKey(context, currentModel.data!));

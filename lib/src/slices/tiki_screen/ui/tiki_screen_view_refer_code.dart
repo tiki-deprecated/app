@@ -6,11 +6,11 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiScreenViewReferCode extends StatefulWidget {
   @override
@@ -22,8 +22,7 @@ class _TikiScreenViewReferCode extends State<TikiScreenViewReferCode> {
   static final double _fontSize = 4.w;
   static final double _marginLeft = 1.w;
   static final double _marginRight = 3.w;
-  static final double _marginVertical =
-      1.5.h;
+  static final double _marginVertical = 1.5.h;
   static final double _borderRadius = 1.5.h;
 
   @override

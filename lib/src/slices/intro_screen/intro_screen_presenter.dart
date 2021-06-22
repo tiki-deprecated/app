@@ -1,11 +1,11 @@
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+
 import 'intro_screen_service.dart';
 import 'res/intro_slides_strings.dart' as introStrings;
-import 'package:sizer/sizer.dart';
 import 'ui/intro_screen_layout.dart';
 
-class IntroScreenPresenter{
-
+class IntroScreenPresenter {
   final IntroScreenService service;
   final double marginTopText = 2.5.h;
   final double marginTopButton = 5.h;
@@ -21,11 +21,7 @@ class IntroScreenPresenter{
   get subtitle => introStrings.slides[currentSlideIndex]["subtitle"];
   get title => introStrings.slides[currentSlideIndex]["title"];
 
-  ChangeNotifierProvider<IntroScreenService> render(){
-    return ChangeNotifierProvider.value(
-        value: service,
-        child: IntroScreen()
-    );
+  ChangeNotifierProvider<IntroScreenService> render() {
+    return ChangeNotifierProvider.value(value: service, child: IntroScreen());
   }
-
 }

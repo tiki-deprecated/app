@@ -7,15 +7,14 @@ import 'dart:io';
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_restore_screen/bloc/keys_restore_screen_bloc.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenInput extends StatelessWidget {
   static final double _fontSize = 5.w;
-  static final double _paddingHorizontal =
-      4.w;
+  static final double _paddingHorizontal = 4.w;
   static final double _paddingVertical = 2.h;
 
   static const String _placeholder = "Your Account Key";

@@ -13,8 +13,7 @@ import 'app_presenter.dart';
 import 'model/app_model.dart';
 import 'model/app_model_routes.dart';
 
-class AppService extends ChangeNotifier{
-
+class AppService extends ChangeNotifier {
   late AppPresenter presenter;
   late AppModel model;
   late AppController controller;
@@ -30,7 +29,7 @@ class AppService extends ChangeNotifier{
     initDynamicLinks();
   }
 
-  Widget getUI(){
+  Widget getUI() {
     return presenter.render();
   }
 
@@ -47,9 +46,9 @@ class AppService extends ChangeNotifier{
   }
 
   getHome() {
-    if(this.deepLink != null){
+    if (this.deepLink != null) {
       _handle(this.deepLink!);
-    }else if (helperLogIn.isReturning()) {
+    } else if (helperLogIn.isReturning()) {
       if (helperLogIn.isLoggedIn()) {
         return AppModelRoutes.home;
       } else {
@@ -63,13 +62,13 @@ class AppService extends ChangeNotifier{
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-          final Uri? deepLink = dynamicLink?.link;
-          if (deepLink != null) _handle(deepLink);
-        }, onError: (OnLinkErrorException e) async {
+      final Uri? deepLink = dynamicLink?.link;
+      if (deepLink != null) _handle(deepLink);
+    }, onError: (OnLinkErrorException e) async {
       await Sentry.captureException(e, stackTrace: StackTrace.current);
     });
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     this.deepLink = data?.link;
   }
 

@@ -9,16 +9,16 @@ import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dar
 import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
 import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
 import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_keys/secure_storage_repository_keys.dart';
+import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_keys/keys_screen_model.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/secure_storage_repository_user.dart';
+import 'package:app/src/features/repo/repo_local_ss_keys/secure_storage_repository_keys.dart';
 import 'package:app/src/features/repo/repo_local_ss_user/app_model_user.dart';
-import 'package:app/src/utils/helper/crypto/helper_crypto_ecdsa.dart';
-import 'package:app/src/utils/helper/crypto/helper_crypto_rsa.dart';
+import 'package:app/src/features/repo/repo_local_ss_user/secure_storage_repository_user.dart';
 import 'package:app/src/repositories/api/helper_api_rsp.dart';
 import 'package:app/src/utils/helper/crypto/helper_crypto.dart';
+import 'package:app/src/utils/helper/crypto/helper_crypto_ecdsa.dart';
+import 'package:app/src/utils/helper/crypto/helper_crypto_rsa.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,7 +77,8 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
     String dataPublic = HelperCryptoRsa.encodeRSAPublic(dataKey.publicKey);
     String dataPrivate = HelperCryptoRsa.encodeRSAPrivate(dataKey.privateKey);
     String signPublic = HelperCryptoEcdsa.encodeECDSAPublic(signKey.publicKey);
-    String signPrivate = HelperCryptoEcdsa.encodeECDSAPrivate(signKey.privateKey);
+    String signPrivate =
+        HelperCryptoEcdsa.encodeECDSAPrivate(signKey.privateKey);
     String address = HelperCrypto.sha3(signPublic);
     yield KeysNewScreenInProgress(
         dataPublic, dataPrivate, signPublic, signPrivate, address, false);

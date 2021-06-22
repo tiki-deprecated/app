@@ -22,8 +22,6 @@ class TikiSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         textAlign: textAlign,
-        style: TextStyle(
-            fontSize: fontSize ?? 5.w,
-            fontWeight: fontWeight));
+        style: TextStyle(fontSize: fontSize ?? 5.w, fontWeight: fontWeight));
   }
 }

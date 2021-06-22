@@ -5,9 +5,9 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/md_viewer/md_viewer.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginEmailScreenTos extends StatelessWidget {
   static final double _fontSize = 2.h;

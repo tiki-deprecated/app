@@ -5,8 +5,8 @@
 
 import 'package:app/src/features/home/home_screen/widgets/home_screen_refer_code.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_refer_text.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 import 'home_screen_refer_count.dart';
 

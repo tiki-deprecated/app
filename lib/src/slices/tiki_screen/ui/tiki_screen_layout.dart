@@ -5,25 +5,25 @@
 
 import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/widgets/home_screen_add_email_button.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_title.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_card_community.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_card_follow_us.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_card_news.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_card_release.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_title.dart';
 import 'package:app/src/slices/tiki_screen/ui/home_screen_add_email_button.dart';
 import 'package:app/src/slices/tiki_screen/ui/home_screen_title.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
 import 'package:app/src/utils/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import 'home_screen_logout.dart';
 
@@ -51,7 +51,9 @@ class TikiScreenLayout extends StatelessWidget {
           margin: EdgeInsets.only(top: 140, bottom: 20),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Container(child: TikiScreenViewTitle("Get started"))])),
+              children: [
+                Container(child: TikiScreenViewTitle("Get started"))
+              ])),
       Container(child: AddGmailButton()),
       Container(
           width: double.maxFinite,
@@ -80,7 +82,8 @@ class TikiScreenLayout extends StatelessWidget {
                       child: TikiScreenViewCounter(),
                     )),
                 Container(
-                    margin: EdgeInsets.only(top: 30), child: TikiScreenViewRefer()),
+                    margin: EdgeInsets.only(top: 30),
+                    child: TikiScreenViewRefer()),
                 Container(
                     margin:
                         EdgeInsets.symmetric(vertical: _marginVerticalShare),
@@ -109,12 +112,13 @@ class TikiScreenLayout extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
           child: TikiScreenViewLogout()),
       Container(
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
-          child: Text("v0.1.1",style: TextStyle(color:Colors.grey)),
+        alignment: Alignment.bottomCenter,
+        margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
+        child: Text("v0.1.1", style: TextStyle(color: Colors.grey)),
       )
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return TikiScaffold(

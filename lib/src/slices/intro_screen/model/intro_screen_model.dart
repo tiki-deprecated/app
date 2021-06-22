@@ -4,27 +4,27 @@ class IntroScreenModel {
   final List<IntroScreenModelSlide> _slides = [];
   int _currentSlide = 0;
 
-  void addSlide(IntroScreenModelSlide slide){
+  void addSlide(IntroScreenModelSlide slide) {
     _slides.add(slide);
   }
 
-  IntroScreenModelSlide getSlideAt(int index){
+  IntroScreenModelSlide getSlideAt(int index) {
     return _slides[index];
   }
 
-  IntroScreenModelSlide getCurrentSlide(){
+  IntroScreenModelSlide getCurrentSlide() {
     return _slides[_currentSlide];
   }
 
-  int getCurrentSlideIndex(){
+  int getCurrentSlideIndex() {
     return _currentSlide;
   }
 
-  IntroScreenModelSlide moveToNextSlide(){
+  IntroScreenModelSlide moveToNextSlide() {
     return _slides[++_currentSlide];
   }
 
-  IntroScreenModelSlide moveToPreviousSlide(){
+  IntroScreenModelSlide moveToPreviousSlide() {
     return _slides[--_currentSlide];
   }
 

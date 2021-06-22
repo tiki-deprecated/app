@@ -7,8 +7,7 @@ import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleRepository {
-  final GoogleSignIn _googleSignIn =
-      GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   GoogleSignInAccount? currentUser;
 
@@ -35,7 +34,7 @@ class GoogleRepository {
 
   Future<bool> handleSignOut() async {
     await _googleSignIn.signOut();
-    return ! await _googleSignIn.isSignedIn();
+    return !await _googleSignIn.isSignedIn();
   }
 
   isConnected() {

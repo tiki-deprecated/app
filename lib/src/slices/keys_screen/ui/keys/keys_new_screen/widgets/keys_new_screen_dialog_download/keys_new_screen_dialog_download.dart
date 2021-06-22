@@ -5,24 +5,20 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/widgets/keys_new_screen_dialog_download_qr.dart';
-import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import 'bloc/keys_new_screen_dialog_download_bloc.dart';
 
 class KeysNewScreenSaveDialogDownload {
   static final double _marginTopTitle = 8.h;
-  static final double _marginHorizontalTitle =
-      6.w;
-  static final double _marginHorizontalSubtitle =
-      4.w;
-  static final double _marginTopSubtitle =
-      1.h;
-  static final double _marginVerticalButton =
-      4.h;
+  static final double _marginHorizontalTitle = 6.w;
+  static final double _marginHorizontalSubtitle = 4.w;
+  static final double _marginTopSubtitle = 1.h;
+  static final double _marginVerticalButton = 4.h;
   static final double _marginTopQr = 3.h;
 
   AlertDialog alert(String keyData, KeysNewScreenDialogDownloadBloc bloc,
@@ -68,8 +64,7 @@ class KeysNewScreenSaveDialogDownload {
                     ]),
               ),
               Container(
-                  margin: EdgeInsets.only(
-                      top: 1.h),
+                  margin: EdgeInsets.only(top: 1.h),
                   child: Text(
                       'Try not to store your keys on iCloud / Google Drive / Dropbox',
                       textAlign: TextAlign.center,

@@ -10,13 +10,10 @@ class TikiBigButton extends StatelessWidget {
   final Widget? leading;
   final double? textWidth;
 
-  static final double _letterSpacing =
-      0.05.w;
+  static final double _letterSpacing = 0.05.w;
   static final double _fontSize = 6.w;
-  static final double _marginHorizontal =
-      10.w;
-  static final double _marginVertical =
-      2.25.h;
+  static final double _marginHorizontal = 10.w;
+  static final double _marginVertical = 2.25.h;
 
   const TikiBigButton(this._text, this._isActive, this._callback,
       {this.trailing, this.leading, this.textWidth});
@@ -29,8 +26,7 @@ class TikiBigButton extends StatelessWidget {
                 vertical: _marginVertical,
                 horizontal: textWidth != null ? 0 : _marginHorizontal),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(10.h))),
+                borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: _isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -41,10 +37,7 @@ class TikiBigButton extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Container(
-                    padding: EdgeInsets.only(
-                        right: trailing != null
-                            ? PlatformRelativeSize.marginHorizontal
-                            : 0),
+                    padding: EdgeInsets.only(right: trailing != null ? 1.w : 0),
                     child: Text(_text,
                         textAlign: TextAlign.center,
                         style: TextStyle(

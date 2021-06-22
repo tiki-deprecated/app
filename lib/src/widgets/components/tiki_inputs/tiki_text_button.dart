@@ -44,26 +44,19 @@ class TikiTextButton extends StatelessWidget {
                     style: TextStyle(
                         color: this.color,
                         fontWeight: this.fontWeight,
-                        fontSize:
-                            PlatformRelativeSize.blockHorizontal * fontSize)),
+                        fontSize: fontSize.sp)),
                 trailing ?? Container(),
               ],
             )));
   }
 
   _getMargins() {
-    return EdgeInsets.fromLTRB(
-        margins['left']!.w,
-        margins['top']!.h,
-        margins['right']!.w,
-        margins['bottom']!.h);
+    return EdgeInsets.fromLTRB(margins['left']!.w, margins['top']!.h,
+        margins['right']!.w, margins['bottom']!.h);
   }
 
   _getPadding() {
-    return EdgeInsets.fromLTRB(
-        padding['left']!.w,
-        padding['top']!.h,
-        padding['right']!.w,
-        padding['bottom']!.h);
+    return EdgeInsets.fromLTRB(padding['left']!.w, padding['top']!.h,
+        padding['right']!.w, padding['bottom']!.h);
   }
 }

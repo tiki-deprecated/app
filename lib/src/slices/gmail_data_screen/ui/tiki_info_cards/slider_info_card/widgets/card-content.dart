@@ -16,20 +16,20 @@ class CardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ConfigColor.mardiGras,
+        color: ConfigColor.mardiGras,
         child: Column(children: [
-      Container(
-          margin: EdgeInsets.only(
-            left: PlatformRelativeSize.blockVertical*2.9,
-            top: PlatformRelativeSize.blockVertical*1.9,
-            right: PlatformRelativeSize.blockVertical*1.9,
-            bottom:  PlatformRelativeSize.blockVertical*1.9),
-          child: this.cardContentData['cardContentData']
-              ['richTextExplanation']),
-      _whatTheySay(),
-      _youShouldKnow(),
-      CardCta(cardCtaArgs: this.cardContentData['cardCtaData']),
-    ]));
+          Container(
+              margin: EdgeInsets.only(
+                  left: PlatformRelativeSize.blockVertical * 2.9,
+                  top: PlatformRelativeSize.blockVertical * 1.9,
+                  right: PlatformRelativeSize.blockVertical * 1.9,
+                  bottom: PlatformRelativeSize.blockVertical * 1.9),
+              child: this.cardContentData['cardContentData']
+                  ['richTextExplanation']),
+          _whatTheySay(),
+          _youShouldKnow(),
+          CardCta(cardCtaArgs: this.cardContentData['cardCtaData']),
+        ]));
   }
 
   _whatTheySay() {

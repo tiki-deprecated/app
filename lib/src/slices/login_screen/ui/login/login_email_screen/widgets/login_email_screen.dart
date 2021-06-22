@@ -6,13 +6,13 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/login/login_email_screen/widgets/login_email_screen_tos.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 import 'login_email_screen_button.dart';
 import 'login_email_screen_error.dart';
@@ -21,10 +21,8 @@ import 'login_email_screen_input.dart';
 class LoginEmailScreen extends StatelessWidget {
   static final double _marginTopTitle = 15.h;
   static final double _marginTopCta = 2.h;
-  static final double _marginRightTitle =
-      15.w;
-  static final double _marginTopInput =
-      2.5.h;
+  static final double _marginRightTitle = 15.w;
+  static final double _marginTopInput = 2.5.h;
   static final double _marginTopButton = 4.h;
   static final double _marginTopTos = 2.h;
 

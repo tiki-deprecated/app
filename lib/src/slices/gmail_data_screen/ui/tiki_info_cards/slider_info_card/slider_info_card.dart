@@ -13,11 +13,11 @@ class SliderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return AnimatedCardContainer(constraints, coverData, cardData);
-            }));
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return AnimatedCardContainer(constraints, coverData, cardData);
+        }));
   }
 }

@@ -8,10 +8,10 @@ import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/bloc/keys_new_screen_dialog_download_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/keys_new_screen_dialog_download.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class KeysNewScreenSaveBkDownload extends StatelessWidget {
   @override
@@ -37,10 +37,8 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
-                  margin: EdgeInsets.only(
-                      bottom: 8.w),
-                  padding:
-                      EdgeInsets.all(4.w),
+                  margin: EdgeInsets.only(bottom: 8.w),
+                  padding: EdgeInsets.all(4.w),
                   decoration: BoxDecoration(
                       color: ConfigColor.gallery,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -57,14 +55,11 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                            padding: EdgeInsets.only(
-                                right:
-                                    4.w),
+                            padding: EdgeInsets.only(right: 4.w),
                             child: HelperImage("icon-download")),
                         Text("Download",
                             style: TextStyle(
-                                fontSize:
-                                    2.5.h,
+                                fontSize: 2.5.h,
                                 fontWeight: FontWeight.bold,
                                 color: ConfigColor.mardiGras)),
                       ])),
@@ -73,8 +68,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                       top: 0,
                       left: 5.w,
                       child: Container(
-                          height: 5.h,
-                          child: HelperImage("green-check")))
+                          height: 5.h, child: HelperImage("green-check")))
                   : Container(),
             ])),
         onTap: () => onPressed(context));

@@ -11,7 +11,6 @@ import 'intro_screen_view_subtitle.dart';
 import 'intro_screen_view_title.dart';
 
 class IntroScreenForegroundView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: _foreground(context));

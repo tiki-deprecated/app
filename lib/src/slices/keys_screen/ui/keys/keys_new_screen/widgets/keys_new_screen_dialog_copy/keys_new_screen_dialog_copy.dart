@@ -7,20 +7,17 @@ import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/bloc/keys_new_screen_dialog_copy_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/widgets/keys_new_screen_dialog_copy_button.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class KeysNewScreenDialogCopy {
-  static final double _marginBottomButton =
-      4.h;
-  static final double _marginVerticalField =
-      0.75.h;
-  static final double _marginVerticalCopy =
-      4.h;
+  static final double _marginBottomButton = 4.h;
+  static final double _marginVerticalField = 0.75.h;
+  static final double _marginVerticalCopy = 4.h;
 
   AlertDialog alert(KeysNewScreenDialogCopyBloc bloc, String combinedKey,
       RepoLocalSsCurrentModel currentModel) {

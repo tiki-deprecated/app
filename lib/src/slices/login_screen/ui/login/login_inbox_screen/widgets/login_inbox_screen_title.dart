@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginInboxScreenTitle extends StatelessWidget {
   static const String _text = "Great, now check your inbox";
