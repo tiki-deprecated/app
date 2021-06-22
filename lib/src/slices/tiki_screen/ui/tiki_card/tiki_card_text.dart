@@ -1,4 +1,4 @@
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 
 class TikiCardText extends StatelessWidget {
@@ -9,6 +9,6 @@ class TikiCardText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: TextStyle(fontSize: 4 * PlatformRelativeSize.blockHorizontal));
+        style: TextStyle(fontSize: 4.w));
   }
 }

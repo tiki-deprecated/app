@@ -5,7 +5,7 @@
 
 import 'package:app/src/config/config_navigate.dart';
 import 'package:app/src/features/login/login_otp/login_otp_valid/bloc/login_otp_valid_bloc.dart';
-import 'package:app/src/slices/app/helper_log_out.dart';
+import 'package:app/src/slices/auth/repository/helper_log_out.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

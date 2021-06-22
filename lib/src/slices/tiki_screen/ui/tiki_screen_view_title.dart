@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 
-class HomeScreenTitle extends StatelessWidget {
+class TikiScreenViewTitle extends StatelessWidget {
   final String _text;
-  static final double _fontSize = 10 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 10.w;
 
-  HomeScreenTitle(this._text);
+  TikiScreenViewTitle(this._text);
 
   @override
   Widget build(BuildContext context) {

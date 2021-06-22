@@ -5,19 +5,19 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreenCounter extends StatefulWidget {
+class TikiScreenViewCounter extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _HomeScreenCounter();
+  State<StatefulWidget> createState() => _TikiScreenViewCounter();
 }
 
-class _HomeScreenCounter extends State<HomeScreenCounter> {
+class _TikiScreenViewCounter extends State<TikiScreenViewCounter> {
   static final double _fontSizeCount =
-      20 * PlatformRelativeSize.blockHorizontal;
-  static final double _fontSizeText = 5 * PlatformRelativeSize.blockHorizontal;
+      20.w;
+  static final double _fontSizeText = 5.w;
 
   @override
   void initState() {

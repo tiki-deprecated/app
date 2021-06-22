@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -19,11 +19,11 @@ class KeysNewScreenGen extends StatefulWidget {
 }
 
 class _KeysNewScreenGen extends State<KeysNewScreenGen> {
-  static final double _marginTopTitle = 9 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle = 9.h;
   static final double _marginTopSubtitle =
-      2.5 * PlatformRelativeSize.blockVertical;
+      2.5.h;
   static final double _marginBottomButton =
-      5 * PlatformRelativeSize.blockVertical;
+      5.h;
 
   @override
   void initState() {

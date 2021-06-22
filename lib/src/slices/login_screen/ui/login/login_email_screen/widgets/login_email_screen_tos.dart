@@ -5,12 +5,12 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/md_viewer/md_viewer.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginEmailScreenTos extends StatelessWidget {
-  static final double _fontSize = 2 * PlatformRelativeSize.blockVertical;
+  static final double _fontSize = 2.h;
 
   @override
   Widget build(BuildContext context) {

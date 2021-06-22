@@ -1,5 +1,5 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 
 class TikiCardTitle extends StatelessWidget {
@@ -13,7 +13,7 @@ class TikiCardTitle extends StatelessWidget {
     return Text(title ?? "",
         style: TextStyle(
             color: textColor ?? ConfigColor.mardiGras,
-            fontSize: 6 * PlatformRelativeSize.blockHorizontal,
+            fontSize: 6.w,
             fontWeight: FontWeight.w800,
             fontFamily: "NunitoSans"));
   }

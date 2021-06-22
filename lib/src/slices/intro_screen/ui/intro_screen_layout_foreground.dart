@@ -4,11 +4,11 @@
  */
 import 'package:flutter/material.dart';
 
-import 'intro_screen_button.dart';
-import 'intro_screen_dots.dart';
-import 'intro_screen_skip_button.dart';
-import 'intro_screen_subtitle.dart';
-import 'intro_screen_title.dart';
+import 'intro_screen_view_button.dart';
+import 'intro_screen_view_dots.dart';
+import 'intro_screen_view_skip_button.dart';
+import 'intro_screen_view_subtitle.dart';
+import 'intro_screen_view_title.dart';
 
 class IntroScreenForegroundView extends StatelessWidget {
 

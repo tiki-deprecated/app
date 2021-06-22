@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'intro_screen_service.dart';
 import 'res/intro_slides_strings.dart' as introStrings;
 import 'package:sizer/sizer.dart';
-import 'ui/intro_screen.dart';
+import 'ui/intro_screen_layout.dart';
 
 class IntroScreenPresenter{
 

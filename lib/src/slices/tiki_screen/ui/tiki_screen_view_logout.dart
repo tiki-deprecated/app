@@ -5,12 +5,12 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/slices/app/helper_log_out.dart';
+import 'package:app/src/slices/auth/repository/helper_log_out.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_text_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreenLogout extends StatelessWidget {
+class TikiScreenViewLogout extends StatelessWidget {
   static const String _text = "Log out";
 
   @override

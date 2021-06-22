@@ -4,14 +4,14 @@
  */
 
 import 'package:app/src/features/login/login_otp/login_otp_req/bloc/login_otp_req_bloc.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginInboxScreenSentTo extends StatelessWidget {
   static const String _text = "I sent an email with a link to";
-  static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 5.w;
 
   @override
   Widget build(BuildContext context) {

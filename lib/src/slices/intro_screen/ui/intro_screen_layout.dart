@@ -6,8 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../intro_screen_service.dart';
-import 'intro_screen_background_view.dart';
-import 'intro_screen_foreground_view.dart';
+import 'intro_screen_layout_background.dart';
+import 'intro_screen_layout_foreground.dart';
 
 class IntroScreen extends StatelessWidget {
 

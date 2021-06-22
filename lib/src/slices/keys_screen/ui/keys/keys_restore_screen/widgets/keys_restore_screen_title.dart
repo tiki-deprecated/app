@@ -4,12 +4,12 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/widgets.dart';
 
 class KeysRestoreScreenTitle extends StatelessWidget {
   static const String _text = "Enter your keys";
-  static final double _fontSize = 10 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 10.w;
 
   @override
   Widget build(BuildContext context) {

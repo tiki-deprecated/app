@@ -5,7 +5,7 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_back_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
@@ -18,10 +18,10 @@ import 'login_inbox_screen_sent_to.dart';
 import 'login_inbox_screen_title.dart';
 
 class LoginInboxScreen extends StatelessWidget {
-  static final double _marginTopTitle = 3 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopResend = 2 * PlatformRelativeSize.blockVertical;
+  static final double _marginTopTitle = 3.h;
+  static final double _marginTopResend = 2.h;
   static final double _marginBottomResend =
-      25 * PlatformRelativeSize.blockVertical;
+      25.h;
 
   Widget _background() {
     return TikiBackground(

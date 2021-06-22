@@ -29,7 +29,6 @@ class GoogleRepository {
       });
       return currentUser;
     } catch (error) {
-      print(error);
       return null;
     }
   }

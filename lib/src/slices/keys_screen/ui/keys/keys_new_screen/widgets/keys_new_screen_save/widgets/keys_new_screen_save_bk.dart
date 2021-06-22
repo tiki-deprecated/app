@@ -9,7 +9,7 @@ import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_di
 import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
 import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +52,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
                   margin: EdgeInsets.only(
-                      bottom: 4 * PlatformRelativeSize.blockHorizontal),
+                      bottom: 4.w),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -72,9 +72,9 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                       children: [
                         Padding(
                             padding: EdgeInsets.only(
-                                top: 0.5 * PlatformRelativeSize.blockVertical,
+                                top: 0.5.h,
                                 right:
-                                    4 * PlatformRelativeSize.blockHorizontal),
+                                    4.w),
                             child: HelperImage("lock-icon")),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,10 +95,10 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                       ])),
               state is KeysNewScreenDialogCopySuccess && state.isKey
                   ? Positioned(
-                      top: 0.25 * PlatformRelativeSize.blockVertical,
-                      left: 6 * PlatformRelativeSize.blockHorizontal,
+                      top: 0.25.h,
+                      left: 6.w,
                       child: Container(
-                          height: 5 * PlatformRelativeSize.blockVertical,
+                          height: 5.h,
                           child: HelperImage("green-check")))
                   : Container(),
             ])),

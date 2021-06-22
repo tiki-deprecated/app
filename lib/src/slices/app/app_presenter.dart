@@ -5,7 +5,7 @@
 import 'package:provider/provider.dart';
 
 import 'app_service.dart';
-import 'ui/app.dart';
+import 'ui/app_layout.dart';
 
 class AppPresenter {
 

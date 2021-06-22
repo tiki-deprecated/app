@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class TikiSubtitle extends StatelessWidget {
     return Text(text,
         textAlign: textAlign,
         style: TextStyle(
-            fontSize: fontSize ?? 5 * PlatformRelativeSize.blockHorizontal,
+            fontSize: fontSize ?? 5.w,
             fontWeight: fontWeight));
   }
 }

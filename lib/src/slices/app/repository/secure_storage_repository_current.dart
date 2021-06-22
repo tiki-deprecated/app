@@ -6,7 +6,7 @@
 import 'package:app/src/repositories/secure_storage/secure_storage_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../slices/app/model/app_model_current.dart';
+import '../model/app_model_current.dart';
 
 class SecureStorageRepositoryCurrent extends SecureStorageRepository<AppModelCurrent> {
   static const String key = "user";

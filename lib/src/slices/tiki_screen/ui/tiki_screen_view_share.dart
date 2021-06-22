@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
 
-/// The [HomeScreen] share section.
+/// The [TikiScreenView] share section.
 ///
 /// It handles the "share your code" action and renders the button.
-class HomeScreenShare extends StatelessWidget {
+class TikiScreenViewShare extends StatelessWidget {
   static late KeysReferralState _state;
   static const String _shareText = "It's your data. Get paid for it.";
 

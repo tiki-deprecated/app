@@ -1,5 +1,5 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 
 /// The default text button for Tiki.
@@ -53,17 +53,17 @@ class TikiTextButton extends StatelessWidget {
 
   _getMargins() {
     return EdgeInsets.fromLTRB(
-        margins['left']! * PlatformRelativeSize.blockHorizontal,
-        margins['top']! * PlatformRelativeSize.blockVertical,
-        margins['right']! * PlatformRelativeSize.blockHorizontal,
-        margins['bottom']! * PlatformRelativeSize.blockVertical);
+        margins['left']!.w,
+        margins['top']!.h,
+        margins['right']!.w,
+        margins['bottom']!.h);
   }
 
   _getPadding() {
     return EdgeInsets.fromLTRB(
-        padding['left']! * PlatformRelativeSize.blockHorizontal,
-        padding['top']! * PlatformRelativeSize.blockVertical,
-        padding['right']! * PlatformRelativeSize.blockHorizontal,
-        padding['bottom']! * PlatformRelativeSize.blockVertical);
+        padding['left']!.w,
+        padding['top']!.h,
+        padding['right']!.w,
+        padding['bottom']!.h);
   }
 }

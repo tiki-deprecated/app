@@ -4,14 +4,14 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class KeysNewScreenDialogDownloadQr extends StatelessWidget {
-  static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 4.w;
   final keyData;
 
   const KeysNewScreenDialogDownloadQr(this.keyData);
@@ -20,8 +20,8 @@ class KeysNewScreenDialogDownloadQr extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget screen = Column(children: [
       Container(
-          height: 50 * PlatformRelativeSize.blockHorizontal,
-          width: 50 * PlatformRelativeSize.blockHorizontal,
+          height: 50.w,
+          width: 50.w,
           child: QrImage(
               version: QrVersions.auto,
               data: keyData,

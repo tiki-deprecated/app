@@ -1,7 +1,7 @@
 import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/repositories/analytics/analytics_repository.dart';
-import 'package:app/src/repositories/database/database_repository.dart';
+import 'package:app/src/slices/analytics/repository/analytics_repository.dart';
 import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/database/database_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -5,19 +5,19 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/cubit/keys_new_screen_dialog_copy_button_cubit.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KeysNewScreenDialogCopyButton extends StatelessWidget {
   static const String _buttonText = "COPY";
-  static final double _borderRadius = 2 * PlatformRelativeSize.blockHorizontal;
+  static final double _borderRadius = 2.w;
   static final double _paddingHorizontal =
-      2 * PlatformRelativeSize.blockHorizontal;
+      2.w;
   static final double _paddingHorizontalIcon =
-      1 * PlatformRelativeSize.blockHorizontal;
-  static final double _fontSize = 4 * PlatformRelativeSize.blockHorizontal;
+      1.w;
+  static final double _fontSize = 4.w;
 
   final String? value;
   final Function() onPressed;

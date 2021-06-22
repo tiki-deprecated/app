@@ -5,13 +5,13 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class KeysNewScreenGenRestore extends StatelessWidget {
   static const String _text = "Already have an account?";
-  static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 5.w;
 
   @override
   Widget build(BuildContext context) {

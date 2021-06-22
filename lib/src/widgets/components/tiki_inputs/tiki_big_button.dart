@@ -1,5 +1,5 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 
 class TikiBigButton extends StatelessWidget {
@@ -11,12 +11,12 @@ class TikiBigButton extends StatelessWidget {
   final double? textWidth;
 
   static final double _letterSpacing =
-      0.05 * PlatformRelativeSize.blockHorizontal;
-  static final double _fontSize = 6 * PlatformRelativeSize.blockHorizontal;
+      0.05.w;
+  static final double _fontSize = 6.w;
   static final double _marginHorizontal =
-      10 * PlatformRelativeSize.blockHorizontal;
+      10.w;
   static final double _marginVertical =
-      2.25 * PlatformRelativeSize.blockVertical;
+      2.25.h;
 
   const TikiBigButton(this._text, this._isActive, this._callback,
       {this.trailing, this.leading, this.textWidth});
@@ -30,7 +30,7 @@ class TikiBigButton extends StatelessWidget {
                 horizontal: textWidth != null ? 0 : _marginHorizontal),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                    Radius.circular(10 * PlatformRelativeSize.blockVertical))),
+                    Radius.circular(10.h))),
             primary: _isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
         child: Row(
           mainAxisSize: MainAxisSize.min,

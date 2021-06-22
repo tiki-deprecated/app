@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 
 class KeysNewScreenGenTitle extends StatelessWidget {
   static const String _text = "Just one sec..";
-  static final double _fontSize = 10 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 10.w;
 
   @override
   Widget build(BuildContext context) {

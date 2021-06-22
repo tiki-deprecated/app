@@ -4,13 +4,13 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/widgets.dart';
 
 class KeysRestoreScreenSubtitle extends StatelessWidget {
   static const String _text =
       "Upload, scan, or manually enter your TIKI account keys";
-  static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
+  static final double _fontSize = 5.w;
 
   @override
   Widget build(BuildContext context) {

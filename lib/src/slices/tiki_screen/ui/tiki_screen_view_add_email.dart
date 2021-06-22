@@ -2,21 +2,21 @@ import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/home_screen_add_email_state.dart';
+import '../home_screen_add_email_state.dart';
 
-class HomeScreenAddEmail extends StatelessWidget {
+class TikiScreenViewAddEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddEmailCubit, AddEmailState>(builder: (context, state) {
-      return HomeScreenAddEmailButton(state);
+      return TikiScreenViewAddEmailButton(state);
     });
   }
 }
 
-class HomeScreenAddEmailButton extends StatelessWidget {
+class TikiScreenViewAddEmailButton extends StatelessWidget {
   final AddEmailState state;
 
-  const HomeScreenAddEmailButton(this.state);
+  const TikiScreenViewAddEmailButton(this.state);
 
   @override
   Widget build(BuildContext context) {

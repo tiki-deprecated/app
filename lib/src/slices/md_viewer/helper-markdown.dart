@@ -11,8 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HelperMarkdown extends StatelessWidget {
   static final double _fontSizeHeading =
-      10 * PlatformRelativeSize.blockHorizontal;
-  static final double _fontSizeText = 4 * PlatformRelativeSize.blockHorizontal;
+      10.w;
+  static final double _fontSizeText = 4.w;
 
   final String source;
 

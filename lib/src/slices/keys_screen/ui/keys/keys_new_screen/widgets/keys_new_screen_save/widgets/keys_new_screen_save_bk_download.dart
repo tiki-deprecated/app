@@ -8,7 +8,7 @@ import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/bloc/keys_new_screen_dialog_download_bloc.dart';
 import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/keys_new_screen_dialog_download.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +38,9 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
                   margin: EdgeInsets.only(
-                      bottom: 8 * PlatformRelativeSize.blockHorizontal),
+                      bottom: 8.w),
                   padding:
-                      EdgeInsets.all(4 * PlatformRelativeSize.blockHorizontal),
+                      EdgeInsets.all(4.w),
                   decoration: BoxDecoration(
                       color: ConfigColor.gallery,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -59,21 +59,21 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                         Padding(
                             padding: EdgeInsets.only(
                                 right:
-                                    4 * PlatformRelativeSize.blockHorizontal),
+                                    4.w),
                             child: HelperImage("icon-download")),
                         Text("Download",
                             style: TextStyle(
                                 fontSize:
-                                    2.5 * PlatformRelativeSize.blockVertical,
+                                    2.5.h,
                                 fontWeight: FontWeight.bold,
                                 color: ConfigColor.mardiGras)),
                       ])),
               state is KeysNewScreenDialogDownloadSuccess
                   ? Positioned(
                       top: 0,
-                      left: 5 * PlatformRelativeSize.blockHorizontal,
+                      left: 5.w,
                       child: Container(
-                          height: 5 * PlatformRelativeSize.blockVertical,
+                          height: 5.h,
                           child: HelperImage("green-check")))
                   : Container(),
             ])),

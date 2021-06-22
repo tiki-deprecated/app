@@ -6,7 +6,7 @@
 import 'package:app/src/repositories/secure_storage/secure_storage_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../slices/login_screen/model/login_screen_model_otp.dart';
+import '../login_screen/model/login_screen_model_otp.dart';
 
 class SecureStorageRepositoryOtp extends SecureStorageRepository<LoginScreenModelOtp> {
   static const String _table = "otp";

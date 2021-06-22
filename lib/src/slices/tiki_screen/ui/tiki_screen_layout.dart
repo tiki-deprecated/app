@@ -9,12 +9,15 @@ import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.da
 import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
 import 'package:app/src/features/home/home_screen/widgets/home_screen_title.dart';
-import 'package:app/src/features/home/home_screen/widgets/tiki_community_card.dart';
-import 'package:app/src/features/home/home_screen/widgets/tiki_follow_us_card.dart';
-import 'package:app/src/features/home/home_screen/widgets/tiki_news_card.dart';
-import 'package:app/src/features/home/home_screen/widgets/tiki_release_card.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_card_community.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_card_follow_us.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_card_news.dart';
+import 'package:app/src/features/home/home_screen/widgets/home_screen_card_release.dart';
+import 'package:app/src/slices/tiki_screen/ui/home_screen_add_email_button.dart';
+import 'package:app/src/slices/tiki_screen/ui/home_screen_title.dart';
 import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
+import 'package:app/src/utils/helper_image.dart';
+import 'package:sizer/sizer.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,14 +25,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/home_screen_logout.dart';
+import 'home_screen_logout.dart';
 
-class HomeScreen extends StatelessWidget {
-  static final double _marginVerticalShare =
-      6 * PlatformRelativeSize.blockVertical;
-  static final double _marginTopCards = 2 * PlatformRelativeSize.blockVertical;
-  static final double _marginVerticalLogOut =
-      4 * PlatformRelativeSize.blockVertical;
+class TikiScreenLayout extends StatelessWidget {
+  // static final double _marginVerticalShare =
+  //     6.h;
+  // static final double _marginTopCards = 2.h;
+  // static final double _marginVerticalLogOut =
+  //     4.h;
 
   Widget _background(context) {
     return TikiBackground(
@@ -48,7 +51,7 @@ class HomeScreen extends StatelessWidget {
           margin: EdgeInsets.only(top: 140, bottom: 20),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Container(child: HomeScreenTitle("Get started"))])),
+              children: [Container(child: TikiScreenViewTitle("Get started"))])),
       Container(child: AddGmailButton()),
       Container(
           width: double.maxFinite,
@@ -56,7 +59,7 @@ class HomeScreen extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
                 margin: EdgeInsets.only(top: 50, bottom: 20),
-                child: HomeScreenTitle("TIKI updates"))
+                child: TikiScreenViewTitle("TIKI updates"))
           ])),
       Container(
           decoration: BoxDecoration(
@@ -74,15 +77,15 @@ class HomeScreen extends StatelessWidget {
                     child: BlocProvider(
                       create: (BuildContext context) =>
                           HomeCounterCubit.provide(context),
-                      child: HomeScreenCounter(),
+                      child: TikiScreenViewCounter(),
                     )),
                 Container(
-                    margin: EdgeInsets.only(top: 30), child: HomeScreenRefer()),
+                    margin: EdgeInsets.only(top: 30), child: TikiScreenViewRefer()),
                 Container(
                     margin:
                         EdgeInsets.symmetric(vertical: _marginVerticalShare),
                     alignment: Alignment.topCenter,
-                    child: HomeScreenShare()),
+                    child: TikiScreenViewShare()),
               ])),
       Container(
         margin: EdgeInsets.only(top: _marginTopCards),
@@ -104,7 +107,7 @@ class HomeScreen extends StatelessWidget {
       Container(
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
-          child: HomeScreenLogout()),
+          child: TikiScreenViewLogout()),
       Container(
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.symmetric(vertical: _marginVerticalLogOut),
