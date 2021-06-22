@@ -9,23 +9,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<AppService>(context, listen: false);
-    return MaterialApp(
-        title: AppModel.title,
-        routes: service.getRoutes(),
-        localizationsDelegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: AppModel.fontFamily,
-                bodyColor: AppModel.bodyColor,
-                displayColor: AppModel.displayColor)));
+    return Sizer(builder: (context, orientation, deviceType) {
+      return MaterialApp(
+          title: AppModel.title,
+          routes: service.getRoutes(context),
+          localizationsDelegates: [
+            DefaultMaterialLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+          ],
+          theme: ThemeData(
+              textTheme: Theme.of(context).textTheme.apply(
+                  fontFamily: AppModel.fontFamily,
+                  bodyColor: AppModel.bodyColor,
+                  displayColor: AppModel.displayColor)));
+    });
   }
 }

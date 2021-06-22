@@ -22,10 +22,11 @@ class AppService extends ChangeNotifier {
   Uri? deepLink;
 
   AppService() {
+    loadHelperLogin();
     presenter = AppPresenter(this);
     model = AppModel();
     controller = AppController();
-    loadHelperLogin();
+
     initDynamicLinks();
   }
 
@@ -33,17 +34,17 @@ class AppService extends ChangeNotifier {
     return presenter.render();
   }
 
-  Future<void> loadHelperLogin() async {
+  loadHelperLogin() async {
     authService = await AuthService().load();
     model.current = authService.current;
     model.user = authService.user;
   }
 
-  getRoutes() {
+  Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {
-      "/": getHome(),
-      "/login": AppModelRoutes.login,
-      "/keys/new": AppModelRoutes.keys,
+      "/": (BuildContext context) => getHome(),
+      "/login": (BuildContext context) => AppModelRoutes.login,
+      "/keys/new": (BuildContext context) => AppModelRoutes.keys,
     };
   }
 
