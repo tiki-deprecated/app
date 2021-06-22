@@ -1,6 +1,6 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiBigInput extends StatelessWidget {
   static final double _paddingHorizontal = 4.w;

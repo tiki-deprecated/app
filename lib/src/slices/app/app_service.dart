@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/auth/repository/helper_log_in.dart';
+import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -17,7 +17,7 @@ class AppService extends ChangeNotifier {
   late AppPresenter presenter;
   late AppModel model;
   late AppController controller;
-  late HelperLogIn helperLogIn;
+  late AuthService authService;
 
   Uri? deepLink;
 
@@ -34,7 +34,9 @@ class AppService extends ChangeNotifier {
   }
 
   Future<void> loadHelperLogin() async {
-    helperLogIn = await HelperLogIn().load();
+    authService = await AuthService().load();
+    model.current = authService.current;
+    model.user = authService.user;
   }
 
   getRoutes() {
@@ -48,8 +50,8 @@ class AppService extends ChangeNotifier {
   getHome() {
     if (this.deepLink != null) {
       _handle(this.deepLink!);
-    } else if (helperLogIn.isReturning()) {
-      if (helperLogIn.isLoggedIn()) {
+    } else if (authService.isReturning()) {
+      if (authService.isLoggedIn()) {
         return AppModelRoutes.home;
       } else {
         return AppModelRoutes.login;
@@ -83,7 +85,7 @@ class AppService extends ChangeNotifier {
   }
 
   void _handleBouncer(Uri link) {
-    String? otp = link.queryParameters["otp"];
+    // String? otp = link.queryParameters["otp"];
     // if (otp != null && otp.isNotEmpty) {
     //   BlocProvider.of<LoginOtpValidBloc>(ConfigNavigate.key.currentContext!)
     //       .add(LoginOtpValidChanged(otp));
@@ -93,7 +95,7 @@ class AppService extends ChangeNotifier {
   }
 
   void _handleBlockchain(Uri link) {
-    String? ref = link.queryParameters["ref"];
+    // String? ref = link.queryParameters["ref"];
     // if (ref != null && ref.isNotEmpty) {
     //   BlocProvider.of<KeysReferralCubit>(context).updateReferer(ref);
     // }

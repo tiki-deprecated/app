@@ -4,9 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiScreenViewCounter extends StatefulWidget {
@@ -19,21 +17,14 @@ class _TikiScreenViewCounter extends State<TikiScreenViewCounter> {
   static final double _fontSizeText = 5.w;
 
   @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<HomeCounterCubit>(context).update();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCounterCubit, HomeCounterState>(
-        builder: (BuildContext context, HomeCounterState state) {
-      return Column(children: [
-        Text(
-            (state.count == null || state.count == 0)
-                ? "..."
-                : state.count.toString().replaceAllMapped(
-                    new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
+    var state = '';
+    return Column(children: [
+        Text("...",
+            // true //(state.count == null || state.count == 0)
+            //     ? "..."
+            //     : state.count.toString().replaceAllMapped(
+            //         new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
             style: TextStyle(
                 color: ConfigColor.flirt,
                 fontFamily: 'Koara',
@@ -46,6 +37,5 @@ class _TikiScreenViewCounter extends State<TikiScreenViewCounter> {
                 fontWeight: FontWeight.w800,
                 color: ConfigColor.tikiBlue))
       ]);
-    });
+    }
   }
-}

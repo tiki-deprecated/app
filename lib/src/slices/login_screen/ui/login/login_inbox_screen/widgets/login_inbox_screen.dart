@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_back_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
@@ -35,7 +35,7 @@ class LoginInboxScreen extends StatelessWidget {
       Container(
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.symmetric(
-              horizontal: PlatformRelativeSize.marginHorizontal),
+              horizontal: 2.w),
           child: Column(children: [
             Container(
               margin: EdgeInsets.only(top: _marginTopTitle),

@@ -3,36 +3,29 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/home/home_counter/bloc/home_counter_cubit.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/widgets/home_screen_add_email_button.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_card_community.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_card_follow_us.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_card_news.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_card_release.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_counter.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_refer.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_share.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_title.dart';
-import 'package:app/src/slices/tiki_screen/ui/home_screen_add_email_button.dart';
-import 'package:app/src/slices/tiki_screen/ui/home_screen_title.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_add_email_button.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_community.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_follow_us.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_news.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_release.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_counter.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_logout.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_refer.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_share.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_title.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-import 'home_screen_logout.dart';
 
 class TikiScreenLayout extends StatelessWidget {
-  // static final double _marginVerticalShare =
-  //     6.h;
-  // static final double _marginTopCards = 2.h;
-  // static final double _marginVerticalLogOut =
-  //     4.h;
+  static final double _marginVerticalShare = 6.h;
+  static final double _marginTopCards = 2.h;
+  static final double _marginVerticalLogOut = 4.h;
 
   Widget _background(context) {
     return TikiBackground(
@@ -76,11 +69,8 @@ class TikiScreenLayout extends StatelessWidget {
               children: <Widget>[
                 Container(
                     margin: EdgeInsets.only(top: 24),
-                    child: BlocProvider(
-                      create: (BuildContext context) =>
-                          HomeCounterCubit.provide(context),
-                      child: TikiScreenViewCounter(),
-                    )),
+                    child: TikiScreenViewCounter(),
+                    ),
                 Container(
                     margin: EdgeInsets.only(top: 30),
                     child: TikiScreenViewRefer()),

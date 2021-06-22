@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-part of 'home_counter_cubit.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class HomeCounterState extends Equatable {
   final int? count;

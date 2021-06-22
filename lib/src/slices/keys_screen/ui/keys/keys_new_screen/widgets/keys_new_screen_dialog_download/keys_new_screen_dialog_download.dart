@@ -4,14 +4,12 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/widgets/keys_new_screen_dialog_download_qr.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_new_screen/widgets/keys_new_screen_dialog_download/widgets/keys_new_screen_dialog_download_qr.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-import 'bloc/keys_new_screen_dialog_download_bloc.dart';
 
 class KeysNewScreenSaveDialogDownload {
   static final double _marginTopTitle = 8.h;
@@ -21,8 +19,7 @@ class KeysNewScreenSaveDialogDownload {
   static final double _marginVerticalButton = 4.h;
   static final double _marginTopQr = 3.h;
 
-  AlertDialog alert(String keyData, KeysNewScreenDialogDownloadBloc bloc,
-      GlobalKey repaintKey) {
+  AlertDialog alert(String keyData, GlobalKey repaintKey) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -35,7 +32,7 @@ class KeysNewScreenSaveDialogDownload {
           left: _marginHorizontalSubtitle,
           right: _marginHorizontalSubtitle),
       title: _title(),
-      content: _content(keyData, bloc, repaintKey),
+      content: _content(keyData, repaintKey),
     );
   }
 
@@ -43,8 +40,7 @@ class KeysNewScreenSaveDialogDownload {
     return TikiTitle("Download key to your device", fontSize: 9);
   }
 
-  Widget _content(String keyData, KeysNewScreenDialogDownloadBloc bloc,
-      GlobalKey repaintKey) {
+  Widget _content(String keyData, GlobalKey repaintKey) {
     return RepaintBoundary(
         key: repaintKey,
         child: Container(
@@ -72,28 +68,13 @@ class KeysNewScreenSaveDialogDownload {
               Container(
                   padding: EdgeInsets.only(top: _marginTopQr),
                   child: KeysNewScreenDialogDownloadQr(keyData)),
-              BlocConsumer<KeysNewScreenDialogDownloadBloc,
-                  KeysNewScreenDialogDownloadState>(
-                bloc: bloc,
-                listener: (BuildContext context,
-                    KeysNewScreenDialogDownloadState state) {
-                  if (state is KeysNewScreenDialogDownloadFailure) {
-                    Future.delayed(Duration(seconds: 1), () {
-                      bloc.add(KeysNewScreenDialogDownloaded(repaintKey));
-                    });
-                  } else if (state is KeysNewScreenDialogDownloadSuccess)
-                    Navigator.of(context).pop();
-                },
-                builder: (BuildContext context,
-                    KeysNewScreenDialogDownloadState state) {
-                  return Container(
+              Container(
                       padding:
                           EdgeInsets.symmetric(vertical: _marginVerticalButton),
-                      child: TikiBigButton('DOWNLOAD', true, (context) {
-                        bloc.add(KeysNewScreenDialogDownloaded(repaintKey));
-                      }));
-                },
+                      child: TikiBigButton('DOWNLOAD', true, () => {})
               )
+
+
             ])));
   }
 

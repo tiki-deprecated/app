@@ -5,12 +5,12 @@
 
 import 'dart:async';
 
-import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_keys/keys_screen_model.dart';
-import 'package:app/src/features/repo/repo_local_ss_keys/secure_storage_repository_keys.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/app_model_user.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/secure_storage_repository_user.dart';
+import 'package:app/src/slices/app/model/app_model_current.dart';
+import 'package:app/src/slices/app/model/app_model_user.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
+import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
+import 'package:app/src/slices/keys_screen/secure_storage_repository_keys.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -22,19 +22,19 @@ part 'keys_restore_screen_state.dart';
 
 class KeysRestoreScreenBloc
     extends Bloc<KeysRestoreScreenEvent, KeysRestoreScreenState> {
-  final RepoLocalSsKeys _repoLocalSsKeys;
-  final RepoLocalSsUser _repoLocalSsUser;
-  final RepoLocalSsCurrent _repoLocalSsCurrent;
+  final SecureStorageRepositoryKeys _repoLocalSsKeys;
+  final SecureStorageRepositoryUser _repoLocalSsUser;
+  final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
 
   KeysRestoreScreenBloc(
-      this._repoLocalSsKeys, this._repoLocalSsUser, this._repoLocalSsCurrent)
+      this._repoLocalSsKeys, this._repoLocalSsUser, this._secureStorageRepositoryCurrent)
       : super(KeysRestoreScreenInitial());
 
   KeysRestoreScreenBloc.provide(BuildContext context)
-      : _repoLocalSsKeys = RepositoryProvider.of<RepoLocalSsKeys>(context),
-        _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
-        _repoLocalSsCurrent =
-            RepositoryProvider.of<RepoLocalSsCurrent>(context),
+      : _repoLocalSsKeys = RepositoryProvider.of<SecureStorageRepositoryKeys>(context),
+        _repoLocalSsUser = RepositoryProvider.of<SecureStorageRepositoryUser>(context),
+        _secureStorageRepositoryCurrent =
+            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         super(KeysRestoreScreenInitial());
 
   @override
@@ -105,17 +105,17 @@ class KeysRestoreScreenBloc
       String address, String? dataPrivate, String? signPrivate) async {
     await _repoLocalSsKeys.save(
         address,
-        RepoLocalSsKeysModel(
+        KeysScreenModel(
             address: address,
             dataPrivateKey: dataPrivate,
             dataPublicKey: null,
             signPrivateKey: signPrivate,
             signPublicKey: null));
-    RepoLocalSsCurrentModel current =
-        await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
+    AppModelCurrent current =
+        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
     await _repoLocalSsUser.save(
         current.email!,
-        RepoLocalSsUserModel(
+        AppModelUser(
             email: current.email, address: state.address, isLoggedIn: true));
   }
 

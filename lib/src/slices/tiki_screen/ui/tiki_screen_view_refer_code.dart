@@ -4,12 +4,10 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiScreenViewReferCode extends StatefulWidget {
@@ -28,15 +26,13 @@ class _TikiScreenViewReferCode extends State<TikiScreenViewReferCode> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<KeysReferralCubit>(context).getLink();
+    // BlocProvider.of<KeysReferralCubit>(context).getLink();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KeysReferralCubit, KeysReferralState>(
-        builder: (BuildContext context, KeysReferralState state) {
-      return _button(state.link);
-    });
+    var link;
+    return _button(link);
   }
 
   Widget _button(Uri? link) {

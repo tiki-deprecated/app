@@ -5,10 +5,9 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
-import 'package:sizer/sizer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiBackButton extends StatelessWidget {
   static const String _text = "Back";

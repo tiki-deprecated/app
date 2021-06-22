@@ -3,13 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_navigate.dart';
-import 'package:app/src/features/login/login_otp/login_otp_req/bloc/login_otp_req_bloc.dart';
-import 'package:app/src/utils/analytics/analytics_repository.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// The login screen button.
 ///
@@ -21,33 +17,10 @@ class LoginEmailScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _blocConsumer(context);
+    return TikiBigButton(_text, true, _submitLogin);
   }
 
-  BlocConsumer _blocConsumer(BuildContext context) {
-    return BlocConsumer<LoginOtpReqBloc, LoginOtpReqState>(
-        listener: _blocConsumerListener, builder: _blocConsumerBuilder);
-  }
 
-  _blocConsumerListener(BuildContext context, LoginOtpReqState state) {
-    if (state is LoginOtpReqStateFailure)
-      Navigator.of(context).pushNamed(ConfigNavigate.path.loginEmail);
-  }
-
-  Widget _blocConsumerBuilder(BuildContext context, LoginOtpReqState state) {
-    bool isButtonActive =
-        state is LoginOtpReqStateInProgress ? state.isValid : false;
-    return _button(context, isButtonActive);
-  }
-
-  Widget _button(BuildContext context, bool isActive) {
-    return TikiBigButton(_text, isActive, _submitLogin);
-  }
-
-  _submitLogin(BuildContext context) {
-    TikiAnalytics.getLogger()!.logEvent('EMAIL_SUBMITTED');
-    Navigator.of(context).pushNamed(ConfigNavigate.path.loginInbox);
-    LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
-    bloc.add(LoginOtpReqSubmitted(bloc.state.email));
+  _submitLogin() {
   }
 }

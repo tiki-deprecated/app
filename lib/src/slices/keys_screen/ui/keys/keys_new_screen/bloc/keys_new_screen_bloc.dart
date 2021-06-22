@@ -5,24 +5,21 @@
 
 import 'dart:async';
 
-import 'package:app/src/features/keys/keys_referral/bloc/keys_referral_cubit.dart';
-import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
-import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
-import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_keys/keys_screen_model.dart';
-import 'package:app/src/features/repo/repo_local_ss_keys/secure_storage_repository_keys.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/app_model_user.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/secure_storage_repository_user.dart';
-import 'package:app/src/repositories/api/helper_api_rsp.dart';
-import 'package:app/src/utils/helper/crypto/helper_crypto.dart';
-import 'package:app/src/utils/helper/crypto/helper_crypto_ecdsa.dart';
-import 'package:app/src/utils/helper/crypto/helper_crypto_rsa.dart';
+import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address.dart';
+import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
+import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
+import 'package:app/src/slices/app/model/app_model_current.dart';
+import 'package:app/src/slices/app/model/app_model_user.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
+import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
+import 'package:app/src/slices/keys_screen/secure_storage_repository_keys.dart';
+import 'package:app/src/utils/crypto/helper_crypto.dart';
+import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
+import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/ecc/api.dart';
@@ -33,29 +30,18 @@ part 'keys_new_screen_state.dart';
 
 class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
   static const fileName = "tiki-do-not-share.png";
-  final RepoLocalSsKeys _repoLocalSsKeys;
-  final RepoLocalSsUser _repoLocalSsUser;
-  final RepoLocalSsCurrent _repoLocalSsCurrent;
-  final KeysReferralCubit _keysReferralCubit;
+  final SecureStorageRepositoryKeys _repoLocalSsKeys;
+  final SecureStorageRepositoryUser _repoLocalSsUser;
+  final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
   final RepoApiBlockchainAddress _repoApiBlockchainAddress;
 
   KeysNewScreenBloc(
       this._repoLocalSsKeys,
       this._repoLocalSsUser,
-      this._repoLocalSsCurrent,
-      this._keysReferralCubit,
+      this._secureStorageRepositoryCurrent,
       this._repoApiBlockchainAddress)
       : super(KeysNewScreenInitial());
 
-  KeysNewScreenBloc.provide(BuildContext context)
-      : _repoLocalSsKeys = RepositoryProvider.of<RepoLocalSsKeys>(context),
-        _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
-        _repoLocalSsCurrent =
-            RepositoryProvider.of<RepoLocalSsCurrent>(context),
-        _keysReferralCubit = BlocProvider.of<KeysReferralCubit>(context),
-        _repoApiBlockchainAddress =
-            RepositoryProvider.of<RepoApiBlockchainAddress>(context),
-        super(KeysNewScreenInitial());
 
   @override
   Stream<KeysNewScreenState> mapEventToState(
@@ -102,6 +88,7 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
   }
 
   Future<bool> _saveAndLogIn() async {
+    var _keysReferralCubit;
     HelperApiRsp<RepoApiBlockchainAddressRsp> rsp =
         await _repoApiBlockchainAddress.issue(RepoApiBlockchainAddressReq(
             state.dataPublic, state.signPublic,
@@ -109,18 +96,18 @@ class KeysNewScreenBloc extends Bloc<KeysNewScreenEvent, KeysNewScreenState> {
     if (rsp.code == 200 && rsp.data.address == state.address) {
       await _repoLocalSsKeys.save(
           state.address!,
-          RepoLocalSsKeysModel(
+          KeysScreenModel(
               address: state.address,
               dataPrivateKey: state.dataPrivate,
               dataPublicKey: state.dataPublic,
               signPrivateKey: state.signPrivate,
               signPublicKey: state.signPublic));
 
-      RepoLocalSsCurrentModel current =
-          await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
+      AppModelCurrent current =
+          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
       await _repoLocalSsUser.save(
           current.email!,
-          RepoLocalSsUserModel(
+          AppModelUser(
               email: current.email, address: state.address, isLoggedIn: true));
       return true;
     } else {

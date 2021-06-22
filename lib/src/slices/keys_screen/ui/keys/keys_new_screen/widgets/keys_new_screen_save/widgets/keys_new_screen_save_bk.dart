@@ -4,11 +4,11 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/keys_new_screen_dialog_copy.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/slices/app/model/app_model_current.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/keys_new_screen_dialog_copy.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +24,10 @@ class KeysNewScreenSaveBk extends StatelessWidget {
     return BlocProvider(
         create: (context) => KeysNewScreenDialogCopyBloc(),
         child: FutureBuilder(
-            future: RepositoryProvider.of<RepoLocalSsCurrent>(context)
-                .find(RepoLocalSsCurrent.key),
+            future: RepositoryProvider.of<SecureStorageRepositoryCurrent>(context)
+                .find(SecureStorageRepositoryCurrent.key),
             builder: (BuildContext context,
-                AsyncSnapshot<RepoLocalSsCurrentModel> currentModel) {
+                AsyncSnapshot<AppModelCurrent> currentModel) {
               return BlocConsumer<KeysNewScreenDialogCopyBloc,
                       KeysNewScreenDialogCopyState>(
                   listener: (BuildContext context,
@@ -45,7 +45,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
   Widget _horizontalButton(
       BuildContext context,
       KeysNewScreenDialogCopyState state,
-      AsyncSnapshot<RepoLocalSsCurrentModel> currentModel) {
+      AsyncSnapshot<AppModelCurrent> currentModel) {
     return GestureDetector(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -78,13 +78,11 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                               Text("Save securely",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 3 *
-                                          PlatformRelativeSize.blockVertical,
+                                      fontSize: 3.h,
                                       color: ConfigColor.mardiGras)),
                               Text("(recommended)",
                                   style: TextStyle(
-                                      fontSize: 3 *
-                                          PlatformRelativeSize.blockVertical,
+                                      fontSize: 3.h,
                                       fontWeight: FontWeight.bold,
                                       color: ConfigColor.jade)),
                             ])
@@ -100,21 +98,22 @@ class KeysNewScreenSaveBk extends StatelessWidget {
         onTap: () => _saveKey(context, currentModel.data!));
   }
 
-  _saveKey(BuildContext context, RepoLocalSsCurrentModel currentModel) async {
-    KeysNewScreenState state =
-        BlocProvider.of<KeysNewScreenBloc>(context).state;
-    KeysNewScreenDialogCopyBloc bloc =
-        BlocProvider.of<KeysNewScreenDialogCopyBloc>(context);
+  _saveKey(BuildContext context, AppModelCurrent currentModel) async {
+    // KeysNewScreenState state =
+    //     BlocProvider.of<KeysNewScreenBloc>(context).state;
+    // KeysNewScreenDialogCopyBloc bloc =
+    //     BlocProvider.of<KeysNewScreenDialogCopyBloc>(context);
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          String key = state.address! +
-              '.' +
-              state.dataPrivate! +
-              '.' +
-              state.signPrivate!;
-          return KeysNewScreenDialogCopy().alert(bloc, key, currentModel);
+          String key = "";
+          // state.address! +
+          //     '.' +
+          //     state.dataPrivate! +
+          //     '.' +
+          //     state.signPrivate!;
+          return KeysNewScreenDialogCopy().alert(key, currentModel);
         });
   }
 }

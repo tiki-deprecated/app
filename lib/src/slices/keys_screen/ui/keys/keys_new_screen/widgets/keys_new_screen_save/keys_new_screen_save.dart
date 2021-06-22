@@ -3,13 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/keys/keys_new_screen/bloc/keys_new_screen_bloc.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'widgets/keys_new_screen_save_bk.dart';
@@ -22,9 +20,7 @@ class KeysNewScreenSave extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KeysNewScreenBloc, KeysNewScreenState>(
-        builder: (BuildContext context, KeysNewScreenState state) {
-      return Container(
+    return Container(
           height: MediaQuery.of(context).size.height * 0.95,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,6 +52,5 @@ class KeysNewScreenSave extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: _marginBottomButton),
                     child: KeysNewScreenSaveRestore())
               ]));
-    });
-  }
+    }
 }

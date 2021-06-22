@@ -1,4 +1,4 @@
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/animated_card_container.dart';
+import 'package:app/src/slices/gmail_data_screen/ui/tiki_info_cards/slider_info_card/widgets/animated_card_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

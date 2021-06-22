@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/repositories/secure_storage/secure_storage_repository.dart';
+import 'package:app/src/slices/secure_storage/secure_storage_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../login_screen/model/login_screen_model_otp.dart';

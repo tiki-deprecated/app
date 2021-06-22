@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_navigate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +16,7 @@ class KeysNewScreenSaveRestore extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(ConfigNavigate.path.keysRestore);
+          // Navigator.of(context).pushNamed(ConfigNavigate.path.keysRestore);
         },
         child: Text(_text,
             style: TextStyle(

@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address.dart';
-import 'package:app/src/features/repo/repo_api_blockchain_address/repo_api_blockchain_address_refer_rsp.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/secure_storage_repository_current.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/app_model_user.dart';
-import 'package:app/src/features/repo/repo_local_ss_user/secure_storage_repository_user.dart';
-import 'package:app/src/repositories/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address.dart';
+import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_refer_rsp.dart';
+import 'package:app/src/slices/app/model/app_model_current.dart';
+import 'package:app/src/slices/app/model/app_model_user.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
+import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -19,18 +19,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'keys_referral_state.dart';
 
 class KeysReferralCubit extends Cubit<KeysReferralState> {
-  final RepoLocalSsCurrent _repoLocalSsCurrent;
-  final RepoLocalSsUser _repoLocalSsUser;
+  final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
+  final SecureStorageRepositoryUser _repoLocalSsUser;
   final RepoApiBlockchainAddress _repoApiBlockchainAddress;
 
-  KeysReferralCubit(this._repoLocalSsCurrent, this._repoLocalSsUser,
+  KeysReferralCubit(this._secureStorageRepositoryCurrent, this._repoLocalSsUser,
       this._repoApiBlockchainAddress)
       : super(KeysReferralInitial());
 
   KeysReferralCubit.provide(BuildContext context)
-      : _repoLocalSsUser = RepositoryProvider.of<RepoLocalSsUser>(context),
-        _repoLocalSsCurrent =
-            RepositoryProvider.of<RepoLocalSsCurrent>(context),
+      : _repoLocalSsUser = RepositoryProvider.of<SecureStorageRepositoryUser>(context),
+        _secureStorageRepositoryCurrent =
+            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         _repoApiBlockchainAddress =
             RepositoryProvider.of<RepoApiBlockchainAddress>(context),
         super(KeysReferralInitial());
@@ -41,9 +41,9 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
 
   Future<void> getLink() async {
     if (state.link == null) {
-      RepoLocalSsCurrentModel current =
-          await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-      RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email!);
+      AppModelCurrent current =
+          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+      AppModelUser user = await _repoLocalSsUser.find(current.email!);
       if (user.referral == null) {
         final DynamicLinkParameters parameters = DynamicLinkParameters(
             uriPrefix: 'https://mytiki.app',
@@ -78,9 +78,9 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
   }
 
   Future<void> getCount() async {
-    RepoLocalSsCurrentModel current =
-        await _repoLocalSsCurrent.find(RepoLocalSsCurrent.key);
-    RepoLocalSsUserModel user = await _repoLocalSsUser.find(current.email!);
+    AppModelCurrent current =
+        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
+    AppModelUser user = await _repoLocalSsUser.find(current.email!);
     HelperApiRsp<RepoApiBlockchainAddressReferRsp> apiRsp =
         await _repoApiBlockchainAddress.referCount(user.address);
     if (apiRsp.code == 200) {

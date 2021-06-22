@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:app/src/config/config_domain.dart';
-import 'package:app/src/repositories/api/helper_api_rsp.dart';
-import 'package:app/src/repositories/api/helper_headers.dart';
 import 'package:http/http.dart' as http;
 
+import '../helper_api_rsp.dart';
+import '../helper_headers.dart';
 import 'repo_api_bouncer_jwt_req_otp.dart';
 import 'repo_api_bouncer_jwt_req_refresh.dart';
 import 'repo_api_bouncer_jwt_rsp.dart';

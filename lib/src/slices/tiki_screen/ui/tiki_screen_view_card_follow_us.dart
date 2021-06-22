@@ -1,9 +1,9 @@
-import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:app/src/widgets/components/tiki_card/tiki_card.dart';
-import 'package:app/src/widgets/components/tiki_card/tiki_card_figure.dart';
-import 'package:app/src/widgets/components/tiki_card/tiki_card_grid_cta.dart';
-import 'package:app/src/widgets/components/tiki_card/tiki_card_text.dart';
-import 'package:app/src/widgets/components/tiki_card/tiki_card_title.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_figure.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_grid_cta.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_text.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_title.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

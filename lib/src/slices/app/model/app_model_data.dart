@@ -19,6 +19,5 @@ class AppModelData {
     value = map['value'].toString();
   }
 
-  @override
   String getTable() => "app_data";
 }

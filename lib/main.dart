@@ -1,5 +1,5 @@
 import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/analytics/repository/analytics_repository.dart';
+import 'package:app/src/slices/analytics/analytics_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/database/database_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,11 +35,11 @@ Future<void> main() async {
 /// [FlutterSecureStorage] initializes the secure storage that will keep the keys.
 /// [HelperLogin] handles login state.
 /// [SystemChrome] uses setPreferedOrientation to keep app in portrait
-/// [TikiAnalytics] enables in-app anonymous analytics with Amplitude.
+/// [AnalyticsService] enables in-app anonymous analytics with Amplitude.
 /// [DatabaseRepository] SQLite connector
 Future<void> initializeDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AnalyticsRepository.getLogger();
+  AnalyticsService.getLogger();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );

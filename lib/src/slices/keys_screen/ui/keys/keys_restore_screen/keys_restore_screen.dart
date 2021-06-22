@@ -4,19 +4,17 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_restore_screen/bloc/keys_restore_screen_bloc.dart';
-import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_back.dart';
-import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_input.dart';
-import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_scan.dart';
-import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_submit.dart';
-import 'package:app/src/features/keys/keys_restore_screen/widgets/keys_restore_screen_subtitle.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_restore_screen/widgets/keys_restore_screen_back.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_restore_screen/widgets/keys_restore_screen_input.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_restore_screen/widgets/keys_restore_screen_scan.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_restore_screen/widgets/keys_restore_screen_submit.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_restore_screen/widgets/keys_restore_screen_subtitle.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'widgets/keys_restore_screen_divider.dart';
@@ -32,11 +30,9 @@ class KeysRestoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => KeysRestoreScreenBloc.provide(context),
-        child: TikiScaffold(
+    return TikiScaffold(
             background: _background() as TikiBackground?,
-            foregroundChildren: _foreground(context)));
+            foregroundChildren: _foreground(context));
   }
 
   Widget _background() {

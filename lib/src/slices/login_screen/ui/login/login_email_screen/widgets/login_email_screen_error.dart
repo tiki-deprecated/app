@@ -4,10 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/login/login_otp/login_otp_req/bloc/login_otp_req_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginEmailScreenError extends StatelessWidget {
@@ -16,11 +14,8 @@ class LoginEmailScreenError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginOtpReqBloc, LoginOtpReqState>(
-        builder: (BuildContext context, LoginOtpReqState state) {
-      return _textWidget(state is LoginOtpReqStateFailure);
-    });
-  }
+    return _textWidget(true);
+    }
 
   Widget _textWidget(bool isError) {
     return Align(

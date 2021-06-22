@@ -3,18 +3,13 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_cubit.dart';
-import 'package:app/src/features/home/home_screen/widgets/home_screen_add_email/bloc/home_screen_add_email_state.dart';
-import 'package:app/src/repositories/google/google_repository.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/slices/gmail_data_screen/ui/tiki_info_cards/slider_info_card/slider_info_card.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/utils/helper_permission.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/slider_info_card.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_cards.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
@@ -24,49 +19,25 @@ import 'package:url_launcher/url_launcher.dart';
 class AddGmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (BuildContext context) => AddEmailCubit(),
-        child: BlocBuilder<AddEmailCubit, AddEmailState>(
-            builder: (BuildContext context, AddEmailState state) {
-          _getGmailCurrentUser(context);
-          return state is InitialState
-              ? CircularProgressIndicator(
-                  color: ConfigColor.mardiGras,
-                )
-              : _addBtn(context);
-        }));
+    return _addBtn(context);
   }
 
-  _getGmailCurrentUser(context) async {
-    AddEmailCubit cubit = BlocProvider.of<AddEmailCubit>(context);
-    HelperGoogleAuth().getConnectedUser().then((connectedUser) {
-      if (connectedUser != null) {
-        cubit.emit(AddedState(connectedUser));
-      } else {
-        cubit.emit(NotAddedState());
-      }
-    });
-  }
-
-  _removeGmail(context) {
-    AddEmailCubit cubit = BlocProvider.of<AddEmailCubit>(context);
-    cubit.removeAccount();
-  }
-
-  _addGmail(context) {
-    AddEmailCubit cubit = BlocProvider.of<AddEmailCubit>(context);
-    cubit.addAccount();
-  }
-
-  _whatGmailHolds(context) {
-    List<SliderInfoCard> cards = createCards();
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SliderInfoCards(cards)));
-  }
-
+  // _removeGmail(context) {
+  //   controller.removeAccount();
+  // }
+  //
+  // _addGmail(context) {
+  //   controller.addAccount();
+  // }
+  //
+  // _whatGmailHolds(context) {
+  //   List<SliderInfoCard> cards = createCards();
+  //   Navigator.of(context)
+  //       .push(MaterialPageRoute(builder: (context) => SliderInfoCards(cards)));
+  // }
+  //
   Widget _addBtn(context) {
-    AddEmailState state = BlocProvider.of<AddEmailCubit>(context).state;
-    List<Widget> child = state is AddedState
+    List<Widget> child = true
         ? [_removeRow(context), _seeButton(context)]
         : [_addButton(context)];
 
@@ -74,9 +45,7 @@ class AddGmailButton extends StatelessWidget {
   }
 
   Widget _removeRow(context) {
-    AddedState state =
-        BlocProvider.of<AddEmailCubit>(context).state as AddedState;
-    String? gmail = state.currentUser?.email;
+    var gmail;
     return Container(
         margin: EdgeInsets.only(bottom: 12),
         child: RichText(
@@ -97,8 +66,8 @@ class AddGmailButton extends StatelessWidget {
                 text: gmail ?? "your Gmail account.",
               ),
               TextSpan(
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => _removeGmail(context),
+                // recognizer: TapGestureRecognizer()
+                //   ..onTap = () => _removeGmail(context),
                 style: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.bold,
@@ -109,7 +78,7 @@ class AddGmailButton extends StatelessWidget {
               WidgetSpan(
                   alignment: ui.PlaceholderAlignment.middle,
                   child: GestureDetector(
-                    onTap: () => _removeGmail(context),
+                    //onTap: () => _removeGmail(context),
                     child: Container(
                         width: 16.0,
                         height: 16.0,
@@ -155,8 +124,8 @@ class AddGmailButton extends StatelessWidget {
               width: 30,
             )
           ]),
-          onTap: () => _addGmail(context)), //_whatGmailHolds(context)),
-    );
+          //onTap: () => _addGmail(context)), //_whatGmailHolds(context)),
+    ));
   }
 
   Widget _seeButton(context) {
@@ -186,8 +155,8 @@ class AddGmailButton extends StatelessWidget {
               width: 30,
             )
           ]),
-          onTap: () => _whatGmailHolds(context)),
-    );
+          //onTap: () => _whatGmailHolds(context)),
+    ));
   }
 
   List<SliderInfoCard> createCards() {
@@ -197,10 +166,10 @@ class AddGmailButton extends StatelessWidget {
           Expanded(
               child: Row(children: [
             HelperImage("gmail-round-logo",
-                width: PlatformRelativeSize.blockHorizontal * 6),
+                width: 6.w),
             Padding(
                 padding: EdgeInsets.only(
-                    right: PlatformRelativeSize.blockHorizontal * 2)),
+                    right: 2.w)),
             Text(
               "Your Gmail account",
               style: TextStyle(
@@ -249,7 +218,7 @@ class AddGmailButton extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
-                            fontSize: 2 * PlatformRelativeSize.blockVertical,
+                            fontSize: 2.sp,
                             fontFamily: "NunitoSans"),
                         text:
                             " every time you open your inbox or send an email.\n\nMost Google products and almost all email services do this. Some, like Outlook, but NOT Gmail, will even send your IP address to the person receiving your email.\n\nThe most common use approximates your location, pinpointing you within 3-5 miles anywhere in the world. In extreme cases, like criminal investigations, your IP address can be tied to your exact device and location by working with an Internet Service Provider.",
@@ -303,7 +272,7 @@ class AddGmailButton extends StatelessWidget {
                           style: TextStyle(
                               color: ConfigColor.tikiBlue,
                               fontWeight: FontWeight.w400,
-                              fontSize: 2 * PlatformRelativeSize.blockVertical,
+                              fontSize: 2.sp,
                               fontFamily: "NunitoSans"),
                           text:
                               " to hide your IP address or, for true anonymity, switch to an ",
@@ -316,7 +285,7 @@ class AddGmailButton extends StatelessWidget {
                                     color: ConfigColor.orange,
                                     fontWeight: FontWeight.bold,
                                     fontSize:
-                                        2 * PlatformRelativeSize.blockVertical,
+                                        2.sp,
                                     fontFamily: "NunitoSans"),
                                 text: "encrypted email service",
                                 children: [
@@ -324,9 +293,7 @@ class AddGmailButton extends StatelessWidget {
                                       style: TextStyle(
                                           color: ConfigColor.tikiBlue,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 2 *
-                                              PlatformRelativeSize
-                                                  .blockVertical,
+                                          fontSize: 2.sp,
                                           fontFamily: "NunitoSans"),
                                       text:
                                           ".\n\nGmail does not currently use additional location services, here’s how to  ",
@@ -337,9 +304,7 @@ class AddGmailButton extends StatelessWidget {
                                             style: TextStyle(
                                                 color: ConfigColor.tikiBlue,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 2 *
-                                                    PlatformRelativeSize
-                                                        .blockVertical,
+                                                fontSize: 2.sp,
                                                 fontFamily: "NunitoSans"),
                                             text: "block them",
                                             children: [
@@ -347,9 +312,7 @@ class AddGmailButton extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: ConfigColor.tikiBlue,
                                                     fontWeight: FontWeight.w400,
-                                                    fontSize: 2 *
-                                                        PlatformRelativeSize
-                                                            .blockVertical,
+                                                    fontSize: 2.sp,
                                                     fontFamily: "NunitoSans"),
                                                 text:
                                                     ".\n\nIf you just hate the ads, you can turn off ad personalization for your entire Google account. ",
@@ -415,7 +378,7 @@ class AddGmailButton extends StatelessWidget {
                       TextSpan(
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 2 * PlatformRelativeSize.blockVertical,
+                            fontSize: 2.h,
                             fontFamily: "NunitoSans"),
                         text: "\n\nCreepy.",
                       )
@@ -470,7 +433,7 @@ class AddGmailButton extends StatelessWidget {
                         style: TextStyle(
                             color: ConfigColor.tikiBlue,
                             fontWeight: FontWeight.w400,
-                            fontSize: 2 * PlatformRelativeSize.blockVertical,
+                            fontSize: 2.sp,
                             fontFamily: "NunitoSans"),
                         text:
                             "and “smart features” to stop Google from scanning your emails.",

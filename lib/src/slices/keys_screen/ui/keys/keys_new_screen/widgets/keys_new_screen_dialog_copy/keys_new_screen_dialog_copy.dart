@@ -4,9 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/bloc/keys_new_screen_dialog_copy_bloc.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/widgets/keys_new_screen_dialog_copy_button.dart';
-import 'package:app/src/features/repo/repo_local_ss_current/app_model_current.dart';
+import 'package:app/src/slices/app/model/app_model_current.dart';
+import 'package:app/src/slices/keys_screen/ui/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/widgets/keys_new_screen_dialog_copy_button.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
@@ -19,13 +18,12 @@ class KeysNewScreenDialogCopy {
   static final double _marginVerticalField = 0.75.h;
   static final double _marginVerticalCopy = 4.h;
 
-  AlertDialog alert(KeysNewScreenDialogCopyBloc bloc, String combinedKey,
-      RepoLocalSsCurrentModel currentModel) {
+  AlertDialog alert(String combinedKey, AppModelCurrent currentModel) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
       title: _title(),
-      content: _content(bloc, combinedKey, currentModel),
+      content: _content(combinedKey, currentModel),
     );
   }
 
@@ -33,8 +31,7 @@ class KeysNewScreenDialogCopy {
     return TikiTitle("Save securely to a pass manager", fontSize: 9);
   }
 
-  Widget _content(KeysNewScreenDialogCopyBloc bloc, String combinedKey,
-      RepoLocalSsCurrentModel currentModel) {
+  Widget _content(String combinedKey, AppModelCurrent currentModel) {
     return Container(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
       TikiSubtitle(
@@ -52,11 +49,12 @@ class KeysNewScreenDialogCopy {
                   color: ConfigColor.gray, fontWeight: FontWeight.bold),
             ),
             KeysNewScreenDialogCopyButton(currentModel.email,
-                () => bloc.add(KeysNewScreenDialogEmailCopied())),
+                () => {}),
             Padding(
                 padding: EdgeInsets.symmetric(vertical: _marginVerticalField)),
             KeysNewScreenDialogCopyButton(
-                combinedKey, () => bloc.add(KeysNewScreenDialogKeyCopied())),
+                combinedKey, () => {}
+            ),
           ],
         ),
       ),

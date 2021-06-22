@@ -1,4 +1,4 @@
-import 'package:app/src/widgets/components/tiki_card/tiki_card_inline_cta.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_inline_cta.dart';
 import 'package:flutter/material.dart';
 
 import 'tiki_card_cta.dart';

@@ -4,10 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_restore_screen/bloc/keys_restore_screen_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenSubmit extends StatelessWidget {
@@ -19,19 +17,11 @@ class KeysRestoreScreenSubmit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KeysRestoreScreenBloc, KeysRestoreScreenState>(
-        builder: (BuildContext context, KeysRestoreScreenState state) {
-      return _button(context,
-          state is KeysRestoreScreenInProgress ? state.isValid : false);
-    });
-  }
-
-  Widget _button(BuildContext context, bool isActive) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: isActive ? ConfigColor.mardiGras : ConfigColor.mamba),
+            primary: true ? ConfigColor.mardiGras : ConfigColor.mamba),
         child: Wrap(
           direction: Axis.vertical,
           children: [
@@ -48,9 +38,9 @@ class KeysRestoreScreenSubmit extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          if (isActive) {
-            BlocProvider.of<KeysRestoreScreenBloc>(context)
-                .add(KeysRestoreScreenSubmitted());
+          if (true) {
+            // BlocProvider.of<KeysRestoreScreenBloc>(context)
+            //     .add(KeysRestoreScreenSubmitted());
           }
         });
   }

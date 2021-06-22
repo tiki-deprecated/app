@@ -1,8 +1,9 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
-import 'package:sizer/sizer.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/widgets/card-cta.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
+import 'card-cta.dart';
 
 class CardContent extends StatelessWidget {
   final BoxConstraints constraints;
@@ -20,10 +21,10 @@ class CardContent extends StatelessWidget {
         child: Column(children: [
           Container(
               margin: EdgeInsets.only(
-                  left: PlatformRelativeSize.blockVertical * 2.9,
-                  top: PlatformRelativeSize.blockVertical * 1.9,
-                  right: PlatformRelativeSize.blockVertical * 1.9,
-                  bottom: PlatformRelativeSize.blockVertical * 1.9),
+                  left: 2.9.h,
+                  top: 1.9.h,
+                  right: 1.9.h,
+                  bottom: 1.9.h),
               child: this.cardContentData['cardContentData']
                   ['richTextExplanation']),
           _whatTheySay(),

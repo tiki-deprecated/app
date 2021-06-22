@@ -17,15 +17,15 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'helper_api_rsp.dart';
 
 class HelperApiAuth {
-  final SecureStorageRepositoryCurrent _repoLocalSsCurrent;
+  final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
   final SecureStorageRepositoryToken _repoLocalSsToken;
   final RepoApiBouncerJwt _repoApiBouncerJwt;
 
-  HelperApiAuth(this._repoLocalSsCurrent, this._repoLocalSsToken,
+  HelperApiAuth(this._secureStorageRepositoryCurrent, this._repoLocalSsToken,
       this._repoApiBouncerJwt);
 
   HelperApiAuth.provide(BuildContext context)
-      : _repoLocalSsCurrent =
+      : _secureStorageRepositoryCurrent =
             RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         _repoLocalSsToken =
             RepositoryProvider.of<SecureStorageRepositoryToken>(context),
@@ -36,7 +36,7 @@ class HelperApiAuth {
     HelperApiRsp<T> rsp = await request();
     if (rsp.code == 401) {
       AppModelCurrent current =
-          await _repoLocalSsCurrent.find(SecureStorageRepositoryCurrent.key);
+          await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
       LoginScreenModelToken token =
           await _repoLocalSsToken.find(current.email!);
       if (token.refresh == null) {
@@ -64,7 +64,7 @@ class HelperApiAuth {
 
   Future<String?> bearer() async {
     AppModelCurrent current =
-        await _repoLocalSsCurrent.find(SecureStorageRepositoryCurrent.key);
+        await _secureStorageRepositoryCurrent.find(SecureStorageRepositoryCurrent.key);
     LoginScreenModelToken token = await _repoLocalSsToken.find(current.email!);
     return token.bearer;
   }

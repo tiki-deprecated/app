@@ -4,10 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_new_screen/widgets/keys_new_screen_dialog_copy/cubit/keys_new_screen_dialog_copy_button_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysNewScreenDialogCopyButton extends StatelessWidget {
@@ -24,13 +22,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => KeysNewScreenDialogCopyButtonCubit(),
-        child: BlocBuilder<KeysNewScreenDialogCopyButtonCubit,
-            KeysNewScreenDialogCopyButtonState>(
-          builder:
-              (BuildContext context, KeysNewScreenDialogCopyButtonState state) {
-            return Container(
+    return Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: ConfigColor.white,
@@ -40,11 +32,9 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                   borderRadius:
                       BorderRadius.all(Radius.circular(_borderRadius))),
               child: Row(
-                children: [_text(), _button(context, state)],
+                children: [_text(), _button()],
               ),
             );
-          },
-        ));
   }
 
   Widget _text() {
@@ -58,8 +48,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                 textAlign: TextAlign.left)));
   }
 
-  Widget _button(
-      BuildContext context, KeysNewScreenDialogCopyButtonState state) {
+  Widget _button() {
     return Container(
         decoration: BoxDecoration(
             border: Border(left: BorderSide(color: ConfigColor.silverChalice))),
@@ -71,11 +60,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                   bottomRight: Radius.circular(_borderRadius)),
             ),
             child: TextButton(
-                onPressed: () {
-                  BlocProvider.of<KeysNewScreenDialogCopyButtonCubit>(context)
-                      .copied(value!);
-                  onPressed();
-                },
+                onPressed: () => {},
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all(EdgeInsets.zero)),
                 child: Align(
@@ -89,18 +74,15 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: _fontSize,
-                                    color: state
-                                            is KeysNewScreenDialogCopyButtonSuccess
+                                    color: true
                                         ? ConfigColor.jade
                                         : ConfigColor.mardiGras)),
                             Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: _paddingHorizontalIcon),
                                 child: Container(
-                                    width: 4 *
-                                        PlatformRelativeSize.blockHorizontal,
-                                    child: state
-                                            is KeysNewScreenDialogCopyButtonSuccess
+                                    width: 4.w,
+                                    child: true
                                         ? Image(
                                             image: AssetImage(
                                                 "res/images/icon-check.png"))

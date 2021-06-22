@@ -4,12 +4,10 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/features/keys/keys_restore_screen/bloc/keys_restore_screen_bloc.dart';
-import 'package:app/src/utils/helper/helper_image.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 
@@ -44,8 +42,8 @@ class KeysRestoreScreenScan extends StatelessWidget {
             ])),
         onPressed: () async {
           if (await HelperPermission.request(Permission.camera)) {
-            BlocProvider.of<KeysRestoreScreenBloc>(context)
-                .add(KeysRestoreScreenScanned());
+            // BlocProvider.of<KeysRestoreScreenBloc>(context)
+            //     .add(KeysRestoreScreenScanned());
           }
         });
   }

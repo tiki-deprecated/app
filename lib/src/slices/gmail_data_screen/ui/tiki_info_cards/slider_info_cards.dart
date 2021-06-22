@@ -1,5 +1,5 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/widgets/components/tiki_info_cards/slider_info_card/slider_info_card.dart';
+import 'package:app/src/slices/gmail_data_screen/ui/tiki_info_cards/slider_info_card/slider_info_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
