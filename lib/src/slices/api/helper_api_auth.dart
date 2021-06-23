@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt.dart';
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_req_refresh.dart';
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_rsp.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
+import 'package:app/src/slices/auth/repository/repo_api_bouncer_jwt.dart';
+import 'package:app/src/slices/auth/repository/repo_api_bouncer_jwt_req_refresh.dart';
+import 'package:app/src/slices/auth/repository/repo_api_bouncer_jwt_rsp.dart';
+import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:app/src/slices/login_screen/model/login_screen_model_token.dart';
-import 'package:app/src/slices/login_screen/secure_storage_repository_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -45,7 +45,7 @@ class HelperApiAuth {
         // HelperLogOut.provide(ConfigNavigate.key.currentContext!)
         //     .user(ConfigNavigate.key.currentContext!, current.email!);
       } else {
-        HelperApiRsp<RepoApiBouncerJwtRsp> refreshRsp = await _repoApiBouncerJwt
+        HelperApiRsp<RepoApiBouncerJwtRsp> refreshRsp = await RepoApiBouncerJwt
             .refresh(RepoApiBouncerJwtReqRefresh(token.refresh));
         if (refreshRsp.code == 200) {
           RepoApiBouncerJwtRsp jwt = refreshRsp.data;

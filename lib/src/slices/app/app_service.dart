@@ -26,7 +26,6 @@ class AppService extends ChangeNotifier {
     presenter = AppPresenter(this);
     model = AppModel();
     controller = AppController();
-
     initDynamicLinks();
   }
 

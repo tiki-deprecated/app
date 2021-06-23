@@ -8,15 +8,15 @@ import 'dart:convert';
 import 'package:app/src/config/config_domain.dart';
 import 'package:http/http.dart' as http;
 
-import '../helper_api_rsp.dart';
-import '../helper_headers.dart';
+import '../../api/helper_api_rsp.dart';
+import '../../api/helper_headers.dart';
 import 'repo_api_bouncer_otp_req.dart';
 import 'repo_api_bouncer_otp_rsp.dart';
 
 class RepoApiBouncerOtp {
   static const String _path = '/api/latest/otp/email';
 
-  Future<HelperApiRsp<RepoApiBouncerOtpRsp>> email(
+  static Future<HelperApiRsp<RepoApiBouncerOtpRsp>> email(
       RepoApiBouncerOtpReq req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _path),

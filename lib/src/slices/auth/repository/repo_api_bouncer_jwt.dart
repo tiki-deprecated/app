@@ -8,8 +8,8 @@ import 'dart:convert';
 import 'package:app/src/config/config_domain.dart';
 import 'package:http/http.dart' as http;
 
-import '../helper_api_rsp.dart';
-import '../helper_headers.dart';
+import '../../api/helper_api_rsp.dart';
+import '../../api/helper_headers.dart';
 import 'repo_api_bouncer_jwt_req_otp.dart';
 import 'repo_api_bouncer_jwt_req_refresh.dart';
 import 'repo_api_bouncer_jwt_rsp.dart';
@@ -19,7 +19,7 @@ class RepoApiBouncerJwt {
   static final String _pathOtp = _path + '/otp';
   static final String _pathRefresh = _path + '/refresh';
 
-  Future<HelperApiRsp<RepoApiBouncerJwtRsp>> otp(
+  static Future<HelperApiRsp<RepoApiBouncerJwtRsp>> otp(
       RepoApiBouncerJwtReqOtp req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathOtp),
@@ -30,7 +30,7 @@ class RepoApiBouncerJwt {
         (json) => RepoApiBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
   }
 
-  Future<HelperApiRsp<RepoApiBouncerJwtRsp>> refresh(
+  static Future<HelperApiRsp<RepoApiBouncerJwtRsp>> refresh(
       RepoApiBouncerJwtReqRefresh req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathRefresh),

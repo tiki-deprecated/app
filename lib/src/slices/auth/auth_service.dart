@@ -7,10 +7,10 @@ import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
+import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
-import 'package:app/src/slices/keys_screen/secure_storage_repository_keys.dart';
+import 'package:app/src/slices/keys_screen/repository/secure_storage_repository_keys.dart';
 import 'package:app/src/slices/login_screen/model/login_screen_model_token.dart';
-import 'package:app/src/slices/login_screen/secure_storage_repository_token.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
@@ -66,6 +66,4 @@ class AuthService {
   }
 
   void logout() {}
-
-  void login() {}
 }
