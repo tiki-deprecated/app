@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class LoginScreenModelOtp {
+class AuthModelOtp {
   String? email;
   String? salt;
 
-  LoginScreenModelOtp({this.email, this.salt});
+  AuthModelOtp({this.email, this.salt});
 
-  LoginScreenModelOtp.fromJson(Map<String, dynamic>? json) {
+  AuthModelOtp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.email = json['email'];
       this.salt = json['salt'];

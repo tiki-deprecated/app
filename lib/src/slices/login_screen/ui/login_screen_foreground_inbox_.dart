@@ -17,7 +17,7 @@ import 'login_inbox_screen_resend.dart';
 import 'login_inbox_screen_sent_to.dart';
 import 'login_inbox_screen_title.dart';
 
-class LoginInboxScreen extends StatelessWidget {
+class LoginScreenForegroundInbox extends StatelessWidget {
   static final double _marginTopTitle = 3.h;
   static final double _marginTopResend = 2.h;
   static final double _marginBottomResend = 25.h;

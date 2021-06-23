@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginEmailScreenError extends StatelessWidget {
+class LoginScreenViewError extends StatelessWidget {
   static const String _text = "Please enter a valid email";
   static final double _fontSize = 4.w;
 

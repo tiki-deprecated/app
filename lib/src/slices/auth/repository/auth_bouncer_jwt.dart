@@ -10,34 +10,34 @@ import 'package:http/http.dart' as http;
 
 import '../../api/helper_api_rsp.dart';
 import '../../api/helper_headers.dart';
-import 'repo_api_bouncer_jwt_req_otp.dart';
-import 'repo_api_bouncer_jwt_req_refresh.dart';
-import 'repo_api_bouncer_jwt_rsp.dart';
+import '../model/auth_bouncer_jwt_req_otp.dart';
+import '../model/auth_bouncer_jwt_req_refresh.dart';
+import '../model/auth_bouncer_jwt_rsp.dart';
 
-class RepoApiBouncerJwt {
+class AuthBouncerJwt {
   static final String _path = '/api/latest/jwt';
   static final String _pathOtp = _path + '/otp';
   static final String _pathRefresh = _path + '/refresh';
 
-  static Future<HelperApiRsp<RepoApiBouncerJwtRsp>> otp(
-      RepoApiBouncerJwtReqOtp req) async {
+  static Future<HelperApiRsp<AuthBouncerJwtRsp>> otp(
+      AuthModelJwtReqOtp req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathOtp),
         headers: HelperHeaders().header,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
-        (json) => RepoApiBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
+        (json) => AuthBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
   }
 
-  static Future<HelperApiRsp<RepoApiBouncerJwtRsp>> refresh(
-      RepoApiBouncerJwtReqRefresh req) async {
+  static Future<HelperApiRsp<AuthBouncerJwtRsp>> refresh(
+      AuthModelJwtReqRefresh req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathRefresh),
         headers: HelperHeaders().header,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
-        (json) => RepoApiBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
+        (json) => AuthBouncerJwtRsp.fromJson(json as Map<String, dynamic>?));
   }
 }

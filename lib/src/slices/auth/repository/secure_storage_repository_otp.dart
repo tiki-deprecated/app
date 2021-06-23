@@ -6,16 +6,15 @@
 import 'package:app/src/slices/secure_storage/secure_storage_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../login_screen/model/login_screen_model_otp.dart';
+import '../model/auth_model_otp.dart';
 
-class SecureStorageRepositoryOtp
-    extends SecureStorageRepository<LoginScreenModelOtp> {
+class SecureStorageRepositoryOtp extends SecureStorageRepository<AuthModelOtp> {
   static const String _table = "otp";
   static const String _version = "0.0.1";
   static const String reqKey = "req";
 
   SecureStorageRepositoryOtp({FlutterSecureStorage? secureStorage})
-      : super(_table, _version, (LoginScreenModelOtp model) => model.toJson(),
-            (Map<String, dynamic>? json) => LoginScreenModelOtp.fromJson(json),
+      : super(_table, _version, (AuthModelOtp model) => model.toJson(),
+            (Map<String, dynamic>? json) => AuthModelOtp.fromJson(json),
             secureStorage: secureStorage);
 }

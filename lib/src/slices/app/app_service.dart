@@ -12,6 +12,8 @@ import 'app_controller.dart';
 import 'app_presenter.dart';
 import 'model/app_model.dart';
 import 'model/app_model_routes.dart';
+import 'model/app_model_user.dart';
+import 'repository/secure_storage_repository_user.dart';
 
 class AppService extends ChangeNotifier {
   late AppPresenter presenter;
@@ -99,5 +101,16 @@ class AppService extends ChangeNotifier {
     // if (ref != null && ref.isNotEmpty) {
     //   BlocProvider.of<KeysReferralCubit>(context).updateReferer(ref);
     // }
+  }
+
+  saveUser(String email, AppModelUser user) async {
+    if (user.address != null) {
+      await SecureStorageRepositoryUser().save(email,
+          AppModelUser(email: email, address: user.address, isLoggedIn: true));
+    } else {
+      await SecureStorageRepositoryUser()
+          .save(email, AppModelUser(email: email, isLoggedIn: false));
+    }
+    notifyListeners();
   }
 }

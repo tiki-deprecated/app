@@ -18,7 +18,6 @@ class _TikiScreenViewCounter extends State<TikiScreenViewCounter> {
 
   @override
   Widget build(BuildContext context) {
-    var state = '';
     return Column(children: [
       Text("...",
           // true //(state.count == null || state.count == 0)

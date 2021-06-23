@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class LoginScreenModelToken {
+class AuthModelToken {
   String? bearer;
   String? refresh;
   int? expiresIn;
 
-  LoginScreenModelToken({this.bearer, this.refresh, this.expiresIn});
+  AuthModelToken({this.bearer, this.refresh, this.expiresIn});
 
-  LoginScreenModelToken.fromJson(Map<String, dynamic>? json) {
+  AuthModelToken.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.bearer = json['bearer'];
       this.refresh = json['refresh'];

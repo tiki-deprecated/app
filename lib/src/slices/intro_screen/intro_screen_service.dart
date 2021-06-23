@@ -52,8 +52,9 @@ class IntroScreenService extends ChangeNotifier {
 
   void skipToLogin(context) {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => LoginScreenService().getUI()), ModalRoute.withName('/login'),);
+      MaterialPageRoute(builder: (context) => LoginScreenService().getUI()),
+      ModalRoute.withName('/login'),
+    );
   }
 
   bool isLastSlide() {

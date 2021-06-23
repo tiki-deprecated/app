@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBouncerOtpRsp {
+class AuthModelOtpRsp {
   String? salt;
   DateTime? issued;
   DateTime? expires;
 
-  RepoApiBouncerOtpRsp(this.salt, {this.issued, this.expires});
+  AuthModelOtpRsp(this.salt, {this.issued, this.expires});
 
-  RepoApiBouncerOtpRsp.fromJson(Map<String, dynamic>? json) {
+  AuthModelOtpRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.salt = json['salt'];
       this.issued = DateTime.parse(json['issued']);

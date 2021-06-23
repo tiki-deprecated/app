@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBouncerJwtReqOtp {
+class AuthModelJwtReqOtp {
   String? otp;
   String? salt;
 
-  RepoApiBouncerJwtReqOtp(this.otp, this.salt);
+  AuthModelJwtReqOtp(this.otp, this.salt);
 
-  RepoApiBouncerJwtReqOtp.fromJson(Map<String, dynamic> json) {
+  AuthModelJwtReqOtp.fromJson(Map<String, dynamic> json) {
     this.otp = json['otp'];
     this.salt = json['salt'];
   }

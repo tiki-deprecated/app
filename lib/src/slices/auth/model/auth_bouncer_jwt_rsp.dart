@@ -3,16 +3,16 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBouncerJwtRsp {
+class AuthBouncerJwtRsp {
   String? accessToken;
   String? tokenType;
   int? expiresIn;
   String? refreshToken;
 
-  RepoApiBouncerJwtRsp(
+  AuthBouncerJwtRsp(
       {this.accessToken, this.tokenType, this.expiresIn, this.refreshToken});
 
-  RepoApiBouncerJwtRsp.fromJson(Map<String, dynamic>? json) {
+  AuthBouncerJwtRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.accessToken = json['accessToken'];
       this.tokenType = json['tokenType'];

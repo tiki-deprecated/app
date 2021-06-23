@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBouncerOtpReq {
+class AuthModelOtpReq {
   String? email;
 
-  RepoApiBouncerOtpReq(this.email);
+  AuthModelOtpReq(this.email);
 
-  RepoApiBouncerOtpReq.fromJson(Map<String, dynamic> json) {
+  AuthModelOtpReq.fromJson(Map<String, dynamic> json) {
     this.email = json['email'];
   }
 

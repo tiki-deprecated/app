@@ -10,14 +10,14 @@ import 'package:http/http.dart' as http;
 
 import '../../api/helper_api_rsp.dart';
 import '../../api/helper_headers.dart';
-import 'repo_api_bouncer_otp_req.dart';
-import 'repo_api_bouncer_otp_rsp.dart';
+import '../model/auth_bouncer_otp_req.dart';
+import '../model/auth_bouncer_otp_rsp.dart';
 
-class RepoApiBouncerOtp {
+class AuthBouncerOtp {
   static const String _path = '/api/latest/otp/email';
 
-  static Future<HelperApiRsp<RepoApiBouncerOtpRsp>> email(
-      RepoApiBouncerOtpReq req) async {
+  static Future<HelperApiRsp<AuthModelOtpRsp>> email(
+      AuthModelOtpReq req) async {
     http.Response rsp = await http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _path),
         headers: HelperHeaders().header,
@@ -25,6 +25,6 @@ class RepoApiBouncerOtp {
 
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
-        (json) => RepoApiBouncerOtpRsp.fromJson(json as Map<String, dynamic>?));
+        (json) => AuthModelOtpRsp.fromJson(json as Map<String, dynamic>?));
   }
 }

@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBouncerJwtReqRefresh {
+class AuthModelJwtReqRefresh {
   String? refreshToken;
 
-  RepoApiBouncerJwtReqRefresh(this.refreshToken);
+  AuthModelJwtReqRefresh(this.refreshToken);
 
-  RepoApiBouncerJwtReqRefresh.fromJson(Map<String, dynamic> json) {
+  AuthModelJwtReqRefresh.fromJson(Map<String, dynamic> json) {
     this.refreshToken = json['refreshToken'];
   }
 
