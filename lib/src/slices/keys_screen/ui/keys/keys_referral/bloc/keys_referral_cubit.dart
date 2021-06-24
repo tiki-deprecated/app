@@ -4,12 +4,12 @@
  */
 
 import 'package:app/src/slices/api/helper_api_rsp.dart';
-import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address.dart';
-import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_refer_rsp.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
+import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address.dart';
+import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address_refer_rsp.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';

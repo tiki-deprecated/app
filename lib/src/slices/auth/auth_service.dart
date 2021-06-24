@@ -81,8 +81,6 @@ class AuthService {
 
   void logout() {}
 
-  login() {}
-
   processOtpRequest(String email, String salt) async {
     await SecureStorageRepositoryOtp().save(SecureStorageRepositoryOtp.reqKey,
         AuthModelOtp(email: email, salt: salt));

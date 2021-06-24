@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 
 class TikiScreenViewTitle extends StatelessWidget {
   final String _text;
-  static final double _fontSize = 10.w;
+  static final double _fontSize = 30.sp;
 
   TikiScreenViewTitle(this._text);
 

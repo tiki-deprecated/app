@@ -6,14 +6,14 @@
 import 'dart:async';
 
 import 'package:app/src/slices/api/helper_api_rsp.dart';
-import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address.dart';
-import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
-import 'package:app/src/slices/api/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
 import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
+import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address.dart';
+import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
+import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
 import 'package:app/src/slices/keys_screen/repository/secure_storage_repository_keys.dart';
 import 'package:app/src/utils/crypto/helper_crypto.dart';
 import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
