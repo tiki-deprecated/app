@@ -14,7 +14,7 @@ class InforCardTopHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<GmailDataScreenService>(context);
+    var service = Provider.of<GmailDataScreenService>(context, listen:false);
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       Expanded(
           child: Row(children: [

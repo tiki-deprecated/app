@@ -7,20 +7,15 @@ import 'login_screen_service.dart';
 class LoginScreenPresenter {
   final LoginScreenService service;
 
-  get marginTopTitle => 15.h;
-
-  get marginTopCta => 2.h;
-
-  get marginRightTitle => 15.w;
-
-  get marginTopButton => 4.h;
-
-  get marginTopTos => 2.h;
-
   get title => "Hey, nice to see you here";
-
   get subtitle => "Enter your email below to begin.";
 
+
+  get marginTopTitle => 15.h;
+  get marginTopCta => 2.h;
+  get marginRightTitle => 15.w;
+  get marginTopButton => 4.h;
+  get marginTopTos => 2.h;
   final double marginTopText = 2.5.h;
   final double marginTopButtonInbox = 5.h;
   final double marginTopTitleInbox = 15.h;

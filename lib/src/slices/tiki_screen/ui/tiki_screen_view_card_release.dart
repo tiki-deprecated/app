@@ -14,7 +14,7 @@ class TikiNextReleaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return GestureDetector(
         child: TikiCard(
           TikiCardTitle("Coming next"),

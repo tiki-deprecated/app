@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/login_screen/ui/login_screen_inbox_back_button.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_back_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
@@ -31,7 +32,7 @@ class LoginScreenForegroundInbox extends StatelessWidget {
 
   List<Widget> _foreground(BuildContext context) {
     return [
-      TikiBackButton(),
+      LoginScreenInboxBackButton(),
       Container(
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.symmetric(horizontal: 2.w),

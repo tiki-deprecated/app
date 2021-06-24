@@ -16,7 +16,7 @@ class LoginScreenViewTos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<LoginScreenService>(context);
+    var service = Provider.of<LoginScreenService>(context, listen:false);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopTos),
         child: Wrap(

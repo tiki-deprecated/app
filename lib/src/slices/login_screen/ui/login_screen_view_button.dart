@@ -19,7 +19,7 @@ class LoginScreenViewButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<LoginScreenService>(context);
+    var service = Provider.of<LoginScreenService>(context, listen:false);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopButton),
         child: TikiBigButton(_text, true, service.controller.submitLogin));

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class TikiScreenViewNewsCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopCards),
         alignment: Alignment.topCenter,

@@ -11,7 +11,7 @@ class AppModel {
   static const Color displayColor = ConfigColor.mardiGras;
   static const Color bodyColor = ConfigColor.mardiGras;
 
-  AppModelRoutes routes = AppModelRoutes();
+  Map<String, WidgetBuilder>? routes;
 
   late AppModelCurrent? current;
   late AppModelUser? user;

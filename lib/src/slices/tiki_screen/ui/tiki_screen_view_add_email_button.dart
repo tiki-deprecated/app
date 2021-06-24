@@ -13,7 +13,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     List<Widget> child = service.model.googleAccount == null
     ? [_removeRow(context, service), _seeButton(context, service)]
         : [_addButton(context, service)];

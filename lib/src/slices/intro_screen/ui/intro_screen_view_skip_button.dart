@@ -16,7 +16,7 @@ class IntroScreenSkipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
     var text = service.presenter.skipText;
-    var marginTop = service.presenter.marginTopSkip;
+    var marginTop = service.presenter.margins['marginTopSkip'];
     return Container(
         margin: EdgeInsets.only(top: marginTop),
         alignment: Alignment.topRight,

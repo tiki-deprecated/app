@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 class GmailDataScreenController{
 
   shareCard(BuildContext context, String message, String image) {
-   Provider.of<GmailDataScreenService>(context).shareCard(message, image);
+   Provider.of<GmailDataScreenService>(context, listen:false).shareCard(message, image);
   }
 
   launchUrl(BuildContext context, String url) async {
-    Provider.of<GmailDataScreenService>(context).launchUrl(url);
+    Provider.of<GmailDataScreenService>(context, listen:false).launchUrl(url);
   }
 
 }

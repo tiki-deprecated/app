@@ -33,6 +33,6 @@ class InfoCardCtaExplanation extends StatelessWidget {
 
   _launchUrl(String? url, context) {
     if(url != null)
-      Provider.of<GmailDataScreenService>(context).launchUrl(url);
+      Provider.of<GmailDataScreenService>(context, listen:false).launchUrl(url);
   }
 }

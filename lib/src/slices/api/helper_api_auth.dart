@@ -24,9 +24,9 @@ class HelperApiAuth {
 
   HelperApiAuth.provide(BuildContext context)
       : _secureStorageRepositoryCurrent =
-            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
+            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context, listen:false),
         _repoLocalSsToken =
-            RepositoryProvider.of<SecureStorageRepositoryToken>(context);
+            RepositoryProvider.of<SecureStorageRepositoryToken>(context, listen:false);
 
   Future<HelperApiRsp<T>> proxy<T>(
       Future<HelperApiRsp<T>> Function() request) async {

@@ -13,7 +13,7 @@ class TikiScreenLayoutBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return Stack(children: [
       Center(child: Container(color: service.presenter.bgcolor)),
       Align(

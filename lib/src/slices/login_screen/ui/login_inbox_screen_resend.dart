@@ -22,7 +22,7 @@ class LoginInboxScreenResend extends StatelessWidget {
           style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.w600)),
       TextButton(
           onPressed: () {
-            // LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context);
+            // LoginOtpReqBloc bloc = BlocProvider.of<LoginOtpReqBloc>(context, listen:false);
             // bloc.add(LoginOtpReqSubmitted(bloc.state.email));
           },
           child: Row(children: [

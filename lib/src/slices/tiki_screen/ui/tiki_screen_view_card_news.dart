@@ -14,7 +14,7 @@ import '../tiki_screen_service.dart';
 class TikiNewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return GestureDetector(
         child: TikiCard(
           TikiCardTitle("Latest News"),

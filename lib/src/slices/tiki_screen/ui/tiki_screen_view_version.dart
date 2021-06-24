@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class TikiScreenViewVersion extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return Container(
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.symmetric(vertical: service.presenter.marginVerticalLogOut),

@@ -20,7 +20,7 @@ class _TikiScreenViewTikiBoxCounter extends State<TikiScreenViewTikiBoxCounter> 
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return Column(children: [
       Text(
           service.model.count == 0

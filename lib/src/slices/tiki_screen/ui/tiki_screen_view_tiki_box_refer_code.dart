@@ -22,7 +22,7 @@ class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var link = Provider.of<TikiScreenService>(context).model.link;
+    var link = Provider.of<TikiScreenService>(context, listen:false).model.link;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 60),
         child: OutlinedButton(

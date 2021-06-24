@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class TikiFollowUsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
+    var service = Provider.of<TikiScreenService>(context, listen:false);
     return TikiCard(
       TikiCardTitle("Follow us"),
       TikiCardText("Follow TIKI on social - you never know they'll do."),
