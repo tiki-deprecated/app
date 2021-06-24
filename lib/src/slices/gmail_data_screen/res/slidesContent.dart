@@ -82,15 +82,15 @@ var slides = [
         "image" : "gmail-round-logo",
         "title" : "Your Gmail account",
         "shareCard" : {
-          "message": "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
-          "image": 'socialmedia2.png'
+        "message": "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
+        "image": 'socialmedia2.png'
         },
-        'image': "what-written",
-        'subtitle': "Gmail knows...",
-        'bigTextLighter': 'What you’ve written to ',
-        'bigTextDarker': 'your friends',
-        'subText': "Gmail has all emails you’ve ever written to anyone. They look at the content in the emails, so they know you better."
       },
+      'image': "what-written",
+      'subtitle': "Gmail knows...",
+      'bigTextLighter': 'What you’ve written to ',
+      'bigTextDarker': 'your friends',
+      'subText': "Gmail has all emails you’ve ever written to anyone. They look at the content in the emails, so they know you better."
     },
     'cardData': {
       'cardContentData': {
