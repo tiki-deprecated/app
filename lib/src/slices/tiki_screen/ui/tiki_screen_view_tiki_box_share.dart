@@ -4,13 +4,12 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../tiki_screen_service.dart';
-import 'package:sizer/sizer.dart';
 
 /// The [TikiScreenView] share section.
 ///

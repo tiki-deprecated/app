@@ -9,7 +9,6 @@ import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TikiNextReleaseCard extends StatelessWidget {
 
