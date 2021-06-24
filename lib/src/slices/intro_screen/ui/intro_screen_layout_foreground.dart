@@ -10,7 +10,7 @@ import 'intro_screen_view_skip_button.dart';
 import 'intro_screen_view_subtitle.dart';
 import 'intro_screen_view_title.dart';
 
-class IntroScreenForegroundView extends StatelessWidget {
+class IntroScreenForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: _foreground(context));

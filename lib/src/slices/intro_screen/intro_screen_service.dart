@@ -1,3 +1,4 @@
+import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:flutter/material.dart';
 
 import 'intro_screen_controller.dart';
@@ -50,8 +51,10 @@ class IntroScreenService extends ChangeNotifier {
   }
 
   void skipToLogin(context) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', ModalRoute.withName('/login'));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => LoginScreenService().getUI()),
+      ModalRoute.withName('/login'),
+    );
   }
 
   bool isLastSlide() {

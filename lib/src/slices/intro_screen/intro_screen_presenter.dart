@@ -16,9 +16,13 @@ class IntroScreenPresenter {
   IntroScreenPresenter(this.service);
 
   get skipText => introStrings.skip;
+
   get currentSlideIndex => service.model.getCurrentSlideIndex();
+
   get buttonText => introStrings.slides[currentSlideIndex]["button"];
+
   get subtitle => introStrings.slides[currentSlideIndex]["subtitle"];
+
   get title => introStrings.slides[currentSlideIndex]["title"];
 
   ChangeNotifierProvider<IntroScreenService> render() {

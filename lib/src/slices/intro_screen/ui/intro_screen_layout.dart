@@ -19,8 +19,8 @@ class IntroScreen extends StatelessWidget {
         body: Center(
             child: GestureDetector(
                 child: Stack(children: [
-                  IntroScreenBackgroundView(),
-                  IntroScreenForegroundView()
+                  IntroScreenBackground(),
+                  IntroScreenForeground()
                 ]),
                 onHorizontalDragEnd: (dragEndDetails) =>
                     controller.onHorizontalDrag(context, dragEndDetails))));
