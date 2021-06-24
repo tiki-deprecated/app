@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
         body: Center(
             child: Stack(children: [
       LoginScreenBackground(),
-      isSubmitted ? LoginScreenForegroundEmail() : LoginScreenForegroundInbox()
+      isSubmitted ? LoginScreenForegroundInbox() : LoginScreenForegroundEmail()
     ])));
   }
 }
