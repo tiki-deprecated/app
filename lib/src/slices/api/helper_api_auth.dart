@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt.dart';
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_req_refresh.dart';
-import 'package:app/src/slices/api/repo_api_bouncer_jwt/repo_api_bouncer_jwt_rsp.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
-import 'package:app/src/slices/login_screen/model/login_screen_model_token.dart';
-import 'package:app/src/slices/login_screen/secure_storage_repository_token.dart';
+import 'package:app/src/slices/auth/model/auth_bouncer_jwt_req_refresh.dart';
+import 'package:app/src/slices/auth/model/auth_bouncer_jwt_rsp.dart';
+import 'package:app/src/slices/auth/model/auth_model_token.dart';
+import 'package:app/src/slices/auth/repository/auth_bouncer_jwt.dart';
+import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -19,17 +19,14 @@ import 'helper_api_rsp.dart';
 class HelperApiAuth {
   final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;
   final SecureStorageRepositoryToken _repoLocalSsToken;
-  final RepoApiBouncerJwt _repoApiBouncerJwt;
 
-  HelperApiAuth(this._secureStorageRepositoryCurrent, this._repoLocalSsToken,
-      this._repoApiBouncerJwt);
+  HelperApiAuth(this._secureStorageRepositoryCurrent, this._repoLocalSsToken);
 
   HelperApiAuth.provide(BuildContext context)
       : _secureStorageRepositoryCurrent =
             RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         _repoLocalSsToken =
-            RepositoryProvider.of<SecureStorageRepositoryToken>(context),
-        _repoApiBouncerJwt = RepositoryProvider.of<RepoApiBouncerJwt>(context);
+            RepositoryProvider.of<SecureStorageRepositoryToken>(context);
 
   Future<HelperApiRsp<T>> proxy<T>(
       Future<HelperApiRsp<T>> Function() request) async {
@@ -37,21 +34,20 @@ class HelperApiAuth {
     if (rsp.code == 401) {
       AppModelCurrent current = await _secureStorageRepositoryCurrent
           .find(SecureStorageRepositoryCurrent.key);
-      LoginScreenModelToken token =
-          await _repoLocalSsToken.find(current.email!);
+      AuthModelToken token = await _repoLocalSsToken.find(current.email!);
       if (token.refresh == null) {
         Sentry.captureMessage("No refresh token. Logging out",
             level: SentryLevel.warning);
         // HelperLogOut.provide(ConfigNavigate.key.currentContext!)
         //     .user(ConfigNavigate.key.currentContext!, current.email!);
       } else {
-        HelperApiRsp<RepoApiBouncerJwtRsp> refreshRsp = await _repoApiBouncerJwt
-            .refresh(RepoApiBouncerJwtReqRefresh(token.refresh));
+        HelperApiRsp<AuthBouncerJwtRsp> refreshRsp =
+            await AuthBouncerJwt.refresh(AuthModelJwtReqRefresh(token.refresh));
         if (refreshRsp.code == 200) {
-          RepoApiBouncerJwtRsp jwt = refreshRsp.data;
+          AuthBouncerJwtRsp jwt = refreshRsp.data;
           _repoLocalSsToken.save(
               current.email!,
-              LoginScreenModelToken(
+              AuthModelToken(
                   bearer: jwt.accessToken,
                   refresh: jwt.refreshToken,
                   expiresIn: jwt.expiresIn));
@@ -65,12 +61,12 @@ class HelperApiAuth {
   Future<String?> bearer() async {
     AppModelCurrent current = await _secureStorageRepositoryCurrent
         .find(SecureStorageRepositoryCurrent.key);
-    LoginScreenModelToken token = await _repoLocalSsToken.find(current.email!);
+    AuthModelToken token = await _repoLocalSsToken.find(current.email!);
     return token.bearer;
   }
 
   Future<String?> bearerForUser(String email) async {
-    LoginScreenModelToken token = await _repoLocalSsToken.find(email);
+    AuthModelToken token = await _repoLocalSsToken.find(email);
     return token.bearer;
   }
 }

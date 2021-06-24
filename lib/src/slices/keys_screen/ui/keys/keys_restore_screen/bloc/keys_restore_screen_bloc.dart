@@ -10,7 +10,7 @@ import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
 import 'package:app/src/slices/keys_screen/model/keys_screen_model.dart';
-import 'package:app/src/slices/keys_screen/secure_storage_repository_keys.dart';
+import 'package:app/src/slices/keys_screen/repository/secure_storage_repository_keys.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
