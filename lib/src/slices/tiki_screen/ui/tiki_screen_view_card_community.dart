@@ -1,4 +1,5 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_figure.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_row_cta.dart';
@@ -6,11 +7,12 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_text.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_title.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 
 class TikiCommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<TikiScreenService>(context);
     return TikiCard(
         TikiCardTitle("TIKI tribe"),
         TikiCardText("Join our community of TIKI-nites from around the globe."),
@@ -19,7 +21,7 @@ class TikiCommunityCard extends StatelessWidget {
           Expanded(
               child: GestureDetector(
                   onTap: () =>
-                      _launchUrl("https://discord.com/invite/evjYQq48Be"),
+                      service.controller.launchUrl("https://discord.com/invite/evjYQq48Be"),
                   child: Container(
                     height: 40,
                     decoration: BoxDecoration(
@@ -44,7 +46,7 @@ class TikiCommunityCard extends StatelessWidget {
                   ))),
           Expanded(
               child: GestureDetector(
-                  onTap: () => _launchUrl(
+                  onTap: () => service.controller.launchUrl(
                       "https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP"),
                   child: Container(
                       height: 40,
@@ -64,7 +66,7 @@ class TikiCommunityCard extends StatelessWidget {
                           ])))),
           Expanded(
               child: GestureDetector(
-                  onTap: () => _launchUrl("https://t.me/mytikiapp"),
+                  onTap: () => service.controller.launchUrl("https://t.me/mytikiapp"),
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius:
@@ -89,7 +91,5 @@ class TikiCommunityCard extends StatelessWidget {
         ]));
   }
 
-  _launchUrl(String url) async {
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
-  }
+
 }

@@ -4,18 +4,15 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class TikiScreenViewReferCode extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _TikiScreenViewReferCode();
-}
-
-class _TikiScreenViewReferCode extends State<TikiScreenViewReferCode> {
+class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
   static const String _text = "YOUR CODE";
   static final double _fontSize = 4.w;
   static final double _marginLeft = 1.w;
@@ -24,22 +21,13 @@ class _TikiScreenViewReferCode extends State<TikiScreenViewReferCode> {
   static final double _borderRadius = 1.5.h;
 
   @override
-  void initState() {
-    super.initState();
-    // BlocProvider.of<KeysReferralCubit>(context).getLink();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var link;
-    return _button(link);
-  }
-
-  Widget _button(Uri? link) {
+    var link = Provider.of<TikiScreenService>(context).model.link;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 60),
         child: OutlinedButton(
             onPressed: () async {
+
               Clipboard.setData(new ClipboardData(text: link.toString()));
             },
             style: OutlinedButton.styleFrom(
