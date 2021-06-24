@@ -15,8 +15,6 @@ import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_
 import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address_req.dart';
 import 'package:app/src/slices/keys_screen/repo_api_blockchain_address/repo_api_blockchain_address_rsp.dart';
 import 'package:app/src/slices/keys_screen/repository/secure_storage_repository_keys.dart';
-import 'package:app/src/slices/keys_screen/secure_storage_repository_keys.dart';
-import 'package:app/src/slices/keys_screen/repository/secure_storage_repository_keys.dart';
 import 'package:app/src/utils/crypto/helper_crypto.dart';
 import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
 import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';
