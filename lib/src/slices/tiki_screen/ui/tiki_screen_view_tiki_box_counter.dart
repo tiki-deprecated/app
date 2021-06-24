@@ -23,7 +23,7 @@ class _TikiScreenViewTikiBoxCounter extends State<TikiScreenViewTikiBoxCounter> 
     var service = Provider.of<TikiScreenService>(context);
     return Column(children: [
       Text(
-          (service.model.count == null || service.model.count == 0)
+          service.model.count == 0
                ? "..."
                : service.model.count.toString().replaceAllMapped(
                    new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),

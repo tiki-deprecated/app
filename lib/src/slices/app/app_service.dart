@@ -24,10 +24,10 @@ class AppService extends ChangeNotifier {
   Uri? deepLink;
 
   AppService() {
-    loadHelperLogin();
     presenter = AppPresenter(this);
     model = AppModel();
     controller = AppController();
+    loadHelperLogin();
     initDynamicLinks();
   }
 
@@ -36,7 +36,8 @@ class AppService extends ChangeNotifier {
   }
 
   loadHelperLogin() async {
-    authService = await AuthService().load();
+    authService = AuthService();
+    await authService.load();
     model.current = authService.current;
     model.user = authService.user;
   }

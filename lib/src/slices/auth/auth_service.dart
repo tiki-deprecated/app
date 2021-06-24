@@ -51,7 +51,7 @@ class AuthService {
         SecureStorageRepositoryToken(secureStorage: secureStorage);
   }
 
-  Future<AuthService> load() async {
+  Future<void> load() async {
     current = await _secureStorageRepositoryCurrent
         .find(SecureStorageRepositoryCurrent.key);
     if (current.email != null) {
@@ -60,7 +60,6 @@ class AuthService {
         keys = await _repoLocalSsKeys.find(user!.address!);
       token = await _repoLocalSsToken.find(current.email!);
     }
-    return this;
   }
 
   bool isReturning() {
