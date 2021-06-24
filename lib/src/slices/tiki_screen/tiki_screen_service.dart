@@ -32,7 +32,7 @@ class TikiScreenService extends ChangeNotifier{
     HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
     await RepoApiWebsiteUsers.total();
     if (apiRsp.code == 200) {
-      RepoApiWebsiteUsersRsp rsp = apiRsp.data;
+      this.model.count = apiRsp.data;
       notifyListeners();
     } else {
       print(apiRsp);
