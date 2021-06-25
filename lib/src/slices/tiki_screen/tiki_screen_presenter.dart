@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class TikiScreenPresenter {
   num get marginHorizontal => 6;
-  num get marginGsTop => 14;
+  num get marginGsTop => 16;
   num get marginEmailTop => 2;
   num get marginUpdatesTop => 3;
   num get marginTikiBoxTop => 2;
@@ -80,8 +80,6 @@ class TikiScreenPresenter {
   get bgcolor => Color(0XFFF4F4F4);
 
   num get emailButtonMarginBottom => 2;
-
-  lockerWidth(context) => MediaQuery.of(context).size.width * 3 / 5;
 
   ChangeNotifierProvider<TikiScreenService> render() {
     return ChangeNotifierProvider.value(
