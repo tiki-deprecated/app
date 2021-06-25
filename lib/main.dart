@@ -18,18 +18,14 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 /// initializeDependencies initializes the app dependencies.
 /// [SentryFlutter] enables Sentry.io monitoring in the app.
 Future<void> main() async {
-   await initializeDependencies();
-   var appService = AppService();
-   await appService.load();
-  // SentryFlutter.init(
-  //     (options) async => options
-  //       ..dsn = ConfigSentry.dsn
-  //       ..environment = ConfigSentry.environment
-  //       ..release = (await PackageInfo.fromPlatform()).version
-  //       ..sendDefaultPii = false,
-  //     appRunner: () =>
-   runApp(appService.getUI());
-      // ));
+  await initializeDependencies();
+  SentryFlutter.init(
+      (options) async => options
+        ..dsn = ConfigSentry.dsn
+        ..environment = ConfigSentry.environment
+        ..release = (await PackageInfo.fromPlatform()).version
+        ..sendDefaultPii = false,
+      appRunner: () => runApp(AppService().getUI()));
 }
 
 /// Initializes App Dependencies

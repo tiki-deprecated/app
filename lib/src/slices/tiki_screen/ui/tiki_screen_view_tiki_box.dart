@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class TikiScreenViewTikiBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,

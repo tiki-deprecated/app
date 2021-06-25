@@ -16,7 +16,7 @@ class TikiScreenViewLogout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Container(
         alignment: Alignment.bottomCenter,
         margin: EdgeInsets.symmetric(

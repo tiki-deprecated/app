@@ -29,11 +29,11 @@ class KeysReferralCubit extends Cubit<KeysReferralState> {
 
   KeysReferralCubit.provide(BuildContext context)
       : _repoLocalSsUser =
-            RepositoryProvider.of<SecureStorageRepositoryUser>(context, listen:false),
+            RepositoryProvider.of<SecureStorageRepositoryUser>(context),
         _secureStorageRepositoryCurrent =
-            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context, listen:false),
+            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         _repoApiBlockchainAddress =
-            RepositoryProvider.of<RepoApiBlockchainAddress>(context, listen:false),
+            RepositoryProvider.of<RepoApiBlockchainAddress>(context),
         super(KeysReferralInitial());
 
   void updateReferer(String referer) {

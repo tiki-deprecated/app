@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class TikiScreenViewFollowUsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopCards),
         alignment: Alignment.topCenter,

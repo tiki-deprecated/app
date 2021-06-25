@@ -32,11 +32,11 @@ class KeysRestoreScreenBloc
 
   KeysRestoreScreenBloc.provide(BuildContext context)
       : _repoLocalSsKeys =
-            RepositoryProvider.of<SecureStorageRepositoryKeys>(context, listen:false),
+            RepositoryProvider.of<SecureStorageRepositoryKeys>(context),
         _repoLocalSsUser =
-            RepositoryProvider.of<SecureStorageRepositoryUser>(context, listen:false),
+            RepositoryProvider.of<SecureStorageRepositoryUser>(context),
         _secureStorageRepositoryCurrent =
-            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context, listen:false),
+            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
         super(KeysRestoreScreenInitial());
 
   @override

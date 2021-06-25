@@ -25,7 +25,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
         create: (context) => KeysNewScreenDialogCopyBloc(),
         child: FutureBuilder(
             future:
-                RepositoryProvider.of<SecureStorageRepositoryCurrent>(context, listen:false)
+                RepositoryProvider.of<SecureStorageRepositoryCurrent>(context)
                     .find(SecureStorageRepositoryCurrent.key),
             builder: (BuildContext context,
                 AsyncSnapshot<AppModelCurrent> currentModel) {
@@ -34,7 +34,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                   listener: (BuildContext context,
                       KeysNewScreenDialogCopyState state) {
                     if (state is KeysNewScreenDialogCopySuccess && state.isKey)
-                      BlocProvider.of<KeysNewScreenBloc>(context, listen:false)
+                      BlocProvider.of<KeysNewScreenBloc>(context)
                           .add(KeysNewScreenBackedUp());
                   },
                   builder: (BuildContext context,
@@ -101,9 +101,9 @@ class KeysNewScreenSaveBk extends StatelessWidget {
 
   _saveKey(BuildContext context, AppModelCurrent currentModel) async {
     // KeysNewScreenState state =
-    //     BlocProvider.of<KeysNewScreenBloc>(context, listen:false).state;
+    //     BlocProvider.of<KeysNewScreenBloc>(context).state;
     // KeysNewScreenDialogCopyBloc bloc =
-    //     BlocProvider.of<KeysNewScreenDialogCopyBloc>(context, listen:false);
+    //     BlocProvider.of<KeysNewScreenDialogCopyBloc>(context);
     showDialog(
         context: context,
         barrierDismissible: true,

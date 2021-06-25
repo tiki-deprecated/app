@@ -21,7 +21,7 @@ class _TikiScreenViewTikiBoxCounter
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Column(children: [
       Text(
           service.model.count == 0

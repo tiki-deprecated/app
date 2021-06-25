@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 class LoginScreenViewSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<LoginScreenService>(context, listen:false);
+    var service = Provider.of<LoginScreenService>(context);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopCta.h),
         alignment: Alignment.centerLeft,

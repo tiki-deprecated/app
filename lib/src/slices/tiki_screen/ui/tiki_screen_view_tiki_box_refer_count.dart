@@ -17,7 +17,7 @@ class TikiScreenViewTikiBoxReferCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
           margin: EdgeInsets.only(right: _marginRight),

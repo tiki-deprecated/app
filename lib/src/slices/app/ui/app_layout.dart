@@ -12,15 +12,13 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<AppService>(context);
-    service.getRoutes(context);
+    var service = Provider.of<AppService>(context, listen: false);
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
           title: AppModel.title,
-          routes: service.model.routes!,
+          routes: service.getRoutes(context),
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,

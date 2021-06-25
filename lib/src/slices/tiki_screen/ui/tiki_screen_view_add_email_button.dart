@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 class TikiScreenViewAddEmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     List<Widget> child = service.model.googleAccount == null
         ? [_removeRow(context, service), _seeButton(context, service)]
         : [_addButton(context, service)];

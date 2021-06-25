@@ -12,7 +12,7 @@ import '../tiki_screen_service.dart';
 class TikiScreenLayoutBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return Stack(children: [
       Center(child: Container(color: service.presenter.bgcolor)),
       Align(

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class TikiCommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return TikiCard(
         TikiCardTitle("TIKI tribe"),
         TikiCardText("Join our community of TIKI-nites from around the globe."),

@@ -42,7 +42,7 @@ class KeysRestoreScreenScan extends StatelessWidget {
             ])),
         onPressed: () async {
           if (await HelperPermission.request(Permission.camera)) {
-            // BlocProvider.of<KeysRestoreScreenBloc>(context, listen:false)
+            // BlocProvider.of<KeysRestoreScreenBloc>(context)
             //     .add(KeysRestoreScreenScanned());
           }
         });

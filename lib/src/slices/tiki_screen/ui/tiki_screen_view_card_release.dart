@@ -13,7 +13,7 @@ import 'package:sizer/sizer.dart';
 class TikiNextReleaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context, listen:false);
+    var service = Provider.of<TikiScreenService>(context);
     return GestureDetector(
         child: TikiCard(
           TikiCardTitle("Coming next"),
