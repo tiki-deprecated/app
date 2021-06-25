@@ -31,7 +31,7 @@ class TikiScreenViewCardCommunity extends StatelessWidget {
                   child: Container(
                     height: _btnHeight.h,
                     decoration: BoxDecoration(
-                      color: ConfigColor.discordBlue,
+                      color: Color(0xFF7289DA),
                       borderRadius:
                           BorderRadius.only(bottomLeft: Radius.circular(24)),
                     ),
@@ -62,7 +62,7 @@ class TikiScreenViewCardCommunity extends StatelessWidget {
                       "https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP"),
                   child: Container(
                       height: _btnHeight.h,
-                      color: ConfigColor.signalBlue,
+                      color: Color(0xFF3661D1),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -90,7 +90,7 @@ class TikiScreenViewCardCommunity extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.only(bottomRight: Radius.circular(24)),
-                        color: ConfigColor.telegramBlue,
+                        color: Color(0xFF0088CC),
                       ),
                       height: _btnHeight.h,
                       child: Row(

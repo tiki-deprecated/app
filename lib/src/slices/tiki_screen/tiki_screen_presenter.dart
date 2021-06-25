@@ -36,6 +36,9 @@ class TikiScreenPresenter {
   num get fontSizeVersion => 11;
   num get fontSizeLogout => 15;
 
+  num get fontSizeEmail => 13.5;
+  num get fontSizeSee => 14;
+
   get textGs => "Get started";
   get textUpdates => "TIKI updates";
   get textLogout => "Log out";
@@ -68,6 +71,8 @@ class TikiScreenPresenter {
 
   get textTikiBoxReferShareMessage => "It's your data. Get paid for it.";
 
+  get textSeeData => "See what data \nGmail has on you";
+
   final service;
 
   TikiScreenPresenter(this.service);
@@ -75,8 +80,6 @@ class TikiScreenPresenter {
   get bgcolor => Color(0XFFF4F4F4);
 
   num get emailButtonMarginBottom => 2;
-
-  num get emailButtonFont => 10;
 
   lockerWidth(context) => MediaQuery.of(context).size.width * 3 / 5;
 
