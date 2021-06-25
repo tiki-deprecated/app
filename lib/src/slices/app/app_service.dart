@@ -5,6 +5,7 @@
 
 import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:app/src/slices/intro_screen/ui/intro_screen_layout.dart';
+import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -41,7 +42,8 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    getHome();
+    this.home = TikiScreenService();
+    //getHome();
     //initDynamicLinks();
   }
 
@@ -118,6 +120,11 @@ class AppService extends ChangeNotifier {
       await SecureStorageRepositoryUser()
           .save(email, AppModelUser(email: email, isLoggedIn: false));
     }
+    notifyListeners();
+  }
+
+  void logout() {
+    this.model.user = this.authService.logout();
     notifyListeners();
   }
 }
