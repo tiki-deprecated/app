@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiNextReleaseCard extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);
@@ -29,7 +28,7 @@ class TikiNextReleaseCard extends StatelessWidget {
               Icon(Icons.arrow_forward, color: ConfigColor.orange),
               () => service.controller.launchUrl("https://mytiki.com/roadmap")),
         ),
-        onTap: () => service.controller.launchUrl("https://mytiki.com/roadmap"));
+        onTap: () =>
+            service.controller.launchUrl("https://mytiki.com/roadmap"));
   }
-
 }

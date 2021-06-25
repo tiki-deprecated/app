@@ -15,13 +15,12 @@ import 'package:provider/provider.dart';
 ///
 /// * See also [LoginOtpReqBloc]
 class LoginScreenViewButton extends StatelessWidget {
-  static const String _text = "CONTINUE";
-
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<LoginScreenService>(context, listen:false);
+    var service = Provider.of<LoginScreenService>(context);
     return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopButton),
-        child: TikiBigButton(_text, true, service.controller.submitLogin));
+        margin: EdgeInsets.only(top: service.presenter.marginTopButton.h),
+        child: TikiBigButton(service.presenter.continueText, true,
+            service.controller.submitLogin));
   }
 }

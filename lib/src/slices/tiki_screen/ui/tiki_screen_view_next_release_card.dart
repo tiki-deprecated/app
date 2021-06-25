@@ -3,7 +3,7 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_release.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TikiScreenViewNextReleaseCard extends StatelessWidget{
+class TikiScreenViewNextReleaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);

@@ -10,16 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TikiScreenLayout extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-          body: Center(
-              child: GestureDetector(
-                  child: Stack(children: [
-                    TikiScreenLayoutBackground(),
-                    TikiScreenLayoutForeground()
-                  ]))));
-    }
+    return Scaffold(
+        body: Center(
+            child: GestureDetector(
+                child: Stack(children: [
+      TikiScreenLayoutBackground(),
+      TikiScreenLayoutForeground()
+    ]))));
   }
-
+}

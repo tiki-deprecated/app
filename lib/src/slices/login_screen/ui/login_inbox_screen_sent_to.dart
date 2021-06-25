@@ -5,20 +5,25 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sizer/sizer.dart';
+import 'package:provider/provider.dart';
+
+import '../login_screen_service.dart';
 
 class LoginInboxScreenSentTo extends StatelessWidget {
-  static const String _text = "I sent an email with a link to";
-  static final double _fontSize = 5.w;
-
   @override
   Widget build(BuildContext context) {
-    var email;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(_text,
-          style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.w600)),
-      Text(email == null ? "" : email!,
-          style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold))
-    ]);
+    var service = Provider.of<LoginScreenService>(context);
+    return Container(
+        alignment: Alignment.topLeft,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(service.presenter.sendToText,
+              style: TextStyle(
+                  fontSize: service.presenter.sendToFontSize,
+                  fontWeight: FontWeight.w600)),
+          Text(service.model.email,
+              style: TextStyle(
+                  fontSize: service.presenter.sendToFontSize,
+                  fontWeight: FontWeight.bold))
+        ]));
   }
 }

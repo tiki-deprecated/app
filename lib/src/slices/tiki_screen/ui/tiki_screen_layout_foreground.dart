@@ -10,38 +10,20 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_title_updates.dar
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_version.dart';
 import 'package:flutter/material.dart';
 
-class TikiScreenLayoutForeground extends StatelessWidget{
+class TikiScreenLayoutForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-        TikiScreenViewTitleGs(),
-        TikiScreenViewAddEmailButton(),
-        TikiScreenViewTitleUpdates(),
-        TikiScreenViewTikiBox(),
-        TikiScreenViewNextReleaseCard(),
-        TikiScreenViewNewsCard(),
-        TikiScreenViewCommunityCard(),
-        TikiScreenViewFollowUsCard(),
-        TikiScreenViewLogout(),
-        TikiScreenViewVersion(),
-      ]);
-    }
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      TikiScreenViewTitleGs(),
+      TikiScreenViewAddEmailButton(),
+      TikiScreenViewTitleUpdates(),
+      TikiScreenViewTikiBox(),
+      TikiScreenViewNextReleaseCard(),
+      TikiScreenViewNewsCard(),
+      TikiScreenViewCommunityCard(),
+      TikiScreenViewFollowUsCard(),
+      TikiScreenViewLogout(),
+      TikiScreenViewVersion(),
+    ]);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

@@ -1,34 +1,31 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 import '../login_screen_service.dart';
 
 class LoginScreenViewInput extends StatelessWidget {
-  static const String _placeholder = "Your email";
-  static final double _paddingHorizontal = 4.w;
-  static final double _paddingVertical = 2.h;
-  static final double _fontSize = 5.w;
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
     return Container(
         margin: EdgeInsets.only(top: service.presenter.marginTopInput),
         child: TextField(
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: _fontSize),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: service.presenter.inputFontSize),
             cursorColor: ConfigColor.orange,
             autocorrect: false,
             autofocus: true,
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
-                    horizontal: _paddingHorizontal, vertical: _paddingVertical),
-                hintText: _placeholder,
+                    horizontal: service.presenter.inputPaddingHorizontal,
+                    vertical: service.presenter.inputPaddingVertical),
+                hintText: service.presenter.inputPlaceholder,
                 hintStyle: TextStyle(
                     color: ConfigColor.gray,
                     fontWeight: FontWeight.bold,
-                    fontSize: _fontSize),
+                    fontSize: service.presenter.inputFontSize),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: UnderlineInputBorder(

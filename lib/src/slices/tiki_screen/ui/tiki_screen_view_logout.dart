@@ -19,7 +19,8 @@ class TikiScreenViewLogout extends StatelessWidget {
     var service = Provider.of<TikiScreenService>(context, listen:false);
     return Container(
         alignment: Alignment.bottomCenter,
-        margin: EdgeInsets.symmetric(vertical: service.presenter.marginVerticalLogOut),
+        margin: EdgeInsets.symmetric(
+            vertical: service.presenter.marginVerticalLogOut),
         child: TikiTextButton(
           _text,
           service.controller.logout,
@@ -27,8 +28,8 @@ class TikiScreenViewLogout extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: ConfigColor.grenadier,
           trailing: Padding(
-          padding: EdgeInsets.only(left: 16),
-          child: HelperImage("icon-logout")),
-    ));
+              padding: EdgeInsets.only(left: 16),
+              child: HelperImage("icon-logout")),
+        ));
   }
 }

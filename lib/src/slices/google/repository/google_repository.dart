@@ -40,5 +40,4 @@ class GoogleRepository {
   isConnected() {
     return _googleSignIn.isSignedIn();
   }
-
 }

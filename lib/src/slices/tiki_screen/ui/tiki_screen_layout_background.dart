@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import '../tiki_screen_service.dart';
 
 class TikiScreenLayoutBackground extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);
@@ -26,4 +25,3 @@ class TikiScreenLayoutBackground extends StatelessWidget {
     ]);
   }
 }
-

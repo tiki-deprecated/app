@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class TikiScreenPresenter{
+class TikiScreenPresenter {
   get marginVerticalShare => 6.h;
   get marginTopCards => 2.h;
   get marginVerticalLogOut => 4.h;
@@ -18,9 +18,7 @@ class TikiScreenPresenter{
   lockerWidth(context) => MediaQuery.of(context).size.width * 3 / 5;
 
   ChangeNotifierProvider<TikiScreenService> render() {
-    return ChangeNotifierProvider.value(value: service, child: TikiScreenLayout());
+    return ChangeNotifierProvider.value(
+        value: service, child: TikiScreenLayout());
   }
 }
-
-
-

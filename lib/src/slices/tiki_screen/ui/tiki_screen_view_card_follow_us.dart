@@ -19,28 +19,32 @@ class TikiFollowUsCard extends StatelessWidget {
       cta: TikiCardGridCta([
         Expanded(
             child: GestureDetector(
-                onTap: () => service.controller.launchUrl("https://www.facebook.com/mytikiapp"),
+                onTap: () => service.controller
+                    .launchUrl("https://www.facebook.com/mytikiapp"),
                 child: Container(
                     padding:
                         EdgeInsets.only(left: 16, top: 16, right: 8, bottom: 8),
                     child: HelperImage("facebook-button")))),
         Expanded(
             child: GestureDetector(
-                onTap: () => service.controller.launchUrl("https://twitter.com/my_tiki_"),
+                onTap: () => service.controller
+                    .launchUrl("https://twitter.com/my_tiki_"),
                 child: Container(
                     padding:
                         EdgeInsets.only(left: 8, top: 16, right: 16, bottom: 8),
                     child: HelperImage("twitter-button")))),
         Expanded(
             child: GestureDetector(
-                onTap: () => service.controller.launchUrl("https://www.instagram.com/my.tiki/"),
+                onTap: () => service.controller
+                    .launchUrl("https://www.instagram.com/my.tiki/"),
                 child: Container(
                     padding:
                         EdgeInsets.only(left: 16, top: 8, right: 8, bottom: 16),
                     child: HelperImage("instagram-button")))),
         Expanded(
             child: GestureDetector(
-                onTap: () => service.controller.launchUrl("https://www.tiktok.com/@my.tiki?"),
+                onTap: () => service.controller
+                    .launchUrl("https://www.tiktok.com/@my.tiki?"),
                 child: Container(
                     padding:
                         EdgeInsets.only(left: 8, top: 8, right: 16, bottom: 16),
@@ -48,5 +52,4 @@ class TikiFollowUsCard extends StatelessWidget {
       ]),
     );
   }
-
 }

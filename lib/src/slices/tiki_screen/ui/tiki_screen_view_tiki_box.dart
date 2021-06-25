@@ -5,7 +5,7 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_tiki_box_share.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TikiScreenViewTikiBox extends StatelessWidget{
+class TikiScreenViewTikiBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);
@@ -27,11 +27,10 @@ class TikiScreenViewTikiBox extends StatelessWidget{
                   margin: EdgeInsets.only(top: 30),
                   child: TikiScreenViewTikiBoxRefer()),
               Container(
-                  margin:
-                  EdgeInsets.symmetric(vertical: service.presenter.marginVerticalShare),
+                  margin: EdgeInsets.symmetric(
+                      vertical: service.presenter.marginVerticalShare),
                   alignment: Alignment.topCenter,
                   child: TikiScreenViewTikiBoxShare()),
             ]));
   }
-
 }

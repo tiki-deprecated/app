@@ -4,7 +4,7 @@ class GmailDataScreenModel {
 
 class InfoCardData {
   final InfoCardCoverData coverData;
-  final InfoCardDataModel cardData ;
+  final InfoCardDataModel cardData;
 
   InfoCardData({required this.coverData, required this.cardData});
 }
@@ -24,7 +24,6 @@ class InfoCardCtaDataModel {
   InfoCardCtaDataModel(this.ctaExplanation, this.buttonText, this.btnActionUrl);
 }
 
-
 class InfoCardContentDataModel {
   late List<InfoCardContentExplanationModel> cardContent;
   late List<InfoCardContenTheySayModel> theySay;
@@ -35,7 +34,6 @@ class InfoCardContentExplanationModel {
   final String? url;
 
   InfoCardContentExplanationModel(this.text, this.url);
-
 }
 
 class InfoCardContenTheySayModel {
@@ -61,17 +59,15 @@ class InfoCardCoverData {
   });
 }
 
-class InfoCardTopHeaderModel{
+class InfoCardTopHeaderModel {
   final String logoImage;
   final String title;
   final String shareMessage;
   final String socialMediaImg;
 
-  InfoCardTopHeaderModel({
-    required this.logoImage,
-    required this.title,
-    required this.shareMessage,
-    required this.socialMediaImg
-  });
+  InfoCardTopHeaderModel(
+      {required this.logoImage,
+      required this.title,
+      required this.shareMessage,
+      required this.socialMediaImg});
 }
-

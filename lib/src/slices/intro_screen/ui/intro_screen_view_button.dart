@@ -14,7 +14,7 @@ class IntroScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var marginTop = service.presenter.marginTopButton;
+    var marginTop = service.presenter.marginTopButton.h;
     var buttonText = service.presenter.buttonText;
     return Container(
         margin: EdgeInsets.only(top: marginTop),

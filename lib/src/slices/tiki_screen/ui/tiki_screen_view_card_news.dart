@@ -32,5 +32,4 @@ class TikiNewsCard extends StatelessWidget {
         ),
         onTap: () => service.controller.launchUrl("https://medium.com/mytiki"));
   }
-
 }

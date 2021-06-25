@@ -8,7 +8,7 @@ class LoginScreenViewSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context, listen:false);
     return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopCta),
+        margin: EdgeInsets.only(top: service.presenter.marginTopCta.h),
         alignment: Alignment.centerLeft,
         child: Text(service.presenter.subtitle,
             textAlign: TextAlign.center,

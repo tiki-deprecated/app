@@ -114,14 +114,16 @@ class AuthService {
                 expiresIn: rspData.expiresIn));
         AppModelUser user =
             await SecureStorageRepositoryUser().find(model.email!);
-        Provider.of<AppService>(context, listen:false).saveUser(model.email!, user);
+        Provider.of<AppService>(context, listen: false)
+            .saveUser(model.email!, user);
       } else {
         SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
-        Provider.of<LoginScreenService>(context, listen:false).otpError(context);
+        Provider.of<LoginScreenService>(context, listen: false)
+            .otpError(context);
       }
     } else {
       SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
-      Provider.of<LoginScreenService>(context, listen:false).otpError(context);
+      Provider.of<LoginScreenService>(context, listen: false).otpError(context);
     }
   }
 }

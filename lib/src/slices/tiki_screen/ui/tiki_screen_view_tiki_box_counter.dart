@@ -14,7 +14,8 @@ class TikiScreenViewTikiBoxCounter extends StatefulWidget {
   State<StatefulWidget> createState() => _TikiScreenViewTikiBoxCounter();
 }
 
-class _TikiScreenViewTikiBoxCounter extends State<TikiScreenViewTikiBoxCounter> {
+class _TikiScreenViewTikiBoxCounter
+    extends State<TikiScreenViewTikiBoxCounter> {
   static final double _fontSizeCount = 20.sp;
   static final double _fontSizeText = 15.sp;
 
@@ -24,9 +25,9 @@ class _TikiScreenViewTikiBoxCounter extends State<TikiScreenViewTikiBoxCounter> 
     return Column(children: [
       Text(
           service.model.count == 0
-               ? "..."
-               : service.model.count.toString().replaceAllMapped(
-                   new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
+              ? "..."
+              : service.model.count.toString().replaceAllMapped(
+                  new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},"),
           style: TextStyle(
               color: ConfigColor.flirt,
               fontFamily: 'Koara',

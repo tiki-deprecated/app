@@ -20,8 +20,8 @@ class TikiCommunityCard extends StatelessWidget {
         cta: TikiCardRowCta([
           Expanded(
               child: GestureDetector(
-                  onTap: () =>
-                      service.controller.launchUrl("https://discord.com/invite/evjYQq48Be"),
+                  onTap: () => service.controller
+                      .launchUrl("https://discord.com/invite/evjYQq48Be"),
                   child: Container(
                     height: 40,
                     decoration: BoxDecoration(
@@ -66,7 +66,8 @@ class TikiCommunityCard extends StatelessWidget {
                           ])))),
           Expanded(
               child: GestureDetector(
-                  onTap: () => service.controller.launchUrl("https://t.me/mytikiapp"),
+                  onTap: () =>
+                      service.controller.launchUrl("https://t.me/mytikiapp"),
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius:
@@ -90,6 +91,4 @@ class TikiCommunityCard extends StatelessWidget {
                       )))),
         ]));
   }
-
-
 }

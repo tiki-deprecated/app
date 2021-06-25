@@ -10,18 +10,17 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiScreenViewAddEmailButton extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);
     List<Widget> child = service.model.googleAccount == null
-    ? [_removeRow(context, service), _seeButton(context, service)]
+        ? [_removeRow(context, service), _seeButton(context, service)]
         : [_addButton(context, service)];
 
     return Column(children: child);
   }
 
-  Widget _removeRow(context,  TikiScreenService service) {
+  Widget _removeRow(context, TikiScreenService service) {
     var gmail;
     return Container(
         margin: EdgeInsets.only(bottom: 12),
@@ -43,8 +42,9 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                 text: gmail ?? "your Gmail account.",
               ),
               TextSpan(
-                 recognizer: TapGestureRecognizer()
-                   ..onTap = () => service.controller.removeGmailAccount(context),
+                recognizer: TapGestureRecognizer()
+                  ..onTap =
+                      () => service.controller.removeGmailAccount(context),
                 style: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.bold,
@@ -100,18 +100,19 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
               width: 30,
             )
           ]),
-          onTap: () => service.controller.addGmailAccount(context), //_whatGmailHolds(context)),
+          onTap: () => service.controller
+              .addGmailAccount(context), //_whatGmailHolds(context)),
         ));
   }
 
   Widget _seeButton(context, TikiScreenService service) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: GestureDetector(
+      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: GestureDetector(
           child: Row(children: [
             HelperImage(
               "eye-added-email",
@@ -131,7 +132,6 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
             )
           ]),
           onTap: () => service.controller.whatGmailHolds(context)),
-        );
+    );
   }
-
 }

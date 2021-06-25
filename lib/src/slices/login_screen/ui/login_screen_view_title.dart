@@ -9,8 +9,8 @@ class LoginScreenViewTitle extends StatelessWidget {
     var service = Provider.of<LoginScreenService>(context, listen:false);
     return Container(
         margin: EdgeInsets.only(
-            top: service.presenter.marginTopTitle,
-            right: service.presenter.marginRightTitle),
+            top: service.presenter.marginTopTitle.h,
+            right: service.presenter.marginRightTitle.w),
         alignment: Alignment.centerLeft,
         child: Text(service.presenter.title,
             textAlign: TextAlign.left,

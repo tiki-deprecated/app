@@ -9,47 +9,50 @@ import 'package:app/src/slices/md_viewer/md_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class LoginScreenViewTos extends StatelessWidget {
-  static final double _fontSize = 2.h;
-
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<LoginScreenService>(context, listen:false);
+    var service = Provider.of<LoginScreenService>(context);
     return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopTos),
+        margin: EdgeInsets.only(top: service.presenter.marginTopTos.h),
         child: Wrap(
           alignment: WrapAlignment.center,
           children: [
             Text("By pressing \"Continue\" you agree to TIKI's ",
-                style: _textStyle()),
+                style: _textStyle(context)),
             _link(
                 "Terms of Service",
-                () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MdViewer("TERMS")))),
-            Text(" and ", style: _textStyle()),
+                () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MdViewer("TERMS"))),
+                context),
+            Text(" and ", style: _textStyle(context)),
             _link(
                 "Privacy Policy",
                 () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MdViewer("PRIVACY")))),
+                    builder: (context) => MdViewer("PRIVACY"))),
+                context),
           ],
         ));
   }
 
-  TextStyle _textStyle({Color color = ConfigColor.boulder}) {
+  TextStyle _textStyle(context, {Color color = ConfigColor.boulder}) {
+    var service = Provider.of<LoginScreenService>(context);
     return TextStyle(
-        fontSize: _fontSize, fontWeight: FontWeight.bold, color: color);
+        fontSize: service.presenter.tosFontSize,
+        fontWeight: FontWeight.bold,
+        color: color);
   }
 
-  Widget _link(String text, Function() onPressed) {
+  Widget _link(String text, Function() onPressed, BuildContext context) {
+    var service = Provider.of<LoginScreenService>(context);
     return MaterialButton(
       onPressed: onPressed,
       minWidth: 0,
-      height: _fontSize,
+      height: service.presenter.tosFontSize,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.all(0),
-      child: Text(text, style: _textStyle(color: ConfigColor.orange)),
+      child: Text(text, style: _textStyle(context, color: ConfigColor.orange)),
     );
   }
 }

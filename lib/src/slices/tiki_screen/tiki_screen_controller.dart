@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TikiScreenController {
-
   addGmailAccount(context) {
     Provider.of<TikiScreenService>(context, listen:false).addGoogleAccount();
   }
@@ -18,7 +17,7 @@ class TikiScreenController {
   }
 
   launchUrl(String url) async {
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   logout(context) {

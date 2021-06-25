@@ -9,8 +9,7 @@ import 'package:share/share.dart';
 
 import 'model/tiki_screen_model.dart';
 
-class TikiScreenService extends ChangeNotifier{
-
+class TikiScreenService extends ChangeNotifier {
   late TikiScreenModel model;
   late TikiScreenPresenter presenter;
   late TikiScreenController controller;
@@ -30,7 +29,7 @@ class TikiScreenService extends ChangeNotifier{
 
   Future<void> getCount() async {
     HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
-    await RepoApiWebsiteUsers.total();
+        await RepoApiWebsiteUsers.total();
     if (apiRsp.code == 200) {
       this.model.count = apiRsp.data;
       notifyListeners();
@@ -61,5 +60,3 @@ class TikiScreenService extends ChangeNotifier{
 
   void whatGmailHolds(context) {}
 }
-
-

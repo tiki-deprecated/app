@@ -27,8 +27,7 @@ class TikiScreenViewTikiBoxShare extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(
-                vertical: _marginVertical,
-                horizontal: _marginHorizontal),
+                vertical: _marginVertical, horizontal: _marginHorizontal),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: ConfigColor.mardiGras),
@@ -41,7 +40,7 @@ class TikiScreenViewTikiBoxShare extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Container(
-                  padding: EdgeInsets.only(left:16),
+                    padding: EdgeInsets.only(left: 16),
                     child: Text("SHARE",
                         textAlign: TextAlign.center,
                         style: TextStyle(

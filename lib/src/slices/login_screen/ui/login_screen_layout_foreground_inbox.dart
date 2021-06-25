@@ -6,7 +6,6 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/login_screen/ui/login_screen_inbox_back_button.dart';
 import 'package:app/src/utils/helper_image.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_back_button.dart';
 import 'package:app/src/widgets/screens/tiki_background.dart';
 import 'package:app/src/widgets/screens/tiki_scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,10 +18,6 @@ import 'login_inbox_screen_sent_to.dart';
 import 'login_inbox_screen_title.dart';
 
 class LoginScreenForegroundInbox extends StatelessWidget {
-  static final double _marginTopTitle = 3.h;
-  static final double _marginTopResend = 2.h;
-  static final double _marginBottomResend = 25.h;
-
   Widget _background() {
     return TikiBackground(
         backgroundColor: ConfigColor.serenade,
@@ -37,19 +32,10 @@ class LoginScreenForegroundInbox extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.symmetric(horizontal: 2.w),
           child: Column(children: [
-            Container(
-              margin: EdgeInsets.only(top: _marginTopTitle),
-              alignment: Alignment.centerLeft,
-              child: LoginInboxScreenTitle(),
-            ),
+            LoginInboxScreenTitle(),
             Expanded(child: HelperImage("inbox-pineapple")),
-            Container(
-                alignment: Alignment.topLeft, child: LoginInboxScreenSentTo()),
-            Container(
-                alignment: Alignment.topLeft,
-                margin: EdgeInsets.only(
-                    top: _marginTopResend, bottom: _marginBottomResend),
-                child: LoginInboxScreenResend())
+            LoginInboxScreenSentTo(),
+            LoginInboxScreenResend()
           ]))
     ];
   }

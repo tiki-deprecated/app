@@ -3,7 +3,7 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_news.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TikiScreenViewNewsCard extends StatelessWidget{
+class TikiScreenViewNewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context, listen:false);
@@ -12,5 +12,4 @@ class TikiScreenViewNewsCard extends StatelessWidget{
         alignment: Alignment.topCenter,
         child: TikiNewsCard());
   }
-
 }

@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiScreenViewTikiBoxReferCount extends StatelessWidget {
-
   static const String _text = "people joined";
   static final double _fontSize = 14.sp;
   static final double _marginRight = 2.w;
@@ -23,10 +22,7 @@ class TikiScreenViewTikiBoxReferCount extends StatelessWidget {
       Container(
           margin: EdgeInsets.only(right: _marginRight),
           child: HelperImage("ref-user")),
-      Text(
-          service.model.count.toString() + " "
-              +
-              _text,
+      Text(service.model.count.toString() + " " + _text,
           style: TextStyle(
               fontSize: _fontSize,
               fontWeight: FontWeight.w600,

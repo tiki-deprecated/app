@@ -27,7 +27,6 @@ class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 60),
         child: OutlinedButton(
             onPressed: () async {
-
               Clipboard.setData(new ClipboardData(text: link.toString()));
             },
             style: OutlinedButton.styleFrom(

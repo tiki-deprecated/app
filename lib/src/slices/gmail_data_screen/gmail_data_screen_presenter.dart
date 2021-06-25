@@ -1,9 +1,9 @@
 import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
 
-class GmailDataScreenPresenter{
-    final GmailDataScreenService service;
+class GmailDataScreenPresenter {
+  final GmailDataScreenService service;
 
-    GmailDataScreenPresenter(this.service);
+  GmailDataScreenPresenter(this.service);
 }
 
 // "coverData": {
