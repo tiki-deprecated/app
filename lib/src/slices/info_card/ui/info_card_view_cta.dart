@@ -1,13 +1,12 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/info_card/info_card_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CardCta extends StatelessWidget {
-  final Map cardCtaArgs;
-
-  const CardCta({Key? key, required this.cardCtaArgs}) : super(key: key);
-
+class InfoCardViewCta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<InfoCardService>(context);
     return Container(
         padding: EdgeInsets.all(25),
         color: Color(0xFFD8D8D8),
@@ -36,7 +35,7 @@ class CardCta extends StatelessWidget {
                   ),
                   child: Text(this.cardCtaArgs['buttonText'],
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   onPressed: () => this.cardCtaArgs['btnAction']()))
         ]));
   }

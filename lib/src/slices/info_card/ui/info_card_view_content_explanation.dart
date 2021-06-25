@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class InfoCardContentExplanation extends StatelessWidget {
+class InfoCardViewContentExplanation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<InfoCardContentExplanationModel> spans = [];
@@ -14,7 +14,10 @@ class InfoCardContentExplanation extends StatelessWidget {
     spans.reversed.forEach((spanContent) {
       childSpan = _buildSpan(spanContent, childSpan, context);
     });
-    return RichText(text: childSpan ?? TextSpan());
+    return Container(
+        margin: EdgeInsets.only(
+            left: 2.9.h, top: 1.9.h, right: 1.9.h, bottom: 1.9.h),
+        child: RichText(text: childSpan ?? TextSpan()));
   }
 
   _buildSpan(InfoCardContentExplanationModel content, TextSpan? child,
