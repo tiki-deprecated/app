@@ -9,6 +9,7 @@ import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginScreenInboxBackButton extends StatelessWidget {
   @override
@@ -22,13 +23,13 @@ class LoginScreenInboxBackButton extends StatelessWidget {
         Container(
           child: HelperImage('back-arrow'),
           margin:
-              EdgeInsets.only(right: service.presenter.backMarginRightArrow),
+              EdgeInsets.only(right: service.presenter.backMarginRightArrow.w),
         ),
         Text(service.presenter.backText,
             style: TextStyle(
                 color: ConfigColor.orange,
                 fontWeight: FontWeight.w800,
-                fontSize: service.presenter.backFontSize))
+                fontSize: service.presenter.backFontSize.sp))
       ]),
     );
   }

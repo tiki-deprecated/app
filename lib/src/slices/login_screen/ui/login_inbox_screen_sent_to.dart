@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../login_screen_service.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginInboxScreenSentTo extends StatelessWidget {
   @override
@@ -18,11 +19,11 @@ class LoginInboxScreenSentTo extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(service.presenter.sendToText,
               style: TextStyle(
-                  fontSize: service.presenter.sendToFontSize,
+                  fontSize: service.presenter.sendToFontSize.sp,
                   fontWeight: FontWeight.w600)),
           Text(service.model.email,
               style: TextStyle(
-                  fontSize: service.presenter.sendToFontSize,
+                  fontSize: service.presenter.sendToFontSize.sp,
                   fontWeight: FontWeight.bold))
         ]));
   }

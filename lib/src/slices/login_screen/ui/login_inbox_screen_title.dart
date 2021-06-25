@@ -5,7 +5,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
+import 'package:sizer/sizer.dart';
 import '../login_screen_service.dart';
 
 class LoginInboxScreenTitle extends StatelessWidget {
@@ -13,12 +13,12 @@ class LoginInboxScreenTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
     return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopTitle),
+        margin: EdgeInsets.only(top: service.presenter.marginTopTitle.h),
         alignment: Alignment.centerLeft,
         child: Text(service.presenter.title,
             style: TextStyle(
                 fontFamily: 'Koara',
-                fontSize: service.presenter.inboxTitleFontSize,
+                fontSize: service.presenter.inboxTitleFontSize.sp,
                 fontWeight: FontWeight.bold)));
   }
 }

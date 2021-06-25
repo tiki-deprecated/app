@@ -7,6 +7,7 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../login_screen_service.dart';
 
@@ -20,7 +21,7 @@ class LoginScreenViewError extends StatelessWidget {
           service.presenter.errorText,
           style: TextStyle(
               fontSize:
-                  service.model.isError ? service.presenter.errorFontSize : 0,
+                  service.model.isError ? service.presenter.errorFontSize.sp : 0,
               fontWeight: FontWeight.w500,
               color: service.model.isError
                   ? ConfigColor.grenadier

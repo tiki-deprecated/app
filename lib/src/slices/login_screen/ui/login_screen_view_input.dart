@@ -1,6 +1,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../login_screen_service.dart';
 
@@ -13,19 +14,19 @@ class LoginScreenViewInput extends StatelessWidget {
         child: TextField(
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: service.presenter.inputFontSize),
+                fontSize: service.presenter.inputFontSize.sp),
             cursorColor: ConfigColor.orange,
             autocorrect: false,
             autofocus: true,
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
-                    horizontal: service.presenter.inputPaddingHorizontal,
-                    vertical: service.presenter.inputPaddingVertical),
+                    horizontal: service.presenter.inputPaddingHorizontal.h,
+                    vertical: service.presenter.inputPaddingVertical.h),
                 hintText: service.presenter.inputPlaceholder,
                 hintStyle: TextStyle(
                     color: ConfigColor.gray,
                     fontWeight: FontWeight.bold,
-                    fontSize: service.presenter.inputFontSize),
+                    fontSize: service.presenter.inputFontSize.sp),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: UnderlineInputBorder(

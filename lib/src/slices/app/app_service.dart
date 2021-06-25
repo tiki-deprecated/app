@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/auth/auth_service.dart';
+import 'package:app/src/slices/intro_screen/ui/intro_screen_layout.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -21,73 +22,76 @@ class AppService extends ChangeNotifier {
   late AppController controller;
   late AuthService authService;
 
+  var home;
+
   Uri? deepLink;
 
   AppService() {
     presenter = AppPresenter(this);
     model = AppModel();
     controller = AppController();
-    loadHelperLogin();
-    initDynamicLinks();
   }
 
   Widget getUI() {
     return presenter.render();
   }
 
-  loadHelperLogin() async {
+  load() async {
     authService = AuthService();
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
+    getHome();
+    //initDynamicLinks();
   }
 
-  Map<String, WidgetBuilder> getRoutes(BuildContext context) {
-    return {
-      "/": (BuildContext context) => getHome(),
-      "/login": (BuildContext context) => AppModelRoutes.login,
-      "/keys/new": (BuildContext context) => AppModelRoutes.keys,
+  getRoutes(BuildContext context) {
+    this.model.routes =  {
+      "/": (BuildContext context) => home.getUI(),
+      "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
+      "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
     };
   }
 
   getHome() {
     if (this.deepLink != null) {
-      _handle(this.deepLink!);
+      this.home = _handle(this.deepLink!);
     } else if (authService.isReturning()) {
       if (authService.isLoggedIn()) {
-        return AppModelRoutes.home;
+        this.home = AppModelRoutes.home;
       } else {
-        return AppModelRoutes.login;
+        this.home = AppModelRoutes.login;
       }
     } else {
-      return AppModelRoutes.intro;
+      this.home = AppModelRoutes.intro;
     }
   }
 
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-      if (deepLink != null) _handle(deepLink);
-    }, onError: (OnLinkErrorException e) async {
+          final Uri? deepLink = dynamicLink?.link;
+          if (deepLink != null) _handle(deepLink);
+        }, onError: (OnLinkErrorException e) async {
       await Sentry.captureException(e, stackTrace: StackTrace.current);
     });
     final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    await FirebaseDynamicLinks.instance.getInitialLink();
     this.deepLink = data?.link;
   }
 
-  void _handle(Uri link) {
+  _handle(Uri link) {
     const String _dlPathBouncer = "/app/bouncer";
     const String _dlPathBlockchain = "/app/blockchain";
     if (link.path == _dlPathBouncer) {
-      _handleBouncer(link);
+      return _handleBouncer(link);
     } else if (link.path == _dlPathBlockchain) {
-      _handleBlockchain(link);
+      return _handleBlockchain(link);
     }
+    return AppModelRoutes.login;
   }
 
-  void _handleBouncer(Uri link) {
+  _handleBouncer(Uri link) {
     // String? otp = link.queryParameters["otp"];
     // if (otp != null && otp.isNotEmpty) {
     //   BlocProvider.of<LoginOtpValidBloc>(ConfigNavigate.key.currentContext!)
@@ -95,13 +99,15 @@ class AppService extends ChangeNotifier {
     //   Navigator.of(ConfigNavigate.key.currentContext!).pushNamedAndRemoveUntil(
     //       ConfigNavigate.path.loginOtp, (route) => false);
     // }
+    return AppModelRoutes.keys;
   }
 
-  void _handleBlockchain(Uri link) {
+  _handleBlockchain(Uri link) {
     // String? ref = link.queryParameters["ref"];
     // if (ref != null && ref.isNotEmpty) {
-    //   BlocProvider.of<KeysReferralCubit>(context).updateReferer(ref);
+    //   BlocProvider.of<KeysReferralCubit>(context, listen:false).updateReferer(ref);
     // }
+    return AppModelRoutes.home;
   }
 
   saveUser(String email, AppModelUser user) async {

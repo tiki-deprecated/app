@@ -9,6 +9,7 @@ import 'package:app/src/slices/md_viewer/md_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginScreenViewTos extends StatelessWidget {
   @override
@@ -39,7 +40,7 @@ class LoginScreenViewTos extends StatelessWidget {
   TextStyle _textStyle(context, {Color color = ConfigColor.boulder}) {
     var service = Provider.of<LoginScreenService>(context);
     return TextStyle(
-        fontSize: service.presenter.tosFontSize,
+        fontSize: service.presenter.tosFontSize.sp,
         fontWeight: FontWeight.bold,
         color: color);
   }
@@ -49,7 +50,7 @@ class LoginScreenViewTos extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: 0,
-      height: service.presenter.tosFontSize,
+      height: service.presenter.tosFontSize.sp,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.all(0),
       child: Text(text, style: _textStyle(context, color: ConfigColor.orange)),
