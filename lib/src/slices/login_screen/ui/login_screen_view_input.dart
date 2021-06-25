@@ -9,41 +9,38 @@ class LoginScreenViewInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
-    return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopInput),
-        child: TextField(
-            style: TextStyle(
+    return TextField(
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: service.presenter.inputFontSize.sp),
+        cursorColor: ConfigColor.orange,
+        autocorrect: false,
+        autofocus: true,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+                horizontal: service.presenter.inputPaddingHorizontal.h,
+                vertical: service.presenter.inputPaddingVertical.h),
+            hintText: service.presenter.inputPlaceholder,
+            hintStyle: TextStyle(
+                color: ConfigColor.gray,
                 fontWeight: FontWeight.bold,
                 fontSize: service.presenter.inputFontSize.sp),
-            cursorColor: ConfigColor.orange,
-            autocorrect: false,
-            autofocus: true,
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: service.presenter.inputPaddingHorizontal.h,
-                    vertical: service.presenter.inputPaddingVertical.h),
-                hintText: service.presenter.inputPlaceholder,
-                hintStyle: TextStyle(
-                    color: ConfigColor.gray,
-                    fontWeight: FontWeight.bold,
-                    fontSize: service.presenter.inputFontSize.sp),
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: service.model.isError
-                            ? ConfigColor.grenadier
-                            : ConfigColor.mardiGras,
-                        width: 2,
-                        style: BorderStyle.solid)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: service.model.isError
-                            ? ConfigColor.grenadier
-                            : ConfigColor.mardiGras,
-                        width: 2,
-                        style: BorderStyle.solid))),
-            onChanged: (input) =>
-                service.controller.emailChanged(context, input)));
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: service.model.isError
+                        ? ConfigColor.grenadier
+                        : ConfigColor.mardiGras,
+                    width: 1,
+                    style: BorderStyle.solid)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: service.model.isError
+                        ? ConfigColor.grenadier
+                        : ConfigColor.mardiGras,
+                    width: 1,
+                    style: BorderStyle.solid))),
+        onChanged: (input) => service.controller.emailChanged(context, input));
   }
 }

@@ -30,7 +30,6 @@ class IntroScreenButton extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Container(
-                    padding: EdgeInsets.only(right: 1.w),
                     width: 70.w,
                     child: Text(buttonText,
                         textAlign: TextAlign.center,

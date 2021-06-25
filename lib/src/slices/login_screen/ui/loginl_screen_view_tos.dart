@@ -15,26 +15,24 @@ class LoginScreenViewTos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
-    return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopTos.h),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          children: [
-            Text("By pressing \"Continue\" you agree to TIKI's ",
-                style: _textStyle(context)),
-            _link(
-                "Terms of Service",
-                () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MdViewer("TERMS"))),
-                context),
-            Text(" and ", style: _textStyle(context)),
-            _link(
-                "Privacy Policy",
-                () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MdViewer("PRIVACY"))),
-                context),
-          ],
-        ));
+    return Wrap(
+      alignment: WrapAlignment.center,
+      children: [
+        Text("By pressing \"Continue\" you agree to TIKI's ",
+            style: _textStyle(context)),
+        _link(
+            "Terms of Service",
+            () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => MdViewer("TERMS"))),
+            context),
+        Text(" and ", style: _textStyle(context)),
+        _link(
+            "Privacy Policy",
+            () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => MdViewer("PRIVACY"))),
+            context),
+      ],
+    );
   }
 
   TextStyle _textStyle(context, {Color color = ConfigColor.boulder}) {
