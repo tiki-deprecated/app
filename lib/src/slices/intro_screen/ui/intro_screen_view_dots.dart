@@ -14,16 +14,8 @@ class IntroScreenDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var marginTop = service.presenter.marginTopText.h;
-    var marginRight = service.presenter.marginRightText.w;
-    return Container(
-        margin: EdgeInsets.only(top: marginTop, right: marginRight),
-        alignment: Alignment.centerLeft,
-        child: tikiDots(service.model.getTotalSlides(),
-            service.model.getCurrentSlideIndex()));
-  }
-
-  Widget tikiDots(size, pos) {
+    var size = service.model.getTotalSlides();
+    var pos = service.model.getCurrentSlideIndex();
     return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,9 +23,11 @@ class IntroScreenDots extends StatelessWidget {
   }
 
   Widget _dot(bool active) {
-    num size = 1.h;
+    var size = 0.9.h;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: size * 0.5),
+      height: size,
+      width: size,
       decoration: BoxDecoration(
           color: active ? ConfigColor.mardiGras : ConfigColor.white,
           borderRadius: BorderRadius.all(Radius.circular(size * 2))),

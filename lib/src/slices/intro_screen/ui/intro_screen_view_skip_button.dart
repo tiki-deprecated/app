@@ -16,20 +16,16 @@ class IntroScreenSkipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
     var text = service.presenter.skipText;
-    var marginTop = service.presenter.marginTopSkip.h;
     return Container(
-        margin: EdgeInsets.only(top: marginTop),
-        alignment: Alignment.topRight,
-        child: Container(
-            child: TextButton(
-                onPressed: () => service.controller.skipToLogin(context),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: ConfigColor.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 4.w,
-                  ),
-                ))));
+        child: TextButton(
+            onPressed: () => service.controller.skipToLogin(context),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: ConfigColor.black,
+                fontWeight: FontWeight.bold,
+                fontSize: service.presenter.skipFontSize.sp,
+              ),
+            )));
   }
 }

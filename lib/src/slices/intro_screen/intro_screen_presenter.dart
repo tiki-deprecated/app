@@ -15,12 +15,18 @@ class IntroScreenPresenter {
   get subtitle => introStrings.slides[currentSlideIndex]["subtitle"];
   get title => introStrings.slides[currentSlideIndex]["title"];
 
-  num get titleFontSize => 30;
-  num get marginTopText => 2.5;
-  num get marginTopButton => 5;
-  num get marginTopTitle => 15;
+  num get skipFontSize => 15;
+  num get titleFontSize => 34;
+  num get subtitleFontSize => 15;
+  num get buttonFontSize => 15;
+
   num get marginTopSkip => 2;
-  num get marginRightText => 10;
+  num get marginTopTitle => 15;
+  num get marginTopText => 2;
+  num get marginTopButton => 5;
+
+  num get marginHorizontal => 6;
+  num get marginRightText => 12;
 
   ChangeNotifierProvider<IntroScreenService> render() {
     return ChangeNotifierProvider.value(value: service, child: IntroScreen());

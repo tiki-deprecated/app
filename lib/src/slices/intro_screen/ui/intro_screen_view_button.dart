@@ -14,38 +14,35 @@ class IntroScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var marginTop = service.presenter.marginTopButton.h;
     var buttonText = service.presenter.buttonText;
-    return Container(
-        margin: EdgeInsets.only(top: marginTop),
-        alignment: Alignment.centerLeft,
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 2.25.h, horizontal: 10.w),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.h))),
-              primary: ConfigColor.mardiGras,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 2.h),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.h))),
+          primary: ConfigColor.mardiGras,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Wrap(
+              direction: Axis.vertical,
               children: [
-                Wrap(
-                  direction: Axis.vertical,
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(right: 1.w),
-                        child: Text(buttonText,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.sp,
-                              letterSpacing: 0.05.w,
-                            )))
-                  ],
-                ),
+                Container(
+                    padding: EdgeInsets.only(right: 1.w),
+                    width: 70.w,
+                    child: Text(buttonText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16.sp,
+                          letterSpacing: 0.05.w,
+                        )))
               ],
             ),
-            onPressed: () => service.controller.navigateToNextScreen(context)));
+          ],
+        ),
+        onPressed: () => service.controller.navigateToNextScreen(context));
   }
 }

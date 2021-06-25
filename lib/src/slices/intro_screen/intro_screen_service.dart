@@ -50,6 +50,16 @@ class IntroScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
+  void moveToPreviousScreen(context) {
+    model.moveToPreviousSlide();
+    var slider = this.getUI();
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => slider,
+        transitionDuration: Duration(seconds: 0),
+        reverseTransitionDuration: Duration(seconds: 0)));
+    notifyListeners();
+  }
+
   void skipToLogin(context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => LoginScreenService().getUI()),
@@ -59,5 +69,9 @@ class IntroScreenService extends ChangeNotifier {
 
   bool isLastSlide() {
     return model.getCurrentSlideIndex() == model.getTotalSlides();
+  }
+
+  bool isFirstSlide() {
+    return model.getCurrentSlideIndex() == 0;
   }
 }
