@@ -5,15 +5,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TikiScreenController {
   addGmailAccount(context) {
-    Provider.of<TikiScreenService>(context).addGoogleAccount();
+    Provider.of<TikiScreenService>(context, listen: false).addGoogleAccount();
   }
 
   removeGmailAccount(context) {
-    Provider.of<TikiScreenService>(context).removeGoogleAccount();
+    Provider.of<TikiScreenService>(context, listen: false).removeGoogleAccount();
   }
 
   whatGmailHolds(context) {
-    Provider.of<TikiScreenService>(context).whatGmailHolds(context);
+    Provider.of<TikiScreenService>(context, listen: false).whatGmailHolds(context);
   }
 
   launchUrl(String url) async {
@@ -21,10 +21,10 @@ class TikiScreenController {
   }
 
   logout(context) {
-    Provider.of<AppService>(context).controller.logout();
+    Provider.of<AppService>(context, listen:false).logout();
   }
 
   shareText(context, text) {
-    Provider.of<TikiScreenService>(context).shareLink(context, text);
+    Provider.of<TikiScreenService>(context, listen: false).shareLink(context, text);
   }
 }

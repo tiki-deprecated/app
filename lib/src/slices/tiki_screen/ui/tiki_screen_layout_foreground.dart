@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class TikiScreenLayoutForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
+    return SingleChildScrollView(child: Column(mainAxisSize: MainAxisSize.min, children: [
       TikiScreenViewTitleGs(),
       TikiScreenViewAddEmailButton(),
       TikiScreenViewTitleUpdates(),
@@ -24,6 +24,6 @@ class TikiScreenLayoutForeground extends StatelessWidget {
       TikiScreenViewFollowUsCard(),
       TikiScreenViewLogout(),
       TikiScreenViewVersion(),
-    ]);
+    ]));
   }
 }

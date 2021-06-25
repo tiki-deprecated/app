@@ -78,7 +78,11 @@ class AuthService {
         token!.refresh != null;
   }
 
-  void logout() {}
+  logout() {
+    user!.isLoggedIn = false;
+    _repoLocalSsUser.save(current.email!,user!);
+    return user!;
+  }
 
   processOtpRequest(String email, String salt) async {
     await SecureStorageRepositoryOtp().save(SecureStorageRepositoryOtp.reqKey,

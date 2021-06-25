@@ -13,7 +13,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context);
-    List<Widget> child = service.model.googleAccount == null
+    List<Widget> child = service.model.googleAccount != null
         ? [_removeRow(context, service), _seeButton(context, service)]
         : [_addButton(context, service)];
 
@@ -21,13 +21,13 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
   }
 
   Widget _removeRow(context, TikiScreenService service) {
-    var gmail;
+
     return Container(
-        margin: EdgeInsets.only(bottom: 12),
+        margin: EdgeInsets.only(bottom: service.presenter.emailButtonMarginBottom.h),
         child: RichText(
             text: TextSpan(
                 style: TextStyle(
-                    fontSize: 1.75.h,
+                    fontSize: service.presenter.emailButtonFont.sp,
                     fontFamily: "NunitoSans",
                     color: Color(0xFF545454),
                     fontWeight: FontWeight.w600),
@@ -35,11 +35,11 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                 children: <InlineSpan>[
               TextSpan(
                 style: TextStyle(
-                    fontSize: 1.75.h,
+                    fontSize: service.presenter.emailButtonFont.sp,
                     fontFamily: "NunitoSans",
                     color: Color(0xFF545454),
                     fontWeight: FontWeight.w600),
-                text: gmail ?? "your Gmail account.",
+                text: service.model.googleAccount?.email ?? "your Gmail account.",
               ),
               TextSpan(
                 recognizer: TapGestureRecognizer()
@@ -48,7 +48,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                 style: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.bold,
-                    fontSize: 1.75.h,
+                    fontSize: service.presenter.emailButtonFont.sp,
                     fontFamily: "NunitoSans"),
                 text: " Remove ",
               ),
@@ -124,7 +124,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                     child: Text("See what data\nGmail has on you",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 2.h,
+                            fontSize: 20.sp,
                             fontFamily: "Montserrat")))),
             HelperImage(
               "right-arrow",

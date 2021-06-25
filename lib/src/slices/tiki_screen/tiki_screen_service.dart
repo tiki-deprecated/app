@@ -1,4 +1,5 @@
 import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
 import 'package:app/src/slices/google/repository/google_repository.dart';
 import 'package:app/src/slices/login_screen/model/repo_api_website_users_rsp.dart';
 import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dart';
@@ -14,7 +15,7 @@ class TikiScreenService extends ChangeNotifier {
   late TikiScreenPresenter presenter;
   late TikiScreenController controller;
 
-  var googleRepository;
+  GoogleRepository googleRepository = GoogleRepository();
 
   TikiScreenService() {
     model = TikiScreenModel();
@@ -45,6 +46,7 @@ class TikiScreenService extends ChangeNotifier {
 
   void removeGoogleAccount() async {
     await googleRepository.handleSignOut();
+    this.model.googleAccount = null;
     notifyListeners();
   }
 
@@ -55,8 +57,11 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   void shareLink(context, text) {
-    Share.share(this.model.link.toString(), subject: text);
+    //TODO rollback
+    // Share.share(this.model.link.toString(), subject: text);
   }
 
-  void whatGmailHolds(context) {}
+  void whatGmailHolds(context) {
+    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GmailDataScreenService().getUI()));
+  }
 }

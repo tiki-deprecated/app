@@ -15,6 +15,10 @@ class TikiScreenPresenter {
 
   get bgcolor => Color(0XFFF4F4F4);
 
+  num get emailButtonMarginBottom => 2;
+
+  num get emailButtonFont => 10;
+
   lockerWidth(context) => MediaQuery.of(context).size.width * 3 / 5;
 
   ChangeNotifierProvider<TikiScreenService> render() {
