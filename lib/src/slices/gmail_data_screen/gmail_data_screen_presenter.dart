@@ -23,6 +23,8 @@ class GmailDataScreenPresenter {
   get bgColor => const Color(0XFFE5E5E5);
 
   get closeColor => ConfigColor.mardiGras;
+
+  render() {}
 }
 
 // "coverData": {

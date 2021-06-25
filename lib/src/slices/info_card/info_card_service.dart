@@ -7,7 +7,39 @@ import 'package:flutter/material.dart';
 class InfoCardService extends ChangeNotifier {
   late InfoCardController controller;
   late InfoCardPresenter presenter;
-  late InfoCardDataModel model;
+  late InfoCardData model;
 
-  InfoCardLayout getUIFromJson(cardsData) {}
+  InfoCardLayout getUIFromJson(cardsData) {
+    var coverData = cardsData['coverData'];
+    var cardData = cardsData['cardData'];
+    this.model = InfoCardData(
+        cardData: getInfoCardData(cardData),
+        coverData: getInfoCoverData(coverData));
+    return this.presenter.getUI();
+  }
+
+  InfoCardDataModel getInfoCardData(cardData) {
+    var cardContentData = cardData['cardContentData'];
+    var cardCtaData = cardData['cardCtaData'];
+    return InfoCardDataModel(
+        cardContentData: getInfoCardContentData(cardContentData),
+        cardCtaData: getInfoCardCtaData(cardCtaData));
+  }
+
+  InfoCardCoverData getInfoCoverData(coverData) {
+    return InfoCardCoverData(
+        subtitle: coverData['subtitle'],
+        subText: coverData['subText'],
+        bigTextLighter: coverData['bigTextLighter'],
+        image: coverData['image'],
+        bigTextDarker: coverData['bigTextDarker']);
+  }
+
+  InfoCardContentDataModel getInfoCardContentData(cardContentData) {
+    return InfoCardContentDataModel(
+        cardContent: cardContentData['richTextExplanation'],
+        theySay: cardContentData['theySay']);
+  }
+
+  InfoCardCtaDataModel getInfoCardCtaData(cardCtaData) {}
 }

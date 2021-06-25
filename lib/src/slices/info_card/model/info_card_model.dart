@@ -9,7 +9,7 @@ class InfoCardDataModel {
   final InfoCardContentDataModel cardContentData;
   final InfoCardCtaDataModel cardCtaData;
 
-  InfoCardDataModel(this.cardContentData, this.cardCtaData);
+  InfoCardDataModel({required this.cardContentData, required this.cardCtaData});
 }
 
 class InfoCardCtaDataModel {
@@ -17,26 +17,31 @@ class InfoCardCtaDataModel {
   final String buttonText;
   final String btnActionUrl;
 
-  InfoCardCtaDataModel(this.ctaExplanation, this.buttonText, this.btnActionUrl);
+  InfoCardCtaDataModel(
+      {required this.ctaExplanation,
+      required this.buttonText,
+      required this.btnActionUrl});
 }
 
 class InfoCardContentDataModel {
-  late List<InfoCardContentExplanationModel> cardContent;
-  late List<InfoCardContenTheySayModel> theySay;
+  final List<InfoCardContentExplanationModel> cardContent;
+  final List<InfoCardContenTheySayModel> theySay;
+
+  InfoCardContentDataModel({required this.cardContent, required this.theySay});
 }
 
 class InfoCardContentExplanationModel {
   final String text;
   final String? url;
 
-  InfoCardContentExplanationModel(this.text, this.url);
+  InfoCardContentExplanationModel({required this.text, required this.url});
 }
 
 class InfoCardContenTheySayModel {
   final String image;
   final String text;
 
-  InfoCardContenTheySayModel(this.image, this.text);
+  InfoCardContenTheySayModel({required this.image, required this.text});
 }
 
 class InfoCardCoverData {
