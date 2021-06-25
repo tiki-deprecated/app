@@ -5,6 +5,7 @@ import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dar
 import 'package:app/src/slices/tiki_screen/tiki_screen_controller.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_presenter.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 import 'model/tiki_screen_model.dart';
 
@@ -22,6 +23,7 @@ class TikiScreenService extends ChangeNotifier {
     initializeGoogleRepo();
     getCount();
     getReferCount();
+    getVersion();
   }
 
   Widget getUI() {
@@ -69,5 +71,11 @@ class TikiScreenService extends ChangeNotifier {
 
   void whatGmailHolds(context) {
     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GmailDataScreenService().getUI()));
+  }
+
+  Future<void> getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    this.model.version = packageInfo.version;
+    notifyListeners();
   }
 }

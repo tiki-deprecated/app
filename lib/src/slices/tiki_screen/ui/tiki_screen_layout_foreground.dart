@@ -4,7 +4,9 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_follow_us.da
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_news.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_release.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_heading.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_logout.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_tiki_box.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_version.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -54,9 +56,16 @@ class TikiScreenLayoutForeground extends StatelessWidget {
       Container(
           margin: EdgeInsets.only(top: service.presenter.marginCardsTop.h),
           alignment: Alignment.topCenter,
-          child: TikiScreenViewCardFollowUs())
-      //TikiScreenViewLogout(),
-      //TikiScreenViewVersion(),
+          child: TikiScreenViewCardFollowUs()),
+      Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.only(top: service.presenter.marginVersionTop.h),
+          child: TikiScreenViewVersion()),
+      Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.symmetric(
+              vertical: service.presenter.marginLogOutVertical.h),
+          child: TikiScreenViewLogout())
     ]);
   }
 }

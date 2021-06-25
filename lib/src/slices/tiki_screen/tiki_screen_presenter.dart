@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TikiScreenPresenter {
-  get marginVerticalLogOut => 4;
-
   num get marginHorizontal => 6;
   num get marginGsTop => 14;
   num get marginEmailTop => 2;
   num get marginUpdatesTop => 3;
   num get marginTikiBoxTop => 2;
   num get marginCardsTop => 3;
+  num get marginVersionTop => 2;
+  num get marginLogOutVertical => 2;
 
   num get marginTikiBoxCounterTop => 3;
   num get marginTikiBoxReferTop => 4;
@@ -33,8 +33,13 @@ class TikiScreenPresenter {
   num get fontSizeCardText => 12;
   num get fontSizeCardCta => 13;
 
+  num get fontSizeVersion => 11;
+  num get fontSizeLogout => 15;
+
   get textGs => "Get started";
   get textUpdates => "TIKI updates";
+  get textLogout => "Log out";
+
   get textTikiBoxCounter => "people joined the TIKI tribe";
   get textTikiBoxReferL1 => "Share your TIKI code and get";
   get textTikiBoxReferL2 => "\$5 for every 10 people who join.";

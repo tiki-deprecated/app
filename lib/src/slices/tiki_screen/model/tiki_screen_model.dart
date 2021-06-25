@@ -5,4 +5,5 @@ class TikiScreenModel {
   int count = 0;
   int referCount = 0;
   late String link;
+  late String version;
 }
