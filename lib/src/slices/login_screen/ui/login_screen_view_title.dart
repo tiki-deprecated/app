@@ -7,11 +7,11 @@ class LoginScreenViewTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
-    return Text(service.presenter.title,
+    return Text(service.presenter.textTitle,
         textAlign: TextAlign.left,
         style: TextStyle(
             fontFamily: 'Koara',
-            fontSize: service.presenter.emailTitleFontSize.sp,
+            fontSize: service.presenter.fontSizeEmailTitle.sp,
             fontWeight: FontWeight.bold));
   }
 }

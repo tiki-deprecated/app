@@ -9,24 +9,24 @@ class IntroScreenPresenter {
 
   IntroScreenPresenter(this.service);
 
-  get skipText => introStrings.skip;
   get currentSlideIndex => service.model.getCurrentSlideIndex();
-  get buttonText => introStrings.slides[currentSlideIndex]["button"];
-  get subtitle => introStrings.slides[currentSlideIndex]["subtitle"];
-  get title => introStrings.slides[currentSlideIndex]["title"];
 
-  num get skipFontSize => 15;
-  num get titleFontSize => 34;
-  num get subtitleFontSize => 15;
-  num get buttonFontSize => 15;
+  get textSkip => introStrings.skip;
+  get textButton => introStrings.slides[currentSlideIndex]["button"];
+  get textSubtitle => introStrings.slides[currentSlideIndex]["subtitle"];
+  get textTitle => introStrings.slides[currentSlideIndex]["title"];
 
-  num get marginTopSkip => 2;
-  num get marginTopTitle => 15;
-  num get marginTopText => 2;
-  num get marginTopButton => 5;
+  num get fontSizeSkip => 15;
+  num get fontSizeTitle => 34;
+  num get fontSizeSubtitle => 15;
+  num get fontSizeButton => 15;
 
+  num get marginSkipTop => 2;
+  num get marginTitleTop => 15;
+  num get marginTextTop => 2;
+  num get marginTextRight => 12;
+  num get marginButtonTop => 5;
   num get marginHorizontal => 6;
-  num get marginRightText => 12;
 
   ChangeNotifierProvider<IntroScreenService> render() {
     return ChangeNotifierProvider.value(value: service, child: IntroScreen());

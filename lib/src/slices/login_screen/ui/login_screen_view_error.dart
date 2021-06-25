@@ -16,10 +16,10 @@ class LoginScreenViewError extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
     return Text(
-      service.presenter.errorText,
+      service.presenter.textError,
       style: TextStyle(
           fontSize:
-              service.model.isError ? service.presenter.errorFontSize.sp : 0,
+              service.model.isError ? service.presenter.fontSizeError.sp : 0,
           fontWeight: FontWeight.w600,
           color: service.model.isError
               ? ConfigColor.grenadier

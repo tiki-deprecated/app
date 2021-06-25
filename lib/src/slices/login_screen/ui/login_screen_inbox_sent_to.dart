@@ -16,15 +16,15 @@ class LoginScreenInboxSentTo extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(service.presenter.sendToText,
+      Text(service.presenter.textSendTo,
           style: TextStyle(
               color: ConfigColor.emperor,
-              fontSize: service.presenter.sendToFontSize.sp,
+              fontSize: service.presenter.fontSizeSendTo.sp,
               fontWeight: FontWeight.w600)),
       Text(service.model.email,
           style: TextStyle(
               color: ConfigColor.emperor,
-              fontSize: service.presenter.sendToFontSize.sp,
+              fontSize: service.presenter.fontSizeSendTo.sp,
               fontWeight: FontWeight.bold))
     ]);
   }

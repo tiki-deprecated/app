@@ -9,16 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class TikiScreenViewTikiBoxCounter extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _TikiScreenViewTikiBoxCounter();
-}
-
-class _TikiScreenViewTikiBoxCounter
-    extends State<TikiScreenViewTikiBoxCounter> {
-  static final double _fontSizeCount = 20.sp;
-  static final double _fontSizeText = 15.sp;
-
+class TikiScreenViewTikiBoxCounter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context);
@@ -32,11 +23,10 @@ class _TikiScreenViewTikiBoxCounter
               color: ConfigColor.flirt,
               fontFamily: 'Koara',
               fontWeight: FontWeight.bold,
-              fontSize: _fontSizeCount)),
-      Text("people already use TIKI",
+              fontSize: service.presenter.fontSizeTikiBoxCounterNum.sp)),
+      Text(service.presenter.textTikiBoxCounter,
           style: TextStyle(
-              height: 1,
-              fontSize: _fontSizeText,
+              fontSize: service.presenter.fontSizeTikiBoxCounterText.sp,
               fontWeight: FontWeight.w800,
               color: ConfigColor.tikiBlue))
     ]);

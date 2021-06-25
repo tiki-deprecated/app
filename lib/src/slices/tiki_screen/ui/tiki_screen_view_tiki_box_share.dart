@@ -15,19 +15,12 @@ import '../tiki_screen_service.dart';
 ///
 /// It handles the "share your code" action and renders the button.
 class TikiScreenViewTikiBoxShare extends StatelessWidget {
-  static const String _shareText = "It's your data. Get paid for it.";
-  static final double _letterSpacing = 0.05.w;
-  static final double _fontSize = 18.sp;
-  static final double _marginHorizontal = 10.w;
-  static final double _marginVertical = 2.25.h;
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-                vertical: _marginVertical, horizontal: _marginHorizontal),
+            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 16.w),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: ConfigColor.mardiGras),
@@ -35,23 +28,22 @@ class TikiScreenViewTikiBoxShare extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.share),
-            Wrap(
-              direction: Axis.vertical,
-              children: [
-                Container(
-                    padding: EdgeInsets.only(left: 16),
-                    child: Text("SHARE",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: _fontSize,
-                          letterSpacing: _letterSpacing,
-                        )))
-              ],
+            Container(
+                padding: EdgeInsets.only(right: 5.w),
+                child: Text(service.presenter.textTikiBoxReferShare,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: service.presenter.fontSizeTikiBoxReferShare.sp,
+                      letterSpacing: 0.05.w,
+                    ))),
+            Icon(
+              Icons.share,
+              size: service.presenter.fontSizeTikiBoxReferShare.sp * 1.2,
             ),
           ],
         ),
-        onPressed: () => service.controller.shareText(context, _shareText));
+        onPressed: () => service.controller.shareText(
+            context, service.presenter.textTikiBoxReferShareMessage));
   }
 }

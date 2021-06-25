@@ -8,10 +8,10 @@ class LoginScreenViewSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
-    return Text(service.presenter.subtitle,
+    return Text(service.presenter.textSubtitle,
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: service.presenter.emailSubtitleFontSize.sp,
+            fontSize: service.presenter.fontSizeEmailSubtitle.sp,
             fontWeight: FontWeight.w600,
             color: ConfigColor.emperor));
   }

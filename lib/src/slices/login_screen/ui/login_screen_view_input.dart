@@ -12,19 +12,19 @@ class LoginScreenViewInput extends StatelessWidget {
     return TextField(
         style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: service.presenter.inputFontSize.sp),
+            fontSize: service.presenter.fontSizeInput.sp),
         cursorColor: ConfigColor.orange,
         autocorrect: false,
         autofocus: true,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
-                horizontal: service.presenter.inputPaddingHorizontal.h,
-                vertical: service.presenter.inputPaddingVertical.h),
-            hintText: service.presenter.inputPlaceholder,
+                horizontal: service.presenter.paddingInputHorizontal.h,
+                vertical: service.presenter.paddingInputVertical.h),
+            hintText: service.presenter.textInputPlaceholder,
             hintStyle: TextStyle(
                 color: ConfigColor.gray,
                 fontWeight: FontWeight.bold,
-                fontSize: service.presenter.inputFontSize.sp),
+                fontSize: service.presenter.fontSizeInput.sp),
             filled: true,
             fillColor: Colors.white,
             enabledBorder: UnderlineInputBorder(

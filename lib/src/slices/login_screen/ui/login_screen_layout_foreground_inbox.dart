@@ -23,18 +23,18 @@ class LoginScreenForegroundInbox extends StatelessWidget {
     return SafeArea(
         child: Padding(
             padding: EdgeInsets.only(
-                left: service.presenter.marginLeftBack.w,
+                left: service.presenter.marginBackLeft.w,
                 right: service.presenter.marginHorizontal.w),
             child: Column(mainAxisSize: MainAxisSize.max, children: [
               LoginScreenInboxBackButton(),
               Expanded(
                   child: Container(
                       margin: EdgeInsets.only(
-                          left: service.presenter.marginLeftBack.w),
+                          left: service.presenter.marginBackLeft.w),
                       child: Column(mainAxisSize: MainAxisSize.max, children: [
                         Container(
                             margin: EdgeInsets.only(
-                                top: service.presenter.marginTopTitleInbox.h),
+                                top: service.presenter.marginTitleInboxTop.h),
                             alignment: Alignment.centerLeft,
                             child: LoginScreenInboxTitle()),
                         Expanded(child: HelperImage("inbox-pineapple")),
@@ -44,7 +44,7 @@ class LoginScreenForegroundInbox extends StatelessWidget {
                         Container(
                             alignment: Alignment.bottomLeft,
                             margin: EdgeInsets.only(
-                                bottom: service.presenter.marginBottomResend.h),
+                                bottom: service.presenter.marginResendBottom.h),
                             child: LoginScreenInboxResend())
                       ])))
             ])));

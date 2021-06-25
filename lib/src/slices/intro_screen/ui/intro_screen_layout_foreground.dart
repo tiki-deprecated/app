@@ -26,28 +26,28 @@ class IntroScreenForeground extends StatelessWidget {
             horizontal: service.presenter.marginHorizontal.w),
         child: Column(children: [
           Container(
-              margin: EdgeInsets.only(top: service.presenter.marginTopSkip.h),
+              margin: EdgeInsets.only(top: service.presenter.marginSkipTop.h),
               alignment: Alignment.topRight,
               child: IntroScreenSkipButton()),
           Container(
               margin: EdgeInsets.only(
-                  top: service.presenter.marginTopTitle.h,
-                  right: service.presenter.marginRightText.w),
+                  top: service.presenter.marginTitleTop.h,
+                  right: service.presenter.marginTextRight.w),
               alignment: Alignment.centerLeft,
               child: IntroScreenTitle()),
           Container(
               margin: EdgeInsets.only(
-                  top: service.presenter.marginTopText.h,
-                  right: service.presenter.marginRightText.w),
+                  top: service.presenter.marginTextTop.h,
+                  right: service.presenter.marginTextRight.w),
               child: IntroScreenSubtitle()),
           Container(
               margin: EdgeInsets.only(
-                  top: service.presenter.marginTopText.h,
-                  right: service.presenter.marginRightText.w),
+                  top: service.presenter.marginTextTop.h,
+                  right: service.presenter.marginTextRight.w),
               alignment: Alignment.centerLeft,
               child: IntroScreenDots()),
           Container(
-              margin: EdgeInsets.only(top: service.presenter.marginTopButton.h),
+              margin: EdgeInsets.only(top: service.presenter.marginButtonTop.h),
               alignment: Alignment.centerLeft,
               child: IntroScreenButton()),
         ]));

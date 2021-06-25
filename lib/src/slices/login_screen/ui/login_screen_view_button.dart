@@ -35,7 +35,7 @@ class LoginScreenViewButton extends StatelessWidget {
               children: [
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Text(service.presenter.continueText,
+                    child: Text(service.presenter.textContinue,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w800,

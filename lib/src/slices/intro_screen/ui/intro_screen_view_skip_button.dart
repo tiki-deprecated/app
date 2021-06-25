@@ -15,7 +15,7 @@ class IntroScreenSkipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var text = service.presenter.skipText;
+    var text = service.presenter.textSkip;
     return Container(
         child: TextButton(
             onPressed: () => service.controller.skipToLogin(context),
@@ -24,7 +24,7 @@ class IntroScreenSkipButton extends StatelessWidget {
               style: TextStyle(
                 color: ConfigColor.black,
                 fontWeight: FontWeight.bold,
-                fontSize: service.presenter.skipFontSize.sp,
+                fontSize: service.presenter.fontSizeSkip.sp,
               ),
             )));
   }

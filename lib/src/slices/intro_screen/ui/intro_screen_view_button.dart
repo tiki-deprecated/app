@@ -14,7 +14,7 @@ class IntroScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var buttonText = service.presenter.buttonText;
+    var buttonText = service.presenter.textButton;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 2.h),

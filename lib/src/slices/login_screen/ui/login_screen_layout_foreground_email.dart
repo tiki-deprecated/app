@@ -25,29 +25,29 @@ class LoginScreenForegroundEmail extends StatelessWidget {
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Container(
                   margin: EdgeInsets.only(
-                      top: service.presenter.marginTopTitle.h,
-                      right: service.presenter.marginRightTitle.w),
+                      top: service.presenter.marginTitleTop.h,
+                      right: service.presenter.marginTitleRight.w),
                   alignment: Alignment.centerLeft,
                   child: LoginScreenViewTitle()),
               Container(
                   margin:
-                      EdgeInsets.only(top: service.presenter.marginTopCta.h),
+                      EdgeInsets.only(top: service.presenter.marginCtaTop.h),
                   alignment: Alignment.centerLeft,
                   child: LoginScreenViewSubtitle()),
               Container(
                   margin:
-                      EdgeInsets.only(top: service.presenter.marginTopInput.h),
+                      EdgeInsets.only(top: service.presenter.marginInputTop.h),
                   child: LoginScreenViewInput()),
               Align(
                   alignment: Alignment.centerLeft,
                   child: LoginScreenViewError()),
               Container(
                   margin:
-                      EdgeInsets.only(top: service.presenter.marginTopButton.h),
+                      EdgeInsets.only(top: service.presenter.marginButtonTop.h),
                   child: LoginScreenViewButton()),
               Container(
                   margin:
-                      EdgeInsets.only(top: service.presenter.marginTopTos.h),
+                      EdgeInsets.only(top: service.presenter.marginTosTop.h),
                   child: LoginScreenViewTos()),
             ])));
   }

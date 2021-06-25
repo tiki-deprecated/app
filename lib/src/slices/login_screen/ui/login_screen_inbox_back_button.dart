@@ -23,13 +23,13 @@ class LoginScreenInboxBackButton extends StatelessWidget {
         Container(
           child: HelperImage('back-arrow'),
           margin:
-              EdgeInsets.only(right: service.presenter.backMarginRightArrow.w),
+              EdgeInsets.only(right: service.presenter.marginBackArrowRight.w),
         ),
-        Text(service.presenter.backText,
+        Text(service.presenter.textBack,
             style: TextStyle(
                 color: ConfigColor.orange,
                 fontWeight: FontWeight.w800,
-                fontSize: service.presenter.backFontSize.sp))
+                fontSize: service.presenter.fontSizeBack.sp))
       ]),
     );
   }

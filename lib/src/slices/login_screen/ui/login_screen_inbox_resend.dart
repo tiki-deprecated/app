@@ -18,19 +18,19 @@ class LoginScreenInboxResend extends StatelessWidget {
     var service = Provider.of<LoginScreenService>(context);
     var presenter = service.presenter;
     return Row(children: [
-      Text(presenter.receiveText,
+      Text(presenter.textReceive,
           style: TextStyle(
               color: ConfigColor.emperor,
-              fontSize: presenter.resendFontSize.sp,
+              fontSize: presenter.fontSizeResend.sp,
               fontWeight: FontWeight.w600)),
       TextButton(
           onPressed: () => service.controller.resend(context),
           child: Row(children: [
             Container(
-                margin: EdgeInsets.only(right: presenter.resendMarginRight.w),
-                child: Text(presenter.resendText,
+                margin: EdgeInsets.only(right: presenter.marginResendRight.w),
+                child: Text(presenter.textResend,
                     style: TextStyle(
-                        fontSize: presenter.resendFontSize.sp,
+                        fontSize: presenter.fontSizeResend.sp,
                         fontWeight: FontWeight.bold,
                         color: ConfigColor.orange))),
             HelperImage("inbox-resend")

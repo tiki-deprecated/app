@@ -38,7 +38,7 @@ class LoginScreenViewTos extends StatelessWidget {
   TextStyle _textStyle(context, {Color color = ConfigColor.boulder}) {
     var service = Provider.of<LoginScreenService>(context);
     return TextStyle(
-        fontSize: service.presenter.tosFontSize.sp,
+        fontSize: service.presenter.fontSizeTos.sp,
         fontWeight: FontWeight.bold,
         color: color);
   }
@@ -48,7 +48,7 @@ class LoginScreenViewTos extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: 0,
-      height: service.presenter.tosFontSize.sp,
+      height: service.presenter.fontSizeTos.sp,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.all(0),
       child: Text(text, style: _textStyle(context, color: ConfigColor.orange)),
