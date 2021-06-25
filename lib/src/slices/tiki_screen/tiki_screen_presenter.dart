@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TikiScreenPresenter {
-  get marginTopCards => 2;
   get marginVerticalLogOut => 4;
 
   num get marginHorizontal => 6;
@@ -12,6 +11,7 @@ class TikiScreenPresenter {
   num get marginEmailTop => 2;
   num get marginUpdatesTop => 3;
   num get marginTikiBoxTop => 2;
+  num get marginCardsTop => 3;
 
   num get marginTikiBoxCounterTop => 3;
   num get marginTikiBoxReferTop => 4;
@@ -29,6 +29,10 @@ class TikiScreenPresenter {
   num get fontSizeTikiBoxReferShare => 18;
   num get fontSizeTikiBoxReferCount => 13;
 
+  num get fontSizeCardTitle => 17;
+  num get fontSizeCardText => 12;
+  num get fontSizeCardCta => 13;
+
   get textGs => "Get started";
   get textUpdates => "TIKI updates";
   get textTikiBoxCounter => "people joined the TIKI tribe";
@@ -37,6 +41,25 @@ class TikiScreenPresenter {
   get textTikiBoxReferCode => "YOUR CODE:";
   get textTikiBoxReferShare => "SHARE";
   get textTikiBoxReferCount => "people joined";
+
+  get textCardReleaseTitle => "Coming next";
+  get textCardReleaseText => "See which companies \nemail you";
+  get textCardReleaseCtaText => "Read More";
+  get textCardReleaseCtaUrl => "https://mytiki.com/roadmap";
+
+  get textCardNewsTitle => "Latest news";
+  get textCardNewsText =>
+      "For the latest news and updates, check out our blog.";
+  get textCardNewsCtaText => "Read More";
+  get textCardNewsCtaUrl => "https://mytiki.com/blog";
+
+  get textCardCommunityTitle => "TIKI tribe";
+  get textCardCommunityText =>
+      "Join our community of TIKI-nites from around the globe.";
+
+  get textCardFollowTitle => "Follow us";
+  get textCardFollowText =>
+      "You can find helpful and fun stuff on our channels.";
 
   get textTikiBoxReferShareMessage => "It's your data. Get paid for it.";
 

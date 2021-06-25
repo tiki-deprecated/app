@@ -1,4 +1,8 @@
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_add_email_button.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_community.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_follow_us.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_news.dart';
+import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_card_release.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_heading.dart';
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_tiki_box.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +39,22 @@ class TikiScreenLayoutForeground extends StatelessWidget {
       Container(
           margin: EdgeInsets.only(top: service.presenter.marginTikiBoxTop.h),
           child: TikiScreenViewTikiBox()),
-      //TikiScreenViewNextReleaseCard(),
-      //TikiScreenViewNewsCard(),
-      //TikiScreenViewCommunityCard(),
-      //TikiScreenViewFollowUsCard(),
+      Container(
+          margin: EdgeInsets.only(top: service.presenter.marginCardsTop.h),
+          alignment: Alignment.topCenter,
+          child: TikiScreenViewCardRelease()),
+      Container(
+          margin: EdgeInsets.only(top: service.presenter.marginCardsTop.h),
+          alignment: Alignment.topCenter,
+          child: TikiScreenViewCardNews()),
+      Container(
+          margin: EdgeInsets.only(top: service.presenter.marginCardsTop.h),
+          alignment: Alignment.topCenter,
+          child: TikiScreenViewCardCommunity()),
+      Container(
+          margin: EdgeInsets.only(top: service.presenter.marginCardsTop.h),
+          alignment: Alignment.topCenter,
+          child: TikiScreenViewCardFollowUs())
       //TikiScreenViewLogout(),
       //TikiScreenViewVersion(),
     ]);

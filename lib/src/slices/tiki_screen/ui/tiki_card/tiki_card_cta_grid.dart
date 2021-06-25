@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'tiki_card_cta.dart';
 
-class TikiCardGridCta extends TikiCardCta {
+class TikiCardCtaGrid extends TikiCardCta {
   final List<Widget> ctas;
 
-  TikiCardGridCta(this.ctas);
+  TikiCardCtaGrid(this.ctas);
 
   Widget buildGrid() {
     return Column(

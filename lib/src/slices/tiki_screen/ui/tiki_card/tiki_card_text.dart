@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../tiki_screen_service.dart';
 
 class TikiCardText extends StatelessWidget {
   final String text;
@@ -8,6 +11,10 @@ class TikiCardText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(fontSize: 4.w));
+    var service = Provider.of<TikiScreenService>(context, listen: false);
+    return Text(text,
+        style: TextStyle(
+            fontSize: service.presenter.fontSizeCardText.sp,
+            fontWeight: FontWeight.w600));
   }
 }

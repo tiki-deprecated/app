@@ -1,13 +1,13 @@
 import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_cta.dart';
 import 'package:flutter/material.dart';
 
-class TikiCardInlineCta extends TikiCardCta {
+class TikiCardCtaInline extends TikiCardCta {
   final Text headline;
   final Icon trailingIcon;
 
   final Function? callback;
 
-  TikiCardInlineCta(this.headline, this.trailingIcon, this.callback);
+  TikiCardCtaInline(this.headline, this.trailingIcon, this.callback);
 
   @override
   Widget getCta() {
