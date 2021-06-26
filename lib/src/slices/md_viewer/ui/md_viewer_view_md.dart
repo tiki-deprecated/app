@@ -4,25 +4,23 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/md_viewer/md_viewer_service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HelperMarkdown extends StatelessWidget {
-  static final double _fontSizeHeading = 10.w;
-  static final double _fontSizeText = 4.w;
-
-  final String source;
-
-  HelperMarkdown(this.source);
+class MdViewerView extends StatelessWidget {
+  static const num _fontSizeHeading = 24;
+  static const num _fontSizeText = 13;
 
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<MdViewerService>(context);
     return FutureBuilder(
         future: DefaultAssetBundle.of(context)
-            .loadString('res/md/' + source + '.md'),
+            .loadString('res/md/' + service.model.filename + '.md'),
         builder: (BuildContext context, AsyncSnapshot<String> mdSource) {
           return MarkdownBody(
               selectable: true,
@@ -32,25 +30,25 @@ class HelperMarkdown extends StatelessWidget {
               styleSheet: MarkdownStyleSheet(
                 h1: TextStyle(
                     color: ConfigColor.mardiGras,
-                    fontSize: _relativeHeadingSize(1),
+                    fontSize: _relativeHeadingSize(1).sp,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Koara'),
                 h3: TextStyle(
-                    fontSize: _relativeHeadingSize(0.3),
+                    fontSize: _relativeHeadingSize(0.3).sp,
                     color: ConfigColor.mardiGras,
                     fontWeight: FontWeight.w600),
                 h4: TextStyle(
-                    fontSize: _relativeHeadingSize(0.1),
+                    fontSize: _relativeHeadingSize(0.1).sp,
                     color: ConfigColor.mardiGras,
                     fontWeight: FontWeight.w600),
                 a: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.w600,
-                    fontSize: _fontSizeText),
+                    fontSize: _fontSizeText.sp),
                 p: TextStyle(
                     color: ConfigColor.emperor,
                     fontWeight: FontWeight.normal,
-                    fontSize: _fontSizeText),
+                    fontSize: _fontSizeText.sp),
               ),
               data: mdSource.data ?? ""); //mdSource.data
         });

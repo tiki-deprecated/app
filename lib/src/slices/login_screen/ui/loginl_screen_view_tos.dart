@@ -5,7 +5,6 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/login_screen/login_screen_service.dart';
-import 'package:app/src/slices/md_viewer/md_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,15 +20,9 @@ class LoginScreenViewTos extends StatelessWidget {
         Text("By pressing \"Continue\" you agree to TIKI's ",
             style: _textStyle(context)),
         _link(
-            "Terms of Service",
-            () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => MdViewer("TERMS"))),
-            context),
+            "Terms of Service", () => service.controller.tos(context), context),
         Text(" and ", style: _textStyle(context)),
-        _link(
-            "Privacy Policy",
-            () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => MdViewer("PRIVACY"))),
+        _link("Privacy Policy", () => service.controller.privacy(context),
             context),
       ],
     );
