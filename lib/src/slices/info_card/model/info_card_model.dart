@@ -26,8 +26,12 @@ class InfoCardCtaDataModel {
 class InfoCardContentDataModel {
   final List<InfoCardContentExplanationModel> cardContent;
   final List<InfoCardContenTheySayModel> theySay;
+  final List<InfoCardContenYouShouldKnowModel> youShouldKnow;
 
-  InfoCardContentDataModel({required this.cardContent, required this.theySay});
+  InfoCardContentDataModel(
+      {required this.cardContent,
+      required this.theySay,
+      required this.youShouldKnow});
 }
 
 class InfoCardContentExplanationModel {
@@ -44,7 +48,15 @@ class InfoCardContenTheySayModel {
   InfoCardContenTheySayModel({required this.image, required this.text});
 }
 
+class InfoCardContenYouShouldKnowModel {
+  final String image;
+  final String text;
+
+  InfoCardContenYouShouldKnowModel({required this.image, required this.text});
+}
+
 class InfoCardCoverData {
+  InfoCardTopHeaderModel topHeader;
   String image;
   String subtitle;
   String bigTextLighter;
@@ -52,6 +64,7 @@ class InfoCardCoverData {
   String subText;
 
   InfoCardCoverData({
+    required this.topHeader,
     required this.image,
     required this.subtitle,
     required this.bigTextLighter,

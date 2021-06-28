@@ -34,12 +34,12 @@ class _InfoCardLayoutContainerState extends State<InfoCardLayoutContainer>
             borderRadius: BorderRadius.all(Radius.circular(10)),
             child: SingleChildScrollView(
                 child: Column(
-                  children: [
+              children: [
                 InfoCardViewCover(
                     maxHeight: widget.constraints.maxHeight,
                     controller: controller),
                 InfoCardViewContent(widget.constraints, controller)
               ],
-                ))));
+            ))));
   }
 }

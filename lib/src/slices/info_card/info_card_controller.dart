@@ -35,4 +35,8 @@ class InfoCardController {
       controller.animateTo(0, curve: Curves.easeOut);
     }
   }
+
+  shareCard(BuildContext context, shareMessage, socialMediaImg) {}
+
+  launchUrl(String btnActionUrl) {}
 }

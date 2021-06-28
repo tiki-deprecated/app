@@ -6,7 +6,9 @@ import 'package:sizer/sizer.dart';
 
 class TikiScreenPresenter {
   get marginVerticalShare => 6.h;
+
   get marginTopCards => 2.h;
+
   get marginVerticalLogOut => 4.h;
 
   final service;

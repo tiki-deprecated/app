@@ -7,6 +7,7 @@ class InfoCardViewCta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCardService>(context);
+    var model = service.model.cardData.cardCtaData;
     return Container(
         padding: EdgeInsets.all(25),
         color: Color(0xFFD8D8D8),
@@ -22,7 +23,7 @@ class InfoCardViewCta extends StatelessWidget {
                     fontSize: 18,
                     fontFamily: "NunitoSans"),
               )),
-          this.cardCtaArgs['richTextExplanation'],
+          InfoCardViewCtaRichText(),
           Container(
               width: double.maxFinite,
               padding: EdgeInsets.symmetric(vertical: 25),
@@ -33,10 +34,18 @@ class InfoCardViewCta extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(30))),
                   ),
-                  child: Text(this.cardCtaArgs['buttonText'],
+                  child: Text(model.buttonText,
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  onPressed: () => this.cardCtaArgs['btnAction']()))
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  onPressed: () =>
+                      service.controller.launchUrl(model.btnActionUrl)))
         ]));
+  }
+}
+
+class InfoCardViewCtaRichText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

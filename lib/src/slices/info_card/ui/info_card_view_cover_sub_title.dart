@@ -1,3 +1,4 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/info_card/info_card_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class InforCardViewCoverSubTitle extends StatelessWidget {
                         .calculateAnimation(6.98, controllerValue.value, 0),
                     margin: EdgeInsets.only(bottom: 10),
                     width: double.maxFinite,
-                    child: Text(this.coverData['subtitle'],
+                    child: Text(service.model.coverData.subtitle,
                         style: TextStyle(
                             color: ConfigColor.orange,
                             fontSize: 2.3.sp,

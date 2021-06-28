@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../login_screen_service.dart';
 
 class LoginInboxScreenResend extends StatelessWidget {
@@ -30,7 +31,8 @@ class LoginInboxScreenResend extends StatelessWidget {
               onPressed: () => service.controller.resend(context),
               child: Row(children: [
                 Container(
-                    margin: EdgeInsets.only(right: presenter.resendMarginRight.w),
+                    margin:
+                        EdgeInsets.only(right: presenter.resendMarginRight.w),
                     child: Text(presenter.resendText,
                         style: TextStyle(
                             fontSize: presenter.resendFontSize.sp,

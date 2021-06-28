@@ -11,4 +11,6 @@ class GmailDataScreenController {
   launchUrl(BuildContext context, String url) async {
     Provider.of<GmailDataScreenService>(context, listen: false).launchUrl(url);
   }
+
+  calculateAnimation(double h, double value, int i) {}
 }

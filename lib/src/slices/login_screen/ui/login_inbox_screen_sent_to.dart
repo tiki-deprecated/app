@@ -6,9 +6,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../login_screen_service.dart';
-import 'package:sizer/sizer.dart';
 
 class LoginInboxScreenSentTo extends StatelessWidget {
   @override

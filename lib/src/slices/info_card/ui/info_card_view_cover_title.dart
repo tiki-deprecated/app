@@ -1,5 +1,7 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../info_card_service.dart';
 
@@ -35,10 +37,10 @@ class InforCardViewCoverTitle extends StatelessWidget {
                             fontSize: service.controller.calculateAnimation(
                                 5.23.h, controllerValue.value, 2.9.h),
                             fontWeight: FontWeight.bold),
-                        text: this.coverData['bigTextLighter'],
+                        text: service.model.coverData.bigTextLighter,
                         children: [
                           TextSpan(
-                              text: this.coverData['bigTextDarker'],
+                              text: service.model.coverData.bigTextDarker,
                               style: TextStyle(
                                   color: ConfigColor.tikiBlue,
                                   height: 1,

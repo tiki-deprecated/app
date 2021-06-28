@@ -1,5 +1,7 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../info_card_service.dart';
 
@@ -22,7 +24,7 @@ class InforCardViewCoverText extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.only(top: 1.16.h),
                 width: double.maxFinite,
-                child: Text(this.coverData['subText'],
+                child: Text(service.model.coverData.subText,
                     style: TextStyle(
                         color: ConfigColor.tikiBlue,
                         fontFamily: "NunitoSans",

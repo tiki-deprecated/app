@@ -1,3 +1,6 @@
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/info_card/model/info_card_model.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +10,8 @@ class InfoCardViewWhatTheySay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCardService>(context);
-    List<Map> theySayData = this.cardContentData['cardContentData']['theysay'];
+    List<InfoCardContenTheySayModel> theySayData =
+        service.model.cardData.cardContentData.theySay;
     List<Widget> theysay = [];
     for (int i = 0; i < theySayData.length; i++) {
       if (i > 0)
@@ -19,9 +23,9 @@ class InfoCardViewWhatTheySay extends StatelessWidget {
       theysay.add(Row(children: [
         Padding(
             padding: EdgeInsets.only(right: 20),
-            child: HelperImage(theySayData[i]['image'], width: 30)),
+            child: HelperImage(theySayData[i].image, width: 30)),
         Expanded(
-          child: Text(theySayData[i]['text'],
+          child: Text(theySayData[i].text,
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: "NunitoSans",

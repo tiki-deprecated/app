@@ -1,6 +1,6 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
-import 'package:app/src/slices/gmail_data_screen/model/gmail_data_screen_model.dart';
+import 'package:app/src/slices/info_card/model/info_card_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

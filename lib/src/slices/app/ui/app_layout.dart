@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<AppService>(context);

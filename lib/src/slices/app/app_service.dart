@@ -4,8 +4,6 @@
  */
 
 import 'package:app/src/slices/auth/auth_service.dart';
-import 'package:app/src/slices/intro_screen/ui/intro_screen_layout.dart';
-import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -42,13 +40,13 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    this.home = TikiScreenService();
-    //getHome();
-    //initDynamicLinks();
+    //this.home = TikiScreenService();
+    getHome();
+    initDynamicLinks();
   }
 
   getRoutes(BuildContext context) {
-    this.model.routes =  {
+    this.model.routes = {
       "/": (BuildContext context) => home.getUI(),
       "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
       "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
@@ -72,13 +70,13 @@ class AppService extends ChangeNotifier {
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-          final Uri? deepLink = dynamicLink?.link;
-          if (deepLink != null) _handle(deepLink);
-        }, onError: (OnLinkErrorException e) async {
+      final Uri? deepLink = dynamicLink?.link;
+      if (deepLink != null) _handle(deepLink);
+    }, onError: (OnLinkErrorException e) async {
       await Sentry.captureException(e, stackTrace: StackTrace.current);
     });
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     this.deepLink = data?.link;
   }
 

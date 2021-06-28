@@ -21,9 +21,9 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
   }
 
   Widget _removeRow(context, TikiScreenService service) {
-
     return Container(
-        margin: EdgeInsets.only(bottom: service.presenter.emailButtonMarginBottom.h),
+        margin: EdgeInsets.only(
+            bottom: service.presenter.emailButtonMarginBottom.h),
         child: RichText(
             text: TextSpan(
                 style: TextStyle(
@@ -39,7 +39,8 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                     fontFamily: "NunitoSans",
                     color: Color(0xFF545454),
                     fontWeight: FontWeight.w600),
-                text: service.model.googleAccount?.email ?? "your Gmail account.",
+                text:
+                    service.model.googleAccount?.email ?? "your Gmail account.",
               ),
               TextSpan(
                 recognizer: TapGestureRecognizer()

@@ -6,6 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
 import '../login_screen_service.dart';
 
 class LoginInboxScreenTitle extends StatelessWidget {

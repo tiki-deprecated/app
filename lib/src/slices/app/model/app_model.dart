@@ -2,7 +2,6 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 
 import 'app_model_current.dart';
-import 'app_model_routes.dart';
 import 'app_model_user.dart';
 
 class AppModel {

@@ -1,5 +1,4 @@
 import 'package:app/src/slices/info_card/info_card_service.dart';
-import 'package:app/src/slices/info_card/ui/info_card_view_cover_image.dart';
 import 'package:app/src/slices/info_card/ui/info_card_view_cover_sub_title.dart';
 import 'package:app/src/slices/info_card/ui/info_card_view_cover_swipe_up.dart';
 import 'package:app/src/slices/info_card/ui/info_card_view_cover_text.dart';
@@ -51,5 +50,16 @@ class InfoCardViewCover extends AnimatedWidget {
                       InforCardViewCoverText(_controllerValue),
                       InforCardViewCoverSwipeUp(_controllerValue)
                     ])))));
+  }
+}
+
+class InforCardViewCoverImage extends StatelessWidget {
+  var controllerValue;
+
+  InforCardViewCoverImage(this.controllerValue);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

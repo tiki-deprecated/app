@@ -28,6 +28,7 @@ class InfoCardService extends ChangeNotifier {
 
   InfoCardCoverData getInfoCoverData(coverData) {
     return InfoCardCoverData(
+        topHeader: getInfoCardTopHeader(coverData['topHeader']),
         subtitle: coverData['subtitle'],
         subText: coverData['subText'],
         bigTextLighter: coverData['bigTextLighter'],
@@ -38,8 +39,22 @@ class InfoCardService extends ChangeNotifier {
   InfoCardContentDataModel getInfoCardContentData(cardContentData) {
     return InfoCardContentDataModel(
         cardContent: cardContentData['richTextExplanation'],
-        theySay: cardContentData['theySay']);
+        theySay: cardContentData['theySay'],
+        youShouldKnow: cardContentData['youShouldKnow']);
   }
 
-  InfoCardCtaDataModel getInfoCardCtaData(cardCtaData) {}
+  InfoCardTopHeaderModel getInfoCardTopHeader(coverData) {
+    return InfoCardTopHeaderModel(
+        title: coverData['title'],
+        logoImage: coverData['logoImage'],
+        socialMediaImg: coverData['socialMediaImg'],
+        shareMessage: coverData['shareMessage']);
+  }
+
+  InfoCardCtaDataModel getInfoCardCtaData(cardCtaData) {
+    return InfoCardCtaDataModel(
+        buttonText: cardCtaData['cardCtaData'],
+        ctaExplanation: cardCtaData['ctaExplanation'],
+        btnActionUrl: cardCtaData['btnActionUrl']);
+  }
 }
