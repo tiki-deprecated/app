@@ -95,8 +95,7 @@ class AppService extends ChangeNotifier {
         }
       }
     }
-    print(this.home);
-    notifyListeners();
+    this.reload();
   }
 
   saveUser(String email, AppModelUser user) async {
@@ -107,11 +106,15 @@ class AppService extends ChangeNotifier {
       await SecureStorageRepositoryUser()
           .save(email, AppModelUser(email: email, isLoggedIn: false));
     }
-    notifyListeners();
+    this.reload();
   }
 
   void logout() {
     this.model.user = this.authService.logout();
-    notifyListeners();
+    this.reload();
+  }
+
+  void reload() {
+    this.notifyListeners();
   }
 }

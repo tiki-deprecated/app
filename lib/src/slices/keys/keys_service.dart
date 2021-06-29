@@ -79,57 +79,6 @@ class KeysService {
     return raw[2];
   }
 
-  //
-  // Future<void> getLink() async {
-  //   if (state.link == null) {
-  //     AppModelCurrent current = await _secureStorageRepositoryCurrent
-  //         .find(SecureStorageRepositoryCurrent.key);
-  //     AppModelUser user = await _repoLocalSsUser.find(current.email!);
-  //     if (user.referral == null) {
-  //       final DynamicLinkParameters parameters = DynamicLinkParameters(
-  //           uriPrefix: 'https://mytiki.app',
-  //           link: Uri.parse(
-  //               'https://mytiki.com/app/blockchain?ref=' + user.address!),
-  //           dynamicLinkParametersOptions: DynamicLinkParametersOptions(
-  //             shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
-  //           ),
-  //           androidParameters: AndroidParameters(
-  //               packageName: 'com.mytiki.app',
-  //               fallbackUrl: Uri.parse(
-  //                   'https://play.google.com/store/apps/details?id=com.mytiki.app')),
-  //           iosParameters: IosParameters(
-  //             //appStoreId: '1560250866',
-  //               bundleId: 'com.mytiki.app',
-  //               fallbackUrl:
-  //               Uri.parse('https://testflight.apple.com/join/pUcjaGK8')),
-  //           socialMetaTagParameters: SocialMetaTagParameters(
-  //               title: 'Welcome to TIKI!',
-  //               description: "It's YOUR data. Take back control of it.",
-  //               imageUrl: Uri.parse(
-  //                   'https://mytiki.com/og-img-d9216d73be474034a8208d3c613f72a8.png')));
-  //       final ShortDynamicLink shortLink = await parameters.buildShortLink();
-  //       Uri referral = shortLink.shortUrl;
-  //       user.referral = referral;
-  //       await _repoLocalSsUser.save(user.email!, user);
-  //       emit(KeysReferralSuccess(state.referer, referral, 0));
-  //     } else
-  //       emit(KeysReferralSuccess(state.referer, user.referral, 0));
-  //   } else
-  //     emit(KeysReferralSuccess(state.referer, state.link, 0));
-  // }
-  //
-  // Future<void> getCount() async {
-  //   AppModelCurrent current = await _secureStorageRepositoryCurrent
-  //       .find(SecureStorageRepositoryCurrent.key);
-  //   AppModelUser user = await _repoLocalSsUser.find(current.email!);
-  //   HelperApiRsp<RepoApiBlockchainAddressReferRsp> apiRsp =
-  //   await _repoApiBlockchainAddress.referCount(user.address);
-  //   if (apiRsp.code == 200) {
-  //     RepoApiBlockchainAddressReferRsp rsp = apiRsp.data;
-  //     emit(KeysReferralSuccess(state.referer, state.link, rsp.count));
-  //   }
-  // }
-
   generateKeys() async {
     AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> dataKey =
         await HelperCryptoRsa.createRSA();
@@ -149,4 +98,44 @@ class KeysService {
       address: address,
     );
   }
+
+  requestReferalCode(KeysModel keysWithAddress) async {
+    HelperApiRsp<RepoApiReferRsp> rsp = await RepoApiRefer.requestCode(
+        RepoApiReferReq(keysWithAddress.address));
+    if (rsp.code == 200) {
+      await SecureStorageRefer.save(keysWithAddress.address!, rsp.data.code);
+    } else {
+      Sentry.captureMessage("Failed to get refer code.",
+          level: SentryLevel.error);
+      print(rsp.data);
+      throw Exception("issueAddress error " + rsp.data);
+    }
+    return keys;
+  }
+}
+
+class SecureStorageRefer {}
+
+class RepoApiReferReq {}
+
+class RepoApiRefer {
+  static requestCode(RepoApiReferReq repoApiReferReq) {}
+}
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+class RepoApiReferRsp {
+  String? code;
+
+  RepoApiReferRsp({this.code});
+
+  RepoApiReferRsp.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      this.code = json['code'];
+    }
+  }
+
+  Map<String, dynamic> toJson() => {'code': code};
 }

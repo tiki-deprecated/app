@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/auth/model/auth_bouncer_jwt_req_refresh.dart';
@@ -38,8 +39,7 @@ class HelperApiAuth {
       if (token.refresh == null) {
         Sentry.captureMessage("No refresh token. Logging out",
             level: SentryLevel.warning);
-        // HelperLogOut.provide(ConfigNavigate.key.currentContext!)
-        //     .user(ConfigNavigate.key.currentContext!, current.email!);
+        AppService().logout();
       } else {
         HelperApiRsp<AuthBouncerJwtRsp> refreshRsp =
             await AuthBouncerJwt.refresh(AuthModelJwtReqRefresh(token.refresh));
