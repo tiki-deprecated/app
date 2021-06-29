@@ -88,7 +88,7 @@ class AppService extends ChangeNotifier {
       String? otp = link.queryParameters["otp"];
       if (otp != null && otp.isNotEmpty) {
         this.model.user = await authService.verifyOtp(otp);
-        if (this.model.user!.address != null) {
+        if (this.model.user?.address != null) {
           this.home = AppModelRoutes.home;
         } else {
           this.home = AppModelRoutes.keys;
@@ -116,5 +116,10 @@ class AppService extends ChangeNotifier {
 
   void reload() {
     this.notifyListeners();
+  }
+
+  void saveReferralCode(String referral) {
+    this.model.user!.code = referral;
+    this.saveUser(this.model.user!.email!, this.model.user!);
   }
 }

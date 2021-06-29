@@ -1,4 +1,4 @@
-import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
 import 'package:app/src/slices/google/repository/google_repository.dart';
 import 'package:app/src/slices/login_screen/model/repo_api_website_users_rsp.dart';
 import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dart';

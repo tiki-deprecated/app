@@ -7,6 +7,7 @@ class AppModelUser {
   String? email;
   String? address;
   bool? isLoggedIn;
+  String? code;
   Uri? referral;
 
   AppModelUser({this.email, this.address, this.isLoggedIn, this.referral});
@@ -18,13 +19,16 @@ class AppModelUser {
       this.isLoggedIn = json['isLoggedIn'];
       this.referral =
           json['referral'] == null ? null : Uri.parse(json['referral']);
+      this.code = json['code'] == null ? null : json['code'];
     }
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'email': email,
         'address': address,
         'isLoggedIn': isLoggedIn,
-        'referral': referral == null ? null : referral.toString()
+        'referral': referral == null ? null : referral.toString(),
+        'code': code
       };
 }
