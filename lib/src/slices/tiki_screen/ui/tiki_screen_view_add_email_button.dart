@@ -44,6 +44,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                 style: TextStyle(
                     fontSize: service.presenter.fontSizeEmail.sp,
                     fontFamily: "NunitoSans",
+                    color: Color(0xFF545454),
                     color: ConfigColor.emperor,
                     fontWeight: FontWeight.w600),
                 text: " as your Gmail account.",

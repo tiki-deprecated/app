@@ -11,7 +11,7 @@ import 'package:app/src/slices/auth/model/auth_model_token.dart';
 import 'package:app/src/slices/auth/repository/auth_bouncer_jwt.dart';
 import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'helper_api_rsp.dart';
@@ -23,10 +23,10 @@ class HelperApiAuth {
   HelperApiAuth(this._secureStorageRepositoryCurrent, this._repoLocalSsToken);
 
   HelperApiAuth.provide(BuildContext context)
-      : _secureStorageRepositoryCurrent =
-            RepositoryProvider.of<SecureStorageRepositoryCurrent>(context),
+      : _secureStorageRepositoryCurrent = SecureStorageRepositoryCurrent(
+            secureStorage: FlutterSecureStorage()),
         _repoLocalSsToken =
-            RepositoryProvider.of<SecureStorageRepositoryToken>(context);
+            SecureStorageRepositoryToken(secureStorage: FlutterSecureStorage());
 
   Future<HelperApiRsp<T>> proxy<T>(
       Future<HelperApiRsp<T>> Function() request) async {
