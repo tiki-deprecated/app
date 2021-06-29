@@ -26,8 +26,11 @@ class TikiScreenController {
     Provider.of<AppService>(context, listen: false).logout();
   }
 
-  shareText(context, text) {
-    Provider.of<TikiScreenService>(context, listen: false)
-        .shareLink(context, text);
+  shareText(context) {
+    Provider.of<TikiScreenService>(context, listen: false).shareLink();
+  }
+
+  copyLink(context) async {
+    await Provider.of<TikiScreenService>(context, listen: false).copyLink();
   }
 }

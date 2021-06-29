@@ -15,9 +15,11 @@ import '../../login_screen/model/repo_api_website_users_rsp.dart';
 class RepoApiWebsiteUsers {
   static const String _path = '/api/0-1-0/user';
 
-  static Future<HelperApiRsp<RepoApiWebsiteUsersRsp>> total() async {
+  static Future<HelperApiRsp<RepoApiWebsiteUsersRsp>> total({code}) async {
+    var query;
+    if (code != null) query = {"referrer": code};
     http.Response rsp = await http.get(
-        ConfigDomain.asUri(ConfigDomain.website, _path),
+        ConfigDomain.asUri(ConfigDomain.website, _path, query),
         headers: HelperHeaders().header);
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp(

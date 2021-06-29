@@ -5,11 +5,14 @@ import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dar
 import 'package:app/src/slices/tiki_screen/tiki_screen_controller.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_presenter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'model/tiki_screen_model.dart';
 
 class TikiScreenService extends ChangeNotifier {
+  static const String _linkUrl = "https://mytiki.com/";
   late TikiScreenModel model;
   late TikiScreenPresenter presenter;
   late TikiScreenController controller;
@@ -42,9 +45,15 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   Future<void> getReferCount() async {
-    //TODO this needs to connect to the proper API
-    this.model.referCount = 666;
-    notifyListeners();
+    var code = "FIXME"; //TODO swap FIXME with actual user referral code
+    HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
+        await RepoApiWebsiteUsers.total(code: code);
+    if (apiRsp.code == 200) {
+      this.model.referCount = apiRsp.data.total;
+      notifyListeners();
+    } else {
+      print(apiRsp);
+    }
   }
 
   void addGoogleAccount() async {
@@ -64,9 +73,18 @@ class TikiScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void shareLink(context, text) {
-    //TODO rollback
-    // Share.share(this.model.link.toString(), subject: text);
+  void shareLink() {
+    var code = "FIXME"; //TODO swap FIXME with actual user referral code
+    var body =
+        "Your data. Your decisions. Take the take power back from corporations. Together, we triumph. Join us! " +
+            _linkUrl +
+            code;
+    Share.share(body, subject: "Have you seen this???");
+  }
+
+  Future<void> copyLink() async {
+    var code = "FIXME"; //TODO swap FIXME with actual user referral code
+    await Clipboard.setData(new ClipboardData(text: _linkUrl + code));
   }
 
   void whatGmailHolds(context) {

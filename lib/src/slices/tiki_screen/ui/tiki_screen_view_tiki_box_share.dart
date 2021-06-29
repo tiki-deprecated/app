@@ -43,7 +43,6 @@ class TikiScreenViewTikiBoxShare extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: () => service.controller.shareText(
-            context, service.presenter.textTikiBoxReferShareMessage));
+        onPressed: () => service.controller.shareText(context));
   }
 }

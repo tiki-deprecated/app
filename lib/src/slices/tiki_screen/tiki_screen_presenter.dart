@@ -69,8 +69,6 @@ class TikiScreenPresenter {
   get textCardFollowText =>
       "You can find helpful and fun stuff on our channels.";
 
-  get textTikiBoxReferShareMessage => "It's your data. Get paid for it.";
-
   get textSeeData => "See what data \nGmail has on you";
 
   final service;
