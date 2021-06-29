@@ -10,7 +10,8 @@ class AppModelUser {
   String? code;
   Uri? referral;
 
-  AppModelUser({this.email, this.address, this.isLoggedIn, this.referral});
+  AppModelUser(
+      {this.email, this.address, this.isLoggedIn, this.referral, this.code});
 
   AppModelUser.fromJson(Map<String, dynamic>? json) {
     if (json != null) {

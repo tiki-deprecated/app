@@ -15,8 +15,9 @@ import '../tiki_screen_service.dart';
 class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var code = "FIXME"; //TODO load stored referral code
     var service = Provider.of<TikiScreenService>(context);
+    var code = service.model.code;
+    if (code.isEmpty) service.getCode(context);
     return OutlinedButton(
         onPressed: () async => service.controller.copyLink(context),
         style: OutlinedButton.styleFrom(
@@ -33,7 +34,7 @@ class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(
                   left: 2.w, right: 4.w, top: 1.25.h, bottom: 1.25.h),
-              child: Text(code,
+              child: Text(service.model.code,
                   style: TextStyle(
                       fontSize: service.presenter.fontSizeTikiBoxReferCode.sp,
                       fontWeight: FontWeight.bold,

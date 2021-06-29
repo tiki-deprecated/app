@@ -4,5 +4,6 @@ class TikiScreenModel {
   GoogleSignInAccount? googleAccount;
   int count = 0;
   int referCount = 0;
-  late String version;
+  String code = "";
+  late String version = "";
 }

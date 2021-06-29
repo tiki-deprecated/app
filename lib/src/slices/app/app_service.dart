@@ -40,18 +40,17 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    //this.home = TikiScreenService();
     getHome();
     initDynamicLinks();
   }
 
-  getRoutes(BuildContext context) {
-    this.model.routes = {
-      "/": (BuildContext context) => home.getUI(),
-      "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
-      "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
-    };
-  }
+  // getRoutes(BuildContext context) {
+  //   this.model.routes = {
+  //     "/": (BuildContext context) => home.getUI(),
+  //     "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
+  //     "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
+  //   };
+  // }
 
   getHome() {
     if (this.deepLink != null) {
@@ -121,5 +120,11 @@ class AppService extends ChangeNotifier {
   void saveReferralCode(String referral) {
     this.model.user!.code = referral;
     this.saveUser(this.model.user!.email!, this.model.user!);
+  }
+
+  void updateUser(AppModelUser user) {
+    this.authService.user = user;
+    this.model.user = user;
+    this.saveUser(user.email!, user);
   }
 }
