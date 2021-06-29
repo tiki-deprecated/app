@@ -16,30 +16,37 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
     List<Widget> child = service.model.googleAccount != null
         ? [_removeRow(context, service), _seeButton(context, service)]
         : [_addButton(context, service)];
-
     return Column(children: child);
   }
 
   Widget _removeRow(context, TikiScreenService service) {
-
     return Container(
-        margin: EdgeInsets.only(bottom: service.presenter.emailButtonMarginBottom.h),
+        margin: EdgeInsets.only(
+            bottom: service.presenter.emailButtonMarginBottom.h),
         child: RichText(
             text: TextSpan(
                 style: TextStyle(
-                    fontSize: service.presenter.emailButtonFont.sp,
+                    fontSize: service.presenter.fontSizeEmail.sp,
                     fontFamily: "NunitoSans",
-                    color: Color(0xFF545454),
+                    color: ConfigColor.emperor,
                     fontWeight: FontWeight.w600),
                 text: "You've linked ",
                 children: <InlineSpan>[
               TextSpan(
                 style: TextStyle(
-                    fontSize: service.presenter.emailButtonFont.sp,
+                    fontSize: service.presenter.fontSizeEmail.sp,
                     fontFamily: "NunitoSans",
-                    color: Color(0xFF545454),
+                    color: ConfigColor.ikb,
                     fontWeight: FontWeight.w600),
-                text: service.model.googleAccount?.email ?? "your Gmail account.",
+                text: service.model.googleAccount?.email,
+              ),
+              TextSpan(
+                style: TextStyle(
+                    fontSize: service.presenter.fontSizeEmail.sp,
+                    fontFamily: "NunitoSans",
+                    color: ConfigColor.emperor,
+                    fontWeight: FontWeight.w600),
+                text: " as your Gmail account.",
               ),
               TextSpan(
                 recognizer: TapGestureRecognizer()
@@ -48,7 +55,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                 style: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.bold,
-                    fontSize: service.presenter.emailButtonFont.sp,
+                    fontSize: service.presenter.fontSizeEmail.sp,
                     fontFamily: "NunitoSans"),
                 text: " Remove ",
               ),
@@ -57,19 +64,19 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () => service.controller.removeGmailAccount(context),
                     child: Container(
-                        width: 16.0,
-                        height: 16.0,
+                        width: 5.w,
+                        height: 5.w,
                         decoration: new BoxDecoration(
                           borderRadius:
-                              new BorderRadius.all(new Radius.circular(15.0)),
+                              new BorderRadius.all(new Radius.circular(5.w)),
                           border: new Border.all(
                             color: ConfigColor.orange,
-                            width: 1.0,
+                            width: 0.4.w,
                           ),
                         ),
                         child: Center(
                             child: Icon(Icons.close,
-                                size: 14, color: ConfigColor.orange))),
+                                size: 12.sp, color: ConfigColor.orange))),
                   )),
             ])));
   }
@@ -116,19 +123,19 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
           child: Row(children: [
             HelperImage(
               "eye-added-email",
-              width: 35,
+              width: 12.w,
             ),
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("See what data\nGmail has on you",
+                    child: Text(service.presenter.textSeeData,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20.sp,
+                            fontSize: service.presenter.fontSizeSee.sp,
                             fontFamily: "Montserrat")))),
             HelperImage(
               "right-arrow",
-              width: 30,
+              width: 12.w,
             )
           ]),
           onTap: () => service.controller.whatGmailHolds(context)),

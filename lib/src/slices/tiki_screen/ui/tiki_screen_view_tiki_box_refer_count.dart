@@ -11,20 +11,18 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class TikiScreenViewTikiBoxReferCount extends StatelessWidget {
-  static const String _text = "people joined";
-  static final double _fontSize = 14.sp;
-  static final double _marginRight = 2.w;
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
-          margin: EdgeInsets.only(right: _marginRight),
-          child: HelperImage("ref-user")),
-      Text(service.model.count.toString() + " " + _text,
+          margin: EdgeInsets.only(right: 2.w), child: HelperImage("ref-user")),
+      Text(
+          service.model.referCount.toString() +
+              " " +
+              service.presenter.textTikiBoxReferCount,
           style: TextStyle(
-              fontSize: _fontSize,
+              fontSize: service.presenter.fontSizeTikiBoxReferCount.sp,
               fontWeight: FontWeight.w600,
               color: ConfigColor.jade))
     ]);

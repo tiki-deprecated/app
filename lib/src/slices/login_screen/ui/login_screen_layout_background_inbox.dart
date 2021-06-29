@@ -13,8 +13,11 @@ class LoginScreenBackgroundInbox extends StatelessWidget {
     return Stack(children: [
       Center(child: Container(color: ConfigColor.serenade)),
       Align(
-          alignment: Alignment.topRight, child: HelperImage('login-pineapple')),
-      Align(alignment: Alignment.centerLeft, child: HelperImage('login-blob'))
+          alignment: Alignment.topRight,
+          child: HelperImage('login-email-blob-tr')),
+      Align(
+          alignment: Alignment.bottomLeft,
+          child: HelperImage('login-email-blob-bl'))
     ]);
   }
 }

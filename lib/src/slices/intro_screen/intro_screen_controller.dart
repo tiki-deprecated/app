@@ -13,6 +13,13 @@ class IntroScreenController {
     }
   }
 
+  void navigateToPreviousScreen(context) {
+    var service = Provider.of<IntroScreenService>(context, listen: false);
+    if (!service.isFirstSlide()) {
+      service.moveToPreviousScreen(context);
+    }
+  }
+
   void skipToLogin(context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
     service.skipToLogin(context);
@@ -20,5 +27,6 @@ class IntroScreenController {
 
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {
     if (dragEndDetails.primaryVelocity! < 0) navigateToNextScreen(context);
+    if (dragEndDetails.primaryVelocity! > 0) navigateToPreviousScreen(context);
   }
 }

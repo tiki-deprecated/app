@@ -1,9 +1,30 @@
+import 'dart:ui';
+
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
 
 class GmailDataScreenPresenter {
   final GmailDataScreenService service;
 
   GmailDataScreenPresenter(this.service);
+
+  get cards => this.service.model.infoCards;
+
+  num get bottomPadding => 20;
+
+  num get topPadding => 25;
+
+  num get bottomClosePadding => 16;
+
+  num get closeFontSize => 20;
+
+  num get closeIconFontSize => 25;
+
+  get bgColor => const Color(0XFFE5E5E5);
+
+  get closeColor => ConfigColor.mardiGras;
+
+  render() {}
 }
 
 // "coverData": {

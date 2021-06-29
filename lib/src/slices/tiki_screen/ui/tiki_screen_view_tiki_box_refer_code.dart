@@ -4,59 +4,41 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
-  static const String _text = "YOUR CODE";
-  static final double _fontSize = 4.w;
-  static final double _marginLeft = 1.w;
-  static final double _marginRight = 3.w;
-  static final double _marginVertical = 1.5.h;
-  static final double _borderRadius = 1.5.h;
+import '../tiki_screen_service.dart';
 
+class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO rollback
-    var link = "";//Provider.of<TikiScreenService>(context).model.link;
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 60),
-        child: OutlinedButton(
-            onPressed: () async {
-              Clipboard.setData(new ClipboardData(text: link.toString()));
-            },
-            style: OutlinedButton.styleFrom(
-                side: BorderSide(color: ConfigColor.alto),
-                primary: ConfigColor.gray,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(_borderRadius)))),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(_text,
+    var code = "FIXME"; //TODO load stored referral code
+    var service = Provider.of<TikiScreenService>(context);
+    return OutlinedButton(
+        onPressed: () async => service.controller.copyLink(context),
+        style: OutlinedButton.styleFrom(
+            side: BorderSide(color: ConfigColor.alto),
+            primary: ConfigColor.gray,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(1.h)))),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(service.presenter.textTikiBoxReferCode,
+              style: TextStyle(
+                  fontSize: service.presenter.fontSizeTikiBoxReferCode.sp,
+                  fontWeight: FontWeight.bold,
+                  color: ConfigColor.gray)),
+          Container(
+              margin: EdgeInsets.only(
+                  left: 2.w, right: 4.w, top: 1.25.h, bottom: 1.25.h),
+              child: Text(code,
                   style: TextStyle(
-                      fontSize: _fontSize,
+                      fontSize: service.presenter.fontSizeTikiBoxReferCode.sp,
                       fontWeight: FontWeight.bold,
-                      color: ConfigColor.gray)),
-              Container(
-                  margin: EdgeInsets.only(
-                      left: _marginLeft,
-                      right: _marginRight,
-                      top: _marginVertical,
-                      bottom: _marginVertical),
-                  child: Text(
-                      link
-                          .toString()
-                          .replaceAll(new RegExp(r'https://mytiki.app/'), ''),
-                      style: TextStyle(
-                          fontSize: _fontSize,
-                          fontWeight: FontWeight.bold,
-                          color: ConfigColor.tikiBlue))),
-              HelperImage("icon-copy"),
-            ])));
+                      color: ConfigColor.tikiBlue))),
+          HelperImage("icon-copy"),
+        ]));
   }
 }

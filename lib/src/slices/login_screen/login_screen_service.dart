@@ -45,7 +45,7 @@ class LoginScreenService extends ChangeNotifier {
   void otpError(context) {
     this.model.submitted = false;
     this.model.isError = true;
-    back();
+    notifyListeners();
   }
 
   Widget getUI() {
@@ -59,7 +59,7 @@ class LoginScreenService extends ChangeNotifier {
   }
 
   void back() {
-    this.model.submitted = true;
+    this.model.submitted = false;
     notifyListeners();
   }
 

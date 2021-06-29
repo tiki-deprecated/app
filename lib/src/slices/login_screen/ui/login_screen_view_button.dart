@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/login_screen/login_screen_service.dart';
-import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +19,34 @@ class LoginScreenViewButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<LoginScreenService>(context);
-    return Container(
-        margin: EdgeInsets.only(top: service.presenter.marginTopButton.h),
-        child: TikiBigButton(service.presenter.continueText, true,
-            service.controller.submitLogin));
+    var isActive = service.model.canSubmit;
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 2.h),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.h))),
+            primary: ConfigColor.mardiGras),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Wrap(
+              direction: Axis.vertical,
+              children: [
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    child: Text(service.presenter.textContinue,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16.sp,
+                          letterSpacing: 0.05.w,
+                        )))
+              ],
+            ),
+          ],
+        ),
+        onPressed:
+            isActive ? () => service.controller.submitLogin(context) : null);
   }
 }

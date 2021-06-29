@@ -13,12 +13,10 @@ class IntroScreenSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var marginTop = service.presenter.marginTopText.h;
-    var marginRight = service.presenter.marginRightText.w;
-    return Container(
-        margin: EdgeInsets.only(top: marginTop, right: marginRight),
-        child: Text(service.presenter.subtitle,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)));
+    return Text(service.presenter.textSubtitle,
+        textAlign: TextAlign.left,
+        style: TextStyle(
+            fontSize: service.presenter.fontSizeSubtitle.sp,
+            fontWeight: FontWeight.bold));
   }
 }

@@ -4,6 +4,7 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_tiki_box_refer.da
 import 'package:app/src/slices/tiki_screen/ui/tiki_screen_view_tiki_box_share.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiScreenViewTikiBox extends StatelessWidget {
   @override
@@ -20,15 +21,18 @@ class TikiScreenViewTikiBox extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 24),
+                margin: EdgeInsets.only(
+                    top: service.presenter.marginTikiBoxCounterTop.h),
                 child: TikiScreenViewTikiBoxCounter(),
               ),
               Container(
-                  margin: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(
+                      top: service.presenter.marginTikiBoxReferTop.h),
                   child: TikiScreenViewTikiBoxRefer()),
               Container(
-                  margin: EdgeInsets.symmetric(
-                      vertical: service.presenter.marginVerticalShare),
+                  margin: EdgeInsets.only(
+                      top: service.presenter.marginTikiBoxShareTop.h,
+                      bottom: service.presenter.marginTikiBoxShareBottom.h),
                   alignment: Alignment.topCenter,
                   child: TikiScreenViewTikiBoxShare()),
             ]));

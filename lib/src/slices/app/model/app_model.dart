@@ -2,7 +2,6 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 
 import 'app_model_current.dart';
-import 'app_model_routes.dart';
 import 'app_model_user.dart';
 
 class AppModel {
@@ -13,6 +12,6 @@ class AppModel {
 
   Map<String, WidgetBuilder>? routes;
 
-  late AppModelCurrent? current;
-  late AppModelUser? user;
+  AppModelCurrent? current;
+  AppModelUser? user;
 }

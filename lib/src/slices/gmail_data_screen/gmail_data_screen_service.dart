@@ -2,16 +2,19 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:app/src/slices/gmail_data_screen/model/gmail_data_screen_model.dart';
+import 'package:app/src/slices/info_card/info_card_service.dart';
+import 'package:app/src/slices/info_card/ui/info_card_layout.dart';
 import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'gmail_data_screen_controller.dart';
 import 'gmail_data_screen_presenter.dart';
+import 'res/slidesContent.dart' as cardsContent;
 
 class GmailDataScreenService extends ChangeNotifier {
   late GmailDataScreenModel model;
@@ -26,6 +29,15 @@ class GmailDataScreenService extends ChangeNotifier {
 
   launchUrl(String url) async {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  getUI() {
+    var cardsData = cardsContent.slides;
+    cardsContent.slides.forEach((cardData) {
+      InfoCardLayout infoCard = InfoCardService().getUIFromJson(cardsData);
+      this.model.infoCards.add(infoCard);
+    });
+    return presenter.render();
   }
 
   shareCard(String message, String image) async {
