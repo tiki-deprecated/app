@@ -68,7 +68,7 @@ class IntroScreenService extends ChangeNotifier {
   }
 
   bool isLastSlide() {
-    return model.getCurrentSlideIndex() == model.getTotalSlides();
+    return model.getCurrentSlideIndex() == (model.getTotalSlides() - 1);
   }
 
   bool isFirstSlide() {
