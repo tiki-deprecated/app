@@ -10,7 +10,7 @@ class InfoCardViewWhatTheySay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCardService>(context);
-    List<InfoCardContenTheySayModel> theySayData =
+    List<InfoCardContentTheySayModel> theySayData =
         service.model.cardData.cardContentData.theySay;
     List<Widget> theysay = [];
     for (int i = 0; i < theySayData.length; i++) {

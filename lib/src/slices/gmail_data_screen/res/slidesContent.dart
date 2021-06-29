@@ -34,7 +34,7 @@ var slides = [
             'url': null,
           }
         ],
-        'theysay': [
+        'theySay': [
           {
             'image': "info-badge",
             'text': "Security monitoring to suspicious access"
@@ -114,7 +114,7 @@ var slides = [
             'url': null,
           }
         ],
-        'theysay': [
+        'theySay': [
           {
             'image': "airplane",
             'text': "Travel assistance like itineraries, updates, and maps."
@@ -183,7 +183,7 @@ var slides = [
                 "Gmail’s app is designed to track most of the things you do with it. It tracks each action you take, on which device, OS, and time of day.\n\nFor example, when you opened the app, what you searched for and if you saw an ad were all tracked.\n\nYour audio is recorded if you use voice search or assistant with Gmail.",
           }
         ],
-        'theysay': [
+        'theySay': [
           {'image': "person-4", 'text': "Personalized experiences"},
           {'image': "circle-badge", 'text': "App and content recommendations"},
           {'image': "search", 'text': "Faster Search"},

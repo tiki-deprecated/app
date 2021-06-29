@@ -8,7 +8,7 @@ class InfoCardViewYouShouldKnow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCardService>(context);
-    List<InfoCardContenYouShouldKnowModel> youShouldKnowData =
+    List<InfoCardContentYouShouldKnowModel> youShouldKnowData =
         service.model.cardData.cardContentData.youShouldKnow;
     List<Widget> youShouldKnow = [];
     for (int i = 0; i < youShouldKnowData.length; i++) {

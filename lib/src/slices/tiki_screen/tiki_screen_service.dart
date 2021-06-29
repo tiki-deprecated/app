@@ -1,3 +1,5 @@
+import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
@@ -89,7 +91,8 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   void whatGmailHolds(context) {
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GmailDataScreenService().getUI()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => GmailDataScreenService().getUI()));
   }
 
   Future<void> getVersion() async {
