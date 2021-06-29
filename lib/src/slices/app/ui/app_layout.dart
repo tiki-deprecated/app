@@ -18,7 +18,7 @@ class App extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
           title: AppModel.title,
-          routes: {"/": (context) => service.home.getUI()},
+          routes: service.getRoutes(context),
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,

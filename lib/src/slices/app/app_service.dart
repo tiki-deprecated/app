@@ -44,13 +44,14 @@ class AppService extends ChangeNotifier {
     initDynamicLinks();
   }
 
-  // getRoutes(BuildContext context) {
-  //   this.model.routes = {
-  //     "/": (BuildContext context) => home.getUI(),
-  //     "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
-  //     "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
-  //   };
-  // }
+  getRoutes(BuildContext context) {
+    this.model.routes = {
+      "/": (BuildContext context) => home.getUI(),
+      "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
+      "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
+    };
+    return this.model.routes;
+  }
 
   getHome() {
     if (this.deepLink != null) {
@@ -110,6 +111,7 @@ class AppService extends ChangeNotifier {
 
   void logout() {
     this.model.user = this.authService.logout();
+    this.home = AppModelRoutes.login;
     this.reload();
   }
 
