@@ -12,6 +12,6 @@ class AppModel {
 
   Map<String, WidgetBuilder>? routes;
 
-  late AppModelCurrent? current;
-  late AppModelUser? user;
+  AppModelCurrent? current;
+  AppModelUser? user;
 }

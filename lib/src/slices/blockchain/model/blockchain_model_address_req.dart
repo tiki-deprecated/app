@@ -13,9 +13,7 @@ class RepoApiBlockchainAddressReq {
   RepoApiBlockchainAddressReq.fromJson(Map<String, dynamic> json) {
     this.dataKey = json['dataKey'];
     this.signKey = json['signKey'];
-    this.referFrom = json['referFrom'];
   }
 
-  Map<String, dynamic> toJson() =>
-      {'dataKey': dataKey, 'signKey': signKey, 'referFrom': referFrom};
+  Map<String, dynamic> toJson() => {'dataKey': dataKey, 'signKey': signKey};
 }

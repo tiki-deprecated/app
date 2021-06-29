@@ -45,9 +45,9 @@ class LoginScreenPresenter {
 
   num get inputPaddingVertical => 2;
 
-  num get inputFontSize => 5;
+  num get inputFontSize => 12;
 
-  num get tosFontSize => 2;
+  num get tosFontSize => 12;
 
   num get marginTopResend => 2;
 

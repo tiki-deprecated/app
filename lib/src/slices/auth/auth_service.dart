@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/slices/api/helper_api_rsp.dart';
-import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
@@ -16,10 +15,8 @@ import 'package:app/src/slices/auth/repository/secure_storage_repository_otp.dar
 import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys/repository/secure_storage_repository_keys.dart';
-import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 
 import 'model/auth_bouncer_jwt_req_otp.dart';
 import 'model/auth_bouncer_jwt_rsp.dart';
@@ -109,7 +106,7 @@ class AuthService {
     }
   }
 
-  verifyOtp(BuildContext context, String otp) async {
+  verifyOtp(String otp) async {
     AuthModelOtp model = await SecureStorageRepositoryOtp()
         .find(SecureStorageRepositoryOtp.reqKey);
     if (model.email != null && model.salt != null) {
@@ -123,18 +120,11 @@ class AuthService {
                 bearer: rspData.accessToken,
                 refresh: rspData.refreshToken,
                 expiresIn: rspData.expiresIn));
-        AppModelUser user =
-            await SecureStorageRepositoryUser().find(model.email!);
-        Provider.of<AppService>(context, listen: false)
-            .saveUser(model.email!, user);
-      } else {
-        SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
-        Provider.of<LoginScreenService>(context, listen: false)
-            .otpError(context);
+        var user = await SecureStorageRepositoryUser().find(model.email!);
+        return user;
       }
-    } else {
-      SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
-      Provider.of<LoginScreenService>(context, listen: false).otpError(context);
     }
+    SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
+    return null;
   }
 }

@@ -28,11 +28,11 @@ class KeysNewScreenService extends ChangeNotifier {
     var service = KeysService();
     KeysModel keys = await service.generateKeys();
     await Future.delayed(Duration(seconds: 3));
-    KeysModel? keysWithAddress =
-        await service.issueAddress(context, keys, null);
-    await service.save(keys);
+    KeysModel keysWithAddress = await service.issueAddress(context, keys);
+    await service.save(keysWithAddress);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => KeysNewScreenRestore().getUI()),
+        MaterialPageRoute(
+            builder: (context) => KeysSaveScreenService().getUI()),
         ModalRoute.withName('/keys/save'));
   }
 }

@@ -48,22 +48,20 @@ class KeysService {
     await _repoLocalSsKeys.save(keys.address!, keys);
   }
 
-  Future<KeysModel?> issueAddress(
-      BuildContext context, KeysModel keys, String? referer) async {
+  Future<KeysModel> issueAddress(BuildContext context, KeysModel keys) async {
     var repoApiBlockchainAddress = RepoApiBlockchainAddress.provide(context);
     HelperApiRsp<RepoApiBlockchainAddressRsp> rsp =
         await repoApiBlockchainAddress.issue(RepoApiBlockchainAddressReq(
-            keys.dataPublicKey, keys.signPublicKey,
-            referFrom: referer));
+            keys.dataPublicKey, keys.signPublicKey));
     if (rsp.code == 200 && rsp.data.address == keys.address) {
       await _repoLocalSsKeys.save(keys.address!, keys);
-      return keys;
     } else {
       Sentry.captureMessage("Failed to register keys with blockchain",
           level: SentryLevel.error);
       print(rsp.data);
+      throw Exception("issueAddress error " + rsp.data);
     }
-    return null;
+    return keys;
   }
 
   String getAddress(String s) {
