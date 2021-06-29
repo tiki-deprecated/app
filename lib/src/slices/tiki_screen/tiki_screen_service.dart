@@ -1,13 +1,15 @@
 import 'package:app/src/slices/api/helper_api_rsp.dart';
 import 'package:app/src/slices/gmail_data_screen/gmail_data_screen_service.dart';
+import 'package:app/src/slices/api/api_service.dart';
+import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/google/repository/google_repository.dart';
-import 'package:app/src/slices/login_screen/model/repo_api_website_users_rsp.dart';
-import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_controller.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'model/tiki_screen_model.dart';
@@ -25,36 +27,36 @@ class TikiScreenService extends ChangeNotifier {
     controller = TikiScreenController();
     presenter = TikiScreenPresenter(this);
     initializeGoogleRepo();
-    getCount();
-    getReferCount();
-    getVersion();
+    getValues();
+  }
+
+  getCode(BuildContext context) {
+    AppModelUser user = Provider.of<AppService>(context).model.user!;
+    this.model.code = user.code ?? "";
+    if (this.model.code.isEmpty) updateCode(context);
+  }
+
+  getReferCount() async {
+    var code = this.model.code;
+    var apiService = ApiService();
+    apiService.getReferCount(code);
+  }
+
+  getTotalCount() async {
+    var apiService = ApiService();
+    var total = await apiService.getTotal();
+    this.model.count = total;
+  }
+
+  void getValues() async {
+    await getTotalCount();
+    await getReferCount();
+    await getVersion();
+    notifyListeners();
   }
 
   Widget getUI() {
     return this.presenter.render();
-  }
-
-  Future<void> getCount() async {
-    HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
-        await RepoApiWebsiteUsers.total();
-    if (apiRsp.code == 200) {
-      this.model.count = apiRsp.data.total;
-      notifyListeners();
-    } else {
-      print(apiRsp);
-    }
-  }
-
-  Future<void> getReferCount() async {
-    var code = "FIXME"; //TODO swap FIXME with actual user referral code
-    HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
-        await RepoApiWebsiteUsers.total(code: code);
-    if (apiRsp.code == 200) {
-      this.model.referCount = apiRsp.data.total;
-      notifyListeners();
-    } else {
-      print(apiRsp);
-    }
   }
 
   void addGoogleAccount() async {
@@ -75,7 +77,7 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   void shareLink() {
-    var code = "FIXME"; //TODO swap FIXME with actual user referral code
+    var code = this.model.code;
     var body =
         "Your data. Your decisions. Take the take power back from corporations. Together, we triumph. Join us! " +
             _linkUrl +
@@ -84,7 +86,7 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   Future<void> copyLink() async {
-    var code = "FIXME"; //TODO swap FIXME with actual user referral code
+    var code = this.model.code;
     await Clipboard.setData(new ClipboardData(text: _linkUrl + code));
   }
 
@@ -96,6 +98,13 @@ class TikiScreenService extends ChangeNotifier {
   Future<void> getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     this.model.version = packageInfo.version;
+    notifyListeners();
+  }
+
+  void updateCode(BuildContext context) async {
+    var apiService = ApiService();
+    AppModelUser user = Provider.of<AppService>(context).model.user!;
+    this.model.code = await apiService.getReferalCode(user.address!);
     notifyListeners();
   }
 }
