@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 
 class KeysNewScreenTitle extends StatelessWidget {
   static const String _text = "Just one sec..";
-  static final double _fontSize = 10.w;
+  static final double _fontSize = 30.sp;
 
   @override
   Widget build(BuildContext context) {

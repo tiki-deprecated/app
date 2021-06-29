@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 
 class KeysNewScreenRestore extends StatelessWidget {
   static const String _text = "Already have an account?";
-  static final double _fontSize = 5.w;
+  static final double _fontSize = 17.sp;
 
   @override
   Widget build(BuildContext context) {

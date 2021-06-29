@@ -11,9 +11,9 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysNewScreenForeground extends StatelessWidget {
-  static final double _marginTopTitle = 9.h;
-  static final double _marginTopSubtitle = 2.5.h;
-  static final double _marginBottomButton = 5.h;
+  static final double _marginTopTitle = 5.h;
+  static final double _marginTopSubtitle = 2.h;
+  static final double _marginBottomButton = 4.h;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,7 @@ class KeysNewScreenForeground extends StatelessWidget {
   }
 
   Widget _foreground(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(children: [
+    return Column(children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -39,18 +38,25 @@ class KeysNewScreenForeground extends StatelessWidget {
           )
         ],
       ),
+      Expanded(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: ClipRect(
+              child: Align(
+                  alignment: Alignment.center,
+                  heightFactor: 0.5,
+                  child: Lottie.asset(
+                      "res/animation/Securing_account_with_blob.json")),
+            ),
+          ),
+        ],
+      )),
       Container(
-        child: ClipRect(
-          child: Align(
-              alignment: Alignment.center,
-              heightFactor: 0.5,
-              child: Lottie.asset(
-                  "res/animation/Securing_account_with_blob.json")),
-        ),
-      ),
-      Container(
+          alignment: Alignment.bottomCenter,
           padding: EdgeInsets.only(bottom: _marginBottomButton),
           child: KeysNewScreenRestore()),
-    ]));
+    ]);
   }
 }

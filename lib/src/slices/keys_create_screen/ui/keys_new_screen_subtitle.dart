@@ -9,7 +9,7 @@ import 'package:sizer/sizer.dart';
 
 class KeysNewScreenSubtitle extends StatelessWidget {
   static const String _text = "I'm securing your account";
-  static final double _fontSize = 5.w;
+  static final double _fontSize = 17.sp;
 
   @override
   Widget build(BuildContext context) {
