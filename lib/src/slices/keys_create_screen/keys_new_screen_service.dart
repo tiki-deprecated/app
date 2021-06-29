@@ -3,7 +3,6 @@ import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_create_screen/keys_new_screen_controller.dart';
 import 'package:app/src/slices/keys_create_screen/keys_new_screen_presenter.dart';
 import 'package:app/src/slices/keys_create_screen/ui/keys_new_screen_restore.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 
 /// The Intro Screen for the first time the app is opened in the device.
