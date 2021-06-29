@@ -32,9 +32,8 @@ class GmailDataScreenService extends ChangeNotifier {
   }
 
   getUI() {
-    var cardsData = cardsContent.slides;
     cardsContent.slides.forEach((cardData) {
-      InfoCardLayout infoCard = InfoCardService().getUIFromJson(cardsData);
+      InfoCardLayout infoCard = InfoCardService().getUIFromJson(cardData);
       this.model.infoCards.add(infoCard);
     });
     return presenter.render();
