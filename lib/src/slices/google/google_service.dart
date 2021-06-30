@@ -1,13 +1,19 @@
-// Copyright 2019 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
-import 'dart:async';
+//google api connects
+//load and return info cards
 
+import 'package:app/src/slices/google/repository/google_info_repository.dart';
+import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
+import 'package:app/src/utils/helper_json.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class GoogleRepository {
+class GoogleService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleInfoRepository _googleInfoRepository = GoogleInfoRepository();
 
   GoogleSignInAccount? currentUser;
 
@@ -39,5 +45,11 @@ class GoogleRepository {
 
   isConnected() {
     return _googleSignIn.isSignedIn();
+  }
+
+  Future<List<InfoCarouselCardModel>> getInfoCards() async {
+    List<dynamic>? infoJson = await _googleInfoRepository.load();
+    return HelperJson.listFromJson(
+        infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 }

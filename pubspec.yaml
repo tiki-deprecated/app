@@ -55,6 +55,7 @@ flutter:
     - res/images/
     - res/animation/
     - res/md/
+    - res/db/
   fonts:
     - family: Koara
       fonts:
