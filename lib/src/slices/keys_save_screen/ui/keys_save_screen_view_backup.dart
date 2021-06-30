@@ -25,7 +25,6 @@ class KeysNewScreenSaveBk extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
-                  margin: EdgeInsets.only(bottom: 4.w),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Colors.white,

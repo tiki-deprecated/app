@@ -22,30 +22,18 @@ class LoginScreenViewButton extends StatelessWidget {
     var isActive = service.model.canSubmit;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 2.h),
+            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 15.w),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: ConfigColor.mardiGras),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Wrap(
-              direction: Axis.vertical,
-              children: [
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Text(service.presenter.textContinue,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16.sp,
-                          letterSpacing: 0.05.w,
-                        )))
-              ],
-            ),
-          ],
-        ),
+        child: Text(service.presenter.textContinue,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: ConfigColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 16.sp,
+              letterSpacing: 0.05.w,
+            )),
         onPressed:
             isActive ? () => service.controller.submitLogin(context) : null);
   }
