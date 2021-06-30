@@ -30,8 +30,8 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
     return Container(
         color: ConfigColor.alto,
         child: NotificationListener(
-            onNotification: (notification) =>
-                controller.onNotification(notification, _animationController),
+            onNotification: (notification) => controller.onScrollNotification(
+                notification, _animationController),
             child: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               child: Column(

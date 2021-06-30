@@ -38,29 +38,14 @@ class InfoCarouselCardLayoutCover extends StatelessWidget {
             child: Container(
                 child: Column(
               children: [
-                SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          if (_animationValue.value < 1.0)
-                            InfoCarouselCardViewCoverHeader(_animationValue),
-                          InfoCarouselCardViewCoverImage(_animationValue),
-                          if (_animationValue.value < 1.0)
-                            Align(
-                                alignment: Alignment.topLeft,
-                                child: InfoCarouselCardViewCoverSubtitle(
-                                    _animationValue)),
-                          Container(
-                              padding: EdgeInsets.only(top: 1.25.h),
-                              width: service.controller.calculateAnimation(
-                                  MediaQuery.of(context).size.width,
-                                  _animationValue.value,
-                                  42.w),
-                              child: InfoCarouselCardViewCoverBigText(
-                                  _animationValue)),
-                        ])),
+                InfoCarouselCardViewCoverHeader(_animationValue),
+                InfoCarouselCardViewCoverImage(_animationValue),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: InfoCarouselCardViewCoverSubtitle(_animationValue)),
+                Container(
+                    padding: EdgeInsets.only(top: 1.25.h),
+                    child: InfoCarouselCardViewCoverBigText(_animationValue)),
                 Container(
                     padding: EdgeInsets.only(top: 1.25.h),
                     child: InfoCarouselCardViewCoverText(_animationValue)),

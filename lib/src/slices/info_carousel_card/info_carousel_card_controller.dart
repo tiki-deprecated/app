@@ -48,15 +48,15 @@ class InfoCarouselCardController {
     }
   }
 
-  bool onNotification(notification, animationController) {
-    if (notification is ScrollStartNotification)
-      scrollStartPos = notification.metrics.pixels;
-    if (notification is ScrollUpdateNotification)
-      scrollUpdatePos = notification.metrics.pixels;
-    else if (notification is ScrollEndNotification &&
+  bool onScrollNotification(scrollNotification, animationController) {
+    if (scrollNotification is ScrollStartNotification)
+      scrollStartPos = scrollNotification.metrics.pixels;
+    if (scrollNotification is ScrollUpdateNotification)
+      scrollUpdatePos = scrollNotification.metrics.pixels;
+    else if (scrollNotification is ScrollEndNotification &&
         scrollStartPos == 0.0 &&
         scrollUpdatePos == 0.0 &&
-        notification.metrics.atEdge)
+        scrollNotification.metrics.atEdge)
       animationController.animateTo(0.0, curve: Curves.easeOut);
     return false;
   }

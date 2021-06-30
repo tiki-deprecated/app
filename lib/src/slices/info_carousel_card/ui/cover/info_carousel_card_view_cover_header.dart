@@ -38,8 +38,8 @@ class InfoCarouselCardViewCoverHeader extends StatelessWidget {
         )
       ])),
       GestureDetector(
-          onTap: () =>
-              service.controller.shareCard(context, model.title!, model.image!),
+          onTap: () => service.controller
+              .shareCard(context, model.share!.message!, model.share!.image!),
           child: Icon(Icons.share,
               color: ConfigColor.orange,
               size: service.controller
