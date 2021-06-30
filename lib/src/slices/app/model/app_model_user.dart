@@ -24,8 +24,7 @@ class AppModelUser {
     }
   }
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'email': email,
         'address': address,
         'isLoggedIn': isLoggedIn,

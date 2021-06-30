@@ -5,6 +5,7 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/keys_save_dialog/keys_new_screen_dialog_download_qr.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class KeysNewScreenSaveDialogDownload {
   static final double _marginVerticalButton = 4.h;
   static final double _marginTopQr = 3.h;
 
-  AlertDialog alert(String keyData, GlobalKey repaintKey) {
+  AlertDialog alert(String keyData, GlobalKey repaintKey,
+      KeysSaveScreenService keysSaveScreenService) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -31,7 +33,7 @@ class KeysNewScreenSaveDialogDownload {
           left: _marginHorizontalSubtitle,
           right: _marginHorizontalSubtitle),
       title: _title(),
-      content: _content(keyData, repaintKey),
+      content: _content(keyData, repaintKey, keysSaveScreenService),
     );
   }
 
@@ -39,7 +41,8 @@ class KeysNewScreenSaveDialogDownload {
     return TikiTitle("Download key to your device", fontSize: 9);
   }
 
-  Widget _content(String keyData, GlobalKey repaintKey) {
+  Widget _content(String keyData, GlobalKey repaintKey,
+      KeysSaveScreenService keysSaveScreenService) {
     return RepaintBoundary(
         key: repaintKey,
         child: Container(
@@ -70,7 +73,11 @@ class KeysNewScreenSaveDialogDownload {
               Container(
                   padding:
                       EdgeInsets.symmetric(vertical: _marginVerticalButton),
-                  child: TikiBigButton('DOWNLOAD', true, () => {}))
+                  child: TikiBigButton(
+                      'DOWNLOAD',
+                      true,
+                      () => keysSaveScreenService.controller
+                          .downloadQR(keysSaveScreenService, repaintKey)))
             ])));
   }
 

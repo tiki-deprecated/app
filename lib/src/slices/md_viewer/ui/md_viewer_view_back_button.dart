@@ -19,7 +19,6 @@ class MdViewerViewBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<MdViewerService>(context);
     return TextButton(
       onPressed: () => Provider.of<MdViewerService>(context, listen: false)
           .controller

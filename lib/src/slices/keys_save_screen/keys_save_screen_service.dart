@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 class KeysSaveScreenService extends ChangeNotifier {
   late KeysSaveScreenPresenter presenter;
   late KeysSaveScreenController controller;
+  late KeysSaveScreenServiceModel model;
 
   KeysSaveScreenService() {
+    model = KeysSaveScreenServiceModel();
     presenter = KeysSaveScreenPresenter(this);
     controller = KeysSaveScreenController();
   }
@@ -14,4 +16,25 @@ class KeysSaveScreenService extends ChangeNotifier {
   getUI() {
     return presenter.render();
   }
+
+  void emailSaved() {
+    this.model.savedEmail = true;
+    notifyListeners();
+  }
+
+  void keySaved() {
+    this.model.savedKeys = true;
+    notifyListeners();
+  }
+
+  void keysDonwloaded() {
+    this.model.downloaded = true;
+    notifyListeners();
+  }
+}
+
+class KeysSaveScreenServiceModel {
+  bool savedEmail = false;
+  bool savedKeys = false;
+  bool downloaded = false;
 }

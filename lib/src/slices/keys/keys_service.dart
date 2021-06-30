@@ -99,4 +99,7 @@ class KeysService {
     );
   }
 
+  getKeys(String address) async {
+    return await _repoLocalSsKeys.find(address);
+  }
 }
