@@ -1,7 +1,9 @@
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
-import 'package:app/src/slices/google/repository/google_repository.dart';
+import 'package:app/src/slices/google/google_service.dart';
+import 'package:app/src/slices/info_carousel/info_carousel_service.dart';
+import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_controller.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_presenter.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class TikiScreenService extends ChangeNotifier {
   late TikiScreenPresenter presenter;
   late TikiScreenController controller;
 
-  GoogleRepository googleRepository = GoogleRepository();
+  GoogleService googleService = GoogleService();
 
   TikiScreenService() {
     model = TikiScreenModel();
@@ -58,19 +60,19 @@ class TikiScreenService extends ChangeNotifier {
   }
 
   void addGoogleAccount() async {
-    this.model.googleAccount = await googleRepository.connect();
+    this.model.googleAccount = await googleService.connect();
     notifyListeners();
   }
 
   void removeGoogleAccount() async {
-    await googleRepository.handleSignOut();
+    await googleService.handleSignOut();
     this.model.googleAccount = null;
     notifyListeners();
   }
 
   initializeGoogleRepo() async {
-    googleRepository = GoogleRepository();
-    this.model.googleAccount = await googleRepository.getConnectedUser();
+    googleService = GoogleService();
+    this.model.googleAccount = await googleService.getConnectedUser();
     notifyListeners();
   }
 
@@ -88,8 +90,10 @@ class TikiScreenService extends ChangeNotifier {
     await Clipboard.setData(new ClipboardData(text: _linkUrl + code));
   }
 
-  void whatGmailHolds(context) {
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GmailDataScreenService().getUI()));
+  Future<void> whatGmailHolds(context) async {
+    List<InfoCarouselCardModel> cards = await googleService.getInfoCards();
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => InfoCarouselService(cards: cards).getUI()));
   }
 
   Future<void> getVersion() async {

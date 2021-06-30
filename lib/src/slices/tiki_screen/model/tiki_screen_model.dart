@@ -5,5 +5,5 @@ class TikiScreenModel {
   int count = 0;
   int referCount = 0;
   String code = "";
-  late String version = "";
+  String version = "";
 }
