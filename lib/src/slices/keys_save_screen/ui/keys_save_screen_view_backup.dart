@@ -4,8 +4,10 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/auth/auth_service.dart';
+import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys_save_dialog/keys_new_screen_dialog_copy.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,6 @@ class KeysNewScreenSaveBk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isSaved = false;
-    var key = '';
     return GestureDetector(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -72,13 +73,20 @@ class KeysNewScreenSaveBk extends StatelessWidget {
   }
 
   _saveKey(BuildContext context) async {
+    var appService = Provider.of<AppService>(context, listen: false);
+    var keysSaveScreenService =
+        Provider.of<KeysSaveScreenService>(context, listen: false);
+    var current = appService.authService.current;
+    var keysService = KeysService();
+    var keys = await keysService.getKeys(appService.model.user!.address!);
+    var key =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          var current = Provider.of<AuthService>(context).current;
-          String key = "";
-          return KeysNewScreenDialogCopy().alert(key, current);
+          return KeysNewScreenDialogCopy()
+              .alert(key, current, keysSaveScreenService);
         });
   }
 }

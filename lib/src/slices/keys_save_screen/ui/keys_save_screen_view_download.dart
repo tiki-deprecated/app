@@ -4,11 +4,16 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys_save_dialog/keys_new_screen_dialog_download.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../keys_save_screen_service.dart';
 
 class KeysNewScreenSaveBkDownload extends StatelessWidget {
   @override
@@ -44,7 +49,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: ConfigColor.mardiGras)),
                       ])),
-              true
+              Provider.of<KeysSaveScreenService>(context).model.downloaded
                   ? Positioned(
                       top: 0,
                       left: 5.w,
@@ -57,17 +62,19 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
 
   void onPressed(BuildContext context) async {
     GlobalKey repaintKey = new GlobalKey();
+    var appService = Provider.of<AppService>(context, listen: false);
+    var keysSaveScreenService =
+        Provider.of<KeysSaveScreenService>(context, listen: false);
+    var keysService = KeysService();
+    var keys = await keysService.getKeys(appService.model.user!.address!);
+    var key =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          String keyData = '';
-          // state.address! +
-          //     "." +
-          //     state.dataPrivate! +
-          //     "." +
-          //     state.signPrivate!;
-          return KeysNewScreenSaveDialogDownload().alert(keyData, repaintKey);
+          return KeysNewScreenSaveDialogDownload()
+              .alert(key, repaintKey, keysSaveScreenService);
         });
   }
 }

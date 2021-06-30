@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -16,12 +17,16 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
   static final double _fontSize = 4.w;
 
   final String? value;
+  final KeysSaveScreenService service;
   final Function() onPressed;
 
-  KeysNewScreenDialogCopyButton(this.value, this.onPressed);
+  KeysNewScreenDialogCopyButton(this.value, this.service, this.onPressed);
 
   @override
   Widget build(BuildContext context) {
+    var saved = this.value!.contains("@")
+        ? service.model.savedEmail
+        : service.model.savedKeys;
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -31,7 +36,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
           ),
           borderRadius: BorderRadius.all(Radius.circular(_borderRadius))),
       child: Row(
-        children: [_text(), _button()],
+        children: [_text(), _button(saved)],
       ),
     );
   }
@@ -47,7 +52,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                 textAlign: TextAlign.left)));
   }
 
-  Widget _button() {
+  Widget _button(bool saved) {
     return Container(
         decoration: BoxDecoration(
             border: Border(left: BorderSide(color: ConfigColor.silverChalice))),
@@ -59,7 +64,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                   bottomRight: Radius.circular(_borderRadius)),
             ),
             child: TextButton(
-                onPressed: () => {},
+                onPressed: onPressed,
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all(EdgeInsets.zero)),
                 child: Align(
@@ -73,7 +78,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: _fontSize,
-                                    color: true
+                                    color: saved
                                         ? ConfigColor.jade
                                         : ConfigColor.mardiGras)),
                             Container(
@@ -81,7 +86,7 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
                                     horizontal: _paddingHorizontalIcon),
                                 child: Container(
                                     width: 4.w,
-                                    child: true
+                                    child: saved
                                         ? Image(
                                             image: AssetImage(
                                                 "res/images/icon-check.png"))

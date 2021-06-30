@@ -13,7 +13,6 @@ import 'package:sizer/sizer.dart';
 import '../tiki_screen_service.dart';
 
 class TikiScreenViewTikiBoxRefer extends StatelessWidget {
-  static final double _marginTopCount = 1.h;
 
   @override
   Widget build(BuildContext context) {
