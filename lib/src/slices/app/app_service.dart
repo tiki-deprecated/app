@@ -40,7 +40,6 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    //this.home = TikiScreenService();
     getHome();
     initDynamicLinks();
   }
@@ -51,6 +50,7 @@ class AppService extends ChangeNotifier {
       "/login": (BuildContext context) => AppModelRoutes.login.getUI(),
       "/keys/new": (BuildContext context) => AppModelRoutes.keys.getUI(),
     };
+    return this.model.routes;
   }
 
   getHome() {
@@ -88,7 +88,7 @@ class AppService extends ChangeNotifier {
       String? otp = link.queryParameters["otp"];
       if (otp != null && otp.isNotEmpty) {
         this.model.user = await authService.verifyOtp(otp);
-        if (this.model.user!.address != null) {
+        if (this.model.user?.address != null) {
           this.home = AppModelRoutes.home;
         } else {
           this.home = AppModelRoutes.keys;
@@ -111,10 +111,22 @@ class AppService extends ChangeNotifier {
 
   void logout() {
     this.model.user = this.authService.logout();
+    this.home = AppModelRoutes.login;
     this.reload();
   }
 
   void reload() {
     this.notifyListeners();
+  }
+
+  void saveReferralCode(String referral) {
+    this.model.user!.code = referral;
+    this.saveUser(this.model.user!.email!, this.model.user!);
+  }
+
+  void updateUser(AppModelUser user) {
+    this.authService.user = user;
+    this.model.user = user;
+    this.saveUser(user.email!, user);
   }
 }

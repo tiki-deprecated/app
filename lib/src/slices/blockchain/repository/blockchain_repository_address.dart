@@ -6,9 +6,9 @@
 import 'dart:convert';
 
 import 'package:app/src/config/config_domain.dart';
-import 'package:app/src/slices/api/helper_api_auth.dart';
-import 'package:app/src/slices/api/helper_api_rsp.dart';
-import 'package:app/src/slices/api/helper_headers.dart';
+import 'package:app/src/slices/api/helpers/helper_api_auth.dart';
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
+import 'package:app/src/slices/api/helpers/helper_headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 

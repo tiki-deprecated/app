@@ -1,4 +1,4 @@
-import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
 import 'package:app/src/slices/blockchain/model/blockchain_model_address_req.dart';
 import 'package:app/src/slices/blockchain/model/blockchain_model_address_rsp.dart';
 import 'package:app/src/slices/blockchain/repository/blockchain_repository_address.dart';
@@ -99,43 +99,4 @@ class KeysService {
     );
   }
 
-  requestReferalCode(KeysModel keysWithAddress) async {
-    HelperApiRsp<RepoApiReferRsp> rsp = await RepoApiRefer.requestCode(
-        RepoApiReferReq(keysWithAddress.address));
-    if (rsp.code == 200) {
-      await SecureStorageRefer.save(keysWithAddress.address!, rsp.data.code);
-    } else {
-      Sentry.captureMessage("Failed to get refer code.",
-          level: SentryLevel.error);
-      print(rsp.data);
-      throw Exception("issueAddress error " + rsp.data);
-    }
-    return keys;
-  }
-}
-
-class SecureStorageRefer {}
-
-class RepoApiReferReq {}
-
-class RepoApiRefer {
-  static requestCode(RepoApiReferReq repoApiReferReq) {}
-}
-/*
- * Copyright (c) TIKI Inc.
- * MIT license. See LICENSE file in root directory.
- */
-
-class RepoApiReferRsp {
-  String? code;
-
-  RepoApiReferRsp({this.code});
-
-  RepoApiReferRsp.fromJson(Map<String, dynamic>? json) {
-    if (json != null) {
-      this.code = json['code'];
-    }
-  }
-
-  Map<String, dynamic> toJson() => {'code': code};
 }

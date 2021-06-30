@@ -15,11 +15,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<AppService>(context);
-    service.getRoutes(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
           title: AppModel.title,
-          routes: service.model.routes!,
+          routes: service.getRoutes(context),
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,

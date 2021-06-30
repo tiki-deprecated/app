@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
@@ -14,8 +15,6 @@ import 'package:app/src/slices/auth/repository/secure_storage_repository_token.d
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
-import 'helper_api_rsp.dart';
 
 class HelperApiAuth {
   final SecureStorageRepositoryCurrent _secureStorageRepositoryCurrent;

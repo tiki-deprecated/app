@@ -1,4 +1,3 @@
-import 'package:app/src/config/config_sentry.dart';
 import 'package:app/src/slices/analytics/analytics_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/database/database_repository.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// The dart entrypoint

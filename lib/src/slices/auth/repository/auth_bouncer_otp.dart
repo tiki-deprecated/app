@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:app/src/config/config_domain.dart';
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
 import 'package:http/http.dart' as http;
 
-import '../../api/helper_api_rsp.dart';
-import '../../api/helper_headers.dart';
+import '../../api/helpers/helper_headers.dart';
 import '../model/auth_bouncer_otp_req.dart';
 import '../model/auth_bouncer_otp_rsp.dart';
 

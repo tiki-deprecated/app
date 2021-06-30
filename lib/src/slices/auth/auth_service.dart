@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api/helper_api_rsp.dart';
+import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
 import 'package:app/src/slices/app/model/app_model_current.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
