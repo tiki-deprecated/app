@@ -10,9 +10,9 @@ class TikiScreenViewVersion extends StatelessWidget {
     var service = Provider.of<TikiScreenService>(context);
     return Text(
         "TIKI Inc." +
-            (service.model.version != null
-                ? " | Release " + service.model.version!
-                : ""),
+            (service.model.version.isEmpty
+                ? ""
+                : " | Release " + service.model.version),
         style: TextStyle(
             fontSize: service.presenter.fontSizeVersion.sp,
             fontWeight: FontWeight.w600,
