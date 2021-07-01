@@ -13,7 +13,6 @@ import 'package:sizer/sizer.dart';
 import '../tiki_screen_service.dart';
 
 class TikiScreenViewTikiBoxRefer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<TikiScreenService>(context);
