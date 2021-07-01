@@ -36,12 +36,16 @@ class AppService extends ChangeNotifier {
   }
 
   load() async {
+    await loadAuth();
+    initDynamicLinks();
+    getHome();
+  }
+
+  loadAuth() async {
     authService = AuthService();
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    initDynamicLinks();
-    getHome();
   }
 
   getRoutes(BuildContext context) {
@@ -68,6 +72,7 @@ class AppService extends ChangeNotifier {
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+      await loadAuth();
       final Uri? deepLink = dynamicLink?.link;
       if (deepLink != null) _handle(deepLink);
     }, onError: (OnLinkErrorException e) async {
