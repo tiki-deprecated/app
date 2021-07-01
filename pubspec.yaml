@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
   equatable: ^2.0.2
   firebase_core: ^1.2.1
   firebase_dynamic_links: ^2.0.5
@@ -16,11 +19,11 @@ dependencies:
   flutter_secure_storage: ^4.2.0
   http: ^0.13.3
   package_info: ^2.0.2
-  sentry_flutter: ^5.0.0
+  sentry_flutter: ^5.1.0
   shared_preferences: ^2.0.6
   pointycastle: ^3.1.1
   qr_flutter: ^4.0.0
-  share: ^2.0.4
+  share_plus: ^2.1.4
   path_provider: ^2.0.2
   url_launcher: ^6.0.3
   android_intent: ^2.0.2
@@ -35,18 +38,24 @@ dependencies:
   google_sign_in: ^5.0.4
   googleapis: ^3.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.2
-
+  intl_utils: ^2.3.0
+  provider: ^5.0.0
+  sizer: ^2.0.13
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  flutter_gen_runner:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - res/images/
     - res/animation/
     - res/md/
+    - res/db/
   fonts:
     - family: Koara
       fonts:

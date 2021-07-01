@@ -11,7 +11,7 @@ class ConfigDomain {
   static const String blockchain =
       ConfigEnvironment.isPublic ? "blockchain.mytiki.com" : "localhost:10252";
   static const String website =
-      ConfigEnvironment.isPublic ? "api.mytiki.com" : "localhost:3000";
+      ConfigEnvironment.isPublic ? "signup.mytiki.com" : "localhost:3000";
 
   static Uri asUri(String authority, String unencodedPath,
       [Map<String, dynamic>? queryParameters]) {

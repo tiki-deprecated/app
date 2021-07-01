@@ -4,8 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiDots extends StatelessWidget {
   final int size;
@@ -22,7 +22,7 @@ class TikiDots extends StatelessWidget {
   }
 
   Widget _dot(bool active) {
-    final double _size = 1 * PlatformRelativeSize.blockVertical;
+    final double _size = 1.h;
 
     return Container(
       height: _size,

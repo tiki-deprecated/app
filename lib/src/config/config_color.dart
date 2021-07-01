@@ -8,6 +8,7 @@ import 'dart:ui';
 class ConfigColor {
   static const Color jade = Color(0xFF00B272);
 
+  static const Color ikb = Color(0xFF0036B5);
   static const Color stratos = Color(0xFF27002E);
   static const Color mardiGras = Color(0xFF27002E);
 
@@ -30,10 +31,6 @@ class ConfigColor {
   static const Color boulder = Color(0xFF797979);
   static const Color emperor = Color(0xFF545454);
   static const Color black = Color(0xFF000000);
-
-  static const Color telegramBlue = Color(0xFF0088CC);
-  static const Color signalBlue = Color(0xFF3661D1);
-  static const Color discordBlue = Color(0xFF7289DA);
 
   static const Color tikiBlue = Color(0xFF00133F);
   static const Color tikiBlack = Color(0xFF1C0000);

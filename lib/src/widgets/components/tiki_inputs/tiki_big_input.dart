@@ -1,12 +1,11 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiBigInput extends StatelessWidget {
-  static final double _paddingHorizontal =
-      4 * PlatformRelativeSize.blockHorizontal;
-  static final double _paddingVertical = 2 * PlatformRelativeSize.blockVertical;
-  static final double _fontSize = 5 * PlatformRelativeSize.blockHorizontal;
+  static final double _paddingHorizontal = 4.w;
+  static final double _paddingVertical = 2.h;
+  static final double _fontSize = 5.w;
 
   final String? placeholder;
   final bool? isError;
