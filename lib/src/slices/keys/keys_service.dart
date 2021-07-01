@@ -102,4 +102,18 @@ class KeysService {
   getKeys(String address) async {
     return await _repoLocalSsKeys.find(address);
   }
+
+  KeysModel? getKeysFromCombined(String rawContent) {
+    String address = getAddress(rawContent);
+    String dataKey = getDataKey(rawContent);
+    String signKey = getSignKey(rawContent);
+    if (isKeyValid(address, dataKey, signKey)) {
+      return KeysModel(
+        dataPrivateKey: dataKey,
+        signPrivateKey: signKey,
+        address: address,
+      );
+    }
+    return null;
+  }
 }

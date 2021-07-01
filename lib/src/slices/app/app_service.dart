@@ -4,7 +4,6 @@
  */
 
 import 'package:app/src/slices/auth/auth_service.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -47,7 +46,7 @@ class AppService extends ChangeNotifier {
 
   getRoutes(BuildContext context) {
     this.model.routes = {
-      "/": (BuildContext context) => KeysSaveScreenService().getUI(),
+      "/": (BuildContext context) => this.home.getUI(),
     };
     return this.model.routes;
   }
