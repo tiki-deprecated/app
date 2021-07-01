@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/keys_create_screen/keys_new_screen_service.dart';
+import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

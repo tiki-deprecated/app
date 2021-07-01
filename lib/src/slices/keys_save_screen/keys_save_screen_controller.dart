@@ -20,11 +20,6 @@ class KeysSaveScreenController {
     appService.reload();
   }
 
-  copyEmail(KeysSaveScreenService keysService, String email) {
-    Clipboard.setData(new ClipboardData(text: email));
-    keysService.emailSaved();
-  }
-
   copyKey(KeysSaveScreenService keysService, String key) {
     Clipboard.setData(new ClipboardData(text: key));
     keysService.keySaved();

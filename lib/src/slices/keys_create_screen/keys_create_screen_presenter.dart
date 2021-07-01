@@ -1,5 +1,5 @@
-import 'package:app/src/slices/keys_create_screen/keys_new_screen_service.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_new_screen_layout.dart';
+import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen.dart';
 import 'package:provider/provider.dart';
 
 class KeysNewScreenPresenter {

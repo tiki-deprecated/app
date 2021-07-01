@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_create_screen/ui/keys_new_screen_restore.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_new_screen_subtitle.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_new_screen_title.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_restore.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_subtitle.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_title.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';

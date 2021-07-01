@@ -6,7 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/keys/keys_service.dart';
-import 'package:app/src/slices/keys_save_dialog/keys_new_screen_dialog_copy.dart';
+import 'package:app/src/slices/keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,9 +83,8 @@ class KeysNewScreenSaveBk extends StatelessWidget {
     showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (BuildContext context) {
-          return KeysNewScreenDialogCopy()
-              .alert(key, current, keysSaveScreenService);
-        });
+        builder: (BuildContext context) =>
+            KeysSaveDialogCopyService(combinedKey: key, email: current.email!)
+                .getUI());
   }
 }

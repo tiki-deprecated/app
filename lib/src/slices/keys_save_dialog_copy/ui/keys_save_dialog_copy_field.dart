@@ -4,55 +4,46 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysNewScreenDialogCopyButton extends StatelessWidget {
-  static const String _buttonText = "COPY";
-  static final double _borderRadius = 2.w;
-  static final double _paddingHorizontal = 2.w;
-  static final double _paddingHorizontalIcon = 1.w;
-  static final double _fontSize = 4.w;
+import '../keys_save_dialog_copy_service.dart';
 
+class KeysSaveDialogCopyField extends StatelessWidget {
   final String? value;
-  final KeysSaveScreenService service;
-  final Function() onPressed;
+  final bool isEmail;
 
-  KeysNewScreenDialogCopyButton(this.value, this.service, this.onPressed);
+  KeysSaveDialogCopyField({this.value, this.isEmail: false});
 
   @override
   Widget build(BuildContext context) {
-    var saved = this.value!.contains("@")
-        ? service.model.savedEmail
-        : service.model.savedKeys;
+    var service =
+        Provider.of<KeysSaveDialogCopyService>(context, listen: false);
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: ConfigColor.white,
-          border: Border.all(
-            color: ConfigColor.silverChalice,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(_borderRadius))),
-      child: Row(
-        children: [_text(), _button(saved)],
-      ),
+          border: Border.all(color: ConfigColor.silverChalice),
+          borderRadius: BorderRadius.all(Radius.circular(2.w))),
+      child: Row(children: [_text(), _button(context, service)]),
     );
   }
 
   Widget _text() {
     return Expanded(
         child: Container(
-            padding: EdgeInsets.only(left: 8),
+            padding: EdgeInsets.only(left: 2.w),
             child: Text(value!,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: _fontSize),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left)));
   }
 
-  Widget _button(bool saved) {
+  Widget _button(BuildContext context, KeysSaveDialogCopyService service) {
+    bool saved =
+        isEmail ? service.model.isCopiedEmail : service.model.isCopiedKey;
     return Container(
         decoration: BoxDecoration(
             border: Border(left: BorderSide(color: ConfigColor.silverChalice))),
@@ -60,30 +51,30 @@ class KeysNewScreenDialogCopyButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: ConfigColor.gallery,
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(_borderRadius),
-                  bottomRight: Radius.circular(_borderRadius)),
+                  topRight: Radius.circular(2.w),
+                  bottomRight: Radius.circular(2.w)),
             ),
             child: TextButton(
-                onPressed: onPressed,
+                onPressed: () =>
+                    service.controller.copyField(context, value!, isEmail),
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all(EdgeInsets.zero)),
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: _paddingHorizontal),
+                            horizontal: 2.w, vertical: 1.5.h),
                         child: Row(
                           children: [
-                            Text(_buttonText,
+                            Text("COPY",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: _fontSize,
+                                    fontSize: 14.sp,
                                     color: saved
                                         ? ConfigColor.jade
                                         : ConfigColor.mardiGras)),
                             Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: _paddingHorizontalIcon),
+                                margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 child: Container(
                                     width: 4.w,
                                     child: saved

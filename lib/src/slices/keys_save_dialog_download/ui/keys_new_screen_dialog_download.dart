@@ -4,12 +4,13 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/keys_save_dialog/keys_new_screen_dialog_download_qr.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/widgets/components/tiki_inputs/tiki_big_button.dart';
 import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import 'keys_new_screen_dialog_download_qr.dart';
 
 class KeysNewScreenSaveDialogDownload {
   static final double _marginTopTitle = 8.h;
