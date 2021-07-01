@@ -10,10 +10,20 @@ import 'package:provider/provider.dart';
 import 'keys_create_screen_layout_background.dart';
 import 'keys_create_screen_layout_foreground.dart';
 
-class KeysNewScreen extends StatelessWidget {
+class KeysNewScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _KeysNewScreen();
+}
+
+class _KeysNewScreen extends State<KeysNewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<KeysNewScreenService>(context).generateKeys(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Provider.of<KeysNewScreenService>(context).generateKeys(context);
     return Scaffold(
         body: Center(
             child: GestureDetector(
