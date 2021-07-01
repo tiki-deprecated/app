@@ -40,8 +40,8 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
-    getHome();
     initDynamicLinks();
+    getHome();
   }
 
   getRoutes(BuildContext context) {
