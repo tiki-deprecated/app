@@ -25,6 +25,4 @@ class KeysNewScreenRestore extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: _fontSize)));
   }
-
-  getUI() {}
 }
