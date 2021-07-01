@@ -12,7 +12,7 @@ class LoginScreenPresenter {
 
   num get marginTitleRight => 20;
 
-  num get marginButtonTop => 4;
+  num get marginButtonTop => 1;
 
   num get marginTosTop => 2;
 
