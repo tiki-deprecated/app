@@ -18,18 +18,19 @@ class MdViewerLayoutForeground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: SingleChildScrollView(
-            child: Column(children: [
+        child: Column(children: [
       Container(
           margin: EdgeInsets.only(left: _marginBackLeft.w),
           child: MdViewerViewBackButton()),
-      Container(
-          margin: EdgeInsets.only(
-              top: _marginTop.h,
-              bottom: _marginBottom.h,
-              left: _marginHorizontal.w,
-              right: _marginHorizontal.w),
-          child: MdViewerView()),
-    ])));
+      Expanded(
+          child: SingleChildScrollView(
+              child: Container(
+                  margin: EdgeInsets.only(
+                      top: _marginTop.h,
+                      bottom: _marginBottom.h,
+                      left: _marginHorizontal.w,
+                      right: _marginHorizontal.w),
+                  child: MdViewerView())))
+    ]));
   }
 }
