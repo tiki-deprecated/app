@@ -8,48 +8,44 @@ import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_continu
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_download.dart';
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_restore.dart';
 import 'package:app/src/utils/helper_image.dart';
-import 'package:app/src/widgets/components/tiki_text/tiki_subtitle.dart';
-import 'package:app/src/widgets/components/tiki_text/tiki_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
+import 'keys_save_screen_view_subtitle.dart';
+import 'keys_save_screen_view_title.dart';
+
 class KeysNewScreenLayoutForeground extends StatelessWidget {
-  static final double _marginBottomButton = 5.h;
+  static final double _marginBottomButton = 4.h;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         height: MediaQuery.of(context).size.height * 0.95,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Expanded(
-                    child: Column(children: [
-                  Container(
-                      margin: EdgeInsets.symmetric(vertical: 2.h),
-                      child: Center(child: HelperImage("icon-alert"))),
-                  Center(child: TikiTitle("Backup\nyour account")),
-                  Container(
-                      margin: EdgeInsets.symmetric(vertical: 2.h),
-                      child: TikiSubtitle(
-                        "We recommend you to securely save your key in case you change your device.",
-                        fontSize: 2.h,
-                        fontWeight: FontWeight.normal,
-                      )),
-                  Container(
-                      child: Column(children: [
-                    KeysNewScreenSaveBk(),
-                    KeysNewScreenSaveBkDownload(),
-                  ])),
-                  KeysNewScreenSaveContinue(),
-                ]))
-              ]),
-              Container(
+        child: Column(children: [
+          Container(
+              margin: EdgeInsets.only(top: 8.h),
+              child: Center(child: HelperImage("icon-alert"))),
+          Container(
+              margin: EdgeInsets.only(top: 2.h),
+              child: KeysNewScreenViewTitle()),
+          Container(
+              margin: EdgeInsets.only(top: 2.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: KeysNewScreenViewSubtitle()),
+          Container(
+              margin: EdgeInsets.only(top: 2.h), child: KeysNewScreenSaveBk()),
+          Container(
+              margin: EdgeInsets.only(top: 2.h),
+              child: KeysNewScreenSaveBkDownload()),
+          Container(
+              margin: EdgeInsets.only(top: 6.h),
+              child: KeysNewScreenSaveContinue()),
+          Expanded(
+              child: Container(
                   alignment: Alignment.bottomCenter,
                   margin: EdgeInsets.only(bottom: _marginBottomButton),
-                  child: KeysNewScreenSaveRestore())
-            ]));
+                  child: KeysNewScreenSaveRestore()))
+        ]));
   }
 }

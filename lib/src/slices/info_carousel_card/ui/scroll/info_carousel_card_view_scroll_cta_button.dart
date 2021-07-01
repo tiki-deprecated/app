@@ -25,7 +25,7 @@ class InfoCarouselCardViewScrollCtaButton extends StatelessWidget {
         ),
         child: Text(model.buttonText!,
             style: TextStyle(fontSize: 13.5.sp, fontWeight: FontWeight.w800)),
-        onPressed: () => service.controller.launchUrl(model.buttonUrl!));
+        onPressed: () => service.controller.openUrl(model.buttonUrl));
     ;
   }
 }

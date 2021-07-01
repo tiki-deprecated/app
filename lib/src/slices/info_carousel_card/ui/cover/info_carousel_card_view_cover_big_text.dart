@@ -26,7 +26,7 @@ class InfoCarouselCardViewCoverBigText extends StatelessWidget {
                 color: ConfigColor.ikb,
                 fontFamily: "Koara",
                 fontSize: service.controller
-                    .calculateAnimation(32.sp, _animationValue.value, 18.sp),
+                    .calculateAnimation(32.sp, _animationValue.value, 0.sp),
                 fontWeight: FontWeight.bold),
             text: model.bigTextLight!,
             children: [
@@ -36,7 +36,7 @@ class InfoCarouselCardViewCoverBigText extends StatelessWidget {
                       color: ConfigColor.tikiBlue,
                       fontFamily: "Koara",
                       fontSize: service.controller.calculateAnimation(
-                          32.sp, _animationValue.value, 18.sp),
+                          32.sp, _animationValue.value, 0.sp),
                       fontWeight: FontWeight.bold))
             ]));
   }

@@ -9,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MdViewerView extends StatelessWidget {
   static const num _fontSizeHeading = 24;
@@ -24,9 +23,8 @@ class MdViewerView extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<String> mdSource) {
           return MarkdownBody(
               selectable: true,
-              onTapLink: (String text, String? href, String title) async {
-                if (await canLaunch(href!)) await launch(href);
-              },
+              onTapLink: (String text, String? href, String title) async =>
+                  service.controller.openUrl(href),
               styleSheet: MarkdownStyleSheet(
                 h1: TextStyle(
                     color: ConfigColor.mardiGras,

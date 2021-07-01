@@ -11,27 +11,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../info_carousel_card_controller.dart';
+
 class InfoCarouselCardViewScrollCtaExplain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<InfoCarouselCardService>(context, listen: false);
     List<InfoCarouselCardModelContentText> spans =
-        Provider.of<InfoCarouselCardService>(context)
-            .model
-            .content!
-            .cta!
-            .explain!;
+        service.model.content!.cta!.explain!;
     TextSpan? childSpan;
     spans.reversed.forEach((spanContent) {
-      childSpan = _buildSpan(spanContent, childSpan, context);
+      childSpan = _buildSpan(spanContent, childSpan, service.controller);
     });
     return RichText(text: childSpan ?? TextSpan());
   }
 
   _buildSpan(InfoCarouselCardModelContentText content, TextSpan? child,
-      BuildContext context) {
+      InfoCarouselCardController controller) {
     return TextSpan(
         recognizer: TapGestureRecognizer()
-          ..onTap = () => _launchUrl(content.url, context),
+          ..onTap = () => controller.openUrl(content.url),
         style: TextStyle(
             color:
                 content.url == null ? ConfigColor.tikiBlue : ConfigColor.orange,
@@ -41,12 +40,5 @@ class InfoCarouselCardViewScrollCtaExplain extends StatelessWidget {
             fontFamily: "NunitoSans"),
         text: content.text,
         children: [child ?? TextSpan()]);
-  }
-
-  _launchUrl(String? url, context) {
-    if (url != null)
-      Provider.of<InfoCarouselCardService>(context, listen: false)
-          .controller
-          .launchUrl(url);
   }
 }

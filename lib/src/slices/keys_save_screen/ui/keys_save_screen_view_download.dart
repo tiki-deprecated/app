@@ -23,7 +23,6 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Stack(clipBehavior: Clip.none, children: [
               Container(
-                  margin: EdgeInsets.only(bottom: 8.w),
                   padding: EdgeInsets.all(4.w),
                   decoration: BoxDecoration(
                       color: ConfigColor.gallery,

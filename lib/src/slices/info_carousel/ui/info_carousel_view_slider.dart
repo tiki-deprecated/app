@@ -11,7 +11,7 @@ class InfoCarouselViewSlider extends StatelessWidget {
     var service = Provider.of<InfoCarouselService>(context);
     return CarouselSlider(
         options: CarouselOptions(
-            viewportFraction: 0.95, height: MediaQuery.of(context).size.height),
+            viewportFraction: 0.92, height: MediaQuery.of(context).size.height),
         items: service.model.cards!.map((card) {
           return Builder(
             builder: (BuildContext context) {

@@ -20,26 +20,30 @@ class InfoCarouselCardViewCoverHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCarouselCardService>(context);
     var model = service.model.cover!.header!;
-    return Opacity(
-        opacity: 1 - _animationValue.value,
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Expanded(
-              child: Row(children: [
-            HelperImage(model.image!, width: 6.w),
-            Padding(padding: EdgeInsets.only(right: 2.w)),
-            Text(
-              model.title!,
-              style: TextStyle(
-                  fontFamily: "NunitoSans",
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ConfigColor.tikiBlue),
-            )
-          ])),
-          GestureDetector(
-              onTap: () => service.controller
-                  .shareCard(context, model.title!, model.image!),
-              child: Icon(Icons.share, color: ConfigColor.orange, size: 36.sp))
-        ]));
+    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+      Expanded(
+          child: Row(children: [
+        HelperImage(model.image!,
+            width: service.controller
+                .calculateAnimation(6.w, _animationValue.value, 0)),
+        Padding(padding: EdgeInsets.only(right: 2.w)),
+        Text(
+          model.title!,
+          style: TextStyle(
+              fontFamily: "NunitoSans",
+              fontSize: service.controller
+                  .calculateAnimation(12.sp, _animationValue.value, 0),
+              fontWeight: FontWeight.bold,
+              color: ConfigColor.tikiBlue),
+        )
+      ])),
+      GestureDetector(
+          onTap: () => service.controller
+              .shareCard(context, model.share!.message!, model.share!.image!),
+          child: Icon(Icons.share,
+              color: ConfigColor.orange,
+              size: service.controller
+                  .calculateAnimation(36.sp, _animationValue.value, 0)))
+    ]);
   }
 }
