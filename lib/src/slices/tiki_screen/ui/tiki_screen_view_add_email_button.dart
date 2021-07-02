@@ -104,7 +104,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                             fontFamily: "Montserrat")))),
             HelperImage(
               "right-arrow",
-              width: 8.w,
+              width: 10.w,
             )
           ]),
           onTap: () => service.controller
@@ -135,7 +135,7 @@ class TikiScreenViewAddEmailButton extends StatelessWidget {
                             fontFamily: "Montserrat")))),
             HelperImage(
               "right-arrow",
-              width: 8.w,
+              width: 10.w,
             )
           ]),
           onTap: () => service.controller.whatGmailHolds(context)),
