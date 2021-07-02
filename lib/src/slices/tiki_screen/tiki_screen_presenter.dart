@@ -86,7 +86,8 @@ class TikiScreenPresenter {
 
   get textCardReleaseCtaText => "Read More";
 
-  get textCardReleaseCtaUrl => "https://mytiki.com/roadmap";
+  get textCardReleaseCtaUrl =>
+      "https://mytiki.com/blog/peek-TIKI-app-prototype";
 
   get textCardNewsTitle => "Latest news";
 
