@@ -89,6 +89,8 @@ class AppService extends ChangeNotifier {
       if (otp != null && otp.isNotEmpty) {
         this.model.user = await authService.verifyOtp(otp);
         if (this.model.user?.address != null) {
+          this.model.user!.isLoggedIn = true;
+          updateUser(this.model.user!);
           this.home = AppModelRoutes.home;
         } else {
           this.home = KeysCreateScreenService(this);
