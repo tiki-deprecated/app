@@ -27,8 +27,10 @@ class TikiScreenViewCardNews extends StatelessWidget {
                       fontSize: service.presenter.fontSizeCardCta.sp,
                       color: ConfigColor.orange)),
               Icon(Icons.arrow_forward, color: ConfigColor.orange),
-              () => service.controller.launchUrl("https://medium.com/mytiki")),
+              () => service.controller
+                  .launchUrl(service.presenter.textCardNewsCtaUrl)),
         ),
-        onTap: () => service.controller.launchUrl("https://medium.com/mytiki"));
+        onTap: () =>
+            service.controller.launchUrl(service.presenter.textCardNewsCtaUrl));
   }
 }
