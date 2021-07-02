@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenLayoutForeground extends StatelessWidget {
-  static final double _marginVerticalDivider = 5.h;
-  static final double _marginTopSubmit = 5.h;
 
   @override
   Widget build(BuildContext context) {
