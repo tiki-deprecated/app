@@ -26,14 +26,14 @@ class KeysSaveDialogDlViewButton extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: _getColor(service)),
         child: Container(
-            width: 60.w,
+            width: 67.w,
             child: Text(_getText(service),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: ConfigColor.white,
                   fontFamily: "NunitoSans",
                   fontWeight: FontWeight.w800,
-                  fontSize: service.model.noPermission ? 14.sp : 14.sp,
+                  fontSize: 16.sp,
                   letterSpacing: 0.05.w,
                 ))),
         onPressed: service.model.noPermission

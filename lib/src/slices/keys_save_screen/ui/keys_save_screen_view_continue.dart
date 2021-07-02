@@ -20,18 +20,20 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
     var service = Provider.of<KeysSaveScreenService>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 20.w),
+            padding: EdgeInsets.symmetric(vertical: 2.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: ConfigColor.mardiGras),
-        child: Text("CONTINUE",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: ConfigColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 15.sp,
-              letterSpacing: 0.05.w,
-            )),
+        child: Container(
+            width: 70.w,
+            child: Text("CONTINUE",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: ConfigColor.white,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16.sp,
+                  letterSpacing: 0.05.w,
+                ))),
         onPressed: service.canContinue()
             ? () => service.controller.goToHome(context)
             : null);

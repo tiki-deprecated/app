@@ -10,7 +10,10 @@ class KeysNewScreenLayoutBackground extends StatelessWidget {
       Center(child: Container(color: ConfigColor.serenade)),
       Align(
           alignment: Alignment.topRight,
-          child: HelperImage("keys-blob", width: 50.w))
+          child: HelperImage(
+            "keys-blob",
+            width: 41.w,
+          ))
     ]);
   }
 }
