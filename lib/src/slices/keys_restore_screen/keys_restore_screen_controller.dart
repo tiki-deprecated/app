@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys/keys_service.dart';
-import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/utils/helper_permission.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,11 +20,8 @@ class KeysRestoreScreenController {
     if (await HelperPermission.request(Permission.camera)) {
       ScanResult result = await BarcodeScanner.scan();
       if (result.type == ResultType.Barcode) {
-        KeysModel? keys = Provider.of<KeysService>(context, listen: false)
-            .getKeysFromCombined(result.rawContent);
-        if (keys != null)
-          Provider.of<KeysRestoreScreenService>(context, listen: false)
-              .saveAndLogin(keys, context);
+        Provider.of<KeysRestoreScreenService>(context, listen: false)
+            .saveAndLogin(result.rawContent, context);
       }
     }
   }
@@ -34,11 +29,8 @@ class KeysRestoreScreenController {
   void manualSubmit(BuildContext context) async {
     var service = Provider.of<KeysRestoreScreenService>(context, listen: false);
     if (service.canSubmit()) {
-      KeysModel? keys = Provider.of<KeysService>(context, listen: false)
-          .getKeysFromCombined(service.model.manualKeys!);
-      if (keys != null)
-        Provider.of<KeysRestoreScreenService>(context, listen: false)
-            .saveAndLogin(keys, context);
+      Provider.of<KeysRestoreScreenService>(context, listen: false)
+          .saveAndLogin(service.model.manualKeys!, context);
     }
   }
 }

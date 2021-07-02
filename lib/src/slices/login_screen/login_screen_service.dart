@@ -37,7 +37,8 @@ class LoginScreenService extends ChangeNotifier {
           Provider.of<AppService>(context, listen: false).authService;
       var result = await authService.requestOtp(this.model.email);
       if (result) {
-        var appService = Provider.of<AppService>(context, listen: false);
+        var appService = Provider.of<AppService>(context,
+            listen: false); //TODO this is unsafe
         appService.authService.current =
             AppModelCurrent(email: this.model.email);
         appService.model.current = appService.authService.current;

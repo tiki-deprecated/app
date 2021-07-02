@@ -43,21 +43,24 @@ class KeysRestoreScreenService extends ChangeNotifier {
       return false;
   }
 
-  saveAndLogin(KeysModel keys, BuildContext context) async {
+  saveAndLogin(String combinedKeys, BuildContext context) async {
     var keysService = KeysService();
-    await keysService.save(keys);
-    var apiService = ApiService();
-    var appService = Provider.of<AppService>(context);
-    String referral = await apiService.getReferalCode(keys.address!);
-    AppModelUser user = AppModelUser(
-      email: appService.model.current!.email,
-      address: keys.address,
-      isLoggedIn: true,
-      code: referral,
-    );
-    appService.updateUser(user);
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => TikiScreenService().getUI()),
-        ModalRoute.withName('/home'));
+    KeysModel? keys = keysService.getKeysFromCombined(combinedKeys);
+    if(keys != null ) {
+      await keysService.save(keys!);
+      var apiService = ApiService();
+      var appService = Provider.of<AppService>(context);
+      String referral = await apiService.getReferalCode(keys.address!);
+      AppModelUser user = AppModelUser(
+        email: appService.model.current!.email,
+        address: keys.address,
+        isLoggedIn: true,
+        code: referral,
+      );
+      appService.updateUser(user);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => TikiScreenService().getUI()),
+          ModalRoute.withName('/home'));
+    }
   }
 }
