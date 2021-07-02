@@ -18,8 +18,9 @@ class KeysSaveScreenController {
   }
 
   goToRestore(BuildContext context) {
+    AppService appService = Provider.of<AppService>(context, listen: false);
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => KeysRestoreScreenService().getUI()));
+        builder: (context) => KeysRestoreScreenService(appService).getUI()));
   }
 
   goToDownloadLocation() async {

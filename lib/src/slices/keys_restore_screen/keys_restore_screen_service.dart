@@ -12,7 +12,6 @@ import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_controlle
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_presenter.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'model/keys_restore_screen_model.dart';
 
@@ -21,7 +20,9 @@ class KeysRestoreScreenService extends ChangeNotifier {
   late KeysRestoreScreenController controller;
   late KeysRestoreScreenServiceModel model;
 
-  KeysRestoreScreenService() {
+  AppService appService;
+
+  KeysRestoreScreenService(this.appService) {
     model = KeysRestoreScreenServiceModel();
     presenter = KeysRestoreScreenPresenter(this);
     controller = KeysRestoreScreenController();
@@ -46,10 +47,9 @@ class KeysRestoreScreenService extends ChangeNotifier {
   saveAndLogin(String combinedKeys, BuildContext context) async {
     var keysService = KeysService();
     KeysModel? keys = keysService.getKeysFromCombined(combinedKeys);
-    if(keys != null ) {
-      await keysService.save(keys!);
+    if (keys != null) {
+      await keysService.save(keys);
       var apiService = ApiService();
-      var appService = Provider.of<AppService>(context);
       String referral = await apiService.getReferalCode(keys.address!);
       AppModelUser user = AppModelUser(
         email: appService.model.current!.email,
