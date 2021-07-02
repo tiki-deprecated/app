@@ -10,7 +10,10 @@ class KeysRestoreScreenLayoutBackground extends StatelessWidget {
       Center(child: Container(color: ConfigColor.serenade)),
       Align(
           alignment: Alignment.topRight,
-          child: HelperImage("home-blob-tr", width: 50.w))
+          child: HelperImage(
+            "home-blob-tr",
+            width: 36.w,
+          ))
     ]);
   }
 }
