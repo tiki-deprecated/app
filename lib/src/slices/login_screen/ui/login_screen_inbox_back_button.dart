@@ -21,8 +21,7 @@ class LoginScreenInboxBackButton extends StatelessWidget {
           .back(context),
       child: Row(children: [
         Container(
-          child: HelperImage('back-arrow',
-              height: service.presenter.fontSizeBack.sp),
+          child: HelperImage('back-arrow', height: 17.sp),
           margin:
               EdgeInsets.only(right: service.presenter.marginBackArrowRight.w),
         ),
