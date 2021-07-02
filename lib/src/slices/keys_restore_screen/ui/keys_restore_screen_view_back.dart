@@ -25,7 +25,10 @@ class KeysRestoreScreenViewBack extends StatelessWidget {
               .back(context),
       child: Row(children: [
         Container(
-          child: HelperImage('back-arrow'),
+          child: HelperImage(
+            'back-arrow',
+            height: 15.sp,
+          ),
           margin: EdgeInsets.only(right: _marginBackArrowRight.w),
         ),
         Text(_textBack,

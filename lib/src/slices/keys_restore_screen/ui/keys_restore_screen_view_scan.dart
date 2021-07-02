@@ -37,7 +37,7 @@ class KeysRestoreScreenViewScan extends StatelessWidget {
                       ))),
               Align(
                   alignment: Alignment.centerRight,
-                  child: HelperImage("icon-qr-code"))
+                  child: HelperImage("icon-qr-code", height: 16.sp))
             ])),
         onPressed: () => controller.scan(context));
   }
