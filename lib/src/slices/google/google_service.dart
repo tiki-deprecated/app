@@ -34,7 +34,7 @@ class GoogleService {
       });
       return currentUser;
     } catch (error) {
-      return null;
+      throw Exception(error);
     }
   }
 
