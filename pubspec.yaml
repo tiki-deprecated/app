@@ -27,7 +27,7 @@ dependencies:
   path_provider: ^2.0.2
   url_launcher: ^6.0.3
   android_intent: ^2.0.2
-  permission_handler: ^8.0.1
+  permission_handler: ^8.1.2
   email_validator: ^2.0.1
   lottie: ^1.0.1
   amplitude_flutter: ^3.1.1

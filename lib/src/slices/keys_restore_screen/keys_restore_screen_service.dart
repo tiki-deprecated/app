@@ -11,7 +11,6 @@ import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_controller.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_presenter.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
-import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,15 +31,16 @@ class KeysRestoreScreenService extends ChangeNotifier {
     return presenter.render();
   }
 
-  scanQr(context) async {
-    var keysService = KeysService();
-    ScanResult result = await BarcodeScanner.scan();
-    if (result.type == ResultType.Barcode) {
-      KeysModel? keys = keysService.getKeysFromCombined(result.rawContent);
-      if (keys != null) {
-        saveAndLogin(keys, context);
-      }
-    }
+  void setManualKey(String s) {
+    model.manualKeys = s;
+    notifyListeners();
+  }
+
+  bool canSubmit() {
+    if (model.manualKeys != null)
+      return model.manualKeys!.length == 1782;
+    else
+      return false;
   }
 
   saveAndLogin(KeysModel keys, BuildContext context) async {

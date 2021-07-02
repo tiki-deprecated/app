@@ -18,6 +18,7 @@ class KeysRestoreScreenLayoutForeground extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
       Container(
         alignment: Alignment.topLeft,
+        margin: EdgeInsets.only(left: 3.w),
         child: KeysRestoreScreenViewBack(),
       ),
       SingleChildScrollView(

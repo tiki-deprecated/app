@@ -43,7 +43,7 @@ post_install do |installer|
             'PERMISSION_EVENTS=0',
             'PERMISSION_REMINDERS=0',
             'PERMISSION_CONTACTS=0',
-            #'PERMISSION_CAMERA=0',
+            'PERMISSION_CAMERA=1',
             'PERMISSION_MICROPHONE=0',
             'PERMISSION_SPEECH_RECOGNIZER=0',
             'PERMISSION_PHOTOS=0',
@@ -51,7 +51,9 @@ post_install do |installer|
             'PERMISSION_NOTIFICATIONS=0',
             'PERMISSION_MEDIA_LIBRARY=0',
             'PERMISSION_SENSORS=0',
-            'PERMISSION_BLUETOOTH=0'
+            'PERMISSION_BLUETOOTH=0',
+            'PERMISSION_APP_TRACKING_TRANSPARENCY=0',
+            'PERMISSION_CRITICAL_ALERTS=0'
           ]
         end
   end

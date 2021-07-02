@@ -5,18 +5,19 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
-import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysRestoreScreenViewScan extends StatelessWidget {
-  static final double _marginHorizontal = 10.w;
-  static final double _marginVertical = 2.5.h;
+import '../keys_restore_screen_service.dart';
 
+class KeysRestoreScreenViewScan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var controller =
+        Provider.of<KeysRestoreScreenService>(context, listen: false)
+            .controller;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -38,11 +39,6 @@ class KeysRestoreScreenViewScan extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: HelperImage("icon-qr-code"))
             ])),
-        onPressed: () async {
-          if (await HelperPermission.request(Permission.camera)) {
-            // BlocProvider.of<KeysRestoreScreenBloc>(context)
-            //     .add(KeysRestoreScreenScanned());
-          }
-        });
+        onPressed: () => controller.scan(context));
   }
 }
