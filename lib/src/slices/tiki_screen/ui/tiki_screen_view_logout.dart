@@ -28,7 +28,8 @@ class TikiScreenViewLogout extends StatelessWidget {
                     fontSize: service.presenter.fontSizeLogout.sp)),
             Container(
                 margin: EdgeInsets.only(left: 3.w),
-                child: HelperImage("icon-logout"))
+                child: HelperImage("icon-logout",
+                    height: service.presenter.fontSizeLogout.sp))
           ],
         ));
   }

@@ -16,7 +16,9 @@ class TikiScreenViewTikiBoxReferCount extends StatelessWidget {
     var service = Provider.of<TikiScreenService>(context);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
-          margin: EdgeInsets.only(right: 2.w), child: HelperImage("ref-user")),
+          margin: EdgeInsets.only(right: 2.w),
+          child: HelperImage("ref-user",
+              height: service.presenter.fontSizeTikiBoxReferCount.sp)),
       Text(
           service.model.referCount.toString() +
               " " +

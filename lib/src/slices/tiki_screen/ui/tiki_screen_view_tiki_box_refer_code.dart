@@ -41,7 +41,8 @@ class TikiScreenViewTikiBoxReferCode extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: ConfigColor.tikiBlue)))
           ]),
-          HelperImage("icon-copy"),
+          HelperImage("icon-copy",
+              height: service.presenter.fontSizeTikiBoxReferCode.sp),
         ]));
   }
 }
