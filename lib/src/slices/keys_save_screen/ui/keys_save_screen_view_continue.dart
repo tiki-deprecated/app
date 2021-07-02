@@ -29,7 +29,7 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
             style: TextStyle(
               color: ConfigColor.white,
               fontWeight: FontWeight.w800,
-              fontSize: 16.sp,
+              fontSize: 15.sp,
               letterSpacing: 0.05.w,
             )),
         onPressed: service.canContinue()

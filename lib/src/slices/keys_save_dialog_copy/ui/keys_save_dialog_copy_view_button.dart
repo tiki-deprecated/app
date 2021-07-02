@@ -27,7 +27,7 @@ class KeysSaveDialogCopyViewButton extends StatelessWidget {
               color: ConfigColor.white,
               fontFamily: "NunitoSans",
               fontWeight: FontWeight.w800,
-              fontSize: 16.sp,
+              fontSize: 14.sp,
               letterSpacing: 0.05.w,
             )),
         onPressed: service.model.isCopiedKey

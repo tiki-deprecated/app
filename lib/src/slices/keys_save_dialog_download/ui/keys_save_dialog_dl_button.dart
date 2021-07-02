@@ -33,7 +33,7 @@ class KeysSaveDialogDlViewButton extends StatelessWidget {
                   color: ConfigColor.white,
                   fontFamily: "NunitoSans",
                   fontWeight: FontWeight.w800,
-                  fontSize: service.model.noPermission ? 16.sp : 16.sp,
+                  fontSize: service.model.noPermission ? 14.sp : 14.sp,
                   letterSpacing: 0.05.w,
                 ))),
         onPressed: service.model.noPermission
