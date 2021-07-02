@@ -3,13 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBlockchainAddressRsp {
+class BlockchainModelAddressRsp {
   String? address;
   DateTime? issued;
 
-  RepoApiBlockchainAddressRsp({this.address, this.issued});
+  BlockchainModelAddressRsp({this.address, this.issued});
 
-  RepoApiBlockchainAddressRsp.fromJson(Map<String, dynamic>? json) {
+  BlockchainModelAddressRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.address = json['address'];
       this.issued = DateTime.parse(json['issued']);

@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class RepoApiBlockchainAddressReferRsp {
+class RepoModelAddressReferRsp {
   int? count;
 
-  RepoApiBlockchainAddressReferRsp({this.count});
+  RepoModelAddressReferRsp({this.count});
 
-  RepoApiBlockchainAddressReferRsp.fromJson(Map<String, dynamic>? json) {
+  RepoModelAddressReferRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.count = json['count'];
     }

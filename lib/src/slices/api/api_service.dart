@@ -4,6 +4,8 @@ import 'package:app/src/config/config_domain.dart';
 import 'package:app/src/slices/api/helpers/helper_api_auth.dart';
 import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
 import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
+import 'package:app/src/slices/blockchain/model/blockchain_model_address_rsp_code.dart';
+import 'package:app/src/slices/blockchain/repository/blockchain_repository_address.dart';
 import 'package:app/src/slices/login_screen/model/repo_api_website_users_rsp.dart';
 import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,20 +30,15 @@ class ApiService {
         HelperApiAuth(secureStorageRepositoryCurrent, repoLocalSsToken);
   }
 
-  Future<String> getReferalCode(String address) async {
-    String? bearer = await helperApiAuth.bearer();
-    http.Response rsp = await http.get(
-        ConfigDomain.asUri(ConfigDomain.blockchain,
-            _referralPath.replaceFirst("%%address%%", address)),
-        headers: HelperHeaders(auth: bearer).header);
-    if (rsp.statusCode == 200) {
-      Map data = jsonDecode(rsp.body);
-      var code = data['data']['code'];
-      return code;
-    } else {
-      throw Exception(
-          "Referal code error " + rsp.statusCode.toString() + " " + rsp.body);
-    }
+  Future<String> getReferralCode(String address) async {
+    BlockchainRepositoryAddress blockchainRepositoryAddress =
+        BlockchainRepositoryAddress.provide();
+    HelperApiRsp<BlockchainModelAddressRspCode> rsp =
+        await blockchainRepositoryAddress.referCode(address);
+    if (rsp.code == 200 && rsp.data != null)
+      return rsp.data.code;
+    else
+      throw Exception("Failed to get refer code");
   }
 
   getTotal() async {

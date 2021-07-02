@@ -48,10 +48,10 @@ class KeysService {
   }
 
   Future<KeysModel> issueAddress(KeysModel keys) async {
-    var repoApiBlockchainAddress = RepoApiBlockchainAddress.provide();
-    HelperApiRsp<RepoApiBlockchainAddressRsp> rsp =
-        await repoApiBlockchainAddress.issue(RepoApiBlockchainAddressReq(
-            keys.dataPublicKey, keys.signPublicKey));
+    var repoApiBlockchainAddress = BlockchainRepositoryAddress.provide();
+    HelperApiRsp<BlockchainModelAddressRsp> rsp =
+        await repoApiBlockchainAddress.issue(
+            BlockchainModelAddressReq(keys.dataPublicKey, keys.signPublicKey));
     if (rsp.code == 200 && rsp.data.address == keys.address) {
       await _repoLocalSsKeys.save(keys.address!, keys);
     } else {

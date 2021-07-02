@@ -50,7 +50,7 @@ class KeysRestoreScreenService extends ChangeNotifier {
     if (keys != null) {
       await keysService.save(keys);
       var apiService = ApiService();
-      String referral = await apiService.getReferalCode(keys.address!);
+      String referral = await apiService.getReferralCode(keys.address!);
       AppModelUser user = AppModelUser(
         email: appService.model.current!.email,
         address: keys.address,
