@@ -1,5 +1,5 @@
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_layout.dart';
 import 'package:provider/provider.dart';
 
 class KeysCreateScreenPresenter {
@@ -9,6 +9,6 @@ class KeysCreateScreenPresenter {
 
   ChangeNotifierProvider<KeysCreateScreenService> render() {
     return ChangeNotifierProvider.value(
-        value: service, child: KeysCreateScreen());
+        value: service, child: KeysCreateScreenLayout());
   }
 }

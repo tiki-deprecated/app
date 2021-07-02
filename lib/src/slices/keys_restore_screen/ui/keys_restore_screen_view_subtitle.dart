@@ -8,16 +8,13 @@ import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenViewSubtitle extends StatelessWidget {
-  static const String _text =
-      "Upload, scan, or manually enter your TIKI account keys";
-  static final double _fontSize = 5.w;
-
   @override
   Widget build(BuildContext context) {
-    return Text(_text,
+    return Text("Upload, scan, or manually enter your TIKI account keys",
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: _fontSize,
+            fontFamily: "NunitoSans",
+            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
             color: ConfigColor.emperor));
   }

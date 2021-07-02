@@ -9,46 +9,42 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenLayoutForeground extends StatelessWidget {
-  static final double _marginTopTitle = 4.h;
-  static final double _marginTopSubtitle = 2.5.h;
-  static final double _marginTopScan = 2.5.h;
-  static final double _marginHorizontalInput = 7.w;
   static final double _marginVerticalDivider = 5.h;
   static final double _marginTopSubmit = 5.h;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: SingleChildScrollView(
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
       Container(
         alignment: Alignment.topLeft,
         child: KeysRestoreScreenViewBack(),
       ),
-      Container(
-          margin: EdgeInsets.only(top: _marginTopTitle),
+      SingleChildScrollView(
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+            margin: EdgeInsets.only(top: 6.h),
+            alignment: Alignment.center,
+            child: KeysRestoreScreenViewTitle()),
+        Container(
+            margin: EdgeInsets.only(top: 2.h, left: 10.w, right: 10.w),
+            alignment: Alignment.center,
+            child: KeysRestoreScreenViewSubtitle()),
+        Container(
+          margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
           alignment: Alignment.center,
-          child: KeysRestoreScreenViewTitle()),
-      Container(
-          margin: EdgeInsets.only(top: _marginTopSubtitle),
-          alignment: Alignment.center,
-          child: KeysRestoreScreenViewSubtitle()),
-      Container(
-          margin: EdgeInsets.symmetric(horizontal: _marginHorizontalInput),
-          child: Column(children: [
-            Container(
-              margin: EdgeInsets.only(top: _marginTopScan),
-              alignment: Alignment.center,
-              child: KeysRestoreScreenViewScan(),
-            ),
-            Container(
-                margin: EdgeInsets.symmetric(vertical: _marginVerticalDivider),
-                child: KeysRestoreScreenViewDivider()),
-            Container(child: KeysRestoreScreenViewInput()),
-            Container(
-                margin: EdgeInsets.only(top: _marginTopSubmit),
-                child: KeysRestoreScreenViewSubmit())
-          ]))
-    ])));
+          child: KeysRestoreScreenViewScan(),
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+            child: KeysRestoreScreenViewDivider()),
+        Container(
+            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+            child: KeysRestoreScreenViewInput()),
+        Container(
+            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+            child: KeysRestoreScreenViewSubmit())
+      ]))
+    ]));
   }
 }

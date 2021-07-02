@@ -10,7 +10,7 @@ import '../keys_create_screen_service.dart';
 import 'keys_create_screen_layout_background.dart';
 import 'keys_create_screen_layout_foreground.dart';
 
-class KeysCreateScreen extends StatelessWidget {
+class KeysCreateScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<KeysCreateScreenService>(context, listen: false)
@@ -19,8 +19,8 @@ class KeysCreateScreen extends StatelessWidget {
         body: Center(
             child: GestureDetector(
                 child: Stack(children: [
-      KeysCreateScreenBackground(),
-      KeysCreateScreenForeground()
+      KeysCreateScreenLayoutBackground(),
+      KeysCreateScreenLayoutForeground()
     ]))));
   }
 }

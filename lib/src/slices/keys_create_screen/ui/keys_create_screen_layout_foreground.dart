@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_restore.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_subtitle.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_title.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_restore.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_subtitle.dart';
+import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_title.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysCreateScreenForeground extends StatelessWidget {
+class KeysCreateScreenLayoutForeground extends StatelessWidget {
   static final double _marginTopTitle = 5.h;
   static final double _marginTopSubtitle = 2.h;
   static final double _marginBottomButton = 4.h;
@@ -30,10 +30,10 @@ class KeysCreateScreenForeground extends StatelessWidget {
             children: [
               Container(
                   padding: EdgeInsets.only(top: _marginTopTitle),
-                  child: KeysCreateScreenTitle()),
+                  child: KeysCreateScreenViewTitle()),
               Container(
                   margin: EdgeInsets.only(top: _marginTopSubtitle),
-                  child: KeysCreateScreenSubtitle()),
+                  child: KeysCreateScreenViewSubtitle()),
             ],
           )
         ],
@@ -56,7 +56,7 @@ class KeysCreateScreenForeground extends StatelessWidget {
       Container(
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.only(bottom: _marginBottomButton),
-          child: KeysCreateScreenRestore()),
+          child: KeysCreateScreenViewRestore()),
     ]);
   }
 }

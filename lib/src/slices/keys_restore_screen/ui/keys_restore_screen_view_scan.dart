@@ -12,9 +12,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenViewScan extends StatelessWidget {
-  static const String _text = "SCAN";
-  static final double _letterSpacing = 0.05.w;
-  static final double _fontSize = 6.w;
   static final double _marginHorizontal = 10.w;
   static final double _marginVertical = 2.5.h;
 
@@ -24,17 +21,18 @@ class KeysRestoreScreenViewScan extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras),
+            primary: ConfigColor.mardiGras,
+            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w)),
         child: Container(
-            margin: EdgeInsets.symmetric(
-                vertical: _marginVertical, horizontal: _marginHorizontal),
+            width: 70.w,
             child: Row(children: [
               Expanded(
-                  child: Text(_text,
+                  child: Text("SCAN",
                       style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: _fontSize,
-                        letterSpacing: _letterSpacing,
+                        color: ConfigColor.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16.sp,
+                        letterSpacing: 0.05.w,
                       ))),
               Align(
                   alignment: Alignment.centerRight,

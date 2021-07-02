@@ -8,21 +8,14 @@ import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenViewTitle extends StatelessWidget {
-  static const String _text = "Enter your keys";
-  static final double _fontSize = 10.w;
-  static final double _marginTopTitle = 4.h;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: _marginTopTitle),
-        alignment: Alignment.center,
-        child: Text(_text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: 'Koara',
-                fontSize: _fontSize,
-                fontWeight: FontWeight.bold,
-                color: ConfigColor.mardiGras)));
+    return Text("Enter your keys",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: 'Koara',
+            fontSize: 28.sp,
+            fontWeight: FontWeight.bold,
+            color: ConfigColor.mardiGras));
   }
 }

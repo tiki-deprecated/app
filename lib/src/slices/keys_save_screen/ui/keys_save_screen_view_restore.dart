@@ -6,7 +6,10 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../keys_save_screen_service.dart';
 
 class KeysNewScreenSaveRestore extends StatelessWidget {
   static const String _text = "Already have an account?";
@@ -14,10 +17,9 @@ class KeysNewScreenSaveRestore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<KeysSaveScreenService>(context);
     return TextButton(
-        onPressed: () {
-          // Navigator.of(context).pushNamed(ConfigNavigate.path.keysRestore);
-        },
+        onPressed: () => service.controller.goToRestore(context),
         child: Text(_text,
             style: TextStyle(
                 color: ConfigColor.orange,

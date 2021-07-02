@@ -6,7 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysCreateScreenTitle extends StatelessWidget {
+class KeysCreateScreenViewTitle extends StatelessWidget {
   static const String _text = "Just one sec..";
   static final double _fontSize = 30.sp;
 

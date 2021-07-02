@@ -5,7 +5,6 @@ import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_controller.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_presenter.dart';
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +24,6 @@ class KeysCreateScreenService extends ChangeNotifier {
 
   getUI() {
     return presenter.render();
-  }
-
-  void restoreKeys(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => KeysRestoreScreenService().getUI()));
   }
 
   generateKeys(BuildContext context) async {
