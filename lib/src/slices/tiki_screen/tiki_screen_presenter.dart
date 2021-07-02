@@ -26,7 +26,7 @@ class TikiScreenPresenter {
 
   num get marginTikiBoxReferCodeTop => 1.5;
 
-  num get marginTikiBoxReferCodeHorizontal => 11;
+  num get marginTikiBoxReferCodeHorizontal => 8;
 
   num get marginTikiBoxReferCountTop => 1;
 
