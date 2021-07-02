@@ -105,7 +105,12 @@ class TikiScreenService extends ChangeNotifier {
   void updateCode(BuildContext context) async {
     var apiService = ApiService();
     AppModelUser user = Provider.of<AppService>(context).model.user!;
-    this.model.code = await apiService.getReferralCode(user.address!);
-    notifyListeners();
+    apiService.getReferralCode(user.address!).then((referral) {
+      this.model.code = referral;
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      // SEND TO SENTRY
+      controller.logout(context);
+    });
   }
 }
