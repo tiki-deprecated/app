@@ -7,7 +7,7 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysSaveDialogCopySubtitle extends StatelessWidget {
+class KeysSaveDialogCopyViewSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -15,6 +15,7 @@ class KeysSaveDialogCopySubtitle extends StatelessWidget {
       text: TextSpan(
           text: "Copy and paste",
           style: TextStyle(
+              fontFamily: "NunitoSans",
               color: ConfigColor.emperor,
               fontSize: 12.sp,
               fontWeight: FontWeight.w800),
@@ -23,6 +24,7 @@ class KeysSaveDialogCopySubtitle extends StatelessWidget {
                 text:
                     " your security key into your preferred password manager for safe keeping.",
                 style: TextStyle(
+                    fontFamily: "NunitoSans",
                     color: ConfigColor.emperor,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w600))

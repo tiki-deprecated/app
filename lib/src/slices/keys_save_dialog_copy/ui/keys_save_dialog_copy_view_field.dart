@@ -11,11 +11,11 @@ import 'package:sizer/sizer.dart';
 
 import '../keys_save_dialog_copy_service.dart';
 
-class KeysSaveDialogCopyField extends StatelessWidget {
+class KeysSaveDialogCopyViewField extends StatelessWidget {
   final String? value;
   final bool isEmail;
 
-  KeysSaveDialogCopyField({this.value, this.isEmail: false});
+  KeysSaveDialogCopyViewField({this.value, this.isEmail: false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class KeysSaveDialogCopyField extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.only(left: 2.w),
             child: Text(value!,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left)));
   }
@@ -69,7 +69,7 @@ class KeysSaveDialogCopyField extends StatelessWidget {
                             Text("COPY",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp,
+                                    fontSize: 12.sp,
                                     color: saved
                                         ? ConfigColor.jade
                                         : ConfigColor.mardiGras)),

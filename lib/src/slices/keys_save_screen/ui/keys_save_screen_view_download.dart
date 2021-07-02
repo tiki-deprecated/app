@@ -4,9 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/keys/keys_service.dart';
-import 'package:app/src/slices/keys_save_dialog_download/ui/keys_new_screen_dialog_download.dart';
+import 'package:app/src/slices/keys_save_dialog_download/keys_save_dialog_dl_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,19 +59,17 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
 
   void onPressed(BuildContext context) async {
     GlobalKey repaintKey = new GlobalKey();
-    var appService = Provider.of<AppService>(context, listen: false);
-    var keysSaveScreenService =
-        Provider.of<KeysSaveScreenService>(context, listen: false);
-    var keysService = KeysService();
-    var keys = await keysService.getKeys(appService.model.user!.address!);
-    var key =
-        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    //var appService = Provider.of<AppService>(context, listen: false);
+    //var keys = await KeysService().getKeys(appService.model.user!.address!);
+    //var key = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return KeysNewScreenSaveDialogDownload()
-              .alert(key, repaintKey, keysSaveScreenService);
+          //return KeysSaveDialogDlService(combinedKey: key, repaintKey: repaintKey).getUI();
+          return KeysSaveDialogDlService(
+                  combinedKey: 'ABC123', repaintKey: repaintKey)
+              .getUI();
         });
   }
 }

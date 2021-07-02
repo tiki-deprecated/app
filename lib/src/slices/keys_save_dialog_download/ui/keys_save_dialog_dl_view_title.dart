@@ -4,13 +4,13 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysSaveDialogCopyViewTitle extends StatelessWidget {
+class KeysSaveDialogDlViewTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text("Save securely to a pass manager",
+    return Text("Download key to your device",
         textAlign: TextAlign.center,
         style: TextStyle(
             color: ConfigColor.mardiGras,

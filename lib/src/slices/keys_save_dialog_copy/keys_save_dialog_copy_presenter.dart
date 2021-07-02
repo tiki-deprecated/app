@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_save_dialog_copy/ui/keys_save_dialog_copy.dart';
+import 'package:app/src/slices/keys_save_dialog_copy/ui/keys_save_dialog_copy_layout.dart';
 import 'package:provider/provider.dart';
 
 import 'keys_save_dialog_copy_service.dart';
@@ -19,6 +19,7 @@ class KeysSaveDialogCopyPresenter {
   ChangeNotifierProvider<KeysSaveDialogCopyService> render() {
     return ChangeNotifierProvider.value(
         value: service,
-        child: KeysSaveDialogCopy(combinedKey: combinedKey, email: email));
+        child:
+            KeysSaveDialogCopyLayout(combinedKey: combinedKey, email: email));
   }
 }

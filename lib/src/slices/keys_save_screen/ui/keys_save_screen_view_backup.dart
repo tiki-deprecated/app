@@ -4,14 +4,10 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysNewScreenSaveBk extends StatelessWidget {
@@ -72,19 +68,19 @@ class KeysNewScreenSaveBk extends StatelessWidget {
   }
 
   _saveKey(BuildContext context) async {
-    var appService = Provider.of<AppService>(context, listen: false);
-    var keysSaveScreenService =
-        Provider.of<KeysSaveScreenService>(context, listen: false);
-    var current = appService.authService.current;
-    var keysService = KeysService();
-    var keys = await keysService.getKeys(appService.model.user!.address!);
-    var key =
-        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    //var appService = Provider.of<AppService>(context, listen: false);
+    //var current = appService.authService.current;
+    //var keys = await KeysService().getKeys(appService.model.user!.address!);
+    //var key = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+
     showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (BuildContext context) =>
-            KeysSaveDialogCopyService(combinedKey: key, email: current.email!)
-                .getUI());
+        builder: (BuildContext context) {
+          //return KeysSaveDialogCopyService(combinedKey: key, email: current.email!).getUI();
+          return KeysSaveDialogCopyService(
+                  combinedKey: "ABC123", email: "test@test.com")
+              .getUI();
+        });
   }
 }

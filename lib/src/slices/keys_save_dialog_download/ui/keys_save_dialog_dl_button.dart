@@ -4,25 +4,29 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../keys_save_dialog_copy_service.dart';
+import '../keys_save_dialog_dl_service.dart';
 
-class KeysSaveDialogCopyViewButton extends StatelessWidget {
+class KeysSaveDialogDlViewButton extends StatelessWidget {
+  final GlobalKey repaintKey;
+
+  KeysSaveDialogDlViewButton({required this.repaintKey});
+
   @override
   Widget build(BuildContext context) {
-    var service =
-        Provider.of<KeysSaveDialogCopyService>(context, listen: false);
+    var controller =
+        Provider.of<KeysSaveDialogDlService>(context, listen: false).controller;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 20.w),
+            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 15.w),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             primary: ConfigColor.mardiGras),
-        child: Text("CONTINUE",
+        child: Text("DOWNLOAD",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ConfigColor.white,
@@ -31,6 +35,6 @@ class KeysSaveDialogCopyViewButton extends StatelessWidget {
               fontSize: 16.sp,
               letterSpacing: 0.05.w,
             )),
-        onPressed: service.model.isCopiedKey ? () => {} : null);
+        onPressed: () => controller.downloadQR(context, repaintKey));
   }
 }

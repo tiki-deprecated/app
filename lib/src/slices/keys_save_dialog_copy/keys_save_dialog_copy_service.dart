@@ -36,8 +36,4 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
     model.isCopiedKey = true;
     notifyListeners();
   }
-
-  bool canContinue() {
-    return model.isCopiedKey;
-  }
 }
