@@ -111,10 +111,8 @@ class AppService extends ChangeNotifier {
     this.reload();
   }
 
-  void logout() {
-    this.model.user = this.authService.logout();
+  Future<void> logout() async {
     this.home = AppModelRoutes.login;
-
     this.reload();
   }
 
