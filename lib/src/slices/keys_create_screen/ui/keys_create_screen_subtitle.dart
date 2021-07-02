@@ -7,7 +7,7 @@ import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysNewScreenSubtitle extends StatelessWidget {
+class KeysCreateScreenSubtitle extends StatelessWidget {
   static const String _text = "I'm securing your account";
   static final double _fontSize = 17.sp;
 

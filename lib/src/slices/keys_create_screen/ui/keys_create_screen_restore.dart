@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysNewScreenRestore extends StatelessWidget {
+class KeysCreateScreenRestore extends StatelessWidget {
   static const String _text = "Already have an account?";
   static final double _fontSize = 17.sp;
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<KeysNewScreenService>(context);
+    var service = Provider.of<KeysCreateScreenService>(context);
     return TextButton(
         onPressed: () => service.controller.restoreKeys(context),
         child: Text(_text,

@@ -10,13 +10,17 @@ import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class KeysNewScreenService extends ChangeNotifier {
-  late KeysNewScreenPresenter presenter;
-  late KeysNewScreenController controller;
+import 'model/keys_create_screen_model.dart';
 
-  KeysNewScreenService() {
-    presenter = KeysNewScreenPresenter(this);
-    controller = KeysNewScreenController();
+class KeysCreateScreenService extends ChangeNotifier {
+  late KeysCreateScreenPresenter presenter;
+  late KeysCreateScreenController controller;
+  late KeysCreateScreenModel model;
+
+  KeysCreateScreenService() {
+    presenter = KeysCreateScreenPresenter(this);
+    controller = KeysCreateScreenController();
+    model = KeysCreateScreenModel();
   }
 
   getUI() {
@@ -29,24 +33,28 @@ class KeysNewScreenService extends ChangeNotifier {
   }
 
   generateKeys(BuildContext context) async {
-    var keysService = KeysService();
-    var apiService = ApiService();
-    var appService = Provider.of<AppService>(context);
-    KeysModel keys = await keysService.generateKeys();
-    KeysModel keysWithAddress = await keysService.issueAddress(context, keys);
-    await keysService.save(keysWithAddress);
-    String referral = await apiService.getReferalCode(keysWithAddress.address!);
-    AppModelUser user = AppModelUser(
-      email: appService.model.current!.email,
-      address: keysWithAddress.address,
-      isLoggedIn: true,
-      code: referral,
-    );
-    appService.updateUser(user);
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => KeysSaveScreenService().getUI()),
-        ModalRoute.withName('/keys/save'));
+    if (!model.isStarted) {
+      model.isStarted = true;
+      var keysService = KeysService();
+      var apiService = ApiService();
+      var appService = Provider.of<AppService>(context);
+      KeysModel keys = await keysService.generateKeys();
+      KeysModel keysWithAddress = await keysService.issueAddress(context, keys);
+      await keysService.save(keysWithAddress);
+      String referral =
+          await apiService.getReferalCode(keysWithAddress.address!);
+      AppModelUser user = AppModelUser(
+        email: appService.model.current!.email,
+        address: keysWithAddress.address,
+        isLoggedIn: true,
+        code: referral,
+      );
+      appService.updateUser(user);
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => KeysSaveScreenService().getUI()),
+          ModalRoute.withName('/keys/save'));
+    }
   }
 }

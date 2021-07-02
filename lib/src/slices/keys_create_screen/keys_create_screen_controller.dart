@@ -2,8 +2,8 @@ import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class KeysNewScreenController {
+class KeysCreateScreenController {
   restoreKeys(BuildContext context) {
-    Provider.of<KeysNewScreenService>(context).restoreKeys(context);
+    Provider.of<KeysCreateScreenService>(context).restoreKeys(context);
   }
 }

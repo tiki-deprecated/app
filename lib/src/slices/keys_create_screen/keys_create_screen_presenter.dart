@@ -2,12 +2,13 @@ import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dar
 import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen.dart';
 import 'package:provider/provider.dart';
 
-class KeysNewScreenPresenter {
-  final KeysNewScreenService service;
+class KeysCreateScreenPresenter {
+  final KeysCreateScreenService service;
 
-  KeysNewScreenPresenter(this.service);
+  KeysCreateScreenPresenter(this.service);
 
-  ChangeNotifierProvider<KeysNewScreenService> render() {
-    return ChangeNotifierProvider.value(value: service, child: KeysNewScreen());
+  ChangeNotifierProvider<KeysCreateScreenService> render() {
+    return ChangeNotifierProvider.value(
+        value: service, child: KeysCreateScreen());
   }
 }

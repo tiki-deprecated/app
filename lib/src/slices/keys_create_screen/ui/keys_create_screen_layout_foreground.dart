@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysNewScreenForeground extends StatelessWidget {
+class KeysCreateScreenForeground extends StatelessWidget {
   static final double _marginTopTitle = 5.h;
   static final double _marginTopSubtitle = 2.h;
   static final double _marginBottomButton = 4.h;
@@ -30,10 +30,10 @@ class KeysNewScreenForeground extends StatelessWidget {
             children: [
               Container(
                   padding: EdgeInsets.only(top: _marginTopTitle),
-                  child: KeysNewScreenTitle()),
+                  child: KeysCreateScreenTitle()),
               Container(
                   margin: EdgeInsets.only(top: _marginTopSubtitle),
-                  child: KeysNewScreenSubtitle()),
+                  child: KeysCreateScreenSubtitle()),
             ],
           )
         ],
@@ -56,7 +56,7 @@ class KeysNewScreenForeground extends StatelessWidget {
       Container(
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.only(bottom: _marginBottomButton),
-          child: KeysNewScreenRestore()),
+          child: KeysCreateScreenRestore()),
     ]);
   }
 }
