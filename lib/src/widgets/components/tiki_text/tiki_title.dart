@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class TikiTitle extends StatelessWidget {
   final int fontSize;
@@ -20,7 +20,7 @@ class TikiTitle extends StatelessWidget {
         textAlign: this.textAlign,
         style: TextStyle(
             fontFamily: 'Koara',
-            fontSize: fontSize * PlatformRelativeSize.blockHorizontal,
+            fontSize: fontSize.sp,
             fontWeight: FontWeight.bold));
   }
 }

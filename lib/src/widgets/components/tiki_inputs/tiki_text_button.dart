@@ -1,6 +1,6 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/platform/platform_relative_size.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 /// The default text button for Tiki.
 class TikiTextButton extends StatelessWidget {
@@ -44,26 +44,19 @@ class TikiTextButton extends StatelessWidget {
                     style: TextStyle(
                         color: this.color,
                         fontWeight: this.fontWeight,
-                        fontSize:
-                            PlatformRelativeSize.blockHorizontal * fontSize)),
+                        fontSize: fontSize.sp)),
                 trailing ?? Container(),
               ],
             )));
   }
 
   _getMargins() {
-    return EdgeInsets.fromLTRB(
-        margins['left']! * PlatformRelativeSize.blockHorizontal,
-        margins['top']! * PlatformRelativeSize.blockVertical,
-        margins['right']! * PlatformRelativeSize.blockHorizontal,
-        margins['bottom']! * PlatformRelativeSize.blockVertical);
+    return EdgeInsets.fromLTRB(margins['left']!.w, margins['top']!.h,
+        margins['right']!.w, margins['bottom']!.h);
   }
 
   _getPadding() {
-    return EdgeInsets.fromLTRB(
-        padding['left']! * PlatformRelativeSize.blockHorizontal,
-        padding['top']! * PlatformRelativeSize.blockVertical,
-        padding['right']! * PlatformRelativeSize.blockHorizontal,
-        padding['bottom']! * PlatformRelativeSize.blockVertical);
+    return EdgeInsets.fromLTRB(padding['left']!.w, padding['top']!.h,
+        padding['right']!.w, padding['bottom']!.h);
   }
 }

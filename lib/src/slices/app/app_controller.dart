@@ -1,0 +1,3 @@
+class AppController {
+  void logout() {}
+}
