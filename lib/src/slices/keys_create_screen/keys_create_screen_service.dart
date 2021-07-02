@@ -26,10 +26,14 @@ class KeysCreateScreenService extends ChangeNotifier {
 
   Future<void> generateKeys() async {
     var keysWithAddress = await KeysService().generateKeysAndIssueAddress();
-    await appService.keysGenerated(keysWithAddress);
-    await Future.delayed(Duration(
-        milliseconds:
-            1500)); //TODO this should wait at least 3 seconds, not add 3 seconds to every generate
+    if (keysWithAddress.address != null) {
+      await appService.keysGenerated(keysWithAddress);
+      await Future.delayed(Duration(
+          milliseconds:
+              1500)); //TODO this should wait at least 3 seconds, not add 3 seconds to every generate
+    } else {
+      appService.logout();
+    }
   }
 
   void setStarted(bool state) {
