@@ -48,13 +48,6 @@ class AppService extends ChangeNotifier {
     model.user = authService.user;
   }
 
-  getRoutes(BuildContext context) {
-    this.model.routes = {
-      "/": (BuildContext context) => this.home.getUI(),
-    };
-    return this.model.routes;
-  }
-
   getHome() {
     if (this.deepLink != null) {
       _handle(this.deepLink!);
