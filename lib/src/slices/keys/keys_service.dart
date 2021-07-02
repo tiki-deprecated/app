@@ -115,4 +115,11 @@ class KeysService {
     }
     return null;
   }
+
+  Future<KeysModel> generateKeysAndIssueAddress() async {
+    KeysModel keys = await generateKeys();
+    KeysModel keysWithAddress = await issueAddress(keys);
+    await save(keysWithAddress);
+    return keysWithAddress;
+  }
 }

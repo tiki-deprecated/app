@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/auth/auth_service.dart';
+import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -125,5 +127,18 @@ class AppService extends ChangeNotifier {
     this.authService.user = user;
     this.model.user = user;
     this.saveUser(user.email!, user);
+  }
+
+  Future<void> keysGenerated(KeysModel keysWithAddress) async {
+    ApiService apiService = ApiService();
+    String referral = await apiService.getReferalCode(keysWithAddress.address!);
+    AppModelUser user = AppModelUser(
+      email: this.model.current!.email,
+      address: keysWithAddress.address,
+      isLoggedIn: true,
+      code: referral,
+    );
+    this.home = AppModelRoutes.home;
+    this.updateUser(user);
   }
 }
