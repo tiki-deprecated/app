@@ -112,6 +112,7 @@ class AppService extends ChangeNotifier {
   void logout() {
     this.model.user = this.authService.logout();
     this.home = AppModelRoutes.login;
+
     this.reload();
   }
 

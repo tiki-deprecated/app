@@ -57,8 +57,7 @@ class KeysService {
     } else {
       Sentry.captureMessage("Failed to register keys with blockchain",
           level: SentryLevel.error);
-      print(rsp.data);
-      throw Exception("issueAddress error " + rsp.data);
+      return KeysModel();
     }
     return keys;
   }
@@ -119,7 +118,9 @@ class KeysService {
   Future<KeysModel> generateKeysAndIssueAddress() async {
     KeysModel keys = await generateKeys();
     KeysModel keysWithAddress = await issueAddress(keys);
-    await save(keysWithAddress);
+    if (keysWithAddress.address != null) {
+      await save(keysWithAddress);
+    }
     return keysWithAddress;
   }
 }
