@@ -24,8 +24,8 @@ class RepoApiBlockchainAddress {
 
   RepoApiBlockchainAddress(this._helperApiAuth);
 
-  RepoApiBlockchainAddress.provide(BuildContext context)
-      : _helperApiAuth = HelperApiAuth.provide(context);
+  RepoApiBlockchainAddress.provide()
+      : _helperApiAuth = HelperApiAuth.provide();
 
   Future<HelperApiRsp<RepoApiBlockchainAddressRsp>> issue(
       RepoApiBlockchainAddressReq req) async {

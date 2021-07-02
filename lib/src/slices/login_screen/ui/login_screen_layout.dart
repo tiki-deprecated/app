@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     var isSubmitted = Provider.of<LoginScreenService>(context).model.submitted;
     var appService = Provider.of<AppService>(context);
     return appService.home is KeysCreateScreenService
-        ? KeysCreateScreenService().getUI()
+        ? KeysCreateScreenService(appService).getUI()
         : Scaffold(
             body: Center(
                 child: Stack(children: [

@@ -6,7 +6,6 @@ import 'package:app/src/slices/keys/repository/secure_storage_repository_keys.da
 import 'package:app/src/utils/crypto/helper_crypto.dart';
 import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
 import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/pointycastle.dart';
@@ -48,8 +47,8 @@ class KeysService {
     await _repoLocalSsKeys.save(keys.address!, keys);
   }
 
-  Future<KeysModel> issueAddress(BuildContext context, KeysModel keys) async {
-    var repoApiBlockchainAddress = RepoApiBlockchainAddress.provide(context);
+  Future<KeysModel> issueAddress(KeysModel keys) async {
+    var repoApiBlockchainAddress = RepoApiBlockchainAddress.provide();
     HelperApiRsp<RepoApiBlockchainAddressRsp> rsp =
         await repoApiBlockchainAddress.issue(RepoApiBlockchainAddressReq(
             keys.dataPublicKey, keys.signPublicKey));

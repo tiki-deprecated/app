@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/auth/auth_service.dart';
+import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -87,7 +88,7 @@ class AppService extends ChangeNotifier {
         if (this.model.user?.address != null) {
           this.home = AppModelRoutes.home;
         } else {
-          this.home = AppModelRoutes.keys;
+          this.home = KeysCreateScreenService(this);
         }
       }
     }

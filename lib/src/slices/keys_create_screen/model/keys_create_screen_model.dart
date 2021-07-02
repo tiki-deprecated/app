@@ -5,4 +5,5 @@
 
 class KeysCreateScreenModel {
   bool isStarted = false;
+  bool isComplete = false;
 }

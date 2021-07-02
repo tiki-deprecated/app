@@ -13,6 +13,6 @@ class AppPresenter {
   AppPresenter(this.appService);
 
   ChangeNotifierProvider<AppService> render() {
-    return ChangeNotifierProvider.value(value: appService, child: App());
+    return ChangeNotifierProvider.value(value: appService, child: AppLayout());
   }
 }
