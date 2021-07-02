@@ -23,7 +23,7 @@ class KeysSaveDialogCopyController {
   continueAction(BuildContext context) {
     var service =
         Provider.of<KeysSaveDialogCopyService>(context, listen: false);
-    service.keysSaveScreenService?.keysSaved();
+    service.keysSaveScreenService.keysSaved();
     Navigator.of(context).pop();
   }
 }

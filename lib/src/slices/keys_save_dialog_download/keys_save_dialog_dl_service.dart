@@ -22,10 +22,10 @@ class KeysSaveDialogDlService extends ChangeNotifier {
   late KeysSaveDialogDlPresenter presenter;
   late KeysSaveDialogDlController controller;
   late KeysSaveDialogDlModel model;
-  final KeysSaveScreenService? keysSaveScreenService;
+  final KeysSaveScreenService keysSaveScreenService;
 
   KeysSaveDialogDlService(
-      {this.keysSaveScreenService,
+      {required this.keysSaveScreenService,
       required String combinedKey,
       required GlobalKey repaintKey}) {
     presenter = KeysSaveDialogDlPresenter(this,
@@ -38,7 +38,7 @@ class KeysSaveDialogDlService extends ChangeNotifier {
     return presenter.render();
   }
 
-  downloadQR(RenderRepaintBoundary renderRepaintBoundary) async {
+  Future<void> downloadQR(RenderRepaintBoundary renderRepaintBoundary) async {
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -54,7 +54,7 @@ class KeysSaveDialogDlService extends ChangeNotifier {
       File imgFile = new File(path);
       imgFile.writeAsBytesSync(pngBytes, flush: true);
       model.isDownloaded = true;
-      keysSaveScreenService?.keysDonwloaded();
+      keysSaveScreenService.keysDonwloaded();
     }
   }
 }

@@ -17,11 +17,8 @@ class KeysSaveDialogDlController {
     if (!renderRepaintBoundary.debugNeedsPaint) {
       var service =
           Provider.of<KeysSaveDialogDlService>(context, listen: false);
-      service.downloadQR(renderRepaintBoundary);
+      await service.downloadQR(renderRepaintBoundary);
+      Navigator.of(context).pop();
     }
-  }
-
-  continueAction(BuildContext context) {
-    Navigator.of(context).pop();
   }
 }

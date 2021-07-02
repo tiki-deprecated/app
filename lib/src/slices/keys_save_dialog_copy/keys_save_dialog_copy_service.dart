@@ -16,17 +16,17 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
   late KeysSaveDialogCopyController controller;
   late KeysSaveDialogCopyModel model;
 
-  final KeysSaveScreenService? keysSaveScreenService;
+  final KeysSaveScreenService keysSaveScreenService;
 
   KeysSaveDialogCopyService(
       {required String combinedKey,
       required String email,
-      this.keysSaveScreenService}) {
+      required this.keysSaveScreenService}) {
     presenter = KeysSaveDialogCopyPresenter(this,
         combinedKey: combinedKey, email: email);
     controller = KeysSaveDialogCopyController();
     model = KeysSaveDialogCopyModel();
-    if (keysSaveScreenService?.model.saved != null) {
+    if (keysSaveScreenService.model.saved) {
       model.isCopiedKey = true;
       model.isCopiedEmail = true;
     }
@@ -38,11 +38,20 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
 
   emailCopied() {
     model.isCopiedEmail = true;
+    checkKeysScreen();
     notifyListeners();
   }
 
   keyCopied() {
     model.isCopiedKey = true;
+    checkKeysScreen();
     notifyListeners();
+  }
+
+  void checkKeysScreen() {
+    if (model.isCopiedKey && model.isCopiedEmail) {
+      keysSaveScreenService.model.saved = true;
+      keysSaveScreenService.notifyListeners();
+    }
   }
 }
