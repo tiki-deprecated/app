@@ -1,5 +1,4 @@
 class KeysSaveScreenServiceModel {
-  bool savedEmail = false;
-  bool savedKeys = false;
+  bool saved = false;
   bool downloaded = false;
 }

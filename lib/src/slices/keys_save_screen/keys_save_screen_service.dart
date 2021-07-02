@@ -18,13 +18,8 @@ class KeysSaveScreenService extends ChangeNotifier {
     return presenter.render();
   }
 
-  void emailSaved() {
-    this.model.savedEmail = true;
-    notifyListeners();
-  }
-
-  void keySaved() {
-    this.model.savedKeys = true;
+  void keysSaved() {
+    this.model.saved = true;
     notifyListeners();
   }
 

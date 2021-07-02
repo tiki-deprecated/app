@@ -15,8 +15,13 @@ class KeysSaveDialogDlController {
     RenderRepaintBoundary renderRepaintBoundary =
         repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     if (!renderRepaintBoundary.debugNeedsPaint) {
-      Provider.of<KeysSaveDialogDlService>(context, listen: false)
-          .downloadQR(renderRepaintBoundary);
+      var service =
+          Provider.of<KeysSaveDialogDlService>(context, listen: false);
+      service.downloadQR(renderRepaintBoundary);
     }
+  }
+
+  continueAction(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

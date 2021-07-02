@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -21,9 +22,12 @@ class KeysSaveDialogDlService extends ChangeNotifier {
   late KeysSaveDialogDlPresenter presenter;
   late KeysSaveDialogDlController controller;
   late KeysSaveDialogDlModel model;
+  final KeysSaveScreenService? keysSaveScreenService;
 
   KeysSaveDialogDlService(
-      {required String combinedKey, required GlobalKey repaintKey}) {
+      {this.keysSaveScreenService,
+      required String combinedKey,
+      required GlobalKey repaintKey}) {
     presenter = KeysSaveDialogDlPresenter(this,
         repaintKey: repaintKey, combinedKey: combinedKey);
     controller = KeysSaveDialogDlController();
@@ -50,6 +54,7 @@ class KeysSaveDialogDlService extends ChangeNotifier {
       File imgFile = new File(path);
       imgFile.writeAsBytesSync(pngBytes, flush: true);
       model.isDownloaded = true;
+      keysSaveScreenService?.keysDonwloaded();
     }
   }
 }

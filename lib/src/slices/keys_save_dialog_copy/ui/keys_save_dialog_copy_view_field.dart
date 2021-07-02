@@ -19,8 +19,7 @@ class KeysSaveDialogCopyViewField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service =
-        Provider.of<KeysSaveDialogCopyService>(context, listen: false);
+    var service = Provider.of<KeysSaveDialogCopyService>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(

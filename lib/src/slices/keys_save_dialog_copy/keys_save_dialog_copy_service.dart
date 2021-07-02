@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/keys_save_dialog_copy/model/keys_save_dialog_copy_model.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,12 +16,20 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
   late KeysSaveDialogCopyController controller;
   late KeysSaveDialogCopyModel model;
 
+  final KeysSaveScreenService? keysSaveScreenService;
+
   KeysSaveDialogCopyService(
-      {required String combinedKey, required String email}) {
+      {required String combinedKey,
+      required String email,
+      this.keysSaveScreenService}) {
     presenter = KeysSaveDialogCopyPresenter(this,
         combinedKey: combinedKey, email: email);
     controller = KeysSaveDialogCopyController();
     model = KeysSaveDialogCopyModel();
+    if (keysSaveScreenService?.model.saved != null) {
+      model.isCopiedKey = true;
+      model.isCopiedEmail = true;
+    }
   }
 
   getUI() {

@@ -4,6 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys_save_dialog_download/keys_save_dialog_dl_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,7 @@ import '../keys_save_screen_service.dart';
 class KeysNewScreenSaveBkDownload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var keysSaveScreenService = Provider.of<KeysSaveScreenService>(context);
     return GestureDetector(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -46,7 +49,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: ConfigColor.mardiGras)),
                       ])),
-              Provider.of<KeysSaveScreenService>(context).model.downloaded
+              keysSaveScreenService.model.downloaded
                   ? Positioned(
                       top: 0,
                       left: 5.w,
@@ -54,21 +57,24 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                           height: 5.h, child: HelperImage("green-check")))
                   : Container(),
             ])),
-        onTap: () => onPressed(context));
+        onTap: () => onPressed(context, keysSaveScreenService));
   }
 
-  void onPressed(BuildContext context) async {
+  void onPressed(
+      BuildContext context, KeysSaveScreenService keysSaveScreenService) async {
     GlobalKey repaintKey = new GlobalKey();
-    //var appService = Provider.of<AppService>(context, listen: false);
-    //var keys = await KeysService().getKeys(appService.model.user!.address!);
-    //var key = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    var appService = Provider.of<AppService>(context, listen: false);
+    var keys = await KeysService().getKeys(appService.model.user!.address!);
+    var key =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          //return KeysSaveDialogDlService(combinedKey: key, repaintKey: repaintKey).getUI();
           return KeysSaveDialogDlService(
-                  combinedKey: 'ABC123', repaintKey: repaintKey)
+                  keysSaveScreenService: keysSaveScreenService,
+                  combinedKey: key,
+                  repaintKey: repaintKey)
               .getUI();
         });
   }

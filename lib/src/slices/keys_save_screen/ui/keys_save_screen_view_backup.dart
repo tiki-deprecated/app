@@ -4,10 +4,14 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysNewScreenSaveBk extends StatelessWidget {
@@ -15,7 +19,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isSaved = false;
+    var keysSaveScreenService = Provider.of<KeysSaveScreenService>(context);
     return GestureDetector(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -56,7 +60,7 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                                       color: ConfigColor.jade)),
                             ])
                       ])),
-              isSaved
+              keysSaveScreenService.model.saved
                   ? Positioned(
                       top: 0.25.h,
                       left: 6.w,
@@ -64,22 +68,24 @@ class KeysNewScreenSaveBk extends StatelessWidget {
                           height: 5.h, child: HelperImage("green-check")))
                   : Container(),
             ])),
-        onTap: () => _saveKey(context));
+        onTap: () => _saveKey(context, keysSaveScreenService));
   }
 
-  _saveKey(BuildContext context) async {
-    //var appService = Provider.of<AppService>(context, listen: false);
-    //var current = appService.authService.current;
-    //var keys = await KeysService().getKeys(appService.model.user!.address!);
-    //var key = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
-
+  _saveKey(
+      BuildContext context, KeysSaveScreenService keysSaveScreenService) async {
+    var appService = Provider.of<AppService>(context, listen: false);
+    var current = appService.authService.current;
+    var keys = await KeysService().getKeys(appService.model.user!.address!);
+    var key =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          //return KeysSaveDialogCopyService(combinedKey: key, email: current.email!).getUI();
           return KeysSaveDialogCopyService(
-                  combinedKey: "ABC123", email: "test@test.com")
+                  combinedKey: key,
+                  email: current.email!,
+                  keysSaveScreenService: keysSaveScreenService)
               .getUI();
         });
   }

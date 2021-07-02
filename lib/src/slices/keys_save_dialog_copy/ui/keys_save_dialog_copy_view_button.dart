@@ -14,8 +14,7 @@ import '../keys_save_dialog_copy_service.dart';
 class KeysSaveDialogCopyViewButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service =
-        Provider.of<KeysSaveDialogCopyService>(context, listen: false);
+    var service = Provider.of<KeysSaveDialogCopyService>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 20.w),
@@ -31,6 +30,9 @@ class KeysSaveDialogCopyViewButton extends StatelessWidget {
               fontSize: 16.sp,
               letterSpacing: 0.05.w,
             )),
-        onPressed: service.model.isCopiedKey ? () => {} : null);
+        onPressed: () =>
+            service.model.isCopiedEmail && service.model.isCopiedKey
+                ? service.controller.continueAction(context)
+                : null);
   }
 }

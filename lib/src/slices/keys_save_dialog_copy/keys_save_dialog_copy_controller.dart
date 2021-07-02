@@ -19,4 +19,11 @@ class KeysSaveDialogCopyController {
     else
       service.keyCopied();
   }
+
+  continueAction(BuildContext context) {
+    var service =
+        Provider.of<KeysSaveDialogCopyService>(context, listen: false);
+    service.keysSaveScreenService?.keysSaved();
+    Navigator.of(context).pop();
+  }
 }
