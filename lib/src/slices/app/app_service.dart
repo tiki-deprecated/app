@@ -8,6 +8,7 @@ import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
+import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -102,17 +103,23 @@ class AppService extends ChangeNotifier {
 
   saveUser(String email, AppModelUser user) async {
     if (user.address != null) {
-      await SecureStorageRepositoryUser().save(email,
-          AppModelUser(email: email, address: user.address, isLoggedIn: true));
+      await SecureStorageRepositoryUser().save(
+          email,
+          AppModelUser(
+              email: email,
+              address: user.address,
+              isLoggedIn: user.isLoggedIn));
     } else {
       await SecureStorageRepositoryUser()
-          .save(email, AppModelUser(email: email, isLoggedIn: false));
+          .save(email, AppModelUser(email: email, isLoggedIn: user.isLoggedIn));
     }
     this.reload();
   }
 
   Future<void> logout() async {
-    this.home = AppModelRoutes.login;
+    this.home = LoginScreenService();
+    this.model.user!.isLoggedIn = false;
+    updateUser(this.model.user!);
     this.reload();
   }
 

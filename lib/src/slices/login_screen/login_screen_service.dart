@@ -63,6 +63,12 @@ class LoginScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearModel() {
+    this.model.submitted = false;
+    this.model.isError = false;
+    notifyListeners();
+  }
+
   void back() {
     this.model.submitted = false;
     notifyListeners();
