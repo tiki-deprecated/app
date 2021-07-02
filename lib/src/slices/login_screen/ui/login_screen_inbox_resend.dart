@@ -33,7 +33,7 @@ class LoginScreenInboxResend extends StatelessWidget {
                         fontSize: presenter.fontSizeResend.sp,
                         fontWeight: FontWeight.bold,
                         color: ConfigColor.orange))),
-            HelperImage("inbox-resend", height: presenter.fontSizeResend.sp)
+            HelperImage("inbox-resend", height: 18.sp)
           ]))
     ]);
   }
