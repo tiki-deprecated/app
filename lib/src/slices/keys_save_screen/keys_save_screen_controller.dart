@@ -35,8 +35,9 @@ class KeysSaveScreenController {
       });
     } else {
       Directory documents = await getApplicationDocumentsDirectory();
-      await launch(
-          "shareddocuments://" + documents.path + '/tiki-do-not-share.png');
+      await launch("shareddocuments:///private" +
+          documents.path +
+          "/tiki-do-not-share.png");
     }
   }
 }
