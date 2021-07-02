@@ -6,12 +6,15 @@
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_backup.dart';
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_continue.dart';
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_download.dart';
+import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_download_link.dart';
 import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_restore.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../keys_save_screen_service.dart';
 import 'keys_save_screen_view_subtitle.dart';
 import 'keys_save_screen_view_title.dart';
 
@@ -20,6 +23,7 @@ class KeysNewScreenLayoutForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var service = Provider.of<KeysSaveScreenService>(context);
     return Container(
         height: MediaQuery.of(context).size.height * 0.95,
         child: Column(children: [
@@ -38,6 +42,10 @@ class KeysNewScreenLayoutForeground extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(top: 2.h),
               child: KeysNewScreenSaveBkDownload()),
+          if (service.model.downloaded)
+            Container(
+                margin: EdgeInsets.only(top: 1.h, left: 5.w, right: 5.w),
+                child: KeysSaveScreenViewDownloadLink()),
           Container(
               margin: EdgeInsets.only(top: 6.h),
               child: KeysNewScreenSaveContinue()),

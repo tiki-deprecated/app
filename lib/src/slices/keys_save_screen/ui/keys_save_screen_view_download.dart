@@ -18,7 +18,7 @@ import '../keys_save_screen_service.dart';
 class KeysNewScreenSaveBkDownload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var keysSaveScreenService = Provider.of<KeysSaveScreenService>(context);
+    var service = Provider.of<KeysSaveScreenService>(context);
     return GestureDetector(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -49,7 +49,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: ConfigColor.mardiGras)),
                       ])),
-              keysSaveScreenService.model.downloaded
+              service.model.downloaded
                   ? Positioned(
                       top: 0,
                       left: 5.w,
@@ -57,7 +57,7 @@ class KeysNewScreenSaveBkDownload extends StatelessWidget {
                           height: 5.h, child: HelperImage("green-check")))
                   : Container(),
             ])),
-        onTap: () => onPressed(context, keysSaveScreenService));
+        onTap: () => onPressed(context, service));
   }
 
   void onPressed(
