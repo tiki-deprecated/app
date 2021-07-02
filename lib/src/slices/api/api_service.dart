@@ -19,8 +19,6 @@ class ApiService {
   final repoLocalSsToken;
   late HelperApiAuth helperApiAuth;
 
-  String _referralPath = '/api/latest/address/%%address%%/code';
-
   ApiService()
       : secureStorageRepositoryCurrent = SecureStorageRepositoryCurrent(
             secureStorage: FlutterSecureStorage()),
