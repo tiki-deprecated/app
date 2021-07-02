@@ -30,9 +30,8 @@ class KeysSaveDialogCopyViewButton extends StatelessWidget {
               fontSize: 16.sp,
               letterSpacing: 0.05.w,
             )),
-        onPressed: () =>
-            service.model.isCopiedEmail && service.model.isCopiedKey
-                ? service.controller.continueAction(context)
-                : null);
+        onPressed: service.model.isCopiedKey
+            ? () => service.controller.continueAction(context)
+            : null);
   }
 }

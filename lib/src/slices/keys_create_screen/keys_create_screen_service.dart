@@ -44,7 +44,9 @@ class KeysCreateScreenService extends ChangeNotifier {
         code: referral,
       );
       appService.updateUser(user);
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(
+          seconds:
+              3)); //TODO this should wait at least 3 seconds, not add 3 seconds to every generate
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => KeysSaveScreenService().getUI()),

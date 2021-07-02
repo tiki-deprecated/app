@@ -22,30 +22,31 @@ class KeysRestoreScreenLayoutForeground extends StatelessWidget {
         child: KeysRestoreScreenViewBack(),
       ),
       SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Container(
-            margin: EdgeInsets.only(top: 6.h),
-            alignment: Alignment.center,
-            child: KeysRestoreScreenViewTitle()),
-        Container(
-            margin: EdgeInsets.only(top: 2.h, left: 10.w, right: 10.w),
-            alignment: Alignment.center,
-            child: KeysRestoreScreenViewSubtitle()),
-        Container(
-          margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-          alignment: Alignment.center,
-          child: KeysRestoreScreenViewScan(),
-        ),
-        Container(
-            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-            child: KeysRestoreScreenViewDivider()),
-        Container(
-            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-            child: KeysRestoreScreenViewInput()),
-        Container(
-            margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-            child: KeysRestoreScreenViewSubmit())
-      ]))
+            Container(
+                margin: EdgeInsets.only(top: 6.h),
+                alignment: Alignment.center,
+                child: KeysRestoreScreenViewTitle()),
+            Container(
+                margin: EdgeInsets.only(top: 2.h, left: 10.w, right: 10.w),
+                alignment: Alignment.center,
+                child: KeysRestoreScreenViewSubtitle()),
+            Container(
+              margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+              alignment: Alignment.center,
+              child: KeysRestoreScreenViewScan(),
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                child: KeysRestoreScreenViewDivider()),
+            Container(
+                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                child: KeysRestoreScreenViewInput()),
+            Container(
+                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                child: KeysRestoreScreenViewSubmit())
+          ]))
     ]));
   }
 }

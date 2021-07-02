@@ -49,7 +49,7 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
   }
 
   void checkKeysScreen() {
-    if (model.isCopiedKey && model.isCopiedEmail) {
+    if (model.isCopiedKey) {
       keysSaveScreenService.model.saved = true;
       keysSaveScreenService.notifyListeners();
     }
