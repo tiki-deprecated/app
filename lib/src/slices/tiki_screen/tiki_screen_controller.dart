@@ -23,6 +23,7 @@ class TikiScreenController {
   }
 
   logout(context) {
+    removeGmailAccount(context);
     Provider.of<AppService>(context, listen: false).logout();
   }
 

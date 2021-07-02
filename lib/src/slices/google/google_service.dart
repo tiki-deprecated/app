@@ -40,7 +40,8 @@ class GoogleService {
 
   Future<bool> handleSignOut() async {
     await _googleSignIn.signOut();
-    return !await _googleSignIn.isSignedIn();
+    var success = !await _googleSignIn.isSignedIn();
+    return success;
   }
 
   isConnected() {
