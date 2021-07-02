@@ -37,7 +37,7 @@ class HelperApiAuth {
       if (token.refresh == null) {
         Sentry.captureMessage("No refresh token. Logging out",
             level: SentryLevel.warning);
-        AppService().logout();
+        AppService().logout(); // TODO FixIt
       } else {
         HelperApiRsp<AuthBouncerJwtRsp> refreshRsp =
             await AuthBouncerJwt.refresh(AuthModelJwtReqRefresh(token.refresh));
