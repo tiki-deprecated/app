@@ -19,7 +19,7 @@ class KeysRestoreScreenLayoutForeground extends StatelessWidget {
         margin: EdgeInsets.only(left: 3.w),
         child: KeysRestoreScreenViewBack(),
       ),
-      SingleChildScrollView(
+      Expanded(child: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             Container(
@@ -44,7 +44,7 @@ class KeysRestoreScreenLayoutForeground extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
                 child: KeysRestoreScreenViewSubmit())
-          ]))
+          ])))
     ]));
   }
 }
