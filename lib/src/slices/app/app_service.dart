@@ -118,6 +118,9 @@ class AppService extends ChangeNotifier {
 
   Future<void> logout() async {
     this.home = LoginScreenService();
+    if (this.model.user == null) {
+      this.model.user = AppModelUser(email: this.model.current!.email);
+    }
     this.model.user!.isLoggedIn = false;
     updateUser(this.model.user!);
     this.reload();
