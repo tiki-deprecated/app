@@ -5,6 +5,7 @@
 
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:app/src/slices/login_screen/ui/login_screen_layout_foreground_inbox.dart';
 import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
@@ -23,6 +24,8 @@ class LoginScreen extends StatelessWidget {
     var child = _loginWidget(context);
     if (appService.home is KeysCreateScreenService) {
       child = KeysCreateScreenService(appService).getUI();
+    } else if (appService.home is KeysSaveScreenService) {
+      child = KeysSaveScreenService().getUI();
     } else if (appService.home is TikiScreenService) {
       child = TikiScreenService().getUI();
     }

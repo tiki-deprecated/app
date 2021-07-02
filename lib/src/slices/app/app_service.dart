@@ -7,6 +7,7 @@ import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -138,7 +139,7 @@ class AppService extends ChangeNotifier {
       isLoggedIn: true,
       code: referral,
     );
-    this.home = AppModelRoutes.home;
+    this.home = KeysSaveScreenService();
     this.updateUser(user);
   }
 }
