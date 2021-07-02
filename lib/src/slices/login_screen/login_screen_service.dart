@@ -32,6 +32,7 @@ class LoginScreenService extends ChangeNotifier {
 
   Future<void> submitEmail(BuildContext context) async {
     if (this.model.canSubmit) {
+      otpSubmitted();
       AuthService authService =
           Provider.of<AppService>(context, listen: false).authService;
       var result = await authService.requestOtp(this.model.email);
@@ -40,7 +41,6 @@ class LoginScreenService extends ChangeNotifier {
         appService.authService.current =
             AppModelCurrent(email: this.model.email);
         appService.model.current = appService.authService.current;
-        otpSubmitted();
       } else {
         otpError(context);
       }
@@ -60,7 +60,6 @@ class LoginScreenService extends ChangeNotifier {
   void otpSubmitted() {
     this.model.submitted = true;
     this.model.isError = false;
-    notifyListeners();
     notifyListeners();
   }
 
