@@ -16,11 +16,11 @@ class LoginScreenBackgroundEmail extends StatelessWidget {
       Container(
           margin: EdgeInsets.only(top: 2.h),
           alignment: Alignment.topRight,
-          child: HelperImage('login-pineapple', height: 30.h)),
+          child: HelperImage('login-pineapple', height: 24.h)),
       Container(
           margin: EdgeInsets.only(top: 32.h),
           alignment: Alignment.topLeft,
-          child: HelperImage('login-blob', height: 20.h))
+          child: HelperImage('login-blob', height: 11.5.h))
     ]);
   }
 }

@@ -14,7 +14,7 @@ const slides = [
   {
     "title": "We're stronger together",
     "subtitle":
-        "You are now part of the TIKI tribe! I’m Tiki and I am here to help you take back your share.",
+        "You are now part of the TIKI tribe! I’m TIKI and I am here to help you take back your share.",
     "button": "GET STARTED"
   }
 ];
