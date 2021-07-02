@@ -18,23 +18,41 @@ class KeysSaveDialogDlViewButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller =
-        Provider.of<KeysSaveDialogDlService>(context, listen: false).controller;
+    var service = Provider.of<KeysSaveDialogDlService>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 15.w),
+            padding: EdgeInsets.symmetric(vertical: 2.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras),
-        child: Text("DOWNLOAD",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: ConfigColor.white,
-              fontFamily: "NunitoSans",
-              fontWeight: FontWeight.w800,
-              fontSize: 16.sp,
-              letterSpacing: 0.05.w,
-            )),
-        onPressed: () => controller.downloadQR(context, repaintKey));
+            primary: _getColor(service)),
+        child: Container(
+            width: 60.w,
+            child: Text(_getText(service),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: ConfigColor.white,
+                  fontFamily: "NunitoSans",
+                  fontWeight: FontWeight.w800,
+                  fontSize: service.model.noPermission ? 16.sp : 16.sp,
+                  letterSpacing: 0.05.w,
+                ))),
+        onPressed: service.model.noPermission
+            ? null
+            : () => service.controller.downloadQR(context, repaintKey));
+  }
+
+  Color _getColor(KeysSaveDialogDlService service) {
+    return service.model.isFailed || service.model.noPermission
+        ? ConfigColor.grenadier
+        : ConfigColor.mardiGras;
+  }
+
+  String _getText(KeysSaveDialogDlService service) {
+    if (service.model.isFailed)
+      return "TRY AGAIN";
+    else if (service.model.noPermission)
+      return "NO PERMISSION";
+    else
+      return "DOWNLOAD";
   }
 }

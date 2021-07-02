@@ -23,8 +23,12 @@ class KeysSaveScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void keysDonwloaded() {
+  void keysDownloaded() {
     this.model.downloaded = true;
     notifyListeners();
+  }
+
+  bool canContinue() {
+    return this.model.saved || this.model.downloaded;
   }
 }

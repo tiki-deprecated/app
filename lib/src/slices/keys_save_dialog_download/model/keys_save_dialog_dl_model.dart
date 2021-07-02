@@ -5,4 +5,6 @@
 
 class KeysSaveDialogDlModel {
   bool isDownloaded = false;
+  bool isFailed = false;
+  bool noPermission = false;
 }

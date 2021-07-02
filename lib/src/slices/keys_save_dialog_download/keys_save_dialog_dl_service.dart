@@ -53,8 +53,25 @@ class KeysSaveDialogDlService extends ChangeNotifier {
       String path = documents.path + '/tiki-do-not-share.png';
       File imgFile = new File(path);
       imgFile.writeAsBytesSync(pngBytes, flush: true);
-      model.isDownloaded = true;
-      keysSaveScreenService.keysDonwloaded();
-    }
+      setDownloaded(true);
+      keysSaveScreenService.keysDownloaded();
+    } else
+      setNoPermission(true);
+    notifyListeners();
+  }
+
+  setDownloaded(bool state) {
+    model.isDownloaded = state;
+    notifyListeners();
+  }
+
+  setFailed(bool state) {
+    model.isFailed = state;
+    notifyListeners();
+  }
+
+  setNoPermission(bool state) {
+    model.noPermission = state;
+    notifyListeners();
   }
 }

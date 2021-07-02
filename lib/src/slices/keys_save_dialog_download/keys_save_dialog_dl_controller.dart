@@ -14,11 +14,11 @@ class KeysSaveDialogDlController {
       BuildContext context, GlobalKey<State<StatefulWidget>> repaintKey) async {
     RenderRepaintBoundary renderRepaintBoundary =
         repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    var service = Provider.of<KeysSaveDialogDlService>(context, listen: false);
     if (!renderRepaintBoundary.debugNeedsPaint) {
-      var service =
-          Provider.of<KeysSaveDialogDlService>(context, listen: false);
       await service.downloadQR(renderRepaintBoundary);
       Navigator.of(context).pop();
-    }
+    } else
+      service.setFailed(true);
   }
 }
