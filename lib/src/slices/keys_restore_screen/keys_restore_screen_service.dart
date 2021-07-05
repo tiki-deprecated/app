@@ -57,7 +57,7 @@ class KeysRestoreScreenService extends ChangeNotifier {
         isLoggedIn: true,
         code: referral,
       );
-      appService.updateUser(user);
+      await appService.updateUser(user);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => TikiScreenService().getUI()),
           ModalRoute.withName('/home'));
