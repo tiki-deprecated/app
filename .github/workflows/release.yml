@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - develop
 
 jobs:
   build:
@@ -121,6 +121,9 @@ jobs:
     name: Sentry Release 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
