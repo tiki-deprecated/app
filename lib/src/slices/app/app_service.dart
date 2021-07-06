@@ -90,7 +90,7 @@ class AppService extends ChangeNotifier {
         this.model.user = await authService.verifyOtp(otp);
         if (this.model.user?.address != null) {
           this.model.user!.isLoggedIn = true;
-          updateUser(this.model.user!);
+          await updateUser(this.model.user!);
           this.home = AppModelRoutes.home;
         } else {
           this.home = KeysCreateScreenService(this);
@@ -100,6 +100,7 @@ class AppService extends ChangeNotifier {
     this.reload();
   }
 
+  //TODO, null writes should be ignored, no need for if's
   saveUser(String email, AppModelUser user) async {
     if (user.address != null) {
       await SecureStorageRepositoryUser().save(
@@ -107,10 +108,13 @@ class AppService extends ChangeNotifier {
           AppModelUser(
               email: email,
               address: user.address,
-              isLoggedIn: user.isLoggedIn));
+              isLoggedIn: user.isLoggedIn,
+              code: user.code));
     } else {
-      await SecureStorageRepositoryUser()
-          .save(email, AppModelUser(email: email, isLoggedIn: user.isLoggedIn));
+      await SecureStorageRepositoryUser().save(
+          email,
+          AppModelUser(
+              email: email, isLoggedIn: user.isLoggedIn, code: user.code));
     }
     this.reload();
   }
@@ -121,7 +125,7 @@ class AppService extends ChangeNotifier {
       this.model.user = AppModelUser(email: this.model.current!.email);
     }
     this.model.user!.isLoggedIn = false;
-    updateUser(this.model.user!);
+    await updateUser(this.model.user!);
     this.reload();
   }
 
@@ -134,10 +138,10 @@ class AppService extends ChangeNotifier {
     this.saveUser(this.model.user!.email!, this.model.user!);
   }
 
-  void updateUser(AppModelUser user) {
+  Future<void> updateUser(AppModelUser user) async {
     this.authService.user = user;
     this.model.user = user;
-    this.saveUser(user.email!, user);
+    await this.saveUser(user.email!, user);
   }
 
   Future<void> keysGenerated(KeysModel keysWithAddress) async {
@@ -151,6 +155,6 @@ class AppService extends ChangeNotifier {
       code: referral,
     );
     this.home = KeysSaveScreenService();
-    this.updateUser(user);
+    await this.updateUser(user);
   }
 }

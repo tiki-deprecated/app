@@ -28,7 +28,7 @@ class ApiService {
         HelperApiAuth(secureStorageRepositoryCurrent, repoLocalSsToken);
   }
 
-  Future<String> getReferralCode(String address) async {
+  Future<String?> getReferralCode(String address) async {
     BlockchainRepositoryAddress blockchainRepositoryAddress =
         BlockchainRepositoryAddress.provide();
     HelperApiRsp<BlockchainModelAddressRspCode> rsp =

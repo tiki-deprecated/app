@@ -17,7 +17,7 @@ PODS:
   - Firebase/DynamicLinks (8.0.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 8.0.0)
-  - firebase_core (1.2.1):
+  - firebase_core (1.3.0):
     - Firebase/CoreOnly (= 8.0.0)
     - Flutter
   - firebase_dynamic_links (2.0.5):
@@ -171,7 +171,7 @@ SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
   Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
-  firebase_core: a9b69f8583dc992f1b15f376b4918537c1804bb4
+  firebase_core: cda81ae37eda6df2bc2d16027fda527987c4bd33
   firebase_dynamic_links: 396528b3a6de2c295ac8af5ebbb2760ffb8742d4
   FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
   FirebaseCoreDiagnostics: a31d987ba0fe16d59886a5dbadc2f1de871f88c8
@@ -200,6 +200,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
-PODFILE CHECKSUM: 4e5c4e9795301b34f33da577b59d7a62c13eee11
+PODFILE CHECKSUM: 596e2e4a546c2ebeeb41a063d9e7e7e6a23bfade
 
 COCOAPODS: 1.10.1
