@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:app/src/config/config_domain.dart';
 import 'package:app/src/slices/api/helpers/helper_api_auth.dart';
@@ -29,15 +28,14 @@ class ApiService {
         HelperApiAuth(secureStorageRepositoryCurrent, repoLocalSsToken);
   }
 
-  Future<String> getReferralCode(String address) async {
+  Future<String?> getReferralCode(String address) async {
     BlockchainRepositoryAddress blockchainRepositoryAddress =
         BlockchainRepositoryAddress.provide();
     HelperApiRsp<BlockchainModelAddressRspCode> rsp =
         await blockchainRepositoryAddress.referCode(address);
-    if (rsp.code == 200 && rsp.data != null) {
-      if (rsp.data.code == null) log("code was null");
-      return rsp.data.code == null ? "" : rsp.data.code;
-    } else
+    if (rsp.code == 200 && rsp.data != null)
+      return rsp.data.code;
+    else
       throw Exception("Failed to get refer code");
   }
 

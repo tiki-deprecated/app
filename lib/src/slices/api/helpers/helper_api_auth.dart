@@ -43,7 +43,7 @@ class HelperApiAuth {
             await AuthBouncerJwt.refresh(AuthModelJwtReqRefresh(token.refresh));
         if (refreshRsp.code == 200) {
           AuthBouncerJwtRsp jwt = refreshRsp.data;
-          _repoLocalSsToken.save(
+          await _repoLocalSsToken.save(
               current.email!,
               AuthModelToken(
                   bearer: jwt.accessToken,
