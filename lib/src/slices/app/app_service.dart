@@ -146,7 +146,7 @@ class AppService extends ChangeNotifier {
 
   Future<void> keysGenerated(KeysModel keysWithAddress) async {
     ApiService apiService = ApiService();
-    String referral =
+    String? referral =
         await apiService.getReferralCode(keysWithAddress.address!);
     AppModelUser user = AppModelUser(
       email: this.model.current!.email,
