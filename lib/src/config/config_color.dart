@@ -24,6 +24,7 @@ class ConfigColor {
   static const Color serenade = Color(0xFFFFF5E9);
   static const Color white = Color(0xFFFFFFFF);
   static const Color gallery = Color(0xFFF0F0F0);
+  static const Color wildSand = Color(0xFFF4F4F4);
   static const Color alto = Color(0xFFD8D8D8);
   static const Color silverChalice = Color(0xFFAFAFAF);
   static const Color gray = Color(0xFF8D8D8D);

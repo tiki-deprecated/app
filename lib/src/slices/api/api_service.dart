@@ -7,7 +7,7 @@ import 'package:app/src/slices/auth/repository/secure_storage_repository_token.d
 import 'package:app/src/slices/blockchain/model/blockchain_model_address_rsp_code.dart';
 import 'package:app/src/slices/blockchain/repository/blockchain_repository_address.dart';
 import 'package:app/src/slices/login_screen/model/repo_api_website_users_rsp.dart';
-import 'package:app/src/slices/tiki_screen/repository/repo_api_website_users.dart';
+import 'package:app/src/slices/tiki_screen/repository/tiki_screen_repository_signup.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,9 +50,9 @@ class ApiService {
     }
   }
 
-  void getReferCount(String code) async {
+  Future<int?> getReferCount(String code) async {
     HelperApiRsp<RepoApiWebsiteUsersRsp> apiRsp =
-        await RepoApiWebsiteUsers.total(code: code);
+        await TikiScreenRepositorySignup.total(code: code);
     if (apiRsp.code == 200) {
       return apiRsp.data.total;
     }

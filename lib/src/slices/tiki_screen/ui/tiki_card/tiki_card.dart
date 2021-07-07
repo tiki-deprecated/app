@@ -23,6 +23,13 @@ class TikiCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: bgcolor,
           borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x0D000000),
+              blurRadius: 2.w,
+              offset: Offset(0.75.w, 0.75.w), // Shadow position
+            ),
+          ],
         ),
         padding: getPadding(),
         child: Column(

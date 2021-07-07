@@ -5,32 +5,32 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../tiki_screen_service.dart';
+class UserReferralViewText extends StatelessWidget {
+  static const String _textL1 = "Share your TIKI code and get";
+  static const String _textL2 = "\$5 for every 10 people who join.";
+  static const num _fontSize = 11;
 
-class TikiScreenViewTikiBoxReferText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<TikiScreenService>(context);
     return Column(
       children: [
         Text(
-          service.presenter.textTikiBoxReferL1,
+          _textL1,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: service.presenter.fontSizeTikiBoxReferText.sp,
+              fontSize: _fontSize.sp,
               fontWeight: FontWeight.w600,
-              color: ConfigColor.emperor),
+              color: ConfigColor.tikiBlue),
         ),
         Text(
-          service.presenter.textTikiBoxReferL2,
+          _textL2,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: service.presenter.fontSizeTikiBoxReferText.sp,
+              fontSize: _fontSize.sp,
               fontWeight: FontWeight.w800,
-              color: ConfigColor.emperor),
+              color: ConfigColor.tikiBlue),
         )
       ],
     );
