@@ -18,7 +18,7 @@ class AppLayout extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
           title: AppModel.title,
-          home: service.home.getUI(),
+          home: Router(routerDelegate: service.router),
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,

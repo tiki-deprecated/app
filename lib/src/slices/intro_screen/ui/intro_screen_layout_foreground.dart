@@ -20,7 +20,7 @@ class IntroScreenForeground extends StatelessWidget {
   }
 
   Widget _foreground(BuildContext context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
+    var service = Provider.of<IntroScreenService>(context);
     return Padding(
         padding: EdgeInsets.symmetric(
             horizontal: service.presenter.marginHorizontal.w),

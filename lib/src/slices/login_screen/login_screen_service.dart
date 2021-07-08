@@ -54,8 +54,8 @@ class LoginScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget getUI() {
-    return this.presenter.render();
+  Page getUI() {
+    return this.presenter;
   }
 
   void otpSubmitted() {

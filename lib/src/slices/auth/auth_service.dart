@@ -37,6 +37,10 @@ class AuthService {
   KeysModel? keys;
   AuthModelToken? token;
 
+  bool _isOtp = false;
+
+  get isOtp => _isOtp;
+
   AuthService() : secureStorage = FlutterSecureStorage() {
     _secureStorageRepositoryCurrent =
         SecureStorageRepositoryCurrent(secureStorage: secureStorage);
@@ -106,7 +110,7 @@ class AuthService {
     }
   }
 
-  verifyOtp(String otp) async {
+  Future<AppModelUser?> verifyOtp(String otp) async {
     AuthModelOtp model = await SecureStorageRepositoryOtp()
         .find(SecureStorageRepositoryOtp.reqKey);
     if (model.email != null && model.salt != null) {
@@ -121,10 +125,12 @@ class AuthService {
                 refresh: rspData.refreshToken,
                 expiresIn: rspData.expiresIn));
         var user = await SecureStorageRepositoryUser().find(model.email!);
+        _isOtp = true;
         return user;
       }
     }
     SecureStorageRepositoryOtp().delete(SecureStorageRepositoryOtp.reqKey);
+    _isOtp = false;
     return null;
   }
 }
