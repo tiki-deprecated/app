@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TikiCardFigure extends StatelessWidget {
+class TikiCardViewFigure extends StatelessWidget {
   final Widget child;
 
-  TikiCardFigure(this.child);
+  TikiCardViewFigure(this.child);
 
   @override
   Widget build(BuildContext context) {

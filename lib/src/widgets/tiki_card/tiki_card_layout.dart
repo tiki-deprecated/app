@@ -1,27 +1,27 @@
-import 'package:app/src/slices/tiki_screen/ui/tiki_card/tiki_card_cta_inline.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import 'tiki_card_cta.dart';
-import 'tiki_card_figure.dart';
-import 'tiki_card_text.dart';
-import 'tiki_card_title.dart';
+import 'tiki_card_view_cta.dart';
+import 'tiki_card_view_cta_inline.dart';
+import 'tiki_card_view_figure.dart';
+import 'tiki_card_view_text.dart';
+import 'tiki_card_view_title.dart';
 
-class TikiCard extends StatelessWidget {
-  final TikiCardTitle title;
-  final TikiCardText text;
-  final TikiCardFigure figure;
-  final TikiCardCta? cta;
-  final Color bgcolor;
+class TikiCardLayout extends StatelessWidget {
+  final TikiCardViewTitle title;
+  final TikiCardViewText text;
+  final TikiCardViewFigure figure;
+  final TikiCardViewCta? cta;
+  final Color bgColor;
 
-  const TikiCard(this.title, this.text, this.figure,
-      {this.cta, this.bgcolor = Colors.white});
+  const TikiCardLayout(this.title, this.text, this.figure,
+      {this.cta, this.bgColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: bgcolor,
+          color: bgColor,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -66,13 +66,13 @@ class TikiCard extends StatelessWidget {
   }
 
   getPadding() {
-    if (this.cta == null || this.cta is TikiCardCtaInline)
+    if (this.cta == null || this.cta is TikiCardViewCtaInline)
       return EdgeInsets.all(6.w);
     return EdgeInsets.only(top: 6.w, left: 0, right: 0, bottom: 0);
   }
 
   getColumnPadding() {
-    if (this.cta == null || this.cta is TikiCardCtaInline)
+    if (this.cta == null || this.cta is TikiCardViewCtaInline)
       return EdgeInsets.all(0);
     return EdgeInsets.symmetric(horizontal: 6.w);
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class TikiCardCta extends StatelessWidget {
+abstract class TikiCardViewCta extends StatelessWidget {
   Widget getCta();
 
   @override

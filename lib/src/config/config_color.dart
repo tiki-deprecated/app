@@ -16,12 +16,12 @@ class ConfigColor {
   static const Color grenadier = Color(0xFFC73000);
   static const Color orange = Color(0xFFFF521C);
 
+  static const Color serenade = Color(0xFFFFF5E9);
   static const Color fireBush = Color(0xFFE89933);
   static const Color sunglow = Color(0xFFFFD225);
   static const Color kournikova = Color(0xFFFFD976);
   static const Color macaroniAndCheese = Color(0xFFFFC376);
 
-  static const Color serenade = Color(0xFFFFF5E9);
   static const Color white = Color(0xFFFFFFFF);
   static const Color gallery = Color(0xFFF0F0F0);
   static const Color wildSand = Color(0xFFF4F4F4);

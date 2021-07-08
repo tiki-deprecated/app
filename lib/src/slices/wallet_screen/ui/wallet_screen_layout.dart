@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:app/src/slices/wallet_balance/wallet_balance_service.dart';
 import 'package:app/src/slices/wallet_screen/ui/wallet_screen_view_cash_out.dart';
 import 'package:app/src/slices/wallet_screen/ui/wallet_screen_view_referral.dart';
@@ -27,6 +28,13 @@ class WalletScreenLayout extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: Column(
                 children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 5.h),
+                      child: TextButton(
+                          onPressed: () => UserAccountModalService()
+                              .presenter
+                              .showModal(context),
+                          child: Text("accountPage"))),
                   Container(
                       margin: EdgeInsets.only(top: 12.h),
                       child: WalletBalanceService().getUI()),
