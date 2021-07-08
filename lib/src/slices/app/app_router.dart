@@ -26,13 +26,12 @@ class AppRouter extends RouterDelegate<AppService>
           return false;
         },
         pages: [
-          // if(appService.authService.isLoggedIn())
-          //   AppModelRoutes.home.getUI(),
-          // if(appService.authService.isOtp())
-          //   AppModelRoutes.keys.getUI(),
-          // if(appService.authService.isReturning())
-          //   AppModelRoutes.login.getUI(),
           AppModelRoutes.intro.getUI(),
+          if (appService.authService.isReturning())
+            AppModelRoutes.login.getUI(),
+          if (appService.authService.isOtp) AppModelRoutes.keys.getUI(),
+          //if(appService.authService.isLoggedIn())
+          //   AppModelRoutes.home.getUI(),
         ]);
   }
 

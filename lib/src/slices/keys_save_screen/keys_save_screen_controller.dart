@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:android_intent/android_intent.dart';
 import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_routes.dart';
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,13 +11,13 @@ import 'package:url_launcher/url_launcher.dart';
 class KeysSaveScreenController {
   goToHome(context) {
     AppService appService = Provider.of<AppService>(context, listen: false);
-    appService.home = AppModelRoutes.home;
+    //TODO appService.home = AppModelRoutes.home;
     appService.reload();
   }
 
   goToRestore(BuildContext context) {
     AppService appService = Provider.of<AppService>(context, listen: false);
-    appService.home = KeysRestoreScreenService(appService);
+    //TODO appService.home = KeysRestoreScreenService(appService);
     appService.reload();
   }
 

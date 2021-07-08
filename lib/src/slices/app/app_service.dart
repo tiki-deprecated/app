@@ -3,17 +3,19 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'dart:async';
+
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app_controller.dart';
 import 'app_presenter.dart';
 import 'app_router.dart';
 import 'model/app_model.dart';
-import 'model/app_model_routes.dart';
 import 'model/app_model_user.dart';
 import 'repository/secure_storage_repository_user.dart';
 
@@ -23,8 +25,6 @@ class AppService extends ChangeNotifier {
   late AppModel model;
   late AppController controller;
   late AuthService authService;
-
-  var home;
 
   Uri? deepLink;
 
@@ -40,6 +40,11 @@ class AppService extends ChangeNotifier {
   }
 
   Future<void> load() async {
+    await loadAuth();
+    await initDynamicLinks();
+  }
+
+  Future<void> loadAuth() async {
     authService = AuthService();
     await authService.load();
     model.current = authService.current;
@@ -58,7 +63,7 @@ class AppService extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    this.home = AppModelRoutes.login;
+    //TODO this.home = AppModelRoutes.login;
     if (this.model.user == null) {
       this.model.user = AppModelUser(email: this.model.current!.email);
     }
@@ -92,7 +97,46 @@ class AppService extends ChangeNotifier {
       isLoggedIn: true,
       code: referral,
     );
-    this.home = KeysSaveScreenService();
+    //TODO this.home = KeysSaveScreenService();
     await this.updateUser(user);
+  }
+
+  Future<bool> requestOtp(String email) async {
+    bool result = await authService.requestOtp(email);
+    if (result) {
+      model.current = authService.current;
+    }
+    return result;
+  }
+
+  Future<void> initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+      await loadAuth();
+      final Uri? deepLink = dynamicLink?.link;
+      if (deepLink != null) _handle(deepLink);
+    }, onError: (OnLinkErrorException e) async {
+      await Sentry.captureException(e, stackTrace: StackTrace.current);
+    });
+    final PendingDynamicLinkData? data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    this.deepLink = data?.link;
+  }
+
+  _handle(Uri link) async {
+    final String dlPathBouncer = "/app/bouncer";
+    if (link.path == dlPathBouncer) {
+      String? otp = link.queryParameters["otp"];
+      if (otp != null && otp.isNotEmpty) {
+        var user = await authService.verifyOtp(otp);
+        if (user != null) {
+          if (user.address != null) {
+            user.isLoggedIn = true;
+            await updateUser(user);
+          }
+        }
+      }
+    }
+    notifyListeners();
   }
 }

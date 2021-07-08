@@ -1,5 +1,6 @@
 import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'intro_screen_service.dart';
@@ -54,9 +55,23 @@ class IntroScreenLayoutNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var goToLogin = context.watch<IntroScreenService>().model.shouldMoveToLogin;
-    return Navigator(pages: [
-      MaterialPage(child: IntroScreen()),
-      if (goToLogin) LoginScreenService().getUI()
-    ]);
+    return Navigator(
+        pages: [
+          MaterialPage(child: IntroScreen()),
+          if (goToLogin) LoginScreenService().getUI()
+        ],
+        onPopPage: (Route route, result) {
+          var success = route.didPop(result);
+          if (success) {
+            if (goToLogin) {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            } else {
+              Provider.of<IntroScreenService>(context)
+                  .controller
+                  .navigateToPreviousScreen(context);
+            }
+          }
+          return success;
+        });
   }
 }

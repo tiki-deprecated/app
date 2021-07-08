@@ -93,13 +93,15 @@ class AuthService {
   }
 
   processOtpRequest(String email, String salt) async {
-    await SecureStorageRepositoryOtp().save(SecureStorageRepositoryOtp.reqKey,
-        AuthModelOtp(email: email, salt: salt));
-    await SecureStorageRepositoryCurrent().save(
-        SecureStorageRepositoryCurrent.key, AppModelCurrent(email: email));
+    current = AppModelCurrent(email: email);
+    var ssOtp = AuthModelOtp(email: email, salt: salt);
+    await SecureStorageRepositoryOtp()
+        .save(SecureStorageRepositoryOtp.reqKey, ssOtp);
+    await SecureStorageRepositoryCurrent()
+        .save(SecureStorageRepositoryCurrent.key, current);
   }
 
-  requestOtp(String email) async {
+  Future<bool> requestOtp(String email) async {
     HelperApiRsp<AuthModelOtpRsp> rsp =
         await AuthBouncerOtp.email(AuthModelOtpReq(email));
     if (rsp.code == 200) {
