@@ -15,24 +15,26 @@ class DataScreenViewSoonIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image(
-          image: AssetImage('res/images/' + image + '.png'),
-          height: 5.5.h,
-          fit: BoxFit.fitHeight,
-        ),
-        Container(
-            margin: EdgeInsets.only(top: 0.5.h),
-            child: Text(
-              label,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 9.sp,
-                  color: ConfigColor.tikiBlue),
-            )),
-      ],
-    );
+    return Container(
+        width: 16.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage('res/images/' + image + '.png'),
+              height: 5.5.h,
+              fit: BoxFit.fitHeight,
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 0.5.h),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 9.sp,
+                      color: ConfigColor.tikiBlue),
+                )),
+          ],
+        ));
   }
 }

@@ -18,7 +18,7 @@ class DataScreenViewSoon extends StatelessWidget {
             EdgeInsets.only(top: 2.5.h, bottom: 3.5.h, left: 7.w, right: 7.w),
         decoration: BoxDecoration(
           color: ConfigColor.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: Color(0x0D000000),
@@ -40,7 +40,7 @@ class DataScreenViewSoon extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(top: 2.5.h),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       DataScreenViewSoonIcon(
                           image: "account-soon-apple", label: "Apple Mail"),
@@ -49,7 +49,7 @@ class DataScreenViewSoon extends StatelessWidget {
                       DataScreenViewSoonIcon(
                           image: "account-soon-google", label: "Google"),
                       DataScreenViewSoonIcon(
-                          image: "account-soon-more", label: "...and More"),
+                          image: "account-soon-more", label: "...and more"),
                     ]))
           ],
         ));
