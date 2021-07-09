@@ -32,10 +32,12 @@ class UserReferralService extends ChangeNotifier {
     return this.presenter.render();
   }
 
-  getCode(BuildContext context) {
-    AppModelUser user = Provider.of<AppService>(context).model.user!;
+   String getCode(BuildContext context) {
+    AppModelUser user =
+        Provider.of<AppService>(context, listen: false).model.user!;
     this.model.code = user.code ?? "";
     if (this.model.code.isEmpty) updateCode(context);
+    return this.model.code;
   }
 
   Future<void> copyLink() async {
