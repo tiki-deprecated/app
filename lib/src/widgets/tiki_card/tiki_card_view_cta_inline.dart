@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import 'tiki_card_view_cta.dart';
 
@@ -15,7 +16,8 @@ class TikiCardViewCtaInline extends TikiCardViewCta {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
       headline,
       IconButton(
-        padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+        padding: EdgeInsets.only(left: 1.w),
+        alignment: Alignment.centerLeft,
         icon: trailingIcon,
         onPressed: () => callback!(),
       )

@@ -16,7 +16,7 @@ class UserAccountModalViewCommunity extends StatelessWidget {
   static const num _btnTextFontSize = 10;
   static const String _title = "TIKI tribe";
   static const String _text =
-      "Join our community of TIKI-nites from around the globe.";
+      "Join our community of \nTIKI-nites from around \nthe globe.";
   static const String _discord = "Discord";
   static const String _discordLink = "https://discord.com/invite/evjYQq48Be";
   static const Color _discordColor = Color(0xFF7289DA);

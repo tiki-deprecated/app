@@ -57,7 +57,7 @@ class UserAccountModalViewFollowUs extends StatelessWidget {
                         left: 3 * _btnPaddingHorizontal.w,
                         top: _btnPaddingVertical.h,
                         right: _btnPaddingHorizontal.w,
-                        bottom: 8 * _btnPaddingVertical.h),
+                        bottom: 4 * _btnPaddingVertical.h),
                     child: HelperImage("instagram-button",
                         height: _btnHeight.h)))),
         Expanded(
@@ -68,7 +68,7 @@ class UserAccountModalViewFollowUs extends StatelessWidget {
                         left: _btnPaddingHorizontal.w,
                         top: _btnPaddingVertical.h,
                         right: 3 * _btnPaddingHorizontal.w,
-                        bottom: 8 * _btnPaddingVertical.h),
+                        bottom: 4 * _btnPaddingVertical.h),
                     child:
                         HelperImage("tiktok-button", height: _btnHeight.h)))),
       ]),

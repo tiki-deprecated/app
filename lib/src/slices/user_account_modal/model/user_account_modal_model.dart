@@ -3,4 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class UserAccountModalModel {}
+class UserAccountModalModel {
+  int? signupCount;
+}

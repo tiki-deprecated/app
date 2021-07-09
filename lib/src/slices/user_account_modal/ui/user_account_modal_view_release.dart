@@ -21,12 +21,12 @@ class UserAccountModalViewRelease extends StatelessWidget {
         child: TikiCardLayout(
           TikiCardViewTitle(_title),
           TikiCardViewText(_text),
-          TikiCardViewFigure(HelperImage("add-gmail")),
+          TikiCardViewFigure(HelperImage("email-see")),
           cta: TikiCardViewCtaInline(
               Text(_cta,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13.sp,
+                      fontSize: 12.5.sp,
                       color: ConfigColor.orange)),
               Icon(Icons.arrow_forward, color: ConfigColor.orange),
               () => TikiCardController.launchUrl(_url)),

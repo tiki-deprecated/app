@@ -27,9 +27,10 @@ class UserAccountModalViewNews extends StatelessWidget {
               Text(_cta,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13.sp,
+                      fontSize: 12.5.sp,
                       color: ConfigColor.orange)),
-              Icon(Icons.arrow_forward, color: ConfigColor.orange),
+              Icon(Icons.arrow_forward,
+                  color: ConfigColor.orange, size: 12.5.sp),
               () => TikiCardController.launchUrl(_url)),
         ),
         onTap: () => TikiCardController.launchUrl(_url));

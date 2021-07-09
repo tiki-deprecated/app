@@ -1,3 +1,4 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +16,7 @@ class TikiCardLayout extends StatelessWidget {
   final Color bgColor;
 
   const TikiCardLayout(this.title, this.text, this.figure,
-      {this.cta, this.bgColor = Colors.white});
+      {this.cta, this.bgColor = ConfigColor.gallery});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +24,6 @@ class TikiCardLayout extends StatelessWidget {
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x0D000000),
-              blurRadius: 2.w,
-              offset: Offset(0.75.w, 0.75.w), // Shadow position
-            ),
-          ],
         ),
         padding: getPadding(),
         child: Column(
@@ -60,15 +54,14 @@ class TikiCardLayout extends StatelessWidget {
                           child: figure,
                         )
                       ])),
-              Padding(padding: EdgeInsets.only(top: 2.h)),
               cta ?? Container()
             ]));
   }
 
   getPadding() {
     if (this.cta == null || this.cta is TikiCardViewCtaInline)
-      return EdgeInsets.all(6.w);
-    return EdgeInsets.only(top: 6.w, left: 0, right: 0, bottom: 0);
+      return EdgeInsets.only(top: 2.h, left: 6.w, right: 6.w, bottom: 1.h);
+    return EdgeInsets.only(top: 3.h, left: 0, right: 0, bottom: 0);
   }
 
   getColumnPadding() {

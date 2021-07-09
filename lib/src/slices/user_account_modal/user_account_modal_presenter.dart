@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +23,14 @@ class UserAccountModalPresenter {
   }
 
   Future<void> showModal(BuildContext context) {
+    var ui = this.service.getUI();
     return showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
         isDismissible: true,
+        backgroundColor: ConfigColor.white,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
-        builder: (BuildContext context) {
-          return this.service.getUI();
-        });
+        builder: (BuildContext context) => ui);
   }
 }
