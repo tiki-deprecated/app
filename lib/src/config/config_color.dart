@@ -14,7 +14,6 @@ class ConfigColor {
 
   static const Color flirt = Color(0xFFB5006C);
   static const Color grenadier = Color(0xFFC73000);
-  static const Color orange = Color(0xFFFF521C);
 
   static const Color serenade = Color(0xFFFFF5E9);
   static const Color fireBush = Color(0xFFE89933);
@@ -22,7 +21,6 @@ class ConfigColor {
   static const Color kournikova = Color(0xFFFFD976);
   static const Color macaroniAndCheese = Color(0xFFFFC376);
 
-  static const Color white = Color(0xFFFFFFFF);
   static const Color gallery = Color(0xFFF0F0F0);
   static const Color wildSand = Color(0xFFF4F4F4);
   static const Color alto = Color(0xFFD8D8D8);
@@ -33,6 +31,23 @@ class ConfigColor {
   static const Color emperor = Color(0xFF545454);
   static const Color black = Color(0xFF000000);
 
+  /// The color for links & selected state.
+  static const Color orange = Color(0xFFFF521C);
+
+  /// The color for text
   static const Color tikiBlue = Color(0xFF00133F);
+
+  /// The TIKI black color
   static const Color tikiBlack = Color(0xFF1C0000);
+
+  /// The color for non-selected nav link
+  static const Color blue = Color(0xFF0036B5);
+
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color greyOne = Color(0xF4F4F4);
+  static const Color greyTwo = Color(0xF0F0F0);
+  static const Color greyThree = Color(0xAFAFAF);
+  static const Color greyFour = Color(0x8D8D8D);
+  static const Color greyFive = Color(0x797979);
+  static const Color greySix = Color(0x545454);
 }

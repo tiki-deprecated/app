@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class KeysRestoreScreenLayoutForeground extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,32 +18,33 @@ class KeysRestoreScreenLayoutForeground extends StatelessWidget {
         margin: EdgeInsets.only(left: 3.w),
         child: KeysRestoreScreenViewBack(),
       ),
-      Expanded(child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Container(
-                margin: EdgeInsets.only(top: 6.h),
-                alignment: Alignment.center,
-                child: KeysRestoreScreenViewTitle()),
-            Container(
-                margin: EdgeInsets.only(top: 2.h, left: 10.w, right: 10.w),
-                alignment: Alignment.center,
-                child: KeysRestoreScreenViewSubtitle()),
-            Container(
-              margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-              alignment: Alignment.center,
-              child: KeysRestoreScreenViewScan(),
-            ),
-            Container(
-                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-                child: KeysRestoreScreenViewDivider()),
-            Container(
-                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-                child: KeysRestoreScreenViewInput()),
-            Container(
-                margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
-                child: KeysRestoreScreenViewSubmit())
-          ])))
+      Expanded(
+          child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Container(
+                    margin: EdgeInsets.only(top: 6.h),
+                    alignment: Alignment.center,
+                    child: KeysRestoreScreenViewTitle()),
+                Container(
+                    margin: EdgeInsets.only(top: 2.h, left: 10.w, right: 10.w),
+                    alignment: Alignment.center,
+                    child: KeysRestoreScreenViewSubtitle()),
+                Container(
+                  margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                  alignment: Alignment.center,
+                  child: KeysRestoreScreenViewScan(),
+                ),
+                Container(
+                    margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                    child: KeysRestoreScreenViewDivider()),
+                Container(
+                    margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                    child: KeysRestoreScreenViewInput()),
+                Container(
+                    margin: EdgeInsets.only(top: 3.h, left: 15.w, right: 15.w),
+                    child: KeysRestoreScreenViewSubmit())
+              ])))
     ]));
   }
 }

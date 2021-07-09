@@ -32,7 +32,7 @@ class UserReferralService extends ChangeNotifier {
     return this.presenter.render();
   }
 
-   String getCode(BuildContext context) {
+  String getCode(BuildContext context) {
     AppModelUser user =
         Provider.of<AppService>(context, listen: false).model.user!;
     this.model.code = user.code ?? "";
