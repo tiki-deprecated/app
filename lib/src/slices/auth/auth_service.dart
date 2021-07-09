@@ -15,7 +15,6 @@ import 'package:app/src/slices/auth/repository/secure_storage_repository_otp.dar
 import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
 import 'package:app/src/slices/keys/repository/secure_storage_repository_keys.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'model/auth_bouncer_jwt_req_otp.dart';
@@ -38,7 +37,6 @@ class AuthService {
   AuthModelToken? token;
 
   bool _isOtp = false;
-
   get isOtp => _isOtp;
 
   AuthService() : secureStorage = FlutterSecureStorage() {
@@ -63,36 +61,20 @@ class AuthService {
     }
   }
 
-  bool isReturning() {
-    return current.email != null;
-  }
-
-  bool isLoggedIn() {
-    return user != null &&
-        user!.isLoggedIn != null &&
-        user!.isLoggedIn! &&
-        keys != null &&
-        keys!.address != null &&
-        keys!.signPrivateKey != null &&
-        keys!.dataPrivateKey != null &&
-        token != null &&
-        token!.refresh != null;
-  }
-
-  login(BuildContext context, address) async {
+  Future<void> login(address) async {
     AppModelCurrent current = await _secureStorageRepositoryCurrent
         .find(SecureStorageRepositoryCurrent.key);
     await _repoLocalSsUser.save(current.email!,
         AppModelUser(email: current.email, address: address, isLoggedIn: true));
   }
 
-  logout() {
+  Future logout() async {
     user!.isLoggedIn = false;
-    _repoLocalSsUser.save(current.email!, user!);
+    await _repoLocalSsUser.save(current.email!, user!);
     return user!;
   }
 
-  processOtpRequest(String email, String salt) async {
+  Future<void> processOtpRequest(String email, String salt) async {
     current = AppModelCurrent(email: email);
     var ssOtp = AuthModelOtp(email: email, salt: salt);
     await SecureStorageRepositoryOtp()
@@ -105,7 +87,7 @@ class AuthService {
     HelperApiRsp<AuthModelOtpRsp> rsp =
         await AuthBouncerOtp.email(AuthModelOtpReq(email));
     if (rsp.code == 200) {
-      processOtpRequest(email, rsp.data.salt);
+      await processOtpRequest(email, rsp.data.salt);
       return true;
     } else {
       return false;

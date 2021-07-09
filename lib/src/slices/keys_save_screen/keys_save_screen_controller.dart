@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:android_intent/android_intent.dart';
 import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/login_navigator/login_navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,13 +13,14 @@ class KeysSaveScreenController {
   goToHome(context) {
     AppService appService = Provider.of<AppService>(context, listen: false);
     //TODO appService.home = AppModelRoutes.home;
-    appService.reload();
+    appService.goToHome();
   }
 
   goToRestore(BuildContext context) {
-    AppService appService = Provider.of<AppService>(context, listen: false);
+    LoginNavigatorService loginNavigatorService =
+        Provider.of<LoginNavigatorService>(context, listen: false);
     //TODO appService.home = KeysRestoreScreenService(appService);
-    appService.reload();
+    loginNavigatorService.goToRestoreKeys();
   }
 
   goToDownloadLocation() async {

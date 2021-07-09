@@ -3,7 +3,7 @@ import 'package:app/src/slices/tiki_screen/ui/tiki_screen_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TikiScreenPresenter {
+class TikiScreenPresenter extends Page {
   num get marginHorizontal => 6;
 
   num get marginGsTop => 16;
@@ -110,7 +110,7 @@ class TikiScreenPresenter {
 
   get textSeeData => "See what data \nGmail has on you";
 
-  final service;
+  final TikiScreenService service;
 
   TikiScreenPresenter(this.service);
 
@@ -118,8 +118,10 @@ class TikiScreenPresenter {
 
   num get emailButtonMarginBottom => 2;
 
-  ChangeNotifierProvider<TikiScreenService> render() {
-    return ChangeNotifierProvider.value(
-        value: service, child: TikiScreenLayout());
+  @override
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+        builder: (BuildContext context) => ChangeNotifierProvider.value(
+            value: service, child: TikiScreenLayout()));
   }
 }

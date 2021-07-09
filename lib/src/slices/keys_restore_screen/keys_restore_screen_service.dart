@@ -57,8 +57,6 @@ class KeysRestoreScreenService extends ChangeNotifier {
         code: referral,
       );
       await appService.updateUser(user);
-      //TODO appService.home = AppModelRoutes.home;
-      appService.reload();
     }
   }
 }

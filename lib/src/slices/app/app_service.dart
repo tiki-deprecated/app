@@ -28,6 +28,8 @@ class AppService extends ChangeNotifier {
 
   Uri? deepLink;
 
+  get isReturning => model.current?.email != null;
+
   AppService() {
     presenter = AppPresenter(this);
     model = AppModel();
@@ -49,6 +51,8 @@ class AppService extends ChangeNotifier {
     await authService.load();
     model.current = authService.current;
     model.user = authService.user;
+    model.user?.keys = authService.keys;
+    model.user?.token = authService.token;
   }
 
   Future<void> saveUser(String email, AppModelUser user) async {
@@ -59,21 +63,16 @@ class AppService extends ChangeNotifier {
             address: user.address,
             isLoggedIn: user.isLoggedIn,
             code: user.code));
-    this.reload();
+    notifyListeners();
   }
 
   Future<void> logout() async {
-    //TODO this.home = AppModelRoutes.login;
     if (this.model.user == null) {
       this.model.user = AppModelUser(email: this.model.current!.email);
     }
     this.model.user!.isLoggedIn = false;
     await updateUser(this.model.user!);
-    this.reload();
-  }
-
-  void reload() {
-    this.notifyListeners();
+    notifyListeners();
   }
 
   void saveReferralCode(String referral) {
@@ -84,6 +83,8 @@ class AppService extends ChangeNotifier {
   Future<void> updateUser(AppModelUser user) async {
     this.authService.user = user;
     this.model.user = user;
+    this.model.user?.keys = authService.keys;
+    this.model.user?.token = authService.token;
     await this.saveUser(user.email!, user);
   }
 
@@ -97,7 +98,6 @@ class AppService extends ChangeNotifier {
       isLoggedIn: true,
       code: referral,
     );
-    //TODO this.home = KeysSaveScreenService();
     await this.updateUser(user);
   }
 
@@ -138,5 +138,9 @@ class AppService extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  void goToHome() {
+    if (model.isLoggedIn) notifyListeners();
   }
 }

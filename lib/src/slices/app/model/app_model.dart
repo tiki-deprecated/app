@@ -14,4 +14,15 @@ class AppModel {
 
   AppModelCurrent? current;
   AppModelUser? user;
+
+  get isLoggedIn =>
+      user != null &&
+      user!.isLoggedIn != null &&
+      user!.isLoggedIn! &&
+      user!.keys != null &&
+      user!.keys!.address != null &&
+      user!.keys!.signPrivateKey != null &&
+      user!.keys!.dataPrivateKey != null &&
+      user!.token != null &&
+      user!.token!.refresh != null;
 }

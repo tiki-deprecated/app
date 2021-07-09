@@ -12,7 +12,11 @@ class AppRouter extends RouterDelegate<AppService>
   final AppService appService;
   final GlobalKey<NavigatorState> _navigatorKey;
 
-  AppRouter(this.appService) : _navigatorKey = GlobalKey<NavigatorState>();
+  AppRouter(this.appService) : _navigatorKey = GlobalKey() {
+    appService.addListener(() {
+      notifyListeners();
+    });
+  }
 
   @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
@@ -26,12 +30,9 @@ class AppRouter extends RouterDelegate<AppService>
           return false;
         },
         pages: [
-          AppModelRoutes.intro.getUI(),
-          if (appService.authService.isReturning())
-            AppModelRoutes.login.getUI(),
-          if (appService.authService.isOtp) AppModelRoutes.keys.getUI(),
-          //if(appService.authService.isLoggedIn())
-          //   AppModelRoutes.home.getUI(),
+          appService.model.isLoggedIn
+              ? AppModelRoutes.home.getUI()
+              : AppModelRoutes.login.getUI(),
         ]);
   }
 
