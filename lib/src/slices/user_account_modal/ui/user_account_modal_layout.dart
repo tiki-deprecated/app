@@ -24,7 +24,7 @@ class UserAccountModalLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
-            height: 90.h,
+            height: 93.h,
             padding:
                 EdgeInsets.only(top: 2.5.h, left: 6.w, right: 6.w, bottom: 5.h),
             child: Column(mainAxisSize: MainAxisSize.min, children: [

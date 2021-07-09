@@ -1,7 +1,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
+import 'package:app/src/widgets/tiki_card/tiki_card.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_controller.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_layout.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_cta_inline.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_figure.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_text.dart';
@@ -18,7 +18,7 @@ class UserAccountModalViewRelease extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        child: TikiCardLayout(
+        child: TikiCard(
           TikiCardViewTitle(_title),
           TikiCardViewText(_text),
           TikiCardViewFigure(HelperImage("email-see")),

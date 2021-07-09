@@ -1,6 +1,6 @@
 import 'package:app/src/utils/helper_image.dart';
+import 'package:app/src/widgets/tiki_card/tiki_card.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_controller.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_layout.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_cta_grid.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_figure.dart';
 import 'package:app/src/widgets/tiki_card/tiki_card_view_text.dart';
@@ -22,7 +22,7 @@ class UserAccountModalViewFollowUs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TikiCardLayout(
+    return TikiCard(
       TikiCardViewTitle(_title),
       TikiCardViewText(_text),
       TikiCardViewFigure(HelperImage("tiki-pool")),

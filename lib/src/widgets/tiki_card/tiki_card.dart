@@ -8,14 +8,14 @@ import 'tiki_card_view_figure.dart';
 import 'tiki_card_view_text.dart';
 import 'tiki_card_view_title.dart';
 
-class TikiCardLayout extends StatelessWidget {
+class TikiCard extends StatelessWidget {
   final TikiCardViewTitle title;
   final TikiCardViewText text;
   final TikiCardViewFigure figure;
   final TikiCardViewCta? cta;
   final Color bgColor;
 
-  const TikiCardLayout(this.title, this.text, this.figure,
+  const TikiCard(this.title, this.text, this.figure,
       {this.cta, this.bgColor = ConfigColor.gallery});
 
   @override
