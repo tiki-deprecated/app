@@ -28,7 +28,17 @@ class UserAccountModalViewBadgesSelect extends StatelessWidget {
               fontSize: 10.sp,
               color: isSelected ? ConfigColor.tikiBlue : ConfigColor.gray),
         ),
-        Padding(
+        Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.w),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x08000000),
+                  blurRadius: 0.75.w,
+                  offset: Offset(-0.5.w, 0.75.w), // Shadow position
+                ),
+              ],
+            ),
             padding: EdgeInsets.only(top: 0.5.h),
             child: Stack(
               alignment: AlignmentDirectional.topStart,

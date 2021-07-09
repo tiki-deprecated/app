@@ -10,6 +10,8 @@ import 'package:sizer/sizer.dart';
 
 class UserAccountModalViewHeader extends StatelessWidget {
   static const String _text = "Account";
+  static const num _paddingHoriz = 6;
+  static const num _paddingVert = 2.5;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +22,17 @@ class UserAccountModalViewHeader extends StatelessWidget {
           Expanded(
               child: Opacity(
                   opacity: 0.0,
-                  child: Image(
-                    alignment: Alignment.centerLeft,
-                    image: AssetImage('res/images/icon-back.png'),
-                    height: 12.sp,
-                    fit: BoxFit.fitHeight,
-                  ))),
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          top: _paddingVert.h,
+                          bottom: _paddingVert.h,
+                          left: _paddingHoriz.w),
+                      child: Image(
+                        alignment: Alignment.centerLeft,
+                        image: AssetImage('res/images/icon-back.png'),
+                        height: 12.sp,
+                        fit: BoxFit.fitHeight,
+                      )))),
           Text(_text,
               style: TextStyle(
                   color: ConfigColor.mardiGras,
@@ -34,12 +41,17 @@ class UserAccountModalViewHeader extends StatelessWidget {
           Expanded(
               child: GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
-                  child: Image(
-                    alignment: Alignment.centerRight,
-                    image: AssetImage('res/images/icon-x.png'),
-                    height: 12.sp,
-                    fit: BoxFit.fitHeight,
-                  )))
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          top: _paddingVert.h,
+                          bottom: _paddingVert.h,
+                          right: _paddingHoriz.w),
+                      child: Image(
+                        alignment: Alignment.centerRight,
+                        image: AssetImage('res/images/icon-x.png'),
+                        height: 12.sp,
+                        fit: BoxFit.fitHeight,
+                      ))))
         ]);
   }
 }

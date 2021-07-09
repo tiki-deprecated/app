@@ -25,43 +25,41 @@ class UserAccountModalLayout extends StatelessWidget {
     return GestureDetector(
         child: Container(
             height: 93.h,
-            padding:
-                EdgeInsets.only(top: 2.5.h, left: 6.w, right: 6.w, bottom: 5.h),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(
-                  margin: EdgeInsets.only(bottom: 1.h),
-                  child: UserAccountModalViewHeader()),
+              UserAccountModalViewHeader(),
               Expanded(
                   child: SingleChildScrollView(
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Container(
-                    margin: EdgeInsets.only(top: 2.h),
-                    child: UserAccountModalViewProfile()),
-                Container(
-                    margin: EdgeInsets.only(top: 4.h),
-                    child: UserAccountModalViewRefer()),
-                Container(
-                    margin: EdgeInsets.only(top: _cardMarginTop.h),
-                    child: UserAccountModalViewRelease()),
-                Container(
-                    margin: EdgeInsets.only(top: _cardMarginTop.h),
-                    child: UserAccountModalViewNews()),
-                Container(
-                    margin: EdgeInsets.only(top: _cardMarginTop.h),
-                    child: UserAccountModalViewCommunity()),
-                Container(
-                    margin: EdgeInsets.only(top: _cardMarginTop.h),
-                    child: UserAccountModalViewFollowUs()),
-                Container(
-                    margin: EdgeInsets.only(top: _cardMarginTop.h),
-                    child: UserAccountModalViewBadges()),
-                Container(
-                    margin: EdgeInsets.only(top: 1.5.h),
-                    child: UserAccountModalViewVersion()),
-                Container(
-                    margin: EdgeInsets.only(top: 3.h),
-                    child: UserAccountModalViewLogout()),
-              ])))
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 6.w, right: 6.w, bottom: 5.h),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
+                            UserAccountModalViewProfile(),
+                            Container(
+                                margin: EdgeInsets.only(top: 4.h),
+                                child: UserAccountModalViewRefer()),
+                            Container(
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewRelease()),
+                            Container(
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewNews()),
+                            Container(
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewCommunity()),
+                            Container(
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewFollowUs()),
+                            Container(
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewBadges()),
+                            Container(
+                                margin: EdgeInsets.only(top: 1.5.h),
+                                child: UserAccountModalViewVersion()),
+                            Container(
+                                margin: EdgeInsets.only(top: 3.h),
+                                child: UserAccountModalViewLogout()),
+                          ]))))
             ])));
   }
 }
