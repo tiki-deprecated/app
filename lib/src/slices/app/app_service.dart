@@ -114,7 +114,7 @@ class AppService extends ChangeNotifier {
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
       await loadAuth();
       final Uri? deepLink = dynamicLink?.link;
-      if (deepLink != null) _handle(deepLink);
+      if (deepLink != null) await _handle(deepLink);
     }, onError: (OnLinkErrorException e) async {
       await Sentry.captureException(e, stackTrace: StackTrace.current);
     });
@@ -123,17 +123,15 @@ class AppService extends ChangeNotifier {
     this.deepLink = data?.link;
   }
 
-  _handle(Uri link) async {
+  Future<void> _handle(Uri link) async {
     final String dlPathBouncer = "/app/bouncer";
     if (link.path == dlPathBouncer) {
       String? otp = link.queryParameters["otp"];
       if (otp != null && otp.isNotEmpty) {
         var user = await authService.verifyOtp(otp);
         if (user != null) {
-          if (user.address != null) {
-            user.isLoggedIn = true;
-            await updateUser(user);
-          }
+          if (user.address != null) user.isLoggedIn = true;
+          await updateUser(user);
         }
       }
     }
