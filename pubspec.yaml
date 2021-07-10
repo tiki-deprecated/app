@@ -57,6 +57,9 @@ flutter:
     - res/md/
     - res/db/
   fonts:
+    - family: TikiIcons
+      fonts:
+        - asset: res/fonts/tiki_icons.ttf
     - family: Koara
       fonts:
         - asset: res/fonts/Koara-Bold.ttf
