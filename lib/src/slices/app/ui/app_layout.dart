@@ -5,6 +5,7 @@
 
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model.dart';
+import 'package:app/src/slices/decision_cards/decision_cards_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,7 @@ class AppLayout extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
           title: AppModel.title,
-          home: service.home.getUI(),
+          home: DecisionCardsService().getUI(), //service.home.getUI(),
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,
