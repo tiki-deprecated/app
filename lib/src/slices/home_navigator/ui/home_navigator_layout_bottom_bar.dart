@@ -1,6 +1,4 @@
-import 'package:app/src/slices/home_navigator/ui/home_navigator_view_button_choices.dart';
-import 'package:app/src/slices/home_navigator/ui/home_navigator_view_button_data.dart';
-import 'package:app/src/slices/home_navigator/ui/home_navigator_view_button_money.dart';
+import 'package:app/src/slices/home_navigator/ui/home_navigator_view_button.dart';
 import 'package:flutter/material.dart';
 
 class HomeNavigatorLayoutBottomBar extends StatelessWidget {
@@ -21,9 +19,9 @@ class HomeNavigatorLayoutBottomBar extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    HomeNavigatorViewButtonData(),
-                    HomeNavigatorViewButtonChoices(),
-                    HomeNavigatorViewButtonMoney()
+                    HomeNavigatorViewButton(0),
+                    HomeNavigatorViewButton(1),
+                    HomeNavigatorViewButton(2),
                   ],
                 ))));
   }
