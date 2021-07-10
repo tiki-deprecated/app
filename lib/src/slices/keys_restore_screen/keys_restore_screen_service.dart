@@ -5,7 +5,6 @@
 
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_routes.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
 import 'package:app/src/slices/keys/keys_service.dart';
 import 'package:app/src/slices/keys/model/keys_model.dart';
@@ -58,8 +57,6 @@ class KeysRestoreScreenService extends ChangeNotifier {
         code: referral,
       );
       await appService.updateUser(user);
-      appService.home = AppModelRoutes.home;
-      appService.reload();
     }
   }
 }

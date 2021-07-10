@@ -1,9 +1,10 @@
 import 'package:app/src/slices/login_screen/ui/login_screen_layout.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'login_screen_service.dart';
 
-class LoginScreenPresenter {
+class LoginScreenPresenter extends Page {
   final LoginScreenService service;
 
   num get marginTitleTop => 5;
@@ -82,7 +83,11 @@ class LoginScreenPresenter {
 
   LoginScreenPresenter(this.service);
 
-  ChangeNotifierProvider<LoginScreenService> render() {
-    return ChangeNotifierProvider.value(value: service, child: LoginScreen());
+  @override
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+        settings: this,
+        builder: (BuildContext context) =>
+            ChangeNotifierProvider.value(value: service, child: LoginScreen()));
   }
 }

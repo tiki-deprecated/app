@@ -1,6 +1,4 @@
 import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_current.dart';
-import 'package:app/src/slices/auth/auth_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -33,29 +31,20 @@ class LoginScreenService extends ChangeNotifier {
   Future<void> submitEmail(BuildContext context) async {
     if (this.model.canSubmit) {
       otpSubmitted();
-      AuthService authService =
-          Provider.of<AppService>(context, listen: false).authService;
-      var result = await authService.requestOtp(this.model.email);
-      if (result) {
-        var appService = Provider.of<AppService>(context,
-            listen: false); //TODO this is unsafe
-        appService.authService.current =
-            AppModelCurrent(email: this.model.email);
-        appService.model.current = appService.authService.current;
-      } else {
-        otpError(context);
-      }
+      AppService appService = Provider.of<AppService>(context, listen: false);
+      var result = await appService.requestOtp(this.model.email);
+      if (!result) otpError();
     }
   }
 
-  void otpError(context) {
+  void otpError() {
     this.model.submitted = false;
     this.model.isError = true;
     notifyListeners();
   }
 
-  Widget getUI() {
-    return this.presenter.render();
+  Page getUI() {
+    return this.presenter;
   }
 
   void otpSubmitted() {

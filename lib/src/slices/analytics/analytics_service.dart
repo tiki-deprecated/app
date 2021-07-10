@@ -33,8 +33,8 @@ class AnalyticsService {
     String apiKey = test ? testApiKey : prodApiKey;
     _logger = Amplitude.getInstance(instanceName: project);
     _logger!.enableCoppaControl();
-    _logger!.setUserId(null);
     _logger!.init(apiKey);
+    _logger!.setUserId(null);
     _logger!.logEvent('Amplitude startup');
   }
 

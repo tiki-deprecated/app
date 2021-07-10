@@ -3,12 +3,17 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/auth/model/auth_model_token.dart';
+import 'package:app/src/slices/keys/model/keys_model.dart';
+
 class AppModelUser {
   String? email;
   String? address;
   bool? isLoggedIn;
   String? code;
   Uri? referral;
+  KeysModel? keys;
+  AuthModelToken? token;
 
   AppModelUser(
       {this.email, this.address, this.isLoggedIn, this.referral, this.code});
