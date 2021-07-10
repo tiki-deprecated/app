@@ -15,35 +15,28 @@ class HeaderBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(right: 4.6.w),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              child: GestureDetector(
-            onTap: () => UserAccountModalService().presenter.showModal(context),
-            child: Container(
-                padding: EdgeInsets.only(
-                    left: _paddingHoriz.w,
-                    top: _paddingTop.h,
-                    bottom: _paddingBottom.h),
-                child: Image(
-                  image: AssetImage('res/images/icon-account.png'),
-                  height: 4.h,
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.centerLeft,
-                )),
-          )),
-          Container(
-              padding: EdgeInsets.only(
-                  left: _paddingHoriz.w,
-                  top: _paddingTop.h,
-                  bottom: _paddingBottom.h),
-              child: HeaderBarViewBadge("BETA TESTER"))
-        ],
-      ),
-    );
+    return GestureDetector(
+        onTap: () => UserAccountModalService().presenter.showModal(context),
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: EdgeInsets.only(
+              left: _paddingHoriz.w,
+              right: _paddingHoriz.w,
+              top: _paddingTop.h,
+              bottom: _paddingBottom.h),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image(
+                image: AssetImage('res/images/icon-account.png'),
+                height: 4.h,
+                fit: BoxFit.fitHeight,
+                alignment: Alignment.centerLeft,
+              ),
+              HeaderBarViewBadge("BETA TESTER")
+            ],
+          ),
+        ));
   }
 }

@@ -6,7 +6,6 @@
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/app/model/app_model_user.dart';
-import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:app/src/slices/user_referral/model/user_referral_model.dart';
 import 'package:app/src/slices/user_referral/user_referral_controller.dart';
 import 'package:app/src/slices/user_referral/user_referral_presenter.dart';
@@ -32,7 +31,7 @@ class UserReferralService extends ChangeNotifier {
     return this.presenter.render();
   }
 
-   String getCode(BuildContext context) {
+  String getCode(BuildContext context) {
     AppModelUser user =
         Provider.of<AppService>(context, listen: false).model.user!;
     this.model.code = user.code ?? "";
@@ -65,8 +64,7 @@ class UserReferralService extends ChangeNotifier {
       }
     }).onError((error, stackTrace) {
       // SEND TO SENTRY
-      Provider.of<TikiScreenService>(context, listen: false)
-          .removeGoogleAccount();
+      //TODO FIX Provider.of<TikiScreenService>(context, listen: false).removeGoogleAccount();
       appService.logout();
     });
   }
