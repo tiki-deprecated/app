@@ -4,12 +4,12 @@
  */
 
 import 'package:app/src/slices/app/app_service.dart';
+import 'package:app/src/slices/data_screen/data_screen_service.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:app/src/slices/login_screen/ui/login_screen_layout_foreground_inbox.dart';
-import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -29,8 +29,8 @@ class LoginScreen extends StatelessWidget {
       child = KeysSaveScreenService().getUI();
     } else if (appService.home is KeysRestoreScreenService) {
       child = KeysRestoreScreenService(appService).getUI();
-    } else if (appService.home is TikiScreenService) {
-      child = TikiScreenService().getUI();
+    } else if (appService.home is DataScreenService) {
+      child = DataScreenService().getUI();
     }
     return child;
   }

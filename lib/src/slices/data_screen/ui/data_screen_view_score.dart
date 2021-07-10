@@ -35,7 +35,7 @@ class DataScreenViewScore extends StatelessWidget {
               color: ConfigColor.tikiBlue),
         ),
         Container(
-            margin: EdgeInsets.only(top: 3.h),
+            margin: EdgeInsets.only(top: 4.h),
             child: Image(
               image: AssetImage('res/images/' + image + '.png'),
               height: 17.h,
@@ -45,6 +45,7 @@ class DataScreenViewScore extends StatelessWidget {
             margin: EdgeInsets.only(top: 1.h),
             child: Text(
               summary,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: "Koara",
                   fontWeight: FontWeight.bold,
@@ -52,8 +53,9 @@ class DataScreenViewScore extends StatelessWidget {
                   color: color),
             )),
         Container(
-            margin: EdgeInsets.only(top: 0.5.h),
+            margin: EdgeInsets.only(top: 0.75.h),
             child: Text(description,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: ConfigColor.tikiBlue,

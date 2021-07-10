@@ -6,6 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/data_screen/data_screen_service.dart';
 import 'package:app/src/slices/data_screen/ui/data_screen_view_score.dart';
+import 'package:app/src/widgets/link_account/link_account.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -15,7 +16,8 @@ import 'data_screen_view_soon.dart';
 class DataScreenLayoutBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var model = Provider.of<DataScreenService>(context).model;
+    var service = Provider.of<DataScreenService>(context);
+    var isLinked = service.model.googleAccount != null;
     return GestureDetector(
         child: SingleChildScrollView(
             physics: ClampingScrollPhysics(),
@@ -24,18 +26,25 @@ class DataScreenLayoutBody extends StatelessWidget {
                 child: Column(
                   children: [
                     DataScreenViewScore(
-                        image: model.isGmailLinked
-                            ? "data-score-happy"
-                            : "data-score-sad",
-                        summary: model.isGmailLinked
-                            ? "All good!"
-                            : "Uh-oh. No data just yet!",
-                        description: model.isGmailLinked
-                            ? "Your account is linked now"
+                        image: isLinked ? "data-score-happy" : "data-score-sad",
+                        summary:
+                            isLinked ? "All good!" : "Uh-oh. No data just yet!",
+                        description: isLinked
+                            ? "Your account is linked now. See what data Gmail holds on you by tapping on the button below."
                             : "Get started by adding a Gmail account",
-                        color: model.isGmailLinked
-                            ? ConfigColor.jade
-                            : ConfigColor.ikb),
+                        color: isLinked ? ConfigColor.jade : ConfigColor.ikb),
+                    Container(
+                      margin: EdgeInsets.only(top: 4.h),
+                      child: LinkAccount(
+                        username: service.model.googleAccount?.email,
+                        type: "Gmail",
+                        linkedIcon: "account-soon-gmail",
+                        unlinkedIcon: "icon-link-gmail",
+                        onLink: () => service.addGoogleAccount(),
+                        onUnlink: () => service.removeGoogleAccount(),
+                        onSee: () => service.controller.openGmailCards(context),
+                      ),
+                    ),
                     Container(
                         margin: EdgeInsets.only(top: 2.h),
                         child: DataScreenViewSoon())

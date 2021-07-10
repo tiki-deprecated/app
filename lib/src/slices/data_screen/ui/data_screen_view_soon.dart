@@ -18,7 +18,7 @@ class DataScreenViewSoon extends StatelessWidget {
             EdgeInsets.only(top: 2.5.h, bottom: 3.5.h, left: 7.w, right: 7.w),
         decoration: BoxDecoration(
           color: ConfigColor.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(4.w),
           boxShadow: [
             BoxShadow(
               color: Color(0x0D000000),
