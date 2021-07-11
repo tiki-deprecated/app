@@ -32,7 +32,7 @@ class LinkAccountViewUnlink extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: _fontSize.sp,
-                      color: ConfigColor.grenadier),
+                      color: ConfigColor.tikiRed),
                 ),
                 Container(
                     margin: EdgeInsets.only(left: 1.w),

@@ -3,27 +3,27 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
+import 'package:app/src/config/config_size.dart';
 import 'package:app/src/widgets/header_bar/header_bar_view_badge.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class HeaderBar extends StatelessWidget {
-  static const num _paddingHoriz = 4.6;
-  static const num _paddingTop = 1;
-  static const num _paddingBottom = 3;
+  final Function()? onTap;
+
+  HeaderBar(this.onTap);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => UserAccountModalService().presenter.showModal(context),
+        onTap: onTap, //UserAccountModalService().presenter.showModal(context),
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(
-              left: _paddingHoriz.w,
-              right: _paddingHoriz.w,
-              top: _paddingTop.h,
-              bottom: _paddingBottom.h),
+              left: ConfigSize.marginHeaderH.w,
+              right: ConfigSize.marginHeaderH.w,
+              top: ConfigSize.marginHeaderT.h,
+              bottom: ConfigSize.marginHeaderB.h),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

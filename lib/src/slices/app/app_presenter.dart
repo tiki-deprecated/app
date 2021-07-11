@@ -2,10 +2,11 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+
 import 'package:provider/provider.dart';
 
 import 'app_service.dart';
-import 'ui/app_layout.dart';
+import 'ui/app_service_layout.dart';
 
 class AppPresenter {
   final AppService appService;

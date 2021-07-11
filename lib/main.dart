@@ -1,49 +1,32 @@
-import 'package:app/src/slices/analytics/analytics_service.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/database/database_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-/// The dart entrypoint
-///
-/// Initializes the app execution and configurates its dependencies.
-/// [WidgetsFlutterBinding.ensureInitialized] waits until widget tree binding is
-/// initialized to configure the app.
-/// initializeDependencies initializes the app dependencies.
-/// [SentryFlutter] enables Sentry.io monitoring in the app.
+import 'src/config/config_sentry.dart';
+import 'src/slices/app/app_service.dart';
+
 Future<void> main() async {
-  await initializeDependencies();
-  var appService = AppService();
-  await appService.load();
-  // SentryFlutter.init(
-  //     (options) async => options
-  //       ..dsn = ConfigSentry.dsn
-  //       ..environment = ConfigSentry.environment
-  //       ..release = (await PackageInfo.fromPlatform()).version
-  //       ..sendDefaultPii = false,
-  //     appRunner: () =>
-  runApp(appService.getUI());
-  // ));
+  AppService appService = AppService();
+  await initializeDependencies(appService);
+  SentryFlutter.init(
+      (options) async => options
+        ..dsn = ConfigSentry.dsn
+        ..environment = ConfigSentry.environment
+        ..release = (await PackageInfo.fromPlatform()).version
+        ..sendDefaultPii = false,
+      appRunner: () => runApp(appService.getUI()));
 }
 
-/// Initializes App Dependencies
-///
-/// [Firebase.initializeApp] initializes Firebase.
-/// [FlutterSecureStorage] initializes the secure storage that will keep the keys.
-/// [HelperLogin] handles login state.
-/// [SystemChrome] uses setPreferedOrientation to keep app in portrait
-/// [AnalyticsService] enables in-app anonymous analytics with Amplitude.
-/// [DatabaseRepository] SQLite connector
-Future<void> initializeDependencies() async {
+Future<void> initializeDependencies(AppService appService) async {
   WidgetsFlutterBinding.ensureInitialized();
-  AnalyticsService.getLogger();
+  /*AnalyticsService.getLogger();*/
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
   await Firebase.initializeApp();
-  await DatabaseRepository.instance!.database;
+  /*await DatabaseRepository.instance!.database;*/
+  //await appService.load();
 }

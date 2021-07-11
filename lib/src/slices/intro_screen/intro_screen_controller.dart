@@ -1,3 +1,4 @@
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +22,10 @@ class IntroScreenController {
   }
 
   void skipToLogin(context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
-    service.skipToLogin();
+    //var service = Provider.of<IntroScreenService>(context, listen: false);
+    //service.skipToLogin();
+    var service = Provider.of<LoginFlowService>(context, listen: false);
+    service.to();
   }
 
   void onHorizontalDrag(BuildContext context, DragEndDetails dragEndDetails) {

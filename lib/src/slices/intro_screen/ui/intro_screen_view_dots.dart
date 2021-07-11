@@ -29,7 +29,7 @@ class IntroScreenDots extends StatelessWidget {
       height: size,
       width: size,
       decoration: BoxDecoration(
-          color: active ? ConfigColor.mardiGras : ConfigColor.white,
+          color: active ? ConfigColor.tikiPurple : ConfigColor.white,
           borderRadius: BorderRadius.all(Radius.circular(size * 2))),
     );
   }

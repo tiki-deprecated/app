@@ -12,26 +12,6 @@ class IntroScreenPresenter extends Page {
 
   get textSkip => introStrings.skip;
 
-  num get fontSizeSkip => 15;
-
-  num get fontSizeTitle => 34;
-
-  num get fontSizeSubtitle => 15;
-
-  num get fontSizeButton => 15;
-
-  num get marginSkipTop => 2;
-
-  num get marginTitleTop => 15;
-
-  num get marginTextTop => 2;
-
-  num get marginTextRight => 12;
-
-  num get marginButtonTop => 5;
-
-  num get marginHorizontal => 6;
-
   get textButton => introStrings.slides[currentSlideIndex]["button"];
 
   get textSubtitle => introStrings.slides[currentSlideIndex]["subtitle"];
@@ -40,11 +20,13 @@ class IntroScreenPresenter extends Page {
 
   get textTitle => introStrings.slides[currentSlideIndex]["title"];
 
-  @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
-        settings: this,
-        builder: (BuildContext context) =>
-            ChangeNotifierProvider.value(value: service, child: IntroScreen()));
+      settings: this,
+      builder: (BuildContext context) {
+        return ChangeNotifierProvider.value(
+            value: service, child: IntroScreen());
+      },
+    );
   }
 }

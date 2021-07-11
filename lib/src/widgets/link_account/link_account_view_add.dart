@@ -42,7 +42,7 @@ class LinkAccountViewAdd extends StatelessWidget {
               fit: BoxFit.fitHeight,
             ),
             Container(
-                color: ConfigColor.gallery,
+                color: ConfigColor.greyTwo,
                 width: 1.sp,
                 height: _height.h,
                 margin: EdgeInsets.only(left: 4.w)),

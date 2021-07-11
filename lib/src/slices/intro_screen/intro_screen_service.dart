@@ -35,10 +35,6 @@ class IntroScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Page getUI() {
-    return presenter;
-  }
-
   void moveToNextScreen() {
     model.moveToNextSlide();
     notifyListeners();

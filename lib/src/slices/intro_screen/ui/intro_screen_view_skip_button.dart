@@ -22,9 +22,9 @@ class IntroScreenSkipButton extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: ConfigColor.black,
+                color: ConfigColor.greySix,
                 fontWeight: FontWeight.bold,
-                fontSize: service.presenter.fontSizeSkip.sp,
+                fontSize: 15.sp,
               ),
             )));
   }

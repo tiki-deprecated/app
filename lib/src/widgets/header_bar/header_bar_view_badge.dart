@@ -33,13 +33,13 @@ class HeaderBarViewBadge extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     color: ConfigColor.white,
-                    fontSize: 8.sp),
+                    fontSize: 10.81.sp),
               ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                   child: Image(
                     image: AssetImage('res/images/icon-star.png'),
-                    height: 8.sp,
+                    height: 10.81.sp,
                     fit: BoxFit.fitHeight,
                   )),
             ],

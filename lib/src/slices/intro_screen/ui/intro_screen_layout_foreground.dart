@@ -14,6 +14,9 @@ import 'intro_screen_view_subtitle.dart';
 import 'intro_screen_view_title.dart';
 
 class IntroScreenForeground extends StatelessWidget {
+  static const num _marginTextRight = 12;
+  static const num _marginTextTop = 2;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: _foreground(context));
@@ -22,32 +25,27 @@ class IntroScreenForeground extends StatelessWidget {
   Widget _foreground(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context);
     return Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: service.presenter.marginHorizontal.w),
+        padding: EdgeInsets.symmetric(horizontal: 6.w),
         child: Column(children: [
           Container(
-              margin: EdgeInsets.only(top: service.presenter.marginSkipTop.h),
+              margin: EdgeInsets.only(top: 2.h),
               alignment: Alignment.topRight,
               child: IntroScreenSkipButton()),
           Container(
-              margin: EdgeInsets.only(
-                  top: service.presenter.marginTitleTop.h,
-                  right: service.presenter.marginTextRight.w),
+              margin: EdgeInsets.only(top: 15.h, right: _marginTextRight.w),
               alignment: Alignment.centerLeft,
               child: IntroScreenTitle()),
           Container(
               margin: EdgeInsets.only(
-                  top: service.presenter.marginTextTop.h,
-                  right: service.presenter.marginTextRight.w),
+                  top: _marginTextTop.h, right: _marginTextRight.w),
               child: IntroScreenSubtitle()),
           Container(
               margin: EdgeInsets.only(
-                  top: service.presenter.marginTextTop.h,
-                  right: service.presenter.marginTextRight.w),
+                  top: _marginTextTop.h, right: _marginTextRight.w),
               alignment: Alignment.centerLeft,
               child: IntroScreenDots()),
           Container(
-              margin: EdgeInsets.only(top: service.presenter.marginButtonTop.h),
+              margin: EdgeInsets.only(top: 5.h),
               alignment: Alignment.centerLeft,
               child: IntroScreenButton()),
         ]));
