@@ -4,5 +4,5 @@
  */
 
 class HomeScreenModel {
-  var currentScreenIndex = 0;
+  var currentScreenIndex = 1;
 }

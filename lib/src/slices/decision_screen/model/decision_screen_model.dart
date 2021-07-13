@@ -3,4 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class DecisionScreenModel {}
+class DecisionScreenModel {
+  bool isLinked = false;
+}
