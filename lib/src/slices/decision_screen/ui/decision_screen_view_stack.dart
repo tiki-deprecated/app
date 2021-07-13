@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class DecisionCardsStack extends StatelessWidget {
+class DecisionScreenViewStack extends StatelessWidget {
   final List<Widget> children;
   final Widget noCardsPlaceholder;
 
-  const DecisionCardsStack(
+  const DecisionScreenViewStack(
       {Key? key, required this.noCardsPlaceholder, required this.children})
       : super(key: key);
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class DecisionCardView extends StatelessWidget {
+class DecisionScreenViewCard extends StatelessWidget {
   final Widget child;
   final Function onSwipeRight;
   final Function onSwipeLeft;
 
-  const DecisionCardView(
+  const DecisionScreenViewCard(
       {required this.child,
       required this.onSwipeRight,
       required this.onSwipeLeft});
