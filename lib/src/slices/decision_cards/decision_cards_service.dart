@@ -14,8 +14,4 @@ class DecisionCardsService extends ChangeNotifier {
     controller = DecisionCardsController();
     model = DecisionCardsModel();
   }
-
-  getUI() {
-    return presenter.render();
-  }
 }

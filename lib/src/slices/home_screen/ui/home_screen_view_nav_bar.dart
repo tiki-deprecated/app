@@ -37,6 +37,7 @@ class HomeScreenViewNavBar extends StatelessWidget {
               onTap: (index) => service.controller.onNavTap(index),
               items: [
                 HomeScreenViewNavBarItem("Data", "eye-icon"),
+                HomeScreenViewNavBarItem("Choices", "choices-icon"),
                 HomeScreenViewNavBarItem("Money", "money-icon")
               ],
               backgroundColor: ConfigColor.white,
