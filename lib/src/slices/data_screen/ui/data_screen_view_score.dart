@@ -35,7 +35,7 @@ class DataScreenViewScore extends StatelessWidget {
               color: ConfigColor.tikiBlue),
         ),
         Container(
-            margin: EdgeInsets.only(top: 4.h),
+            margin: EdgeInsets.only(top: 1.h),
             child: Image(
               image: AssetImage('res/images/' + image + '.png'),
               height: 17.h,

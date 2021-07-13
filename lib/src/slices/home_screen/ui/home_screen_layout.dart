@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/data_screen/data_screen_service.dart';
 import 'package:app/src/slices/decision_cards/decision_cards_service.dart';
 import 'package:app/src/slices/home_screen/home_screen_service.dart';
@@ -17,6 +18,7 @@ class HomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeScreenService service = Provider.of<HomeScreenService>(context);
+    ApiGoogleService googleService = Provider.of<ApiGoogleService>(context);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: Scaffold(
@@ -26,7 +28,7 @@ class HomeScreenLayout extends StatelessWidget {
               child: IndexedStack(
                   index: service.model.currentScreenIndex,
                   children: [
-                    DataScreenService().presenter.render(),
+                    DataScreenService(googleService).presenter.render(),
                     DecisionCardsService().presenter.render(),
                     WalletScreenService().presenter.render(),
                   ]),

@@ -34,20 +34,25 @@ import 'model/login_flow_model_state.dart';
 class LoginFlowService extends ChangeNotifier {
   final LoginFlowModel model;
   late final LoginFlowDelegate delegate;
-  final ApiUserService apiUserService;
+  late final ApiUserService apiUserService;
   late final ApiBouncerService apiBouncerService;
   late final ApiBlockchainService apiBlockchainService;
+  List<void Function()> logoutCallbacks = [];
 
-  LoginFlowService(this.apiUserService) : this.model = LoginFlowModel() {
+  LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
     initDynamicLinks();
   }
 
   Future<void> initialize(
-      {required ApiBouncerService apiBouncerService,
-      required ApiBlockchainService apiBlockchainService}) async {
+      {required ApiUserService apiUserService,
+      required ApiBouncerService apiBouncerService,
+      required ApiBlockchainService apiBlockchainService,
+      Iterable<void Function()>? logoutCallbacks}) async {
+    this.apiUserService = apiUserService;
     this.apiBouncerService = apiBouncerService;
     this.apiBlockchainService = apiBlockchainService;
+    if (logoutCallbacks != null) this.logoutCallbacks.addAll(logoutCallbacks);
     await loadUser();
 
     if (this.model.user?.user?.isLoggedIn == true)
@@ -88,6 +93,11 @@ class LoginFlowService extends ChangeNotifier {
     ];
   }
 
+  void registerLogout(void Function() logout) {
+    if (!this.logoutCallbacks.contains(logout))
+      this.logoutCallbacks.add(logout);
+  }
+
   void changeState(LoginFlowModelState state) {
     this.model.state = state;
     notifyListeners();
@@ -108,6 +118,7 @@ class LoginFlowService extends ChangeNotifier {
       this.model.user!.user!.isLoggedIn = false;
       await apiUserService.setUser(this.model.user!.user!);
     }
+    logoutCallbacks.forEach((func) => func());
     setReturningUser();
   }
 

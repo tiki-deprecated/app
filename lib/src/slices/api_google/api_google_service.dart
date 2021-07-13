@@ -3,18 +3,16 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-//google api connects
-//load and return info cards
-
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:app/src/utils/helper_json.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'repository/google_info_repository.dart';
+import 'repository/api_google_repository_info.dart';
 
-class GoogleService {
+class ApiGoogleService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final GoogleInfoRepository _googleInfoRepository = GoogleInfoRepository();
+  final ApiGoogleRepositoryInfo _googleInfoRepository =
+      ApiGoogleRepositoryInfo();
 
   getConnectedUser() async {
     return await _googleSignIn.signInSilently();

@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/google/google_service.dart';
+import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,10 +16,9 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenModel model;
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
+  final ApiGoogleService googleService;
 
-  GoogleService googleService = GoogleService();
-
-  DataScreenService() {
+  DataScreenService(this.googleService) {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
@@ -27,7 +26,6 @@ class DataScreenService extends ChangeNotifier {
   }
 
   initializeGoogleRepo() async {
-    googleService = GoogleService();
     this.model.googleAccount = await googleService.getConnectedUser();
     notifyListeners();
   }

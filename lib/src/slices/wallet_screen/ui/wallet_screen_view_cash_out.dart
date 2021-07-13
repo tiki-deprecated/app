@@ -21,13 +21,13 @@ class WalletScreenViewCashOut extends StatelessWidget {
         decoration: BoxDecoration(
           color: ConfigColor.white,
           borderRadius: BorderRadius.circular(_borderRadius.w),
-          boxShadow: [
+          /*boxShadow: [
             BoxShadow(
               color: Color(0x0D000000),
               blurRadius: 2.w,
               offset: Offset(0.75.w, 0.75.w), // Shadow position
             ),
-          ],
+          ],*/
         ),
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 2.h),

@@ -17,15 +17,16 @@ class DataScreenViewSoon extends StatelessWidget {
         padding:
             EdgeInsets.only(top: 2.5.h, bottom: 3.5.h, left: 7.w, right: 7.w),
         decoration: BoxDecoration(
-          color: ConfigColor.white,
+          //color: ConfigColor.greyTwo,
           borderRadius: BorderRadius.circular(4.w),
-          boxShadow: [
+          //border: Border.all(color: ConfigColor.greyThree)
+          /*boxShadow: [
             BoxShadow(
               color: Color(0x0D000000),
               blurRadius: 2.w,
               offset: Offset(0.75.w, 0.75.w), // Shadow position
             ),
-          ],
+          ],*/
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

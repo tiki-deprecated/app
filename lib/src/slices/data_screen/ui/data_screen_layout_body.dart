@@ -34,7 +34,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                             : "Get started by adding a Gmail account",
                         color: isLinked ? ConfigColor.green : ConfigColor.blue),
                     Container(
-                      margin: EdgeInsets.only(top: 4.h),
+                      margin: EdgeInsets.only(top: 2.h),
                       child: LinkAccount(
                         username: service.model.googleAccount?.email,
                         type: "Gmail",
