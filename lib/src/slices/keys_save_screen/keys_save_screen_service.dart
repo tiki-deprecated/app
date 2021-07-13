@@ -31,5 +31,5 @@ class KeysSaveScreenService extends ChangeNotifier {
   }
 
   Future<void> saveAndLogin() async =>
-      await this.loginFlowService.saveAndLogin();
+      await this.loginFlowService.registerAndLogin();
 }

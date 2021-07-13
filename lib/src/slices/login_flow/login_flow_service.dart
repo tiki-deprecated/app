@@ -34,20 +34,25 @@ import 'model/login_flow_model_state.dart';
 class LoginFlowService extends ChangeNotifier {
   final LoginFlowModel model;
   late final LoginFlowDelegate delegate;
-  final ApiUserService apiUserService;
+  late final ApiUserService apiUserService;
   late final ApiBouncerService apiBouncerService;
   late final ApiBlockchainService apiBlockchainService;
+  List<void Function()> logoutCallbacks = [];
 
-  LoginFlowService(this.apiUserService) : this.model = LoginFlowModel() {
+  LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
     initDynamicLinks();
   }
 
   Future<void> initialize(
-      {required ApiBouncerService apiBouncerService,
-      required ApiBlockchainService apiBlockchainService}) async {
+      {required ApiUserService apiUserService,
+      required ApiBouncerService apiBouncerService,
+      required ApiBlockchainService apiBlockchainService,
+      Iterable<void Function()>? logoutCallbacks}) async {
+    this.apiUserService = apiUserService;
     this.apiBouncerService = apiBouncerService;
     this.apiBlockchainService = apiBlockchainService;
+    if (logoutCallbacks != null) this.logoutCallbacks.addAll(logoutCallbacks);
     await loadUser();
 
     if (this.model.user?.user?.isLoggedIn == true)
@@ -88,6 +93,11 @@ class LoginFlowService extends ChangeNotifier {
     ];
   }
 
+  void registerLogout(void Function() logout) {
+    if (!this.logoutCallbacks.contains(logout))
+      this.logoutCallbacks.add(logout);
+  }
+
   void changeState(LoginFlowModelState state) {
     this.model.state = state;
     notifyListeners();
@@ -108,6 +118,7 @@ class LoginFlowService extends ChangeNotifier {
       this.model.user!.user!.isLoggedIn = false;
       await apiUserService.setUser(this.model.user!.user!);
     }
+    logoutCallbacks.forEach((func) => func());
     setReturningUser();
   }
 
@@ -160,6 +171,7 @@ class LoginFlowService extends ChangeNotifier {
   }
 
   Future<bool> verifyOtp(String otp) async {
+    if (this.model.user!.user!.isLoggedIn == true) return true;
     HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
         await apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
     if (HelperApiUtils.isOk(rsp.code)) {
@@ -186,37 +198,60 @@ class LoginFlowService extends ChangeNotifier {
       return false;
   }
 
-  Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
-    String errorMsg = "";
-    if (keys != null) this.model.user!.keys = keys;
+  Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
+    if (await _saveKeys(keys: keys)) {
+      if (await _registerKeys(keys: keys)) {
+        setLoggedIn();
+        await loadUser();
+        return true;
+      }
+    }
+    return false;
+  }
 
+  Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
+    if (await _saveKeys(keys: keys)) {
+      setLoggedIn();
+      await loadUser();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> _saveKeys({ApiUserModelKeys? keys}) async {
+    if (keys != null) this.model.user!.keys = keys;
     if (this.model.user?.keys != null) {
       await this.apiUserService.setKeys(this.model.user!.keys!);
-
       this.model.user!.user!.address = this.model.user!.keys!.address;
       this.model.user!.user!.isLoggedIn = true;
       await this.apiUserService.setUser(this.model.user!.user!);
+      return true;
+    } else {
+      ConfigSentry.message("Trying to save null keys. Skipping",
+          level: ConfigSentry.levelError);
+      return false;
+    }
+  }
 
-      HelperApiRsp<ApiBlockchainModelAddressRsp> rsp = await this
-          .apiBlockchainService
-          .issue(ApiBlockchainModelAddressReq(
-              this.model.user?.keys!.dataPublicKey,
-              this.model.user?.keys!.signPublicKey));
-
-      if (HelperApiUtils.isOk(rsp.code)) {
-        ApiBlockchainModelAddressRsp data = rsp.data;
-        if (data.address == this.model.user!.keys!.address) {
-          setLoggedIn();
-          await loadUser();
-          return true;
-        } else
-          errorMsg = "Failed to issue Blockchain Address.Skipping";
-      } else
-        errorMsg = "Failed to issue Blockchain Address.Skipping";
-    } else
-      errorMsg = "Trying to save null keys. Skipping";
-
-    ConfigSentry.message(errorMsg, level: ConfigSentry.levelError);
-    return false;
+  Future<bool> _registerKeys({ApiUserModelKeys? keys}) async {
+    if (keys != null) this.model.user!.keys = keys;
+    HelperApiRsp<ApiBlockchainModelAddressRsp> rsp = await this
+        .apiBlockchainService
+        .issue(ApiBlockchainModelAddressReq(
+            this.model.user?.keys!.dataPublicKey,
+            this.model.user?.keys!.signPublicKey));
+    if (HelperApiUtils.isOk(rsp.code)) {
+      ApiBlockchainModelAddressRsp data = rsp.data;
+      if (data.address != this.model.user!.keys!.address) {
+        ConfigSentry.message("Failed to issue Blockchain Address.Skipping",
+            level: ConfigSentry.levelError);
+        return false;
+      }
+    } else {
+      ConfigSentry.message("Failed to issue Blockchain Address.Skipping",
+          level: ConfigSentry.levelError);
+      return false;
+    }
+    return true;
   }
 }

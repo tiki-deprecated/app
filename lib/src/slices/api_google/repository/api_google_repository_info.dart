@@ -7,7 +7,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-class GoogleInfoRepository {
+class ApiGoogleRepositoryInfo {
   static const _dbLocation = "res/db/google_info_db.json";
 
   Future<List<dynamic>> load() async {

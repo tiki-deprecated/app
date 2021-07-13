@@ -15,7 +15,7 @@ import 'home_screen_view_nav_bar_item.dart';
 
 class HomeScreenViewNavBar extends StatelessWidget {
   static const double _fontSize = 12;
-  static const double _radius = 53;
+  static const double _radius = 50;
 
   @override
   Widget build(BuildContext context) {
