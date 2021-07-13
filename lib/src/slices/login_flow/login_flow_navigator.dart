@@ -17,6 +17,9 @@ class LoginFlowNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     var service = Provider.of<LoginFlowService>(context);
     return Navigator(
-        key: navigatorKey, pages: service.pages(), onPopPage: service.pop);
+      key: navigatorKey,
+      pages: service.getPages(),
+      onPopPage: service.onPopPage,
+    );
   }
 }

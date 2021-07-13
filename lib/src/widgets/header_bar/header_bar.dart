@@ -4,19 +4,16 @@
  */
 
 import 'package:app/src/config/config_size.dart';
+import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:app/src/widgets/header_bar/header_bar_view_badge.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class HeaderBar extends StatelessWidget {
-  final Function()? onTap;
-
-  HeaderBar(this.onTap);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onTap, //UserAccountModalService().presenter.showModal(context),
+        onTap: () => UserAccountModalService().presenter.showModal(context),
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(

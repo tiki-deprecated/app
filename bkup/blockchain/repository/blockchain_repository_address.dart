@@ -7,9 +7,9 @@ import 'dart:convert';
 
 import 'package:app/src/config/config_domain.dart';
 import 'package:app/src/slices/api/helpers/helper_api_auth.dart';
+import 'package:app/src/slices/api/helpers/helper_api_headers.dart';
 import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
-import 'package:app/src/slices/api/helpers/helper_headers.dart';
-import 'package:app/src/slices/blockchain/model/blockchain_model_address_rsp_code.dart';
+import 'package:app/src/slices/blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/blockchain_model_address_refer_rsp.dart';

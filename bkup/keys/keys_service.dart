@@ -1,8 +1,8 @@
 import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
-import 'package:app/src/slices/blockchain/model/blockchain_model_address_req.dart';
-import 'package:app/src/slices/blockchain/model/blockchain_model_address_rsp.dart';
+import 'package:app/src/slices/blockchain/model/api_blockchain_model_address_req.dart';
+import 'package:app/src/slices/blockchain/model/api_blockchain_model_address_rsp.dart';
 import 'package:app/src/slices/blockchain/repository/blockchain_repository_address.dart';
-import 'package:app/src/slices/keys/repository/secure_storage_repository_keys.dart';
+import 'package:app/src/slices/keys/repository/api_user_repository_keys.dart';
 import 'package:app/src/utils/crypto/helper_crypto.dart';
 import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
 import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';

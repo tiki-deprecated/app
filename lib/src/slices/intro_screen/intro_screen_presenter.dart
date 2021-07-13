@@ -8,7 +8,7 @@ import 'ui/intro_screen_layout.dart';
 class IntroScreenPresenter extends Page {
   final IntroScreenService service;
 
-  IntroScreenPresenter(this.service);
+  IntroScreenPresenter(this.service) : super(key: ValueKey("IntroScreen"));
 
   get textSkip => introStrings.skip;
 
@@ -20,13 +20,11 @@ class IntroScreenPresenter extends Page {
 
   get textTitle => introStrings.slides[currentSlideIndex]["title"];
 
+  @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
-      settings: this,
-      builder: (BuildContext context) {
-        return ChangeNotifierProvider.value(
-            value: service, child: IntroScreen());
-      },
-    );
+        settings: this,
+        builder: (BuildContext context) =>
+            ChangeNotifierProvider.value(value: service, child: IntroScreen()));
   }
 }

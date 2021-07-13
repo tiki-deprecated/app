@@ -7,7 +7,7 @@ import 'dart:async';
 
 import 'package:app/src/slices/api/api_service.dart';
 import 'package:app/src/slices/auth/auth_service.dart';
-import 'package:app/src/slices/keys/model/keys_model.dart';
+import 'package:app/src/slices/keys/model/api_user_model_keys.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';

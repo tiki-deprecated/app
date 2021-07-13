@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/slices/auth/model/auth_model_token.dart';
-import 'package:app/src/slices/keys/model/keys_model.dart';
+import 'package:app/src/slices/keys/model/api_user_model_keys.dart';
 
 class AppModelUser {
   String? email;

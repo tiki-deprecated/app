@@ -3,15 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/login_flow/model/login_flow_model_path.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'login_flow_navigator.dart';
 import 'login_flow_service.dart';
 
-class LoginFlowDelegate extends RouterDelegate<LoginFlowModelPath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<LoginFlowModelPath> {
+class LoginFlowDelegate extends RouterDelegate
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   final GlobalKey<NavigatorState> navigatorKey;
   final LoginFlowService service;
 
@@ -24,5 +23,5 @@ class LoginFlowDelegate extends RouterDelegate<LoginFlowModelPath>
   }
 
   @override
-  Future<void> setNewRoutePath(LoginFlowModelPath configuration) async {}
+  Future<void> setNewRoutePath(configuration) async {}
 }

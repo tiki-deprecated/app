@@ -5,7 +5,7 @@ import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.d
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/slices/login_navigator/login_navigator_service.dart';
 import 'package:app/src/slices/login_navigator/model/login_navigator_model.dart';
-import 'package:app/src/slices/login_screen/login_screen_service.dart';
+import 'package:app/src/slices/login_screen/login_screen_email_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

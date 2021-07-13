@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys/model/keys_model.dart';
-import 'package:app/src/slices/secure_storage/secure_storage_repository.dart';
+import 'package:app/src/slices/keys/model/api_user_model_keys.dart';
+import 'package:app/src/slices/secure_storage/abstract_ss_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageRepositoryKeys extends SecureStorageRepository<KeysModel> {

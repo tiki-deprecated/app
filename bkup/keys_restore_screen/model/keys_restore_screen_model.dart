@@ -1,3 +1,0 @@
-class KeysRestoreScreenServiceModel {
-  String? manualKeys;
-}

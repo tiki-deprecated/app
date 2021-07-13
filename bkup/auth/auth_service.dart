@@ -4,17 +4,17 @@
  */
 
 import 'package:app/src/slices/api/helpers/helper_api_rsp.dart';
-import 'package:app/src/slices/app/model/app_model_current.dart';
-import 'package:app/src/slices/app/model/app_model_user.dart';
-import 'package:app/src/slices/app/repository/secure_storage_repository_current.dart';
-import 'package:app/src/slices/app/repository/secure_storage_repository_user.dart';
+import 'package:app/src/slices/app/model/api_user_model_current.dart';
+import 'package:app/src/slices/app/model/api_user_model_user.dart';
+import 'package:app/src/slices/app/repository/api_user_repository_current.dart';
+import 'package:app/src/slices/app/repository/api_user_repository_user.dart';
 import 'package:app/src/slices/auth/model/auth_model_token.dart';
-import 'package:app/src/slices/auth/repository/auth_bouncer_jwt.dart';
-import 'package:app/src/slices/auth/repository/auth_bouncer_otp.dart';
-import 'package:app/src/slices/auth/repository/secure_storage_repository_otp.dart';
-import 'package:app/src/slices/auth/repository/secure_storage_repository_token.dart';
-import 'package:app/src/slices/keys/model/keys_model.dart';
-import 'package:app/src/slices/keys/repository/secure_storage_repository_keys.dart';
+import 'package:app/src/slices/auth/repository/api_bouncer_repository_jwt.dart';
+import 'package:app/src/slices/auth/repository/api_bouncer_repository_otp.dart';
+import 'package:app/src/slices/auth/repository/api_user_repository_otp.dart';
+import 'package:app/src/slices/auth/repository/api_user_repository_token.dart';
+import 'package:app/src/slices/keys/model/api_user_model_keys.dart';
+import 'package:app/src/slices/keys/repository/api_user_repository_keys.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'model/auth_bouncer_jwt_req_otp.dart';

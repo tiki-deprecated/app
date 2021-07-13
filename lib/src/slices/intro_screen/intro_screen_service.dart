@@ -16,7 +16,7 @@ class IntroScreenService extends ChangeNotifier {
   IntroScreenService() {
     presenter = IntroScreenPresenter(this);
     model = IntroScreenModel();
-    controller = IntroScreenController();
+    controller = IntroScreenController(this);
     this.createSlidesData();
   }
 
