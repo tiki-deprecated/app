@@ -6,7 +6,7 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/data_screen/data_screen_service.dart';
-import 'package:app/src/slices/decision_cards/decision_cards_service.dart';
+import 'package:app/src/slices/decision_screen/decision_screen_service.dart';
 import 'package:app/src/slices/home_screen/home_screen_service.dart';
 import 'package:app/src/slices/home_screen/ui/home_screen_view_nav_bar.dart';
 import 'package:app/src/slices/wallet_screen/wallet_screen_service.dart';
@@ -29,7 +29,7 @@ class HomeScreenLayout extends StatelessWidget {
                   index: service.model.currentScreenIndex,
                   children: [
                     DataScreenService(googleService).presenter.render(),
-                    DecisionCardsService().presenter.render(),
+                    DecisionScreenService(googleService).presenter.render(),
                     WalletScreenService().presenter.render(),
                   ]),
             ),

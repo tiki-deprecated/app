@@ -14,13 +14,8 @@ class ApiGoogleService {
   final ApiGoogleRepositoryInfo _googleInfoRepository =
       ApiGoogleRepositoryInfo();
 
-  getConnectedUser() async {
+  Future<GoogleSignInAccount?> getConnectedUser() async {
     return await _googleSignIn.signInSilently();
-  }
-
-  void onChanged(Function(GoogleSignInAccount? account) listener) {
-    _googleSignIn.onCurrentUserChanged
-        .listen((GoogleSignInAccount? account) => listener);
   }
 
   Future<GoogleSignInAccount?> signIn() async {
@@ -33,8 +28,8 @@ class ApiGoogleService {
     return success;
   }
 
-  isConnected() {
-    return _googleSignIn.isSignedIn();
+  Future<bool> isConnected() async {
+    return await _googleSignIn.isSignedIn();
   }
 
   Future<List<InfoCarouselCardModel>> getInfoCards() async {
