@@ -10,17 +10,13 @@ import 'package:provider/provider.dart';
 import 'ui/wallet_screen_layout.dart';
 import 'wallet_screen_service.dart';
 
-class WalletScreenPresenter extends Page {
+class WalletScreenPresenter {
   final WalletScreenService service;
 
-  WalletScreenPresenter(this.service) : super(key: ValueKey("WalletScreen"));
+  WalletScreenPresenter(this.service);
 
-  @override
-  Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
-      settings: this,
-      builder: (BuildContext context) => ChangeNotifierProvider.value(
-          value: service, child: WalletScreenLayout()),
-    );
+  ChangeNotifierProvider<WalletScreenService> render() {
+    return ChangeNotifierProvider.value(
+        value: service, child: WalletScreenLayout());
   }
 }

@@ -3,4 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class WalletScreenController {}
+import 'package:app/src/slices/wallet_screen/wallet_screen_service.dart';
+
+class WalletScreenController {
+  final WalletScreenService service;
+
+  WalletScreenController(this.service);
+}

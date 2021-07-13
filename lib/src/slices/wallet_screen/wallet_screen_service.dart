@@ -16,7 +16,7 @@ class WalletScreenService extends ChangeNotifier {
 
   WalletScreenService() {
     model = WalletScreenModel();
-    controller = WalletScreenController();
+    controller = WalletScreenController(this);
     presenter = WalletScreenPresenter(this);
   }
 }

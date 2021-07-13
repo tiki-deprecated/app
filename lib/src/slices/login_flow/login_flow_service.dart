@@ -16,13 +16,13 @@ import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
 import 'package:app/src/slices/api_user/model/api_user_model_otp.dart';
 import 'package:app/src/slices/api_user/model/api_user_model_token.dart';
 import 'package:app/src/slices/api_user/model/api_user_model_user.dart';
+import 'package:app/src/slices/home_screen/home_screen_service.dart';
 import 'package:app/src/slices/intro_screen/intro_screen_service.dart';
 import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
 import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_delegate.dart';
 import 'package:app/src/slices/login_screen_email/login_screen_email_service.dart';
 import 'package:app/src/slices/login_screen_inbox/login_screen_inbox_service.dart';
-import 'package:app/src/slices/wallet_screen/wallet_screen_service.dart';
 import 'package:app/src/utils/api/helper_api_rsp.dart';
 import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -84,7 +84,7 @@ class LoginFlowService extends ChangeNotifier {
       else if (this.model.state == LoginFlowModelState.keysCreated)
         KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
-        WalletScreenService().presenter
+        HomeScreenService().presenter
     ];
   }
 
