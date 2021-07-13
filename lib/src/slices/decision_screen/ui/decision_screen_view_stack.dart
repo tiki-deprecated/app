@@ -10,11 +10,9 @@ class DecisionScreenViewStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: Stack(children: [
-          ...children,
-          noCardsPlaceholder,
-        ]));
+    return Stack(children: [
+      ...children,
+      noCardsPlaceholder,
+    ]);
   }
 }

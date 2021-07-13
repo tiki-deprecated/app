@@ -1,9 +1,14 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
 import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import 'decision_screen_view_empty.dart';
+
 class DecisionScreenLayout extends StatelessWidget {
+  static const num _radius = 4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +20,18 @@ class DecisionScreenLayout extends StatelessWidget {
         HeaderBar(),
         Expanded(
             child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(4.w))),
-                width: double.infinity,
-                margin: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
-                child: Text("Hi")))
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(_radius.w))),
+                    width: double.infinity,
+                    margin: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
+                    child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(_radius.w)),
+                        child: DecisionScreenViewStack(
+                            noCardsPlaceholder: DecisionScreenViewEmpty(),
+                            children: [])))))
       ]))
     ])));
   }
