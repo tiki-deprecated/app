@@ -6,10 +6,11 @@
 //google api connects
 //load and return info cards
 
-import 'package:app/src/slices/google/repository/google_info_repository.dart';
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:app/src/utils/helper_json.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'repository/google_info_repository.dart';
 
 class GoogleService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

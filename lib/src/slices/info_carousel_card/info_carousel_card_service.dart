@@ -18,9 +18,9 @@ import 'info_carousel_card_presenter.dart';
 import 'model/info_carousel_card_model.dart';
 
 class InfoCarouselCardService extends ChangeNotifier {
-  late InfoCarouselCardPresenter presenter;
-  late InfoCarouselCardModel model;
-  late InfoCarouselCardController controller;
+  late final InfoCarouselCardPresenter presenter;
+  late final InfoCarouselCardModel model;
+  late final InfoCarouselCardController controller;
 
   InfoCarouselCardService({InfoCarouselCardModel? card}) {
     presenter = InfoCarouselCardPresenter(this);
@@ -29,10 +29,6 @@ class InfoCarouselCardService extends ChangeNotifier {
       model = card;
     else
       model = InfoCarouselCardModel();
-  }
-
-  getUI() {
-    return presenter.render();
   }
 
   void setCard(InfoCarouselCardModel card) {

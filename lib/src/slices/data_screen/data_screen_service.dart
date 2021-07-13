@@ -13,9 +13,9 @@ import 'data_screen_presenter.dart';
 import 'model/data_screen_model.dart';
 
 class DataScreenService extends ChangeNotifier {
-  late DataScreenModel model;
-  late DataScreenPresenter presenter;
-  late DataScreenController controller;
+  late final DataScreenModel model;
+  late final DataScreenPresenter presenter;
+  late final DataScreenController controller;
 
   GoogleService googleService = GoogleService();
 
@@ -24,10 +24,6 @@ class DataScreenService extends ChangeNotifier {
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
     initializeGoogleRepo();
-  }
-
-  Widget getUI() {
-    return this.presenter.render();
   }
 
   initializeGoogleRepo() async {
