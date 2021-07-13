@@ -43,8 +43,8 @@ class KeysSaveDialogDlViewButton extends StatelessWidget {
 
   Color _getColor(KeysSaveDialogDlService service) {
     return service.model.isFailed || service.model.noPermission
-        ? ConfigColor.grenadier
-        : ConfigColor.mardiGras;
+        ? ConfigColor.tikiRed
+        : ConfigColor.tikiPurple;
   }
 
   String _getText(KeysSaveDialogDlService service) {

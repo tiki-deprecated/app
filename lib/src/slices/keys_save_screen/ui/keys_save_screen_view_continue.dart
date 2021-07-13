@@ -23,7 +23,7 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 2.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras),
+            primary: ConfigColor.tikiPurple),
         child: Container(
             width: 70.w,
             child: Text("CONTINUE",
@@ -34,8 +34,7 @@ class KeysNewScreenSaveContinue extends StatelessWidget {
                   fontSize: 16.sp,
                   letterSpacing: 0.05.w,
                 ))),
-        onPressed: service.canContinue()
-            ? () => service.controller.goToHome(context)
-            : null);
+        onPressed:
+            service.canContinue() ? () => service.controller.goToHome() : null);
   }
 }

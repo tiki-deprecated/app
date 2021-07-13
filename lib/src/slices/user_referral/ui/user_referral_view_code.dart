@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/user_referral_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +19,11 @@ class UserReferralViewCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<UserReferralService>(context);
-    var code = service.model.code;
-    if (code.isEmpty) service.getCode(context);
     return OutlinedButton(
         onPressed: () async => service.controller.copyLink(context),
         style: OutlinedButton.styleFrom(
-            side: BorderSide(color: ConfigColor.alto),
-            primary: ConfigColor.gray,
+            side: BorderSide(color: ConfigColor.greyThree),
+            primary: ConfigColor.greyFour,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(1.h)))),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -33,11 +32,12 @@ class UserReferralViewCode extends StatelessWidget {
                 style: TextStyle(
                     fontSize: _fontSize.sp,
                     fontWeight: FontWeight.bold,
-                    color: ConfigColor.gray)),
+                    color: ConfigColor.greyFour)),
             Container(
                 margin: EdgeInsets.only(
                     left: 2.w, top: 1.5.h, right: 1.h, bottom: 1.5.h),
-                child: Text(service.model.code,
+                child: Text(
+                    service.getCode(Provider.of<LoginFlowService>(context)),
                     style: TextStyle(
                         fontSize: _fontSize.sp,
                         fontWeight: FontWeight.bold,

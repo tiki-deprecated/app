@@ -17,7 +17,7 @@ class UserAccountModalViewVersion extends StatelessWidget {
               style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  color: ConfigColor.boulder));
+                  color: ConfigColor.greyFive));
         });
   }
 }

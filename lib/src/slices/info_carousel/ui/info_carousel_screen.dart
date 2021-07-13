@@ -10,7 +10,7 @@ class InfoCarouselScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(body: Builder(builder: (BuildContext context) {
       return Container(
-          color: ConfigColor.gallery,
+          color: ConfigColor.greyTwo,
           child: SafeArea(
               child: Container(
                   child: Column(children: [

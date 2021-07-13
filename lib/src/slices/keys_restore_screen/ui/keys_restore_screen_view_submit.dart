@@ -19,7 +19,7 @@ class KeysRestoreScreenViewSubmit extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras,
+            primary: ConfigColor.tikiPurple,
             padding: EdgeInsets.symmetric(vertical: 2.h)),
         child: Container(
             width: 70.w,
@@ -32,7 +32,7 @@ class KeysRestoreScreenViewSubmit extends StatelessWidget {
                   letterSpacing: 0.05.w,
                 ))),
         onPressed: service.canSubmit()
-            ? () => service.controller.manualSubmit(context)
+            ? () => service.controller.manualSubmit()
             : null);
   }
 }

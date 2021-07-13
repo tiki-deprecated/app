@@ -34,10 +34,6 @@ class KeysSaveDialogDlService extends ChangeNotifier {
     model = KeysSaveDialogDlModel();
   }
 
-  getUI() {
-    return presenter.render();
-  }
-
   Future<void> downloadQR(RenderRepaintBoundary renderRepaintBoundary) async {
     ui.Image image = await renderRepaintBoundary.toImage(pixelRatio: 4.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);

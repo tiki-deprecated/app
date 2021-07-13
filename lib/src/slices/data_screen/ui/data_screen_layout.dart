@@ -15,7 +15,7 @@ class DataScreenLayout extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Stack(children: [
-      Container(color: ConfigColor.wildSand),
+      Container(color: ConfigColor.greyOne),
       SafeArea(
           child: Column(
               children: [HeaderBar(), Expanded(child: DataScreenLayoutBody())]))

@@ -1,27 +1,29 @@
 import 'dart:io';
 
 import 'package:android_intent/android_intent.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_routes.dart';
+import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
+import 'package:app/src/slices/keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
+import 'package:app/src/slices/keys_save_dialog_download/keys_save_dialog_dl_service.dart';
+import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class KeysSaveScreenController {
-  goToHome(context) {
-    AppService appService = Provider.of<AppService>(context, listen: false);
-    appService.home = AppModelRoutes.home;
-    appService.reload();
+  final KeysSaveScreenService service;
+
+  KeysSaveScreenController(this.service);
+
+  goToHome() async {
+    if (service.canContinue()) await service.saveAndLogin();
   }
 
-  goToRestore(BuildContext context) {
-    AppService appService = Provider.of<AppService>(context, listen: false);
-    appService.home = KeysRestoreScreenService(appService);
-    appService.reload();
-  }
+  goToRestore(BuildContext context) => Navigator.of(context).push(
+      KeysRestoreScreenService(service.loginFlowService)
+          .presenter
+          .createRoute(context));
 
   goToDownloadLocation() async {
     if (Platform.isAndroid) {
@@ -40,5 +42,29 @@ class KeysSaveScreenController {
           documents.path +
           "/tiki-do-not-share.png");
     }
+  }
+
+  Future<void> onDownload(BuildContext context, GlobalKey repaintKey) async {
+    ApiUserModelKeys keys = service.loginFlowService.model.user!.keys!;
+    String combinedKey =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    KeysSaveDialogDlService(
+            keysSaveScreenService: service,
+            combinedKey: combinedKey,
+            repaintKey: repaintKey)
+        .presenter
+        .show(context);
+  }
+
+  Future<void> onBackup(BuildContext context) async {
+    ApiUserModelKeys keys = service.loginFlowService.model.user!.keys!;
+    String combinedKey =
+        keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    KeysSaveDialogCopyService(
+            combinedKey: combinedKey,
+            email: service.loginFlowService.model.user!.user!.email!,
+            keysSaveScreenService: service)
+        .presenter
+        .show(context);
   }
 }

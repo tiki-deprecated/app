@@ -1,14 +1,26 @@
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_layout.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class KeysSaveScreenPresenter {
-  final service;
+import 'keys_save_screen_service.dart';
+import 'ui/keys_save_screen_layout.dart';
 
-  KeysSaveScreenPresenter(this.service);
+class KeysSaveScreenPresenter extends Page {
+  final KeysSaveScreenService service;
 
-  ChangeNotifierProvider<KeysSaveScreenService> render() {
-    return ChangeNotifierProvider.value(
-        value: service, child: KeysSaveScreenLayout());
+  KeysSaveScreenPresenter(this.service)
+      : super(key: ValueKey("KeysSaveScreen"));
+
+  @override
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+      settings: this,
+      builder: (BuildContext context) => ChangeNotifierProvider.value(
+          value: service, child: KeysSaveScreenLayout()),
+    );
   }
 }

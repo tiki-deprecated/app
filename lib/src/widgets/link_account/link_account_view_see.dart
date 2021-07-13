@@ -16,7 +16,7 @@ class LinkAccountViewSee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: ConfigColor.gallery,
+        color: ConfigColor.greyTwo,
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 1.75.h),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [

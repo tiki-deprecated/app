@@ -16,6 +16,6 @@ class KeysRestoreScreenViewTitle extends StatelessWidget {
             fontFamily: 'Koara',
             fontSize: 28.sp,
             fontWeight: FontWeight.bold,
-            color: ConfigColor.mardiGras));
+            color: ConfigColor.tikiPurple));
   }
 }

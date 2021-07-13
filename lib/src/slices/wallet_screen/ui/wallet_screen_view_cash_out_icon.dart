@@ -22,7 +22,7 @@ class WalletScreenViewCashOutIcon extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(1.25.h),
               decoration: BoxDecoration(
-                  color: ConfigColor.silverChalice,
+                  color: ConfigColor.greyThree,
                   borderRadius: BorderRadius.circular(20.w),
                   boxShadow: [
                     BoxShadow(
@@ -42,7 +42,7 @@ class WalletScreenViewCashOutIcon extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.sp,
-                  color: ConfigColor.gray),
+                  color: ConfigColor.greyFour),
             ))
       ],
     );

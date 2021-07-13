@@ -11,18 +11,14 @@ import 'info_carousel_controller.dart';
 import 'info_carousel_presenter.dart';
 
 class InfoCarouselService extends ChangeNotifier {
-  late InfoCarouselPresenter presenter;
-  late InfoCarouselModel model;
-  late InfoCarouselController controller;
+  late final InfoCarouselPresenter presenter;
+  late final InfoCarouselModel model;
+  late final InfoCarouselController controller;
 
   InfoCarouselService({List<InfoCarouselCardModel>? cards}) {
     presenter = InfoCarouselPresenter(this);
     model = InfoCarouselModel(cards: cards);
     controller = InfoCarouselController();
-  }
-
-  getUI() {
-    return presenter.render();
   }
 
   void setCards(List<InfoCarouselCardModel> cards) {

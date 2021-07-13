@@ -23,7 +23,6 @@ class UserAccountModalPresenter {
   }
 
   Future<void> showModal(BuildContext context) {
-    var ui = this.service.getUI();
     return showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
@@ -31,6 +30,6 @@ class UserAccountModalPresenter {
         backgroundColor: ConfigColor.white,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
-        builder: (BuildContext context) => ui);
+        builder: (BuildContext context) => render());
   }
 }

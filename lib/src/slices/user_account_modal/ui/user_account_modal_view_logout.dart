@@ -18,14 +18,14 @@ class UserAccountModalViewLogout extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Provider.of<UserAccountModalService>(context).controller;
     return TextButton(
-        onPressed: () => controller.onLogout(),
+        onPressed: () => controller.onLogout(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(_text,
                 style: TextStyle(
-                    color: ConfigColor.grenadier,
+                    color: ConfigColor.tikiRed,
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp)),
             Container(

@@ -16,6 +16,7 @@ class DataScreenController {
   void openGmailCards(BuildContext context) async {
     List<InfoCarouselCardModel> cards = await service.getGmailCards();
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => InfoCarouselService(cards: cards).getUI()));
+        builder: (context) =>
+            InfoCarouselService(cards: cards).presenter.render()));
   }
 }

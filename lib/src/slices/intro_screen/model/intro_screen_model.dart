@@ -2,6 +2,7 @@ import 'intro_screen_model_slide.dart';
 
 class IntroScreenModel {
   final List<IntroScreenModelSlide> _slides = [];
+  bool shouldMoveToLogin = false;
   int _currentSlide = 0;
 
   void addSlide(IntroScreenModelSlide slide) {

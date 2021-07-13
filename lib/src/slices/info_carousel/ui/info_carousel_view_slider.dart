@@ -14,10 +14,8 @@ class InfoCarouselViewSlider extends StatelessWidget {
             viewportFraction: 0.92, height: MediaQuery.of(context).size.height),
         items: service.model.cards!.map((card) {
           return Builder(
-            builder: (BuildContext context) {
-              return InfoCarouselCardService(card: card).getUI();
-            },
-          );
+              builder: (BuildContext context) =>
+                  InfoCarouselCardService(card: card).presenter.render());
         }).toList());
   }
 }

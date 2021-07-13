@@ -22,7 +22,7 @@ class UserAccountModalViewReferShare extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 1.25.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras),
+            primary: ConfigColor.tikiPurple),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,

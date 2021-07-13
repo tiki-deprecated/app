@@ -37,7 +37,7 @@ class WalletBalanceViewAmount extends StatelessWidget {
                 _text,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                    color: ConfigColor.emperor,
+                    color: ConfigColor.greySix,
                     fontFamily: "Koara",
                     fontWeight: FontWeight.bold,
                     fontSize: 12.sp),

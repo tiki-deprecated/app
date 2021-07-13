@@ -13,7 +13,7 @@ class KeysSaveDialogDlViewTitle extends StatelessWidget {
     return Text("Download key to your device",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: ConfigColor.mardiGras,
+            color: ConfigColor.tikiPurple,
             fontFamily: 'Koara',
             fontSize: 28.sp,
             fontWeight: FontWeight.bold));

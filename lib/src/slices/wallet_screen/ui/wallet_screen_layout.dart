@@ -15,8 +15,12 @@ class WalletScreenLayout extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Stack(children: [
-      Container(color: ConfigColor.wildSand),
-      SafeArea(child: Column(children: [HeaderBar(), Expanded(child: WalletScreenLayoutBody())]))
+      Container(color: ConfigColor.greyOne),
+      SafeArea(
+          child: Column(children: [
+        HeaderBar(),
+        Expanded(child: WalletScreenLayoutBody())
+      ]))
     ])));
   }
 }

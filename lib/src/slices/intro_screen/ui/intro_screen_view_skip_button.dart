@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +21,9 @@ class IntroScreenSkipButton extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: ConfigColor.black,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: service.presenter.fontSizeSkip.sp,
+                fontSize: 15.sp,
               ),
             )));
   }

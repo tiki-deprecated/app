@@ -11,19 +11,15 @@ import 'md_viewer_presenter.dart';
 import 'model/md_viewer_model.dart';
 
 class MdViewerService extends ChangeNotifier {
-  late MdViewerModel model;
-  late MdViewerPresenter presenter;
-  late MdViewerController controller;
+  late final MdViewerModel model;
+  late final MdViewerPresenter presenter;
+  late final MdViewerController controller;
 
   MdViewerService(String filename) {
     model = MdViewerModel();
     model.filename = filename;
-    controller = MdViewerController();
     presenter = MdViewerPresenter(this);
-  }
-
-  Widget getUI() {
-    return this.presenter.render();
+    controller = MdViewerController(this);
   }
 
   void setFile(String filename) {

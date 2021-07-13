@@ -14,7 +14,7 @@ class UserAccountModalViewRefer extends StatelessWidget {
         Provider.of<UserAccountModalService>(context).referralService;
     return Container(
         decoration: BoxDecoration(
-          color: ConfigColor.gallery,
+          color: ConfigColor.greyTwo,
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
@@ -28,7 +28,7 @@ class UserAccountModalViewRefer extends StatelessWidget {
               ),
               Container(
                   margin: EdgeInsets.only(top: 3.5.h),
-                  child: referralService.getUI()),
+                  child: referralService.presenter.render()),
               Container(
                   margin: EdgeInsets.only(
                       top: 4.5.h, bottom: 5.5.h, left: 13.w, right: 13.w),

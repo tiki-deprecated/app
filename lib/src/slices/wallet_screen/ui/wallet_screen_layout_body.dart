@@ -20,7 +20,7 @@ class WalletScreenLayoutBody extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Column(
                   children: [
-                    WalletBalanceService().getUI(),
+                    WalletBalanceService().presenter.render(),
                     Container(
                         margin: EdgeInsets.only(top: 2.h),
                         child: WalletScreenViewCashOut()),

@@ -3,69 +3,56 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api/api_service.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_user.dart';
+import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
+import 'package:app/src/slices/api_signup/api_signup_service.dart';
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/model/user_referral_model.dart';
 import 'package:app/src/slices/user_referral/user_referral_controller.dart';
 import 'package:app/src/slices/user_referral/user_referral_presenter.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:app/src/utils/api/helper_api_rsp.dart';
+import 'package:app/src/utils/api/helper_api_utils.dart';
+import 'package:flutter/widgets.dart';
 
 class UserReferralService extends ChangeNotifier {
-  static const String _linkUrl = "https://mytiki.com/";
-
-  late UserReferralPresenter presenter;
-  late UserReferralController controller;
-  late UserReferralModel model;
+  late final UserReferralPresenter presenter;
+  late final UserReferralController controller;
+  late final UserReferralModel model;
 
   UserReferralService() {
     this.presenter = UserReferralPresenter(this);
-    this.controller = UserReferralController();
+    this.controller = UserReferralController(this);
     this.model = UserReferralModel();
-    getReferCount();
   }
 
-  Widget getUI() {
-    return this.presenter.render();
+  String getCode(LoginFlowService loginFlowService) {
+    String? code = loginFlowService.model.user!.user!.code;
+    if (code == null || code.isEmpty) _updateCode(loginFlowService);
+    return code ?? "";
   }
 
-  String getCode(BuildContext context) {
-    AppModelUser user =
-        Provider.of<AppService>(context, listen: false).model.user!;
-    this.model.code = user.code ?? "";
-    if (this.model.code.isEmpty) updateCode(context);
-    return this.model.code;
-  }
-
-  Future<void> copyLink() async {
-    var code = this.model.code;
-    await Clipboard.setData(new ClipboardData(text: _linkUrl + code));
-  }
-
-  getReferCount() async {
-    var code = this.model.code;
-    var apiService = ApiService();
-    this.model.referCount = (await apiService.getReferCount(code))!;
-    notifyListeners();
-  }
-
-  void updateCode(BuildContext context) async {
-    var apiService = ApiService();
-    AppService appService = Provider.of<AppService>(context);
-    AppModelUser user = appService.model.user!;
-    apiService.getReferralCode(user.address!).then((referral) async {
-      if (referral != null) {
-        this.model.code = referral;
-        user.code = this.model.code;
-        await appService.updateUser(user);
+  updateReferCount(LoginFlowService loginFlowService,
+      ApiSignupService apiSignupService) async {
+    String? code = loginFlowService.model.user!.user!.code;
+    if (code != null) {
+      int? count = await apiSignupService.getTotal(code: code);
+      if (count != null) {
+        this.model.referCount = count;
         notifyListeners();
       }
-    }).onError((error, stackTrace) {
-      // SEND TO SENTRY
-      //TODO FIX Provider.of<TikiScreenService>(context, listen: false).removeGoogleAccount();
-      appService.logout();
-    });
+    }
+  }
+
+  void _updateCode(LoginFlowService loginFlowService) async {
+    HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp = await loginFlowService
+        .apiBlockchainService
+        .referCode(loginFlowService.model.user!.user!.address!);
+    if (HelperApiUtils.isOk(rsp.code)) {
+      ApiBlockchainModelAddressRspCode data = rsp.data;
+      loginFlowService.model.user!.user!.code = data.code;
+      await loginFlowService.apiUserService
+          .setUser(loginFlowService.model.user!.user!);
+      await loginFlowService.loadUser();
+      notifyListeners();
+    }
   }
 }

@@ -16,7 +16,7 @@ class TikiCard extends StatelessWidget {
   final Color bgColor;
 
   const TikiCard(this.title, this.text, this.figure,
-      {this.cta, this.bgColor = ConfigColor.gallery});
+      {this.cta, this.bgColor = ConfigColor.greyTwo});
 
   @override
   Widget build(BuildContext context) {

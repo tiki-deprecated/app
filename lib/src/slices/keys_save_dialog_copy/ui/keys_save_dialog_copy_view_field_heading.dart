@@ -15,7 +15,7 @@ class KeysSaveDialogCopyViewFieldHeading extends StatelessWidget {
       'YOUR ACCOUNT E-MAIL AND KEY',
       style: TextStyle(
           fontFamily: "NunitoSans",
-          color: ConfigColor.silverChalice,
+          color: ConfigColor.greyThree,
           fontWeight: FontWeight.w600,
           fontSize: 12.sp),
     );

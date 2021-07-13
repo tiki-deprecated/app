@@ -40,7 +40,7 @@ class WalletScreenViewReferral extends StatelessWidget {
               ),
               Container(
                   margin: EdgeInsets.only(top: 2.h),
-                  child: UserReferralService().getUI())
+                  child: UserReferralService().presenter.render())
             ],
           )),
     );

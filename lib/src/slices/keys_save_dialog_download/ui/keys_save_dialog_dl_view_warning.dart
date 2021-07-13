@@ -14,7 +14,7 @@ class KeysSaveDialogDlViewWarning extends StatelessWidget {
         'Try not to store your keys on iCloud / Google Drive / Dropbox.',
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: ConfigColor.emperor,
+            color: ConfigColor.greySix,
             fontSize: 12.sp,
             fontWeight: FontWeight.w600));
   }

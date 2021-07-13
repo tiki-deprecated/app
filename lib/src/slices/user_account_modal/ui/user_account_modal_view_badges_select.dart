@@ -26,7 +26,7 @@ class UserAccountModalViewBadgesSelect extends StatelessWidget {
               fontFamily: "Koara",
               fontWeight: FontWeight.bold,
               fontSize: 10.sp,
-              color: isSelected ? ConfigColor.tikiBlue : ConfigColor.gray),
+              color: isSelected ? ConfigColor.tikiBlue : ConfigColor.greyFour),
         ),
         Container(
             decoration: BoxDecoration(

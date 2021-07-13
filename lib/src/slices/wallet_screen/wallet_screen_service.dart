@@ -10,17 +10,13 @@ import 'wallet_screen_controller.dart';
 import 'wallet_screen_presenter.dart';
 
 class WalletScreenService extends ChangeNotifier {
-  late WalletScreenModel model;
-  late WalletScreenPresenter presenter;
-  late WalletScreenController controller;
+  late final WalletScreenModel model;
+  late final WalletScreenPresenter presenter;
+  late final WalletScreenController controller;
 
   WalletScreenService() {
     model = WalletScreenModel();
-    controller = WalletScreenController();
+    controller = WalletScreenController(this);
     presenter = WalletScreenPresenter(this);
-  }
-
-  Widget getUI() {
-    return this.presenter.render();
   }
 }

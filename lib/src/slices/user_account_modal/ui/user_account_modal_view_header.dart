@@ -35,7 +35,7 @@ class UserAccountModalViewHeader extends StatelessWidget {
                       )))),
           Text(_text,
               style: TextStyle(
-                  color: ConfigColor.mardiGras,
+                  color: ConfigColor.tikiPurple,
                   fontWeight: FontWeight.w800,
                   fontSize: 12.sp)),
           Expanded(

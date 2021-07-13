@@ -19,7 +19,7 @@ class DataScreenViewScore extends StatelessWidget {
       {required this.image,
       required this.summary,
       required this.description,
-      this.color = ConfigColor.ikb});
+      this.color = ConfigColor.blue});
 
   @override
   Widget build(BuildContext context) {

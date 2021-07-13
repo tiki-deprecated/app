@@ -15,13 +15,14 @@ class UserAccountModalViewReferCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<UserAccountModalService>(context);
+    service.controller.updateUserCount(context);
     return Column(children: [
       Text(
           service.model.signupCount?.toString().replaceAllMapped(
                   new RegExp(r'(\d{1,3})(?=(\d{3})+$)'), (m) => "${m[1]},") ??
               "...",
           style: TextStyle(
-              color: ConfigColor.flirt,
+              color: ConfigColor.tikiPink,
               fontFamily: 'Koara',
               fontWeight: FontWeight.bold,
               height: 0,

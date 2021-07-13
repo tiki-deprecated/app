@@ -19,7 +19,7 @@ class UserAccountModalViewBadges extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: ConfigColor.gallery, borderRadius: BorderRadius.circular(24)),
+          color: ConfigColor.greyTwo, borderRadius: BorderRadius.circular(24)),
       padding: EdgeInsets.only(top: 3.h, left: 6.w, right: 6.w, bottom: 3.h),
       child: Column(
         children: [

@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/keys_save_dialog_download/ui/keys_save_dialog_dl_layout.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +18,13 @@ class KeysSaveDialogDlPresenter {
   KeysSaveDialogDlPresenter(this.service,
       {required this.combinedKey, required this.repaintKey});
 
-  ChangeNotifierProvider<KeysSaveDialogDlService> render() {
-    return ChangeNotifierProvider.value(
-        value: service,
-        child: KeysSaveDialogDlLayout(
-            combinedKey: combinedKey, repaintKey: repaintKey));
+  Future show(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) => ChangeNotifierProvider.value(
+            value: service,
+            child: KeysSaveDialogDlLayout(
+                combinedKey: combinedKey, repaintKey: repaintKey)));
   }
 }

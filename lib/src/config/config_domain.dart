@@ -10,14 +10,14 @@ class ConfigDomain {
       ConfigEnvironment.isPublic ? "bouncer.mytiki.com" : "localhost:10227";
   static const String blockchain =
       ConfigEnvironment.isPublic ? "blockchain.mytiki.com" : "localhost:10252";
-  static const String website =
+  static const String signup =
       ConfigEnvironment.isPublic ? "signup.mytiki.com" : "localhost:3000";
 
-  static Uri asUri(String authority, String unencodedPath,
-      [Map<String, dynamic>? queryParameters]) {
+  static Uri asUri(String authority, String path,
+      [Map<String, dynamic>? query]) {
     return ConfigEnvironment.isPublic
-        ? Uri.https(authority, unencodedPath, queryParameters)
-        : Uri.http(authority, unencodedPath, queryParameters);
+        ? Uri.https(authority, path, query)
+        : Uri.http(authority, path, query);
   }
 
   const ConfigDomain();

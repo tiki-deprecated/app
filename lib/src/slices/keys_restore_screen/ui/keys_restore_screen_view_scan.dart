@@ -22,7 +22,7 @@ class KeysRestoreScreenViewScan extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
-            primary: ConfigColor.mardiGras,
+            primary: ConfigColor.tikiPurple,
             padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w)),
         child: Container(
             width: 70.w,
@@ -39,6 +39,6 @@ class KeysRestoreScreenViewScan extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: HelperImage("icon-qr-code", height: 16.sp))
             ])),
-        onPressed: () => controller.scan(context));
+        onPressed: () => controller.scan());
   }
 }

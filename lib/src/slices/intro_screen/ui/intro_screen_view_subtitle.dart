@@ -15,8 +15,6 @@ class IntroScreenSubtitle extends StatelessWidget {
     var service = Provider.of<IntroScreenService>(context, listen: false);
     return Text(service.presenter.textSubtitle,
         textAlign: TextAlign.left,
-        style: TextStyle(
-            fontSize: service.presenter.fontSizeSubtitle.sp,
-            fontWeight: FontWeight.bold));
+        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold));
   }
 }

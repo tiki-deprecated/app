@@ -18,7 +18,9 @@ class WalletBalanceLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<WalletBalanceService>(context).updateBalance(context);
+    Provider.of<WalletBalanceService>(context)
+        .controller
+        .updateBalance(context);
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(_borderRadius.w),
