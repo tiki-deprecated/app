@@ -21,7 +21,20 @@ class DecisionScreenService extends ChangeNotifier {
   }
 
   void updateIsLinked(bool isLinked) {
-    this.model.isLinked = isLinked;
+    this.model.isLinked = true; //isLinked;
+    notifyListeners();
+  }
+
+  generateContentCards() {
+    return [
+      "test-card-lemon",
+      "test-card-pineapple",
+      "test-card-watermelon",
+    ];
+  }
+
+  void removeCard(int i) {
+    this.model.cards.removeLast();
     notifyListeners();
   }
 
