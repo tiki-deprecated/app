@@ -17,7 +17,10 @@ class DecisionScreenViewCard extends StatelessWidget {
         onDragEnd: onDragEnd,
         childWhenDragging: Container(),
         feedback: child,
-        child: child);
+        child: Container(
+          width: double.infinity,
+          child: child,
+        ));
   }
 
   void onDragEnd(DraggableDetails details) {

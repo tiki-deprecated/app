@@ -1,10 +1,12 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/decision_screen/ui/decision_screen_view_card_test.dart';
 import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
 import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../decision_screen_service.dart';
+import 'decision_screen_view_card.dart';
 import 'decision_screen_view_empty.dart';
 import 'decision_screen_view_link.dart';
 
@@ -25,7 +27,24 @@ class DecisionScreenLayout extends StatelessWidget {
     var model = Provider.of<DecisionScreenService>(context).model;
     if (model.isLinked == true)
       return DecisionScreenViewStack(
-          noCardsPlaceholder: DecisionScreenViewEmpty(), children: []);
+          noCardsPlaceholder: DecisionScreenViewEmpty(),
+          children: [
+            DecisionScreenViewCard(
+              onSwipeRight: () {},
+              onSwipeLeft: () {},
+              child: DecisionScreenViewCardTest("test-card-lemon"),
+            ),
+            DecisionScreenViewCard(
+              onSwipeRight: () {},
+              onSwipeLeft: () {},
+              child: DecisionScreenViewCardTest("test-card-pineapple"),
+            ),
+            DecisionScreenViewCard(
+              onSwipeRight: () {},
+              onSwipeLeft: () {},
+              child: DecisionScreenViewCardTest("test-card-watermelon"),
+            ),
+          ]);
     else
       return DecisionScreenViewLink();
   }

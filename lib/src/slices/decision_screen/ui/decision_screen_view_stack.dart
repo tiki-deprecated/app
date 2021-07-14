@@ -21,8 +21,8 @@ class DecisionScreenViewStack extends StatelessWidget {
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(_radius.w)),
             child: Stack(children: [
-              ...children,
               noCardsPlaceholder,
+              ...children,
             ])));
   }
 }
