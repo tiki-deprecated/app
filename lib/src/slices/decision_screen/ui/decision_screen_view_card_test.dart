@@ -27,7 +27,8 @@ class DecisionScreenViewCardTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Provider.of<DecisionScreenService>(context).controller;
+    var controller =
+        Provider.of<DecisionScreenService>(context, listen: false).controller;
     return Container(
         color: ConfigColor.white,
         child: Center(
