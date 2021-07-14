@@ -5,4 +5,5 @@
 
 class DecisionScreenModel {
   bool isLinked = false;
+  List<String> cards = [];
 }
