@@ -40,8 +40,7 @@ class DecisionCardsPresenter {
           onSwipeRight: () => print("swipe right $index"),
           onSwipeLeft: () => print("swipe left $index"),
           child: Container(
-              color: colors[color],
-              child: Center(child: Text("no more cards"))));
+              color: colors[color], child: Center(child: Text("$index"))));
     });
   }
 }

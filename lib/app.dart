@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_sentry.dart';
+import 'package:app/src/slices/decision_cards/decision_cards_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,10 @@ class App extends StatelessWidget {
                 fontFamily: ConfigFont.familyNunitoSans,
                 bodyColor: ConfigColor.tikiBlue,
                 displayColor: ConfigColor.tikiBlue)),
-        home: Router(
-            routerDelegate: loginFlowService.delegate,
-            backButtonDispatcher: RootBackButtonDispatcher()),
+        home: DecisionCardsService().presenter.render(),
+        // Router(
+        //routerDelegate: loginFlowService.delegate,
+        //backButtonDispatcher: RootBackButtonDispatcher()),
         navigatorObservers: [ConfigSentry.navigatorObserver],
       );
     });
