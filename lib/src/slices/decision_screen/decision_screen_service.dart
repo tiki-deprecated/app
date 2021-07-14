@@ -21,7 +21,7 @@ class DecisionScreenService extends ChangeNotifier {
   }
 
   void updateIsLinked(bool isLinked) {
-    this.model.isLinked = true; //isLinked;
+    this.model.isLinked = isLinked;
     notifyListeners();
   }
 
