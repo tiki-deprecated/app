@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - develop
 
 jobs:
   build:
@@ -111,16 +111,13 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/bundle/release/*.aab,build/ios/release/app.ipa"
-          replacesArtifacts: false
-          token: ${{ secrets.GH_TOKEN }}
-  semtry_release:
+  sentry_release:
     name: Sentry Release 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
