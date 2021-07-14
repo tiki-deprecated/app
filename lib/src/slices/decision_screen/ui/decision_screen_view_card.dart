@@ -79,7 +79,7 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                                       HelperImage("yes-label", height: 30.h)))),
                       Positioned(
                           right: -60,
-                          top: 30,
+                          top: 100,
                           child: Align(
                             alignment: Alignment.topRight,
                             child: Opacity(

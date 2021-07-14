@@ -18,9 +18,11 @@ class DecisionScreenViewStack extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(_radius.w))),
         width: double.infinity,
         margin: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
-        child: Stack(children: [
-          noCardsPlaceholder,
-          ...children,
-        ]));
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(_radius.w)),
+            child: Stack(children: [
+              noCardsPlaceholder,
+              ...children,
+            ])));
   }
 }
