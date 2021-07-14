@@ -36,13 +36,12 @@ class DecisionScreenLayout extends StatelessWidget {
 
   List<DecisionScreenViewCard> _getCards(context, constraints) {
     var service = Provider.of<DecisionScreenService>(context);
-    var i = 0;
     List<DecisionScreenViewCard> cards = [];
     service.model.cards.forEach((cardData) {
       cards.add(DecisionScreenViewCard(
         constraints: constraints,
-        onSwipeRight: () => service.controller.removeAt(context, i),
-        onSwipeLeft: () => service.controller.removeAt(context, i),
+        onSwipeRight: () => service.controller.removeLast(context),
+        onSwipeLeft: () => service.controller.removeLast(context),
         child: DecisionScreenViewCardTest(cardData),
       ));
     });

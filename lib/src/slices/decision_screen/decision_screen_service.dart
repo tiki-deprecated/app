@@ -15,6 +15,7 @@ class DecisionScreenService extends ChangeNotifier {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController();
     model = DecisionScreenModel();
+    _generateContentCards();
     apiGoogleService
         .isConnected()
         .then((isConnected) => updateIsLinked(isConnected));
@@ -25,15 +26,15 @@ class DecisionScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  generateContentCards() {
-    return [
+  _generateContentCards() {
+    this.model.cards = [
       "test-card-lemon",
       "test-card-pineapple",
       "test-card-watermelon",
     ];
   }
 
-  void removeCard(int i) {
+  void removeCard() {
     this.model.cards.removeLast();
     notifyListeners();
   }

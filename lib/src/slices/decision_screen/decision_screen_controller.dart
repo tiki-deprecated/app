@@ -12,7 +12,7 @@ class DecisionScreenController {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  removeAt(context, int i) {
-    Provider.of<DecisionScreenService>(context, listen: false).removeCard(i);
+  removeLast(context) {
+    Provider.of<DecisionScreenService>(context, listen: false).removeCard();
   }
 }
