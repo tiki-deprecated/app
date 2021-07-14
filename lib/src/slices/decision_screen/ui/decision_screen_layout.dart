@@ -26,26 +26,26 @@ class DecisionScreenLayout extends StatelessWidget {
   Widget show(BuildContext context) {
     var model = Provider.of<DecisionScreenService>(context).model;
     if (model.isLinked == true)
-      return DecisionScreenViewStack(
-          noCardsPlaceholder: DecisionScreenViewEmpty(),
-          children: [
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-lemon"),
-            ),
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-pineapple"),
-            ),
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-watermelon"),
-            ),
-          ]);
+      return LayoutBuilder(
+          builder: (context, constraints) => DecisionScreenViewStack(
+              noCardsPlaceholder: DecisionScreenViewEmpty(),
+              children: _getCards(context, constraints)));
     else
       return DecisionScreenViewLink();
+  }
+
+  List<DecisionScreenViewCard> _getCards(context, constraints) {
+    var service = Provider.of<DecisionScreenService>(context);
+    var i = 0;
+    List<DecisionScreenViewCard> cards = [];
+    service.model.cards.forEach((cardData) {
+      cards.add(DecisionScreenViewCard(
+        constraints: constraints,
+        onSwipeRight: () => service.controller.removeAt(context, i),
+        onSwipeLeft: () => service.controller.removeAt(context, i),
+        child: DecisionScreenViewCardTest(cardData),
+      ));
+    });
+    return cards;
   }
 }

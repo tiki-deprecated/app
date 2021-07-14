@@ -23,6 +23,7 @@ class ConfigSentry {
   const ConfigSentry();
 
   static SentryHttpClient get http => SentryHttpClient();
+
   static SentryNavigatorObserver get navigatorObserver =>
       SentryNavigatorObserver();
 

@@ -3,10 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../intro_screen_service.dart';
 import 'intro_screen_view_button.dart';
 import 'intro_screen_view_dots.dart';
 import 'intro_screen_view_skip_button.dart';

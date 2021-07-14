@@ -1,6 +1,5 @@
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'decision_screen_controller.dart';
 import 'decision_screen_presenter.dart';
@@ -22,7 +21,20 @@ class DecisionScreenService extends ChangeNotifier {
   }
 
   void updateIsLinked(bool isLinked) {
-    this.model.isLinked = isLinked;
+    this.model.isLinked = true; //isLinked;
+    notifyListeners();
+  }
+
+  generateContentCards() {
+    return [
+      "test-card-lemon",
+      "test-card-pineapple",
+      "test-card-watermelon",
+    ];
+  }
+
+  void removeCard(int i) {
+    this.model.cards.removeLast();
     notifyListeners();
   }
 }
