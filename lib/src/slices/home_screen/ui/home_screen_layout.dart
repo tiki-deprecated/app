@@ -29,7 +29,7 @@ class HomeScreenLayout extends StatelessWidget {
                   index: service.model.currentScreenIndex,
                   children: [
                     DataScreenService(googleService).presenter.render(),
-                    DecisionScreenService(googleService).presenter.render(),
+                    DecisionScreenService().presenter.render(),
                     WalletScreenService().presenter.render(),
                   ]),
             ),

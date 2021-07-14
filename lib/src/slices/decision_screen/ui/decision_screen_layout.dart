@@ -26,25 +26,29 @@ class DecisionScreenLayout extends StatelessWidget {
   Widget show(BuildContext context) {
     var model = Provider.of<DecisionScreenService>(context).model;
     if (model.isLinked == true)
-      return DecisionScreenViewStack(
-          noCardsPlaceholder: DecisionScreenViewEmpty(),
-          children: [
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-lemon"),
-            ),
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-pineapple"),
-            ),
-            DecisionScreenViewCard(
-              onSwipeRight: () {},
-              onSwipeLeft: () {},
-              child: DecisionScreenViewCardTest("test-card-watermelon"),
-            ),
-          ]);
+      return LayoutBuilder(
+          builder: (context, constraints) => DecisionScreenViewStack(
+                  noCardsPlaceholder: DecisionScreenViewEmpty(),
+                  children: [
+                    DecisionScreenViewCard(
+                      constraints: constraints,
+                      onSwipeRight: () {},
+                      onSwipeLeft: () {},
+                      child: DecisionScreenViewCardTest("test-card-lemon"),
+                    ),
+                    DecisionScreenViewCard(
+                      constraints: constraints,
+                      onSwipeRight: () {},
+                      onSwipeLeft: () {},
+                      child: DecisionScreenViewCardTest("test-card-pineapple"),
+                    ),
+                    DecisionScreenViewCard(
+                      constraints: constraints,
+                      onSwipeRight: () {},
+                      onSwipeLeft: () {},
+                      child: DecisionScreenViewCardTest("test-card-watermelon"),
+                    ),
+                  ]));
     else
       return DecisionScreenViewLink();
   }
