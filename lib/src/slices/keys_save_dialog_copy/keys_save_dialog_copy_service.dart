@@ -32,10 +32,6 @@ class KeysSaveDialogCopyService extends ChangeNotifier {
     }
   }
 
-  getUI() {
-    return presenter.render();
-  }
-
   emailCopied() {
     model.isCopiedEmail = true;
     checkKeysScreen();

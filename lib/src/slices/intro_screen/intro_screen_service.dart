@@ -1,4 +1,3 @@
-import 'package:app/src/slices/login_screen/login_screen_service.dart';
 import 'package:flutter/material.dart';
 
 import 'intro_screen_controller.dart';
@@ -17,7 +16,7 @@ class IntroScreenService extends ChangeNotifier {
   IntroScreenService() {
     presenter = IntroScreenPresenter(this);
     model = IntroScreenModel();
-    controller = IntroScreenController();
+    controller = IntroScreenController(this);
     this.createSlidesData();
   }
 
@@ -36,35 +35,19 @@ class IntroScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  getUI() {
-    return presenter.render();
-  }
-
-  void moveToNextScreen(context) {
+  void moveToNextScreen() {
     model.moveToNextSlide();
-    var slider = this.getUI();
-    Navigator.of(context).push(PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => slider,
-        transitionDuration: Duration(seconds: 0),
-        reverseTransitionDuration: Duration(seconds: 0)));
     notifyListeners();
   }
 
-  void moveToPreviousScreen(context) {
+  void moveToPreviousScreen() {
     model.moveToPreviousSlide();
-    var slider = this.getUI();
-    Navigator.of(context).push(PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => slider,
-        transitionDuration: Duration(seconds: 0),
-        reverseTransitionDuration: Duration(seconds: 0)));
     notifyListeners();
   }
 
-  void skipToLogin(context) {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => LoginScreenService().getUI()),
-      ModalRoute.withName('/login'),
-    );
+  void skipToLogin() {
+    model.shouldMoveToLogin = true;
+    notifyListeners();
   }
 
   bool isLastSlide() {

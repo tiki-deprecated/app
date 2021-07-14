@@ -10,13 +10,13 @@ class InfoCarouselViewClose extends StatelessWidget {
           Text('CLOSE',
               style: TextStyle(
                   fontSize: 15.sp,
-                  color: ConfigColor.mardiGras,
+                  color: ConfigColor.tikiPurple,
                   fontFamily: "NunitoSans",
                   fontWeight: FontWeight.w800)),
           Padding(
               padding: EdgeInsets.only(left: 0.5.w),
-              child:
-                  Icon(Icons.close, size: 22.sp, color: ConfigColor.mardiGras)),
+              child: Icon(Icons.close,
+                  size: 22.sp, color: ConfigColor.tikiPurple)),
         ]),
         onTap: () => Navigator.of(context).pop());
   }

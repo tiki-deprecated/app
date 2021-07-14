@@ -28,7 +28,7 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Provider.of<InfoCarouselCardService>(context).controller;
     return Container(
-        color: ConfigColor.alto,
+        color: ConfigColor.greyThree,
         child: NotificationListener(
             onNotification: (notification) => controller.onScrollNotification(
                 notification, _animationController),
@@ -41,7 +41,7 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
                       padding: EdgeInsets.only(left: 4.w, top: 1.h, right: 4.w),
                       child: InfoCarouselCardViewScrollHeader(_animationValue)),
                   Container(
-                      color: ConfigColor.mardiGras,
+                      color: ConfigColor.tikiPurple,
                       child: Column(children: [
                         Padding(
                             padding: EdgeInsets.symmetric(
@@ -51,7 +51,7 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
                         InfoCarouselCardViewScrollBodyShouldKnow(),
                       ])),
                   Container(
-                      color: ConfigColor.alto,
+                      color: ConfigColor.greyThree,
                       padding: EdgeInsets.only(left: 4.w, top: 3.h, right: 4.w),
                       child: Column(children: [
                         Container(

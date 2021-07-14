@@ -24,7 +24,7 @@ class KeysSaveScreenViewDownloadLink extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: "NunitoSans",
                     fontSize: 11.sp,
-                    color: ConfigColor.emperor,
+                    color: ConfigColor.greySix,
                     fontWeight: FontWeight.w600),
                 children: [
               TextSpan(
@@ -33,7 +33,7 @@ class KeysSaveScreenViewDownloadLink extends StatelessWidget {
                       fontFamily: "NunitoSans",
                       fontSize: 11.sp,
                       decoration: TextDecoration.underline,
-                      color: ConfigColor.ikb,
+                      color: ConfigColor.blue,
                       fontWeight: FontWeight.w600))
             ])));
   }

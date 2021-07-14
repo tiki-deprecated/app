@@ -27,24 +27,24 @@ class MdViewerView extends StatelessWidget {
                   service.controller.openUrl(href),
               styleSheet: MarkdownStyleSheet(
                 h1: TextStyle(
-                    color: ConfigColor.mardiGras,
+                    color: ConfigColor.tikiPurple,
                     fontSize: _relativeHeadingSize(1).sp,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Koara'),
                 h3: TextStyle(
                     fontSize: _relativeHeadingSize(0.3).sp,
-                    color: ConfigColor.mardiGras,
+                    color: ConfigColor.tikiPurple,
                     fontWeight: FontWeight.w600),
                 h4: TextStyle(
                     fontSize: _relativeHeadingSize(0.1).sp,
-                    color: ConfigColor.mardiGras,
+                    color: ConfigColor.tikiPurple,
                     fontWeight: FontWeight.w600),
                 a: TextStyle(
                     color: ConfigColor.orange,
                     fontWeight: FontWeight.w600,
                     fontSize: _fontSizeText.sp),
                 p: TextStyle(
-                    color: ConfigColor.emperor,
+                    color: ConfigColor.greySix,
                     fontWeight: FontWeight.normal,
                     fontSize: _fontSizeText.sp),
               ),

@@ -16,9 +16,9 @@ class KeysCreateScreenViewRestore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<KeysCreateScreenService>(context);
+    var controller = Provider.of<KeysCreateScreenService>(context).controller;
     return TextButton(
-        onPressed: () => service.controller.goToRestore(context),
+        onPressed: () => controller.goToRestore(context),
         child: Text(_text,
             style: TextStyle(
                 color: ConfigColor.orange,

@@ -1,48 +1,57 @@
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/keys/keys_service.dart';
-import 'package:app/src/slices/keys_create_screen/keys_create_screen_controller.dart';
-import 'package:app/src/slices/keys_create_screen/keys_create_screen_presenter.dart';
+import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
+import 'package:app/src/utils/crypto/helper_crypto.dart';
+import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
+import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';
 import 'package:flutter/material.dart';
+import 'package:pointycastle/api.dart';
+import 'package:pointycastle/asymmetric/api.dart';
+import 'package:pointycastle/ecc/api.dart';
 
+import 'keys_create_screen_controller.dart';
+import 'keys_create_screen_presenter.dart';
 import 'model/keys_create_screen_model.dart';
 
 class KeysCreateScreenService extends ChangeNotifier {
-  late KeysCreateScreenPresenter presenter;
-  late KeysCreateScreenController controller;
-  late KeysCreateScreenModel model;
+  late final KeysCreateScreenPresenter presenter;
+  late final KeysCreateScreenController controller;
+  late final KeysCreateScreenModel model;
+  final LoginFlowService loginFlowService;
 
-  AppService appService;
-
-  KeysCreateScreenService(this.appService) {
+  KeysCreateScreenService(this.loginFlowService) {
     presenter = KeysCreateScreenPresenter(this);
-    controller = KeysCreateScreenController();
+    controller = KeysCreateScreenController(this);
     model = KeysCreateScreenModel();
+    genKeysWithTimer();
   }
 
-  getUI() {
-    generateKeys();
-    return presenter.render();
+  Future<void> genKeysWithTimer() async {
+    await Future.wait([
+      _genKeys().then((keys) {
+        this.loginFlowService.model.user?.keys = keys;
+      }),
+      Future.delayed(Duration(seconds: 3))
+    ]);
+    this.loginFlowService.setKeysCreated();
   }
 
-  Future<void> generateKeys() async {
-    var keysWithAddress = await KeysService().generateKeysAndIssueAddress();
-    if (keysWithAddress.address != null) {
-      await appService.keysGenerated(keysWithAddress);
-      await Future.delayed(Duration(
-          milliseconds:
-              1500)); //TODO this should wait at least 3 seconds, not add 3 seconds to every generate
-    } else {
-      appService.logout();
-    }
-  }
+  Future<ApiUserModelKeys> _genKeys() async {
+    ApiUserModelKeys keys = ApiUserModelKeys();
 
-  void setStarted(bool state) {
-    model.isStarted = state;
-    notifyListeners();
-  }
+    AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> dataKey =
+        await HelperCryptoRsa.createRSA();
+    AsymmetricKeyPair<ECPublicKey, ECPrivateKey> signKey =
+        await HelperCryptoEcdsa.createECDSA();
 
-  void setComplete(bool state) {
-    model.isComplete = state;
-    notifyListeners();
+    keys.dataPublicKey = HelperCryptoRsa.encodeRSAPublic(dataKey.publicKey);
+    keys.dataPrivateKey = HelperCryptoRsa.encodeRSAPrivate(dataKey.privateKey);
+
+    keys.signPublicKey = HelperCryptoEcdsa.encodeECDSAPublic(signKey.publicKey);
+    keys.signPrivateKey =
+        HelperCryptoEcdsa.encodeECDSAPrivate(signKey.privateKey);
+
+    keys.address = HelperCrypto.sha3(keys.signPublicKey!);
+
+    return keys;
   }
 }

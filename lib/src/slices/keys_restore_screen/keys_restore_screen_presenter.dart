@@ -3,17 +3,20 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_layout.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'keys_restore_screen_service.dart';
+import 'ui/keys_restore_screen_layout.dart';
+
 class KeysRestoreScreenPresenter {
-  final service;
+  final KeysRestoreScreenService service;
 
   KeysRestoreScreenPresenter(this.service);
 
-  ChangeNotifierProvider<KeysRestoreScreenService> render() {
-    return ChangeNotifierProvider.value(
-        value: service, child: KeysRestoreScreenLayout());
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+        builder: (BuildContext context) => ChangeNotifierProvider.value(
+            value: service, child: KeysRestoreScreenLayout()));
   }
 }

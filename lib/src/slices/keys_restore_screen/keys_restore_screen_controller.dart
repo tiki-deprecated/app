@@ -7,30 +7,29 @@ import 'package:app/src/utils/helper_permission.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 import 'keys_restore_screen_service.dart';
 
 class KeysRestoreScreenController {
-  void back(BuildContext context) {
-    Navigator.of(context).pop();
-  }
+  final KeysRestoreScreenService service;
 
-  void scan(BuildContext context) async {
+  KeysRestoreScreenController(this.service);
+
+  void back(BuildContext context) => Navigator.of(context).pop();
+
+  void updateKeys(String key) => service.updateCombinedKeys(key);
+
+  void scan() async {
     if (await HelperPermission.request(Permission.camera)) {
       ScanResult result = await BarcodeScanner.scan();
       if (result.type == ResultType.Barcode) {
-        Provider.of<KeysRestoreScreenService>(context, listen: false)
-            .saveAndLogin(result.rawContent, context);
+        updateKeys(result.rawContent);
+        if (service.canSubmit()) service.saveAndLogin();
       }
     }
   }
 
-  void manualSubmit(BuildContext context) async {
-    var service = Provider.of<KeysRestoreScreenService>(context, listen: false);
-    if (service.canSubmit()) {
-      Provider.of<KeysRestoreScreenService>(context, listen: false)
-          .saveAndLogin(service.model.manualKeys!, context);
-    }
+  void manualSubmit() async {
+    if (service.canSubmit()) await service.saveAndLogin();
   }
 }

@@ -13,7 +13,7 @@ class IntroScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<IntroScreenService>(context, listen: false);
-    var titleSize = service.presenter.fontSizeTitle.sp;
+    var titleSize = 34.sp;
     return Text(service.presenter.textTitle,
         textAlign: TextAlign.left,
         style: TextStyle(

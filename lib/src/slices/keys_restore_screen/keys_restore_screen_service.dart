@@ -3,14 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api/api_service.dart';
-import 'package:app/src/slices/app/app_service.dart';
-import 'package:app/src/slices/app/model/app_model_user.dart';
-import 'package:app/src/slices/keys/keys_service.dart';
-import 'package:app/src/slices/keys/model/keys_model.dart';
+import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_controller.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_presenter.dart';
-import 'package:app/src/slices/tiki_screen/tiki_screen_service.dart';
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 
 import 'model/keys_restore_screen_model.dart';
@@ -19,48 +15,52 @@ class KeysRestoreScreenService extends ChangeNotifier {
   late KeysRestoreScreenPresenter presenter;
   late KeysRestoreScreenController controller;
   late KeysRestoreScreenServiceModel model;
+  final LoginFlowService loginFlowService;
 
-  AppService appService;
-
-  KeysRestoreScreenService(this.appService) {
+  KeysRestoreScreenService(this.loginFlowService) {
     model = KeysRestoreScreenServiceModel();
     presenter = KeysRestoreScreenPresenter(this);
-    controller = KeysRestoreScreenController();
-  }
-
-  getUI() {
-    return presenter.render();
-  }
-
-  void setManualKey(String s) {
-    model.manualKeys = s;
-    notifyListeners();
+    controller = KeysRestoreScreenController(this);
   }
 
   bool canSubmit() {
-    if (model.manualKeys != null)
-      return model.manualKeys!.length == 1782;
+    if (model.combinedKeys != null)
+      return model.combinedKeys!.length == 1782;
     else
       return false;
   }
 
-  saveAndLogin(String combinedKeys, BuildContext context) async {
-    var keysService = KeysService();
-    KeysModel? keys = keysService.getKeysFromCombined(combinedKeys);
-    if (keys != null) {
-      await keysService.save(keys);
-      var apiService = ApiService();
-      String referral = await apiService.getReferralCode(keys.address!);
-      AppModelUser user = AppModelUser(
-        email: appService.model.current!.email,
-        address: keys.address,
-        isLoggedIn: true,
-        code: referral,
+  void updateCombinedKeys(String keys) {
+    this.model.combinedKeys = keys;
+    notifyListeners();
+  }
+
+  Future<void> saveAndLogin() async {
+    ApiUserModelKeys? keys = _getKeysFromCombined(this.model.combinedKeys!);
+    if (keys != null) await loginFlowService.saveAndLogin(keys: keys);
+  }
+
+  ApiUserModelKeys? _getKeysFromCombined(String combined) {
+    List<String> combinedSplit = combined.split(".");
+    String address = combinedSplit[0];
+    String dataKey = combinedSplit[1];
+    String signKey = combinedSplit[2];
+
+    if (_areKeysValid(address, dataKey, signKey)) {
+      return ApiUserModelKeys(
+        dataPrivateKey: dataKey,
+        signPrivateKey: signKey,
+        address: address,
       );
-      appService.updateUser(user);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => TikiScreenService().getUI()),
-          ModalRoute.withName('/home'));
     }
+    return null;
+  }
+
+  bool _areKeysValid(
+      String? address, String? dataKeyPrivate, String? signKeyPrivate) {
+    var addressValid = address != null && address.length == 64;
+    var dataKeyValid = dataKeyPrivate != null && dataKeyPrivate.length == 1624;
+    var signKeyValid = signKeyPrivate != null && signKeyPrivate.length == 92;
+    return addressValid && dataKeyValid && signKeyValid;
   }
 }

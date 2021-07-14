@@ -16,7 +16,7 @@ class KeysSaveDialogDlViewSubtitle extends StatelessWidget {
           text: 'We recommend storing your QR key ',
           style: TextStyle(
               fontFamily: "NunitoSans",
-              color: ConfigColor.emperor,
+              color: ConfigColor.greySix,
               fontSize: 12.sp,
               fontWeight: FontWeight.w600),
           children: [
@@ -24,7 +24,7 @@ class KeysSaveDialogDlViewSubtitle extends StatelessWidget {
               text: 'off your phone',
               style: TextStyle(
                 fontFamily: "NunitoSans",
-                color: ConfigColor.emperor,
+                color: ConfigColor.greySix,
                 fontWeight: FontWeight.w800,
                 fontSize: 12.sp,
               ),
@@ -33,7 +33,7 @@ class KeysSaveDialogDlViewSubtitle extends StatelessWidget {
               text: ', in case you lose it.',
               style: TextStyle(
                   fontFamily: "NunitoSans",
-                  color: ConfigColor.emperor,
+                  color: ConfigColor.greySix,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600),
             ),

@@ -24,7 +24,7 @@ class KeysSaveDialogCopyViewField extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: ConfigColor.white,
-          border: Border.all(color: ConfigColor.silverChalice),
+          border: Border.all(color: ConfigColor.greyThree),
           borderRadius: BorderRadius.all(Radius.circular(2.w))),
       child: Row(children: [_text(), _button(context, service)]),
     );
@@ -45,10 +45,10 @@ class KeysSaveDialogCopyViewField extends StatelessWidget {
         isEmail ? service.model.isCopiedEmail : service.model.isCopiedKey;
     return Container(
         decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: ConfigColor.silverChalice))),
+            border: Border(left: BorderSide(color: ConfigColor.greyThree))),
         child: Container(
             decoration: BoxDecoration(
-              color: ConfigColor.gallery,
+              color: ConfigColor.greyTwo,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(2.w),
                   bottomRight: Radius.circular(2.w)),
@@ -70,8 +70,8 @@ class KeysSaveDialogCopyViewField extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
                                     color: saved
-                                        ? ConfigColor.jade
-                                        : ConfigColor.mardiGras)),
+                                        ? ConfigColor.green
+                                        : ConfigColor.tikiPurple)),
                             Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 child: Container(

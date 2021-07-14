@@ -16,7 +16,7 @@ class KeysSaveDialogCopyViewSubtitle extends StatelessWidget {
           text: "Copy and paste",
           style: TextStyle(
               fontFamily: "NunitoSans",
-              color: ConfigColor.emperor,
+              color: ConfigColor.greySix,
               fontSize: 12.sp,
               fontWeight: FontWeight.w800),
           children: [
@@ -25,7 +25,7 @@ class KeysSaveDialogCopyViewSubtitle extends StatelessWidget {
                     " your security key into your preferred password manager for safe keeping.",
                 style: TextStyle(
                     fontFamily: "NunitoSans",
-                    color: ConfigColor.emperor,
+                    color: ConfigColor.greySix,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w600))
           ]),

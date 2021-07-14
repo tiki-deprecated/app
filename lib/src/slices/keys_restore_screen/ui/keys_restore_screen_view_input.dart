@@ -14,7 +14,9 @@ import '../keys_restore_screen_service.dart';
 class KeysRestoreScreenViewInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<KeysRestoreScreenService>(context, listen: false);
+    var controller =
+        Provider.of<KeysRestoreScreenService>(context, listen: false)
+            .controller;
     return TextField(
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
       cursorColor: ConfigColor.orange,
@@ -23,22 +25,22 @@ class KeysRestoreScreenViewInput extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
           hintText: "Your Account Key",
           hintStyle: TextStyle(
-              color: ConfigColor.boulder,
+              color: ConfigColor.greyFive,
               fontWeight: FontWeight.bold,
               fontSize: 15.sp),
           filled: true,
           fillColor: Colors.white,
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: ConfigColor.boulder,
+                  color: ConfigColor.greyFive,
                   width: 1,
                   style: BorderStyle.solid)),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: ConfigColor.boulder,
+                  color: ConfigColor.greyFive,
                   width: 1,
                   style: BorderStyle.solid))),
-      onChanged: (String s) => service.setManualKey(s),
+      onChanged: (String s) => controller.updateKeys(s),
     );
   }
 }

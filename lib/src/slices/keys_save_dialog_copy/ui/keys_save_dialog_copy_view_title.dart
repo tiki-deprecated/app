@@ -13,7 +13,7 @@ class KeysSaveDialogCopyViewTitle extends StatelessWidget {
     return Text("Save securely to a pass manager",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: ConfigColor.mardiGras,
+            color: ConfigColor.tikiPurple,
             fontFamily: 'Koara',
             fontSize: 28.sp,
             fontWeight: FontWeight.bold));

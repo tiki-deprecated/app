@@ -1,12 +1,15 @@
-import 'package:app/src/slices/app/app_service.dart';
 import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'keys_create_screen_service.dart';
 
 class KeysCreateScreenController {
-  goToRestore(BuildContext context) {
-    AppService appService = Provider.of<AppService>(context, listen: false);
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => KeysRestoreScreenService(appService).getUI()));
-  }
+  final KeysCreateScreenService service;
+
+  KeysCreateScreenController(this.service);
+
+  goToRestore(BuildContext context) => Navigator.of(context).push(
+      KeysRestoreScreenService(service.loginFlowService)
+          .presenter
+          .createRoute(context));
 }

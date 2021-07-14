@@ -1,14 +1,21 @@
-import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_layout.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class KeysCreateScreenPresenter {
+import 'keys_create_screen_service.dart';
+import 'ui/keys_create_screen_layout.dart';
+
+class KeysCreateScreenPresenter extends Page {
   final KeysCreateScreenService service;
 
-  KeysCreateScreenPresenter(this.service);
+  KeysCreateScreenPresenter(this.service)
+      : super(key: ValueKey("KeysCreateScreen"));
 
-  ChangeNotifierProvider<KeysCreateScreenService> render() {
-    return ChangeNotifierProvider.value(
-        value: service, child: KeysCreateScreenLayout());
+  @override
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+        settings: this,
+        builder: (BuildContext context) => ChangeNotifierProvider.value(
+            value: service, child: KeysCreateScreenLayout()));
   }
 }

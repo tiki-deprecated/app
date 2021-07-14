@@ -7,7 +7,7 @@ class KeysNewScreenLayoutBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Center(child: Container(color: ConfigColor.serenade)),
+      Center(child: Container(color: ConfigColor.cream)),
       Align(
           alignment: Alignment.topRight,
           child: HelperImage(

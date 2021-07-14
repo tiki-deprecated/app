@@ -27,7 +27,7 @@ class InfoCarouselCardViewScrollHeader extends StatelessWidget {
               textAlign: TextAlign.left,
               text: TextSpan(
                   style: TextStyle(
-                      color: ConfigColor.ikb,
+                      color: ConfigColor.blue,
                       fontFamily: "Koara",
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold),

@@ -16,7 +16,7 @@ class KeysNewScreenViewTitle extends StatelessWidget {
     return Text("Backup\nyour account",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: ConfigColor.mardiGras,
+            color: ConfigColor.tikiPurple,
             fontFamily: 'Koara',
             fontSize: 30.sp,
             fontWeight: FontWeight.bold));

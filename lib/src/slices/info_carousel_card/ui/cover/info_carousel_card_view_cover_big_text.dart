@@ -23,7 +23,7 @@ class InfoCarouselCardViewCoverBigText extends StatelessWidget {
         textAlign: TextAlign.left,
         text: TextSpan(
             style: TextStyle(
-                color: ConfigColor.ikb,
+                color: ConfigColor.blue,
                 fontFamily: "Koara",
                 fontSize: service.controller
                     .calculateAnimation(32.sp, _animationValue.value, 0.sp),
