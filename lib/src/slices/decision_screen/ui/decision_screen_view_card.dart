@@ -23,6 +23,8 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
   double delta = 0;
   double top = 0;
 
+  double lastDx = 0;
+
   get angle =>
       delta.abs() / SizerUtil.width > 45 ? 45 : -delta / SizerUtil.width;
 
@@ -88,7 +90,6 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
   }
 
   void onDragUpdate(DragUpdateDetails details) {
-    print(delta * 3 / SizerUtil.width);
     setState(() {
       top += details.delta.dy;
       delta += details.delta.dx;
@@ -96,6 +97,11 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
   }
 
   void onDragEnd(DragEndDetails details) {
+    if (delta > 0) {
+      widget.onSwipeRight();
+    } else {
+      widget.onSwipeLeft();
+    }
     setState(() {
       delta = 0;
       top = 0;
