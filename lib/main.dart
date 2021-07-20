@@ -1,5 +1,6 @@
 import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_bouncer/api_bouncer_service.dart';
+import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/api_user/api_user_service.dart';
@@ -49,7 +50,9 @@ Future<void> main() async {
               Provider<ApiBouncerService>.value(value: apiBouncerService),
               Provider<ApiBlockchainService>.value(value: apiBlockchainService),
               Provider<ApiSignupService>(create: (_) => ApiSignupService()),
-              Provider<ApiGoogleService>.value(value: apiGoogleService)
+              Provider<ApiGoogleService>.value(value: apiGoogleService),
+              Provider<ApiCompanyIndexService>(
+                  create: (_) => ApiCompanyIndexService(helperApiAuth))
             ],
             child: App(loginFlowService),
           )));
