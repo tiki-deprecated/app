@@ -1,34 +1,29 @@
 import 'package:app/src/slices/api_company/model/api_company_model.dart';
+import 'package:app/src/slices/api_company/repository/api_company_repository.dart';
+import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
+import 'package:app/src/slices/api_company_index/model/api_company_index_model_rsp.dart';
 import 'package:app/src/utils/api/helper_api_auth.dart';
 
-import '../api_sender/model/api_sender_model.dart';
-
 class ApiCompanyService {
-
   HelperApiAuth helperApiAuth;
+  ApiCompanyIndexService? apiCompanyIndexService;
 
-  ApiCompanyService.auth(this.helperApiAuth);
-
-  Future<Map<String, String>> getCompanyDataFromApi(String domain) {
-    // TODO call api
+  ApiCompanyService.auth(this.helperApiAuth) {
+    apiCompanyIndexService = ApiCompanyIndexService(helperApiAuth);
   }
 
-  void processEmailData(Map<String, dynamic> emailData) async {
-    var companyData = await getCompanyDataFromApi(emailData['domain']);
-    var companyModel = await createUpdateOrNewCompany(
-        logo: companyData['logo'],
-        securityScore: companyData['securityScore'],
-        domain: companyData['domain']
+  Future<ApiCompanyModel> createOrUpdate(String domain) async {
+    ApiCompanyIndexModelRsp companyIndexData =
+        (await apiCompanyIndexService!.find(domain)).data;
+    ApiCompanyModel company = ApiCompanyModel(
+      domain: domain,
+      logo: companyIndexData.about?.logo,
+      securityScore: companyIndexData.score!.securityScore,
     );
-    var sender = createUpdateOrNewSender(
-        name: null
-
-
-    )
+    var getCompany = await ApiCompanyRepository().get(company);
+    var dbCompany = getCompany.length > 0
+        ? ApiCompanyRepository().update(company)
+        : ApiCompanyRepository().insert(company);
+    return dbCompany;
   }
-
-  createOrUpdate(String domain) {
-
-  }
-
 }

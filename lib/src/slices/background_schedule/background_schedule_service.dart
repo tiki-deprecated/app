@@ -1,5 +1,4 @@
 import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_message/api_email_service.dart';
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
@@ -28,7 +27,7 @@ class BackgroundScheduleService {
       fetchedModel.senderData['company_id'] = companyId;
       var senderId = saveSender(fetchedModel);
       fetchedModel.senderData['sender_id'] = senderId;
-      saveMessage(fetchedModel)
+      saveMessage(fetchedModel);
     }
   }
 
@@ -38,12 +37,11 @@ class BackgroundScheduleService {
     return companyId;
   }
 
-  saveSender(ApiMessageFetchedModel fetchedModel) {
-    return ApiSenderService().createOrUpdate(fetchedModel);
+  saveSender(ApiMessageFetchedModel fetchedModel) async {
+    return await ApiSenderService().createOrUpdate(fetchedModel);
   }
 
-  saveMessage(ApiMessageFetchedModel fetchedModel) {
-    return ApiMessageService().createOrUpdate(fetchedModel);
+  saveMessage(ApiMessageFetchedModel fetchedModel) async {
+    return await ApiMessageService().createOrUpdate(fetchedModel);
   }
-
 }

@@ -38,7 +38,6 @@ class DataScreenService extends ChangeNotifier {
 
   void addGoogleAccount() async {
     this.model.googleAccount = await googleService.signIn();
-    ApiGoogleService.fetchGmailMessagesMetadata();
     notifyListeners();
   }
 

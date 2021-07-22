@@ -2,7 +2,7 @@ import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_sqlite/api_sqlite_service.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class ApiCompanyRepositoryCompany {
+class ApiCompanyRepository {
   String _table = 'company';
 
   Future<ApiCompanyModel> insert(ApiCompanyModel company) async {
@@ -47,9 +47,7 @@ class ApiCompanyRepositoryCompany {
     final db = await ApiSqliteService.db;
     await db.delete(
       _table,
-      // Use a `where` clause to delete a specific dog.
       where: 'id = ?',
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [id],
     );
   }

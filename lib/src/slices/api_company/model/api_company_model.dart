@@ -1,14 +1,10 @@
 class ApiCompanyModel {
   int? companyId;
   String? logo;
-  int? securityScore;
+  double? securityScore;
   String? domain;
 
-  ApiCompanyModel(
-      {required this.companyId,
-      required this.logo,
-      required this.securityScore,
-      required this.domain});
+  ApiCompanyModel({this.companyId, this.logo, this.securityScore, this.domain});
 
   ApiCompanyModel.fromMap(companyMap)
       : companyId = companyMap['company_id'],

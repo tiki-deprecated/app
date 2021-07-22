@@ -69,7 +69,7 @@ class ApiGoogleService {
     );
   }
 
-  Future<Message> fetchAndProcessGmailMessage(Message messageMeta) async {
+  Future<Message?> fetchAndProcessGmailMessage(Message messageMeta) async {
     var isListMessage = false;
     var gmailApi = await getGmailApi();
     var message = await gmailApi?.users.messages.get("me", messageMeta.id!,
@@ -84,7 +84,7 @@ class ApiGoogleService {
         }
       }
     }
-    if (isListMessage) processEmailListMessage(message!);
+    return isListMessage ? message : null;
   }
 
   Map<String, String> getSenderData(Message message) {
