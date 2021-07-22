@@ -53,30 +53,17 @@ class ApiSqliteRepository {
   /// Database creation hook.
   static FutureOr<void> onCreate(Database db, int version) async {
     print('creating db');
-    await db.execute('''
-            create table app_data (
-              id integer primary key autoincrement,
-              key text not null,
-              value text not null)
-            ''');
-    await db.execute('''
-            create table sender (
-              id integer primary key autoincrement,
-              key text not null,
-              value text not null)
-            ''');
-    await db.execute('''
-            create table company (
-              id integer primary key autoincrement,
-              key text not null,
-              value text not null)
-            ''');
-    await db.execute('''
-            create table message (
-              id integer primary key autoincrement,
-              key text not null,
-              value text not null)
-            ''');
+    v1CreateTables(db);
+    v2CreateTables(db);
+  }
+
+  FutureOr<void> onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion <= 1) {
+      v2CreateTables(db);
+    }
+  }
+
+  static void v1CreateTables(Database db) async {
     await db.execute('''
             create table app_data (
               id integer primary key autoincrement,
@@ -85,7 +72,32 @@ class ApiSqliteRepository {
             ''');
   }
 
-  FutureOr<void> onUpgrade(Database db, int oldVersion, int newVersion) {
-    if (oldVersion <= 1) {}
+  static void v2CreateTables(Database db) async {
+    await db.execute('''
+            create table sender (
+              sender_id integer primary key autoincrement,
+              company_id ,
+              name text,
+              email text,
+              category text,
+              unsubscribe_mail_to text,
+              action integer)
+            ''');
+    await db.execute('''
+            create table company (
+              company_id integer primary key autoincrement,
+              logo text,
+              security_score real,
+              domain text)
+            ''');
+    await db.execute('''
+            create table message (
+              message_id integer primary key autoincrement,
+              ext_message_id text,
+              sender_id integer,
+              received_date integer,
+              opened_date integer,
+              account text,
+            ''');
   }
 }
