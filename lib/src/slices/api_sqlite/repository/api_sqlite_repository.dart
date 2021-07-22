@@ -1,22 +1,25 @@
 import 'dart:async';
 
+import 'package:app/src/slices/api_user/api_user_service.dart';
+import 'package:app/src/slices/api_user/model/api_user_model.dart';
 import 'package:async/async.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sqflite_sqlcipher/sqflite.dart';
 
 /// The SQLite conector
 ///
 /// The SQLite conector with singleton architecture. To initialize the database,
 /// just call TikiDatabase.instance.database.
-class DatabaseRepository {
+class ApiSqliteRepository {
   /// Internal empty constructor
-  DatabaseRepository._internal();
+  ApiSqliteRepository._internal();
 
   /// The database singleton.
-  static final DatabaseRepository? _tikiDatabase =
-      new DatabaseRepository._internal();
+  static final ApiSqliteRepository _tikiDatabase =
+      new ApiSqliteRepository._internal();
 
   /// The database singleton instance getter.
-  static DatabaseRepository? get instance => _tikiDatabase;
+  static ApiSqliteRepository get instance => _tikiDatabase;
 
   /// The internal [Database].
   static Database? _db;
@@ -25,22 +28,23 @@ class DatabaseRepository {
   final _initDBMemoizer = AsyncMemoizer<Database>();
 
   /// The public [Database] getter.
-  Future<Database?> get database async {
-    if (_db != null) return _db;
+  Future<Database> get database async {
+    if (_db != null) return _db!;
 
     _db = await _initDBMemoizer.runOnce(() async {
       return await _initDB();
     });
 
-    return _db;
+    return _db!;
   }
 
   /// Initializes the [Database].
   Future<Database> _initDB() async {
     print('initializing db');
     String databasePath = await getDatabasesPath();
+    ApiUserModel user = await ApiUserService(FlutterSecureStorage()).get();
     return await openDatabase(databasePath + "/tiki.db",
-        version: 1, onCreate: onCreate);
+        password: user.keys!.dataPrivateKey, version: 1, onCreate: onCreate);
   }
 
   /// Database creation hook.

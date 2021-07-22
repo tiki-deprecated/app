@@ -30,6 +30,8 @@ Future<void> main() async {
   ApiBlockchainService apiBlockchainService =
       ApiBlockchainService(helperApiAuth);
   ApiGoogleService apiGoogleService = ApiGoogleService();
+  // TODO add providers for apis
+  // TODO initialize the local notifications
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,

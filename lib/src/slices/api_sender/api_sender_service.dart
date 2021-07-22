@@ -1,0 +1,3 @@
+class ApiSenderService {
+  createOrUpdate(senderData) {}
+}
