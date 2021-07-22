@@ -1,8 +1,13 @@
 import 'package:app/src/slices/api_company/model/api_company_model.dart';
+import 'package:app/src/utils/api/helper_api_auth.dart';
 
 import '../api_sender/model/api_sender_model.dart';
 
 class ApiCompanyService {
+
+  HelperApiAuth helperApiAuth;
+
+  ApiCompanyService.auth(this.helperApiAuth);
 
   Future<Map<String, String>> getCompanyDataFromApi(String domain) {
     // TODO call api
@@ -22,6 +27,8 @@ class ApiCompanyService {
     )
   }
 
-  createOrUpdate(senderData) {}
+  createOrUpdate(String domain) {
+
+  }
 
 }

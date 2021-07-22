@@ -3,9 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_email/api_email_service.dart';
-import 'package:app/src/slices/api_sender/api_sender_service.dart';
+import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:app/src/utils/helper_json.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
@@ -52,34 +50,26 @@ class ApiGoogleService {
     return null;
   }
 
-  void fetchGmailMessagesMetadata() async {
+  Future<List<Message>> fetchGmailMessagesMetadata() async {
     var gmailApi = await getGmailApi();
     var emailList = await gmailApi?.users.messages.list("me");
-    for (var messageMeta in emailList!.messages!) {
-      await fetchAndProcessGmailMessage(messageMeta);
-    }
+    return emailList!.messages!;
   }
 
-  Future<void> processEmailListMessage(Message message) async {
+  ApiMessageFetchedModel processEmailListMessage(Message message) {
     var senderData = getSenderData(message);
-    var messageExtId = message.id;
-    var messageReceivedDate = message.internalDate;
-    var messageOpenedDate =
-        message.labelIds!.contains("OPENED") ? messageReceivedDate : null;
-    var account = _googleSignIn.currentUser!.email;
-    var companyId = ApiCompanyService().createOrUpdate(senderData);
-    senderData['company_id'] = companyId;
-    var senderId = ApiSenderService().createOrUpdate(senderData);
-    ApiEmailService().create({
-      'sender_id': senderId,
-      'message_ext_id': messageExtId,
-      'message_received_date': messageReceivedDate,
-      'message_opened_date': messageOpenedDate,
-      'account': account,
-    });
+    return ApiMessageFetchedModel(
+      senderData: senderData,
+      messageExtId: message.id,
+      messageReceivedDate: message.internalDate,
+      messageOpenedDate:
+          message.labelIds!.contains("OPENED") ? message.internalDate : null,
+      account: _googleSignIn.currentUser!.email,
+      domain: senderData['email']!.split("@")[1].trim(),
+    );
   }
 
-  Future<void> fetchAndProcessGmailMessage(Message messageMeta) async {
+  Future<Message> fetchAndProcessGmailMessage(Message messageMeta) async {
     var isListMessage = false;
     var gmailApi = await getGmailApi();
     var message = await gmailApi?.users.messages.get("me", messageMeta.id!,
@@ -97,7 +87,7 @@ class ApiGoogleService {
     if (isListMessage) processEmailListMessage(message!);
   }
 
-  getSenderData(Message message) {
+  Map<String, String> getSenderData(Message message) {
     var senderName;
     var senderEmail;
     var senderCategory;
