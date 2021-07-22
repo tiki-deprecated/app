@@ -2,19 +2,15 @@ import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_company/repository/api_company_repository.dart';
 import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
 import 'package:app/src/slices/api_company_index/model/api_company_index_model_rsp.dart';
-import 'package:app/src/utils/api/helper_api_auth.dart';
 
 class ApiCompanyService {
-  HelperApiAuth helperApiAuth;
-  ApiCompanyIndexService? apiCompanyIndexService;
+  final ApiCompanyIndexService apiCompanyIndexService;
 
-  ApiCompanyService.auth(this.helperApiAuth) {
-    apiCompanyIndexService = ApiCompanyIndexService(helperApiAuth);
-  }
+  ApiCompanyService(this.apiCompanyIndexService);
 
   Future<ApiCompanyModel> createOrUpdate(String domain) async {
     ApiCompanyIndexModelRsp companyIndexData =
-        (await apiCompanyIndexService!.find(domain)).data;
+        (await apiCompanyIndexService.find(domain)).data;
     ApiCompanyModel company = ApiCompanyModel(
       domain: domain,
       logo: companyIndexData.about?.logo,

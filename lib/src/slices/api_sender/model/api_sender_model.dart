@@ -24,12 +24,12 @@ class ApiSenderModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'senderId': senderId,
-      'companyId': companyId,
+      'sender_id': senderId,
+      'company_id': companyId,
       'name': name,
       'email': email,
       'category': category,
-      'unsubscribeMailTo': unsubscribeMailTo,
+      'unsubscribe_mail_to': unsubscribeMailTo,
     };
   }
 

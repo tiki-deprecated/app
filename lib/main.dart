@@ -1,7 +1,10 @@
 import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_bouncer/api_bouncer_service.dart';
+import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
+import 'package:app/src/slices/api_message/api_message_service.dart';
+import 'package:app/src/slices/api_sender/api_sender_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/api_user/api_user_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
@@ -30,9 +33,13 @@ Future<void> main() async {
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
       ApiBlockchainService(helperApiAuth);
+  ApiCompanyIndexService apiCompanyIndexService =
+      ApiCompanyIndexService(helperApiAuth);
   ApiGoogleService apiGoogleService = ApiGoogleService();
-  // TODO add providers for apis
-  // TODO initialize the local notifications
+  ApiCompanyService apiCompanyService =
+      ApiCompanyService(apiCompanyIndexService);
+  ApiSenderService apiSenderService = ApiSenderService();
+  ApiMessageService apiMessageService = ApiMessageService();
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
@@ -53,8 +60,11 @@ Future<void> main() async {
               Provider<ApiBlockchainService>.value(value: apiBlockchainService),
               Provider<ApiSignupService>(create: (_) => ApiSignupService()),
               Provider<ApiGoogleService>.value(value: apiGoogleService),
-              Provider<ApiCompanyIndexService>(
-                  create: (_) => ApiCompanyIndexService(helperApiAuth))
+              Provider<ApiCompanyIndexService>.value(
+                  value: apiCompanyIndexService),
+              Provider<ApiCompanyService>.value(value: apiCompanyService),
+              Provider<ApiSenderService>.value(value: apiSenderService),
+              Provider<ApiMessageService>.value(value: apiMessageService),
             ],
             child: App(loginFlowService),
           )));

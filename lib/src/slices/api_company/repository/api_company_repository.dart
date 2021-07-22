@@ -6,7 +6,7 @@ class ApiCompanyRepository {
   String _table = 'company';
 
   Future<ApiCompanyModel> insert(ApiCompanyModel company) async {
-    final db = await ApiSqliteService.db;
+    final db = await ApiSqliteService().db;
     int senderId = await db.insert(_table, company.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     company.companyId = senderId;
@@ -14,7 +14,7 @@ class ApiCompanyRepository {
   }
 
   Future<List<ApiCompanyModel>> get(ApiCompanyModel subject) async {
-    final db = await ApiSqliteService.db;
+    final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
     String where = subjectMap.keys.join(' = ?,');
     List<String> whereArgs =
@@ -26,14 +26,14 @@ class ApiCompanyRepository {
   }
 
   Future<List<ApiCompanyModel>> getAll() async {
-    final db = await ApiSqliteService.db;
+    final db = await ApiSqliteService().db;
     final List<Map<String, dynamic>> allMapped = await db.query(_table);
     return List.generate(
         allMapped.length, (i) => ApiCompanyModel.fromMap(allMapped[i]));
   }
 
   Future<ApiCompanyModel> update(ApiCompanyModel company) async {
-    final db = await ApiSqliteService.db;
+    final db = await ApiSqliteService().db;
     await db.update(
       _table,
       company.toMap(),
@@ -44,7 +44,7 @@ class ApiCompanyRepository {
   }
 
   Future<void> delete(int id) async {
-    final db = await ApiSqliteService.db;
+    final db = await ApiSqliteService().db;
     await db.delete(
       _table,
       where: 'id = ?',

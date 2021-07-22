@@ -44,7 +44,10 @@ class ApiSqliteRepository {
     String databasePath = await getDatabasesPath();
     ApiUserModel user = await ApiUserService(FlutterSecureStorage()).get();
     return await openDatabase(databasePath + "/tiki.db",
-        password: user.keys!.dataPrivateKey, version: 1, onCreate: onCreate);
+        password: user.keys!.dataPrivateKey,
+        version: 2,
+        onCreate: onCreate,
+        onUpgrade: onUpgrade);
   }
 
   /// Database creation hook.
@@ -56,5 +59,33 @@ class ApiSqliteRepository {
               key text not null,
               value text not null)
             ''');
+    await db.execute('''
+            create table sender (
+              id integer primary key autoincrement,
+              key text not null,
+              value text not null)
+            ''');
+    await db.execute('''
+            create table company (
+              id integer primary key autoincrement,
+              key text not null,
+              value text not null)
+            ''');
+    await db.execute('''
+            create table message (
+              id integer primary key autoincrement,
+              key text not null,
+              value text not null)
+            ''');
+    await db.execute('''
+            create table app_data (
+              id integer primary key autoincrement,
+              key text not null,
+              value text not null)
+            ''');
+  }
+
+  FutureOr<void> onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion <= 1) {}
   }
 }
