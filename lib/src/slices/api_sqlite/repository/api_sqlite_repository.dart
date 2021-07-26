@@ -79,6 +79,8 @@ class ApiSqliteRepository {
               email text,
               category text,
               unsubscribe_mail_to text,
+              ignore_until integer,
+              unsubscribed integer,
               action integer)
             ''');
     await db.execute('''create table company (

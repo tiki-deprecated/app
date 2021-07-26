@@ -6,6 +6,7 @@ import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_message/api_message_service.dart';
 import 'package:app/src/slices/api_sender/api_sender_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
+import 'package:app/src/slices/api_unsubscribe_spam/api_unsubscribe_spam_service.dart';
 import 'package:app/src/slices/api_user/api_user_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,6 +38,12 @@ Future<void> main() async {
       ApiCompanyService(apiCompanyIndexService);
   ApiSenderService apiSenderService = ApiSenderService();
   ApiMessageService apiMessageService = ApiMessageService();
+  ApiUnsubscribeSpamService apiUnsubscribeSpamService =
+      ApiUnsubscribeSpamService(
+          apiGoogleService: apiGoogleService,
+          apiMessageService: apiMessageService,
+          apiSenderService: apiSenderService,
+          apiCompanyService: apiCompanyService);
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
@@ -62,6 +69,8 @@ Future<void> main() async {
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiSenderService>.value(value: apiSenderService),
       Provider<ApiMessageService>.value(value: apiMessageService),
+      Provider<ApiUnsubscribeSpamService>.value(
+          value: apiUnsubscribeSpamService),
     ],
     child: App(loginFlowService),
   ));

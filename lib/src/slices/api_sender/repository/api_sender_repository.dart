@@ -57,15 +57,15 @@ class ApiSenderRepository {
     final db = await ApiSqliteService().db;
     String where = '';
     List<String?> whereArgs = [];
+    List<String?> whereParams = [];
     if (params.isNotEmpty) {
-      List<String?> whereParams = [];
       params.forEach((param) {
         if (param[0] != null && param[1] != null) {
           whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
           whereArgs.add(param[2] != null ? "'${param[2].toString()}'" : 'NULL');
         }
       });
-      where = whereArgs.join(' AND ');
+      where = whereParams.join(' AND ');
     }
     final List<Map<String, Object?>> mappedSenders =
         await db.query(_table, where: where, whereArgs: whereArgs);
