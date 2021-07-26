@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/decision_screen/decision_screen_service.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,7 +13,8 @@ class DecisionScreenController {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  removeLast(context) {
+  removeLast(BuildContext context, Function callback) {
     Provider.of<DecisionScreenService>(context, listen: false).removeCard();
+    callback(context);
   }
 }

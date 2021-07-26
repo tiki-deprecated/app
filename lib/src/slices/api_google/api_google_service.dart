@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'dart:convert';
+
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:app/src/utils/helper_json.dart';
@@ -13,10 +15,10 @@ import 'package:googleapis/gmail/v1.dart';
 import 'repository/api_google_repository_info.dart';
 
 class ApiGoogleService {
-  static final GoogleSignIn _googleSignIn =
-      GoogleSignIn(scopes: [GmailApi.gmailReadonlyScope]);
+  static final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [GmailApi.gmailReadonlyScope, GmailApi.gmailSendScope]);
   final ApiGoogleRepositoryInfo _googleInfoRepository =
-  ApiGoogleRepositoryInfo();
+      ApiGoogleRepositoryInfo();
 
   Future<GoogleSignInAccount?> getConnectedUser() async {
     return await _googleSignIn.signInSilently();
@@ -50,10 +52,10 @@ class ApiGoogleService {
     return null;
   }
 
-  Future<List<Message>> fetchGmailMessagesMetadata() async {
+  Future<List<Message>?> fetchGmailMessagesMetadata() async {
     var gmailApi = await getGmailApi();
     var emailList = await gmailApi?.users.messages.list("me");
-    return emailList!.messages!;
+    return emailList?.messages;
   }
 
   ApiMessageFetchedModel processEmailListMessage(Message message) {
@@ -65,7 +67,7 @@ class ApiGoogleService {
       messageOpenedDate:
           message.labelIds!.contains("OPENED") ? message.internalDate : null,
       account: _googleSignIn.currentUser!.email,
-      domain: senderData['email']!.split("@")[1].trim(),
+      domain: getDomainFromSenderData(senderData),
     );
   }
 
@@ -117,5 +119,45 @@ class ApiGoogleService {
       'senderCategory': senderCategory,
       'unsubscribeMailTo': unsubscribeMailTo,
     };
+  }
+
+  String getBase64Email({String? source}) {
+    List<int> bytes = utf8.encode(source ?? '');
+    String base64String = base64UrlEncode(bytes);
+    return base64String;
+  }
+
+  Future<bool> sendUnsubscribeMail(String unsubscribeMailTo) async {
+    var gmailApi = await getGmailApi();
+    if (gmailApi == null) return false;
+    var to = getToFromMailTo(unsubscribeMailTo);
+    var subject = getsubjectFromMailTo(unsubscribeMailTo);
+    var content = getContentFromMailTo(unsubscribeMailTo);
+    await gmailApi.users.messages.send(
+        Message.fromJson({
+          'raw': getBase64Email(
+              source: 'From: me\r\n'
+                  'To: $to\r\n'
+                  'Subject: $subject\r\n'
+                  'Content-Type: text/html; charset=utf-8\r\n'
+                  'Content-Transfer-Encoding: base64\r\n\r\n'
+                  '$content'),
+        }),
+        "me");
+    return true;
+  }
+
+  getToFromMailTo(String unsubscribeMailTo) {}
+
+  getsubjectFromMailTo(String unsubscribeMailTo) {}
+
+  getContentFromMailTo(String unsubscribeMailTo) {}
+
+  String? getDomainFromSenderData(Map<String, String> senderData) {
+    var email = senderData['senderEmail'];
+    if (email == null) return null;
+    var uri = Uri.parse(email);
+    var domain = uri.host;
+    return domain;
   }
 }

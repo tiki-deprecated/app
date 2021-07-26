@@ -14,12 +14,19 @@ class ApiCompanyService {
     ApiCompanyModel company = ApiCompanyModel(
       domain: domain,
       logo: companyIndexData.about?.logo,
-      securityScore: companyIndexData.score!.securityScore,
+      securityScore: companyIndexData.score?.securityScore,
+      breachScore: companyIndexData.score?.securityScore,
+      sensitivityScore: companyIndexData.score?.securityScore,
     );
     var getCompany = await ApiCompanyRepository().get(company);
     var dbCompany = getCompany.length > 0
         ? ApiCompanyRepository().update(company)
         : ApiCompanyRepository().insert(company);
     return dbCompany;
+  }
+
+  Future<ApiCompanyModel> getById(int? companyId) async {
+    ApiCompanyModel company = ApiCompanyModel(companyId: companyId);
+    return (await ApiCompanyRepository().get(company))[0];
   }
 }

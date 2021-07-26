@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_sentry.dart';
+import 'package:app/src/slices/background_schedule/background_schedule_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BackgroundScheduleService(context).fetchGoogleEmails();
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         title: _title,

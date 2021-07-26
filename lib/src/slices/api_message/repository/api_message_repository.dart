@@ -16,9 +16,10 @@ class ApiMessageRepository {
   Future<List<ApiMessageModel>> get(ApiMessageModel subject) async {
     final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
-    String where = subjectMap.keys.join(' = ?,');
-    List<String> whereArgs =
-        subjectMap.entries.map((entry) => entry.toString()).toList();
+    String where = subjectMap.keys.join(' = ? AND ') + "= ?";
+    List<String?> whereArgs = subjectMap.values
+        .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
+        .toList();
     final List<Map<String, Object?>> mappedSenders =
         await db.query(_table, where: where, whereArgs: whereArgs);
     return List.generate(
@@ -50,5 +51,25 @@ class ApiMessageRepository {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<List<ApiMessageModel>> getByParams(List<List<String?>> params) async {
+    final db = await ApiSqliteService().db;
+    String where = '';
+    List<String?> whereArgs = [];
+    if (params.isNotEmpty) {
+      List<String?> whereParams = [];
+      params.forEach((param) {
+        if (param[0] != null && param[1] != null) {
+          whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
+          whereArgs.add(param[2] != null ? "'${param[2].toString()}'" : 'NULL');
+        }
+      });
+      where = whereArgs.join(' AND ');
+    }
+    final List<Map<String, Object?>> mappedSenders =
+        await db.query(_table, where: where, whereArgs: whereArgs);
+    return List.generate(
+        mappedSenders.length, (i) => ApiMessageModel.fromMap(mappedSenders[i]));
   }
 }

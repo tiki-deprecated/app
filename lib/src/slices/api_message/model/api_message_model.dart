@@ -2,7 +2,7 @@ import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart'
 
 class ApiMessageModel {
   int? messageId;
-  int? extMessageId;
+  String? extMessageId;
   int? senderId;
   int? receivedDate;
   int? openedDate;
@@ -19,8 +19,10 @@ class ApiMessageModel {
 
   ApiMessageModel.fromFetchedMessage(ApiMessageFetchedModel fetchedModel)
       : extMessageId = fetchedModel.messageExtId,
-        senderId = fetchedModel.senderData['sender_id'],
-        receivedDate = fetchedModel.messageReceivedDate,
+        senderId = int.parse(fetchedModel.senderData['sender_id']),
+        receivedDate = fetchedModel.messageReceivedDate is String
+            ? int.parse(fetchedModel.messageReceivedDate)
+            : fetchedModel.messageReceivedDate,
         openedDate = fetchedModel.messageOpenedDate,
         account = fetchedModel.account;
 

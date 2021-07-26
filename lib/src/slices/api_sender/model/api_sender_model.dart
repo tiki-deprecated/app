@@ -5,6 +5,8 @@ class ApiSenderModel {
   final String email;
   final String category;
   String? unsubscribeMailTo;
+  int unsubscribed;
+  int ignoreUntil = 0;
 
   ApiSenderModel(
       {this.senderId,
@@ -12,15 +14,19 @@ class ApiSenderModel {
       required this.name,
       required this.email,
       required this.category,
-      this.unsubscribeMailTo});
+      this.unsubscribeMailTo,
+      this.ignoreUntil = 0,
+      this.unsubscribed = 0});
 
   ApiSenderModel.fromMap(senderMap)
       : senderId = senderMap['sender_id'],
-        companyId = senderMap['company_id'],
-        name = senderMap['name'],
-        email = senderMap['email'],
-        category = senderMap['category'],
-        unsubscribeMailTo = senderMap['unsubscribe_mail_to'];
+        companyId = int.parse(senderMap['company_id']),
+        name = senderMap['name'].toString(),
+        email = senderMap['email'].toString(),
+        category = senderMap['category'].toString(),
+        unsubscribeMailTo = senderMap['unsubscribe_mail_to'].toString(),
+        ignoreUntil = senderMap['ignore_until'],
+        unsubscribed = senderMap['unsubscribed'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -30,6 +36,8 @@ class ApiSenderModel {
       'email': email,
       'category': category,
       'unsubscribe_mail_to': unsubscribeMailTo,
+      'ignore_until': ignoreUntil,
+      'unsubscribed': unsubscribed,
     };
   }
 
@@ -41,7 +49,9 @@ class ApiSenderModel {
     name : $name, 
     email : $email,
     category : $category,
-    unsubscribeMailTo : $unsubscribeMailTo,}''';
+    unsubscribeMailTo : $unsubscribeMailTo,
+    ignoreUntil : $ignoreUntil,
+    unsubscribed : $unsubscribed}''';
     return str;
   }
 }

@@ -1,50 +1,62 @@
 import 'package:app/src/slices/api_company/api_company_service.dart';
+import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_message/api_message_service.dart';
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
+import 'package:app/src/slices/api_message/model/api_message_model.dart';
 import 'package:app/src/slices/api_sender/api_sender_service.dart';
+import 'package:app/src/slices/api_sender/model/api_sender_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:provider/provider.dart';
 
 class BackgroundScheduleService {
-
   final BuildContext context;
 
   BackgroundScheduleService(this.context);
 
-  fetchGoogleEmails() async {
+  Future<void> fetchGoogleEmails() async {
+    print("start - " + DateTime.now().minute.toString());
     var googleService = Provider.of<ApiGoogleService>(context, listen: false);
-    var messagesMeta = await googleService.fetchGmailMessagesMetadata();
-    List<Message> messages = [];
-    for (var messageMeta in messagesMeta) {
-      var message =
-          await googleService.fetchAndProcessGmailMessage(messageMeta);
-      if (message != null) messages.add(message);
+    if (await googleService.isConnected()) {
+      var messagesMeta = await googleService.fetchGmailMessagesMetadata();
+      List<Message> messages = [];
+      if (messagesMeta != null) {
+        for (var messageMeta in messagesMeta) {
+          var message =
+              await googleService.fetchAndProcessGmailMessage(messageMeta);
+          if (message != null) messages.add(message);
+        }
+      }
+      for (var message in messages) {
+        var fetchedModel = googleService.processEmailListMessage(message);
+        var company = await saveCompany(fetchedModel.domain);
+        fetchedModel.senderData['company_id'] = company?.companyId.toString();
+        var sender = await saveSender(fetchedModel);
+        fetchedModel.senderData['sender_id'] = sender.senderId.toString();
+        saveMessage(fetchedModel);
+      }
     }
-    for (var message in messages) {
-      var fetchedModel = googleService.processEmailListMessage(message);
-      var companyId = saveCompany(fetchedModel.domain);
-      fetchedModel.senderData['company_id'] = companyId;
-      var senderId = saveSender(fetchedModel);
-      fetchedModel.senderData['sender_id'] = senderId;
-      saveMessage(fetchedModel);
-    }
+    print("end - " + DateTime.now().minute.toString());
   }
 
-  saveCompany(String domain) async {
+  Future<ApiCompanyModel?> saveCompany(String? domain) async {
+    if (domain == null) return null;
     var companyService = Provider.of<ApiCompanyService>(context, listen: false);
-    var companyId = await companyService.createOrUpdate(domain);
-    return companyId;
+    var company = await companyService.createOrUpdate(domain);
+    return company;
   }
 
-  saveSender(ApiMessageFetchedModel fetchedModel) async {
+  Future<ApiSenderModel> saveSender(ApiMessageFetchedModel fetchedModel) async {
     var senderService = Provider.of<ApiSenderService>(context, listen: false);
-    return await senderService.createOrUpdate(fetchedModel);
+    var sender = await senderService.createOrUpdate(fetchedModel);
+    return sender;
   }
 
-  saveMessage(ApiMessageFetchedModel fetchedModel) async {
+  Future<ApiMessageModel> saveMessage(
+      ApiMessageFetchedModel fetchedModel) async {
     var messageService = Provider.of<ApiMessageService>(context, listen: false);
-    return await messageService.save(fetchedModel);
+    var message = await messageService.save(fetchedModel);
+    return message;
   }
 }

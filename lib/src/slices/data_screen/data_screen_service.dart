@@ -26,18 +26,18 @@ class DataScreenService extends ChangeNotifier {
     initializeGoogleRepo();
   }
 
-  initializeGoogleRepo() async {
+  Future<void> initializeGoogleRepo() async {
     this.model.googleAccount = await googleService.getConnectedUser();
     notifyListeners();
   }
 
-  void removeGoogleAccount() async {
+  Future<void> removeGoogleAccount() async {
     await googleService.signOut();
     this.model.googleAccount = null;
     notifyListeners();
   }
 
-  void addGoogleAccount(context) async {
+  Future<void> addGoogleAccount(context) async {
     this.model.googleAccount = await googleService.signIn();
     BackgroundScheduleService(context).fetchGoogleEmails();
     notifyListeners();

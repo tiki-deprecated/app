@@ -16,9 +16,10 @@ class ApiCompanyRepository {
   Future<List<ApiCompanyModel>> get(ApiCompanyModel subject) async {
     final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
-    String where = subjectMap.keys.join(' = ?,');
-    List<String> whereArgs =
-        subjectMap.entries.map((entry) => entry.toString()).toList();
+    String where = subjectMap.keys.join(' = ? AND ') + "= ?";
+    List<String?> whereArgs = subjectMap.values
+        .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
+        .toList();
     final List<Map<String, Object?>> mappedCompanies =
         await db.query(_table, where: where, whereArgs: whereArgs);
     return List.generate(mappedCompanies.length,

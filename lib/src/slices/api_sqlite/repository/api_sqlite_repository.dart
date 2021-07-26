@@ -64,8 +64,7 @@ class ApiSqliteRepository {
   }
 
   static void v1CreateTables(Database db) async {
-    await db.execute('''
-            create table app_data (
+    await db.execute('''create table app_data (
               id integer primary key autoincrement,
               key text not null,
               value text not null)
@@ -73,8 +72,7 @@ class ApiSqliteRepository {
   }
 
   static void v2CreateTables(Database db) async {
-    await db.execute('''
-            create table sender (
+    await db.execute('''create table sender (
               sender_id integer primary key autoincrement,
               company_id ,
               name text,
@@ -83,21 +81,21 @@ class ApiSqliteRepository {
               unsubscribe_mail_to text,
               action integer)
             ''');
-    await db.execute('''
-            create table company (
+    await db.execute('''create table company (
               company_id integer primary key autoincrement,
               logo text,
               security_score real,
+              breach_score real,
+              sensitivity_score real,
               domain text)
             ''');
-    await db.execute('''
-            create table message (
+    await db.execute('''create table message (
               message_id integer primary key autoincrement,
               ext_message_id text,
               sender_id integer,
               received_date integer,
               opened_date integer,
-              account text,
+              account text)
             ''');
   }
 }

@@ -1,5 +1,4 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/decision_screen/ui/decision_screen_view_card_test.dart';
 import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
 import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +36,19 @@ class DecisionScreenLayout extends StatelessWidget {
   List<DecisionScreenViewCard> _getCards(context, constraints) {
     var service = Provider.of<DecisionScreenService>(context);
     List<DecisionScreenViewCard> cards = [];
-    service.model.cards.forEach((cardData) {
-      cards.add(DecisionScreenViewCard(
-        constraints: constraints,
-        onSwipeRight: () => service.controller.removeLast(context),
-        onSwipeLeft: () => service.controller.removeLast(context),
-        child: DecisionScreenViewCardTest(cardData),
-      ));
-    });
+    if (service.model.cards.isEmpty) {
+      service.generateSpamCards(context);
+    } else {
+      service.model.cards.forEach((card) {
+        cards.add(DecisionScreenViewCard(
+            constraints: constraints,
+            onSwipeRight: () =>
+                service.controller.removeLast(context, card.callbackYes),
+            onSwipeLeft: () =>
+                service.controller.removeLast(context, card.callbackNo),
+            child: card.content(context)));
+      });
+    }
     return cards;
   }
 }
