@@ -18,7 +18,7 @@ class ApiMessageRepository {
     var subjectMap = subject.toMap();
     String where = subjectMap.keys.join(' = ? AND ') + "= ?";
     List<String?> whereArgs = subjectMap.values
-        .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
+        .map((entry) => entry != null ? "${entry.toString()}" : 'NULL')
         .toList();
     final List<Map<String, Object?>> mappedSenders =
         await db.query(_table, where: where, whereArgs: whereArgs);
@@ -62,7 +62,7 @@ class ApiMessageRepository {
       params.forEach((param) {
         if (param[0] != null && param[1] != null) {
           whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
-          whereArgs.add(param[2] != null ? "'${param[2].toString()}'" : 'NULL');
+          whereArgs.add(param[2] != null ? "${param[2].toString()}" : 'NULL');
         }
       });
       where = whereParams.join(' AND ');

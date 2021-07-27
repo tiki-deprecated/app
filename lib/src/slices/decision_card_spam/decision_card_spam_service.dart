@@ -19,13 +19,15 @@ class DecisionCardSpamService extends ChangeNotifier {
     controller = DecisionCardSpamController(this);
   }
 
-  Future<List<DecisionCardSpamLayout>> getCards(BuildContext context) async {
+  Future<List<DecisionCardSpamLayout>?> getCards(BuildContext context) async {
     var apiUnsubscribeSpam = Provider.of<ApiUnsubscribeSpamService>(context);
-    List<DecisionCardSpamModel> sendersDataForCards =
+    List<DecisionCardSpamModel>? sendersDataForCards =
         await apiUnsubscribeSpam.getDataForCards();
-    return sendersDataForCards
-        .map((spamModel) => DecisionCardSpamLayout(this, spamModel))
-        .toList();
+    if (sendersDataForCards != null) {
+      return sendersDataForCards
+          .map((spamModel) => DecisionCardSpamLayout(this, spamModel))
+          .toList();
+    }
   }
 
   unsubscribeFromSpam(BuildContext context, int senderId) {

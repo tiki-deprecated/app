@@ -22,7 +22,7 @@ class ApiSenderService {
       ['unsubscribed', "=", 0.toString()],
       [
         'ignore_until',
-        ">",
+        "<",
         (DateTime.now().millisecondsSinceEpoch / 1000).toString()
       ]
     ];

@@ -105,19 +105,23 @@ class ApiGoogleService {
             senderEmail = values[1].trim().replaceFirst('>', '');
             break;
           case "List-Unsubscribe":
-            unsubscribeMailTo = headerEntry.value!;
+            var unsubscribeMailToArr = headerEntry.value!.split('mailto:');
+            unsubscribeMailTo = unsubscribeMailToArr.length > 1
+                ? unsubscribeMailToArr[1].split('>')[0]
+                : '';
             break;
         }
       }
     }
     message.labelIds!.forEach((label) {
-      if (label.contains("CATEGORY")) senderCategory = label;
+      if (label.contains("CATEGORY_"))
+        senderCategory = label.replaceFirst('CATEGORY_', '');
     });
     return {
-      'senderName': senderName,
-      'senderEmail': senderEmail,
-      'senderCategory': senderCategory,
-      'unsubscribeMailTo': unsubscribeMailTo,
+      'name': senderName,
+      'email': senderEmail,
+      'category': senderCategory,
+      'unsubscribe_mail_to': unsubscribeMailTo,
     };
   }
 
@@ -147,17 +151,27 @@ class ApiGoogleService {
     return true;
   }
 
-  getToFromMailTo(String unsubscribeMailTo) {}
+  getToFromMailTo(String unsubscribeMailTo) {
+    Uri uri = Uri.parse(unsubscribeMailTo);
+    return uri.path;
+  }
 
-  getsubjectFromMailTo(String unsubscribeMailTo) {}
+  getsubjectFromMailTo(String unsubscribeMailTo) {
+    Uri uri = Uri.parse(unsubscribeMailTo);
+    String subject = uri.queryParameters['subject'] ?? "unsubscribe";
+    return subject;
+  }
 
-  getContentFromMailTo(String unsubscribeMailTo) {}
+  getContentFromMailTo(String unsubscribeMailTo) {
+    Uri uri = Uri.parse(unsubscribeMailTo);
+    String content = uri.queryParameters['content'] ?? "unsubscribe";
+    return content;
+  }
 
   String? getDomainFromSenderData(Map<String, String> senderData) {
-    var email = senderData['senderEmail'];
+    var email = senderData['email'];
     if (email == null) return null;
-    var uri = Uri.parse(email);
-    var domain = uri.host;
+    var domain = email.split('@')[1];
     return domain;
   }
 }

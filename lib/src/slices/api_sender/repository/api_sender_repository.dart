@@ -16,7 +16,7 @@ class ApiSenderRepository {
   Future<List<ApiSenderModel>> get(ApiSenderModel subject) async {
     final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
-    String where = subjectMap.keys.join(' = ? AND ') + "= ?";
+    String where = subjectMap.keys.join(' = ? AND ') + " = ?";
     List<String?> whereArgs = subjectMap.values
         .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
         .toList();
@@ -62,7 +62,7 @@ class ApiSenderRepository {
       params.forEach((param) {
         if (param[0] != null && param[1] != null) {
           whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
-          whereArgs.add(param[2] != null ? "'${param[2].toString()}'" : 'NULL');
+          whereArgs.add(param[2] != null ? "${param[2]}" : 'NULL');
         }
       });
       where = whereParams.join(' AND ');

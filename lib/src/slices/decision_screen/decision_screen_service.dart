@@ -34,7 +34,10 @@ class DecisionScreenService extends ChangeNotifier {
   Future<void> generateSpamCards(BuildContext context) async {
     if (!this.model.isLinked) return;
     var decisionCardSpamService = DecisionCardSpamService();
-    this.model.cards = await decisionCardSpamService.getCards(context);
-    notifyListeners();
+    var cards = await decisionCardSpamService.getCards(context);
+    if (cards != null) {
+      this.model.cards = cards;
+      notifyListeners();
+    }
   }
 }

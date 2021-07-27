@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
@@ -16,7 +17,25 @@ class BackgroundScheduleService {
   BackgroundScheduleService(this.context);
 
   Future<void> fetchGoogleEmails() async {
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
     print("start - " + DateTime.now().minute.toString());
+    var lastRun =
+        await apiAppDataService.getByKey("fetchGoogleEmails last run");
+    if (lastRun != null &&
+        DateTime.now()
+                .difference(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(lastRun.value)))
+                .inDays <
+            1) {
+      print("lastRun fetchGoogleEmails: " +
+          DateTime.now()
+              .difference(
+                  DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value)))
+              .inMinutes
+              .toString());
+      return null;
+    }
     var googleService = Provider.of<ApiGoogleService>(context, listen: false);
     if (await googleService.isConnected()) {
       var messagesMeta = await googleService.fetchGmailMessagesMetadata();
@@ -34,9 +53,12 @@ class BackgroundScheduleService {
         fetchedModel.senderData['company_id'] = company?.companyId.toString();
         var sender = await saveSender(fetchedModel);
         fetchedModel.senderData['sender_id'] = sender.senderId.toString();
+        ;
         saveMessage(fetchedModel);
       }
     }
+    ApiAppDataService().save("fetchGoogleEmails last run",
+        DateTime.now().millisecondsSinceEpoch.toString());
     print("end - " + DateTime.now().minute.toString());
   }
 
@@ -53,8 +75,7 @@ class BackgroundScheduleService {
     return sender;
   }
 
-  Future<ApiMessageModel> saveMessage(
-      ApiMessageFetchedModel fetchedModel) async {
+  Future<ApiMessageModel> saveMessage(ApiMessageFetchedModel fetchedModel) async {
     var messageService = Provider.of<ApiMessageService>(context, listen: false);
     var message = await messageService.save(fetchedModel);
     return message;

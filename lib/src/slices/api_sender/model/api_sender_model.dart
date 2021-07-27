@@ -20,13 +20,15 @@ class ApiSenderModel {
 
   ApiSenderModel.fromMap(senderMap)
       : senderId = senderMap['sender_id'],
-        companyId = int.parse(senderMap['company_id']),
+        companyId = senderMap['company_id'] is String
+            ? num.parse(senderMap['company_id'])
+            : senderMap['company_id'],
         name = senderMap['name'].toString(),
         email = senderMap['email'].toString(),
         category = senderMap['category'].toString(),
         unsubscribeMailTo = senderMap['unsubscribe_mail_to'].toString(),
-        ignoreUntil = senderMap['ignore_until'],
-        unsubscribed = senderMap['unsubscribed'];
+        ignoreUntil = senderMap['ignore_until'] ?? 0,
+        unsubscribed = senderMap['unsubscribed'] ?? 0;
 
   Map<String, dynamic> toMap() {
     return {

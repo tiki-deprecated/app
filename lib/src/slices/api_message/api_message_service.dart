@@ -12,17 +12,20 @@ class ApiMessageService {
     if (getMessage.length == 0) return ApiMessageRepository().insert(message);
   }
 
-  getMessageDataForCards(List<int> senderIds) async {
-    Map<int, Map<String, dynamic>> messsagesData = {};
-    senderIds.forEach((sender) async {
+  Future<Map<int, Map<String, dynamic>>> getMessageDataForCards(
+      List<int> senderIds) async {
+    Map<int, Map<String, dynamic>> messagesData = {};
+    for (int i = 0; i < senderIds.length; i++) {
+      var sender = senderIds[i];
       List<List<String>> params = [
         ['sender_id', '=', sender.toString()]
       ];
       var messages = await ApiMessageRepository().getByParams(params);
       DecisionCardSpamFrequency frequency = calculateFrequency(messages);
       var openRate = calculateOpenRate(messages);
-      messsagesData[sender] = {'frequency': frequency, 'openRate': openRate};
-    });
+      messagesData[sender] = {'frequency': frequency, 'openRate': openRate};
+    }
+    return messagesData;
   }
 
   DecisionCardSpamFrequency calculateFrequency(List<ApiMessageModel> messages) {
@@ -63,12 +66,3 @@ class ApiMessageService {
     return opened / total;
   }
 }
-//
-// this.logoUrl,
-// required this.companyName,
-
-// ,
-// this.securityScore,
-// this.sensitivityScore,
-// this.hackingScore,
-// required this.senderId,

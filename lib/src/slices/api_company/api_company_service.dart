@@ -8,7 +8,8 @@ class ApiCompanyService {
 
   ApiCompanyService(this.apiCompanyIndexService);
 
-  Future<ApiCompanyModel> createOrUpdate(String domain) async {
+  Future<ApiCompanyModel?> createOrUpdate(String domain) async {
+    if (domain.isEmpty) return null;
     ApiCompanyIndexModelRsp companyIndexData =
         (await apiCompanyIndexService.find(domain)).data;
     ApiCompanyModel company = ApiCompanyModel(
@@ -25,8 +26,9 @@ class ApiCompanyService {
     return dbCompany;
   }
 
-  Future<ApiCompanyModel> getById(int? companyId) async {
-    ApiCompanyModel company = ApiCompanyModel(companyId: companyId);
-    return (await ApiCompanyRepository().get(company))[0];
+  Future<ApiCompanyModel?> getById(int? companyId) async {
+    if (companyId == null) return null;
+    var company = await ApiCompanyRepository().getById(companyId);
+    return company;
   }
 }

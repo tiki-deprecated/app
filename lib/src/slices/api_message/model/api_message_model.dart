@@ -19,7 +19,9 @@ class ApiMessageModel {
 
   ApiMessageModel.fromFetchedMessage(ApiMessageFetchedModel fetchedModel)
       : extMessageId = fetchedModel.messageExtId,
-        senderId = int.parse(fetchedModel.senderData['sender_id']),
+        senderId = fetchedModel.senderData['sender_id'] is String
+            ? int.parse(fetchedModel.senderData['sender_id'])
+            : fetchedModel.senderData['sender_id'],
         receivedDate = fetchedModel.messageReceivedDate is String
             ? int.parse(fetchedModel.messageReceivedDate)
             : fetchedModel.messageReceivedDate,

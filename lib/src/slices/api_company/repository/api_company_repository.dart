@@ -18,7 +18,7 @@ class ApiCompanyRepository {
     var subjectMap = subject.toMap();
     String where = subjectMap.keys.join(' = ? AND ') + "= ?";
     List<String?> whereArgs = subjectMap.values
-        .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
+        .map((entry) => entry != null ? "${entry.toString()}" : 'NULL')
         .toList();
     final List<Map<String, Object?>> mappedCompanies =
         await db.query(_table, where: where, whereArgs: whereArgs);
@@ -51,5 +51,13 @@ class ApiCompanyRepository {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<ApiCompanyModel> getById(int id) async {
+    final db = await ApiSqliteService().db;
+    final List<Map<String, Object?>> mappedCompanies =
+        await db.query(_table, where: "company_id = ?", whereArgs: [id]);
+    return List.generate(mappedCompanies.length,
+        (i) => ApiCompanyModel.fromMap(mappedCompanies[i])).first;
   }
 }

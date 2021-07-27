@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_bouncer/api_bouncer_service.dart';
 import 'package:app/src/slices/api_company/api_company_service.dart';
@@ -38,12 +39,14 @@ Future<void> main() async {
       ApiCompanyService(apiCompanyIndexService);
   ApiSenderService apiSenderService = ApiSenderService();
   ApiMessageService apiMessageService = ApiMessageService();
+  ApiAppDataService apiAppDataService = ApiAppDataService();
   ApiUnsubscribeSpamService apiUnsubscribeSpamService =
       ApiUnsubscribeSpamService(
           apiGoogleService: apiGoogleService,
           apiMessageService: apiMessageService,
           apiSenderService: apiSenderService,
-          apiCompanyService: apiCompanyService);
+          apiCompanyService: apiCompanyService,
+          apiAppDataService: apiAppDataService);
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
@@ -69,6 +72,7 @@ Future<void> main() async {
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiSenderService>.value(value: apiSenderService),
       Provider<ApiMessageService>.value(value: apiMessageService),
+      Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiUnsubscribeSpamService>.value(
           value: apiUnsubscribeSpamService),
     ],
