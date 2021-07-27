@@ -24,6 +24,9 @@ class DecisionCardSpamLayout implements AbstractDecisionCardView {
 
   @override
   Widget content(BuildContext context) {
-    return Container();
+    return Container(
+        width: double.maxFinite,
+        height: double.maxFinite,
+        color: Colors.orange);
   }
 }

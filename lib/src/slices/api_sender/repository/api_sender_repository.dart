@@ -72,4 +72,12 @@ class ApiSenderRepository {
     return List.generate(
         mappedSenders.length, (i) => ApiSenderModel.fromMap(mappedSenders[i]));
   }
+
+  Future<ApiSenderModel> getById(int id) async {
+    final db = await ApiSqliteService().db;
+    final List<Map<String, Object?>> mappedCompanies =
+        await db.query(_table, where: "sender_id = ?", whereArgs: [id]);
+    return List.generate(mappedCompanies.length,
+        (i) => ApiSenderModel.fromMap(mappedCompanies[i])).first;
+  }
 }

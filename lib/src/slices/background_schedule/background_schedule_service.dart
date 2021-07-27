@@ -53,7 +53,6 @@ class BackgroundScheduleService {
         fetchedModel.senderData['company_id'] = company?.companyId.toString();
         var sender = await saveSender(fetchedModel);
         fetchedModel.senderData['sender_id'] = sender.senderId.toString();
-        ;
         saveMessage(fetchedModel);
       }
     }

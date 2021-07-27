@@ -22,8 +22,8 @@ class ApiUnsubscribeSpamService {
       required this.apiAppDataService});
 
   Future<List<DecisionCardSpamModel>?> getDataForCards() async {
-    var lastRun =
-        await ApiAppDataService().getByKey("getDataForCards last run");
+    // var lastRun =
+    //     await ApiAppDataService().getByKey("getDataForCards last run");
     // if( lastRun != null && DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value))).inDays < 1 ) {
     //   print("lastRun getDataForCards: "+ DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value))).inMinutes.toString());
     //   return null;
@@ -55,16 +55,20 @@ class ApiUnsubscribeSpamService {
   }
 
   void unsubscribe(int senderId) async {
-    ApiSenderModel sender = await apiSenderService.getById(senderId);
-    String? mailTo = sender.unsubscribeMailTo;
-    if (mailTo != null) {
-      var unsubscribed = await apiGoogleService.sendUnsubscribeMail(mailTo);
-      if (unsubscribed) apiSenderService.markAsUnsubscribed(sender);
+    ApiSenderModel? sender = await apiSenderService.getById(senderId);
+    if (sender != null) {
+      String? mailTo = sender.unsubscribeMailTo;
+      if (mailTo != null) {
+        var unsubscribed = await apiGoogleService.sendUnsubscribeMail(mailTo);
+        if (unsubscribed) apiSenderService.markAsUnsubscribed(sender);
+      }
     }
   }
 
   void keepReceiving(int senderId) async {
-    ApiSenderModel sender = await apiSenderService.getById(senderId);
-    apiSenderService.markAsKeeped(sender);
+    ApiSenderModel? sender = await apiSenderService.getById(senderId);
+    if (sender != null) {
+      apiSenderService.markAsKeeped(sender);
+    }
   }
 }

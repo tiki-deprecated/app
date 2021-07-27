@@ -29,9 +29,10 @@ class ApiSenderService {
     return await repository.getByParams(params);
   }
 
-  Future<ApiSenderModel> getById(int? senderId) async {
-    ApiSenderModel sender = ApiSenderModel.fromMap({'senderId': senderId});
-    return (await ApiSenderRepository().get(sender))[0];
+  Future<ApiSenderModel?> getById(int? senderId) async {
+    if (senderId == null) return null;
+    var sender = await ApiSenderRepository().getById(senderId);
+    return sender;
   }
 
   Future<void> markAsUnsubscribed(ApiSenderModel sender) async {

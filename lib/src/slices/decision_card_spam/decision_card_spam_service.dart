@@ -31,12 +31,14 @@ class DecisionCardSpamService extends ChangeNotifier {
   }
 
   unsubscribeFromSpam(BuildContext context, int senderId) {
-    var apiUnsubscribeSpam = Provider.of<ApiUnsubscribeSpamService>(context);
+    var apiUnsubscribeSpam =
+        Provider.of<ApiUnsubscribeSpamService>(context, listen: false);
     apiUnsubscribeSpam.unsubscribe(senderId);
   }
 
   keepReceiving(BuildContext context, int senderId) {
-    var apiUnsubscribeSpam = Provider.of<ApiUnsubscribeSpamService>(context);
+    var apiUnsubscribeSpam =
+        Provider.of<ApiUnsubscribeSpamService>(context, listen: false);
     apiUnsubscribeSpam.keepReceiving(senderId);
   }
 }
