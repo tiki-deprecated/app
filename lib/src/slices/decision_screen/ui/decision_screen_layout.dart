@@ -33,22 +33,26 @@ class DecisionScreenLayout extends StatelessWidget {
       return DecisionScreenViewLink();
   }
 
-  List<DecisionScreenViewCard> _getCards(context, constraints) {
-    var service = Provider.of<DecisionScreenService>(context);
+  List<DecisionScreenViewCard> _getCards(
+      BuildContext context, BoxConstraints constraints) {
+    var service = Provider.of<DecisionScreenService>(context, listen: false);
     List<DecisionScreenViewCard> cards = [];
     if (service.model.cards.isEmpty) {
-      service.generateSpamCards(context);
-    } else {
-      service.model.cards.forEach((card) {
-        cards.add(DecisionScreenViewCard(
-            constraints: constraints,
-            onSwipeRight: () =>
-                service.controller.removeLast(context, card.callbackYes),
-            onSwipeLeft: () =>
-                service.controller.removeLast(context, card.callbackNo),
-            child: card.content(context)));
-      });
+      if (service.model.isTestDone) {
+        service.generateSpamCards(context);
+      } else {
+        service.generateTestCards();
+      }
     }
+    service.model.cards.forEach((card) {
+      cards.add(DecisionScreenViewCard(
+          constraints: constraints,
+          onSwipeRight: () =>
+              service.controller.removeLast(context, card.callbackYes),
+          onSwipeLeft: () =>
+              service.controller.removeLast(context, card.callbackNo),
+          child: card.content(context)));
+    });
     return cards;
   }
 }

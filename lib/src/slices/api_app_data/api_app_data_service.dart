@@ -6,7 +6,7 @@ class ApiAppDataService {
     return await ApiAppDataRepository().getByKey(key);
   }
 
-  Future<ApiAppDataModel> save(String key, String value) async {
+  Future<ApiAppDataModel?> save(String key, String value) async {
     var data = await this.getByKey(key);
     var dataToInsert = ApiAppDataModel(id: data?.id, key: key, value: value);
     return data == null

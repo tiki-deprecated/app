@@ -58,7 +58,11 @@ class ApiGoogleService {
     return emailList?.messages;
   }
 
-  ApiMessageFetchedModel processEmailListMessage(Message message) {
+  ApiMessageFetchedModel? processEmailListMessage(Message message) {
+    message.labelIds!.forEach((label) {
+      if (label.contains("CATEGORY_")) if ("PROMOTION" ==
+          label.replaceFirst('CATEGORY_', '')) return null;
+    });
     var senderData = getSenderData(message);
     return ApiMessageFetchedModel(
       senderData: senderData,

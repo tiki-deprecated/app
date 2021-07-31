@@ -18,4 +18,6 @@ class DecisionCardSpamController {
   keepReceiving(BuildContext context, int senderId) {
     this.service.keepReceiving(context, senderId);
   }
+
+  shareCard(BuildContext context, param1, param2) {}
 }

@@ -9,7 +9,8 @@ class ApiSenderService {
 
   Future<ApiSenderModel> createOrUpdate(
       ApiMessageFetchedModel fetchedModel) async {
-    var sender = ApiSenderModel.fromMap(fetchedModel.senderData);
+    var senderData = fetchedModel.senderData;
+    var sender = ApiSenderModel.fromMap(senderData);
     var getSender = await ApiSenderRepository().get(sender);
     var dbCompany = getSender.length > 0
         ? ApiSenderRepository().update(sender)

@@ -2,11 +2,12 @@ class DecisionCardSpamModel {
   String? logoUrl;
   String? companyName;
   String? category;
-  DecisionCardSpamFrequency? frequency;
+  String? frequency;
   double? openRate;
   double? securityScore;
   double? sensitivityScore;
   double? hackingScore;
+  String? senderEmail;
   late int senderId;
 
   DecisionCardSpamModel({
@@ -18,6 +19,7 @@ class DecisionCardSpamModel {
     this.securityScore,
     this.sensitivityScore,
     this.hackingScore,
+    this.senderEmail,
     required this.senderId,
   });
 }

@@ -13,10 +13,13 @@ class ApiSenderRepository {
     return sender;
   }
 
-  Future<List<ApiSenderModel>> get(ApiSenderModel subject) async {
+  Future<List<ApiSenderModel>> get(ApiSenderModel subject,
+      {keepNull: false}) async {
     final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
+    if (!keepNull) subjectMap.removeWhere((key, value) => value == null);
     String where = subjectMap.keys.join(' = ? AND ') + " = ?";
+
     List<String?> whereArgs = subjectMap.values
         .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
         .toList();

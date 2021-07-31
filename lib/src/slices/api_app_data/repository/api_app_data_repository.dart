@@ -5,12 +5,14 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 class ApiAppDataRepository {
   String _table = 'app_data';
 
-  Future<ApiAppDataModel> insert(ApiAppDataModel data) async {
+  Future<ApiAppDataModel?> insert(ApiAppDataModel data) async {
     final db = await ApiSqliteService().db;
-    int dataId = await db.insert(_table, data.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-    data.id = dataId;
-    return data;
+    if (db != null) {
+      int dataId = await db.insert(_table, data.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      data.id = dataId;
+      return data;
+    }
   }
 
   Future<List<ApiAppDataModel>> getAll() async {
@@ -42,6 +44,7 @@ class ApiAppDataRepository {
 
   Future<ApiAppDataModel?> getById(int id) async {
     final db = await ApiSqliteService().db;
+    if (db == null) return null;
     final List<Map<String, Object?>> mappedData =
         await db.query(_table, where: "id = ?", whereArgs: [id]);
     return mappedData.length > 0
@@ -52,6 +55,7 @@ class ApiAppDataRepository {
 
   Future<ApiAppDataModel?> getByKey(String key) async {
     final db = await ApiSqliteService().db;
+    if (db == null) return null;
     final List<Map<String, Object?>> mappedData =
         await db.query(_table, where: "key = ?", whereArgs: [key]);
     return mappedData.length > 0

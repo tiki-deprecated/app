@@ -22,6 +22,7 @@ class ApiUnsubscribeSpamService {
       required this.apiAppDataService});
 
   Future<List<DecisionCardSpamModel>?> getDataForCards() async {
+    // TODO: uncomment to release
     // var lastRun =
     //     await ApiAppDataService().getByKey("getDataForCards last run");
     // if( lastRun != null && DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value))).inDays < 1 ) {
@@ -37,7 +38,7 @@ class ApiUnsubscribeSpamService {
     for (int i = 0; i < senders.length; i++) {
       var sender = senders[i];
       ApiCompanyModel? company =
-          await apiCompanyService.getById(sender.companyId!);
+          await apiCompanyService.getById(sender.companyId);
       dataModels.add(DecisionCardSpamModel(
           logoUrl: company?.logo,
           category: sender.category,

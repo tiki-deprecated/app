@@ -28,26 +28,23 @@ class ApiSqliteRepository {
   final _initDBMemoizer = AsyncMemoizer<Database>();
 
   /// The public [Database] getter.
-  Future<Database> get database async {
+  get database async {
     if (_db != null) return _db!;
-
+    ApiUserModel user = await ApiUserService(FlutterSecureStorage()).get();
+    if (user.keys == null) return _db;
     _db = await _initDBMemoizer.runOnce(() async {
-      return await _initDB();
+      return await _initDB(user.keys!.signPrivateKey!);
     });
 
     return _db!;
   }
 
   /// Initializes the [Database].
-  Future<Database> _initDB() async {
+  _initDB(String pass) async {
     print('initializing db');
     String databasePath = await getDatabasesPath();
-    ApiUserModel user = await ApiUserService(FlutterSecureStorage()).get();
     return await openDatabase(databasePath + "/tiki.db",
-        password: user.keys!.dataPrivateKey,
-        version: 2,
-        onCreate: onCreate,
-        onUpgrade: onUpgrade);
+        password: pass, version: 2, onCreate: onCreate, onUpgrade: onUpgrade);
   }
 
   /// Database creation hook.

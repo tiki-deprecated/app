@@ -20,22 +20,23 @@ class BackgroundScheduleService {
     ApiAppDataService apiAppDataService =
         Provider.of<ApiAppDataService>(context, listen: false);
     print("start - " + DateTime.now().minute.toString());
-    var lastRun =
-        await apiAppDataService.getByKey("fetchGoogleEmails last run");
-    if (lastRun != null &&
-        DateTime.now()
-                .difference(DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(lastRun.value)))
-                .inDays <
-            1) {
-      print("lastRun fetchGoogleEmails: " +
-          DateTime.now()
-              .difference(
-                  DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value)))
-              .inMinutes
-              .toString());
-      return null;
-    }
+    // TODO remove to release
+    // var lastRun =
+    //     await apiAppDataService.getByKey("fetchGoogleEmails last run");
+    // if (lastRun != null &&
+    //     DateTime.now()
+    //             .difference(DateTime.fromMillisecondsSinceEpoch(
+    //                 int.parse(lastRun.value)))
+    //             .inDays <
+    //         1) {
+    //   print("lastRun fetchGoogleEmails: " +
+    //       DateTime.now()
+    //           .difference(
+    //               DateTime.fromMillisecondsSinceEpoch(int.parse(lastRun.value)))
+    //           .inMinutes
+    //           .toString());
+    //   return null;
+    // }
     var googleService = Provider.of<ApiGoogleService>(context, listen: false);
     if (await googleService.isConnected()) {
       var messagesMeta = await googleService.fetchGmailMessagesMetadata();
@@ -49,11 +50,13 @@ class BackgroundScheduleService {
       }
       for (var message in messages) {
         var fetchedModel = googleService.processEmailListMessage(message);
-        var company = await saveCompany(fetchedModel.domain);
-        fetchedModel.senderData['company_id'] = company?.companyId.toString();
-        var sender = await saveSender(fetchedModel);
-        fetchedModel.senderData['sender_id'] = sender.senderId.toString();
-        saveMessage(fetchedModel);
+        if (fetchedModel != null) {
+          var company = await saveCompany(fetchedModel.domain);
+          fetchedModel.senderData['company_id'] = company?.companyId.toString();
+          var sender = await saveSender(fetchedModel);
+          fetchedModel.senderData['sender_id'] = sender.senderId.toString();
+          saveMessage(fetchedModel);
+        }
       }
     }
     ApiAppDataService().save("fetchGoogleEmails last run",

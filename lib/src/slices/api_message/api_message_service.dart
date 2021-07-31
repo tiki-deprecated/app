@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
 import 'package:app/src/slices/api_message/model/api_message_model.dart';
 import 'package:app/src/slices/api_message/repository/api_message_repository.dart';
-import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
 
 class ApiMessageService {
   save(ApiMessageFetchedModel fetchedModel) async {
@@ -21,20 +20,21 @@ class ApiMessageService {
         ['sender_id', '=', sender.toString()]
       ];
       var messages = await ApiMessageRepository().getByParams(params);
-      DecisionCardSpamFrequency frequency = calculateFrequency(messages);
+      String frequency = calculateFrequency(messages);
       var openRate = calculateOpenRate(messages);
       messagesData[sender] = {'frequency': frequency, 'openRate': openRate};
     }
     return messagesData;
   }
 
-  DecisionCardSpamFrequency calculateFrequency(List<ApiMessageModel> messages) {
+  String calculateFrequency(List<ApiMessageModel> messages) {
     const secsInDay = 86400;
     const secsInWeek = 86400 * 7;
     const secsInMonth = 86400 * 30;
     int daily = 0;
     int weekly = 0;
     int monthly = 0;
+    if (messages.length == 1) return "monthly";
     for (int i = 1; i < messages.length; i++) {
       var message = messages[i];
       var previous = messages[i - 1];
@@ -49,11 +49,11 @@ class ApiMessageService {
     }
     int maxFrequency = [daily, weekly, monthly].reduce(max);
     if (maxFrequency == daily) {
-      return DecisionCardSpamFrequency.daily;
+      return "daily";
     } else if (maxFrequency == weekly) {
-      return DecisionCardSpamFrequency.weekly;
+      return "weekly";
     } else {
-      return DecisionCardSpamFrequency.monthly;
+      return "monthly";
     }
   }
 
