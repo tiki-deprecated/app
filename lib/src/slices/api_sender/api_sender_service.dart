@@ -11,11 +11,12 @@ class ApiSenderService {
       ApiMessageFetchedModel fetchedModel) async {
     var senderData = fetchedModel.senderData;
     var sender = ApiSenderModel.fromMap(senderData);
-    var getSender = await ApiSenderRepository().get(sender);
-    var dbCompany = getSender.length > 0
-        ? ApiSenderRepository().update(sender)
-        : ApiSenderRepository().insert(sender);
-    return dbCompany;
+    var getSender = await ApiSenderRepository().getByEmail(sender.email);
+    if (getSender != null) {
+      sender.senderId = getSender.senderId;
+      ApiSenderRepository().update(sender);
+    }
+    return ApiSenderRepository().insert(sender);
   }
 
   Future<List<ApiSenderModel>> getSendersForCards() async {

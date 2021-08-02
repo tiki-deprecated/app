@@ -13,12 +13,14 @@ class ApiCompanyRepository {
     return company;
   }
 
-  Future<List<ApiCompanyModel>> get(ApiCompanyModel subject) async {
+  Future<List<ApiCompanyModel>> get(ApiCompanyModel subject,
+      {keepNull: false}) async {
     final db = await ApiSqliteService().db;
     var subjectMap = subject.toMap();
-    String where = subjectMap.keys.join(' = ? AND ') + "= ?";
+    if (!keepNull) subjectMap.removeWhere((key, value) => value == null);
+    String where = subjectMap.keys.join(' = ? AND ') + " = ?";
     List<String?> whereArgs = subjectMap.values
-        .map((entry) => entry != null ? "${entry.toString()}" : 'NULL')
+        .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
         .toList();
     final List<Map<String, Object?>> mappedCompanies =
         await db.query(_table, where: where, whereArgs: whereArgs);
@@ -38,7 +40,7 @@ class ApiCompanyRepository {
     await db.update(
       _table,
       company.toMap(),
-      where: 'sender_id = ?',
+      where: 'company_id = ?',
       whereArgs: [company.companyId],
     );
     return company;
@@ -59,5 +61,14 @@ class ApiCompanyRepository {
         await db.query(_table, where: "company_id = ?", whereArgs: [id]);
     return List.generate(mappedCompanies.length,
         (i) => ApiCompanyModel.fromMap(mappedCompanies[i])).first;
+  }
+
+  Future<ApiCompanyModel?> getByDomain(String domain) async {
+    final db = await ApiSqliteService().db;
+    final List<Map<String, Object?>> mappedCompanies =
+        await db.query(_table, where: "domain = ?", whereArgs: [domain]);
+    final company = List.generate(mappedCompanies.length,
+        (i) => ApiCompanyModel.fromMap(mappedCompanies[i]));
+    return company.length == 0 ? null : company.first;
   }
 }

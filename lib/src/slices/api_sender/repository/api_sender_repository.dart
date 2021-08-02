@@ -19,7 +19,6 @@ class ApiSenderRepository {
     var subjectMap = subject.toMap();
     if (!keepNull) subjectMap.removeWhere((key, value) => value == null);
     String where = subjectMap.keys.join(' = ? AND ') + " = ?";
-
     List<String?> whereArgs = subjectMap.values
         .map((entry) => entry != null ? "'${entry.toString()}'" : 'NULL')
         .toList();
@@ -82,5 +81,14 @@ class ApiSenderRepository {
         await db.query(_table, where: "sender_id = ?", whereArgs: [id]);
     return List.generate(mappedCompanies.length,
         (i) => ApiSenderModel.fromMap(mappedCompanies[i])).first;
+  }
+
+  Future<ApiSenderModel?> getByEmail(String email) async {
+    final db = await ApiSqliteService().db;
+    final List<Map<String, Object?>> mappedCompanies =
+        await db.query(_table, where: "email = ?", whereArgs: [email]);
+    final sender = List.generate(mappedCompanies.length,
+        (i) => ApiSenderModel.fromMap(mappedCompanies[i]));
+    return sender.length == 0 ? null : sender.first;
   }
 }

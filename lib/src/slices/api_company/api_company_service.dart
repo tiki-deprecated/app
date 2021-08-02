@@ -19,11 +19,12 @@ class ApiCompanyService {
       breachScore: companyIndexData.score?.securityScore,
       sensitivityScore: companyIndexData.score?.securityScore,
     );
-    var getCompany = await ApiCompanyRepository().get(company);
-    var dbCompany = getCompany.length > 0
-        ? ApiCompanyRepository().update(company)
-        : ApiCompanyRepository().insert(company);
-    return dbCompany;
+    var getCompany = await ApiCompanyRepository().getByDomain(domain);
+    if (getCompany != null) {
+      company.companyId = getCompany.companyId;
+      ApiCompanyRepository().update(company);
+    }
+    return ApiCompanyRepository().insert(company);
   }
 
   Future<ApiCompanyModel?> getById(int? companyId) async {
