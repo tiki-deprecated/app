@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -26,7 +27,13 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
 
   _getAvatar(logo, name, email) {
     if (logo != null) {
-      return ClipOval(child: Image.network(logo, height: 8.h));
+      return ClipOval(
+          child: Container(
+              decoration: BoxDecoration(
+                color: ConfigColor.greyTwo,
+              ),
+              height: 8.h,
+              child: Center(child: Image.network(logo, height: 8.h))));
     } else {
       var img = 'avatar' + (Random().nextInt(2) + 1).toString();
       String title = name ?? email;
