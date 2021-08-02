@@ -1,12 +1,15 @@
-import 'dart:math';
-
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
 import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
+import 'package:app/src/slices/decision_card_spam/ui/decision_card_spam_view_security.dart';
 import 'package:app/src/slices/decision_screen/model/decision_screen_model.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import 'decision_card_spam_view_company.dart';
+import 'decision_card_spam_view_data_info_row.dart';
+import 'decision_card_spam_view_frequency.dart';
+import 'decision_card_spam_view_header.dart';
+import 'decision_card_spam_view_separator.dart';
 
 class DecisionCardSpamLayout implements AbstractDecisionCardView {
   final DecisionCardSpamModel cardSpamModel;
@@ -70,172 +73,8 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
   }
 }
 
-class DecisionCardSpamViewCompany extends StatelessWidget {
-  final logo;
-  final name;
-  final email;
 
-  const DecisionCardSpamViewCompany(
-      {Key? key, this.logo, this.name, this.email})
-      : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _getAvatar(this.logo, this.name, this.email),
-        _getCompanyName(this.name, this.email)
-      ],
-    );
-  }
 
-  _getAvatar(logo, name, email) {
-    if (logo != null) {
-      return ClipOval(child: Image.network(logo, height: 8.h));
-    } else {
-      var img = 'avatar' + (Random().nextInt(2) + 1).toString();
-      String title = name ?? email;
-      return Stack(children: [
-        HelperImage(img, height: 8.h),
-        Text(title[0].toUpperCase())
-      ]);
-    }
-  }
 
-  _getCompanyName(name, email) {
-    if (name != null) {
-      return Text(name,
-          style: TextStyle(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
-              fontFamily: "nunitoSans"));
-    } else {
-      return Text(email,
-          style: TextStyle(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
-              fontFamily: "nunitoSans"));
-    }
-  }
-}
 
-class DecisionCardSpamViewFrequency extends StatelessWidget {
-  final frequency;
-
-  final category;
-
-  DecisionCardSpamViewFrequency(String this.frequency, String this.category);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text("They send you emails",
-            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700)),
-        Text('${frequency[0].toUpperCase()}${frequency.substring(1)}',
-            style: TextStyle(
-                fontFamily: "Koara",
-                fontSize: 32.sp,
-                fontWeight: FontWeight.w800,
-                color: _getTextColor(frequency))),
-        _getCategory(this.category)
-      ],
-    );
-  }
-
-  _getTextColor(String frequency) {
-    switch (frequency) {
-      case "monthly":
-        return ConfigColor.green;
-      case "daily":
-        return ConfigColor.red;
-      case "weekly":
-        return ConfigColor.tikiOrange;
-    }
-  }
-
-  _getCategory(category) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('in'),
-          Padding(
-            padding: EdgeInsets.only(left: 12.sp),
-          ),
-          Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: ConfigColor.greySix, width: 1.sp),
-                  borderRadius: BorderRadius.circular(50)),
-              padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 10.sp),
-              child: Row(
-                children: [
-                  Icon(Icons.sell, color: ConfigColor.greySix),
-                  Text(
-                      "${category[0].toUpperCase()}${category.substring(1).toLowerCase()}",
-                      style: TextStyle(color: ConfigColor.greySix))
-                ],
-              ))
-        ]);
-  }
-}
-
-class DecisionCardSpamViewSeparator extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class DecisionCardSpamViewSecurity extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class DecisionCardSpamViewHeader extends StatelessWidget {
-  final shareKey;
-  final shareMessage;
-
-  final service;
-
-  DecisionCardSpamViewHeader(this.service, this.shareKey, this.shareMessage);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(3.w),
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Expanded(
-              child: Row(children: [
-            HelperImage("gmail-round-logo", width: 6.w),
-            Padding(padding: EdgeInsets.only(right: 2.w)),
-            Text(
-              "Your Gmail Account",
-              style: TextStyle(
-                  fontFamily: "NunitoSans",
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ConfigColor.tikiBlue),
-            )
-          ])),
-          GestureDetector(
-              onTap: () =>
-                  service.controller.shareCard(context, shareKey, shareMessage),
-              child: Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child:
-                      Icon(Icons.share, color: ConfigColor.orange, size: 6.w)))
-        ]));
-  }
-}
