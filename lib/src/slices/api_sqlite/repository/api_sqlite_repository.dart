@@ -77,6 +77,7 @@ class ApiSqliteRepository {
               category text,
               unsubscribe_mail_to text,
               ignore_until integer,
+              email_since integer,
               unsubscribed integer,
               action integer)
             ''');

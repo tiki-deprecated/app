@@ -5,6 +5,7 @@ class ApiSenderModel {
   final String email;
   final String category;
   String? unsubscribeMailTo;
+  int? emailSince;
   int unsubscribed;
   int ignoreUntil = 0;
 
@@ -15,6 +16,7 @@ class ApiSenderModel {
       required this.email,
       required this.category,
       this.unsubscribeMailTo,
+      this.emailSince,
       this.ignoreUntil = 0,
       this.unsubscribed = 0});
 
@@ -27,6 +29,8 @@ class ApiSenderModel {
         email = senderMap['email'].toString(),
         category = senderMap['category'].toString(),
         unsubscribeMailTo = senderMap['unsubscribe_mail_to'].toString(),
+        emailSince = senderMap['email_since'] ??
+            (DateTime.now().millisecondsSinceEpoch).round(),
         ignoreUntil = senderMap['ignore_until'] ?? 0,
         unsubscribed = senderMap['unsubscribed'] ?? 0;
 
@@ -38,6 +42,7 @@ class ApiSenderModel {
       'email': email,
       'category': category,
       'unsubscribe_mail_to': unsubscribeMailTo,
+      'email_since': emailSince,
       'ignore_until': ignoreUntil,
       'unsubscribed': unsubscribed,
     };
@@ -52,6 +57,7 @@ class ApiSenderModel {
     email : $email,
     category : $category,
     unsubscribeMailTo : $unsubscribeMailTo,
+    email_since : $emailSince,
     ignoreUntil : $ignoreUntil,
     unsubscribed : $unsubscribed}''';
     return str;

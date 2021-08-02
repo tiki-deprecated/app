@@ -126,6 +126,8 @@ class ApiGoogleService {
       'email': senderEmail,
       'category': senderCategory,
       'unsubscribe_mail_to': unsubscribeMailTo,
+      'email_since': message.internalDate ??
+          DateTime.now().millisecondsSinceEpoch.toString()
     };
   }
 

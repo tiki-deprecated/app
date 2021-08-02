@@ -14,6 +14,11 @@ class ApiSenderService {
     var getSender = await ApiSenderRepository().getByEmail(sender.email);
     if (getSender != null) {
       sender.senderId = getSender.senderId;
+      if (sender.emailSince != null) {
+        sender.emailSince = getSender.emailSince! < sender.emailSince!
+            ? getSender.emailSince
+            : sender.emailSince;
+      }
       ApiSenderRepository().update(sender);
     }
     return ApiSenderRepository().insert(sender);
@@ -25,8 +30,7 @@ class ApiSenderService {
       [
         'ignore_until',
         "<",
-        (DateTime.now().millisecondsSinceEpoch / 1000).toString()
-      ]
+        (DateTime.now().millisecondsSinceEpoch).toString()]
     ];
     return await repository.getByParams(params);
   }
@@ -40,16 +44,14 @@ class ApiSenderService {
   Future<void> markAsUnsubscribed(ApiSenderModel sender) async {
     sender.unsubscribed = 1;
     sender.ignoreUntil =
-        (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch / 1000)
-            .round();
+        (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch).round();
     ApiSenderRepository().update(sender);
   }
 
   Future<void> markAsKeeped(ApiSenderModel sender) async {
     sender.unsubscribed = 0;
     sender.ignoreUntil =
-        (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch / 1000)
-            .round();
+        (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch).round();
     ApiSenderRepository().update(sender);
   }
 }
