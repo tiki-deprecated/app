@@ -1,5 +1,4 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/decision_screen/ui/decision_screen_view_card_test.dart';
 import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
 import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
@@ -34,16 +33,25 @@ class DecisionScreenLayout extends StatelessWidget {
       return DecisionScreenViewLink();
   }
 
-  List<DecisionScreenViewCard> _getCards(context, constraints) {
-    var service = Provider.of<DecisionScreenService>(context);
+  List<DecisionScreenViewCard> _getCards(
+      BuildContext context, BoxConstraints constraints) {
+    var service = Provider.of<DecisionScreenService>(context, listen: false);
     List<DecisionScreenViewCard> cards = [];
-    service.model.cards.forEach((cardData) {
+    if (service.model.cards.isEmpty) {
+      if (service.model.isTestDone) {
+        service.generateSpamCards(context);
+      } else {
+        service.generateTestCards();
+      }
+    }
+    service.model.cards.forEach((card) {
       cards.add(DecisionScreenViewCard(
-        constraints: constraints,
-        onSwipeRight: () => service.controller.removeLast(context),
-        onSwipeLeft: () => service.controller.removeLast(context),
-        child: DecisionScreenViewCardTest(cardData),
-      ));
+          constraints: constraints,
+          onSwipeRight: () =>
+              service.controller.removeLast(context, card.callbackYes),
+          onSwipeLeft: () =>
+              service.controller.removeLast(context, card.callbackNo),
+          child: card.content(context)));
     });
     return cards;
   }

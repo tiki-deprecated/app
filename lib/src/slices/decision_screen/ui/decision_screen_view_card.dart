@@ -97,9 +97,9 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
   }
 
   void onDragEnd(DragEndDetails details) {
-    if (delta > 0) {
+    if (delta > 100) {
       widget.onSwipeRight();
-    } else {
+    } else if (delta < -100) {
       widget.onSwipeLeft();
     }
     setState(() {
