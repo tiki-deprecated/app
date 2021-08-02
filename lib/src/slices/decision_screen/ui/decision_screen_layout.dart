@@ -1,5 +1,4 @@
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/background_schedule/background_schedule_service.dart';
 import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
 import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,6 @@ class DecisionScreenLayout extends StatelessWidget {
 
   List<DecisionScreenViewCard> _getCards(
       BuildContext context, BoxConstraints constraints) {
-    BackgroundScheduleService(context).fetchGoogleEmails();
     var service = Provider.of<DecisionScreenService>(context, listen: false);
     List<DecisionScreenViewCard> cards = [];
     if (service.model.cards.isEmpty) {

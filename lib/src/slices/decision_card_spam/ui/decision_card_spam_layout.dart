@@ -33,6 +33,7 @@ class DecisionCardSpamLayout implements AbstractDecisionCardView {
     return Container(
         key: shareKey,
         color: Colors.white,
+        padding: EdgeInsets.all(1.w),
         width: double.maxFinite,
         height: double.maxFinite,
         child: DecisionCardSpamLayoutContent(
@@ -59,7 +60,8 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
             logo: this.cardSpamModel.logoUrl,
             name: this.cardSpamModel.companyName,
             email: this.cardSpamModel.senderEmail),
-        DecisionCardSpamViewFrequency(this.cardSpamModel.frequency.toString()),
+        DecisionCardSpamViewFrequency(this.cardSpamModel.frequency.toString(),
+            this.cardSpamModel.category.toString()),
         DecisionCardSpamViewSeparator(),
         DecisionCardSpamViewDataInfoRow(),
         DecisionCardSpamViewSecurity()
@@ -121,7 +123,9 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
 class DecisionCardSpamViewFrequency extends StatelessWidget {
   final frequency;
 
-  DecisionCardSpamViewFrequency(String this.frequency);
+  final category;
+
+  DecisionCardSpamViewFrequency(String this.frequency, String this.category);
 
   @override
   Widget build(BuildContext context) {
@@ -130,13 +134,13 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
       children: [
         Text("They send you emails",
             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700)),
-        Text(frequency,
+        Text('${frequency[0].toUpperCase()}${frequency.substring(1)}',
             style: TextStyle(
                 fontFamily: "Koara",
                 fontSize: 32.sp,
                 fontWeight: FontWeight.w800,
                 color: _getTextColor(frequency))),
-        _getCategory("Promotions")
+        _getCategory(this.category)
       ],
     );
   }
@@ -169,7 +173,9 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.sell, color: ConfigColor.greySix),
-                  Text(category, style: TextStyle(color: ConfigColor.greySix))
+                  Text(
+                      "${category[0].toUpperCase()}${category.substring(1).toLowerCase()}",
+                      style: TextStyle(color: ConfigColor.greySix))
                 ],
               ))
         ]);
@@ -207,24 +213,29 @@ class DecisionCardSpamViewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      Expanded(
-          child: Row(children: [
-        HelperImage("socialmedia1", width: 6.w),
-        Padding(padding: EdgeInsets.only(right: 2.w)),
-        Text(
-          "Your Gmail Account",
-          style: TextStyle(
-              fontFamily: "NunitoSans",
-              fontSize: 12.sp,
-              fontWeight: FontWeight.bold,
-              color: ConfigColor.tikiBlue),
-        )
-      ])),
-      GestureDetector(
-          onTap: () =>
-              service.controller.shareCard(context, shareKey, shareMessage),
-          child: Icon(Icons.share, color: ConfigColor.orange, size: 36.sp))
-    ]);
+    return Padding(
+        padding: EdgeInsets.all(3.w),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Expanded(
+              child: Row(children: [
+            HelperImage("gmail-round-logo", width: 6.w),
+            Padding(padding: EdgeInsets.only(right: 2.w)),
+            Text(
+              "Your Gmail Account",
+              style: TextStyle(
+                  fontFamily: "NunitoSans",
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                  color: ConfigColor.tikiBlue),
+            )
+          ])),
+          GestureDetector(
+              onTap: () =>
+                  service.controller.shareCard(context, shareKey, shareMessage),
+              child: Padding(
+                  padding: EdgeInsets.only(right: 3.w),
+                  child:
+                      Icon(Icons.share, color: ConfigColor.orange, size: 6.w)))
+        ]));
   }
 }

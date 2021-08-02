@@ -29,8 +29,9 @@ class ApiSenderModel {
         email = senderMap['email'].toString(),
         category = senderMap['category'].toString(),
         unsubscribeMailTo = senderMap['unsubscribe_mail_to'].toString(),
-        emailSince = senderMap['email_since'] ??
-            (DateTime.now().millisecondsSinceEpoch).round(),
+        emailSince = senderMap['email_since'] != null
+            ? int.parse(senderMap['email_since'].toString())
+            : (DateTime.now().millisecondsSinceEpoch).round(),
         ignoreUntil = senderMap['ignore_until'] ?? 0,
         unsubscribed = senderMap['unsubscribed'] ?? 0;
 
