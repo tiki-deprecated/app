@@ -1,5 +1,7 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
   final sinceYear;
@@ -11,12 +13,16 @@ class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Row(children: [
-      DecisionCardSpamViewSent(this.totalEmails, this.sinceYear),
-      VerticalDivider(),
-      DecisionCardSpamViewOpened(25)
-    ]));
+    return IntrinsicHeight(
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 1.5.h),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  DecisionCardSpamViewSent(this.totalEmails, this.sinceYear),
+                  HelperImage("vertical-separator", height: 12.h),
+                  DecisionCardSpamViewOpened(64)
+                ])));
   }
 }
 
@@ -27,20 +33,56 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("You've opened"),
-        TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0.0, end: this.percent / 100),
-            duration: const Duration(milliseconds: 3500),
-            builder: (_, value, __) => Stack(children: [
-                  Text("${value.toString()} %"),
-                  CircularProgressIndicator(
-                      backgroundColor: ConfigColor.greyThree, value: value),
-                ])),
-        Text("of their emails"),
-      ],
-    );
+    return Column(children: [
+      Text("You've opened",
+          style: TextStyle(
+              fontFamily: "Nunito sans", color: ConfigColor.tikiBlue)),
+      Padding(
+        padding: EdgeInsets.only(bottom: 1.h),
+      ),
+      SizedBox(
+          height: 9.h,
+          width: 9.h,
+          child: Stack(children: [
+            Center(
+                child: RichText(
+                    text: TextSpan(
+                        text: "${this.percent.round().toString()}",
+                        style: TextStyle(
+                            color: _getProgressColor(this.percent),
+                            fontFamily: 'koara',
+                            fontSize: 30.sp,
+                            fontWeight: FontWeight.w700),
+                        children: [
+                  TextSpan(
+                    text: " %",
+                    style: TextStyle(
+                        fontSize: 18.sp, fontWeight: FontWeight.normal),
+                  )
+                ]))),
+            SizedBox(
+              height: 9.h,
+              width: 9.h,
+              child: CircularProgressIndicator(
+                  strokeWidth: 2.w,
+                  backgroundColor: ConfigColor.greyThree,
+                  value: this.percent / 100,
+                  color: _getProgressColor(this.percent)),
+            )
+          ])),
+      Padding(
+        padding: EdgeInsets.only(bottom: 1.h),
+      ),
+      Text("of their emails")
+    ]);
+  }
+
+  _getProgressColor(percent) {
+    if (percent < 50) {
+      return ConfigColor.tikiOrange;
+    } else {
+      return ConfigColor.green;
+    }
   }
 }
 

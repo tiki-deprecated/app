@@ -56,6 +56,7 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
         child: Container(
             width: widget.constraints.maxWidth,
             height: widget.constraints.maxHeight,
+            padding: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.w),
             child: GestureDetector(
                 onPanEnd: onDragEnd,
                 onPanUpdate: onDragUpdate,

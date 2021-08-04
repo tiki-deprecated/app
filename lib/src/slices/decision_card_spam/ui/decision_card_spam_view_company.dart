@@ -16,31 +16,56 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _getAvatar(this.logo, this.name, this.email),
-        _getCompanyName(this.name, this.email)
-      ],
-    );
+    return Container(
+        padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 3.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _getAvatar(this.logo, this.name, this.email),
+            Padding(padding: EdgeInsets.only(top: 1.h)),
+            _getCompanyName(this.name, this.email)
+          ],
+        ));
   }
 
   _getAvatar(logo, name, email) {
     if (logo != null) {
-      return ClipOval(
-          child: Container(
-              decoration: BoxDecoration(
-                color: ConfigColor.greyTwo,
-              ),
-              height: 8.h,
-              child: Center(child: Image.network(logo, height: 8.h))));
+      return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(color: ConfigColor.greyTwo, width: 5),
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0x4D000000),
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                  blurRadius: 12)
+            ],
+          ),
+          child: ClipOval(child: Image.network(logo, height: 8.h)));
     } else {
       var img = 'avatar' + (Random().nextInt(2) + 1).toString();
       String title = name ?? email;
-      return Stack(children: [
-        HelperImage(img, height: 8.h),
-        Text(title[0].toUpperCase())
-      ]);
+      return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(color: ConfigColor.greyTwo, width: 5),
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0x26000000),
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                  blurRadius: 12)
+            ],
+          ),
+          child: ClipOval(
+              child: Stack(children: [
+            HelperImage(img, height: 8.h),
+            Center(
+              child: Text(title[0].toUpperCase(),
+                  style: TextStyle(color: ConfigColor.tikiBlue)),
+            )
+          ])));
     }
   }
 

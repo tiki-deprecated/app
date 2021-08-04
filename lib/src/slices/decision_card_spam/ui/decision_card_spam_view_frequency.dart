@@ -14,14 +14,18 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        Padding(padding: EdgeInsets.only(top: 2.8.h)),
         Text("They send you emails",
             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700)),
+        Padding(padding: EdgeInsets.only(top: 0.2.h)),
         Text('${frequency[0].toUpperCase()}${frequency.substring(1)}',
             style: TextStyle(
                 fontFamily: "Koara",
                 fontSize: 32.sp,
+                height: 1.2,
                 fontWeight: FontWeight.w800,
                 color: _getTextColor(frequency))),
+        Padding(padding: EdgeInsets.only(top: 0.5.h)),
         _getCategory(this.category)
       ],
     );
@@ -45,19 +49,26 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
         children: [
           Text('in'),
           Padding(
-            padding: EdgeInsets.only(left: 12.sp),
+            padding: EdgeInsets.only(left: 3.sp),
           ),
           Container(
               decoration: BoxDecoration(
                   border: Border.all(color: ConfigColor.greySix, width: 1.sp),
                   borderRadius: BorderRadius.circular(50)),
-              padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 10.sp),
+              padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 10.sp),
               child: Row(
                 children: [
-                  Icon(Icons.sell, color: ConfigColor.greySix),
+                  Icon(
+                    Icons.sell,
+                    color: ConfigColor.greySix,
+                    size: 12.sp,
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 6.sp)),
                   Text(
                       "${category[0].toUpperCase()}${category.substring(1).toLowerCase()}",
-                      style: TextStyle(color: ConfigColor.greySix))
+                      style: TextStyle(
+                          color: ConfigColor.greySix,
+                          fontWeight: FontWeight.bold))
                 ],
               ))
         ]);
