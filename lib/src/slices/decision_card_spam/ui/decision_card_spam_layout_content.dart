@@ -1,5 +1,6 @@
 import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
 import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
+import 'package:app/src/slices/decision_card_spam/ui/decision_card_spam_view_security.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
@@ -43,7 +44,7 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
                           this.cardSpamModel.category.toString()),
                       DecisionCardSpamViewSeparator(),
                       DecisionCardSpamViewDataInfoRow(),
-                      // DecisionCardSpamViewSecurity()
+                      DecisionCardSpamViewSecurity(1)
                     ],
                   ))))
     ]));

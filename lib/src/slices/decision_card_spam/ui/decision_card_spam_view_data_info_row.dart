@@ -1,4 +1,5 @@
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/config/config_font.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -16,13 +17,16 @@ class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
     return IntrinsicHeight(
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 1.5.h),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  DecisionCardSpamViewSent(this.totalEmails, this.sinceYear),
-                  HelperImage("vertical-separator", height: 12.h),
-                  DecisionCardSpamViewOpened(64)
-                ])));
+            child: Stack(children: [
+              Center(child: HelperImage("vertical-separator", height: 12.h)),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DecisionCardSpamViewSent(1516, 2016),
+                    DecisionCardSpamViewOpened(64)
+                  ])
+            ])));
   }
 }
 
@@ -97,16 +101,33 @@ class DecisionCardSpamViewSent extends StatelessWidget {
     return Column(
       children: [
         Text("They've sent you"),
-        Text(this.totalEmails.toString()),
-        Text("emails"),
-        Container(
-            color: ConfigColor.tikiBlue,
-            child: Row(
-              children: [
-                Icon(Icons.calendar_today, color: Colors.white),
-                Text(" since ${this.sinceYear.toString()}")
-              ],
-            ))
+        Padding(padding: EdgeInsets.only(bottom: 5)),
+        Text(
+          this.totalEmails.toString(),
+          style: TextStyle(
+              fontFamily: ConfigFont.familyKoara,
+              fontSize: 45.sp,
+              fontWeight: FontWeight.bold),
+        ),
+        Text("emails",
+            style: TextStyle(height: 0.5, fontWeight: FontWeight.bold)),
+        Padding(padding: EdgeInsets.only(bottom: 10)),
+        ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Container(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                color: ConfigColor.tikiBlue,
+                child: Row(
+                  children: [
+                    Icon(Icons.calendar_today,
+                        color: Colors.white, size: 10.sp),
+                    Text(
+                      " since ${this.sinceYear.toString()}",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    )
+                  ],
+                )))
       ],
     );
   }
