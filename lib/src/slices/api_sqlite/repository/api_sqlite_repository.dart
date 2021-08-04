@@ -42,8 +42,9 @@ class ApiSqliteRepository {
   /// Initializes the [Database].
   _initDB(String pass) async {
     print('initializing db');
+    dropOldDatabase();
     String databasePath = await getDatabasesPath();
-    return await openDatabase(databasePath + "/tiki.db",
+    return await openDatabase(databasePath + "/tiki_enc.db",
         password: pass, version: 2, onCreate: onCreate, onUpgrade: onUpgrade);
   }
 
@@ -98,4 +99,10 @@ class ApiSqliteRepository {
               account text)
             ''');
   }
+
+  static void dropOldDatabase() async {
+    String databasePath = await getDatabasesPath();
+    return await deleteDatabase(databasePath + "/tiki.db");
+  }
+
 }
