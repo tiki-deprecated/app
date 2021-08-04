@@ -27,7 +27,6 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 85.h,
         child:Column(children: [
       Padding(
         padding: EdgeInsets.only(top: 0.5.h),
