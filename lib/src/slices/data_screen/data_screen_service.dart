@@ -4,7 +4,7 @@
  */
 
 import 'package:app/src/slices/api_google/api_google_service.dart';
-import 'package:app/src/slices/background_schedule/background_schedule_service.dart';
+//import 'package:app/src/slices/background_schedule/background_schedule_service.dart';
 import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -39,7 +39,7 @@ class DataScreenService extends ChangeNotifier {
 
   Future<void> addGoogleAccount(context) async {
     this.model.googleAccount = await googleService.signIn();
-    BackgroundScheduleService(context).fetchGoogleEmails();
+    //BackgroundScheduleService(context).fetchGoogleEmails();
     notifyListeners();
   }
 

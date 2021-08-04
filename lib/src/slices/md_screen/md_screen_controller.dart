@@ -6,12 +6,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'md_viewer_service.dart';
+import 'md_screen_service.dart';
 
-class MdViewerController {
-  final MdViewerService service;
+class MdScreenController {
+  final MdScreenService service;
 
-  MdViewerController(this.service);
+  MdScreenController(this.service);
 
   back(BuildContext context) {
     Navigator.of(context).pop();

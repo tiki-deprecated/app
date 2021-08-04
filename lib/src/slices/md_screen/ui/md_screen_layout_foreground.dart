@@ -6,10 +6,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
-import 'md_viewer_view_back_button.dart';
-import 'md_viewer_view_md.dart';
+import 'md_screen_view_back_button.dart';
+import 'md_screen_view_md.dart';
 
-class MdViewerLayoutForeground extends StatelessWidget {
+class MdScreenLayoutForeground extends StatelessWidget {
   static const num _marginTop = 2;
   static const num _marginBottom = 12;
   static const num _marginHorizontal = 6;
@@ -21,7 +21,7 @@ class MdViewerLayoutForeground extends StatelessWidget {
         child: Column(children: [
       Container(
           margin: EdgeInsets.only(left: _marginBackLeft.w),
-          child: MdViewerViewBackButton()),
+          child: MdScreenViewBackButton()),
       Expanded(
           child: SingleChildScrollView(
               child: Container(
@@ -30,7 +30,7 @@ class MdViewerLayoutForeground extends StatelessWidget {
                       bottom: _marginBottom.h,
                       left: _marginHorizontal.w,
                       right: _marginHorizontal.w),
-                  child: MdViewerView())))
+                  child: MdScreenView())))
     ]));
   }
 }

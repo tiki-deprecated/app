@@ -3,6 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class MdViewerModel {
+class MdScreenModel {
   late String filename;
 }

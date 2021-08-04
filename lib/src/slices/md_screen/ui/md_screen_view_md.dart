@@ -4,19 +4,20 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/md_viewer/md_viewer_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class MdViewerView extends StatelessWidget {
+import '../md_screen_service.dart';
+
+class MdScreenView extends StatelessWidget {
   static const num _fontSizeHeading = 24;
   static const num _fontSizeText = 13;
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<MdViewerService>(context);
+    var service = Provider.of<MdScreenService>(context);
     return FutureBuilder(
         future: DefaultAssetBundle.of(context)
             .loadString('res/md/' + service.model.filename + '.md'),

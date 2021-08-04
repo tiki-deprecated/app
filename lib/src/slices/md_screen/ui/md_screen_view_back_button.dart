@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../md_viewer_service.dart';
+import '../md_screen_service.dart';
 
-class MdViewerViewBackButton extends StatelessWidget {
+class MdScreenViewBackButton extends StatelessWidget {
   static const num _marginBackArrowRight = 1;
   static const num _fontSizeBack = 15;
   static const String _textBack = "Back";
@@ -20,7 +20,7 @@ class MdViewerViewBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Provider.of<MdViewerService>(context, listen: false)
+      onPressed: () => Provider.of<MdScreenService>(context, listen: false)
           .controller
           .back(context),
       child: Row(children: [

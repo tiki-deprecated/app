@@ -3,19 +3,20 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/md_viewer/md_viewer_service.dart';
-import 'package:app/src/slices/md_viewer/ui/md_viewer_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MdViewerPresenter {
-  final MdViewerService service;
+import 'md_screen_service.dart';
+import 'ui/md_screen_layout.dart';
 
-  MdViewerPresenter(this.service);
+class MdScreenPresenter {
+  final MdScreenService service;
+
+  MdScreenPresenter(this.service);
 
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
         builder: (BuildContext context) => ChangeNotifierProvider.value(
-            value: service, child: MdViewerLayout()));
+            value: service, child: MdScreenLayout()));
   }
 }
