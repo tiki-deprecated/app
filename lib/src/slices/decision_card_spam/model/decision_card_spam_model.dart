@@ -3,6 +3,8 @@ class DecisionCardSpamModel {
   String? companyName;
   String? category;
   String? frequency;
+  String? sinceYear;
+  int? totalEmails;
   double? openRate;
   double? securityScore;
   double? sensitivityScore;
@@ -15,6 +17,8 @@ class DecisionCardSpamModel {
     this.category,
     required this.companyName,
     required this.frequency,
+    this.sinceYear,
+    this.totalEmails,
     required this.openRate,
     this.securityScore,
     this.sensitivityScore,

@@ -1,5 +1,6 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_font.dart';
+import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -7,10 +8,9 @@ import 'package:sizer/sizer.dart';
 class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
   final sinceYear;
   final totalEmails;
+  final opened;
 
-  const DecisionCardSpamViewDataInfoRow(
-      {Key? key, this.sinceYear, this.totalEmails})
-      : super(key: key);
+  const DecisionCardSpamViewDataInfoRow(this.sinceYear, this.totalEmails, this.opened);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DecisionCardSpamViewSent(1516, 2016),
-                    DecisionCardSpamViewOpened(64)
+                    DecisionCardSpamViewSent(this.totalEmails, this.sinceYear),
+                    DecisionCardSpamViewOpened(this.opened)
                   ])
             ])));
   }

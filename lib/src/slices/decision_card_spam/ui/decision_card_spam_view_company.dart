@@ -17,7 +17,7 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 3.h),
+        padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 2.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -29,43 +29,38 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
   }
 
   _getAvatar(logo, name, email) {
+    var avatar;
     if (logo != null) {
-      return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: ConfigColor.greyTwo, width: 5),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x4D000000),
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                  blurRadius: 12)
-            ],
-          ),
-          child: ClipOval(child: Image.network(logo, height: 8.h)));
+      avatar = ClipOval(child: Image.network(logo, height: 8.h));
     } else {
       var img = 'avatar' + (Random().nextInt(2) + 1).toString();
       String title = name ?? email;
-      return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: ConfigColor.greyTwo, width: 5),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x26000000),
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                  blurRadius: 12)
-            ],
-          ),
-          child: ClipOval(
+      avatar = ClipOval(
+              child: Container(
+                width: 8.h,
+                height: 8.h,
               child: Stack(children: [
-            HelperImage(img, height: 8.h),
-            Center(
-              child: Text(title[0].toUpperCase(),
-                  style: TextStyle(color: ConfigColor.tikiBlue)),
-            )
-          ])));
+                HelperImage(img, height: 8.h),
+                Center(
+                  child: Text(title[0].toUpperCase(),
+                      style: TextStyle(color: ConfigColor.tikiBlue)),
+                )
+              ])));
+      return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: ConfigColor.greyTwo, width: 5),
+              boxShadow: [
+                  BoxShadow(
+                    color: Color(0x4D000000),
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                    blurRadius: 12
+                  )
+              ],
+            ),
+            child: avatar
+      );
     }
   }
 

@@ -22,14 +22,17 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        child: Column(
+
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center, children: [
       DecisionCardSpamViewHeader(this.service, this.shareKey, "mensagem"),
       DecisionCardSpamViewCompany(
           logo: this.cardSpamModel.logoUrl,
           name: this.cardSpamModel.companyName,
           email: this.cardSpamModel.senderEmail),
-      Padding(padding: EdgeInsets.only(top: 3.h)),
       Container(
           margin: EdgeInsets.symmetric(horizontal: 3.w),
           child: ClipRRect(
@@ -43,8 +46,8 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
                           this.cardSpamModel.frequency.toString(),
                           this.cardSpamModel.category.toString()),
                       DecisionCardSpamViewSeparator(),
-                      DecisionCardSpamViewDataInfoRow(),
-                      DecisionCardSpamViewSecurity(1)
+                      DecisionCardSpamViewDataInfoRow(this.cardSpamModel.sinceYear, this.cardSpamModel.totalEmails, this.cardSpamModel.openRate),
+                      DecisionCardSpamViewSecurity(this.cardSpamModel.securityScore)
                     ],
                   ))))
     ]));
