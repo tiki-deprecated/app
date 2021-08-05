@@ -25,7 +25,7 @@ class ApiEmailMsgModel {
   ApiEmailMsgModel.fromMap(Map<String, dynamic> map) {
     this.messageId = map['message_id'];
     this.extMessageId = map['ext_message_id'];
-    this.sender = ApiEmailSenderModel.fromMap(map['sender_id']);
+    this.sender = ApiEmailSenderModel.fromMap(map['sender']);
     this.account = map['account'];
     if (map['received_date_epoch'] != null)
       this.receivedDate =

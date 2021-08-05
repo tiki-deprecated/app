@@ -41,5 +41,6 @@ CREATE TABLE message (
     received_date_epoch INTEGER,
     opened_date_epoch INTEGER,
     account TEXT,
-    FOREIGN KEY (sender_id) REFERENCES sender(sender_id)
+    FOREIGN KEY (sender_id) REFERENCES sender(sender_id),
+    UNIQUE (ext_message_id, sender_id)
 );

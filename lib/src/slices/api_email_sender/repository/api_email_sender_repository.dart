@@ -29,38 +29,65 @@ class ApiEmailSenderRepository {
     return sender;
   }
 
-  //todo clean this up to be explicit
-  Future<List<ApiEmailSenderModel>> getByParams(
-      List<List<String?>> params) async {
-    String where = '';
-    List<String?> whereArgs = [];
-    List<String?> whereParams = [];
-    if (params.isNotEmpty) {
-      params.forEach((param) {
-        if (param[0] != null && param[1] != null) {
-          whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
-          whereArgs.add(param[2] != null ? "${param[2]}" : 'NULL');
-        }
-      });
-      where = whereParams.join(' AND ');
-    }
+  Future<ApiEmailSenderModel?> getById(int id) async {
     final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: where, whereArgs: whereArgs);
+        await _select(where: "sender_id = ?", whereArgs: [id]);
+    if (rows.isEmpty) return null;
+    return ApiEmailSenderModel.fromMap(rows[0]);
+  }
+
+  Future<List<ApiEmailSenderModel>> getByUnsubscribedAndIgnoreUntilBefore(
+      bool unsubscribed, DateTime beforeDate) async {
+    final List<Map<String, Object?>> rows = await _select(
+        where: 'unsubscribed = ? AND ignore_until < ?',
+        whereArgs: [
+          unsubscribed == true ? 1 : 0,
+          beforeDate.millisecondsSinceEpoch
+        ]);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
   }
 
-  Future<ApiEmailSenderModel?> getById(int id) async {
+  Future<ApiEmailSenderModel?> getByEmail(String email) async {
     final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: "sender_id = ?", whereArgs: [id]);
+        await _select(where: "email = ?", whereArgs: [email]);
     if (rows.isEmpty) return null;
     return ApiEmailSenderModel.fromMap(rows[0]);
   }
 
-  Future<ApiEmailSenderModel?> getByEmail(String email) async {
-    final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: "email = ?", whereArgs: [email]);
-    if (rows.isEmpty) return null;
-    return ApiEmailSenderModel.fromMap(rows[0]);
+  Future<List<Map<String, Object?>>> _select(
+      {String? where, List<Object?>? whereArgs}) async {
+    List<Map<String, Object?>> rows = await _database.rawQuery(
+        'SELECT sender.sender_id AS \'sender@sender_id\', '
+                'sender.name AS \'sender@name\', sender.email AS \'sender@email\', '
+                'sender.category AS \'sender@category\', '
+                'sender.unsubscribe_mail_to AS \'sender@unsubscribe_mail_to\', '
+                'sender.email_since_epoch AS \'sender@email_since_epoch\', '
+                'sender.ignore_until_epoch AS \'sender@ignore_until_epoch\', '
+                'sender.unsubscribed_bool AS \'sender@unsubscribed_bool\', '
+                'company.company_id AS \'company@company_id\', '
+                'company.logo AS \'company@logo\', '
+                'company.security_score AS \'company@security_score\', '
+                'company.breach_score AS \'company@breach_score\', '
+                'company.sensitivity_score AS \'company@sensitivity_score\', '
+                'company.domain AS \'company@domain\' '
+                'FROM sender AS sender '
+                'INNER JOIN company AS company '
+                'ON company.company_id = sender.company_id ' +
+            (where != null ? 'WHERE ' + where : ''),
+        whereArgs);
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) {
+      Map<String, Object?> senderMap = Map();
+      Map<String, Object?> companyMap = Map();
+      row.entries.forEach((element) {
+        if (element.key.contains('sender@'))
+          senderMap[element.key.replaceFirst('sender@', '')] = element.value;
+        else if (element.key.contains('company@'))
+          companyMap[element.key.replaceFirst('company@', '')] = element.value;
+      });
+      senderMap['company'] = companyMap;
+      return senderMap;
+    }).toList();
   }
 }

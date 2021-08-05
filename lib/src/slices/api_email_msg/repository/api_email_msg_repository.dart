@@ -19,34 +19,66 @@ class ApiEmailMsgRepository {
     return message;
   }
 
-  Future<List<ApiEmailMsgModel>> get(ApiEmailMsgModel subject) async {
-    var subjectMap = subject.toMap();
-    String where = subjectMap.keys.join(' = ? AND ') + "= ?";
-    List<String?> whereArgs = subjectMap.values
-        .map((entry) => entry != null ? "${entry.toString()}" : 'NULL')
-        .toList();
+  Future<ApiEmailMsgModel?> getByExtMessageIdAndSenderId(
+      String extMessageId, int senderId) async {
+    final List<Map<String, Object?>> rows = await _select(
+        where: 'ext_message_id = ? AND sender.sender_id = ?',
+        whereArgs: [extMessageId, senderId]);
+    if (rows.isEmpty) return null;
+    return ApiEmailMsgModel.fromMap(rows[0]);
+  }
+
+  Future<List<ApiEmailMsgModel>> getByAnySenderId(List<int> senderIds) async {
     final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: where, whereArgs: whereArgs);
+        await _select(where: 'sender.sender_id IN ?', whereArgs: [senderIds]);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
   }
 
-  Future<List<ApiEmailMsgModel>> getByParams(List<List<String?>> params) async {
-    String where = '';
-    List<String?> whereArgs = [];
-    List<String?> whereParams = [];
-    if (params.isNotEmpty) {
-      params.forEach((param) {
-        if (param[0] != null && param[1] != null) {
-          whereParams.add(param[0]! + ' ' + param[1]! + ' ?');
-          whereArgs.add(param[2] != null ? "${param[2].toString()}" : 'NULL');
-        }
-      });
-      where = whereParams.join(' AND ');
-    }
-    final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: where, whereArgs: whereArgs);
+  Future<List<Map<String, Object?>>> _select(
+      {String? where, List<Object?>? whereArgs}) async {
+    List<Map<String, Object?>> rows = await _database.rawQuery(
+        'SELECT message.message_id AS \'message@message_id\', '
+                'message.ext_message_id AS \'message@ext_message_id\', '
+                'message.account AS \'message@account\', '
+                'message.received_date_epoch AS \'message@received_date_epoch\', '
+                'message.opened_date_epoch AS \'message@opened_date_epoch\', '
+                'sender.sender_id AS \'sender@sender_id\', '
+                'sender.name AS \'sender@name\', sender.email AS \'sender@email\', '
+                'sender.category AS \'sender@category\', '
+                'sender.unsubscribe_mail_to AS \'sender@unsubscribe_mail_to\', '
+                'sender.email_since_epoch AS \'sender@email_since_epoch\', '
+                'sender.ignore_until_epoch AS \'sender@ignore_until_epoch\', '
+                'sender.unsubscribed_bool AS \'sender@unsubscribed_bool\', '
+                'company.company_id AS \'company@company_id\', '
+                'company.logo AS \'company@logo\', '
+                'company.security_score AS \'company@security_score\', '
+                'company.breach_score AS \'company@breach_score\', '
+                'company.sensitivity_score AS \'company@sensitivity_score\', '
+                'company.domain AS \'company@domain\' '
+                'FROM message AS message '
+                'INNER JOIN sender AS sender '
+                'ON sender.sender_id = message.sender_id '
+                'INNER JOIN company AS company '
+                'ON company.company_id = sender.company_id ' +
+            (where != null ? 'WHERE ' + where : ''),
+        whereArgs);
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+    return rows.map((row) {
+      Map<String, Object?> messageMap = Map();
+      Map<String, Object?> senderMap = Map();
+      Map<String, Object?> companyMap = Map();
+      row.entries.forEach((element) {
+        if (element.key.contains('message@'))
+          messageMap[element.key.replaceFirst('message@', '')] = element.value;
+        else if (element.key.contains('sender@'))
+          senderMap[element.key.replaceFirst('sender@', '')] = element.value;
+        else if (element.key.contains('company@'))
+          companyMap[element.key.replaceFirst('company@', '')] = element.value;
+      });
+      senderMap['company'] = companyMap;
+      messageMap['sender'] = senderMap;
+      return messageMap;
+    }).toList();
   }
 }

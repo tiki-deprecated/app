@@ -278,6 +278,7 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+
     //ApiSenderService apiSenderService = ApiSenderService(database: database);
     //ApiEmailMsgService apiMessageService = ApiEmailMsgService(database: database);
     //ApiCompanyService apiCompanyService = ApiCompanyService(apiCompanyIndexService: ApiCompanyIndexService(helperApiAuth), database: database);

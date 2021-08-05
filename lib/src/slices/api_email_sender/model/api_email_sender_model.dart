@@ -19,9 +19,9 @@ class ApiEmailSenderModel {
   ApiEmailSenderModel(
       {this.senderId,
       this.company,
-      required this.name,
-      required this.email,
-      required this.category,
+      this.name,
+      this.email,
+      this.category,
       this.unsubscribeMailTo,
       this.emailSince,
       this.ignoreUntil,
