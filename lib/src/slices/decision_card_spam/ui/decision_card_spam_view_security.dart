@@ -134,6 +134,7 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
   }
 
   Future<void> showModal(BuildContext context, {num? sensitivity, num? hacking}) {
+    var spacing = 2.4.h;
     return showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
@@ -142,26 +143,74 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
         builder: (BuildContext context) => Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Security score.'),
-              sensitivity == null ? DecisionCardSpamViewSecurityEmpty() : Container(),
-              RichText(text:TextSpan(text:'For each email list that emails you, we show you a rating which we call a ',children: [TextSpan(text:'Security score.', style:TextStyle(fontWeight: FontWeight.bold))])),
+            padding: EdgeInsets.only(left: 20, right: 40),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Padding(
+                padding: EdgeInsets.only(top: spacing),
+              ),
+              Divider(
+                height: spacing,
+                thickness: 5,
+                color: ConfigColor.greyTwo,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: spacing * 2),
+              ),
+              Text('Security score.',
+                  style: TextStyle(
+                      color: ConfigColor.tikiBlue,
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold)),
+              Padding(
+                padding: EdgeInsets.only(top: spacing),
+              ),
+              sensitivity == null
+                  ? DecisionCardSpamViewSecurityEmpty()
+                  : Container(),
+              RichText(
+                  text: TextSpan(
+                      text:
+                          'For each email list that emails you, we show you a rating which we call a ',
+                      children: [
+                    TextSpan(
+                        text: 'Security score.',
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ])),
+              Padding(
+                padding: EdgeInsets.only(top: spacing),
+              ),
               Text('The security score is determined by two ratings:'),
-              sensitivity != null ? DecisionCardSpamViewSecurityScore() : Container(),
+              sensitivity != null
+                  ? DecisionCardSpamViewSecurityScore()
+                  : Container(),
+              Padding(
+                padding: EdgeInsets.only(top: spacing),
+              ),
               DecisionCardSpamViewSecuritySensivityText(),
-              DecisionCardSpamViewSecurityHackingText (),
+              Padding(
+                padding: EdgeInsets.only(top: spacing),
+              ),
+              DecisionCardSpamViewSecurityHackingText(),
+              Padding(
+                padding: EdgeInsets.only(top: spacing * 2),
+              ),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Container(
-                  color: ConfigColor.tikiRed,
-                  child: Text('OK, got it', style: TextStyle(color:Colors.white))
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size.fromWidth(70.w),
+                  primary: ConfigColor.orange,
+                  padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
                 ),
-              )
-            ]
-          )
-        ));
+                child: Text("OK, got it",
+                    style: TextStyle(
+                        fontSize: 13.5.sp, fontWeight: FontWeight.w800)),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: spacing * 3),
+              ),
+            ])));
   }
 
   _getInfoIcon(BuildContext context) {
