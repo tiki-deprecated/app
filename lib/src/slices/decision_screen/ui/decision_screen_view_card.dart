@@ -1,3 +1,4 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -8,11 +9,10 @@ class DecisionScreenViewCard extends StatefulWidget {
   final Function onSwipeLeft;
   final BoxConstraints constraints;
 
-  DecisionScreenViewCard(
-      {required this.child,
-      required this.onSwipeRight,
-      required this.onSwipeLeft,
-      required this.constraints});
+  DecisionScreenViewCard({required this.child,
+    required this.onSwipeRight,
+    required this.onSwipeLeft,
+    required this.constraints});
 
   @override
   State<StatefulWidget> createState() => _DecisionCardViewState();
@@ -64,11 +64,18 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                     transform: Matrix4.rotationZ(angle),
                     alignment: FractionalOffset.topCenter,
                     child: Stack(clipBehavior: Clip.none, children: [
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(_radius.w)),
-                        child: widget.child,
-                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                            border: Border.all(
+                                color: ConfigColor.greyTwo, width: 2),
+                          ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                            child: widget.child,
+                          )),
                       Positioned(
                           left: -60,
                           top: 100,
@@ -77,7 +84,7 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                               child: Opacity(
                                   opacity: getopacityYes(),
                                   child:
-                                      HelperImage("yes-label", height: 30.h)))),
+                                  HelperImage("yes-label", height: 30.h)))),
                       Positioned(
                           right: -60,
                           top: 100,
