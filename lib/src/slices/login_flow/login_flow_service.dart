@@ -3,31 +3,41 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_req.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp.dart';
-import 'package:app/src/slices/api_bouncer/api_bouncer_service.dart';
-import 'package:app/src/slices/api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
-import 'package:app/src/slices/api_bouncer/model/api_bouncer_model_otp_rsp.dart';
-import 'package:app/src/slices/api_user/api_user_service.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_current.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_otp.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_token.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_user.dart';
-import 'package:app/src/slices/home_screen/home_screen_service.dart';
-import 'package:app/src/slices/intro_screen/intro_screen_service.dart';
-import 'package:app/src/slices/keys_create_screen/keys_create_screen_service.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_delegate.dart';
-import 'package:app/src/slices/login_screen_email/login_screen_email_service.dart';
-import 'package:app/src/slices/login_screen_inbox/login_screen_inbox_service.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
+import '../../config/config_sentry.dart';
+import '../../utils/api/helper_api_auth.dart';
+import '../../utils/api/helper_api_rsp.dart';
+import '../../utils/api/helper_api_utils.dart';
+import '../../utils/helper_db.dart';
+import '../api_app_data/api_app_data_service.dart';
+import '../api_blockchain/api_blockchain_service.dart';
+import '../api_blockchain/model/api_blockchain_model_address_req.dart';
+import '../api_blockchain/model/api_blockchain_model_address_rsp.dart';
+import '../api_bouncer/api_bouncer_service.dart';
+import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
+import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
+import '../api_company/api_company_service.dart';
+import '../api_company_index/api_company_index_service.dart';
+import '../api_message/api_message_service.dart';
+import '../api_sender/api_sender_service.dart';
+import '../api_user/api_user_service.dart';
+import '../api_user/model/api_user_model_current.dart';
+import '../api_user/model/api_user_model_keys.dart';
+import '../api_user/model/api_user_model_otp.dart';
+import '../api_user/model/api_user_model_token.dart';
+import '../api_user/model/api_user_model_user.dart';
+import '../home_screen/home_screen_service.dart';
+import '../intro_screen/intro_screen_service.dart';
+import '../keys_create_screen/keys_create_screen_service.dart';
+import '../keys_save_screen/keys_save_screen_service.dart';
+import '../login_flow/login_flow_delegate.dart';
+import '../login_screen_email/login_screen_email_service.dart';
+import '../login_screen_inbox/login_screen_inbox_service.dart';
 import 'model/login_flow_model.dart';
 import 'model/login_flow_model_state.dart';
 
@@ -37,7 +47,9 @@ class LoginFlowService extends ChangeNotifier {
   late final ApiUserService apiUserService;
   late final ApiBouncerService apiBouncerService;
   late final ApiBlockchainService apiBlockchainService;
+  late final HelperApiAuth helperApiAuth;
   List<void Function()> logoutCallbacks = [];
+  List<SingleChildWidget> dbProviders = [];
 
   LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
@@ -48,16 +60,19 @@ class LoginFlowService extends ChangeNotifier {
       {required ApiUserService apiUserService,
       required ApiBouncerService apiBouncerService,
       required ApiBlockchainService apiBlockchainService,
+      required HelperApiAuth helperApiAuth,
       Iterable<void Function()>? logoutCallbacks}) async {
     this.apiUserService = apiUserService;
     this.apiBouncerService = apiBouncerService;
     this.apiBlockchainService = apiBlockchainService;
+    this.helperApiAuth = helperApiAuth;
     if (logoutCallbacks != null) this.logoutCallbacks.addAll(logoutCallbacks);
     await loadUser();
 
-    if (this.model.user?.user?.isLoggedIn == true)
+    if (this.model.user?.user?.isLoggedIn == true) {
+      await _initDb();
       setLoggedIn();
-    else if (this.model.user?.current?.email != null) setReturningUser();
+    } else if (this.model.user?.current?.email != null) setReturningUser();
   }
 
   Future<void> loadUser() async {
@@ -89,7 +104,7 @@ class LoginFlowService extends ChangeNotifier {
       else if (this.model.state == LoginFlowModelState.keysCreated)
         KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
-        HomeScreenService().presenter
+        HomeScreenService(dbProviders).presenter
     ];
   }
 
@@ -186,6 +201,7 @@ class LoginFlowService extends ChangeNotifier {
       if (this.model.user?.keys?.address != null) {
         this.model.user!.user!.isLoggedIn = true;
         await apiUserService.setUser(this.model.user!.user!);
+        await _initDb();
         setLoggedIn();
       } else {
         await apiUserService.setUser(ApiUserModelUser(
@@ -201,6 +217,7 @@ class LoginFlowService extends ChangeNotifier {
   Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
       if (await _registerKeys(keys: keys)) {
+        await _initDb();
         setLoggedIn();
         await loadUser();
         return true;
@@ -211,6 +228,7 @@ class LoginFlowService extends ChangeNotifier {
 
   Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
+      await _initDb();
       setLoggedIn();
       await loadUser();
       return true;
@@ -253,5 +271,24 @@ class LoginFlowService extends ChangeNotifier {
       return false;
     }
     return true;
+  }
+
+  Future<void> _initDb() async {
+    Database database =
+        await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
+
+    ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+    ApiSenderService apiSenderService = ApiSenderService(database: database);
+    ApiMessageService apiMessageService = ApiMessageService(database: database);
+
+    ApiCompanyService apiCompanyService = ApiCompanyService(
+        apiCompanyIndexService: ApiCompanyIndexService(helperApiAuth), database: database);
+
+    dbProviders = [
+      Provider<ApiCompanyService>.value(value: apiCompanyService),
+      Provider<ApiSenderService>.value(value: apiSenderService),
+      Provider<ApiMessageService>.value(value: apiMessageService),
+      Provider<ApiAppDataService>.value(value: apiAppDataService),
+    ];
   }
 }

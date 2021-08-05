@@ -12,13 +12,15 @@ class DecisionScreenService extends ChangeNotifier {
   late final DecisionScreenPresenter presenter;
   late final DecisionScreenController controller;
   late final DecisionScreenModel model;
-  final ApiGoogleService apiGoogleService;
 
-  DecisionScreenService(this.apiGoogleService) {
+  final ApiAppDataService _apiAppDataService;
+  final ApiGoogleService _apiGoogleService;
+
+  DecisionScreenService(this._apiGoogleService, this._apiAppDataService) {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController();
     model = DecisionScreenModel();
-    apiGoogleService
+    _apiGoogleService
         .isConnected()
         .then((isConnected) => updateIsLinked(isConnected));
   }
@@ -51,13 +53,13 @@ class DecisionScreenService extends ChangeNotifier {
 
   Future<bool> isTestDone() async {
     var testDone =
-        await ApiAppDataService().getByKey("decision cards test done");
+        await _apiAppDataService.getByKey("decision cards test done");
     return testDone?.value == "true";
   }
 
   Future<void> testDone() async {
     if (this.model.isTestDone) return;
-    await ApiAppDataService().save("decision cards test done", "true");
+    await _apiAppDataService.save("decision cards test done", "true");
     this.model.isTestDone = true;
   }
 }

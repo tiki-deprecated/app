@@ -50,7 +50,7 @@ class ApiUnsubscribeSpamService {
           hackingScore: company?.breachScore,
           senderId: sender.senderId!));
     }
-    ApiAppDataService().save("getDataForCards last run",
+    apiAppDataService.save("getDataForCards last run",
         DateTime.now().millisecondsSinceEpoch.toString());
     return dataModels;
   }

@@ -3,12 +3,18 @@ import 'dart:math';
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
 import 'package:app/src/slices/api_message/model/api_message_model.dart';
 import 'package:app/src/slices/api_message/repository/api_message_repository.dart';
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 class ApiMessageService {
+  final ApiMessageRepository _repository;
+
+  ApiMessageService({required Database database})
+      : this._repository = ApiMessageRepository(database);
+
   save(ApiMessageFetchedModel fetchedModel) async {
     var message = ApiMessageModel.fromFetchedMessage(fetchedModel);
-    var getMessage = await ApiMessageRepository().get(message);
-    if (getMessage.length == 0) return ApiMessageRepository().insert(message);
+    var getMessage = await _repository.get(message);
+    if (getMessage.length == 0) return _repository.insert(message);
   }
 
   Future<Map<int, Map<String, dynamic>>> getMessageDataForCards(
@@ -19,15 +25,15 @@ class ApiMessageService {
       List<List<String>> params = [
         ['sender_id', '=', sender.toString()]
       ];
-      var messages = await ApiMessageRepository().getByParams(params);
-      String frequency = calculateFrequency(messages);
-      var openRate = calculateOpenRate(messages);
+      var messages = await _repository.getByParams(params);
+      String frequency = _calculateFrequency(messages);
+      var openRate = _calculateOpenRate(messages);
       messagesData[sender] = {'frequency': frequency, 'openRate': openRate};
     }
     return messagesData;
   }
 
-  String calculateFrequency(List<ApiMessageModel> messages) {
+  String _calculateFrequency(List<ApiMessageModel> messages) {
     const secsInDay = 86400;
     const secsInWeek = 86400 * 7;
     const secsInMonth = 86400 * 30;
@@ -57,7 +63,7 @@ class ApiMessageService {
     }
   }
 
-  calculateOpenRate(List<ApiMessageModel> messages) {
+  _calculateOpenRate(List<ApiMessageModel> messages) {
     int opened = 0;
     int total = messages.length;
     messages.forEach((message) {

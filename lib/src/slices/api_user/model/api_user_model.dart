@@ -15,6 +15,4 @@ class ApiUserModel {
   ApiUserModelToken? token;
   ApiUserModelOtp? otp;
   ApiUserModelKeys? keys;
-  bool isGmailLinked = false;
-  bool isTestCardDone = false;
 }
