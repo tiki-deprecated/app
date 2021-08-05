@@ -30,21 +30,20 @@ class ApiMessageService {
   String calculateFrequency(List<ApiMessageModel> messages) {
     const secsInDay = 86400;
     const secsInWeek = 86400 * 7;
-    const secsInMonth = 86400 * 30;
     int daily = 0;
     int weekly = 0;
     int monthly = 0;
     if (messages.length == 1) return "monthly";
-    for (int i = 1; i < messages.length; i++) {
+    for (int i = messages.length - 2; i >= 0; i--) {
       var message = messages[i];
-      var previous = messages[i - 1];
-      int diff = message.receivedDate! - previous.receivedDate!;
-      if (diff < secsInDay) {
+      var previous = messages[i + 1];
+      num diff = (message.receivedDate! - previous.receivedDate!) / 1000;
+      if (diff <= secsInDay) {
         daily++;
-      } else if (diff < secsInWeek) {
-        monthly++;
-      } else if (diff > secsInMonth) {
+      } else if (diff <= secsInWeek) {
         weekly++;
+      } else if (diff > secsInWeek) {
+        monthly++;
       }
     }
     int maxFrequency = [daily, weekly, monthly].reduce(max);
