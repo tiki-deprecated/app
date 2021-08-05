@@ -1,4 +1,3 @@
-import 'package:app/src/config/config_color.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -66,10 +65,17 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                     child: Stack(clipBehavior: Clip.none, children: [
                       Container(
                           decoration: BoxDecoration(
+                            boxShadow: angle.abs() > 0
+                                ? [
+                                    BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 20,
+                                        spreadRadius: 0,
+                                        offset: Offset(-3, 4))
+                                  ]
+                                : [],
                             borderRadius:
                                 BorderRadius.all(Radius.circular(_radius.w)),
-                            border: Border.all(
-                                color: ConfigColor.greyTwo, width: 2),
                           ),
                           child: ClipRRect(
                             borderRadius:
