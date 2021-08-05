@@ -1,10 +1,15 @@
-class IntroScreenModelSlide {
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+class IntroScreenModelCard {
   final title;
   final subtitle;
   final button;
   final backgroundColor;
 
-  IntroScreenModelSlide(
+  IntroScreenModelCard(
       {required this.title,
       required this.subtitle,
       required this.button,
