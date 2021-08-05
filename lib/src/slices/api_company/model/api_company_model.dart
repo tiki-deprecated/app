@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 class ApiCompanyModel {
   int? companyId;
   String? logo;
@@ -14,36 +19,26 @@ class ApiCompanyModel {
       this.sensitivityScore,
       this.breachScore});
 
-  ApiCompanyModel.fromMap(companyMap)
-      : companyId = companyMap['company_id'],
-        logo = companyMap['logo'],
-        securityScore = companyMap['security_score'],
-        breachScore = companyMap['breachScore'],
-        sensitivityScore = companyMap['sensitivityScore'],
-        domain = companyMap['domain'];
-
-  Map<String, dynamic> toMap() {
-    return {
-      'company_id': this.companyId,
-      'logo': this.logo,
-      'security_score': this.securityScore,
-      'breach_score': this.breachScore,
-      'sensitivity_score': sensitivityScore,
-      'domain': this.domain,
-    };
+  ApiCompanyModel.fromMap(map) {
+    this.companyId = map['company_id'];
+    this.logo = map['logo'];
+    this.securityScore = map['security_score'];
+    this.breachScore = map['breach_score'];
+    this.sensitivityScore = map['sensitivity_score'];
+    this.domain = map['domain'];
   }
+
+  Map<String, dynamic> toMap() => {
+        'company_id': companyId,
+        'logo': logo,
+        'security_score': securityScore,
+        'breach_score': breachScore,
+        'sensitivity_score': sensitivityScore,
+        'domain': domain,
+      };
 
   @override
   String toString() {
-    var str = '''ApiCompanyModel{ 
-      companyId : $companyId, 
-      logo : $logo, 
-      securityScore : $securityScore,
-      security_score : $securityScore,
-      breach_score : $breachScore,
-      sensitivityScore : $sensitivityScore, 
-      domain : $domain, 
-      }''';
-    return str;
+    return 'ApiCompanyModel{companyId: $companyId, logo: $logo, securityScore: $securityScore, breachScore: $breachScore, sensitivityScore: $sensitivityScore, domain: $domain}';
   }
 }

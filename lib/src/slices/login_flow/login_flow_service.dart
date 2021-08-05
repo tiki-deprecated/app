@@ -21,10 +21,10 @@ import '../api_blockchain/model/api_blockchain_model_address_rsp.dart';
 import '../api_bouncer/api_bouncer_service.dart';
 import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
 import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
-import '../api_company/api_company_service.dart';
-import '../api_company_index/api_company_index_service.dart';
-import '../api_message/api_message_service.dart';
-import '../api_sender/api_sender_service.dart';
+//import '../api_company/api_company_service.dart';
+//import '../api_company_index/api_company_index_service.dart';
+//import '../api_email_msg/api_email_msg_service.dart';
+//import '../api_sender/api_email_sender_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
 import '../api_user/model/api_user_model_keys.dart';
@@ -278,16 +278,14 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
-    ApiSenderService apiSenderService = ApiSenderService(database: database);
-    ApiMessageService apiMessageService = ApiMessageService(database: database);
-
-    ApiCompanyService apiCompanyService = ApiCompanyService(
-        apiCompanyIndexService: ApiCompanyIndexService(helperApiAuth), database: database);
+    //ApiSenderService apiSenderService = ApiSenderService(database: database);
+    //ApiEmailMsgService apiMessageService = ApiEmailMsgService(database: database);
+    //ApiCompanyService apiCompanyService = ApiCompanyService(apiCompanyIndexService: ApiCompanyIndexService(helperApiAuth), database: database);
 
     dbProviders = [
-      Provider<ApiCompanyService>.value(value: apiCompanyService),
-      Provider<ApiSenderService>.value(value: apiSenderService),
-      Provider<ApiMessageService>.value(value: apiMessageService),
+      //Provider<ApiCompanyService>.value(value: apiCompanyService),
+      //Provider<ApiSenderService>.value(value: apiSenderService),
+      //Provider<ApiEmailMsgService>.value(value: apiMessageService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
     ];
   }

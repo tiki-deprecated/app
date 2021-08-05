@@ -1,20 +1,24 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'dart:math';
 
-import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
-import 'package:app/src/slices/api_message/model/api_message_model.dart';
-import 'package:app/src/slices/api_message/repository/api_message_repository.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
-class ApiMessageService {
-  final ApiMessageRepository _repository;
+import 'model/api_email_msg_model.dart';
+import 'repository/api_email_msg_repository.dart';
 
-  ApiMessageService({required Database database})
-      : this._repository = ApiMessageRepository(database);
+class ApiEmailMsgService {
+  final ApiEmailMsgRepository _repository;
 
-  save(ApiMessageFetchedModel fetchedModel) async {
-    var message = ApiMessageModel.fromFetchedMessage(fetchedModel);
-    var getMessage = await _repository.get(message);
-    if (getMessage.length == 0) return _repository.insert(message);
+  ApiEmailMsgService({required Database database})
+      : this._repository = ApiEmailMsgRepository(database);
+
+  save(ApiEmailMsgModel model) async {
+    var getMessage = await _repository.get(model);
+    if (getMessage.length == 0) return _repository.insert(model);
   }
 
   Future<Map<int, Map<String, dynamic>>> getMessageDataForCards(
@@ -33,7 +37,7 @@ class ApiMessageService {
     return messagesData;
   }
 
-  String _calculateFrequency(List<ApiMessageModel> messages) {
+  String _calculateFrequency(List<ApiEmailMsgModel> messages) {
     const secsInDay = 86400;
     const secsInWeek = 86400 * 7;
     const secsInMonth = 86400 * 30;
@@ -63,7 +67,7 @@ class ApiMessageService {
     }
   }
 
-  _calculateOpenRate(List<ApiMessageModel> messages) {
+  _calculateOpenRate(List<ApiEmailMsgModel> messages) {
     int opened = 0;
     int total = messages.length;
     messages.forEach((message) {

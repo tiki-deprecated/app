@@ -1,20 +1,26 @@
-import 'package:app/src/slices/api_sender/model/api_sender_model.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class ApiSenderRepository {
+import '../../../lib/src/slices/api_email_sender/model/api_email_sender_model.dart';
+
+class ApiEmailSenderRepository {
   static const String _table = 'sender';
   final Database _database;
 
-  ApiSenderRepository(this._database);
+  ApiEmailSenderRepository(this._database);
 
-  Future<ApiSenderModel> insert(ApiSenderModel sender) async {
+  Future<ApiEmailSenderModel> insert(ApiEmailSenderModel sender) async {
     int senderId = await _database.insert(_table, sender.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     sender.senderId = senderId;
     return sender;
   }
 
-  Future<List<ApiSenderModel>> get(ApiSenderModel subject,
+  Future<List<ApiEmailSenderModel>> get(ApiEmailSenderModel subject,
       {keepNull: false}) async {
     var subjectMap = subject.toMap();
     if (!keepNull) subjectMap.removeWhere((key, value) => value == null);
@@ -24,17 +30,17 @@ class ApiSenderRepository {
         .toList();
     final List<Map<String, Object?>> mappedSenders =
         await _database.query(_table, where: where, whereArgs: whereArgs);
-    return List.generate(
-        mappedSenders.length, (i) => ApiSenderModel.fromMap(mappedSenders[i]));
+    return List.generate(mappedSenders.length,
+        (i) => ApiEmailSenderModel.fromMap(mappedSenders[i]));
   }
 
-  Future<List<ApiSenderModel>> getAll() async {
+  Future<List<ApiEmailSenderModel>> getAll() async {
     final List<Map<String, dynamic>> allMapped = await _database.query(_table);
     return List.generate(
-        allMapped.length, (i) => ApiSenderModel.fromMap(allMapped[i]));
+        allMapped.length, (i) => ApiEmailSenderModel.fromMap(allMapped[i]));
   }
 
-  Future<ApiSenderModel> update(ApiSenderModel sender) async {
+  Future<ApiEmailSenderModel> update(ApiEmailSenderModel sender) async {
     await _database.update(
       _table,
       sender.toMap(),
@@ -52,7 +58,8 @@ class ApiSenderRepository {
     );
   }
 
-  Future<List<ApiSenderModel>> getByParams(List<List<String?>> params) async {
+  Future<List<ApiEmailSenderModel>> getByParams(
+      List<List<String?>> params) async {
     String where = '';
     List<String?> whereArgs = [];
     List<String?> whereParams = [];
@@ -67,22 +74,22 @@ class ApiSenderRepository {
     }
     final List<Map<String, Object?>> mappedSenders =
         await _database.query(_table, where: where, whereArgs: whereArgs);
-    return List.generate(
-        mappedSenders.length, (i) => ApiSenderModel.fromMap(mappedSenders[i]));
+    return List.generate(mappedSenders.length,
+        (i) => ApiEmailSenderModel.fromMap(mappedSenders[i]));
   }
 
-  Future<ApiSenderModel> getById(int id) async {
+  Future<ApiEmailSenderModel> getById(int id) async {
     final List<Map<String, Object?>> mappedCompanies =
         await _database.query(_table, where: "sender_id = ?", whereArgs: [id]);
     return List.generate(mappedCompanies.length,
-        (i) => ApiSenderModel.fromMap(mappedCompanies[i])).first;
+        (i) => ApiEmailSenderModel.fromMap(mappedCompanies[i])).first;
   }
 
-  Future<ApiSenderModel?> getByEmail(String email) async {
+  Future<ApiEmailSenderModel?> getByEmail(String email) async {
     final List<Map<String, Object?>> mappedCompanies =
         await _database.query(_table, where: "email = ?", whereArgs: [email]);
     final sender = List.generate(mappedCompanies.length,
-        (i) => ApiSenderModel.fromMap(mappedCompanies[i]));
+        (i) => ApiEmailSenderModel.fromMap(mappedCompanies[i]));
     return sender.length == 0 ? null : sender.first;
   }
 }

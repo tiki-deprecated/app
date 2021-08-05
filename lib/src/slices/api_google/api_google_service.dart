@@ -5,13 +5,13 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
-import 'package:app/src/utils/helper_json.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 
+import '../../utils/helper_json.dart';
+//import '../api_email_msg/model/api_email_msg_model.dart';
+import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'repository/api_google_repository_info.dart';
 
 class ApiGoogleService {
@@ -58,21 +58,22 @@ class ApiGoogleService {
     return emailList?.messages;
   }
 
-  ApiMessageFetchedModel? processEmailListMessage(Message message) {
+  /*ApiEmailMsgModel?*/ processEmailListMessage(Message message) {
     message.labelIds!.forEach((label) {
       if (label.contains("CATEGORY_")) if ("PROMOTION" ==
           label.replaceFirst('CATEGORY_', '')) return null;
     });
     var senderData = getSenderData(message);
-    return ApiMessageFetchedModel(
-      senderData: senderData,
-      messageExtId: message.id,
-      messageReceivedDate: message.internalDate,
-      messageOpenedDate:
-          message.labelIds!.contains("OPENED") ? message.internalDate : null,
-      account: _googleSignIn.currentUser!.email,
-      domain: getDomainFromSenderData(senderData),
-    );
+    /*return ApiEmailMsgModel(
+        extMessageId: message.id,
+        receivedDate: message.internalDate != null
+            ? int.parse(message.internalDate!)
+            : null,
+        openedDate:
+            message.labelIds!.contains("OPENED") && message.internalDate != null
+                ? int.parse(message.internalDate!)
+                : null,
+        account: _googleSignIn.currentUser!.email);*/
   }
 
   Future<Message?> fetchAndProcessGmailMessage(Message messageMeta) async {

@@ -2,11 +2,11 @@ import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
-import 'package:app/src/slices/api_message/api_message_service.dart';
+import 'package:app/src/slices/api_message/api_email_msg_service.dart';
+import 'package:app/src/slices/api_message/model/api_email_msg_model.dart';
 import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
-import 'package:app/src/slices/api_message/model/api_message_model.dart';
-import 'package:app/src/slices/api_sender/api_sender_service.dart';
-import 'package:app/src/slices/api_sender/model/api_sender_model.dart';
+import 'package:app/src/slices/api_sender/api_email_sender_service.dart';
+import 'package:app/src/slices/api_sender/model/api_email_sender_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +77,8 @@ class BackgroundScheduleService {
     return sender;
   }
 
-  Future<ApiMessageModel> saveMessage(ApiMessageFetchedModel fetchedModel) async {
+  Future<ApiMessageModel> saveMessage(
+      ApiMessageFetchedModel fetchedModel) async {
     var messageService = Provider.of<ApiMessageService>(context, listen: false);
     var message = await messageService.save(fetchedModel);
     return message;

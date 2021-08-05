@@ -1,18 +1,23 @@
-import 'package:app/src/slices/api_message/model/api_message_fetched_model.dart';
-import 'package:app/src/slices/api_sender/model/api_sender_model.dart';
-import 'package:app/src/slices/api_sender/repository/api_sender_repository.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
-class ApiSenderService {
-  final ApiSenderRepository _repository;
+import '../../lib/src/slices/api_email_sender/model/api_email_sender_model.dart';
+import 'repository/api_email_sender_repository.dart';
 
-  ApiSenderService({required Database database})
-      : this._repository = ApiSenderRepository(database);
+class ApiEmailSenderService {
+  final ApiEmailSenderRepository _repository;
 
-  Future<ApiSenderModel> createOrUpdate(
+  ApiEmailSenderService({required Database database})
+      : this._repository = ApiEmailSenderRepository(database);
+
+  Future<ApiEmailSenderModel> createOrUpdate(
       ApiMessageFetchedModel fetchedModel) async {
     var senderData = fetchedModel.senderData;
-    var sender = ApiSenderModel.fromMap(senderData);
+    var sender = ApiEmailSenderModel.fromMap(senderData);
     var getSender = await _repository.getByEmail(sender.email);
     if (getSender != null) {
       sender.senderId = getSender.senderId;
@@ -26,7 +31,7 @@ class ApiSenderService {
     return _repository.insert(sender);
   }
 
-  Future<List<ApiSenderModel>> getSendersForCards() async {
+  Future<List<ApiEmailSenderModel>> getSendersForCards() async {
     List<List<String>> params = [
       ['unsubscribed', "=", 0.toString()],
       ['ignore_until', "<", (DateTime.now().millisecondsSinceEpoch).toString()]
@@ -34,20 +39,20 @@ class ApiSenderService {
     return await _repository.getByParams(params);
   }
 
-  Future<ApiSenderModel?> getById(int? senderId) async {
+  Future<ApiEmailSenderModel?> getById(int? senderId) async {
     if (senderId == null) return null;
     var sender = await _repository.getById(senderId);
     return sender;
   }
 
-  Future<void> markAsUnsubscribed(ApiSenderModel sender) async {
+  Future<void> markAsUnsubscribed(ApiEmailSenderModel sender) async {
     sender.unsubscribed = 1;
     sender.ignoreUntil =
         (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch).round();
     _repository.update(sender);
   }
 
-  Future<void> markAsKeeped(ApiSenderModel sender) async {
+  Future<void> markAsKeeped(ApiEmailSenderModel sender) async {
     sender.unsubscribed = 0;
     sender.ignoreUntil =
         (DateTime.now().add(Duration(days: 60)).millisecondsSinceEpoch).round();

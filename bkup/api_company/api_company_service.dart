@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:app/src/slices/api_company/repository/api_company_repository.dart';
 import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
