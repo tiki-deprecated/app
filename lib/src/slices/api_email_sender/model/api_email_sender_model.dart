@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_company/model/api_company_model.dart';
+import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
 
 class ApiEmailSenderModel {
   int? senderId;
-  ApiCompanyModel? company;
+  ApiCompanyModelLocal? company;
   String? name;
   String? email;
   String? category;
@@ -29,7 +29,7 @@ class ApiEmailSenderModel {
 
   ApiEmailSenderModel.fromMap(map) {
     this.senderId = map['sender_id'];
-    this.company = ApiCompanyModel.fromMap(map['company']);
+    this.company = ApiCompanyModelLocal.fromMap(map['company']);
     this.name = map['name'];
     this.email = map['email'];
     this.category = map['category'];

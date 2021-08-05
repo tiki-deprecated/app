@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModel {
+class ApiCompanyModelLocal {
   int? companyId;
   String? logo;
   double? securityScore;
@@ -11,7 +11,7 @@ class ApiCompanyModel {
   double? sensitivityScore;
   String? domain;
 
-  ApiCompanyModel(
+  ApiCompanyModelLocal(
       {this.companyId,
       this.logo,
       this.securityScore,
@@ -19,7 +19,7 @@ class ApiCompanyModel {
       this.sensitivityScore,
       this.breachScore});
 
-  ApiCompanyModel.fromMap(map) {
+  ApiCompanyModelLocal.fromMap(map) {
     this.companyId = map['company_id'];
     this.logo = map['logo'];
     this.securityScore = map['security_score'];
