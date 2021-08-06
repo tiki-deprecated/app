@@ -11,7 +11,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   final int? hacking;
 
   DecisionCardSpamViewSecurity({starRates, sensitivity, hacking})
-      : this.starRates = (1 - starRates) * 5,
+      : this.starRates = starRates != null ? (1 - starRates) * 5 : null,
         this.sensitivity =
             sensitivity != null ? (sensitivity! * 10).round() : null,
         this.hacking = hacking != null ? (hacking! * 10).round() : null;
