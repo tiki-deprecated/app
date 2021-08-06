@@ -8,10 +8,11 @@ class DecisionScreenViewCard extends StatefulWidget {
   final Function onSwipeLeft;
   final BoxConstraints constraints;
 
-  DecisionScreenViewCard({required this.child,
-    required this.onSwipeRight,
-    required this.onSwipeLeft,
-    required this.constraints});
+  DecisionScreenViewCard(
+      {required this.child,
+      required this.onSwipeRight,
+      required this.onSwipeLeft,
+      required this.constraints});
 
   @override
   State<StatefulWidget> createState() => _DecisionCardViewState();
@@ -90,7 +91,7 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                               child: Opacity(
                                   opacity: getopacityYes(),
                                   child:
-                                  HelperImage("yes-label", height: 30.h)))),
+                                      HelperImage("yes-label", height: 30.h)))),
                       Positioned(
                           right: -60,
                           top: 100,
