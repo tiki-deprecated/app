@@ -13,8 +13,7 @@ import '../intro_screen_service.dart';
 class IntroScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
-    var buttonText = service.presenter.textButton;
+    var service = Provider.of<IntroScreenService>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -31,7 +30,7 @@ class IntroScreenButton extends StatelessWidget {
               children: [
                 Container(
                     width: 70.w,
-                    child: Text(buttonText,
+                    child: Text(service.getCurrentCard().button,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w800,

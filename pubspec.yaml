@@ -39,6 +39,7 @@ dependencies:
   intl_utils: ^2.4.0
   provider: ^5.0.0
   sizer: ^2.0.13
+  logging: ^1.0.1
 
 dependency_overrides:
   sqflite:
@@ -60,7 +61,8 @@ flutter:
     - res/images/
     - res/animation/
     - res/md/
-    - res/db/
+    - res/json/
+    - res/sql/
   fonts:
     - family: TikiIcons
       fonts:

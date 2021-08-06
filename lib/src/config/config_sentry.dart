@@ -10,9 +10,10 @@ import 'config_environment.dart';
 //TODO setup good exception handling -> https://flutter.dev/docs/testing/errors
 
 class ConfigSentry {
-  static const String dsn = ConfigEnvironment.isPublic
-      ? "https://8074e92e5fc04829b519f700e3295fd2@o564671.ingest.sentry.io/5705532"
-      : "";
+  static const String dsn = ConfigEnvironment.isDevelop ||
+          ConfigEnvironment.isLocal
+      ? ""
+      : "https://8074e92e5fc04829b519f700e3295fd2@o564671.ingest.sentry.io/5705532";
   static const String environment = ConfigEnvironment.appEnv;
   static const SentryLevel levelDebug = SentryLevel.debug;
   static const SentryLevel levelInfo = SentryLevel.info;

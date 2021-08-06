@@ -12,8 +12,8 @@ import '../intro_screen_service.dart';
 class IntroScreenSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
-    return Text(service.presenter.textSubtitle,
+    var service = Provider.of<IntroScreenService>(context);
+    return Text(service.getCurrentCard().subtitle,
         textAlign: TextAlign.left,
         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold));
   }

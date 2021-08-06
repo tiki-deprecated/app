@@ -5,6 +5,7 @@
 
 import 'package:app/src/slices/home_screen/model/home_screen_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'home_screen_controller.dart';
 import 'home_screen_presenter.dart';
@@ -14,9 +15,9 @@ class HomeScreenService extends ChangeNotifier {
   late final HomeScreenPresenter presenter;
   late final HomeScreenModel model;
 
-  HomeScreenService() {
+  HomeScreenService(List<SingleChildWidget> providers) {
     controller = HomeScreenController(this);
-    presenter = HomeScreenPresenter(this);
+    presenter = HomeScreenPresenter(this, providers);
     model = HomeScreenModel();
   }
 

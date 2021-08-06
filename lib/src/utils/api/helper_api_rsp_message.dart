@@ -15,7 +15,8 @@ class HelperApiRspMessage {
     this.code = json['code'];
     this.status = json['status'];
     this.message = json['message'];
-    this.properties = json['properties'];
+    if (json['properties'] != null)
+      this.properties = Map.from(json['properties']);
   }
 
   Map<String, dynamic> toJson() => {
