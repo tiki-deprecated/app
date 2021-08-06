@@ -3,15 +3,17 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import '../api_app_data/api_app_data_key.dart';
+import '../api_app_data/api_app_data_service.dart';
 import '../api_company/api_company_service.dart';
+import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service.dart';
+import '../data_bkg/model/data_bkg_model_page.dart';
 import 'model/data_bkg_model.dart';
 
 class DataBkgService {
@@ -32,24 +34,35 @@ class DataBkgService {
         this._apiCompanyService = apiCompanyService,
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiAppDataService = apiAppDataService;
+        this._apiAppDataService = apiAppDataService {
+    checkEmail();
+  }
 
   Future<void> checkEmail() async {
-    List<ApiEmailMsgModel> messages =
-        await _apiGoogleService.gmailFetch(unsubscribeOnly: true);
-    for (ApiEmailMsgModel message in messages) {
-      if (message.sender?.email != null) {
-        ApiCompanyModelLocal? company = await _apiCompanyService
-            .upsert(domainFromEmail(message.sender!.email!));
-        if (company != null) {
-          message.sender!.company = company;
-          await _apiEmailSenderService.upsert(message.sender!);
-          await _apiEmailMsgService.upsert(message);
+    GoogleSignInAccount? googleAccount =
+        await _apiGoogleService.getConnectedUser();
+    if (googleAccount != null) {
+      DataBkgModelPage<ApiEmailMsgModel>? page;
+      for (int i = 0; i < 10; i++) {
+        page = await _apiGoogleService.gmailFetch(
+            unsubscribeOnly: true, maxResults: 10, pageToken: page?.next);
+        if (page.data != null) {
+          for (ApiEmailMsgModel message in page.data!) {
+            if (message.sender?.email != null) {
+              ApiCompanyModelLocal? company = await _apiCompanyService
+                  .upsert(domainFromEmail(message.sender!.email!));
+              if (company != null) {
+                message.sender!.company = company;
+                await _apiEmailSenderService.upsert(message.sender!);
+                await _apiEmailMsgService.upsert(message);
+              }
+            }
+          }
+          _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
+              DateTime.now().millisecondsSinceEpoch.toString());
         }
       }
     }
-    _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
-        DateTime.now().millisecondsSinceEpoch.toString());
   }
 
   String domainFromEmail(String email) {

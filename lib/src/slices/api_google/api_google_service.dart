@@ -7,14 +7,13 @@ import 'dart:convert';
 
 import 'package:app/src/slices/api_email_msg/model/api_email_msg_model.dart';
 import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
+import 'package:app/src/slices/data_bkg/model/data_bkg_model_page.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';
-
-//import '../api_email_msg/model/api_email_msg_model.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'repository/api_google_repository_info.dart';
 
@@ -44,11 +43,13 @@ class ApiGoogleService {
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 
-  Future<List<ApiEmailMsgModel>> gmailFetch(
-      {int maxResults = 100, bool unsubscribeOnly = false}) async {
+  Future<DataBkgModelPage<ApiEmailMsgModel>> gmailFetch(
+      {int maxResults = 100,
+      bool unsubscribeOnly = false,
+      String? pageToken}) async {
     GmailApi? gmailApi = await _gmailApi;
-    ListMessagesResponse? emails =
-        await gmailApi?.users.messages.list("me", maxResults: maxResults);
+    ListMessagesResponse? emails = await gmailApi?.users.messages
+        .list("me", maxResults: maxResults, pageToken: pageToken);
     List<ApiEmailMsgModel> messages = List.empty(growable: true);
     for (Message message in emails?.messages ?? List.empty()) {
       if (message.id != null) {
@@ -60,7 +61,7 @@ class ApiGoogleService {
         }
       }
     }
-    return messages;
+    return DataBkgModelPage(data: messages, next: emails?.nextPageToken);
   }
 
   Future<ApiEmailMsgModel?> gmailFetchMessage(String messageId,
