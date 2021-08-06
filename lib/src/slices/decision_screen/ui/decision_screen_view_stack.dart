@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
 
 class DecisionScreenViewStack extends StatelessWidget {
@@ -17,12 +18,9 @@ class DecisionScreenViewStack extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(_radius.w))),
         width: double.infinity,
-        //margin: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
-        child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(_radius.w)),
-            child: Stack(children: [
-              noCardsPlaceholder,
-              ...children,
-            ])));
+        child: Stack(clipBehavior: Clip.none, children: [
+          noCardsPlaceholder,
+          ...children,
+        ]));
   }
 }

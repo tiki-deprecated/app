@@ -64,11 +64,25 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                     transform: Matrix4.rotationZ(angle),
                     alignment: FractionalOffset.topCenter,
                     child: Stack(clipBehavior: Clip.none, children: [
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(_radius.w)),
-                        child: widget.child,
-                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                            boxShadow: angle.abs() > 0
+                                ? [
+                                    BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 20,
+                                        spreadRadius: 0,
+                                        offset: Offset(-3, 4))
+                                  ]
+                                : [],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                          ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                            child: widget.child,
+                          )),
                       Positioned(
                           left: -60,
                           top: 100,
