@@ -13,6 +13,7 @@ import 'intro_screen_view_title.dart';
 
 class IntroScreenForeground extends StatelessWidget {
   static const num _marginTextRight = 12;
+  static const num _marginTitleRight = 10;
   static const num _marginTextTop = 2;
 
   @override
@@ -29,7 +30,7 @@ class IntroScreenForeground extends StatelessWidget {
               alignment: Alignment.topRight,
               child: IntroScreenSkipButton()),
           Container(
-              margin: EdgeInsets.only(top: 15.h, right: _marginTextRight.w),
+              margin: EdgeInsets.only(top: 15.h, right: _marginTitleRight.w),
               alignment: Alignment.centerLeft,
               child: IntroScreenTitle()),
           Container(

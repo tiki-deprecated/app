@@ -13,9 +13,9 @@ import '../intro_screen_service.dart';
 class IntroScreenDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
-    var size = service.model.getTotalSlides();
-    var pos = service.model.getCurrentSlideIndex();
+    var model = Provider.of<IntroScreenService>(context).model;
+    var size = model.cards.length;
+    var pos = model.currentCard;
     return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

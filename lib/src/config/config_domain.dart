@@ -7,20 +7,20 @@ import 'config_environment.dart';
 
 class ConfigDomain {
   static const String bouncer =
-      ConfigEnvironment.isPublic ? "bouncer.mytiki.com" : "localhost:10227";
+      ConfigEnvironment.isLocal ? "localhost:10227" : "bouncer.mytiki.com";
   static const String blockchain =
-      ConfigEnvironment.isPublic ? "blockchain.mytiki.com" : "localhost:10252";
+      ConfigEnvironment.isLocal ? "localhost:10252" : "blockchain.mytiki.com";
   static const String signup =
-      ConfigEnvironment.isPublic ? "signup.mytiki.com" : "localhost:3000";
-  static const String companyIndex = ConfigEnvironment.isPublic
-      ? "company-index.mytiki.com"
-      : "localhost:10224";
+      ConfigEnvironment.isLocal ? "localhost:3000" : "signup.mytiki.com";
+  static const String companyIndex = ConfigEnvironment.isLocal
+      ? "localhost:10224"
+      : "company-index.mytiki.com";
 
   static Uri asUri(String authority, String path,
       [Map<String, dynamic>? query]) {
-    return ConfigEnvironment.isPublic
-        ? Uri.https(authority, path, query)
-        : Uri.http(authority, path, query);
+    return ConfigEnvironment.isLocal
+        ? Uri.http(authority, path, query)
+        : Uri.https(authority, path, query);
   }
 
   const ConfigDomain();

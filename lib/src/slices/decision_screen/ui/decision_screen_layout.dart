@@ -39,7 +39,7 @@ class DecisionScreenLayout extends StatelessWidget {
     List<DecisionScreenViewCard> cards = [];
     if (service.model.cards.isEmpty) {
       if (service.model.isTestDone) {
-        service.generateSpamCards(context);
+        service.generateSpamCards();
       } else {
         service.generateTestCards();
       }

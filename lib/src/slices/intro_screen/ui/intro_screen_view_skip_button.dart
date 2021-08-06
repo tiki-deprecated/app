@@ -11,15 +11,17 @@ import 'package:sizer/sizer.dart';
 import '../intro_screen_service.dart';
 
 class IntroScreenSkipButton extends StatelessWidget {
+  static const String _text = 'Skip';
+
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<IntroScreenService>(context, listen: false);
-    var text = service.presenter.textSkip;
+    var controller =
+        Provider.of<IntroScreenService>(context, listen: false).controller;
     return Container(
         child: TextButton(
-            onPressed: () => service.controller.skipToLogin(context),
+            onPressed: () => controller.skipToLogin(context),
             child: Text(
-              text,
+              _text,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

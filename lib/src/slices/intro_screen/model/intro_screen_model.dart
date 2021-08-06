@@ -1,35 +1,33 @@
-import 'intro_screen_model_slide.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'package:app/src/config/config_color.dart';
+
+import 'intro_screen_model_card.dart';
 
 class IntroScreenModel {
-  final List<IntroScreenModelSlide> _slides = [];
+  final List<IntroScreenModelCard> cards = [
+    IntroScreenModelCard(
+        title: 'Take control of your data',
+        subtitle:
+            'TIKI is a free app that allows you to see, control and monetize your data.',
+        button: 'NEXT',
+        backgroundColor: ConfigColor.yellow),
+    IntroScreenModelCard(
+        title: 'Start earning money',
+        subtitle:
+            'You can also choose to earn money from your data. This is optional.',
+        button: 'NEXT',
+        backgroundColor: ConfigColor.lightYellow),
+    IntroScreenModelCard(
+        title: 'We’re stronger together',
+        subtitle:
+            'You are now part of the TIKI tribe! I’m TIKI and I am here to help you take back your share.',
+        button: 'GET STARTED',
+        backgroundColor: ConfigColor.lightOrange),
+  ];
   bool shouldMoveToLogin = false;
-  int _currentSlide = 0;
-
-  void addSlide(IntroScreenModelSlide slide) {
-    _slides.add(slide);
-  }
-
-  IntroScreenModelSlide getSlideAt(int index) {
-    return _slides[index];
-  }
-
-  IntroScreenModelSlide getCurrentSlide() {
-    return _slides[_currentSlide];
-  }
-
-  int getCurrentSlideIndex() {
-    return _currentSlide;
-  }
-
-  IntroScreenModelSlide moveToNextSlide() {
-    return _slides[++_currentSlide];
-  }
-
-  IntroScreenModelSlide moveToPreviousSlide() {
-    return _slides[--_currentSlide];
-  }
-
-  int getTotalSlides() {
-    return _slides.length;
-  }
+  int currentCard = 0;
 }

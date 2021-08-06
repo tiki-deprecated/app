@@ -1,11 +1,14 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:flutter/material.dart';
 
 import 'intro_screen_controller.dart';
 import 'intro_screen_presenter.dart';
 import 'model/intro_screen_model.dart';
-import 'model/intro_screen_model_slide.dart';
-import 'res/intro_slides_colors.dart' as introSlidesColors;
-import 'res/intro_slides_strings.dart' as introSlidesStrings;
+import 'model/intro_screen_model_card.dart';
 
 /// The Intro Screen for the first time the app is opened in the device.
 class IntroScreenService extends ChangeNotifier {
@@ -17,31 +20,15 @@ class IntroScreenService extends ChangeNotifier {
     presenter = IntroScreenPresenter(this);
     model = IntroScreenModel();
     controller = IntroScreenController(this);
-    this.createSlidesData();
-  }
-
-  /// Creates the [IntroScreenModel]s
-  ///
-  /// Creates the [IntroSlideModel]s that will be used in [IntroScreenModel].
-  createSlidesData() {
-    introSlidesStrings.slides.toList().asMap().forEach((index, strings) {
-      var slide = IntroScreenModelSlide(
-          title: strings['title'],
-          subtitle: strings['subtitle'],
-          button: strings['button'],
-          backgroundColor: introSlidesColors.colors[index]);
-      model.addSlide(slide);
-    });
-    notifyListeners();
   }
 
   void moveToNextScreen() {
-    model.moveToNextSlide();
+    model.currentCard++;
     notifyListeners();
   }
 
   void moveToPreviousScreen() {
-    model.moveToPreviousSlide();
+    model.currentCard--;
     notifyListeners();
   }
 
@@ -50,11 +37,15 @@ class IntroScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isLastSlide() {
-    return model.getCurrentSlideIndex() == (model.getTotalSlides() - 1);
+  bool isLastCard() {
+    return model.currentCard == (model.cards.length - 1);
   }
 
-  bool isFirstSlide() {
-    return model.getCurrentSlideIndex() == 0;
+  bool isFirstCard() {
+    return model.currentCard == 0;
+  }
+
+  IntroScreenModelCard getCurrentCard() {
+    return model.cards[model.currentCard];
   }
 }

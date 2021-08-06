@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +15,7 @@ class IntroScreenController {
   IntroScreenController(this.service);
 
   void navigateToNextScreen(context) {
-    if (!service.isLastSlide()) {
+    if (!service.isLastCard()) {
       service.moveToNextScreen();
     } else {
       skipToLogin(context);
@@ -18,7 +23,7 @@ class IntroScreenController {
   }
 
   void navigateToPreviousScreen(context) {
-    if (!service.isFirstSlide()) {
+    if (!service.isFirstCard()) {
       service.moveToPreviousScreen();
     }
   }

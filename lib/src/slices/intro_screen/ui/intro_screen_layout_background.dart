@@ -13,12 +13,9 @@ import '../intro_screen_service.dart';
 class IntroScreenBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var bgColor = Provider.of<IntroScreenService>(context)
-        .model
-        .getCurrentSlide()
-        .backgroundColor;
+    var service = Provider.of<IntroScreenService>(context);
     return Stack(children: [
-      Center(child: Container(color: bgColor)),
+      Center(child: Container(color: service.getCurrentCard().backgroundColor)),
       Align(
         alignment: Alignment.bottomLeft,
         child: HelperImage('intro-blob'),

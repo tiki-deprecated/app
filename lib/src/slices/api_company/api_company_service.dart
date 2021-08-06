@@ -1,35 +1,54 @@
-import 'package:app/src/slices/api_company/model/api_company_model.dart';
-import 'package:app/src/slices/api_company/repository/api_company_repository.dart';
-import 'package:app/src/slices/api_company_index/api_company_index_service.dart';
-import 'package:app/src/slices/api_company_index/model/api_company_index_model_rsp.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
+import '../../utils/api/helper_api_auth.dart';
+import '../../utils/api/helper_api_rsp.dart';
+import '../../utils/api/helper_api_utils.dart';
+import '../api_company/repository/api_company_repository_index.dart';
+import '../api_company/repository/api_company_repository_local.dart';
+import 'model/api_company_model_index.dart';
+import 'model/api_company_model_local.dart';
 
 class ApiCompanyService {
-  final ApiCompanyIndexService apiCompanyIndexService;
+  final HelperApiAuth helperApiAuth;
+  final ApiCompanyRepositoryLocal _repositoryLocal;
 
-  ApiCompanyService(this.apiCompanyIndexService);
+  ApiCompanyService({required Database database, required this.helperApiAuth})
+      : this._repositoryLocal = ApiCompanyRepositoryLocal(database);
 
-  Future<ApiCompanyModel?> createOrUpdate(String domain) async {
-    if (domain.isEmpty) return null;
-    ApiCompanyIndexModelRsp companyIndexData =
-        (await apiCompanyIndexService.find(domain)).data;
-    ApiCompanyModel company = ApiCompanyModel(
-      domain: domain,
-      logo: companyIndexData.about?.logo,
-      securityScore: companyIndexData.score?.securityScore,
-      breachScore: companyIndexData.score?.securityScore,
-      sensitivityScore: companyIndexData.score?.securityScore,
-    );
-    var getCompany = await ApiCompanyRepository().getByDomain(domain);
-    if (getCompany != null) {
-      company.companyId = getCompany.companyId;
-      ApiCompanyRepository().update(company);
+  Future<ApiCompanyModelLocal?> upsert(String domain) async {
+    if (domain.isNotEmpty) {
+      HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
+      if (HelperApiUtils.is2xx(indexRsp.code)) {
+        ApiCompanyModelLocal? local =
+            await _repositoryLocal.getByDomain(domain);
+        ApiCompanyModelLocal company = ApiCompanyModelLocal(
+          companyId: local?.companyId,
+          domain: domain,
+          logo: indexRsp.data.about?.logo,
+          securityScore: indexRsp.data.score?.securityScore,
+          breachScore: indexRsp.data.score?.securityScore,
+          sensitivityScore: indexRsp.data.score?.securityScore,
+        );
+        return local == null
+            ? _repositoryLocal.insert(company)
+            : _repositoryLocal.update(company);
+      }
     }
-    return ApiCompanyRepository().insert(company);
+    return null;
   }
 
-  Future<ApiCompanyModel?> getById(int? companyId) async {
+  Future<ApiCompanyModelLocal?> getById(int? companyId) async {
     if (companyId == null) return null;
-    var company = await ApiCompanyRepository().getById(companyId);
+    var company = await _repositoryLocal.getById(companyId);
     return company;
   }
+
+  Future<HelperApiRsp<ApiCompanyModelIndex>> fetch(String domain) async =>
+      await helperApiAuth.proxy(
+          () => ApiCompanyRepositoryIndex.find(helperApiAuth.bearer, domain));
 }
