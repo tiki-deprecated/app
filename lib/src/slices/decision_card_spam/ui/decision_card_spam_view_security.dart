@@ -7,22 +7,14 @@ import 'package:sizer/sizer.dart';
 
 class DecisionCardSpamViewSecurity extends StatelessWidget {
   final double? starRates;
+  final int? sensitivity;
+  final int? hacking;
 
-  const DecisionCardSpamViewSecurity(this.starRates);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child:
-          Column(children: [DecisionCardSpamViewSecurityStars(this.starRates)]),
-    );
-  }
-}
-
-class DecisionCardSpamViewSecurityStars extends StatelessWidget {
-  final double? starRates;
-
-  DecisionCardSpamViewSecurityStars(this.starRates);
+  DecisionCardSpamViewSecurity({starRates, sensitivity, hacking})
+      : this.starRates = (1 - starRates) * 5,
+        this.sensitivity =
+            sensitivity != null ? (sensitivity! * 10).round() : null,
+        this.hacking = hacking != null ? (hacking! * 10).round() : null;
 
   @override
   Widget build(BuildContext context) {
@@ -142,74 +134,89 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
         builder: (BuildContext context) => Container(
-            padding: EdgeInsets.only(left: 20, right: 40),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Padding(
-                padding: EdgeInsets.only(top: spacing),
-              ),
-              Divider(
-                height: spacing,
-                thickness: 5,
-                color: ConfigColor.greyTwo,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: spacing * 2),
-              ),
-              Text('Security score.',
-                  style: TextStyle(
-                      color: ConfigColor.tikiBlue,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold)),
-              Padding(
-                padding: EdgeInsets.only(top: spacing),
-              ),
-              sensitivity == null
-                  ? DecisionCardSpamViewSecurityEmpty()
-                  : Container(),
-              RichText(
-                  text: TextSpan(
-                      text:
-                          'For each email list that emails you, we show you a rating which we call a ',
-                      children: [
-                    TextSpan(
-                        text: 'Security score.',
-                        style: TextStyle(fontWeight: FontWeight.bold))
-                  ])),
-              Padding(
-                padding: EdgeInsets.only(top: spacing),
-              ),
-              Text('The security score is determined by two ratings:'),
-              sensitivity != null
-                  ? DecisionCardSpamViewSecurityScore()
-                  : Container(),
-              Padding(
-                padding: EdgeInsets.only(top: spacing),
-              ),
-              DecisionCardSpamViewSecuritySensivityText(),
-              Padding(
-                padding: EdgeInsets.only(top: spacing),
-              ),
-              DecisionCardSpamViewSecurityHackingText(),
-              Padding(
-                padding: EdgeInsets.only(top: spacing * 2),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size.fromWidth(70.w),
-                  primary: ConfigColor.orange,
-                  padding: EdgeInsets.symmetric(vertical: 1.5.h),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                ),
-                child: Text("OK, got it",
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing),
+                  ),
+                  Divider(
+                    height: spacing,
+                    thickness: 5,
+                    color: ConfigColor.greyThree,
+                    indent: 38.w,
+                    endIndent: 38.w,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing * 1.5),
+                  ),
+                  Center(
+                      child: Text(
+                    'Security score',
                     style: TextStyle(
-                        fontSize: 13.5.sp, fontWeight: FontWeight.w800)),
-                onPressed: () => Navigator.of(context).pop(),
+                        color: ConfigColor.tikiBlue,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w800),
+                    textAlign: TextAlign.center,
+                  )),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing * 1.5),
+                  ),
+                  sensitivity == null
+                      ? DecisionCardSpamViewSecurityEmpty()
+                      : Container(),
+                  RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                          text:
+                              'For each email list that emails you, we show\nyou a rating which we call a ',
+                          style: TextStyle(
+                            color: ConfigColor.tikiBlue,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: 'Security score.',
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ])),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing),
+                  ),
+                  Text('The security score is determined by two ratings:'),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing),
+                  ),
+                  sensitivity != null
+                      ? DecisionCardSpamViewSecurityScore(
+                          hacking: this.hacking, sensitivity: this.sensitivity)
+                      : Container(),
+                  DecisionCardSpamViewSecuritySensivityText(),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing),
+                  ),
+                  DecisionCardSpamViewSecurityHackingText(),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing * 2),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: spacing * 3),
-              ),
-            ])));
+                  Center(
+                      child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size.fromWidth(90.w),
+                      primary: ConfigColor.orange,
+                      padding: EdgeInsets.symmetric(vertical: 2.h),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(3.w))),
+                    ),
+                    child: Text("OK, got it",
+                        style: TextStyle(
+                            fontSize: 12.sp, fontWeight: FontWeight.bold)),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )),
+                  Padding(
+                    padding: EdgeInsets.only(top: spacing * 3),
+                  ),
+                ])));
   }
 
   _getInfoIcon(BuildContext context) {
@@ -219,7 +226,8 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
             child: GestureDetector(
               child:
                   Icon(Icons.info_outline_rounded, color: ConfigColor.greyFour),
-              onTap: () => showModal(context),
+              onTap: () => showModal(context,
+                  sensitivity: this.sensitivity, hacking: this.hacking),
             )));
   }
 }
@@ -227,10 +235,14 @@ class DecisionCardSpamViewSecurityStars extends StatelessWidget {
 class DecisionCardSpamViewSecurityHackingText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text('HACKING SCORE', style: TextStyle(color: ConfigColor.greyThree)),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('HACKING SCORE',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+              color: ConfigColor.greyFour, fontWeight: FontWeight.bold)),
       Text(
-          'A rating based on known recent security breaches/hacks (from www.XXXXXXXXX.com)')
+          'A rating based on known recent security\nbreaches/hacks (from www.XXXXXXXXX.com)',
+          style: TextStyle(fontWeight: FontWeight.bold))
     ]);
   }
 }
@@ -238,10 +250,14 @@ class DecisionCardSpamViewSecurityHackingText extends StatelessWidget {
 class DecisionCardSpamViewSecuritySensivityText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text('SENSITIVITY SCORE'),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('SENSITIVITY SCORE',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+              color: ConfigColor.greyFour, fontWeight: FontWeight.bold)),
       Text(
-          'A rating based on the sensitivity of the business emailing you, for example whether they are holding medical or financial information vs a clothing company. We find this information at www.XXXXXXXXX.com.')
+          'A rating based on the sensitivity of the\nbusiness emailing you, for example whether\nthey are holding nmedical or financial\ninformation vs a clothing company. We find this\ninformation at www.XXXXXXXXX.com.',
+          style: TextStyle(fontWeight: FontWeight.bold))
     ]);
   }
 }
@@ -249,26 +265,39 @@ class DecisionCardSpamViewSecuritySensivityText extends StatelessWidget {
 class DecisionCardSpamViewSecurityEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
-        'We’re sorry that we cannot provide you with a security score for this email list right now. Find out more info about security score below.',
-        style: TextStyle(color: ConfigColor.tikiRed));
+    return Column(children: [
+      Text(
+          'We’re sorry that we cannot provide you with a\nsecurity score for this email list right now.\nFind out more info about security score below.',
+          style: TextStyle(
+              color: ConfigColor.tikiRed, fontWeight: FontWeight.bold)),
+      Padding(padding: EdgeInsets.only(top: 2.h)),
+    ]);
   }
 }
 
 class DecisionCardSpamViewSecurityScore extends StatelessWidget {
+  final int? hacking;
+  final int? sensitivity;
+
+  const DecisionCardSpamViewSecurityScore({this.hacking, this.sensitivity});
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Stack(children: [
-        Center(child: HelperImage("vertical-separator", height: 12.h)),
+        Center(child: HelperImage("vertical-separator", height: 8.h)),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DecisionCardSpamViewSecurityScoreNumbers(7, 'SENSITIVITY'),
-              DecisionCardSpamViewSecurityScoreNumbers(6, 'HACKING'),
+              DecisionCardSpamViewSecurityScoreNumbers(
+                  this.sensitivity, 'SENSITIVITY'),
+              DecisionCardSpamViewSecurityScoreNumbers(this.hacking, 'HACKING'),
             ])
-      ])
+      ]),
+      Padding(
+        padding: EdgeInsets.only(top: 2.4.h),
+      ),
     ]);
   }
 }
@@ -283,9 +312,15 @@ class DecisionCardSpamViewSecurityScoreNumbers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Text("${this.score} / 10",
-          style: TextStyle(color: ConfigColor.tikiBlue, fontSize: 30.sp)),
+          style: TextStyle(
+              color: ConfigColor.tikiBlue,
+              fontSize: 25.sp,
+              fontWeight: FontWeight.bold)),
       Text(this.text,
-          style: TextStyle(color: ConfigColor.greyFive, fontSize: 15.sp))
+          style: TextStyle(
+              color: ConfigColor.greyFive,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold))
     ]);
   }
 }

@@ -50,7 +50,10 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
                               this.cardSpamModel.totalEmails,
                               this.cardSpamModel.openRate),
                           DecisionCardSpamViewSecurity(
-                              this.cardSpamModel.securityScore)
+                            starRates: this.cardSpamModel.securityScore,
+                            sensitivity: this.cardSpamModel.sensitivityScore,
+                            hacking: this.cardSpamModel.securityScore,
+                          )
                         ],
                       ))))
         ]));
