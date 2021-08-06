@@ -19,11 +19,10 @@ class ApiEmailMsgService {
   Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel message) async {
     ApiEmailMsgModel? dbModel = await _repository.getByExtMessageIdAndSenderId(
         message.extMessageId!, message.sender!.senderId!);
-    if (dbModel != null) {
-      message.messageId = dbModel.messageId;
-      return _repository.update(message);
-    } else
-      return _repository.insert(message);
+    message.messageId = dbModel?.messageId;
+    return dbModel == null
+        ? _repository.insert(message)
+        : _repository.update(message);
   }
 
   Future<Map<int, Map<String, dynamic>>> getMessageDataForCards(

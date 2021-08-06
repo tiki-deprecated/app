@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
 import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
@@ -53,13 +54,13 @@ class DecisionScreenService extends ChangeNotifier {
 
   Future<bool> isTestDone() async {
     var testDone =
-        await _apiAppDataService.getByKey("decision cards test done");
+        await _apiAppDataService.getByKey(ApiAppDataKey.decisionCardsTestDone);
     return testDone?.value == "true";
   }
 
   Future<void> testDone() async {
     if (this.model.isTestDone) return;
-    await _apiAppDataService.save("decision cards test done", "true");
+    await _apiAppDataService.save(ApiAppDataKey.decisionCardsTestDone, "true");
     this.model.isTestDone = true;
   }
 }

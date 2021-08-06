@@ -24,20 +24,19 @@ class ApiCompanyService {
     if (domain.isNotEmpty) {
       HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
       if (HelperApiUtils.is2xx(indexRsp.code)) {
+        ApiCompanyModelLocal? local =
+            await _repositoryLocal.getByDomain(domain);
         ApiCompanyModelLocal company = ApiCompanyModelLocal(
+          companyId: local?.companyId,
           domain: indexRsp.data.domain,
           logo: indexRsp.data.about?.logo,
           securityScore: indexRsp.data.score?.securityScore,
           breachScore: indexRsp.data.score?.securityScore,
           sensitivityScore: indexRsp.data.score?.securityScore,
         );
-        ApiCompanyModelLocal? local =
-            await _repositoryLocal.getByDomain(domain);
-        if (local != null) {
-          company.companyId = local.companyId;
-          return _repositoryLocal.update(company);
-        } else
-          return _repositoryLocal.insert(company);
+        return local == null
+            ? _repositoryLocal.insert(company)
+            : _repositoryLocal.update(company);
       }
     }
     return ApiCompanyModelLocal(domain: domain);

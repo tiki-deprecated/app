@@ -8,16 +8,9 @@ class ApiAppDataRepository {
   ApiAppDataRepository(this._database);
 
   Future<ApiAppDataModel?> insert(ApiAppDataModel data) async {
-    int dataId = await _database.insert(_table, data.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    int dataId = await _database.insert(_table, data.toMap());
     data.id = dataId;
     return data;
-  }
-
-  Future<List<ApiAppDataModel>> getAll() async {
-    final List<Map<String, dynamic>> allMapped = await _database.query(_table);
-    return List.generate(
-        allMapped.length, (i) => ApiAppDataModel.fromMap(allMapped[i]));
   }
 
   Future<ApiAppDataModel> update(ApiAppDataModel data) async {
@@ -39,20 +32,16 @@ class ApiAppDataRepository {
   }
 
   Future<ApiAppDataModel?> getById(int id) async {
-    final List<Map<String, Object?>> mappedData =
+    final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "id = ?", whereArgs: [id]);
-    return mappedData.length > 0
-        ? List.generate(mappedData.length,
-            (i) => ApiAppDataModel.fromMap(mappedData[i])).first
-        : null;
+    if (rows.isEmpty) return null;
+    return ApiAppDataModel.fromMap(rows[0]);
   }
 
   Future<ApiAppDataModel?> getByKey(String key) async {
-    final List<Map<String, Object?>> mappedData =
+    final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "key = ?", whereArgs: [key]);
-    return mappedData.length > 0
-        ? List.generate(mappedData.length,
-            (i) => ApiAppDataModel.fromMap(mappedData[i])).first
-        : null;
+    if (rows.isEmpty) return null;
+    return ApiAppDataModel.fromMap(rows[0]);
   }
 }
