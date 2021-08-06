@@ -28,8 +28,8 @@ class ApiEmailSenderService {
     return _repository.insert(sender);
   }
 
-  Future<List<ApiEmailSenderModel>> getSendersForCards() =>
-      _repository.getByUnsubscribedAndIgnoreUntilBefore(false, DateTime.now());
+  Future<List<ApiEmailSenderModel>> getUnsubscribed() async => await _repository
+      .getByUnsubscribedAndIgnoreUntilBefore(false, DateTime.now());
 
   Future<ApiEmailSenderModel?> getById(int senderId) =>
       _repository.getById(senderId);

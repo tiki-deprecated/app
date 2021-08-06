@@ -21,16 +21,17 @@ import '../api_blockchain/model/api_blockchain_model_address_rsp.dart';
 import '../api_bouncer/api_bouncer_service.dart';
 import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
 import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
-//import '../api_company/api_company_service.dart';
-//import '../api_company_index/api_company_index_service.dart';
-//import '../api_email_msg/api_email_msg_service.dart';
-//import '../api_sender/api_email_sender_service.dart';
+import '../api_company/api_company_service.dart';
+import '../api_email_msg/api_email_msg_service.dart';
+import '../api_email_sender/api_email_sender_service.dart';
+import '../api_google/api_google_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
 import '../api_user/model/api_user_model_keys.dart';
 import '../api_user/model/api_user_model_otp.dart';
 import '../api_user/model/api_user_model_token.dart';
 import '../api_user/model/api_user_model_user.dart';
+import '../data_bkg/data_bkg_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
 import '../keys_create_screen/keys_create_screen_service.dart';
@@ -49,7 +50,7 @@ class LoginFlowService extends ChangeNotifier {
   late final ApiBlockchainService apiBlockchainService;
   late final HelperApiAuth helperApiAuth;
   List<void Function()> logoutCallbacks = [];
-  List<SingleChildWidget> dbProviders = [];
+  List<SingleChildWidget> providers = [];
 
   LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
@@ -70,7 +71,7 @@ class LoginFlowService extends ChangeNotifier {
     await loadUser();
 
     if (this.model.user?.user?.isLoggedIn == true) {
-      await _initDb();
+      await _initServices();
       setLoggedIn();
     } else if (this.model.user?.current?.email != null) setReturningUser();
   }
@@ -104,7 +105,7 @@ class LoginFlowService extends ChangeNotifier {
       else if (this.model.state == LoginFlowModelState.keysCreated)
         KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
-        HomeScreenService(dbProviders).presenter
+        HomeScreenService(providers).presenter
     ];
   }
 
@@ -201,7 +202,7 @@ class LoginFlowService extends ChangeNotifier {
       if (this.model.user?.keys?.address != null) {
         this.model.user!.user!.isLoggedIn = true;
         await apiUserService.setUser(this.model.user!.user!);
-        await _initDb();
+        await _initServices();
         setLoggedIn();
       } else {
         await apiUserService.setUser(ApiUserModelUser(
@@ -217,7 +218,7 @@ class LoginFlowService extends ChangeNotifier {
   Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
       if (await _registerKeys(keys: keys)) {
-        await _initDb();
+        await _initServices();
         setLoggedIn();
         await loadUser();
         return true;
@@ -228,7 +229,7 @@ class LoginFlowService extends ChangeNotifier {
 
   Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
-      await _initDb();
+      await _initServices();
       setLoggedIn();
       await loadUser();
       return true;
@@ -273,21 +274,35 @@ class LoginFlowService extends ChangeNotifier {
     return true;
   }
 
-  Future<void> _initDb() async {
+  Future<void> _initServices() async {
     Database database =
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+    ApiEmailSenderService apiEmailSenderService =
+        ApiEmailSenderService(database: database);
+    ApiEmailMsgService apiEmailMsgService =
+        ApiEmailMsgService(database: database);
+    ApiCompanyService apiCompanyService =
+        ApiCompanyService(database: database, helperApiAuth: helperApiAuth);
 
-    //ApiSenderService apiSenderService = ApiSenderService(database: database);
-    //ApiEmailMsgService apiMessageService = ApiEmailMsgService(database: database);
-    //ApiCompanyService apiCompanyService = ApiCompanyService(apiCompanyIndexService: ApiCompanyIndexService(helperApiAuth), database: database);
+    ApiGoogleService apiGoogleService = ApiGoogleService();
+    registerLogout(() async => await apiGoogleService.signOut());
 
-    dbProviders = [
-      //Provider<ApiCompanyService>.value(value: apiCompanyService),
-      //Provider<ApiSenderService>.value(value: apiSenderService),
-      //Provider<ApiEmailMsgService>.value(value: apiMessageService),
+    DataBkgService dataBkgService = DataBkgService(
+        apiEmailMsgService: apiEmailMsgService,
+        apiCompanyService: apiCompanyService,
+        apiEmailSenderService: apiEmailSenderService,
+        apiGoogleService: apiGoogleService,
+        apiAppDataService: apiAppDataService);
+
+    providers = [
+      Provider<ApiCompanyService>.value(value: apiCompanyService),
+      Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
+      Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
+      Provider<ApiGoogleService>.value(value: apiGoogleService),
+      Provider<DataBkgService>.value(value: dataBkgService),
     ];
   }
 }

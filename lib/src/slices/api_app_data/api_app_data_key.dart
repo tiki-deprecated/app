@@ -5,6 +5,8 @@
 
 enum ApiAppDataKey {
   decisionCardsTestDone,
+  fetchGmailLastRun,
+  spamCardsLastRun,
 }
 
 extension ApiAppDataKeyExtension on ApiAppDataKey {
@@ -12,6 +14,10 @@ extension ApiAppDataKeyExtension on ApiAppDataKey {
     switch (this) {
       case ApiAppDataKey.decisionCardsTestDone:
         return 'decision cards test done';
+      case ApiAppDataKey.fetchGmailLastRun:
+        return 'fetchGoogleEmails last run';
+      case ApiAppDataKey.spamCardsLastRun:
+        return 'getDataForCards last run';
       default:
         return null;
     }

@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config_color.dart';
 import '../../api_app_data/api_app_data_service.dart';
+import '../../api_email_msg/api_email_msg_service.dart';
+import '../../api_email_sender/api_email_sender_service.dart';
 import '../../api_google/api_google_service.dart';
 import '../../data_bkg/data_bkg_service.dart';
 import '../../data_screen/data_screen_service.dart';
@@ -28,6 +29,10 @@ class HomeScreenLayout extends StatelessWidget {
         Provider.of<DataBkgService>(context, listen: false);
     ApiAppDataService appDataService =
         Provider.of<ApiAppDataService>(context, listen: false);
+    ApiEmailMsgService apiEmailMsgService =
+        Provider.of<ApiEmailMsgService>(context, listen: false);
+    ApiEmailSenderService apiEmailSenderService =
+        Provider.of<ApiEmailSenderService>(context, listen: false);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: Scaffold(
@@ -38,7 +43,11 @@ class HomeScreenLayout extends StatelessWidget {
                 DataScreenService(googleService, dataBkgService)
                     .presenter
                     .render(),
-                DecisionScreenService(googleService, appDataService)
+                DecisionScreenService(
+                        apiEmailSenderService: apiEmailSenderService,
+                        apiEmailMsgService: apiEmailMsgService,
+                        apiGoogleService: googleService,
+                        apiAppDataService: appDataService)
                     .presenter
                     .render(),
                 WalletScreenService().presenter.render(),

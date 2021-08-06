@@ -28,39 +28,35 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
         ));
   }
 
-  _getAvatar(logo, name, email) {
-    var avatar;
+  Widget _getAvatar(logo, name, email) {
     if (logo != null) {
-      avatar = ClipOval(child: Image.network(logo, height: 8.h));
+      return ClipOval(child: Image.network(logo, height: 8.h));
     } else {
       var img = 'avatar' + (Random().nextInt(2) + 1).toString();
       String title = name ?? email;
-      avatar = ClipOval(
-              child: Container(
-                width: 8.h,
-                height: 8.h,
-              child: Stack(children: [
-                HelperImage(img, height: 8.h),
-                Center(
-                  child: Text(title[0].toUpperCase(),
-                      style: TextStyle(color: ConfigColor.tikiBlue)),
-                )
-              ])));
       return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(color: ConfigColor.greyTwo, width: 5),
-              boxShadow: [
-                  BoxShadow(
-                    color: Color(0x4D000000),
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                    blurRadius: 12
-                  )
-              ],
-            ),
-            child: avatar
-      );
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(color: ConfigColor.greyTwo, width: 5),
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0x4D000000),
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                  blurRadius: 12)
+            ],
+          ),
+          child: ClipOval(
+              child: Container(
+                  width: 8.h,
+                  height: 8.h,
+                  child: Stack(children: [
+                    HelperImage(img, height: 8.h),
+                    Center(
+                      child: Text(title[0].toUpperCase(),
+                          style: TextStyle(color: ConfigColor.tikiBlue)),
+                    )
+                  ]))));
     }
   }
 

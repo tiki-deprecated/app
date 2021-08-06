@@ -39,7 +39,7 @@ class ApiEmailSenderRepository {
   Future<List<ApiEmailSenderModel>> getByUnsubscribedAndIgnoreUntilBefore(
       bool unsubscribed, DateTime beforeDate) async {
     final List<Map<String, Object?>> rows = await _select(
-        where: 'unsubscribed = ? AND ignore_until < ?',
+        where: 'unsubscribed_bool = ? AND ignore_until_epoch < ?',
         whereArgs: [
           unsubscribed == true ? 1 : 0,
           beforeDate.millisecondsSinceEpoch

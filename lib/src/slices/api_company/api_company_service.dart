@@ -20,7 +20,7 @@ class ApiCompanyService {
   ApiCompanyService({required Database database, required this.helperApiAuth})
       : this._repositoryLocal = ApiCompanyRepositoryLocal(database);
 
-  Future<ApiCompanyModelLocal> upsert(String domain) async {
+  Future<ApiCompanyModelLocal?> upsert(String domain) async {
     if (domain.isNotEmpty) {
       HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
       if (HelperApiUtils.is2xx(indexRsp.code)) {
@@ -28,7 +28,7 @@ class ApiCompanyService {
             await _repositoryLocal.getByDomain(domain);
         ApiCompanyModelLocal company = ApiCompanyModelLocal(
           companyId: local?.companyId,
-          domain: indexRsp.data.domain,
+          domain: domain,
           logo: indexRsp.data.about?.logo,
           securityScore: indexRsp.data.score?.securityScore,
           breachScore: indexRsp.data.score?.securityScore,
@@ -39,7 +39,7 @@ class ApiCompanyService {
             : _repositoryLocal.update(company);
       }
     }
-    return ApiCompanyModelLocal(domain: domain);
+    return null;
   }
 
   Future<ApiCompanyModelLocal?> getById(int? companyId) async {

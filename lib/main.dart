@@ -1,5 +1,4 @@
 import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/data_bkg/data_bkg_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'app.dart';
 import 'src/config/config_log.dart';
 import 'src/slices/api_blockchain/api_blockchain_service.dart';
 import 'src/slices/api_bouncer/api_bouncer_service.dart';
-import 'src/slices/api_google/api_google_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/api_user/api_user_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
@@ -35,14 +33,13 @@ Future<void> init() async {
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
       ApiBlockchainService(helperApiAuth);
-  ApiGoogleService apiGoogleService = ApiGoogleService();
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
       apiBouncerService: apiBouncerService,
       apiBlockchainService: apiBlockchainService,
       helperApiAuth: helperApiAuth,
-      logoutCallbacks: [() async => await apiGoogleService.signOut()]);
+      logoutCallbacks: []);
 
   SentryFlutter.init(
       (options) async => options
@@ -54,9 +51,6 @@ Future<void> init() async {
             Provider<ApiUserService>.value(value: apiUserService),
             Provider<ApiBouncerService>.value(value: apiBouncerService),
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
-            Provider<ApiGoogleService>.value(value: apiGoogleService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
-            Provider<DataBkgService>(
-                create: (_) => DataBkgService(apiGoogleService)),
           ], child: App(loginFlowService))));
 }
