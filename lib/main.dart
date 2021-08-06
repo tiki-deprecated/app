@@ -1,4 +1,5 @@
 import 'package:app/src/config/config_sentry.dart';
+import 'package:app/src/slices/data_bkg/data_bkg_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app.dart';
+import 'src/config/config_log.dart';
 import 'src/slices/api_blockchain/api_blockchain_service.dart';
 import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_google/api_google_service.dart';
@@ -20,6 +22,7 @@ import 'src/utils/api/helper_api_auth.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  ConfigLog();
   await Firebase.initializeApp();
   return init();
 }
@@ -53,5 +56,7 @@ Future<void> init() async {
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
             Provider<ApiGoogleService>.value(value: apiGoogleService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+            Provider<DataBkgService>(
+                create: (_) => DataBkgService(apiGoogleService)),
           ], child: App(loginFlowService))));
 }

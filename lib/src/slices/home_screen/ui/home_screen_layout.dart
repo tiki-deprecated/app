@@ -3,18 +3,20 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/api_google/api_google_service.dart';
-import 'package:app/src/slices/data_screen/data_screen_service.dart';
-import 'package:app/src/slices/decision_screen/decision_screen_service.dart';
-import 'package:app/src/slices/home_screen/home_screen_service.dart';
-import 'package:app/src/slices/home_screen/model/home_screen_model.dart';
-import 'package:app/src/slices/home_screen/ui/home_screen_view_nav_bar.dart';
-import 'package:app/src/slices/wallet_screen/wallet_screen_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../config/config_color.dart';
+import '../../api_app_data/api_app_data_service.dart';
+import '../../api_google/api_google_service.dart';
+import '../../data_bkg/data_bkg_service.dart';
+import '../../data_screen/data_screen_service.dart';
+import '../../decision_screen/decision_screen_service.dart';
+import '../../wallet_screen/wallet_screen_service.dart';
+import '../home_screen_service.dart';
+import '../model/home_screen_model.dart';
+import 'home_screen_view_nav_bar.dart';
 
 class HomeScreenLayout extends StatelessWidget {
   @override
@@ -22,6 +24,8 @@ class HomeScreenLayout extends StatelessWidget {
     HomeScreenModel model = Provider.of<HomeScreenService>(context).model;
     ApiGoogleService googleService =
         Provider.of<ApiGoogleService>(context, listen: false);
+    DataBkgService dataBkgService =
+        Provider.of<DataBkgService>(context, listen: false);
     ApiAppDataService appDataService =
         Provider.of<ApiAppDataService>(context, listen: false);
     return WillPopScope(
@@ -31,7 +35,9 @@ class HomeScreenLayout extends StatelessWidget {
             body: SafeArea(
               top: false,
               child: IndexedStack(index: model.currentScreenIndex, children: [
-                DataScreenService(googleService).presenter.render(),
+                DataScreenService(googleService, dataBkgService)
+                    .presenter
+                    .render(),
                 DecisionScreenService(googleService, appDataService)
                     .presenter
                     .render(),
