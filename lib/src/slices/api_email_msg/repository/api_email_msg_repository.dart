@@ -3,11 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import '../model/api_email_msg_model.dart';
 
 class ApiEmailMsgRepository {
+  final _log = Logger('ApiEmailMsgRepository');
   static const String _table = 'message';
   final Database _database;
 
@@ -15,6 +17,7 @@ class ApiEmailMsgRepository {
 
   Future<ApiEmailMsgModel> insert(ApiEmailMsgModel message) async {
     int id = await _database.insert(_table, message.toMap());
+    _log.finest("Insert #" + id.toString());
     message.messageId = id;
     return message;
   }
@@ -26,6 +29,7 @@ class ApiEmailMsgRepository {
       where: 'message_id = ?',
       whereArgs: [message.messageId],
     );
+    _log.finest("update #" + message.messageId.toString());
     return message;
   }
 
