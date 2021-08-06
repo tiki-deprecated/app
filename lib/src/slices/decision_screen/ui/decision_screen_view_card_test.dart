@@ -33,14 +33,10 @@ class DecisionScreenViewCardTest implements AbstractDecisionCardView {
   DecisionScreenViewCardTest(this.cardnum);
 
   @override
-  Future<void> callbackNo(BuildContext context) async {
-    _testDone(context);
-  }
+  Future<void> callbackNo(BuildContext context) => _testDone(context);
 
   @override
-  Future<void> callbackYes(BuildContext context) async {
-    _testDone(context);
-  }
+  Future<void> callbackYes(BuildContext context) => _testDone(context);
 
   @override
   Widget content(BuildContext context) {
@@ -116,8 +112,8 @@ class DecisionScreenViewCardTest implements AbstractDecisionCardView {
             ]));
   }
 
-  void _testDone(context) {
-    if (cardnum + 2 == icons.length) {
+  Future<void> _testDone(context) async {
+    if (cardnum + 1 == icons.length) {
       var service = Provider.of<DecisionScreenService>(context, listen: false);
       service.testDone();
     }

@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 class DecisionScreenModel {
   List<AbstractDecisionCardView> cards = [];
   bool isLinked = false;
-  bool isTestDone = false;
+  bool testCardsAdded = false;
 }
 
 abstract class AbstractDecisionCardView {
