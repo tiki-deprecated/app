@@ -37,46 +37,44 @@ class DecisionScreenService extends ChangeNotifier {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController();
     model = DecisionScreenModel();
-    _apiGoogleService
-        .isConnected()
-        .then((isConnected) => updateIsLinked(isConnected));
+    refresh();
   }
 
-  void updateIsLinked(bool isLinked) async {
-    this.model.isLinked = isLinked;
-    this.model.isTestDone = await this.isTestDone();
-    notifyListeners();
+  Future<bool> refresh() async {
+    bool isConnected = await _apiGoogleService.isConnected();
+    if (isConnected) await _generateSpamCards();
+    await _addTests();
+    this.model.isLinked = isConnected;
+    return this.model.isLinked;
   }
 
   void removeCard() {
-    this.model.cards.removeLast();
+    this.model.cards.removeAt(0);
     notifyListeners();
   }
 
-  Future<void> generateSpamCards() async {
+  Future<void> testDone() async =>
+      _apiAppDataService.save(ApiAppDataKey.decisionCardsTestDone, "true");
+
+  Future<void> _addTests() async {
+    ApiAppDataModel? testDone =
+        await _apiAppDataService.getByKey(ApiAppDataKey.decisionCardsTestDone);
+    bool isTestDone = (testDone?.value == "true" ? true : false);
+    if (!isTestDone && !this.model.testCardsAdded) {
+      this.model.cards.addAll(List<DecisionScreenViewCardTest>.generate(
+          3, (index) => DecisionScreenViewCardTest(index)).reversed.toList());
+      this.model.testCardsAdded = true;
+    }
+  }
+
+  Future<void> _generateSpamCards() async {
     if (!this.model.isLinked) return;
     List<DecisionCardSpamLayout>? cards =
         await _decisionCardSpamService.getCards();
     if (cards != null && cards.isNotEmpty) {
-      this.model.cards = [...cards];
-      notifyListeners();
+      cards.forEach((card) {
+        if (!this.model.cards.contains(card)) this.model.cards.add(card);
+      });
     }
-  }
-
-  void generateTestCards() {
-    this.model.cards = List<DecisionScreenViewCardTest>.generate(
-        3, (index) => DecisionScreenViewCardTest(index)).reversed.toList();
-  }
-
-  Future<bool> isTestDone() async {
-    ApiAppDataModel? testDone =
-        await _apiAppDataService.getByKey(ApiAppDataKey.decisionCardsTestDone);
-    return testDone?.value == "true";
-  }
-
-  Future<void> testDone() async {
-    if (this.model.isTestDone) return;
-    await _apiAppDataService.save(ApiAppDataKey.decisionCardsTestDone, "true");
-    this.model.isTestDone = true;
   }
 }

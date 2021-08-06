@@ -33,7 +33,7 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
               name: this.cardSpamModel.companyName,
               email: this.cardSpamModel.senderEmail),
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 3.w),
+              margin: EdgeInsets.only(left: 5.w, right: 5.w, top: 3.h),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(

@@ -1,13 +1,14 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/decision_screen/ui/decision_screen_view_stack.dart';
-import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config_color.dart';
+import '../../../widgets/header_bar/header_bar.dart';
 import '../decision_screen_service.dart';
+import '../model/decision_screen_model.dart';
 import 'decision_screen_view_card.dart';
 import 'decision_screen_view_empty.dart';
 import 'decision_screen_view_link.dart';
+import 'decision_screen_view_stack.dart';
 
 class DecisionScreenLayout extends StatelessWidget {
   @override
@@ -23,28 +24,25 @@ class DecisionScreenLayout extends StatelessWidget {
   }
 
   Widget show(BuildContext context) {
-    var model = Provider.of<DecisionScreenService>(context).model;
-    if (model.isLinked == true)
-      return LayoutBuilder(
-          builder: (context, constraints) => DecisionScreenViewStack(
-              noCardsPlaceholder: DecisionScreenViewEmpty(),
-              children: _getCards(context, constraints)));
-    else
-      return DecisionScreenViewLink();
+    DecisionScreenService service = Provider.of<DecisionScreenService>(context);
+    return FutureBuilder<bool>(
+        future: service.refresh(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.data == true)
+            return LayoutBuilder(
+                builder: (context, constraints) => DecisionScreenViewStack(
+                    noCardsPlaceholder: DecisionScreenViewEmpty(),
+                    children: _getCards(context, constraints, service)));
+          else
+            return DecisionScreenViewLink();
+        });
   }
 
-  List<DecisionScreenViewCard> _getCards(
-      BuildContext context, BoxConstraints constraints) {
-    var service = Provider.of<DecisionScreenService>(context, listen: false);
+  List<DecisionScreenViewCard> _getCards(BuildContext context,
+      BoxConstraints constraints, DecisionScreenService service) {
     List<DecisionScreenViewCard> cards = [];
-    if (service.model.cards.isEmpty) {
-      if (service.model.isTestDone) {
-        service.generateSpamCards();
-      } else {
-        service.generateTestCards();
-      }
-    }
-    service.model.cards.forEach((card) {
+    for (int i = service.model.cards.length - 1; i >= 0; i--) {
+      AbstractDecisionCardView card = service.model.cards[i];
       cards.add(DecisionScreenViewCard(
           constraints: constraints,
           onSwipeRight: () =>
@@ -52,7 +50,7 @@ class DecisionScreenLayout extends StatelessWidget {
           onSwipeLeft: () =>
               service.controller.removeLast(context, card.callbackNo),
           child: card.content(context)));
-    });
+    }
     return cards;
   }
 }

@@ -14,8 +14,9 @@ class HomeScreenPresenter extends Page {
   final HomeScreenService service;
   final List<SingleChildWidget> providers;
 
-  HomeScreenPresenter(this.service, this.providers)
-      : super(key: ValueKey("HomeNav"));
+  HomeScreenPresenter({required this.service, List<SingleChildWidget>? providers})
+      : this.providers = providers ?? [],
+        super(key: ValueKey("HomeNav"));
 
   @override
   Route createRoute(BuildContext context) {

@@ -105,7 +105,7 @@ class LoginFlowService extends ChangeNotifier {
       else if (this.model.state == LoginFlowModelState.keysCreated)
         KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
-              HomeScreenService(providers).presenter
+        HomeScreenService(providers: providers).presenter
     ];
   }
 
