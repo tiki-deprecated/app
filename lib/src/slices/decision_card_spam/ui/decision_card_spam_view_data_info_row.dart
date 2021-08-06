@@ -51,7 +51,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
             Center(
                 child: RichText(
                     text: TextSpan(
-                        text: "${this.percent.round().toString()}",
+                        text: "${(this.percent * 100).round().toString()}",
                         style: TextStyle(
                             color: _getProgressColor(this.percent),
                             fontFamily: 'koara',
@@ -70,8 +70,8 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
               child: CircularProgressIndicator(
                   strokeWidth: 2.w,
                   backgroundColor: ConfigColor.greyThree,
-                  value: this.percent / 100,
-                  color: _getProgressColor(this.percent)),
+                  value: this.percent,
+                  color: _getProgressColor(this.percent * 100)),
             )
           ])),
       Padding(
@@ -109,7 +109,7 @@ class DecisionCardSpamViewSent extends StatelessWidget {
               fontSize: 45.sp,
               fontWeight: FontWeight.bold),
         ),
-        Text("emails",
+        Text(this.totalEmails > 1 ? "emails" : "email",
             style: TextStyle(height: 0.5, fontWeight: FontWeight.bold)),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         ClipRRect(

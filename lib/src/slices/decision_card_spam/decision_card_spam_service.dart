@@ -49,21 +49,23 @@ class DecisionCardSpamService extends ChangeNotifier {
     Map<int, List<ApiEmailMsgModel>> messages =
         await _apiEmailMsgService.getBySenders(senderIds);
     List<DecisionCardSpamModel> spamModels = [];
-
     for (int senderId in senderIds) {
       List<ApiEmailMsgModel>? msgs = messages[senderId];
       if (msgs != null && msgs.isNotEmpty) {
         spamModels.add(DecisionCardSpamModel(
-            logoUrl: msgs[0].sender?.company?.logo,
-            category: msgs[0].sender?.category,
-            companyName: msgs[0].sender?.name,
-            frequency: _calculateFrequency(msgs),
-            openRate: _calculateOpenRate(msgs),
-            securityScore: msgs[0].sender?.company?.securityScore,
-            sensitivityScore: msgs[0].sender?.company?.sensitivityScore,
-            hackingScore: msgs[0].sender?.company?.breachScore,
-            senderId: senderId,
-            senderEmail: msgs[0].sender?.email));
+          logoUrl: msgs[0].sender?.company?.logo,
+          category: msgs[0].sender?.category,
+          companyName: msgs[0].sender?.name,
+          frequency: _calculateFrequency(msgs),
+          openRate: _calculateOpenRate(msgs),
+          securityScore: msgs[0].sender?.company?.securityScore,
+          sensitivityScore: msgs[0].sender?.company?.sensitivityScore,
+          hackingScore: msgs[0].sender?.company?.breachScore,
+          senderId: senderId,
+          senderEmail: msgs[0].sender?.email,
+          totalEmails: msgs.length,
+          sinceYear: _getSinceYear(msgs),
+        ));
       }
     }
     _apiAppDataService.save(ApiAppDataKey.spamCardsLastRun,
@@ -131,5 +133,13 @@ class DecisionCardSpamService extends ChangeNotifier {
       if (message.openedDate != null) opened++;
     });
     return opened / total;
+  }
+
+  String _getSinceYear(List<ApiEmailMsgModel> messages) {
+    DateTime since = DateTime.now();
+    messages.forEach((message) {
+      if (message.receivedDate!.isBefore(since)) since = message.receivedDate!;
+    });
+    return since.year.toString();
   }
 }
