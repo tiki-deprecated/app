@@ -6,6 +6,7 @@
 //import 'package:app/src/slices/api_unsubscribe_spam/api_unsubscribe_spam_service.dart';
 import 'dart:math';
 
+import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -24,14 +25,17 @@ class DecisionCardSpamService extends ChangeNotifier {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
   final ApiAppDataService _apiAppDataService;
+  final ApiGoogleService _apiGoogleService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
-      required ApiAppDataService apiAppDataService})
+      required ApiAppDataService apiAppDataService,
+      required ApiGoogleService apiGoogleService})
       : this._apiAppDataService = apiAppDataService,
         this._apiEmailMsgService = apiEmailMsgService,
-        this._apiEmailSenderService = apiEmailSenderService {
+        this._apiEmailSenderService = apiEmailSenderService,
+        this._apiGoogleService = apiGoogleService {
     controller = DecisionCardSpamController(this);
   }
 
@@ -69,16 +73,24 @@ class DecisionCardSpamService extends ChangeNotifier {
         .toList();
   }
 
-  unsubscribeFromSpam(BuildContext context, int senderId) {
-    /*var apiUnsubscribeSpam =
-        Provider.of<ApiUnsubscribeSpamService>(context, listen: false);
-    apiUnsubscribeSpam.unsubscribe(senderId);*/
+  unsubscribeFromSpam(BuildContext context, int senderId) async {
+    ApiEmailSenderModel? sender =
+        await _apiEmailSenderService.getById(senderId);
+    if (sender != null) {
+      String? mailTo = sender.unsubscribeMailTo;
+      if (mailTo != null) {
+        bool unsubscribed = await _apiGoogleService.unsubscribe(mailTo);
+        if (unsubscribed) _apiEmailSenderService.markAsUnsubscribed(sender);
+      }
+    }
   }
 
-  keepReceiving(BuildContext context, int senderId) {
-    /*var apiUnsubscribeSpam =
-        Provider.of<ApiUnsubscribeSpamService>(context, listen: false);
-    apiUnsubscribeSpam.keepReceiving(senderId);*/
+  keepReceiving(BuildContext context, int senderId) async {
+    ApiEmailSenderModel? sender =
+        await _apiEmailSenderService.getById(senderId);
+    if (sender != null) {
+      _apiEmailSenderService.markAsKept(sender);
+    }
   }
 
   String _calculateFrequency(List<ApiEmailMsgModel> messages) {

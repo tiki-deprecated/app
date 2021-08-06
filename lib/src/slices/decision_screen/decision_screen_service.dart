@@ -32,7 +32,8 @@ class DecisionScreenService extends ChangeNotifier {
         this._decisionCardSpamService = DecisionCardSpamService(
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService,
-            apiAppDataService: apiAppDataService) {
+            apiAppDataService: apiAppDataService,
+            apiGoogleService: apiGoogleService) {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController();
     model = DecisionScreenModel();
