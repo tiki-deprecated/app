@@ -53,7 +53,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
                     text: TextSpan(
                         text: "${(this.percent * 100).round().toString()}",
                         style: TextStyle(
-                            color: _getProgressColor(this.percent),
+                            color: _getProgressColor(this.percent * 100),
                             fontFamily: 'koara',
                             fontSize: 30.sp,
                             fontWeight: FontWeight.w700),
@@ -82,7 +82,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
   }
 
   _getProgressColor(percent) {
-    if (percent < 50) {
+    if (percent <= 50) {
       return ConfigColor.tikiOrange;
     } else {
       return ConfigColor.green;
