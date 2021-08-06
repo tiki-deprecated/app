@@ -19,6 +19,16 @@ class ApiEmailMsgRepository {
     return message;
   }
 
+  Future<ApiEmailMsgModel> update(ApiEmailMsgModel message) async {
+    await _database.update(
+      _table,
+      message.toMap(),
+      where: 'message_id = ?',
+      whereArgs: [message.messageId],
+    );
+    return message;
+  }
+
   Future<ApiEmailMsgModel?> getByExtMessageIdAndSenderId(
       String extMessageId, int senderId) async {
     final List<Map<String, Object?>> rows = await _select(
@@ -28,9 +38,9 @@ class ApiEmailMsgRepository {
     return ApiEmailMsgModel.fromMap(rows[0]);
   }
 
-  Future<List<ApiEmailMsgModel>> getByAnySenderId(List<int> senderIds) async {
+  Future<List<ApiEmailMsgModel>> getBySenderId(int senderId) async {
     final List<Map<String, Object?>> rows =
-        await _select(where: 'sender.sender_id IN ?', whereArgs: [senderIds]);
+        await _select(where: 'sender.sender_id = ?', whereArgs: [senderId]);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
   }

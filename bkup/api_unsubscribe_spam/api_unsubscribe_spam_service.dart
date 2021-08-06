@@ -1,6 +1,6 @@
 import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_company/model/api_company_model.dart';
+import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_message/api_email_msg_service.dart';
 import 'package:app/src/slices/api_sender/api_email_sender_service.dart';
@@ -37,7 +37,7 @@ class ApiUnsubscribeSpamService {
     List<DecisionCardSpamModel> dataModels = [];
     for (int i = 0; i < senders.length; i++) {
       var sender = senders[i];
-      ApiCompanyModel? company =
+      ApiCompanyModelLocal? company =
           await apiCompanyService.getById(sender.companyId);
       dataModels.add(DecisionCardSpamModel(
           logoUrl: company?.logo,
@@ -69,7 +69,7 @@ class ApiUnsubscribeSpamService {
   void keepReceiving(int senderId) async {
     ApiSenderModel? sender = await apiSenderService.getById(senderId);
     if (sender != null) {
-      apiSenderService.markAsKeeped(sender);
+      apiSenderService.markAsKept(sender);
     }
   }
 }

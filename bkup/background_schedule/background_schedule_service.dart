@@ -1,6 +1,6 @@
 import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_company/model/api_company_model.dart';
+import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:app/src/slices/api_message/api_email_msg_service.dart';
 import 'package:app/src/slices/api_message/model/api_email_msg_model.dart';
@@ -64,7 +64,7 @@ class BackgroundScheduleService {
     print("end - " + DateTime.now().minute.toString());
   }
 
-  Future<ApiCompanyModel?> saveCompany(String? domain) async {
+  Future<ApiCompanyModelLocal?> saveCompany(String? domain) async {
     if (domain == null) return null;
     var companyService = Provider.of<ApiCompanyService>(context, listen: false);
     var company = await companyService.createOrUpdate(domain);
