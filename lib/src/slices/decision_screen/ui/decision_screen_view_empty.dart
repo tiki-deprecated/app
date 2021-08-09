@@ -5,10 +5,8 @@
 
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_font.dart';
-import 'package:app/src/slices/decision_screen/decision_screen_service.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class DecisionScreenViewEmpty extends StatelessWidget {
@@ -22,7 +20,6 @@ class DecisionScreenViewEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<DecisionScreenService>(context).model;
     return Container(
         width: double.maxFinite,
         padding: EdgeInsets.only(top: 12.5.h),

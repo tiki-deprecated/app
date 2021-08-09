@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../api_google/api_google_service.dart';
 import '../data_bkg/data_bkg_service.dart';
@@ -46,5 +47,9 @@ class DataScreenService extends ChangeNotifier {
 
   Future<List<InfoCarouselCardModel>> getGmailCards() async {
     return await _googleService.gmailInfoCards();
+  }
+
+  Future<void> openUrl(String? href) async {
+    if (href != null && await canLaunch(href)) await launch(href);
   }
 }

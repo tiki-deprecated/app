@@ -5,7 +5,7 @@
 
 class DataBkgModelPage<T> {
   List<T>? data;
-  dynamic? next;
+  dynamic next;
 
   DataBkgModelPage({this.data, this.next});
 }

@@ -1,68 +1,45 @@
+import 'package:app/src/config/config_color.dart';
+import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
-class DecisionScreenViewOverlay extends ModalRoute<void> {
+class DecisionScreenViewOverlay extends StatelessWidget {
   @override
-  Duration get transitionDuration => Duration(milliseconds: 500);
-
-  @override
-  bool get opaque => false;
-
-  @override
-  bool get barrierDismissible => false;
-
-  @override
-  Color get barrierColor => Colors.black.withOpacity(0.5);
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
+  Widget build(BuildContext context) {
     // This makes sure that text and other content follows the material style
     return Material(
-      type: MaterialType.transparency,
-      // make sure that the overlay content is not cut off
-      child: SafeArea(
-        child: _buildOverlayContent(context),
-      ),
-    );
+        type: MaterialType.transparency, child: _buildOverlayContent(context));
   }
 
   Widget _buildOverlayContent(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            'This is a nice overlay',
-            style: TextStyle(color: Colors.white, fontSize: 30.0),
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(children: [
+          HelperImage("overlay-bg"),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 20.h)),
+              HelperImage("swipe-choices"),
+              Padding(padding: EdgeInsets.only(top: 4.h)),
+              RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      text:
+                          "Unsubscribe from an email list by swiping left, or\nkeep their emails coming by swiping right.\n\n",
+                      style: TextStyle(fontSize: 12.sp),
+                      children: [
+                        TextSpan(
+                            text:
+                                "Unsubscribing will remove you from an email list.\n",
+                            style: TextStyle(color: ConfigColor.tikiOrange)),
+                        TextSpan(
+                            text:
+                                "You can always re-subscribe by going back to\ntheir website.")
+                      ]))
+            ],
           ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Dismiss'),
-          )
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    // You can add your own animations for the overlay content
-    return FadeTransition(
-      opacity: animation,
-      child: ScaleTransition(
-        scale: animation,
-        child: child,
-      ),
-    );
+        ]));
   }
 }

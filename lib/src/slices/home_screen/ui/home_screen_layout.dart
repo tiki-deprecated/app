@@ -5,6 +5,7 @@
 
 import 'package:app/src/slices/data_screen/data_screen_service.dart';
 import 'package:app/src/slices/decision_screen/decision_screen_service.dart';
+import 'package:app/src/slices/decision_screen/ui/decision_screen_view_overlay.dart';
 import 'package:app/src/slices/home_screen/ui/home_screen_view_stack.dart';
 import 'package:app/src/slices/wallet_screen/wallet_screen_service.dart';
 import 'package:flutter/material.dart';
@@ -31,22 +32,26 @@ class HomeScreenLayout extends StatelessWidget {
         Provider.of<ApiEmailMsgService>(context, listen: false);
     ApiEmailSenderService apiEmailSenderService =
         Provider.of<ApiEmailSenderService>(context, listen: false);
+    bool showSwipeOverlay = false; // TODO: change variable in HomeScreenService
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
-        child: Scaffold(
-            backgroundColor: ConfigColor.greyOne,
-            body: SafeArea(
-                top: false,
-                child: HomeScreenViewStack(
-                  decisionScreenService: DecisionScreenService(
-                      apiGoogleService: googleService,
-                      apiEmailMsgService: apiEmailMsgService,
-                      apiEmailSenderService: apiEmailSenderService,
-                      apiAppDataService: appDataService),
-                  dataScreenService:
-                      DataScreenService(googleService, dataBkgService),
-                  walletScreenService: WalletScreenService(),
-                )),
-            bottomNavigationBar: HomeScreenViewNavBar()));
+        child: Stack(children: [
+          Scaffold(
+              backgroundColor: ConfigColor.greyOne,
+              body: SafeArea(
+                  top: false,
+                  child: HomeScreenViewStack(
+                    decisionScreenService: DecisionScreenService(
+                        apiGoogleService: googleService,
+                        apiEmailMsgService: apiEmailMsgService,
+                        apiEmailSenderService: apiEmailSenderService,
+                        apiAppDataService: appDataService),
+                    dataScreenService:
+                        DataScreenService(googleService, dataBkgService),
+                    walletScreenService: WalletScreenService(),
+                  )),
+              bottomNavigationBar: HomeScreenViewNavBar()),
+          showSwipeOverlay ? DecisionScreenViewOverlay() : Container(),
+        ]));
   }
 }

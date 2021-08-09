@@ -14,13 +14,14 @@ class DecisionScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Stack(children: [
-      Container(color: ConfigColor.greyOne),
-      SafeArea(
-          child:
-              Column(children: [HeaderBar(), Expanded(child: show(context))]))
-    ])));
+      body: Center(
+          child: Stack(children: [
+        Container(color: ConfigColor.greyOne),
+        SafeArea(
+            child:
+                Column(children: [HeaderBar(), Expanded(child: show(context))]))
+      ])),
+    );
   }
 
   Widget show(BuildContext context) {
