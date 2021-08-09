@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
+import '../api_app_data/model/api_app_data_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -41,7 +42,15 @@ class DataBkgService {
   Future<void> checkEmail() async {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
-    if (googleAccount != null) {
+    ApiAppDataModel? appDataGmailLastRun =
+        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
+    DateTime? gmailLastRun = appDataGmailLastRun != null
+        ? DateTime.fromMillisecondsSinceEpoch(
+            int.parse(appDataGmailLastRun.value))
+        : null;
+    if (googleAccount != null &&
+        (gmailLastRun == null ||
+            DateTime.now().subtract(Duration(days: 1)).isAfter(gmailLastRun))) {
       DataBkgModelPage<ApiEmailMsgModel>? page;
       for (int i = 0; i < 10; i++) {
         page = await _apiGoogleService.gmailFetch(

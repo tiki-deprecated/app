@@ -33,4 +33,15 @@ class DecisionCardSpamLayout implements AbstractDecisionCardView {
         child: DecisionCardSpamLayoutContent(
             shareKey, this.service, this.cardSpamModel));
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DecisionCardSpamLayout &&
+          runtimeType == other.runtimeType &&
+          cardSpamModel == other.cardSpamModel &&
+          service == other.service;
+
+  @override
+  int get hashCode => cardSpamModel.hashCode ^ service.hashCode;
 }
