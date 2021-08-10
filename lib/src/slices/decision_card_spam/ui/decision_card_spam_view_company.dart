@@ -17,16 +17,14 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.only(left: 3.w, right: 3.w, top: 2.h),
-        child: Column(
+    return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _getAvatar(this.logo, this.name, this.email),
             Padding(padding: EdgeInsets.only(top: 1.h)),
             _getCompanyName(this.name, this.email)
           ],
-        ));
+        );
   }
 
   Widget _getAvatar(String? logo, String? name, String? email) {
@@ -53,11 +51,11 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
         width: 10.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          border: Border.all(color: ConfigColor.greyTwo, width: 5),
+          border: Border.all(color: ConfigColor.greyTwo, width: 4.5.sp),
           color: ConfigColor.white,
           boxShadow: [
             BoxShadow(
-                color: Color(0x4D000000),
+                color: Color(0x26000000),
                 offset: Offset(0, 4),
                 spreadRadius: 0,
                 blurRadius: 12)
@@ -70,13 +68,13 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
     if (name != null) {
       return Text(name,
           style: TextStyle(
-              fontSize: 22.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w800,
               fontFamily: ConfigFont.familyNunitoSans));
     } else {
       return Text(email,
           style: TextStyle(
-              fontSize: 18.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w800,
               fontFamily: ConfigFont.familyNunitoSans));
     }

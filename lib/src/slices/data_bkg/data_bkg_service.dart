@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -18,14 +17,13 @@ import '../api_google/api_google_service.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import 'model/data_bkg_model.dart';
 
-class DataBkgService {
+class DataBkgService extends ChangeNotifier {
   final DataBkgModel model = DataBkgModel();
   final ApiCompanyService _apiCompanyService;
   final ApiEmailMsgService _apiEmailMsgService;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiGoogleService _apiGoogleService;
   final ApiAppDataService _apiAppDataService;
-
   ApiAppDataModel? appDataGmailLastRun;
 
   DataBkgService({required ApiGoogleService apiGoogleService,

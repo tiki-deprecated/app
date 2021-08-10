@@ -14,18 +14,19 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(padding: EdgeInsets.only(top: 2.8.h)),
         Text("They send you emails",
-            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700)),
-        Padding(padding: EdgeInsets.only(top: 0.2.h)),
+            style: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w600,
+                color: ConfigColor.tikiBlue)),
+        Padding(padding: EdgeInsets.only(top: 0.75.h)),
         Text('${frequency[0].toUpperCase()}${frequency.substring(1)}',
             style: TextStyle(
                 fontFamily: "Koara",
-                fontSize: 32.sp,
-                height: 1.2,
+                fontSize: 26.sp,
                 fontWeight: FontWeight.w800,
                 color: _getTextColor(frequency))),
-        Padding(padding: EdgeInsets.only(top: 0.5.h)),
+        Padding(padding: EdgeInsets.only(top: 0.75.h)),
         _getCategory(this.category)
       ],
     );
@@ -47,7 +48,11 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('in'),
+          Text('in',
+              style: TextStyle(
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w600,
+                  color: ConfigColor.tikiBlue)),
           Padding(
             padding: EdgeInsets.only(left: 3.sp),
           ),
@@ -55,7 +60,7 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(color: ConfigColor.greySix, width: 1.sp),
                   borderRadius: BorderRadius.circular(50)),
-              padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 10.sp),
+              padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 8.sp),
               child: Row(
                 children: [
                   Icon(
@@ -63,12 +68,13 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
                     color: ConfigColor.greySix,
                     size: 12.sp,
                   ),
-                  Padding(padding: EdgeInsets.only(left: 6.sp)),
+                  Padding(padding: EdgeInsets.only(left: 4.sp)),
                   Text(
                       "${category[0].toUpperCase()}${category.substring(1).toLowerCase()}",
                       style: TextStyle(
+                          fontSize: 10.sp,
                           color: ConfigColor.greySix,
-                          fontWeight: FontWeight.bold))
+                          fontWeight: FontWeight.w800))
                 ],
               ))
         ]);
