@@ -48,8 +48,8 @@ class ApiGoogleService {
       bool unsubscribeOnly = false,
       String? pageToken}) async {
     GmailApi? gmailApi = await _gmailApi;
-    ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list("me", maxResults: maxResults, pageToken: pageToken);
+    ListMessagesResponse? emails = await gmailApi?.users.messages.list("me",
+        maxResults: maxResults, pageToken: pageToken, includeSpamTrash: true);
     List<ApiEmailMsgModel> messages = List.empty(growable: true);
     for (Message message in emails?.messages ?? List.empty()) {
       if (message.id != null) {

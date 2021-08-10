@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
+import '../../data_bkg/data_bkg_service.dart';
 import '../decision_screen_service.dart';
 import '../model/decision_screen_model.dart';
 import 'decision_screen_view_card.dart';
@@ -13,6 +14,7 @@ import 'decision_screen_view_stack.dart';
 class DecisionScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Provider.of<DataBkgService>(context);
     return Scaffold(
       body: Center(
           child: Stack(children: [
