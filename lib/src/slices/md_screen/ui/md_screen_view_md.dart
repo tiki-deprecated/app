@@ -45,7 +45,7 @@ class MdScreenView extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: _fontSizeText.sp),
                 p: TextStyle(
-                    color: ConfigColor.greySix,
+                    color: ConfigColor.greySeven,
                     fontWeight: FontWeight.normal,
                     fontSize: _fontSizeText.sp),
               ),

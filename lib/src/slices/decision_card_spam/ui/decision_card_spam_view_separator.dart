@@ -13,13 +13,13 @@ class DecisionCardSpamViewSeparator extends StatelessWidget {
           child: Container(
               margin: EdgeInsets.only(right: _margin.w),
               height: 1,
-              color: ConfigColor.greyTwo)),
+              color: ConfigColor.greyThree)),
       HelperImage("icon-email", height: 2.h),
       Expanded(
           child: Container(
               margin: EdgeInsets.only(left: _margin.w),
               height: 1,
-              color: ConfigColor.greyTwo)),
+              color: ConfigColor.greyThree)),
     ]);
   }
 }

@@ -55,6 +55,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                 ))));
   }
 
+  //TODO move out of here
   Future<void> _showGoogleAlert(
       BuildContext context, DataScreenService service) {
     var spacing = 2.4.h;
@@ -77,7 +78,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                   Divider(
                     height: spacing,
                     thickness: 5,
-                    color: ConfigColor.greyThree,
+                    color: ConfigColor.greyFour,
                     indent: 38.w,
                     endIndent: 38.w,
                   ),

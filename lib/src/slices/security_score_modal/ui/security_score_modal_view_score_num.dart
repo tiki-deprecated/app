@@ -26,12 +26,12 @@ class SecurityScoreModalViewScoreNum extends StatelessWidget {
                   fontWeight: FontWeight.bold))
           : Text("? / 10",
               style: TextStyle(
-                  color: ConfigColor.greyThree,
+                  color: ConfigColor.greyFour,
                   fontSize: 30.sp,
                   fontWeight: FontWeight.bold)),
       Text(this.label,
           style: TextStyle(
-              color: ConfigColor.greyFive,
+              color: ConfigColor.greySix,
               fontSize: 11.5.sp,
               fontFamily: ConfigFont.familyNunitoSans,
               fontWeight: FontWeight.bold))

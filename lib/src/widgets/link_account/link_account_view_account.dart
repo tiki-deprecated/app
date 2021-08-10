@@ -32,7 +32,7 @@ class LinkAccountViewAccount extends StatelessWidget {
               Text(type,
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      color: ConfigColor.greyFour,
+                      color: ConfigColor.greyFive,
                       height: 1,
                       fontSize: 11.sp)),
               Text(username,

@@ -17,7 +17,7 @@ class KeysNewScreenViewSubtitle extends StatelessWidget {
         "We recommend you to securely save your key in case you change your device.",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: ConfigColor.greySix,
+            color: ConfigColor.greySeven,
             fontSize: 13.sp,
             fontWeight: FontWeight.w600));
   }

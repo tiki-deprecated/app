@@ -21,12 +21,12 @@ class LoginScreenInboxSentTo extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(_text,
           style: TextStyle(
-              color: ConfigColor.greySix,
+              color: ConfigColor.greySeven,
               fontSize: _fontSize.sp,
               fontWeight: FontWeight.w600)),
       Text(model.email ?? "",
           style: TextStyle(
-              color: ConfigColor.greySix,
+              color: ConfigColor.greySeven,
               fontSize: _fontSize.sp,
               fontWeight: FontWeight.bold))
     ]);

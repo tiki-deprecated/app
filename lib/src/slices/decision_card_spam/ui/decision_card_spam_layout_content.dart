@@ -1,3 +1,4 @@
+import 'package:app/src/config/config_color.dart';
 import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
 import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
                       left: 5.w, right: 5.w, top: 2.h, bottom: 2.5.h),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2.h),
-                      color: Color(0xFFF8F8F8)),
+                      color: ConfigColor.greyZero),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,

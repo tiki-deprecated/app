@@ -3,19 +3,19 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_button.dart';
-import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_desc.dart';
-import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_explain.dart';
-import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_score.dart';
-import 'package:app/src/widgets/modal_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../../../widgets/modal_divider.dart';
 import '../model/security_score_modal_model.dart';
 import '../security_score_modal_service.dart';
+import 'security_score_modal_view_button.dart';
+import 'security_score_modal_view_desc.dart';
+import 'security_score_modal_view_explain.dart';
+import 'security_score_modal_view_score.dart';
 
 class SecurityScoreModalLayout extends StatelessWidget {
   static const String _title = 'Security score';

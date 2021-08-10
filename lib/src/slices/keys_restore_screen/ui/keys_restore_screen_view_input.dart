@@ -25,19 +25,19 @@ class KeysRestoreScreenViewInput extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
           hintText: "Your Account Key",
           hintStyle: TextStyle(
-              color: ConfigColor.greyFive,
+              color: ConfigColor.greySix,
               fontWeight: FontWeight.bold,
               fontSize: 15.sp),
           filled: true,
           fillColor: Colors.white,
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: ConfigColor.greyFive,
+                  color: ConfigColor.greySix,
                   width: 1,
                   style: BorderStyle.solid)),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: ConfigColor.greyFive,
+                  color: ConfigColor.greySix,
                   width: 1,
                   style: BorderStyle.solid))),
       onChanged: (String s) => controller.updateKeys(s),

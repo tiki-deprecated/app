@@ -31,7 +31,7 @@ class LoginScreenEmailViewTos extends StatelessWidget {
     );
   }
 
-  TextStyle _textStyle(context, {Color color = ConfigColor.greyFive}) {
+  TextStyle _textStyle(context, {Color color = ConfigColor.greySix}) {
     return TextStyle(
         fontSize: _fontSize.sp, fontWeight: FontWeight.bold, color: color);
   }

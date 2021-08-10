@@ -43,7 +43,7 @@ class SecurityScoreModalViewScore extends StatelessWidget {
                   Container(
                     width: 1,
                     height: 8.h,
-                    color: ConfigColor.greyThree,
+                    color: ConfigColor.greyFour,
                   ),
                   SecurityScoreModalViewScoreNum(
                       score: this.hacking, label: _labelHacking),

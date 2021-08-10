@@ -58,14 +58,14 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
           ),
           Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: ConfigColor.greySix, width: 1.sp),
+                  border: Border.all(color: ConfigColor.greySeven, width: 1.sp),
                   borderRadius: BorderRadius.circular(50)),
               padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 8.sp),
               child: Row(
                 children: [
                   Icon(
                     Icons.sell,
-                    color: ConfigColor.greySix,
+                    color: ConfigColor.greySeven,
                     size: 12.sp,
                   ),
                   Padding(padding: EdgeInsets.only(left: 4.sp)),
@@ -73,7 +73,7 @@ class DecisionCardSpamViewFrequency extends StatelessWidget {
                       "${category[0].toUpperCase()}${category.substring(1).toLowerCase()}",
                       style: TextStyle(
                           fontSize: 10.sp,
-                          color: ConfigColor.greySix,
+                          color: ConfigColor.greySeven,
                           fontWeight: FontWeight.w800))
                 ],
               ))

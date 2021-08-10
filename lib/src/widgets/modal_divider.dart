@@ -17,6 +17,6 @@ class ModalDivider extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10.h)),
-                color: ConfigColor.greyTwo)));
+                color: ConfigColor.greyThree)));
   }
 }

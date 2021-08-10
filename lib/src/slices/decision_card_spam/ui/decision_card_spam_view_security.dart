@@ -29,7 +29,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: ConfigFont.familyKoara,
-                      color: ConfigColor.greyFour,
+                      color: ConfigColor.greyFive,
                       fontSize: 15.sp),
                   text: "Your data is ",
                   children: [
@@ -44,7 +44,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: ConfigFont.familyKoara,
-                      color: ConfigColor.greyFour,
+                      color: ConfigColor.greyFive,
                       fontSize: 15.sp),
                   text: "No data score info yet",
                   children: [_getInfoIcon(context)]),
@@ -99,7 +99,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   Color _getColorForText() {
     var starRates = this.security ?? 0;
     if (this.security == null) {
-      return ConfigColor.greyFive;
+      return ConfigColor.greySix;
     } else {
       if (starRates < 2) {
         return ConfigColor.tikiRed;
@@ -130,7 +130,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
             child: GestureDetector(
                 child: Icon(
                   Icons.info_outline_rounded,
-                  color: ConfigColor.greyFour,
+                  color: ConfigColor.greyFive,
                   size: 17.sp,
                 ),
                 onTap: () => SecurityScoreModalService(

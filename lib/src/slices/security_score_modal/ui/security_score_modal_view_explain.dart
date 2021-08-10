@@ -54,7 +54,7 @@ class SecurityScoreModalViewExplain extends StatelessWidget {
         child: Text(label,
             textAlign: TextAlign.left,
             style: TextStyle(
-                color: ConfigColor.greyFive, fontWeight: FontWeight.bold)));
+                color: ConfigColor.greySix, fontWeight: FontWeight.bold)));
   }
 
   Widget _text(
