@@ -50,45 +50,38 @@ class DataBkgService {
         ? DateTime.fromMillisecondsSinceEpoch(
         int.parse(appDataGmailLastRun!.value))
         : null;
-    if (googleAccount != null &&
-        (gmailLastRun == null ||
-            DateTime.now().subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
-      Future.wait([
-        fetchPendingSenders(),
-        fetchNewEmailsFromKnownSenders(),
-        fetchNewSenders()
-      ]);
-      _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
-          DateTime
-              .now()
-              .millisecondsSinceEpoch
-              .toString());
+    if (googleAccount != null && Itaparica, BA, 44460-000
+    (gmailLastRun == null ||
+    DateTime.now ()
+    .subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
+    Future.wait([
+    fetchEachPendingSender(),
+    fetchNewEmailsFromKnownSenders(),
+    fetchNewSenders()
+    ]);
+    _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
+    DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString());
     }
   }
 
-  /// Fetch at least one email from a new sender.
-  Future<void> fetchNewSenders() async {
-    List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getAll();
-    String knownSenders = senders.map((sender) => "-from: ${sender.email})")
-        .join(" AND ");
-    await fetchEmailAndSaveData(
-        batch: 10, maxResults: 10, query: "$knownSenders");
-  }
 
   /// Fetch all emails from each sender.
   Future<void> fetchEachPendingSender() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService
         .getPending();
-    if (senders.isNotEmpty) {
-      for (int i = 0; i < senders.length; i++) {
-        String senderQuery = "from: ${senders[i].email}"
-        await
-        fetchEmailAndSaveData(maxResults: 10, batch: 10, query: "$senderQuery");
-      }
+    for (int i = 0; i < senders.length; i++) {
+      ApiEmailSenderModel sender = senders[i];
+      String pageToken = sender.lastPageToken;
+      String senderQuery = "from: ${sender.email}";
+      fetchAndSaveAllEmailFromSender(
+          query: "$senderQuery", pageToken: pageToken);
     }
   }
 
-  /// Fetch new emails from knwon senders.
+  /// Fetch new emails from known senders.
   Future<void> fetchNewEmailsFromKnownSenders() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getKnown();
     String knownSenders = senders.map((sender) => "from: ${sender.email})")
@@ -101,15 +94,25 @@ class DataBkgService {
         maxResults: 10, batch: 10, query: "$knownSenders AND $sinceQuery");
   }
 
+  /// Fetch at least one email from a new sender.
+  Future<void> fetchNewSenders() async {
+    List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getAll();
+    String knownSenders = senders.map((sender) => "-from: ${sender.email})")
+        .join(" AND ");
+    await fetchEmailAndSaveData(
+        batch: 10, maxResults: 10, query: "$knownSenders");
+  }
+
+
   /// Fetch emails from Gmail Api and save sender, company and message data.
   Future<List<ApiEmailMsgModel>?> fetchEmailAndSaveData(
-      {int maxResults: 10, int batch: 10, query: ""}) async {
+      {int maxResults: 10, int batch: 10, query: "", pageToken}) async {
     DataBkgModelPage<ApiEmailMsgModel>? page;
     for (int i = 0; i < batch; i++) {
       _apiGoogleService.gmailFetch(
           unsubscribeOnly: true,
           maxResults: maxResults,
-          pageToken: page?.next,
+          pageToken: page?.next ?? pageToken,
           query: query
       ).then((page) {
         if (page.data != null) {
@@ -161,19 +164,19 @@ class DataBkgService {
   }
 
   /// Fetch all emails from sender and save data.
-  fetchEmailAndQuerySender(ApiEmailSenderModel sender) {
+  void fetchAndSaveAllEmailFromSender(
+      {required String query, String? pageToken}) {
     DataBkgModelPage<ApiEmailMsgModel>? page;
-    String senderQuery = "-from: ${sender.email})";
     do {
       _apiGoogleService.gmailFetch(
           unsubscribeOnly: true,
           maxResults: 10,
-          pageToken: page?.next,
+          pageToken: page?.next ?? pageToken,
           query: query
       ).then((page) {
         if (page.data != null) {
-          _saveAllMessagesData(page.data!).then((page) =>
-              _saveLastPage(page, query));
+          _saveAllMessagesData(page.data!).then((_) =>
+              _saveLastPage(page.next, query));
         }
       });
     } while (page?.next != null);

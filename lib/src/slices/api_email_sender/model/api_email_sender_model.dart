@@ -20,6 +20,10 @@ class ApiEmailSenderModel {
 
   int updated_epoch;
 
+  String lastPage;
+
+  String lastPageToken;
+
   ApiEmailSenderModel({
     this.senderId,
     this.company,
