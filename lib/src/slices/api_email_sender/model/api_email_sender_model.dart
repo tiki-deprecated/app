@@ -15,19 +15,24 @@ class ApiEmailSenderModel {
   DateTime? emailSince;
   bool? unsubscribed;
   DateTime? ignoreUntil;
+  int created_epoch;
+  int modified_epoch;
 
-  ApiEmailSenderModel(
-      {this.senderId,
-      this.company,
-      this.name,
-      this.email,
-      this.category,
-      this.unsubscribeMailTo,
-      this.emailSince,
-      DateTime? ignoreUntil,
-      this.unsubscribed = false})
-      : this.ignoreUntil =
-            ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
+  int updated_epoch;
+
+  ApiEmailSenderModel({
+    this.senderId,
+    this.company,
+    this.name,
+    this.email,
+    this.category,
+    this.unsubscribeMailTo,
+    this.emailSince,
+    DateTime? ignoreUntil,
+    int? created_epoch,
+    int? modified_epoch,
+    this.unsubscribed = false,
+  }) : this.ignoreUntil = ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
   ApiEmailSenderModel.fromMap(map) {
     this.senderId = map['sender_id'];

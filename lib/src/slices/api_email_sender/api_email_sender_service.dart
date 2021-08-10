@@ -45,4 +45,20 @@ class ApiEmailSenderService {
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
     _repository.update(sender);
   }
+
+  getByEmail(String email) {
+    // TODO
+  }
+
+  getPending() {
+    //TODO
+  }
+
+  getKnown() {
+    //todo
+  }
+
+  getAll() {
+    //TODO
+  }
 }

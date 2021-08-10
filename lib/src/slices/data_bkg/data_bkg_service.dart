@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -25,12 +26,13 @@ class DataBkgService {
   final ApiGoogleService _apiGoogleService;
   final ApiAppDataService _apiAppDataService;
 
-  DataBkgService(
-      {required ApiGoogleService apiGoogleService,
-      required ApiCompanyService apiCompanyService,
-      required ApiEmailMsgService apiEmailMsgService,
-      required ApiEmailSenderService apiEmailSenderService,
-      required ApiAppDataService apiAppDataService})
+  ApiAppDataModel? appDataGmailLastRun;
+
+  DataBkgService({required ApiGoogleService apiGoogleService,
+    required ApiCompanyService apiCompanyService,
+    required ApiEmailMsgService apiEmailMsgService,
+    required ApiEmailSenderService apiEmailSenderService,
+    required ApiAppDataService apiAppDataService})
       : this._apiGoogleService = apiGoogleService,
         this._apiCompanyService = apiCompanyService,
         this._apiEmailMsgService = apiEmailMsgService,
@@ -41,39 +43,94 @@ class DataBkgService {
 
   Future<void> checkEmail() async {
     GoogleSignInAccount? googleAccount =
-        await _apiGoogleService.getConnectedUser();
-    ApiAppDataModel? appDataGmailLastRun =
-        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
+    await _apiGoogleService.getConnectedUser();
+    appDataGmailLastRun =
+    await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
     DateTime? gmailLastRun = appDataGmailLastRun != null
         ? DateTime.fromMillisecondsSinceEpoch(
-            int.parse(appDataGmailLastRun.value))
+        int.parse(appDataGmailLastRun!.value))
         : null;
     if (googleAccount != null &&
         (gmailLastRun == null ||
-            DateTime.now().subtract(Duration(days: 1)).isAfter(gmailLastRun))) {
-      DataBkgModelPage<ApiEmailMsgModel>? page;
-      for (int i = 0; i < 10; i++) {
-        page = await _apiGoogleService.gmailFetch(
-            unsubscribeOnly: true, maxResults: 10, pageToken: page?.next);
-        if (page.data != null) {
-          for (ApiEmailMsgModel message in page.data!) {
-            if (message.sender?.email != null) {
-              ApiCompanyModelLocal? company = await _apiCompanyService
-                  .upsert(domainFromEmail(message.sender!.email!));
-              if (company != null) {
-                message.sender!.company = company;
-                await _apiEmailSenderService.upsert(message.sender!);
-                await _apiEmailMsgService.upsert(message);
-              }
-            }
-          }
-          _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
-              DateTime.now().millisecondsSinceEpoch.toString());
-        }
+            DateTime.now().subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
+      Future.wait([
+        fetchPendingSenders(),
+        fetchNewEmailsFromKnownSenders(),
+        fetchNewSenders()
+      ]);
+      _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
+          DateTime
+              .now()
+              .millisecondsSinceEpoch
+              .toString());
+    }
+  }
+
+  /// Fetch at least one email from a new sender.
+  Future<void> fetchNewSenders() async {
+    List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getAll();
+    String knownSenders = senders.map((sender) => "-from: ${sender.email})")
+        .join(" AND ");
+    await fetchEmailAndSaveData(
+        batch: 10, maxResults: 10, query: "$knownSenders");
+  }
+
+  /// Fetch all emails from each sender.
+  Future<void> fetchEachPendingSender() async {
+    List<ApiEmailSenderModel> senders = await _apiEmailSenderService
+        .getPending();
+    if (senders.isNotEmpty) {
+      for (int i = 0; i < senders.length; i++) {
+        String senderQuery = "from: ${senders[i].email}"
+        await
+        fetchEmailAndSaveData(maxResults: 10, batch: 10, query: "$senderQuery");
       }
     }
   }
 
+  /// Fetch new emails from knwon senders.
+  Future<void> fetchNewEmailsFromKnownSenders() async {
+    List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getKnown();
+    String knownSenders = senders.map((sender) => "from: ${sender.email})")
+        .join(" AND ");
+    num lastRun = appDataGmailLastRun?.value != null ?
+    num.parse(appDataGmailLastRun!.value) / 1000 :
+    0;
+    String sinceQuery = "after: $lastRun";
+    await fetchEmailAndSaveData(
+        maxResults: 10, batch: 10, query: "$knownSenders AND $sinceQuery");
+  }
+
+  /// Fetch emails from Gmail Api and save sender, company and message data.
+  Future<List<ApiEmailMsgModel>?> fetchEmailAndSaveData(
+      {int maxResults: 10, int batch: 10, query: ""}) async {
+    DataBkgModelPage<ApiEmailMsgModel>? page;
+    for (int i = 0; i < batch; i++) {
+      _apiGoogleService.gmailFetch(
+          unsubscribeOnly: true,
+          maxResults: maxResults,
+          pageToken: page?.next,
+          query: query
+      ).then((page) {
+        if (page.data != null) {
+          _saveAllMessagesData(page.data!).then((page) =>
+              _saveLastPage(page, query));
+        }
+      });
+    }
+  }
+
+  /// Save the data of each email in a list.
+  Future<void> _saveAllMessagesData(List<ApiEmailMsgModel> messages) async {
+    List<Future> saveList = [];
+    for (int i = 0; i < messages.length; i++) {
+      ApiEmailMsgModel message = messages[i];
+      saveList.add(_saveMessageData(message));
+    }
+    Future.wait(saveList);
+  }
+
+  /// Get domain from Email.
   String domainFromEmail(String email) {
     List<String> atSplit = email.split('@');
     List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
@@ -81,4 +138,47 @@ class DataBkgService {
         "." +
         periodSplit[periodSplit.length - 1];
   }
+
+  /// Save sender, company and message data.
+  Future<void> _saveMessageData(message,
+      {bool forceSenderUpdate = false}) async {
+    if (message.sender?.email != null) {
+      ApiEmailSenderModel? messageSender = await _apiEmailSenderService
+          .getByEmail(message.sender!.email!);
+      if (forceSenderUpdate || DateTime.fromMillisecondsSinceEpoch(
+          messageSender!.updated_epoch).isBefore(
+          DateTime.now().subtract(Duration(days: 30)))
+      ) {
+        ApiCompanyModelLocal? company = await _apiCompanyService.upsert(
+            domainFromEmail(message.sender!.email!));
+        if (company != null) {
+          message.sender!.company = company;
+          await _apiEmailSenderService.upsert(message.sender!);
+        }
+      }
+      _apiEmailMsgService.upsert(message);
+    }
+  }
+
+  /// Fetch all emails from sender and save data.
+  fetchEmailAndQuerySender(ApiEmailSenderModel sender) {
+    DataBkgModelPage<ApiEmailMsgModel>? page;
+    String senderQuery = "-from: ${sender.email})";
+    do {
+      _apiGoogleService.gmailFetch(
+          unsubscribeOnly: true,
+          maxResults: 10,
+          pageToken: page?.next,
+          query: query
+      ).then((page) {
+        if (page.data != null) {
+          _saveAllMessagesData(page.data!).then((page) =>
+              _saveLastPage(page, query));
+        }
+      });
+    } while (page?.next != null);
+  }
+
+  _saveLastPage(void page, String query) {}
 }
+

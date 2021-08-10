@@ -136,6 +136,7 @@ class DecisionCardSpamService extends ChangeNotifier {
   }
 
   String _getSinceYear(List<ApiEmailMsgModel> messages) {
+    // todo change for the database saved since
     DateTime since = DateTime.now();
     messages.forEach((message) {
       if (message.receivedDate!.isBefore(since)) since = message.receivedDate!;

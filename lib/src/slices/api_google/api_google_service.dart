@@ -46,10 +46,11 @@ class ApiGoogleService {
   Future<DataBkgModelPage<ApiEmailMsgModel>> gmailFetch(
       {int maxResults = 100,
       bool unsubscribeOnly = false,
-      String? pageToken}) async {
+      String? pageToken,
+      String query = ''}) async {
     GmailApi? gmailApi = await _gmailApi;
     ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list("me", maxResults: maxResults, pageToken: pageToken);
+        .list("me", maxResults: maxResults, pageToken: pageToken, q: query);
     List<ApiEmailMsgModel> messages = List.empty(growable: true);
     for (Message message in emails?.messages ?? List.empty()) {
       if (message.id != null) {
