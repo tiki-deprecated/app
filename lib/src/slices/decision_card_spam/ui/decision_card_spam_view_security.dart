@@ -20,9 +20,6 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Column(children: [
-      Padding(
-        padding: EdgeInsets.only(top: 0.5.h),
-      ),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: _getStars()),
       Padding(
         padding: EdgeInsets.only(top: 1.h),
@@ -34,7 +31,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontFamily: ConfigFont.familyKoara,
                       color: ConfigColor.greyFour,
-                      fontSize: 20.sp),
+                      fontSize: 15.sp),
                   text: "Your data is ",
                   children: [
                     TextSpan(
@@ -49,13 +46,10 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontFamily: ConfigFont.familyKoara,
                       color: ConfigColor.greyFour,
-                      fontSize: 20.sp),
-                  text: "No data score info yet ",
+                      fontSize: 15.sp),
+                  text: "No data score info yet",
                   children: [_getInfoIcon(context)]),
             ),
-      Padding(
-        padding: EdgeInsets.only(top: 3.h),
-      ),
     ]));
   }
 
@@ -64,21 +58,26 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
     var starRate = this.starRates ?? 0;
     var stars = <Widget>[];
     for (int i = 0; i < 5; i++) {
-      if (i < starRate) {
-        stars.add(HelperImage("star-$color", width: 6.w));
-      } else if (i > starRate.floor() && i < starRate.ceil()) {
-        stars.add(Stack(children: [
-          ClipRect(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                widthFactor: 0.5,
-                child: HelperImage("star-$color", width: 7.w)),
-          ),
-          HelperImage("star-grey", width: 7.w),
-        ]));
-      } else if (i >= starRate) {
-        stars.add(HelperImage("star-grey", width: 7.w));
-      }
+      if (i >= starRate.floor() && i < starRate.ceil()) {
+        stars.add(Padding(
+            padding: EdgeInsets.symmetric(horizontal: 1.w),
+            child: Stack(children: [
+              HelperImage("star-grey", width: 6.w),
+              ClipRect(
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: 0.5,
+                    child: HelperImage("star-$color", width: 6.w)),
+              ),
+            ])));
+      } else if (i >= starRate.ceil())
+        stars.add(Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.75.w),
+            child: HelperImage("star-grey", width: 6.w)));
+      else
+        stars.add(Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.75.w),
+            child: HelperImage("star-$color", width: 6.w)));
     }
     return stars;
   }
@@ -198,7 +197,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                   DecisionCardSpamViewSecurityHackingText(),
                   Padding(
                     padding: EdgeInsets.only(top: spacing * 2),
-              ),
+                  ),
                   Center(
                       child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -222,10 +221,15 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   _getInfoIcon(BuildContext context) {
     return WidgetSpan(
         child: Padding(
-            padding: EdgeInsets.only(left: 6.sp, bottom: 1.sp),
+            padding: EdgeInsets.only(
+              left: 1.5.w,
+            ),
             child: GestureDetector(
-              child:
-                  Icon(Icons.info_outline_rounded, color: ConfigColor.greyFour),
+              child: Icon(
+                Icons.info_outline_rounded,
+                color: ConfigColor.greyFour,
+                size: 17.sp,
+              ),
               onTap: () => showModal(context,
                   sensitivity: this.sensitivity, hacking: this.hacking),
             )));
