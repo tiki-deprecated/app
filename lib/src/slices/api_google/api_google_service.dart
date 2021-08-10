@@ -49,10 +49,11 @@ class ApiGoogleService {
       String? pageToken,
       String query = ''}) async {
     GmailApi? gmailApi = await _gmailApi;
-    ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list("me", maxResults: maxResults, pageToken: pageToken, q: query);
     ListMessagesResponse? emails = await gmailApi?.users.messages.list("me",
-        maxResults: maxResults, pageToken: pageToken, includeSpamTrash: true);
+        maxResults: maxResults,
+        pageToken: pageToken,
+        q: query,
+        includeSpamTrash: true);
     List<ApiEmailMsgModel> messages = List.empty(growable: true);
     for (Message message in emails?.messages ?? List.empty()) {
       if (message.id != null) {

@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -57,9 +59,8 @@ class DataBkgService extends ChangeNotifier {
         fetchNewSenders()
       ]);
       _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
-          DateTime.now()
-        .millisecondsSinceEpoch
-        .toString());
+          DateTime.now().millisecondsSinceEpoch.toString());
+      notifyListeners();
     }
   }
 
