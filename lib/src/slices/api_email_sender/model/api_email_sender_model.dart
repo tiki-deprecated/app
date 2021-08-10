@@ -15,14 +15,8 @@ class ApiEmailSenderModel {
   DateTime? emailSince;
   bool? unsubscribed;
   DateTime? ignoreUntil;
-  int created_epoch;
-  int modified_epoch;
-
-  int updated_epoch;
-
-  String lastPage;
-
-  String lastPageToken;
+  int? updatedEpoch;
+  String? lastPageToken;
 
   ApiEmailSenderModel({
     this.senderId,
@@ -33,8 +27,8 @@ class ApiEmailSenderModel {
     this.unsubscribeMailTo,
     this.emailSince,
     DateTime? ignoreUntil,
-    int? created_epoch,
-    int? modified_epoch,
+    this.updatedEpoch = 0,
+    this.lastPageToken,
     this.unsubscribed = false,
   }) : this.ignoreUntil = ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -44,6 +38,7 @@ class ApiEmailSenderModel {
     this.name = map['name'];
     this.email = map['email'];
     this.category = map['category'];
+    this.updatedEpoch = map['updated_epoch'] ?? 0;
     this.unsubscribeMailTo = map['unsubscribe_mail_to'];
     this.unsubscribed = map['unsubscribed_bool'] == 1 ? true : false;
     if (map['ignore_until_epoch'] != null)
@@ -54,7 +49,8 @@ class ApiEmailSenderModel {
           DateTime.fromMillisecondsSinceEpoch(map['email_since_epoch']);
   }
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() =>
+      {
         'sender_id': senderId,
         'company_id': company?.companyId,
         'name': name,
@@ -63,11 +59,12 @@ class ApiEmailSenderModel {
         'unsubscribe_mail_to': unsubscribeMailTo,
         'email_since_epoch': emailSince?.millisecondsSinceEpoch,
         'ignore_until_epoch': ignoreUntil?.millisecondsSinceEpoch,
+        'updated_epoch': updatedEpoch,
         'unsubscribed_bool': unsubscribed == true ? 1 : 0,
       };
 
   @override
   String toString() {
-    return 'ApiEmailSenderModel{senderId: $senderId, company: $company, name: $name, email: $email, category: $category, unsubscribeMailTo: $unsubscribeMailTo, emailSince: $emailSince, unsubscribed: $unsubscribed, ignoreUntil: $ignoreUntil}';
+    return 'ApiEmailSenderModel{senderId: $senderId, company: $company, name: $name, email: $email, category: $category, unsubscribeMailTo: $unsubscribeMailTo, emailSince: $emailSince, unsubscribed: $unsubscribed, updatedEpoch: $updatedEpoch, ignoreUntil: $ignoreUntil}';
   }
 }

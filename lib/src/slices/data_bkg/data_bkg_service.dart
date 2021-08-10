@@ -50,18 +50,16 @@ class DataBkgService {
         ? DateTime.fromMillisecondsSinceEpoch(
         int.parse(appDataGmailLastRun!.value))
         : null;
-    if (googleAccount != null && Itaparica, BA, 44460-000
-    (gmailLastRun == null ||
-    DateTime.now ()
-    .subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
-    Future.wait([
-    fetchEachPendingSender(),
-    fetchNewEmailsFromKnownSenders(),
-    fetchNewSenders()
-    ]);
-    _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
-    DateTime
-        .now()
+    if (googleAccount != null &&
+        (gmailLastRun == null ||
+            DateTime.now().subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
+      Future.wait([
+        fetchEachPendingSender(),
+        fetchNewEmailsFromKnownSenders(),
+        fetchNewSenders()
+      ]);
+      _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
+          DateTime.now()
         .millisecondsSinceEpoch
         .toString());
     }
@@ -74,7 +72,7 @@ class DataBkgService {
         .getPending();
     for (int i = 0; i < senders.length; i++) {
       ApiEmailSenderModel sender = senders[i];
-      String pageToken = sender.lastPageToken;
+      String? pageToken = sender.lastPageToken;
       String senderQuery = "from: ${sender.email}";
       fetchAndSaveAllEmailFromSender(
           query: "$senderQuery", pageToken: pageToken);
@@ -116,8 +114,7 @@ class DataBkgService {
           query: query
       ).then((page) {
         if (page.data != null) {
-          _saveAllMessagesData(page.data!).then((page) =>
-              _saveLastPage(page, query));
+          _saveAllMessagesData(page.data!);
         }
       });
     }
@@ -148,10 +145,8 @@ class DataBkgService {
     if (message.sender?.email != null) {
       ApiEmailSenderModel? messageSender = await _apiEmailSenderService
           .getByEmail(message.sender!.email!);
-      if (forceSenderUpdate || DateTime.fromMillisecondsSinceEpoch(
-          messageSender!.updated_epoch).isBefore(
-          DateTime.now().subtract(Duration(days: 30)))
-      ) {
+      if (forceSenderUpdate || DateTime.fromMillisecondsSinceEpoch(messageSender!.updatedEpoch!)
+              .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
         ApiCompanyModelLocal? company = await _apiCompanyService.upsert(
             domainFromEmail(message.sender!.email!));
         if (company != null) {
@@ -172,16 +167,19 @@ class DataBkgService {
           unsubscribeOnly: true,
           maxResults: 10,
           pageToken: page?.next ?? pageToken,
-          query: query
-      ).then((page) {
+              query: query)
+          .then((page) {
         if (page.data != null) {
-          _saveAllMessagesData(page.data!).then((_) =>
-              _saveLastPage(page.next, query));
+          _saveAllMessagesData(page.data!).then(
+              (_) => _saveSenderLastPage(page.next, page.data![0].sender!));
         }
       });
     } while (page?.next != null);
   }
 
-  _saveLastPage(void page, String query) {}
+  _saveSenderLastPage(String pageToken, ApiEmailSenderModel sender) {
+    sender.lastPageToken = pageToken;
+    _apiEmailSenderService.upsert(sender);
+  }
 }
 
