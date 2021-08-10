@@ -4,6 +4,11 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_button.dart';
+import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_desc.dart';
+import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_explain.dart';
+import 'package:app/src/slices/security_score_modal/ui/security_score_modal_view_score.dart';
+import 'package:app/src/widgets/modal_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -11,101 +16,56 @@ import 'package:sizer/sizer.dart';
 
 import '../model/security_score_modal_model.dart';
 import '../security_score_modal_service.dart';
-import 'security_score_modal_view_empty.dart';
-import 'security_score_modal_view_hack.dart';
-import 'security_score_modal_view_score.dart';
-import 'security_score_modal_view_sensitive.dart';
 
 class SecurityScoreModalLayout extends StatelessWidget {
+  static const String _title = 'Security score';
+
   @override
   Widget build(BuildContext context) {
     SecurityScoreModalModel model =
         Provider.of<SecurityScoreModalService>(context).model;
     return GestureDetector(
-        child: Container(
-            height: 70.h,
-            padding: EdgeInsets.only(left: 20.w, right: 20.w),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h),
-                  ),
-                  Divider(
-                    height: 2.4.h,
-                    thickness: 5,
-                    color: ConfigColor.greyThree,
-                    indent: 38.w,
-                    endIndent: 38.w,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h * 1.5),
-                  ),
-                  Center(
-                      child: Text(
-                    'Security score',
-                    style: TextStyle(
-                        color: ConfigColor.tikiBlue,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800),
-                    textAlign: TextAlign.center,
-                  )),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h * 1.5),
-                  ),
-                  model.sensitivity == null
-                      ? SecurityScoreModalViewEmpty()
-                      : Container(),
-                  RichText(
-                      textAlign: TextAlign.start,
-                      text: TextSpan(
-                          text:
-                              'For each email list that emails you, we show\nyou a rating which we call a ',
-                          style: TextStyle(
-                            color: ConfigColor.tikiBlue,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: 'Security score.',
-                                style: TextStyle(fontWeight: FontWeight.bold))
-                          ])),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h),
-                  ),
-                  Text('The security score is determined by two ratings:'),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h),
-                  ),
-                  model.sensitivity != null
-                      ? SecurityScoreModalViewScore(
-                          hacking: 69, sensitivity: 69)
-                      : Container(),
-                  SecurityScoreModalViewSensitive(),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h),
-                  ),
-                  SecurityScoreModalViewHack(),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h * 2),
-                  ),
-                  Center(
-                      child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size.fromWidth(90.w),
-                      primary: ConfigColor.orange,
-                      padding: EdgeInsets.symmetric(vertical: 2.h),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(3.w))),
-                    ),
-                    child: Text("OK, got it",
-                        style: TextStyle(
-                            fontSize: 12.sp, fontWeight: FontWeight.bold)),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.4.h * 3),
-                  ),
-                ])));
+        child: SafeArea(
+            child: Container(
+                height: 80.h,
+                margin: EdgeInsets.symmetric(horizontal: 7.w),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(top: 2.5.h),
+                          child: ModalDivider()),
+                      Container(
+                          margin: EdgeInsets.only(top: 5.h),
+                          alignment: Alignment.center,
+                          child: Text(
+                            _title,
+                            style: TextStyle(
+                                color: ConfigColor.tikiBlue,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w800),
+                            textAlign: TextAlign.center,
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(top: 3.h),
+                          alignment: Alignment.topLeft,
+                          child: SecurityScoreModalViewDesc(
+                              noScore: model.security == null)),
+                      Container(
+                          margin: EdgeInsets.only(top: 3.h),
+                          child: SecurityScoreModalViewScore(
+                              security: model.security,
+                              hacking: model.hacking,
+                              sensitivity: model.sensitivity)),
+                      Container(
+                          margin: EdgeInsets.only(top: 3.h),
+                          child: SecurityScoreModalViewExplain()),
+                      Expanded(
+                          child: Container(
+                              alignment: Alignment.bottomCenter,
+                              margin: EdgeInsets.only(bottom: 3.h),
+                              child: SecurityScoreModalViewButton()))
+                    ]))));
   }
 }

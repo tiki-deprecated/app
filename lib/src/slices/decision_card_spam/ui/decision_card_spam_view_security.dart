@@ -7,12 +7,13 @@ import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
 
 class DecisionCardSpamViewSecurity extends StatelessWidget {
-  final double? starRates;
+  final double? security;
   final double? sensitivity;
   final double? hacking;
 
-  DecisionCardSpamViewSecurity({starRates, this.sensitivity, this.hacking})
-      : this.starRates = starRates != null ? (1 - starRates) * 5 : null;
+  DecisionCardSpamViewSecurity(
+      {double? security, this.sensitivity, this.hacking})
+      : this.security = security != null ? (1 - security) * 5 : null;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
       Padding(
         padding: EdgeInsets.only(top: 1.h),
       ),
-      this.starRates != null
+      this.security != null
           ? RichText(
               text: TextSpan(
                   style: TextStyle(
@@ -33,7 +34,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                   text: "Your data is ",
                   children: [
                     TextSpan(
-                        text: _getSecurityText(this.starRates ?? 0),
+                        text: _getSecurityText(this.security ?? 0),
                         style: TextStyle(color: _getColorForText())),
                     _getInfoIcon(context)
                   ]),
@@ -53,7 +54,7 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
 
   List<Widget> _getStars() {
     var color = _getColor();
-    var starRate = this.starRates ?? 0;
+    var starRate = this.security ?? 0;
     var stars = <Widget>[];
     for (int i = 0; i < 5; i++) {
       if (i >= starRate.floor() && i < starRate.ceil()) {
@@ -81,10 +82,10 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   }
 
   String _getColor() {
-    if (this.starRates == null) {
+    if (this.security == null) {
       return "grey";
     } else {
-      var starRate = this.starRates ?? 0;
+      var starRate = this.security ?? 0;
       if (starRate < 2) {
         return "red";
       } else if (starRate < 4) {
@@ -96,8 +97,8 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
   }
 
   Color _getColorForText() {
-    var starRates = this.starRates ?? 0;
-    if (this.starRates == null) {
+    var starRates = this.security ?? 0;
+    if (this.security == null) {
       return ConfigColor.greyFive;
     } else {
       if (starRates < 2) {
@@ -133,7 +134,9 @@ class DecisionCardSpamViewSecurity extends StatelessWidget {
                   size: 17.sp,
                 ),
                 onTap: () => SecurityScoreModalService(
-                        hacking: this.hacking, sensitivity: this.sensitivity)
+                        hacking: this.hacking,
+                        sensitivity: this.sensitivity,
+                        security: this.security)
                     .presenter
                     .showModal(context))));
   }

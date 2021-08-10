@@ -63,7 +63,7 @@ class DecisionCardSpamLayoutContent extends StatelessWidget {
                         Padding(
                             padding: EdgeInsets.only(top: 3.5.h),
                             child: DecisionCardSpamViewSecurity(
-                              starRates: this.cardSpamModel.securityScore,
+                              security: this.cardSpamModel.securityScore,
                               sensitivity: this.cardSpamModel.sensitivityScore,
                               hacking: this.cardSpamModel.hackingScore,
                             ))

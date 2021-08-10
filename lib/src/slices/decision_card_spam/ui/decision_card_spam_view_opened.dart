@@ -36,7 +36,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
                         style: TextStyle(
                             color: _getProgressColor(this.percent! * 100),
                             fontFamily: ConfigFont.familyKoara,
-                            fontSize: 26.sp,
+                            fontSize: 23.sp,
                             fontWeight: FontWeight.bold),
                         children: [
                   TextSpan(
