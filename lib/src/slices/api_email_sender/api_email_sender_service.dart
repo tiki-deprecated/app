@@ -34,6 +34,14 @@ class ApiEmailSenderService {
   Future<ApiEmailSenderModel?> getById(int senderId) =>
       _repository.getById(senderId);
 
+  getByEmail(String email) => _repository.getById(email);
+
+  getPending() => _repository.getPending(email);
+
+  getKnown() => _repository.getKnown(email);
+
+  getAll() => _repository.getAll();
+
   Future<void> markAsUnsubscribed(ApiEmailSenderModel sender) async {
     sender.unsubscribed = true;
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
@@ -46,19 +54,5 @@ class ApiEmailSenderService {
     _repository.update(sender);
   }
 
-  getByEmail(String email) {
-    // TODO
-  }
 
-  getPending() {
-    //TODO
-  }
-
-  getKnown() {
-    //todo
-  }
-
-  getAll() {
-    //TODO
-  }
 }

@@ -41,6 +41,7 @@ class DataBkgService extends ChangeNotifier {
     checkEmail();
   }
 
+  /// Checks email data from GmailApi
   Future<void> checkEmail() async {
     GoogleSignInAccount? googleAccount =
     await _apiGoogleService.getConnectedUser();

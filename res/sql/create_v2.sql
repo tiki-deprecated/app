@@ -26,6 +26,7 @@ CREATE TABLE sender (
     unsubscribe_mail_to TEXT,
     ignore_until_epoch INTEGER,
     email_since_epoch INTEGER,
+    updated_epoch INTEGER,
     unsubscribed_bool INTEGER,
     FOREIGN KEY(company_id) REFERENCES company(company_id)
 );
