@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -17,7 +18,7 @@ import '../api_google/api_google_service.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import 'model/data_bkg_model.dart';
 
-class DataBkgService {
+class DataBkgService extends ChangeNotifier {
   final DataBkgModel model = DataBkgModel();
   final ApiCompanyService _apiCompanyService;
   final ApiEmailMsgService _apiEmailMsgService;
@@ -69,6 +70,7 @@ class DataBkgService {
           }
           _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
               DateTime.now().millisecondsSinceEpoch.toString());
+          notifyListeners();
         }
       }
     }
