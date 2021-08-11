@@ -14,12 +14,16 @@ class ApiEmailSenderRepository {
   ApiEmailSenderRepository(this._database);
 
   Future<ApiEmailSenderModel> insert(ApiEmailSenderModel sender) async {
+    DateTime now = DateTime.now();
+    sender.modified = now;
+    sender.created = now;
     int id = await _database.insert(_table, sender.toMap());
     sender.senderId = id;
     return sender;
   }
 
   Future<ApiEmailSenderModel> update(ApiEmailSenderModel sender) async {
+    sender.modified = DateTime.now();
     await _database.update(
       _table,
       sender.toMap(),

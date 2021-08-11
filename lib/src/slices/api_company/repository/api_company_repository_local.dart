@@ -14,12 +14,16 @@ class ApiCompanyRepositoryLocal {
   ApiCompanyRepositoryLocal(this._database);
 
   Future<ApiCompanyModelLocal> insert(ApiCompanyModelLocal company) async {
+    DateTime now = DateTime.now();
+    company.modified = now;
+    company.created = now;
     int id = await _database.insert(_table, company.toMap());
     company.companyId = id;
     return company;
   }
 
   Future<ApiCompanyModelLocal> update(ApiCompanyModelLocal company) async {
+    company.modified = DateTime.now();
     await _database.update(
       _table,
       company.toMap(),

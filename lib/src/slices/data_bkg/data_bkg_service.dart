@@ -10,9 +10,11 @@ import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../api_company/api_company_service.dart';
+import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
+import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_google/api_google_service.dart';
 import 'model/data_bkg_model.dart';
 
@@ -35,7 +37,7 @@ class DataBkgService extends ChangeNotifier {
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiAppDataService = apiAppDataService {
-    checkGmail();
+    checkGmail(fetchAll: true);
   }
 
   // pass flag that says all otherwise only since last fetch (after:2004/04/16)
@@ -59,10 +61,12 @@ class DataBkgService extends ChangeNotifier {
             DateTime.now()
                 .subtract(Duration(days: 0 /*1*/))
                 .isAfter(gmailLastRun)))
-      return _checkGmailFetch(fetchAll: fetchAll, lastChecked: gmailLastRun);
+      return _checkGmailFetchList(
+          fetchAll: fetchAll, lastChecked: gmailLastRun);
   }
 
-  _checkGmailFetch({bool fetchAll = false, DateTime? lastChecked}) async {
+  Future<void> _checkGmailFetchList(
+      {bool fetchAll = false, DateTime? lastChecked}) async {
     Set<String> messages;
     if (fetchAll)
       messages = await _apiGoogleService.gmailFetch();
@@ -75,39 +79,76 @@ class DataBkgService extends ChangeNotifier {
               ? "after:" + secondsSinceEpoch.toString()
               : null);
     }
+    List<String> known =
+        (await _apiEmailMsgService.getByExtMessageIds(messages.toList()))
+            .map((message) => message.extMessageId!)
+            .toList();
+    Set<String> unknown =
+        messages.where((message) => !known.contains(message)).toSet();
+    _checkGmailFetchMessage(unknown);
+  }
+
+  Future<void> _checkGmailFetchMessage(Set<String> messages) async {
     for (String messageId in messages) {
-      ApiEmailMsgModel? msg = await _apiGoogleService.gmailFetchMessage(
+      ApiEmailMsgModel? message = await _apiGoogleService.gmailFetchMessage(
           messageId,
           format: "metadata",
           headers: ["List-unsubscribe"]);
-      //do we have the sender? if so, upset message. if not, go get sender info
-    }
-  }
-
-  /*
-  DataBkgModelPage<ApiEmailMsgModel>? page;
-      for (int i = 0; i < 10; i++) {
-        page = await _apiGoogleService.gmailFetch(
-            unsubscribeOnly: true, maxResults: 10, pageToken: page?.next);
-        if (page.data != null) {
-          for (ApiEmailMsgModel message in page.data!) {
-            if (message.sender?.email != null) {
-              ApiCompanyModelLocal? company = await _apiCompanyService
-                  .upsert(domainFromEmail(message.sender!.email!));
-              if (company != null) {
-                message.sender!.company = company;
-                await _apiEmailSenderService.upsert(message.sender!);
-                await _apiEmailMsgService.upsert(message);
-              }
-            }
-          }
-          _apiAppDataService.save(ApiAppDataKey.gmailLastFetch,
-              DateTime.now().millisecondsSinceEpoch.toString());
-          notifyListeners();
+      if (message?.sender?.email != null &&
+          message?.sender?.unsubscribeMailTo != null) {
+        ApiEmailSenderModel? sender =
+            await _apiEmailSenderService.getByEmail(message!.sender!.email!);
+        if (sender != null) {
+          await _saveSender(sender);
+          await _apiEmailMsgService.upsert(message);
+        } else {
+          Set<ApiEmailMsgModel> senderMessages =
+              await _checkGmailNewSender(message.sender!.email!);
+          messages
+              .removeAll(senderMessages.map((message) => message.extMessageId));
         }
       }
     }
-   */
+  }
+
+  Future<Set<ApiEmailMsgModel>> _checkGmailNewSender(String email) async {
+    Set<String> messageIds =
+        await _apiGoogleService.gmailFetch(query: 'from:' + email);
+    Set<ApiEmailMsgModel> messages = Set();
+    for (String messageId in messageIds) {
+      ApiEmailMsgModel? message = await _apiGoogleService.gmailFetchMessage(
+          messageId,
+          format: "metadata",
+          headers: ["List-unsubscribe"]);
+      if (message?.sender?.email != null &&
+          message?.sender?.unsubscribeMailTo != null) messages.add(message!);
+    }
+    DateTime first = DateTime.now();
+    messages.forEach((message) {
+      if (message.receivedDate != null && message.receivedDate!.isBefore(first))
+        first = message.receivedDate!;
+    });
+    ApiEmailSenderModel sender = messages.first.sender!;
+    sender.emailSince = first;
+    ApiEmailSenderModel? inserted = await _saveSender(sender);
+    for (ApiEmailMsgModel message in messages) {
+      message.sender = inserted;
+      await _apiEmailMsgService.upsert(message);
+    }
+    return messages;
+  }
+
+  Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
+    if (sender.email != null) {
+      ApiCompanyModelLocal? company =
+          await _apiCompanyService.upsert(domainFromEmail(sender.email!));
+      if (company != null) {
+        sender.company = company;
+        await _apiEmailSenderService.upsert(sender);
+        notifyListeners();
+      }
+    }
+  }
 
   String domainFromEmail(String email) {
     List<String> atSplit = email.split('@');

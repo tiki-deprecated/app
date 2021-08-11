@@ -10,6 +10,8 @@ class ApiCompanyModelLocal {
   double? breachScore;
   double? sensitivityScore;
   String? domain;
+  DateTime? created;
+  DateTime? modified;
 
   ApiCompanyModelLocal(
       {this.companyId,
@@ -17,7 +19,9 @@ class ApiCompanyModelLocal {
       this.securityScore,
       this.domain,
       this.sensitivityScore,
-      this.breachScore});
+      this.breachScore,
+      this.created,
+      this.modified});
 
   ApiCompanyModelLocal.fromMap(map) {
     this.companyId = map['company_id'];
@@ -26,6 +30,11 @@ class ApiCompanyModelLocal {
     this.breachScore = map['breach_score'];
     this.sensitivityScore = map['sensitivity_score'];
     this.domain = map['domain'];
+    if (map['modified_epoch'] != null)
+      this.modified =
+          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
+    if (map['created_epoch'] != null)
+      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
   Map<String, dynamic> toMap() => {
@@ -35,10 +44,12 @@ class ApiCompanyModelLocal {
         'breach_score': breachScore,
         'sensitivity_score': sensitivityScore,
         'domain': domain,
+        'modified_epoch': modified?.millisecondsSinceEpoch,
+        'created_epoch': created?.millisecondsSinceEpoch
       };
 
   @override
   String toString() {
-    return 'ApiCompanyModel{companyId: $companyId, logo: $logo, securityScore: $securityScore, breachScore: $breachScore, sensitivityScore: $sensitivityScore, domain: $domain}';
+    return 'ApiCompanyModelLocal{companyId: $companyId, logo: $logo, securityScore: $securityScore, breachScore: $breachScore, sensitivityScore: $sensitivityScore, domain: $domain, created: $created, modified: $modified}';
   }
 }

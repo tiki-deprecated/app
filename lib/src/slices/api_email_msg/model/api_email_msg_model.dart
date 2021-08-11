@@ -12,15 +12,18 @@ class ApiEmailMsgModel {
   DateTime? receivedDate;
   DateTime? openedDate;
   String? account;
+  DateTime? created;
+  DateTime? modified;
 
-  ApiEmailMsgModel({
-    this.messageId,
-    this.extMessageId,
-    this.sender,
-    this.receivedDate,
-    this.openedDate,
-    this.account,
-  });
+  ApiEmailMsgModel(
+      {this.messageId,
+      this.extMessageId,
+      this.sender,
+      this.receivedDate,
+      this.openedDate,
+      this.account,
+      this.modified,
+      this.created});
 
   ApiEmailMsgModel.fromMap(Map<String, dynamic> map) {
     this.messageId = map['message_id'];
@@ -33,6 +36,11 @@ class ApiEmailMsgModel {
     if (map['opened_date_epoch'] != null)
       this.openedDate =
           DateTime.fromMillisecondsSinceEpoch(map['opened_date_epoch']);
+    if (map['modified_epoch'] != null)
+      this.modified =
+          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
+    if (map['created_epoch'] != null)
+      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
   Map<String, dynamic> toMap() {
@@ -43,6 +51,8 @@ class ApiEmailMsgModel {
       'received_date_epoch': receivedDate?.millisecondsSinceEpoch,
       'opened_date_epoch': openedDate?.millisecondsSinceEpoch,
       'account': account,
+      'modified_epoch': modified?.millisecondsSinceEpoch,
+      'created_epoch': created?.millisecondsSinceEpoch
     };
   }
 

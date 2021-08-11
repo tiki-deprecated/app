@@ -22,24 +22,33 @@ class ApiCompanyService {
 
   Future<ApiCompanyModelLocal?> upsert(String domain) async {
     if (domain.isNotEmpty) {
-      HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
-      if (HelperApiUtils.is2xx(indexRsp.code)) {
-        ApiCompanyModelLocal? local =
-            await _repositoryLocal.getByDomain(domain);
-        ApiCompanyModelLocal company = ApiCompanyModelLocal(
-          companyId: local?.companyId,
-          domain: domain,
-          logo: indexRsp.data.about?.logo,
-          securityScore: indexRsp.data.score?.securityScore,
-          breachScore: indexRsp.data.score?.securityScore,
-          sensitivityScore: indexRsp.data.score?.securityScore,
-        );
-        return local == null
-            ? _repositoryLocal.insert(company)
-            : _repositoryLocal.update(company);
-      }
+      ApiCompanyModelLocal? local = await _repositoryLocal.getByDomain(domain);
+      if (local == null) {
+        HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
+        if (HelperApiUtils.is2xx(indexRsp.code))
+          return _repositoryLocal.insert(ApiCompanyModelLocal(
+            domain: domain,
+            logo: indexRsp.data.about?.logo,
+            securityScore: indexRsp.data.score?.securityScore,
+            breachScore: indexRsp.data.score?.securityScore,
+            sensitivityScore: indexRsp.data.score?.securityScore,
+          ));
+      } else if (local.modified == null ||
+          local.modified!
+              .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
+        HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
+        if (HelperApiUtils.is2xx(indexRsp.code))
+          return _repositoryLocal.update(ApiCompanyModelLocal(
+            companyId: local.companyId,
+            domain: domain,
+            logo: indexRsp.data.about?.logo,
+            securityScore: indexRsp.data.score?.securityScore,
+            breachScore: indexRsp.data.score?.securityScore,
+            sensitivityScore: indexRsp.data.score?.securityScore,
+          ));
+      } else
+        return local;
     }
-    return null;
   }
 
   Future<ApiCompanyModelLocal?> getById(int? companyId) async {

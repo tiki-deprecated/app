@@ -42,27 +42,6 @@ class ApiGoogleService {
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 
-  /*Future<DataBkgModelPage<ApiEmailMsgModel>> gmailFetch(
-      {int maxResults = 100,
-      bool unsubscribeOnly = false,
-      String? pageToken}) async {
-    GmailApi? gmailApi = await _gmailApi;
-    ListMessagesResponse? emails = await gmailApi?.users.messages.list("me",
-        maxResults: maxResults, pageToken: pageToken, includeSpamTrash: true);
-    List<ApiEmailMsgModel> messages = List.empty(growable: true);
-    for (Message message in emails?.messages ?? List.empty()) {
-      if (message.id != null) {
-        ApiEmailMsgModel? rsp =
-            await gmailFetchMessage(message.id!, headers: ["List-unsubscribe"]);
-        if (rsp != null) {
-          if (!unsubscribeOnly || rsp.sender?.unsubscribeMailTo != null)
-            messages.add(rsp);
-        }
-      }
-    }
-    return DataBkgModelPage(data: messages, next: emails?.nextPageToken);
-  }*/
-
   Future<Set<String>> gmailFetch({String? query}) async {
     return _gmailFetch(messageIds: Set(), query: query);
   }

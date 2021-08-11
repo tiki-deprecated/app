@@ -34,6 +34,9 @@ class ApiEmailSenderService {
   Future<ApiEmailSenderModel?> getById(int senderId) =>
       _repository.getById(senderId);
 
+  Future<ApiEmailSenderModel?> getByEmail(String email) =>
+      _repository.getByEmail(email);
+
   Future<void> markAsUnsubscribed(ApiEmailSenderModel sender) async {
     sender.unsubscribed = true;
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));

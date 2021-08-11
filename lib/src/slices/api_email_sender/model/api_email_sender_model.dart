@@ -15,6 +15,8 @@ class ApiEmailSenderModel {
   DateTime? emailSince;
   bool? unsubscribed;
   DateTime? ignoreUntil;
+  DateTime? created;
+  DateTime? modified;
 
   ApiEmailSenderModel(
       {this.senderId,
@@ -25,7 +27,9 @@ class ApiEmailSenderModel {
       this.unsubscribeMailTo,
       this.emailSince,
       DateTime? ignoreUntil,
-      this.unsubscribed = false})
+      this.unsubscribed = false,
+      this.modified,
+      this.created})
       : this.ignoreUntil =
             ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -43,6 +47,11 @@ class ApiEmailSenderModel {
     if (map['email_since_epoch'] != null)
       this.emailSince =
           DateTime.fromMillisecondsSinceEpoch(map['email_since_epoch']);
+    if (map['modified_epoch'] != null)
+      this.modified =
+          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
+    if (map['created_epoch'] != null)
+      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
   Map<String, dynamic> toMap() => {
@@ -55,6 +64,8 @@ class ApiEmailSenderModel {
         'email_since_epoch': emailSince?.millisecondsSinceEpoch,
         'ignore_until_epoch': ignoreUntil?.millisecondsSinceEpoch,
         'unsubscribed_bool': unsubscribed == true ? 1 : 0,
+        'modified_epoch': modified?.millisecondsSinceEpoch,
+        'created_epoch': created?.millisecondsSinceEpoch
       };
 
   @override
