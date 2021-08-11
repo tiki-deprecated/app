@@ -85,16 +85,20 @@ class ApiGoogleService {
     Uri uri = Uri.parse(unsubscribeMailTo);
     String to = uri.path;
     String subject = uri.queryParameters['subject'] ?? "unsubscribe";
-    String content = uri.queryParameters['content'] ?? "unsubscribe";
+    String message = "Tiki unsubscribe message";
+    String email = '''
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+to: $to
+from: me
+subject: $subject
+
+$message
+''';
+
     await gmailApi.users.messages.send(
         Message.fromJson({
-          'raw': _getBase64Email(
-              source: 'From: me\r\n'
-                  'To: $to\r\n'
-                  'Subject: $subject\r\n'
-                  'Content-Type: text/html; charset=utf-8\r\n'
-                  'Content-Transfer-Encoding: base64\r\n\r\n'
-                  '$content'),
+          'raw': _getBase64Email(source: email),
         }),
         "me");
     return true;
