@@ -44,7 +44,7 @@ class DataBkgService extends ChangeNotifier {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
     ApiAppDataModel? appDataGmailLastRun =
-        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
+        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
     DateTime? gmailLastRun = appDataGmailLastRun != null
         ? DateTime.fromMillisecondsSinceEpoch(
             int.parse(appDataGmailLastRun.value))
@@ -68,7 +68,7 @@ class DataBkgService extends ChangeNotifier {
               }
             }
           }
-          _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
+          _apiAppDataService.save(ApiAppDataKey.gmailLastFetch,
               DateTime.now().millisecondsSinceEpoch.toString());
           notifyListeners();
         }

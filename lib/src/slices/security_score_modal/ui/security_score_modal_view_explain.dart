@@ -75,7 +75,7 @@ class SecurityScoreModalViewExplain extends StatelessWidget {
           TextSpan(
               text: link,
               recognizer: TapGestureRecognizer()
-                ..onTap = () async => controller.onLink('https://' + link),
+                ..onTap = () async => controller.openLink('https://' + link),
               style: TextStyle(
                   color: ConfigColor.orange,
                   fontFamily: ConfigFont.familyNunitoSans,

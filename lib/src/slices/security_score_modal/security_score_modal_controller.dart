@@ -12,7 +12,7 @@ class SecurityScoreModalController {
 
   SecurityScoreModalController(this.service);
 
-  Future<void> onLink(String? href) async {
+  Future<void> openLink(String? href) async {
     if (href != null && await canLaunch(href)) await launch(href);
   }
 }

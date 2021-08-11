@@ -54,11 +54,11 @@ class DecisionScreenService extends ChangeNotifier {
   }
 
   Future<void> testDone() async =>
-      _apiAppDataService.save(ApiAppDataKey.decisionCardsTestDone, "true");
+      _apiAppDataService.save(ApiAppDataKey.testCardsDone, "true");
 
   Future<void> _addTests() async {
     ApiAppDataModel? testDone =
-        await _apiAppDataService.getByKey(ApiAppDataKey.decisionCardsTestDone);
+        await _apiAppDataService.getByKey(ApiAppDataKey.testCardsDone);
     bool isTestDone = (testDone?.value == "true" ? true : false);
     if (!isTestDone && !this.model.testCardsAdded) {
       this.model.cards.addAll(List<DecisionScreenViewCardTest>.generate(
