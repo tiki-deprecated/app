@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/home_screen/home_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,14 +30,17 @@ class DataScreenController {
   Future<void> linkGmail(BuildContext context) async {
     ApiAppDataService apiAppDataService =
         Provider.of<ApiAppDataService>(context, listen: false);
+    HomeScreenService homeScreenService =
+        Provider.of<HomeScreenService>(context, listen: false);
     ApiAppDataModel? appData = await apiAppDataService
         .getByKey(ApiAppDataKey.googleOauthModalComplete);
     if (appData == null || appData.value == "false")
-      return GoogleOauthModalService(
+      await GoogleOauthModalService(
               dataScreenService: service, apiAppDataService: apiAppDataService)
           .presenter
           .showModal(context);
     else
-      return service.addGoogleAccount();
+      await service.addGoogleAccount();
+    return homeScreenService.showOverlay(apiAppDataService);
   }
 }

@@ -40,6 +40,7 @@ class DecisionScreenService extends ChangeNotifier {
     refresh();
   }
 
+  //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
     bool isConnected = await _apiGoogleService.isConnected();
     if (isConnected) await _generateSpamCards();
@@ -64,6 +65,7 @@ class DecisionScreenService extends ChangeNotifier {
       this.model.cards.addAll(List<DecisionScreenViewCardTest>.generate(
           3, (index) => DecisionScreenViewCardTest(index)).reversed.toList());
       this.model.testCardsAdded = true;
+      this.model.isPending = true;
     }
   }
 
@@ -73,6 +75,7 @@ class DecisionScreenService extends ChangeNotifier {
       List<DecisionCardSpamLayout>? cards =
           await _decisionCardSpamService.getCards();
       if (cards != null && cards.isNotEmpty) {
+        this.model.isPending = false;
         cards.forEach((card) {
           if (!this.model.cards.contains(card) && this.model.cards.length < 5)
             this.model.cards.add(card);

@@ -3,18 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
+import 'package:app/src/slices/decision_screen/ui/decision_screen_abstract_card.dart';
 
 class DecisionScreenModel {
-  List<AbstractDecisionCardView> cards = [];
+  List<DecisionScreenAbstractCard> cards = [];
   bool isLinked = false;
   bool testCardsAdded = false;
-}
-
-abstract class AbstractDecisionCardView {
-  Future<void> callbackNo(BuildContext context);
-
-  Future<void> callbackYes(BuildContext context);
-
-  Widget content(BuildContext context);
+  bool isPending = false;
 }

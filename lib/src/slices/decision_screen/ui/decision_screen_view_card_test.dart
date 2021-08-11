@@ -1,6 +1,5 @@
 import 'package:app/src/config/config_color.dart';
 import 'package:app/src/config/config_font.dart';
-import 'package:app/src/slices/decision_screen/model/decision_screen_model.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,8 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../decision_screen_service.dart';
+import 'decision_screen_abstract_card.dart';
 
-class DecisionScreenViewCardTest implements AbstractDecisionCardView {
+class DecisionScreenViewCardTest implements DecisionScreenAbstractCard {
   static const num _iconSize = 15;
   static const num _fontSizeTitle = 25;
   static const num _fontSizeText = 12.5;

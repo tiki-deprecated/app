@@ -12,11 +12,11 @@ class DecisionScreenController {
 
   DecisionScreenController(this.service);
 
-  void openLink(String url) async {
+  Future<void> openLink(String url) async {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  removeLast(BuildContext context, Function callback) {
+  void removeLast(BuildContext context, Function callback) {
     service.removeCard();
     service.refresh();
     callback(context);
