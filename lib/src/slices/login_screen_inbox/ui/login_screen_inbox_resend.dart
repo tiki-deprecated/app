@@ -24,7 +24,7 @@ class LoginScreenInboxResend extends StatelessWidget {
     return Row(children: [
       Text(_textReceive,
           style: TextStyle(
-              color: ConfigColor.greySix,
+              color: ConfigColor.greySeven,
               fontSize: _fontSize.sp,
               fontWeight: FontWeight.w600)),
       TextButton(

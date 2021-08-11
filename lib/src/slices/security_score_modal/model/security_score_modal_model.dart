@@ -4,8 +4,9 @@
  */
 
 class SecurityScoreModalModel {
+  double? security;
   double? hacking;
   double? sensitivity;
 
-  SecurityScoreModalModel({this.hacking, this.sensitivity});
+  SecurityScoreModalModel({this.security, this.hacking, this.sensitivity});
 }

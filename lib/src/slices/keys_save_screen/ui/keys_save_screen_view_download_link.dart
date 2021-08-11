@@ -24,7 +24,7 @@ class KeysSaveScreenViewDownloadLink extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: "NunitoSans",
                     fontSize: 11.sp,
-                    color: ConfigColor.greySix,
+                    color: ConfigColor.greySeven,
                     fontWeight: FontWeight.w600),
                 children: [
               TextSpan(

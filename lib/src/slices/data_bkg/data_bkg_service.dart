@@ -46,11 +46,11 @@ class DataBkgService extends ChangeNotifier {
   Future<void> checkEmail() async {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
-    appDataGmailLastRun =
-        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
+    ApiAppDataModel? appDataGmailLastRun =
+        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
     DateTime? gmailLastRun = appDataGmailLastRun != null
         ? DateTime.fromMillisecondsSinceEpoch(
-            int.parse(appDataGmailLastRun!.value))
+            int.parse(appDataGmailLastRun.value))
         : null;
     if (googleAccount != null &&
         (gmailLastRun == null ||
@@ -120,15 +120,6 @@ class DataBkgService extends ChangeNotifier {
     await Future.wait(saveList);
   }
 
-  /// Get domain from Email.
-  String domainFromEmail(String email) {
-    List<String> atSplit = email.split('@');
-    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-    return periodSplit[periodSplit.length - 2] +
-        "." +
-        periodSplit[periodSplit.length - 1];
-  }
-
   /// Save sender, company and message data.
   Future<void> _saveMessageData(message,
       {bool forceSenderUpdate = false}) async {
@@ -171,5 +162,13 @@ class DataBkgService extends ChangeNotifier {
       _apiEmailSenderService.saveSinceYear(sender, since);
     }
     notifyListeners();
+  }
+
+  String domainFromEmail(String email) {
+    List<String> atSplit = email.split('@');
+    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
+    return periodSplit[periodSplit.length - 2] +
+        "." +
+        periodSplit[periodSplit.length - 1];
   }
 }

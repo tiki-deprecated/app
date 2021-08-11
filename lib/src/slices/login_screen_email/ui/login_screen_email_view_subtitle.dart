@@ -12,6 +12,6 @@ class LoginScreenEmailViewSubtitle extends StatelessWidget {
         style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
-            color: ConfigColor.greySix));
+            color: ConfigColor.greySeven));
   }
 }

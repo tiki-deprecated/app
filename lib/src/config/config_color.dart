@@ -28,10 +28,12 @@ class ConfigColor {
 
   /// Grey scale
   static const Color white = Color(0xFFFFFFFF);
+  static const Color greyZero = Color(0xFFF8F8F8);
   static const Color greyOne = Color(0xFFF4F4F4);
   static const Color greyTwo = Color(0xFFF0F0F0);
-  static const Color greyThree = Color(0xFFAFAFAF);
-  static const Color greyFour = Color(0xFF8D8D8D);
-  static const Color greyFive = Color(0xFF797979);
-  static const Color greySix = Color(0xFF545454);
+  static const Color greyThree = Color(0xFFD8D8D8);
+  static const Color greyFour = Color(0xFFAFAFAF);
+  static const Color greyFive = Color(0xFF8D8D8D);
+  static const Color greySix = Color(0xFF797979);
+  static const Color greySeven = Color(0xFF545454);
 }

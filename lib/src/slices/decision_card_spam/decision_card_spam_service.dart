@@ -10,7 +10,6 @@ import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
@@ -68,8 +67,6 @@ class DecisionCardSpamService extends ChangeNotifier {
         ));
       }
     }
-    _apiAppDataService.save(ApiAppDataKey.spamCardsLastRun,
-        DateTime.now().millisecondsSinceEpoch.toString());
     return spamModels
         .map((spamModel) => DecisionCardSpamLayout(this, spamModel))
         .toList();

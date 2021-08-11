@@ -4,28 +4,46 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/config/config_font.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class SecurityScoreModalViewScoreNum extends StatelessWidget {
-  final score;
-  final text;
+  final int? score;
+  final String label;
 
-  const SecurityScoreModalViewScoreNum(this.score, this.text);
+  SecurityScoreModalViewScoreNum({double? score, required this.label})
+      : this.score = score != null ? ((1 - score) * 10).round() : null;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Text("${this.score} / 10",
+      score != null
+          ? Text("${this.score} / 10",
+              style: TextStyle(
+                  color: _getColor(this.score!),
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold))
+          : Text("? / 10",
+              style: TextStyle(
+                  color: ConfigColor.greyFour,
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold)),
+      Text(this.label,
           style: TextStyle(
-              color: ConfigColor.tikiBlue,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold)),
-      Text(this.text,
-          style: TextStyle(
-              color: ConfigColor.greyFive,
-              fontSize: 10.sp,
+              color: ConfigColor.greySix,
+              fontSize: 11.5.sp,
+              fontFamily: ConfigFont.familyNunitoSans,
               fontWeight: FontWeight.bold))
     ]);
+  }
+
+  Color _getColor(int score) {
+    if (score < 4)
+      return ConfigColor.tikiRed;
+    else if (score < 7)
+      return ConfigColor.tikiOrange;
+    else
+      return ConfigColor.green;
   }
 }

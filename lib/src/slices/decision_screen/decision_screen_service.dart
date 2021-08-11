@@ -35,11 +35,12 @@ class DecisionScreenService extends ChangeNotifier {
             apiAppDataService: apiAppDataService,
             apiGoogleService: apiGoogleService) {
     presenter = DecisionScreenPresenter(this);
-    controller = DecisionScreenController();
+    controller = DecisionScreenController(this);
     model = DecisionScreenModel();
     refresh();
   }
 
+  //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
     bool isConnected = await _apiGoogleService.isConnected();
     if (isConnected) await _generateSpamCards();
@@ -54,27 +55,32 @@ class DecisionScreenService extends ChangeNotifier {
   }
 
   Future<void> testDone() async =>
-      _apiAppDataService.save(ApiAppDataKey.decisionCardsTestDone, "true");
+      _apiAppDataService.save(ApiAppDataKey.testCardsDone, "true");
 
   Future<void> _addTests() async {
     ApiAppDataModel? testDone =
-        await _apiAppDataService.getByKey(ApiAppDataKey.decisionCardsTestDone);
+        await _apiAppDataService.getByKey(ApiAppDataKey.testCardsDone);
     bool isTestDone = (testDone?.value == "true" ? true : false);
     if (!isTestDone && !this.model.testCardsAdded) {
       this.model.cards.addAll(List<DecisionScreenViewCardTest>.generate(
           3, (index) => DecisionScreenViewCardTest(index)).reversed.toList());
       this.model.testCardsAdded = true;
+      this.model.isPending = true;
     }
   }
 
   Future<void> _generateSpamCards() async {
     if (!this.model.isLinked) return;
-    List<DecisionCardSpamLayout>? cards =
-        await _decisionCardSpamService.getCards();
-    if (cards != null && cards.isNotEmpty) {
-      cards.forEach((card) {
-        if (!this.model.cards.contains(card)) this.model.cards.add(card);
-      });
+    if (this.model.cards.length < 5) {
+      List<DecisionCardSpamLayout>? cards =
+          await _decisionCardSpamService.getCards();
+      if (cards != null && cards.isNotEmpty) {
+        this.model.isPending = false;
+        cards.forEach((card) {
+          if (!this.model.cards.contains(card) && this.model.cards.length < 5)
+            this.model.cards.add(card);
+        });
+      }
     }
   }
 }

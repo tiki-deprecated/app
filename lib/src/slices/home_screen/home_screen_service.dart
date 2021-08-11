@@ -3,6 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
+import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -23,6 +26,21 @@ class HomeScreenService extends ChangeNotifier {
 
   void setCurrentScreenIndex(int index) {
     this.model.currentScreenIndex = index;
+    notifyListeners();
+  }
+
+  Future<void> showOverlay(ApiAppDataService apiAppDataService) async {
+    ApiAppDataModel? appData =
+        await apiAppDataService.getByKey(ApiAppDataKey.decisionOverlayShown);
+    if (appData == null || appData.value == "false") {
+      model.showOverlay = true;
+      notifyListeners();
+    }
+  }
+
+  Future<void> dismissOverlay(ApiAppDataService apiAppDataService) async {
+    await apiAppDataService.save(ApiAppDataKey.decisionOverlayShown, "true");
+    model.showOverlay = false;
     notifyListeners();
   }
 }

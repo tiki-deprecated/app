@@ -25,7 +25,7 @@ class DecisionCardSpamViewDataInfoRow extends StatelessWidget {
               width: _width.w,
               child:
                   DecisionCardSpamViewSent(this.totalEmails, this.sinceYear)),
-          Container(width: 1, height: _height.h, color: ConfigColor.greyTwo),
+          Container(width: 1, height: _height.h, color: ConfigColor.greyThree),
           Container(
               width: _width.w, child: DecisionCardSpamViewOpened(this.opened))
         ]);
