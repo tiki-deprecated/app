@@ -36,11 +36,11 @@ CREATE TABLE sender (
 -- -----------------------------------------------------------------------
 CREATE TABLE message (
     message_id INTEGER PRIMARY KEY AUTOINCREMENT ,
-    ext_message_id TEXT,
+    ext_message_id TEXT NOT NULL,
     sender_id INTEGER NOT NULL,
     received_date_epoch INTEGER,
     opened_date_epoch INTEGER,
     account TEXT,
     FOREIGN KEY (sender_id) REFERENCES sender(sender_id),
-    UNIQUE (ext_message_id, sender_id)
+    UNIQUE (ext_message_id)
 );

@@ -40,7 +40,7 @@ class DataScreenService extends ChangeNotifier {
 
   Future<void> addGoogleAccount() async {
     this.model.googleAccount = await _googleService.signIn();
-    _dataBkgService.checkEmail();
+    _dataBkgService.checkGmail();
     notifyListeners();
   }
 
