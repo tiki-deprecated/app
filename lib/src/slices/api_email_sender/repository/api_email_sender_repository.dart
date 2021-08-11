@@ -14,21 +14,22 @@ class ApiEmailSenderRepository {
   ApiEmailSenderRepository(this._database);
 
   Future<ApiEmailSenderModel> insert(ApiEmailSenderModel sender) async {
+    DateTime now = DateTime.now();
+    sender.modified = now;
+    sender.created = now;
     int id = await _database.insert(_table, sender.toMap());
     sender.senderId = id;
-    sender.updatedEpoch = DateTime.now().millisecondsSinceEpoch;
     return sender;
   }
 
   Future<ApiEmailSenderModel> update(ApiEmailSenderModel sender) async {
-    sender.updatedEpoch = DateTime.now().millisecondsSinceEpoch;
+    sender.modified = DateTime.now();
     await _database.update(
       _table,
       sender.toMap(),
       where: 'sender_id = ?',
       whereArgs: [sender.senderId],
     );
-    sender.updatedEpoch = DateTime.now().millisecondsSinceEpoch;
     return sender;
   }
 
@@ -39,12 +40,6 @@ class ApiEmailSenderRepository {
     return ApiEmailSenderModel.fromMap(rows[0]);
   }
 
-  Future<List<ApiEmailSenderModel>> getAll() async {
-    final List<Map<String, Object?>> rows = await _select();
-    if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
-  }
-
   Future<List<ApiEmailSenderModel>> getByUnsubscribedAndIgnoreUntilBefore(
       bool unsubscribed, DateTime beforeDate) async {
     final List<Map<String, Object?>> rows = await _select(
@@ -53,20 +48,6 @@ class ApiEmailSenderRepository {
           unsubscribed == true ? 1 : 0,
           beforeDate.millisecondsSinceEpoch
         ]);
-    if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
-  }
-
-  Future<List<ApiEmailSenderModel>> getWithSinceYear() async {
-    final List<Map<String, Object?>> rows =
-        await _select(where: 'email_since_epoch IS NOT NULL');
-    if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
-  }
-
-  Future<List<ApiEmailSenderModel>> getWithNullSinceYear() async {
-    final List<Map<String, Object?>> rows =
-        await _select(where: 'email_since_epoch IS NULL');
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
   }

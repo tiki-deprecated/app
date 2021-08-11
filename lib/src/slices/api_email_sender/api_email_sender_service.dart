@@ -37,14 +37,6 @@ class ApiEmailSenderService {
   Future<ApiEmailSenderModel?> getByEmail(String email) =>
       _repository.getByEmail(email);
 
-  Future<List<ApiEmailSenderModel>> getPending() =>
-      _repository.getWithNullSinceYear();
-
-  Future<List<ApiEmailSenderModel>> getKnown() =>
-      _repository.getWithSinceYear();
-
-  Future<List<ApiEmailSenderModel>> getAll() => _repository.getAll();
-
   Future<void> markAsUnsubscribed(ApiEmailSenderModel sender) async {
     sender.unsubscribed = true;
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
@@ -54,11 +46,6 @@ class ApiEmailSenderService {
   Future<void> markAsKept(ApiEmailSenderModel sender) async {
     sender.unsubscribed = false;
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
-    _repository.update(sender);
-  }
-
-  Future<void> saveSinceYear(ApiEmailSenderModel sender, int since) async {
-    sender.emailSince = DateTime(since);
     _repository.update(sender);
   }
 }

@@ -16,6 +16,9 @@ class ApiEmailMsgRepository {
   ApiEmailMsgRepository(this._database);
 
   Future<ApiEmailMsgModel> insert(ApiEmailMsgModel message) async {
+    DateTime now = DateTime.now();
+    message.modified = now;
+    message.created = now;
     int id = await _database.insert(_table, message.toMap());
     _log.finest("Insert #" + id.toString());
     message.messageId = id;
@@ -23,6 +26,8 @@ class ApiEmailMsgRepository {
   }
 
   Future<ApiEmailMsgModel> update(ApiEmailMsgModel message) async {
+    message.modified = DateTime.now();
+    ;
     await _database.update(
       _table,
       message.toMap(),
@@ -33,13 +38,23 @@ class ApiEmailMsgRepository {
     return message;
   }
 
-  Future<ApiEmailMsgModel?> getByExtMessageIdAndSenderId(
-      String extMessageId, int senderId) async {
+  Future<ApiEmailMsgModel?> getByExtMessageIdAndAccount(
+      String extMessageId, String account) async {
     final List<Map<String, Object?>> rows = await _select(
-        where: 'ext_message_id = ? AND sender.sender_id = ?',
-        whereArgs: [extMessageId, senderId]);
+        where: 'ext_message_id = ? AND account = ?',
+        whereArgs: [extMessageId, account]);
     if (rows.isEmpty) return null;
     return ApiEmailMsgModel.fromMap(rows[0]);
+  }
+
+  Future<List<ApiEmailMsgModel>> getByExtMessageIds(
+      List<String> extMessageIds) async {
+    final List<Map<String, Object?>> rows = await _select(
+        where: 'ext_message_id IN (' +
+            extMessageIds.map((s) => '\'' + s + '\'').join(", ") +
+            ')');
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
   }
 
   Future<List<ApiEmailMsgModel>> getBySenderId(int senderId) async {

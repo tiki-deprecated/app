@@ -11,7 +11,9 @@ CREATE TABLE company (
      security_score REAL,
      breach_score REAL,
      sensitivity_score REAL,
-     domain TEXT
+     domain TEXT,
+     created_epoch INTEGER NOT NULL,
+     modified_epoch INTEGER NOT NULL
 );
 
 -- -----------------------------------------------------------------------
@@ -28,6 +30,8 @@ CREATE TABLE sender (
     email_since_epoch INTEGER,
     updated_epoch INTEGER,
     unsubscribed_bool INTEGER,
+    created_epoch INTEGER NOT NULL,
+    modified_epoch INTEGER NOT NULL,
     FOREIGN KEY(company_id) REFERENCES company(company_id)
 );
 
@@ -37,11 +41,13 @@ CREATE TABLE sender (
 -- -----------------------------------------------------------------------
 CREATE TABLE message (
     message_id INTEGER PRIMARY KEY AUTOINCREMENT ,
-    ext_message_id TEXT,
+    ext_message_id TEXT NOT NULL,
     sender_id INTEGER NOT NULL,
     received_date_epoch INTEGER,
     opened_date_epoch INTEGER,
     account TEXT,
+    created_epoch INTEGER NOT NULL,
+    modified_epoch INTEGER NOT NULL,
     FOREIGN KEY (sender_id) REFERENCES sender(sender_id),
-    UNIQUE (ext_message_id, sender_id)
+    UNIQUE (ext_message_id, account)
 );

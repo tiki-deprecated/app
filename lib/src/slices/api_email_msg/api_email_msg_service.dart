@@ -15,8 +15,8 @@ class ApiEmailMsgService {
       : this._repository = ApiEmailMsgRepository(database);
 
   Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel message) async {
-    ApiEmailMsgModel? dbModel = await _repository.getByExtMessageIdAndSenderId(
-        message.extMessageId!, message.sender!.senderId!);
+    ApiEmailMsgModel? dbModel = await _repository.getByExtMessageIdAndAccount(
+        message.extMessageId!, message.account!);
     message.messageId = dbModel?.messageId;
     return dbModel == null
         ? _repository.insert(message)
@@ -34,20 +34,7 @@ class ApiEmailMsgService {
     return rsp;
   }
 
-  double calculateOpenRate(List<ApiEmailMsgModel> messages) {
-    int opened = 0;
-    int total = messages.length;
-    messages.forEach((message) {
-      if (message.openedDate != null) opened++;
-    });
-    return opened / total;
-  }
-
-  int getSinceYear(List<ApiEmailMsgModel> messages) {
-    DateTime since = DateTime.now();
-    messages.forEach((message) {
-      if (message.receivedDate!.isBefore(since)) since = message.receivedDate!;
-    });
-    return since.year;
-  }
+  Future<List<ApiEmailMsgModel>> getByExtMessageIds(
+          List<String> extMessageIds) async =>
+      _repository.getByExtMessageIds(extMessageIds);
 }
