@@ -65,7 +65,7 @@ class DataBkgService extends ChangeNotifier {
   Future<void> fetchNewEmailsFromKnownSenders() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getKnown();
     String knownSenders =
-        senders.map((sender) => "from: ${sender.email})").join(" AND ");
+        senders.map((sender) => "from: ${sender.email}").join(" AND ");
     if (knownSenders.length > 0) {
       num lastRun = appDataGmailLastRun?.value != null
           ? num.parse(appDataGmailLastRun!.value) / 1000
@@ -82,7 +82,7 @@ class DataBkgService extends ChangeNotifier {
   Future<void> fetchNewSenders() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getAll();
     String knownSenders =
-        senders.map((sender) => "-from: ${sender.email})").join(" AND ");
+        senders.map((sender) => "-from: ${sender.email}").join(" AND ");
     List<ApiEmailMsgModel> messages =
         await fetchEmail(batch: 10, maxResults: 10, query: "$knownSenders");
     if (messages.isNotEmpty) {
@@ -113,12 +113,10 @@ class DataBkgService extends ChangeNotifier {
 
   /// Save the data of each email in a list.
   Future<void> _saveAllMessagesData(List<ApiEmailMsgModel> messages) async {
-    List<Future> saveList = List.empty(growable: true);
     for (int i = 0; i < messages.length; i++) {
       ApiEmailMsgModel message = messages[i];
-      saveList.add(_saveMessageData(message));
+      await _saveMessageData(message);
     }
-    await Future.wait(saveList);
   }
 
   /// Save sender, company and message data.
