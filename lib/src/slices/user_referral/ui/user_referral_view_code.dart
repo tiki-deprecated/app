@@ -22,8 +22,8 @@ class UserReferralViewCode extends StatelessWidget {
     return OutlinedButton(
         onPressed: () async => service.controller.copyLink(context),
         style: OutlinedButton.styleFrom(
-            side: BorderSide(color: ConfigColor.greyThree),
-            primary: ConfigColor.greyFour,
+            side: BorderSide(color: ConfigColor.greyFour),
+            primary: ConfigColor.greyFive,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(1.h)))),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -32,7 +32,7 @@ class UserReferralViewCode extends StatelessWidget {
                 style: TextStyle(
                     fontSize: _fontSize.sp,
                     fontWeight: FontWeight.bold,
-                    color: ConfigColor.greyFour)),
+                    color: ConfigColor.greyFive)),
             Container(
                 margin: EdgeInsets.only(
                     left: 2.w, top: 1.5.h, right: 1.h, bottom: 1.5.h),

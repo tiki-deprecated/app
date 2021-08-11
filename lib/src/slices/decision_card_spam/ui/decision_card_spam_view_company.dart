@@ -51,7 +51,7 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
         width: 10.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          border: Border.all(color: ConfigColor.greyTwo, width: 4.5.sp),
+          border: Border.all(color: ConfigColor.greyThree, width: 4.5.sp),
           color: ConfigColor.white,
           boxShadow: [
             BoxShadow(

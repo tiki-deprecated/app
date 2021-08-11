@@ -28,7 +28,7 @@ class DecisionCardSpamViewHeader extends StatelessWidget {
                   fontFamily: ConfigFont.familyNunitoSans,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: ConfigColor.greyFive),
+                  color: ConfigColor.greySix),
             )
           ])),
           Opacity(

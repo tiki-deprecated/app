@@ -36,7 +36,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
                         style: TextStyle(
                             color: _getProgressColor(this.percent! * 100),
                             fontFamily: ConfigFont.familyKoara,
-                            fontSize: 26.sp,
+                            fontSize: 23.sp,
                             fontWeight: FontWeight.bold),
                         children: [
                   TextSpan(
@@ -56,7 +56,7 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
               width: 8.h,
               child: CircularProgressIndicator(
                   strokeWidth: 1.75.w,
-                  backgroundColor: ConfigColor.greyTwo,
+                  backgroundColor: Color(0xFFC4C4C4),
                   value: this.percent,
                   color: _getProgressColor(this.percent! * 100)),
             )

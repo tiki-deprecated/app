@@ -1,11 +1,11 @@
 import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
 import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
-import 'package:app/src/slices/decision_screen/model/decision_screen_model.dart';
+import 'package:app/src/slices/decision_screen/ui/decision_screen_abstract_card.dart';
 import 'package:flutter/material.dart';
 
 import 'decision_card_spam_layout_content.dart';
 
-class DecisionCardSpamLayout implements AbstractDecisionCardView {
+class DecisionCardSpamLayout implements DecisionScreenAbstractCard {
   final DecisionCardSpamModel cardSpamModel;
   final DecisionCardSpamService service;
 

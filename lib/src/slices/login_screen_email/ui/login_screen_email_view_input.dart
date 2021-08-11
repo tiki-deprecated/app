@@ -22,7 +22,7 @@ class LoginScreenEmailViewInput extends StatelessWidget {
                 EdgeInsets.symmetric(horizontal: 1.5.h, vertical: 2.h),
             hintText: _placeholder,
             hintStyle: TextStyle(
-                color: ConfigColor.greyFour,
+                color: ConfigColor.greyFive,
                 fontWeight: FontWeight.bold,
                 fontSize: _fontSize.sp),
             filled: true,

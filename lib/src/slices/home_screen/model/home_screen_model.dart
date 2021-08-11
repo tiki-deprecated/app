@@ -5,5 +5,5 @@
 
 class HomeScreenModel {
   int currentScreenIndex = 1;
-  bool isLinked = false;
+  bool showOverlay = false;
 }
