@@ -13,7 +13,7 @@ class SecurityScoreModalViewScoreNum extends StatelessWidget {
   final String label;
 
   SecurityScoreModalViewScoreNum({double? score, required this.label})
-      : this.score = score != null ? ((1 - score) * 10).round() : null;
+      : this.score = score != null ? ((1 - score) * 10).floor() : null;
 
   @override
   Widget build(BuildContext context) {

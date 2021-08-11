@@ -28,6 +28,7 @@ class ApiEmailSenderRepository {
       where: 'sender_id = ?',
       whereArgs: [sender.senderId],
     );
+    sender.updatedEpoch = DateTime.now().millisecondsSinceEpoch;
     return sender;
   }
 
@@ -58,14 +59,14 @@ class ApiEmailSenderRepository {
 
   Future<List<ApiEmailSenderModel>> getWithSinceYear() async {
     final List<Map<String, Object?>> rows =
-        await _select(where: 'emailSince IS NOT NULL');
+        await _select(where: 'email_since_epoch IS NOT NULL');
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
   }
 
   Future<List<ApiEmailSenderModel>> getWithNullSinceYear() async {
     final List<Map<String, Object?>> rows =
-        await _select(where: 'emailSince IS NULL');
+        await _select(where: 'email_since_epoch IS NULL');
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
   }

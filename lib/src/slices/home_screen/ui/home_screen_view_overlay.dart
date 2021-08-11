@@ -7,16 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../home_screen_service.dart';
 import '../../../config/config_color.dart';
 import '../../../config/config_font.dart';
-import '../../home_screen/home_screen_controller.dart';
 import '../../../utils/helper_image.dart';
+import '../../home_screen/home_screen_controller.dart';
+import '../home_screen_service.dart';
 
 class HomeScreenViewOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    HomeScreenController controller = Provider.of<HomeScreenService>(context, listen: false).controller;
+    HomeScreenController controller =
+        Provider.of<HomeScreenService>(context, listen: false).controller;
     return GestureDetector(
         onTap: () async => controller.dismissOverlay(context),
         child: Stack(children: [

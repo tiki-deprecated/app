@@ -46,17 +46,17 @@ class DataBkgService extends ChangeNotifier {
   Future<void> checkEmail() async {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
-    appDataGmailLastRun =
-        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
+    ApiAppDataModel? appDataGmailLastRun =
+        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
     DateTime? gmailLastRun = appDataGmailLastRun != null
         ? DateTime.fromMillisecondsSinceEpoch(
-            int.parse(appDataGmailLastRun!.value))
+            int.parse(appDataGmailLastRun.value))
         : null;
     if (googleAccount != null &&
         (gmailLastRun == null ||
             DateTime.now().subtract(Duration(days: 0)).isAfter(gmailLastRun))) {
       await Future.wait([fetchNewEmailsFromKnownSenders(), fetchNewSenders()]);
-      _apiAppDataService.save(ApiAppDataKey.gmailLastFetch,
+      _apiAppDataService.save(ApiAppDataKey.fetchGmailLastRun,
           DateTime.now().millisecondsSinceEpoch.toString());
     }
   }
@@ -65,22 +65,24 @@ class DataBkgService extends ChangeNotifier {
   Future<void> fetchNewEmailsFromKnownSenders() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getKnown();
     String knownSenders =
-        senders.map((sender) => "from: ${sender.email})").join(" AND ");
-    num lastRun = appDataGmailLastRun?.value != null
-        ? num.parse(appDataGmailLastRun!.value) / 1000
-        : 0;
-    String sinceQuery = "after: $lastRun";
-    List<ApiEmailMsgModel> messages = await fetchEmail(
-        maxResults: 10, batch: 10, query: "$knownSenders AND $sinceQuery");
-    await _saveAllMessagesData(messages);
-    notifyListeners();
+        senders.map((sender) => "from: ${sender.email}").join(" AND ");
+    if (knownSenders.length > 0) {
+      num lastRun = appDataGmailLastRun?.value != null
+          ? num.parse(appDataGmailLastRun!.value) / 1000
+          : 0;
+      String sinceQuery = "after: $lastRun";
+      List<ApiEmailMsgModel> messages = await fetchEmail(
+          maxResults: 10, batch: 10, query: "$knownSenders AND $sinceQuery");
+      await _saveAllMessagesData(messages);
+      notifyListeners();
+    }
   }
 
   /// Fetch new senders.
   Future<void> fetchNewSenders() async {
     List<ApiEmailSenderModel> senders = await _apiEmailSenderService.getAll();
     String knownSenders =
-        senders.map((sender) => "-from: ${sender.email})").join(" AND ");
+        senders.map((sender) => "-from: ${sender.email}").join(" AND ");
     List<ApiEmailMsgModel> messages =
         await fetchEmail(batch: 10, maxResults: 10, query: "$knownSenders");
     if (messages.isNotEmpty) {
@@ -95,7 +97,7 @@ class DataBkgService extends ChangeNotifier {
   Future<List<ApiEmailMsgModel>> fetchEmail(
       {int maxResults: 10, int batch: 10, query: "", pageToken}) async {
     DataBkgModelPage<ApiEmailMsgModel>? page;
-    List<ApiEmailMsgModel> emails = List.empty();
+    List<ApiEmailMsgModel> emails = List.empty(growable: true);
     for (int i = 0; i < batch; i++) {
       page = await _apiGoogleService.gmailFetch(
           unsubscribeOnly: true,
@@ -111,21 +113,10 @@ class DataBkgService extends ChangeNotifier {
 
   /// Save the data of each email in a list.
   Future<void> _saveAllMessagesData(List<ApiEmailMsgModel> messages) async {
-    List<Future> saveList = [];
     for (int i = 0; i < messages.length; i++) {
       ApiEmailMsgModel message = messages[i];
-      saveList.add(_saveMessageData(message));
+      await _saveMessageData(message);
     }
-    await Future.wait(saveList);
-  }
-
-  /// Get domain from Email.
-  String domainFromEmail(String email) {
-    List<String> atSplit = email.split('@');
-    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-    return periodSplit[periodSplit.length - 2] +
-        "." +
-        periodSplit[periodSplit.length - 1];
   }
 
   /// Save sender, company and message data.
@@ -133,14 +124,15 @@ class DataBkgService extends ChangeNotifier {
       {bool forceSenderUpdate = false}) async {
     if (message.sender?.email != null) {
       ApiEmailSenderModel? messageSender =
-          await _apiEmailSenderService.getByEmail(message.sender!.email!);
-      if (forceSenderUpdate ||
-          DateTime.fromMillisecondsSinceEpoch(messageSender!.updatedEpoch!)
+          await _apiEmailSenderService.getByEmail(message.sender.email!);
+      if (messageSender == null ||
+          forceSenderUpdate ||
+          DateTime.fromMillisecondsSinceEpoch(messageSender.updatedEpoch!)
               .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
         ApiCompanyModelLocal? company = await _apiCompanyService
-            .upsert(domainFromEmail(message.sender!.email!));
+            .upsert(domainFromEmail(message.sender.email));
         if (company != null) {
-          message.sender!.company = company;
+          message.sender.company = company;
           await _apiEmailSenderService.upsert(message.sender!);
         }
       }
@@ -152,7 +144,7 @@ class DataBkgService extends ChangeNotifier {
   Future<void> fetchAndSaveAllEmailsFromSender(
       ApiEmailSenderModel sender) async {
     DataBkgModelPage<ApiEmailMsgModel>? page;
-    List<ApiEmailMsgModel> messages = List.empty();
+    List<ApiEmailMsgModel> messages = List.empty(growable: true);
     String query = "from : ${sender.email}";
     do {
       page = await _apiGoogleService.gmailFetch(
@@ -170,5 +162,13 @@ class DataBkgService extends ChangeNotifier {
       _apiEmailSenderService.saveSinceYear(sender, since);
     }
     notifyListeners();
+  }
+
+  String domainFromEmail(String email) {
+    List<String> atSplit = email.split('@');
+    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
+    return periodSplit[periodSplit.length - 2] +
+        "." +
+        periodSplit[periodSplit.length - 1];
   }
 }

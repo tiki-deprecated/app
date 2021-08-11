@@ -39,7 +39,8 @@ class HomeScreenViewStack extends StatelessWidget {
                 decisionScreenService.presenter.render(),
                 walletScreenService.presenter.render(),
               ]))),
-      if (model.showOverlay == true) HomeScreenViewOverlay()
+      if (model.showOverlay == true && model.currentScreenIndex == 1)
+        HomeScreenViewOverlay()
     ]);
   }
 }
