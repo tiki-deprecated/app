@@ -35,7 +35,7 @@ class DecisionScreenService extends ChangeNotifier {
             apiAppDataService: apiAppDataService,
             apiGoogleService: apiGoogleService) {
     presenter = DecisionScreenPresenter(this);
-    controller = DecisionScreenController();
+    controller = DecisionScreenController(this);
     model = DecisionScreenModel();
     refresh();
   }
@@ -69,12 +69,15 @@ class DecisionScreenService extends ChangeNotifier {
 
   Future<void> _generateSpamCards() async {
     if (!this.model.isLinked) return;
-    List<DecisionCardSpamLayout>? cards =
-        await _decisionCardSpamService.getCards();
-    if (cards != null && cards.isNotEmpty) {
-      cards.forEach((card) {
-        if (!this.model.cards.contains(card)) this.model.cards.add(card);
-      });
+    if (this.model.cards.length < 5) {
+      List<DecisionCardSpamLayout>? cards =
+          await _decisionCardSpamService.getCards();
+      if (cards != null && cards.isNotEmpty) {
+        cards.forEach((card) {
+          if (!this.model.cards.contains(card) && this.model.cards.length < 5)
+            this.model.cards.add(card);
+        });
+      }
     }
   }
 }
