@@ -85,22 +85,35 @@ class ApiGoogleService {
     return message != null ? _convertMessage(message) : null;
   }
 
-  Future<bool> unsubscribe(String unsubscribeMailTo) async {
+  Future<bool> unsubscribe(String unsubscribeMailTo, String list) async {
     GmailApi? gmailApi = await _gmailApi;
     if (gmailApi == null) return false;
     Uri uri = Uri.parse(unsubscribeMailTo);
     String to = uri.path;
-    String subject = uri.queryParameters['subject'] ?? "unsubscribe";
-    String content = uri.queryParameters['content'] ?? "unsubscribe";
+    String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
+    String email = '''
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+to: $to
+from: me
+subject: $subject
+
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+I'd like to stop receiving emails from this email list.
+
+Thanks,
+${_googleSignIn.currentUser?.displayName ?? ''}
+
+*Sent via <a href="http://www.mytiki.com>TIKI</a>. Join the data ownership
+revolution today.
+''';
+
     await gmailApi.users.messages.send(
         Message.fromJson({
-          'raw': _getBase64Email(
-              source: 'From: me\r\n'
-                  'To: $to\r\n'
-                  'Subject: $subject\r\n'
-                  'Content-Type: text/html; charset=utf-8\r\n'
-                  'Content-Transfer-Encoding: base64\r\n\r\n'
-                  '$content'),
+          'raw': _getBase64Email(source: email),
         }),
         "me");
     return true;

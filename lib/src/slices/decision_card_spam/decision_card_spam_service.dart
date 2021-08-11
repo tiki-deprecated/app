@@ -76,7 +76,8 @@ class DecisionCardSpamService extends ChangeNotifier {
     if (sender != null) {
       String? mailTo = sender.unsubscribeMailTo;
       if (mailTo != null) {
-        bool unsubscribed = await _apiGoogleService.unsubscribe(mailTo);
+        String list = sender.name ?? sender.email!;
+        bool unsubscribed = await _apiGoogleService.unsubscribe(mailTo, list);
         if (unsubscribed) _apiEmailSenderService.markAsUnsubscribed(sender);
       }
     }
