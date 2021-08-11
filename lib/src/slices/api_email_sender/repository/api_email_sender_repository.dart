@@ -28,6 +28,7 @@ class ApiEmailSenderRepository {
       where: 'sender_id = ?',
       whereArgs: [sender.senderId],
     );
+    sender.updatedEpoch = DateTime.now().millisecondsSinceEpoch;
     return sender;
   }
 
