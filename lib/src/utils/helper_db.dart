@@ -38,7 +38,6 @@ class HelperDb {
   Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
     _log.fine('upgrade');
     if (oldVersion < 2) await _executeScript(db, 'create_v2');
-    if (oldVersion == 2) await _executeScript(db, 'update_v3');
   }
 
   Future<void> onDowngrade(Database db, int oldVersion, int newVersion) async {
