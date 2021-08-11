@@ -25,7 +25,7 @@ class ApiCompanyService {
       ApiCompanyModelLocal? local = await _repositoryLocal.getByDomain(domain);
       if (local == null) {
         HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);
-        if (HelperApiUtils.is2xx(indexRsp.code))
+        if (HelperApiUtils.isOk(indexRsp.code))
           return _repositoryLocal.insert(ApiCompanyModelLocal(
             domain: domain,
             logo: indexRsp.data.about?.logo,
@@ -34,6 +34,7 @@ class ApiCompanyService {
             sensitivityScore: indexRsp.data.score?.securityScore,
           ));
       } else if (local.modified == null ||
+          local.securityScore == null ||
           local.modified!
               .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
         HelperApiRsp<ApiCompanyModelIndex> indexRsp = await fetch(domain);

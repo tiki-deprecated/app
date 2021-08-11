@@ -37,32 +37,33 @@ class DataBkgService extends ChangeNotifier {
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiAppDataService = apiAppDataService {
-    checkGmail(fetchAll: true);
+    checkGmail();
   }
-
-  // pass flag that says all otherwise only since last fetch (after:2004/04/16)
-  // grab a batch of emails from gmail
-  // loop
-  // if we have the sender in the db, upsert the message
-  // if we don't have the sender in the db, fetch all the messages for the sender, then add em all
 
   Future<void> checkGmail({bool fetchAll = false, bool force = false}) async {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
     ApiAppDataModel? appDataGmailLastRun =
         await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
-    DateTime? gmailLastRun = appDataGmailLastRun != null
-        ? DateTime.fromMillisecondsSinceEpoch(
-            int.parse(appDataGmailLastRun.value))
-        : null;
+    DateTime? gmailLastRun;
+    if (appDataGmailLastRun != null)
+      gmailLastRun = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(appDataGmailLastRun.value));
+    else {
+      fetchAll = true;
+      force = true;
+    }
     if (googleAccount != null &&
         (force == true ||
             gmailLastRun == null ||
             DateTime.now()
                 .subtract(Duration(days: 0 /*1*/))
-                .isAfter(gmailLastRun)))
-      return _checkGmailFetchList(
-          fetchAll: fetchAll, lastChecked: gmailLastRun);
+                .isAfter(gmailLastRun))) {
+      DateTime run = DateTime.now();
+      await _checkGmailFetchList(fetchAll: fetchAll, lastChecked: gmailLastRun);
+      await _apiAppDataService.save(
+          ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
+    }
   }
 
   Future<void> _checkGmailFetchList(
@@ -85,15 +86,17 @@ class DataBkgService extends ChangeNotifier {
             .toList();
     Set<String> unknown =
         messages.where((message) => !known.contains(message)).toSet();
-    _checkGmailFetchMessage(unknown);
+    return _checkGmailFetchMessage(unknown);
   }
 
   Future<void> _checkGmailFetchMessage(Set<String> messages) async {
+    Set<String> processed = Set();
     for (String messageId in messages) {
       ApiEmailMsgModel? message = await _apiGoogleService.gmailFetchMessage(
           messageId,
           format: "metadata",
           headers: ["List-unsubscribe"]);
+      if (message?.extMessageId != null) processed.add(message!.extMessageId!);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         ApiEmailSenderModel? sender =
@@ -101,11 +104,18 @@ class DataBkgService extends ChangeNotifier {
         if (sender != null) {
           await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
+          notifyListeners();
         } else {
           Set<ApiEmailMsgModel> senderMessages =
               await _checkGmailNewSender(message.sender!.email!);
-          messages
-              .removeAll(senderMessages.map((message) => message.extMessageId));
+          Set<String> senderMessageIds =
+              senderMessages.map((message) => message.extMessageId!).toSet();
+          Set<String> newMessages = messages
+              .where((message) =>
+                  !senderMessageIds.contains(message) &&
+                  !processed.contains(message))
+              .toSet();
+          return _checkGmailFetchMessage(newMessages);
         }
       }
     }
@@ -131,9 +141,12 @@ class DataBkgService extends ChangeNotifier {
     ApiEmailSenderModel sender = messages.first.sender!;
     sender.emailSince = first;
     ApiEmailSenderModel? inserted = await _saveSender(sender);
-    for (ApiEmailMsgModel message in messages) {
-      message.sender = inserted;
-      await _apiEmailMsgService.upsert(message);
+    if (inserted != null) {
+      for (ApiEmailMsgModel message in messages) {
+        message.sender = inserted;
+        await _apiEmailMsgService.upsert(message);
+      }
+      notifyListeners();
     }
     return messages;
   }
@@ -144,8 +157,8 @@ class DataBkgService extends ChangeNotifier {
           await _apiCompanyService.upsert(domainFromEmail(sender.email!));
       if (company != null) {
         sender.company = company;
-        await _apiEmailSenderService.upsert(sender);
-        notifyListeners();
+        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
+        return saved;
       }
     }
   }

@@ -157,11 +157,12 @@ class ApiGoogleService {
             }
             break;
           case "List-Unsubscribe":
-            List<String> unsubscribeMailToArr =
-                headerEntry.value!.split('mailto:');
+            String s =
+                headerEntry.value!.replaceAll('<', '').replaceAll(">", '');
+            List<String> unsubscribeMailToArr = s.split('mailto:');
             sender.unsubscribeMailTo = unsubscribeMailToArr.length > 1
-                ? unsubscribeMailToArr[1].split('>')[0]
-                : '';
+                ? unsubscribeMailToArr[1]
+                : unsubscribeMailToArr[0];
             break;
         }
       }
