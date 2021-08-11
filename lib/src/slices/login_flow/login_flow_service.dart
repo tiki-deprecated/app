@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -218,6 +219,7 @@ class LoginFlowService extends ChangeNotifier {
   Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
       if (await _registerKeys(keys: keys)) {
+        await this.updateCode();
         await _initServices();
         setLoggedIn();
         await loadUser();
@@ -229,6 +231,7 @@ class LoginFlowService extends ChangeNotifier {
 
   Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
     if (await _saveKeys(keys: keys)) {
+      await this.updateCode();
       await _initServices();
       setLoggedIn();
       await loadUser();
@@ -272,6 +275,17 @@ class LoginFlowService extends ChangeNotifier {
       return false;
     }
     return true;
+  }
+
+  Future<void> updateCode() async {
+    HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp = await this
+        .apiBlockchainService
+        .referCode(this.model.user!.user!.address!);
+    if (HelperApiUtils.isOk(rsp.code)) {
+      ApiBlockchainModelAddressRspCode data = rsp.data;
+      this.model.user!.user!.code = data.code;
+      await this.apiUserService.setUser(this.model.user!.user!);
+    }
   }
 
   Future<void> _initServices() async {

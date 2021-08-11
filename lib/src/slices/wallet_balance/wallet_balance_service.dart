@@ -26,11 +26,11 @@ class WalletBalanceService extends ChangeNotifier {
       ApiSignupService apiSignupService) async {
     String? code = loginFlowService.model.user!.user!.code;
     if (code != null) {
-      // int? count = await apiSignupService.getTotal(code: code);
-      // if (count != null) {
-      //   this.model.balance = 5.0 * (count ~/ 10.0);
-      //   notifyListeners();
-      // }
+      int? count = await apiSignupService.getTotal(code: code);
+      if (count != null) {
+        this.model.balance = 5.0 * (count ~/ 10.0);
+        notifyListeners();
+      }
     }
   }
 }
