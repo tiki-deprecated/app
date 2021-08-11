@@ -47,7 +47,7 @@ class DataBkgService extends ChangeNotifier {
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
     ApiAppDataModel? appDataGmailLastRun =
-        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
+        await _apiAppDataService.getByKey(ApiAppDataKey.fetchGmailLastRun);
     DateTime? gmailLastRun = appDataGmailLastRun != null
         ? DateTime.fromMillisecondsSinceEpoch(
             int.parse(appDataGmailLastRun.value))
@@ -60,7 +60,6 @@ class DataBkgService extends ChangeNotifier {
           DateTime.now().millisecondsSinceEpoch.toString());
     }
   }
-
 
   /// Fetch new emails from known senders.
   Future<void> fetchNewEmailsFromKnownSenders() async {
