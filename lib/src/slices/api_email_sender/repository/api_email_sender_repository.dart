@@ -38,6 +38,12 @@ class ApiEmailSenderRepository {
     return ApiEmailSenderModel.fromMap(rows[0]);
   }
 
+  Future<List<ApiEmailSenderModel>> getAll() async {
+    final List<Map<String, Object?>> rows = await _select();
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
+  }
+
   Future<List<ApiEmailSenderModel>> getByUnsubscribedAndIgnoreUntilBefore(
       bool unsubscribed, DateTime beforeDate) async {
     final List<Map<String, Object?>> rows = await _select(
@@ -46,6 +52,20 @@ class ApiEmailSenderRepository {
           unsubscribed == true ? 1 : 0,
           beforeDate.millisecondsSinceEpoch
         ]);
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
+  }
+
+  Future<List<ApiEmailSenderModel>> getWithSinceYear() async {
+    final List<Map<String, Object?>> rows =
+        await _select(where: 'emailSince IS NOT NULL');
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
+  }
+
+  Future<List<ApiEmailSenderModel>> getWithNullSinceYear() async {
+    final List<Map<String, Object?>> rows =
+        await _select(where: 'emailSince IS NULL');
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
   }

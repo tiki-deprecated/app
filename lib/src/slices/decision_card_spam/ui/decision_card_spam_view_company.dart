@@ -18,13 +18,13 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _getAvatar(this.logo, this.name, this.email),
-            Padding(padding: EdgeInsets.only(top: 1.h)),
-            _getCompanyName(this.name, this.email)
-          ],
-        );
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _getAvatar(this.logo, this.name, this.email),
+        Padding(padding: EdgeInsets.only(top: 1.h)),
+        _getCompanyName(this.name, this.email)
+      ],
+    );
   }
 
   Widget _getAvatar(String? logo, String? name, String? email) {

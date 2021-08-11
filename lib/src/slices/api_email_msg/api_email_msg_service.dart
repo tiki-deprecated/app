@@ -33,4 +33,21 @@ class ApiEmailMsgService {
     }
     return rsp;
   }
+
+  double calculateOpenRate(List<ApiEmailMsgModel> messages) {
+    int opened = 0;
+    int total = messages.length;
+    messages.forEach((message) {
+      if (message.openedDate != null) opened++;
+    });
+    return opened / total;
+  }
+
+  int getSinceYear(List<ApiEmailMsgModel> messages) {
+    DateTime since = DateTime.now();
+    messages.forEach((message) {
+      if (message.receivedDate!.isBefore(since)) since = message.receivedDate!;
+    });
+    return since.year;
+  }
 }

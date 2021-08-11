@@ -14,7 +14,8 @@ class HomeScreenPresenter extends Page {
   final HomeScreenService service;
   final List<SingleChildWidget> providers;
 
-  HomeScreenPresenter({required this.service, List<SingleChildWidget>? providers})
+  HomeScreenPresenter(
+      {required this.service, List<SingleChildWidget>? providers})
       : this.providers = providers ?? [],
         super(key: ValueKey("HomeNav"));
 

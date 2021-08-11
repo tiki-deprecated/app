@@ -57,14 +57,14 @@ class DecisionCardSpamService extends ChangeNotifier {
           category: msgs[0].sender?.category,
           companyName: msgs[0].sender?.name,
           frequency: _calculateFrequency(msgs),
-          openRate: _calculateOpenRate(msgs),
+          openRate: _apiEmailMsgService.calculateOpenRate(msgs),
           securityScore: msgs[0].sender?.company?.securityScore,
           sensitivityScore: msgs[0].sender?.company?.sensitivityScore,
           hackingScore: msgs[0].sender?.company?.breachScore,
           senderId: senderId,
           senderEmail: msgs[0].sender?.email,
           totalEmails: msgs.length,
-          sinceYear: _getSinceYear(msgs),
+          sinceYear: _apiEmailMsgService.getSinceYear(msgs).toString(),
         ));
       }
     }
@@ -124,23 +124,5 @@ class DecisionCardSpamService extends ChangeNotifier {
     } else {
       return "monthly";
     }
-  }
-
-  double _calculateOpenRate(List<ApiEmailMsgModel> messages) {
-    int opened = 0;
-    int total = messages.length;
-    messages.forEach((message) {
-      if (message.openedDate != null) opened++;
-    });
-    return opened / total;
-  }
-
-  String _getSinceYear(List<ApiEmailMsgModel> messages) {
-    // todo change for the database saved since
-    DateTime since = DateTime.now();
-    messages.forEach((message) {
-      if (message.receivedDate!.isBefore(since)) since = message.receivedDate!;
-    });
-    return since.year.toString();
   }
 }
