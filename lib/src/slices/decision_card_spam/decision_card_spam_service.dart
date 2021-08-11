@@ -23,7 +23,6 @@ class DecisionCardSpamService extends ChangeNotifier {
   late final DecisionCardSpamController controller;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
-  final ApiAppDataService _apiAppDataService;
   final ApiGoogleService _apiGoogleService;
 
   DecisionCardSpamService(
@@ -31,8 +30,7 @@ class DecisionCardSpamService extends ChangeNotifier {
       required ApiEmailMsgService apiEmailMsgService,
       required ApiAppDataService apiAppDataService,
       required ApiGoogleService apiGoogleService})
-      : this._apiAppDataService = apiAppDataService,
-        this._apiEmailMsgService = apiEmailMsgService,
+      : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiGoogleService = apiGoogleService {
     controller = DecisionCardSpamController(this);
