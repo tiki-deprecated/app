@@ -30,8 +30,8 @@ class ApiCompanyService {
             domain: domain,
             logo: indexRsp.data.about?.logo,
             securityScore: indexRsp.data.score?.securityScore,
-            breachScore: indexRsp.data.score?.securityScore,
-            sensitivityScore: indexRsp.data.score?.securityScore,
+            breachScore: indexRsp.data.score?.breachScore,
+            sensitivityScore: indexRsp.data.score?.sensitivityScore,
           ));
       } else if (local.modified == null ||
           local.securityScore == null ||
@@ -44,8 +44,8 @@ class ApiCompanyService {
               domain: domain,
               logo: indexRsp.data.about?.logo,
               securityScore: indexRsp.data.score?.securityScore,
-              breachScore: indexRsp.data.score?.securityScore,
-              sensitivityScore: indexRsp.data.score?.securityScore,
+              breachScore: indexRsp.data.score?.breachScore,
+              sensitivityScore: indexRsp.data.score?.sensitivityScore,
               created: local.created,
               modified: local.modified));
       } else
