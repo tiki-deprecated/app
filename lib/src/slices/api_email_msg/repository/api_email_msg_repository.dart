@@ -27,7 +27,6 @@ class ApiEmailMsgRepository {
 
   Future<ApiEmailMsgModel> update(ApiEmailMsgModel message) async {
     message.modified = DateTime.now();
-    ;
     await _database.update(
       _table,
       message.toMap(),

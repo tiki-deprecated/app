@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -26,13 +27,15 @@ class DecisionScreenService extends ChangeNotifier {
       {required ApiGoogleService apiGoogleService,
       required ApiAppDataService apiAppDataService,
       required ApiEmailSenderService apiEmailSenderService,
-      required ApiEmailMsgService apiEmailMsgService})
+      required ApiEmailMsgService apiEmailMsgService,
+        required ApiCompanyService apiCompanyService})
       : this._apiAppDataService = apiAppDataService,
         this._apiGoogleService = apiGoogleService,
         this._decisionCardSpamService = DecisionCardSpamService(
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService,
             apiAppDataService: apiAppDataService,
+            apiCompanyService: apiCompanyService,
             apiGoogleService: apiGoogleService) {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController(this);

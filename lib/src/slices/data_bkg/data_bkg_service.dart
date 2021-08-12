@@ -56,9 +56,7 @@ class DataBkgService extends ChangeNotifier {
     if (googleAccount != null &&
         (force == true ||
             gmailLastRun == null ||
-            DateTime.now()
-                .subtract(Duration(days: 0 /*1*/))
-                .isAfter(gmailLastRun))) {
+            DateTime.now().subtract(Duration(days: 1)).isAfter(gmailLastRun))) {
       DateTime run = DateTime.now();
       await _checkGmailFetchList(fetchAll: fetchAll, lastChecked: gmailLastRun);
       await _apiAppDataService.save(

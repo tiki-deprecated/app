@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,8 @@ class HomeScreenLayout extends StatelessWidget {
         Provider.of<ApiEmailMsgService>(context, listen: false);
     ApiEmailSenderService apiEmailSenderService =
         Provider.of<ApiEmailSenderService>(context, listen: false);
+    ApiCompanyService apiCompanyService =
+        Provider.of<ApiCompanyService>(context, listen: false);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
@@ -36,6 +39,7 @@ class HomeScreenLayout extends StatelessWidget {
               apiGoogleService: googleService,
               apiEmailMsgService: apiEmailMsgService,
               apiEmailSenderService: apiEmailSenderService,
+              apiCompanyService: apiCompanyService,
               apiAppDataService: appDataService),
           dataScreenService: DataScreenService(googleService, dataBkgService),
           walletScreenService: WalletScreenService(),

@@ -6,6 +6,7 @@
 //import 'package:app/src/slices/api_unsubscribe_spam/api_unsubscribe_spam_service.dart';
 import 'dart:math';
 
+import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,25 +25,36 @@ class DecisionCardSpamService extends ChangeNotifier {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
   final ApiGoogleService _apiGoogleService;
+  final ApiCompanyService _apiCompanyService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiAppDataService apiAppDataService,
-      required ApiGoogleService apiGoogleService})
+      required ApiGoogleService apiGoogleService,
+      required ApiCompanyService apiCompanyService})
       : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiGoogleService = apiGoogleService {
+        this._apiGoogleService = apiGoogleService,
+        this._apiCompanyService = apiCompanyService {
     controller = DecisionCardSpamController(this);
   }
 
   Future<List<DecisionCardSpamLayout>?> getCards() async {
     List<ApiEmailSenderModel> senders =
         await _apiEmailSenderService.getUnsubscribed();
-    List<int> senderIds = senders
-        .skipWhile((sender) => sender.senderId == null)
-        .map((sender) => sender.senderId!)
-        .toList();
+
+    List<int> senderIds = List.empty(growable: true);
+    for (ApiEmailSenderModel sender in senders) {
+      if (sender.senderId != null) senderIds.add(sender.senderId!);
+      if (sender.company?.domain != null &&
+          sender.company?.securityScore == null) {
+        _apiCompanyService
+            .upsert(sender.company!.domain!)
+            .then((value) => notifyListeners());
+      }
+    }
+
     Map<int, List<ApiEmailMsgModel>> messages =
         await _apiEmailMsgService.getBySenders(senderIds);
     List<DecisionCardSpamModel> spamModels = [];
@@ -50,7 +62,7 @@ class DecisionCardSpamService extends ChangeNotifier {
       List<ApiEmailMsgModel>? msgs = messages[senderId];
       if (msgs != null && msgs.isNotEmpty) {
         spamModels.add(DecisionCardSpamModel(
-          logoUrl: msgs[0].sender?.company?.logo,
+          //logoUrl: msgs[0].sender?.company?.logo,
           category: msgs[0].sender?.category,
           companyName: msgs[0].sender?.name,
           frequency: _calculateFrequency(msgs),
