@@ -62,7 +62,7 @@ class DecisionCardSpamService extends ChangeNotifier {
       List<ApiEmailMsgModel>? msgs = messages[senderId];
       if (msgs != null && msgs.isNotEmpty) {
         spamModels.add(DecisionCardSpamModel(
-          //logoUrl: msgs[0].sender?.company?.logo,
+          logoUrl: msgs[0].sender?.company?.logo,
           category: msgs[0].sender?.category,
           companyName: msgs[0].sender?.name,
           frequency: _calculateFrequency(msgs),
