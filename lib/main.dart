@@ -1,3 +1,4 @@
+import 'package:app/src/config/config_amplitude.dart';
 import 'package:app/src/config/config_sentry.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   ConfigLog();
+  await ConfigAmplitude.init();
   await Firebase.initializeApp();
   return init();
 }
