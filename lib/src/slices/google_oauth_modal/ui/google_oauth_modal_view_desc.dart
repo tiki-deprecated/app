@@ -42,7 +42,7 @@ class GoogleOauthModalViewDesc extends StatelessWidget {
           ),
           Container(
               margin: EdgeInsets.only(top: 2.h),
-              child: HelperImage('gmail_alert', height: 13.h)),
+              child: HelperImage('gmail_alert', height: 12.h)),
           Container(
               margin: EdgeInsets.only(top: 2.h),
               child: RichText(

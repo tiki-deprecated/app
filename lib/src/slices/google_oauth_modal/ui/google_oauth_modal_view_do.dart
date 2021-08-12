@@ -31,7 +31,7 @@ class GoogleOauthModalViewDo extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 2.5.h),
             child: Image.asset("res/images/gmail_alert.gif",
-                width: 60.w, fit: BoxFit.fitWidth),
+                height: 28.h, fit: BoxFit.fitHeight),
           )
         ]);
   }

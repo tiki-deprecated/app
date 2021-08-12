@@ -17,7 +17,7 @@ class GoogleOauthModalLayout extends StatelessWidget {
     return GestureDetector(
         child: SafeArea(
             child: Container(
-                height: 80.h,
+                height: 85.h,
                 margin: EdgeInsets.symmetric(horizontal: 7.w),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
