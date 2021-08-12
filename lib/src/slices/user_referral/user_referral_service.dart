@@ -34,11 +34,11 @@ class UserReferralService extends ChangeNotifier {
       ApiSignupService apiSignupService) async {
     String? code = loginFlowService.model.user!.user!.code;
     if (code != null) {
-      //int? count = await apiSignupService.getTotal(code: code);
-      // if (count != null) {
-      //   this.model.referCount = count;
-      //   notifyListeners();
-      // }
+      int? count = await apiSignupService.getTotal(code: code);
+      if (count != null) {
+        this.model.referCount = count;
+        notifyListeners();
+      }
     }
   }
 
