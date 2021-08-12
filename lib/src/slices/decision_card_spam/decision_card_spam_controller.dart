@@ -11,13 +11,11 @@ class DecisionCardSpamController {
 
   DecisionCardSpamController(this.service);
 
-  unsubscribeFromSpam(BuildContext context, int senderId) {
-    this.service.unsubscribeFromSpam(context, senderId);
-  }
+  Future<void> unsubscribeFromSpam(BuildContext context, int senderId) async =>
+      this.service.unsubscribeFromSpam(context, senderId);
 
-  keepReceiving(BuildContext context, int senderId) {
-    this.service.keepReceiving(context, senderId);
-  }
+  Future<void> keepReceiving(BuildContext context, int senderId) async =>
+      this.service.keepReceiving(context, senderId);
 
   shareCard(BuildContext context, param1, param2) {}
 }

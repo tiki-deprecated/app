@@ -10,6 +10,7 @@ import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -21,6 +22,7 @@ import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
 
 class DecisionCardSpamService extends ChangeNotifier {
+  final _log = Logger('DecisionCardSpamService');
   late final DecisionCardSpamController controller;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
@@ -82,24 +84,31 @@ class DecisionCardSpamService extends ChangeNotifier {
         .toList();
   }
 
-  unsubscribeFromSpam(BuildContext context, int senderId) async {
+  Future<void> unsubscribeFromSpam(BuildContext context, int senderId) async {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
       String? mailTo = sender.unsubscribeMailTo;
       if (mailTo != null) {
         String list = sender.name ?? sender.email!;
-        bool unsubscribed = await _apiGoogleService.unsubscribe(mailTo, list);
-        if (unsubscribed) _apiEmailSenderService.markAsUnsubscribed(sender);
+        await _apiEmailSenderService.markAsUnsubscribed(sender);
+        bool unsubscribed = false;
+        try {
+          unsubscribed = await _apiGoogleService.unsubscribe(mailTo, list);
+          _log.finest(
+              mailTo + ' unsubscribed status: ' + unsubscribed.toString());
+        } catch (e) {
+          _log.warning('Failed to unsubscribe from: ' + mailTo, e);
+        }
       }
     }
   }
 
-  keepReceiving(BuildContext context, int senderId) async {
+  Future<void> keepReceiving(BuildContext context, int senderId) async {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
-      _apiEmailSenderService.markAsKept(sender);
+      await _apiEmailSenderService.markAsKept(sender);
     }
   }
 

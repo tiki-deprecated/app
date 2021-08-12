@@ -42,8 +42,13 @@ class ApiGoogleService {
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 
-  Future<Set<String>> gmailFetch({String? query}) async {
-    return _gmailFetch(messageIds: Set(), query: query);
+  Future<Set<String>> gmailFetch({String? query, int retries = 3}) async {
+    try {
+      return await _gmailFetch(messageIds: Set(), query: query);
+    } catch (e) {
+      if (retries > 1) return gmailFetch(query: query, retries: retries - 1);
+      rethrow;
+    }
   }
 
   Future<Set<String>> _gmailFetch(
@@ -75,6 +80,21 @@ class ApiGoogleService {
   }
 
   Future<ApiEmailMsgModel?> gmailFetchMessage(String messageId,
+      {String format = "metadata",
+      List<String>? headers,
+      int retries = 3}) async {
+    try {
+      return await _gmailFetchMessage(messageId,
+          format: format, headers: headers);
+    } catch (e) {
+      if (retries > 1)
+        return gmailFetchMessage(messageId,
+            format: format, headers: headers, retries: retries - 1);
+      rethrow;
+    }
+  }
+
+  Future<ApiEmailMsgModel?> _gmailFetchMessage(String messageId,
       {String format = "metadata", List<String>? headers}) async {
     GmailApi? gmailApi = await _gmailApi;
     List<String> metadataHeaders = ["From"];
@@ -111,11 +131,8 @@ ${_googleSignIn.currentUser?.displayName ?? ''}
 revolution today.
 ''';
 
-    await gmailApi.users.messages.send(
-        Message.fromJson({
-          'raw': _getBase64Email(source: email),
-        }),
-        "me");
+    await gmailApi.users.messages
+        .send(Message.fromJson({'raw': _getBase64Email(source: email)}), "me");
     return true;
   }
 
@@ -170,12 +187,11 @@ revolution today.
             }
             break;
           case "List-Unsubscribe":
-            String s =
+            String removeCaret =
                 headerEntry.value!.replaceAll('<', '').replaceAll(">", '');
-            List<String> unsubscribeMailToArr = s.split('mailto:');
-            sender.unsubscribeMailTo = unsubscribeMailToArr.length > 1
-                ? unsubscribeMailToArr[1]
-                : unsubscribeMailToArr[0];
+            List<String> splitMailTo = removeCaret.split('mailto:');
+            if (splitMailTo.length > 1)
+              sender.unsubscribeMailTo = splitMailTo[1].split(',')[0];
             break;
         }
       }

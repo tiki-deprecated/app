@@ -16,9 +16,9 @@ class DecisionScreenController {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  void removeLast(BuildContext context, Function callback) {
+  Future<void> removeLast(BuildContext context, Function callback) async {
     service.removeCard();
+    await callback(context);
     service.refresh();
-    callback(context);
   }
 }

@@ -12,17 +12,16 @@ class DecisionCardSpamLayout implements DecisionScreenAbstractCard {
   DecisionCardSpamLayout(this.service, this.cardSpamModel);
 
   @override
-  Future<void> callbackNo(BuildContext context) async {
-    this
-        .service
-        .controller
-        .unsubscribeFromSpam(context, this.cardSpamModel.senderId);
-  }
+  Future<void> callbackNo(BuildContext context) async => this
+      .service
+      .controller
+      .unsubscribeFromSpam(context, this.cardSpamModel.senderId);
 
   @override
-  Future<void> callbackYes(BuildContext context) async {
-    this.service.controller.keepReceiving(context, this.cardSpamModel.senderId);
-  }
+  Future<void> callbackYes(BuildContext context) async => this
+      .service
+      .controller
+      .keepReceiving(context, this.cardSpamModel.senderId);
 
   @override
   Widget content(BuildContext context) {

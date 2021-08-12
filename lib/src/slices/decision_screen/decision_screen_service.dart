@@ -28,7 +28,7 @@ class DecisionScreenService extends ChangeNotifier {
       required ApiAppDataService apiAppDataService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
-        required ApiCompanyService apiCompanyService})
+      required ApiCompanyService apiCompanyService})
       : this._apiAppDataService = apiAppDataService,
         this._apiGoogleService = apiGoogleService,
         this._decisionCardSpamService = DecisionCardSpamService(
@@ -74,13 +74,13 @@ class DecisionScreenService extends ChangeNotifier {
 
   Future<void> _generateSpamCards() async {
     if (!this.model.isLinked) return;
-    if (this.model.cards.length < 5) {
+    if (this.model.cards.length < 3) {
       List<DecisionCardSpamLayout>? cards =
           await _decisionCardSpamService.getCards();
       if (cards != null && cards.isNotEmpty) {
         this.model.isPending = false;
         cards.forEach((card) {
-          if (!this.model.cards.contains(card) && this.model.cards.length < 5)
+          if (!this.model.cards.contains(card) && this.model.cards.length < 3)
             this.model.cards.add(card);
         });
       }
