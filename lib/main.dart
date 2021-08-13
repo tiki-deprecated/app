@@ -48,7 +48,9 @@ Future<void> init() async {
         ..dsn = ConfigSentry.dsn
         ..environment = ConfigSentry.environment
         ..release = (await PackageInfo.fromPlatform()).version
-        ..sendDefaultPii = false,
+        ..sendDefaultPii = false
+        ..diagnosticLevel = SentryLevel.info
+        ..sampleRate = 1.0,
       appRunner: () => runApp(MultiProvider(providers: [
             Provider<ApiUserService>.value(value: apiUserService),
             Provider<ApiBouncerService>.value(value: apiBouncerService),
