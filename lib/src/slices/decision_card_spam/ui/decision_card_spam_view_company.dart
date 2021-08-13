@@ -27,33 +27,6 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
   }
 
   Widget _getAvatar(String? logo, String? name, String? email) {
-    Widget avatar;
-    if (logo != null)
-      avatar = ClipOval(child: Image.network(logo, height: 10.h));
-    else {
-      var img = 'avatar' + (Random().nextInt(3) + 1).toString();
-      String title = name ?? email ?? "";
-      avatar = ClipOval(
-          child: Container(
-              width: 10.h,
-              height: 10.h,
-              child: Stack(children: [
-                Image(
-                  image: AssetImage('res/images/' + img + '.png'),
-                  width: 10.h,
-                  height: 10.h,
-                  fit: BoxFit.fill,
-                ),
-                Center(
-                  child: Text(title[0].toUpperCase(),
-                      style: TextStyle(
-                          color: ConfigColor.tikiBlue,
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: ConfigFont.familyNunitoSans)),
-                )
-              ])));
-    }
     return Container(
         height: 10.h,
         width: 10.h,
@@ -69,7 +42,34 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
                 blurRadius: 12)
           ],
         ),
-        child: avatar);
+        child: ClipOval(
+            child: logo != null
+                ? Image.network(logo,
+                    height: 10.h,
+                    errorBuilder: (context, error, stackTrace) =>
+                        _randomAvatar())
+                : _randomAvatar()));
+  }
+
+  Widget _randomAvatar() {
+    String img = 'avatar' + (Random().nextInt(3) + 1).toString();
+    String title = name ?? email ?? "";
+    return Stack(children: [
+      Image(
+        image: AssetImage('res/images/' + img + '.png'),
+        width: 10.h,
+        height: 10.h,
+        fit: BoxFit.fill,
+      ),
+      Center(
+        child: Text(title[0].toUpperCase(),
+            style: TextStyle(
+                color: ConfigColor.tikiBlue,
+                fontSize: 30.sp,
+                fontWeight: FontWeight.bold,
+                fontFamily: ConfigFont.familyNunitoSans)),
+      )
+    ]);
   }
 
   _getCompanyName(name, email) {

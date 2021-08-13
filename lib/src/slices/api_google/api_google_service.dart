@@ -195,7 +195,7 @@ revolution today.<br />
             if (values.length == 1)
               sender.email = values[0].trim();
             else if (values.length == 2) {
-              sender.name = values[0].trim();
+              sender.name = values[0].trim().replaceAll("\"", '');
               sender.email = values[1].trim().replaceAll('>', '');
             }
             break;
