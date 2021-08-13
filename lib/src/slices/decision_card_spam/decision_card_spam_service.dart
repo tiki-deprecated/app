@@ -3,20 +3,17 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-//import 'package:app/src/slices/api_unsubscribe_spam/api_unsubscribe_spam_service.dart';
-import 'dart:math';
-
-import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_google/api_google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_service.dart';
+import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_google/api_google_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
@@ -113,34 +110,34 @@ class DecisionCardSpamService extends ChangeNotifier {
   }
 
   String _calculateFrequency(List<ApiEmailMsgModel> messages) {
-    const secsInDay = 86400;
-    const secsInWeek = 86400 * 7;
-    int daily = 0;
-    int weekly = 0;
-    int monthly = 0;
-    if (messages.length == 1) return "monthly";
-    for (int i = messages.length - 2; i >= 0; i--) {
-      var message = messages[i];
-      var previous = messages[i + 1];
-      num diff = (message.receivedDate!.millisecondsSinceEpoch -
-              previous.receivedDate!.millisecondsSinceEpoch) /
-          1000;
-      if (diff <= secsInDay) {
-        daily++;
-      } else if (diff <= secsInWeek) {
-        weekly++;
-      } else if (diff > secsInWeek) {
-        monthly++;
-      }
+    const int secsInDay = 86400;
+    const int secsInWeek = 604800;
+    const int secsInMonth = 2629746;
+
+    if (messages.length == 1) return "once";
+
+    messages.sort((a, b) => a.receivedDate!.isBefore(b.receivedDate!) ? -1 : 1);
+    List<Duration> freq = [];
+    for (int i = 0; i < messages.length - 1; i++) {
+      freq.add(
+          messages[i].receivedDate!.difference(messages[i + 1].receivedDate!));
     }
-    int maxFrequency = [daily, weekly, monthly].reduce(max);
-    if (maxFrequency == daily) {
+    double avgSeconds = 0;
+    freq.map((f) => f.inSeconds).forEach((f) => avgSeconds += f);
+    avgSeconds = (avgSeconds / freq.length).abs();
+
+    if (avgSeconds <= secsInDay)
       return "daily";
-    } else if (maxFrequency == weekly) {
+    else if (avgSeconds <= secsInWeek)
       return "weekly";
-    } else {
+    else if (avgSeconds <= secsInMonth)
       return "monthly";
-    }
+    else if (avgSeconds <= secsInMonth * 3)
+      return "quarterly";
+    else if (avgSeconds <= secsInMonth * 6)
+      return "semiannually";
+    else
+      return "annually";
   }
 
   double _calculateOpenRate(List<ApiEmailMsgModel> messages) {
