@@ -39,6 +39,10 @@ class HelperApiAuth {
                   refresh: jwt.refreshToken,
                   expiresIn: jwt.expiresIn));
           rsp = await request();
+        } else {
+          ConfigSentry.message("Failed to refresh. Logging out",
+              level: ConfigSentry.levelWarn);
+          loginFlowService.setLoggedOut();
         }
       }
     }

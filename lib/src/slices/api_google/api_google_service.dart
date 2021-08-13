@@ -5,14 +5,15 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_email_msg/model/api_email_msg_model.dart';
-import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';
+import '../api_email_msg/model/api_email_msg_model.dart';
+import '../api_email_sender/model/api_email_sender_model.dart';
+import '../data_bkg/model/data_bkg_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'repository/api_google_repository_info.dart';
 
@@ -42,41 +43,42 @@ class ApiGoogleService {
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 
-  Future<Set<String>> gmailFetch({String? query, int retries = 3}) async {
+  Future<DataBkgModelPage<String>> gmailFetch(
+      {String? query,
+      String? page,
+      int retries = 3,
+      int maxResults = 500}) async {
     try {
-      return await _gmailFetch(messageIds: Set(), query: query);
+      return await _gmailFetch(
+          query: query, maxResults: maxResults, page: page);
     } catch (e) {
-      if (retries > 1) return gmailFetch(query: query, retries: retries - 1);
+      if (retries > 1)
+        return gmailFetch(
+            query: query,
+            retries: retries - 1,
+            page: page,
+            maxResults: maxResults);
       rethrow;
     }
   }
 
-  Future<Set<String>> _gmailFetch(
-      {required Set<String> messageIds,
-      String? query,
-      int? maxResults,
-      String? pageToken}) async {
+  Future<DataBkgModelPage<String>> _gmailFetch(
+      {String? query, int? maxResults, String? page}) async {
     GmailApi? gmailApi = await _gmailApi;
+    List<String>? messages;
     ListMessagesResponse? emails = await gmailApi?.users.messages.list("me",
         maxResults: maxResults,
         includeSpamTrash: true,
-        pageToken: pageToken,
+        pageToken: page,
         q: query);
     _log.finest(
         'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
     if (emails != null && emails.messages != null)
-      messageIds.addAll(emails.messages!
+      messages = emails.messages!
           .where((message) => message.id != null)
           .map((message) => message.id!)
-          .toSet());
-    if (emails?.nextPageToken != null)
-      return await _gmailFetch(
-          messageIds: messageIds,
-          query: query,
-          maxResults: maxResults,
-          pageToken: emails?.nextPageToken);
-    else
-      return messageIds;
+          .toList();
+    return DataBkgModelPage(next: emails?.nextPageToken, data: messages);
   }
 
   Future<ApiEmailMsgModel?> gmailFetchMessage(String messageId,
@@ -158,11 +160,13 @@ revolution today.<br />
   }
 
   ApiEmailMsgModel _convertMessage(Message message) {
-    message.labelIds!.forEach((label) {
-      if (label.contains("CATEGORY_")) {
-        if ("PROMOTION" == label.replaceFirst('CATEGORY_', '')) return null;
-      }
-    });
+    if (message.labelIds != null) {
+      message.labelIds!.forEach((label) {
+        if (label.contains("CATEGORY_")) {
+          if ("PROMOTION" == label.replaceFirst('CATEGORY_', '')) return null;
+        }
+      });
+    }
     return ApiEmailMsgModel(
         extMessageId: message.id,
         receivedDate: message.internalDate != null
