@@ -20,7 +20,7 @@ class LinkAccountViewSee extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 1.75.h),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("What data " + type + " holds on me",
+            Text("What data does " + type + " hold",
                 style: TextStyle(
                     fontSize: 11.5.sp,
                     fontWeight: FontWeight.bold,
