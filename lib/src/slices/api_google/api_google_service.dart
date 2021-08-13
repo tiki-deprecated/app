@@ -160,12 +160,18 @@ revolution today.<br />
   }
 
   ApiEmailMsgModel _convertMessage(Message message) {
+    DateTime? openedDate;
     if (message.labelIds != null) {
       message.labelIds!.forEach((label) {
         if (label.contains("CATEGORY_")) {
           if ("PROMOTION" == label.replaceFirst('CATEGORY_', '')) return null;
         }
       });
+      openedDate =
+          message.labelIds!.contains("UNREAD") && message.internalDate != null
+              ? DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(message.internalDate!))
+              : null;
     }
     return ApiEmailMsgModel(
         extMessageId: message.id,
@@ -173,11 +179,7 @@ revolution today.<br />
             ? DateTime.fromMillisecondsSinceEpoch(
                 int.parse(message.internalDate!))
             : null,
-        openedDate: !message.labelIds!.contains("UNREAD") &&
-                message.internalDate != null
-            ? DateTime.fromMillisecondsSinceEpoch(
-                int.parse(message.internalDate!))
-            : null,
+        openedDate: openedDate,
         account: _googleSignIn.currentUser!.email,
         sender: _convertSender(message));
   }
