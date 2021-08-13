@@ -44,7 +44,7 @@ class DataBkgService extends ChangeNotifier {
   }
 
   Future<void> checkGmail({bool fetchAll = false, bool force = false}) async {
-    _log.info('Gmail fetch starting on: ' + DateTime.now().toIso8601String());
+    _log.fine('Gmail fetch starting on: ' + DateTime.now().toIso8601String());
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
     ApiAppDataModel? appDataGmailLastFetch =
@@ -69,7 +69,7 @@ class DataBkgService extends ChangeNotifier {
       await _apiAppDataService.save(
           ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
       await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, '');
-      _log.info(
+      _log.fine(
           'Gmail fetch completed on: ' + DateTime.now().toIso8601String());
     }
   }
@@ -125,7 +125,7 @@ class DataBkgService extends ChangeNotifier {
         if (sender != null) {
           await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
-          _log.info('Sender upsert: ' + (sender.company?.domain ?? ''));
+          _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
           notifyListeners();
         } else {
           Set<ApiEmailMsgModel> senderMessages =
@@ -169,7 +169,7 @@ class DataBkgService extends ChangeNotifier {
         message.sender = inserted;
         await _apiEmailMsgService.upsert(message);
       }
-      _log.info('Sender upsert: ' + (sender.company?.domain ?? ''));
+      _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
       notifyListeners();
     }
     return messages;
