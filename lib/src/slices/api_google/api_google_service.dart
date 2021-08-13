@@ -209,10 +209,12 @@ revolution today.<br />
         }
       }
     }
-    message.labelIds!.forEach((label) {
-      if (label.contains("CATEGORY_"))
-        sender.category = label.replaceFirst('CATEGORY_', '');
-    });
+    if (message.labelIds != null) {
+      message.labelIds!.forEach((label) {
+        if (label.contains("CATEGORY_"))
+          sender.category = label.replaceFirst('CATEGORY_', '');
+      });
+    }
     return sender;
   }
 }
