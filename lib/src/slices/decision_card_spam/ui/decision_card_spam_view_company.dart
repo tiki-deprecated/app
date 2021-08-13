@@ -75,12 +75,16 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
   _getCompanyName(name, email) {
     if (name != null) {
       return Text(name,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w800,
               fontFamily: ConfigFont.familyNunitoSans));
     } else {
       return Text(email,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w800,
