@@ -16,7 +16,7 @@ import 'data_screen_view_soon.dart';
 class DataScreenLayoutBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<DataScreenService>(context);
+    DataScreenService service = Provider.of<DataScreenService>(context);
     var isLinked = service.model.googleAccount != null;
     return GestureDetector(
         child: SingleChildScrollView(
@@ -40,7 +40,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                         type: "Gmail",
                         linkedIcon: "account-soon-gmail",
                         unlinkedIcon: "icon-link-gmail",
-                        onLink: () => service.addGoogleAccount(),
+                        onLink: () => service.controller.linkGmail(context),
                         onUnlink: () => service.removeGoogleAccount(),
                         onSee: () => service.controller.openGmailCards(context),
                       ),

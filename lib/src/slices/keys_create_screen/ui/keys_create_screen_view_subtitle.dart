@@ -18,6 +18,6 @@ class KeysCreateScreenViewSubtitle extends StatelessWidget {
         style: TextStyle(
             fontSize: _fontSize,
             fontWeight: FontWeight.w600,
-            color: ConfigColor.greySix));
+            color: ConfigColor.greySeven));
   }
 }

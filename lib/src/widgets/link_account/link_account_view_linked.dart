@@ -59,7 +59,7 @@ class LinkAccountViewLinked extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 3.h),
                       width: double.infinity,
-                      color: ConfigColor.greyTwo,
+                      color: ConfigColor.greyThree,
                       height: 1.sp,
                     ),
                     Container(child: LinkAccountViewSee(type))

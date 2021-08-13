@@ -56,6 +56,7 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
         child: Container(
             width: widget.constraints.maxWidth,
             height: widget.constraints.maxHeight,
+            padding: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.w),
             child: GestureDetector(
                 onPanEnd: onDragEnd,
                 onPanUpdate: onDragUpdate,
@@ -63,11 +64,25 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
                     transform: Matrix4.rotationZ(angle),
                     alignment: FractionalOffset.topCenter,
                     child: Stack(clipBehavior: Clip.none, children: [
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(_radius.w)),
-                        child: widget.child,
-                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                            boxShadow: angle.abs() > 0
+                                ? [
+                                    BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 20,
+                                        spreadRadius: 0,
+                                        offset: Offset(-3, 4))
+                                  ]
+                                : [],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                          ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(_radius.w)),
+                            child: widget.child,
+                          )),
                       Positioned(
                           left: -60,
                           top: 100,
@@ -97,9 +112,9 @@ class _DecisionCardViewState extends State<DecisionScreenViewCard> {
   }
 
   void onDragEnd(DragEndDetails details) {
-    if (delta > 0) {
+    if (delta > 100) {
       widget.onSwipeRight();
-    } else {
+    } else if (delta < -100) {
       widget.onSwipeLeft();
     }
     setState(() {

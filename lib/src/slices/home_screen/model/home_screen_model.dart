@@ -4,5 +4,6 @@
  */
 
 class HomeScreenModel {
-  var currentScreenIndex = 1;
+  int currentScreenIndex = 1;
+  bool showOverlay = false;
 }
