@@ -111,3 +111,7 @@ flutter:
         - asset: res/fonts/NunitoSans-ExtraLightItalic.ttf
           weight: 200
           style: italic
+    - family: Roboto
+      fonts:
+        - asset: res/fonts/Roboto-Medium.ttf
+          weight: 500

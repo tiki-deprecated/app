@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class LinkAccountViewAdd extends StatelessWidget {
-  static const double _height = 40;
+  static const double _scale = 0.9;
 
   final String text;
   final String icon;
@@ -23,11 +23,11 @@ class LinkAccountViewAdd extends StatelessWidget {
         onTap: onLink, // controller.onLink(),
         behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: _height,
+          padding: EdgeInsets.symmetric(horizontal: 8.sp * _scale),
+          height: 40.sp * _scale,
           decoration: BoxDecoration(
             color: ConfigColor.white,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(5.sp * _scale),
             boxShadow: [
               BoxShadow(
                 color: Color(0x0D000000),
@@ -39,15 +39,16 @@ class LinkAccountViewAdd extends StatelessWidget {
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Image(
               image: AssetImage('res/images/' + icon + '.png'),
-              height: 24,
+              height: 18.sp * _scale,
               fit: BoxFit.fitHeight,
             ),
             Container(
-                margin: EdgeInsets.only(left: 24),
+                margin: EdgeInsets.only(left: 24.sp * _scale),
                 child: Text(text,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "RobotoMono",
+                        fontSize: 14.sp * _scale,
+                        fontFamily: "Roboto",
                         fontWeight: FontWeight.w500,
                         color: Colors.black54))),
           ]),
