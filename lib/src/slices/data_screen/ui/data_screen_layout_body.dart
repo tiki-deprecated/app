@@ -37,9 +37,9 @@ class DataScreenLayoutBody extends StatelessWidget {
                       margin: EdgeInsets.only(top: 2.h),
                       child: LinkAccount(
                         username: service.model.googleAccount?.email,
-                        type: "Gmail",
+                        type: "Google",
                         linkedIcon: "account-soon-gmail",
-                        unlinkedIcon: "icon-link-gmail",
+                        unlinkedIcon: "google-icon",
                         onLink: () => service.controller.linkGmail(context),
                         onUnlink: () => service.removeGoogleAccount(),
                         onSee: () => service.controller.openGmailCards(context),
