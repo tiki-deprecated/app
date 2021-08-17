@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/user_referral_service.dart';
@@ -20,15 +21,17 @@ class UserReferralController {
   copyLink(BuildContext context) async {
     LoginFlowService loginFlowService =
         Provider.of<LoginFlowService>(context, listen: false);
-    await Clipboard.setData(
-        new ClipboardData(text: _linkUrl + service.getCode(loginFlowService)));
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
+    await Clipboard.setData(new ClipboardData(
+        text: _linkUrl + service.getCode(apiAppDataService, loginFlowService)));
   }
 
   Future<void> updateReferCount(BuildContext context) async {
     ApiSignupService apiSignupService =
         Provider.of<ApiSignupService>(context, listen: false);
-    LoginFlowService loginFlowService =
-        Provider.of<LoginFlowService>(context, listen: false);
-    await service.updateReferCount(loginFlowService, apiSignupService);
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
+    await service.updateReferCount(apiAppDataService, apiSignupService);
   }
 }

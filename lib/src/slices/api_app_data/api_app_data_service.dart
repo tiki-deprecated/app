@@ -21,4 +21,22 @@ class ApiAppDataService {
         ? await _repository.insert(dataToInsert)
         : await _repository.update(dataToInsert);
   }
+
+  Future<void> deleteOnLogout() async {
+    List<ApiAppDataKey> keysToDelete = [
+      ApiAppDataKey.userReferCode,
+      ApiAppDataKey.gmailLastFetch,
+      ApiAppDataKey.gmailLastPage,
+      ApiAppDataKey.googleOauthModalComplete,
+    ];
+    keysToDelete.forEach((key) async {
+      await _repository.deleteByKey(key);
+    });
+  }
+
+  Future<void> deleteByKeys(List<ApiAppDataKey> keysToDelete) async {
+    keysToDelete.forEach((key) async {
+      await _repository.deleteByKey(key);
+    });
+  }
 }

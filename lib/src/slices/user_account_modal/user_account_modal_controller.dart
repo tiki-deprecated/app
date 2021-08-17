@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
@@ -20,13 +21,18 @@ class UserAccountModalController {
 
   UserAccountModalController(this.service);
 
-  void onLogout(BuildContext context) =>
-      Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+  void onLogout(BuildContext context) {
+    Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+    Provider.of<ApiAppDataService>(context, listen: false).deleteOnLogout();
+  }
 
   void onShare(BuildContext context) {
     LoginFlowService loginFlowService =
         Provider.of<LoginFlowService>(context, listen: false);
-    String code = service.referralService.getCode(loginFlowService);
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
+    String code =
+        service.referralService.getCode(apiAppDataService, loginFlowService);
     Share.share(_shareBody + _shareLink + code, subject: _shareSubject);
   }
 

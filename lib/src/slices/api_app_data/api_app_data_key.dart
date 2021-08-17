@@ -4,11 +4,12 @@
  */
 
 enum ApiAppDataKey {
-  testCardsDone,
+  decisionOverlayShown,
   gmailLastFetch,
   gmailLastPage,
   googleOauthModalComplete,
-  decisionOverlayShown,
+  testCardsDone,
+  userReferCode,
 }
 
 extension ApiAppDataKeyExtension on ApiAppDataKey {
@@ -24,6 +25,8 @@ extension ApiAppDataKeyExtension on ApiAppDataKey {
         return 'google_oauth_modal_complete_bool';
       case ApiAppDataKey.decisionOverlayShown:
         return 'decision_overlay_shown_bool';
+      case ApiAppDataKey.userReferCode:
+        return 'user_refer_code';
       default:
         return null;
     }

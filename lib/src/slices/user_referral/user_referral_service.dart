@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
@@ -24,35 +26,48 @@ class UserReferralService extends ChangeNotifier {
     this.model = UserReferralModel();
   }
 
-  String getCode(LoginFlowService loginFlowService) {
-    String? code = loginFlowService.model.user!.user!.code;
-    if (code == null || code.isEmpty) _updateCode(loginFlowService);
+  String getCode(
+      ApiAppDataService apiAppDataService, LoginFlowService loginFlowService) {
+    String? code = this.model.code;
+    if (code == null || code.isEmpty)
+      _updateCode(apiAppDataService, loginFlowService);
     return code ?? "";
   }
 
-  updateReferCount(LoginFlowService loginFlowService,
+  updateReferCount(ApiAppDataService apiAppDataService,
       ApiSignupService apiSignupService) async {
-    String? code = loginFlowService.model.user!.user!.code;
-    if (code != null) {
-      int? count = await apiSignupService.getTotal(code: code);
-      if (count != null) {
-        this.model.referCount = count;
-        notifyListeners();
+    if (!this.model.referCountUpdated) {
+      String? code =
+          (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
+              ?.value;
+      if (code != null) {
+        int? count = await apiSignupService.getTotal(code: code);
+        if (count != null) {
+          this.model.referCount = count;
+          this.model.referCountUpdated = true;
+          notifyListeners();
+        }
       }
     }
   }
 
-  void _updateCode(LoginFlowService loginFlowService) async {
-    HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp = await loginFlowService
-        .apiBlockchainService
-        .referCode(loginFlowService.model.user!.user!.address!);
-    if (HelperApiUtils.isOk(rsp.code)) {
-      ApiBlockchainModelAddressRspCode data = rsp.data;
-      loginFlowService.model.user!.user!.code = data.code;
-      await loginFlowService.apiUserService
-          .setUser(loginFlowService.model.user!.user!);
-      await loginFlowService.loadUser();
-      notifyListeners();
+  void _updateCode(ApiAppDataService apiAppDataService,
+      LoginFlowService loginFlowService) async {
+    String code =
+        (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
+                ?.value ??
+            '';
+    if (code.isEmpty) {
+      String address = loginFlowService.model.user!.user!.address!;
+      HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
+          await loginFlowService.apiBlockchainService.referCode(address);
+      if (HelperApiUtils.isOk(rsp.code)) {
+        ApiBlockchainModelAddressRspCode data = rsp.data;
+        code = data.code ?? '';
+        await apiAppDataService.save(ApiAppDataKey.userReferCode, code);
+      }
     }
+    this.model.code = code;
+    notifyListeners();
   }
 }

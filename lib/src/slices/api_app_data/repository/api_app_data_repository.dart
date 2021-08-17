@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
 import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
@@ -33,7 +34,7 @@ class ApiAppDataRepository {
 
   Future<ApiAppDataModel?> getById(int id) async {
     final List<Map<String, Object?>> rows =
-        await _database.query(_table, where: "id = ?", whereArgs: [id]);
+    await _database.query(_table, where: "id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
     return ApiAppDataModel.fromMap(rows[0]);
   }
@@ -43,5 +44,9 @@ class ApiAppDataRepository {
         await _database.query(_table, where: "key = ?", whereArgs: [key]);
     if (rows.isEmpty) return null;
     return ApiAppDataModel.fromMap(rows[0]);
+  }
+
+  deleteByKey(ApiAppDataKey key) async {
+    await _database.delete(_table, where: "key = ?", whereArgs: [key]);
   }
 }
