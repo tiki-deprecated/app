@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 class LinkAccountViewAdd extends StatelessWidget {
-  static const num _height = 7;
+  static const double _height = 40;
 
   final String text;
   final String icon;
@@ -23,10 +23,11 @@ class LinkAccountViewAdd extends StatelessWidget {
         onTap: onLink, // controller.onLink(),
         behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          height: _height,
           decoration: BoxDecoration(
             color: ConfigColor.white,
-            borderRadius: BorderRadius.circular(4.w),
+            borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
                 color: Color(0x0D000000),
@@ -35,31 +36,20 @@ class LinkAccountViewAdd extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(children: [
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
             Image(
               image: AssetImage('res/images/' + icon + '.png'),
-              height: 2.h,
+              height: 24,
               fit: BoxFit.fitHeight,
             ),
             Container(
-                color: ConfigColor.greyTwo,
-                width: 1.sp,
-                height: _height.h,
-                margin: EdgeInsets.only(left: 4.w)),
-            Container(
-                margin: EdgeInsets.only(left: 4.w),
+                margin: EdgeInsets.only(left: 24),
                 child: Text(text,
                     style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: ConfigColor.tikiBlue))),
-            Expanded(
-                child: Image(
-              alignment: Alignment.centerRight,
-              image: AssetImage('res/images/icon-act-plus.png'),
-              height: 3.75.h,
-              fit: BoxFit.fitHeight,
-            )),
+                        fontSize: 16,
+                        fontFamily: "RobotoMono",
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54))),
           ]),
         ));
   }
