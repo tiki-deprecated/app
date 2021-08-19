@@ -17,7 +17,6 @@ class UserReferralViewCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<UserReferralService>(context);
-    service.controller.updateReferCount(context);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
           margin: EdgeInsets.only(right: 2.w),

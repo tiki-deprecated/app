@@ -4,6 +4,8 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/user_account_modal/user_account_modal_controller.dart';
+import 'package:app/src/slices/user_referral/user_referral_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,11 @@ class UserAccountModalViewReferShare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Provider.of<UserAccountModalService>(context).controller;
+    UserAccountModalService userAccountModalService =
+        Provider.of<UserAccountModalService>(context);
+    UserAccountModalController controller = userAccountModalService.controller;
+    UserReferralService userReferralService =
+        userAccountModalService.referralService;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 1.25.h),
@@ -42,6 +48,6 @@ class UserAccountModalViewReferShare extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: () => controller.onShare(context));
+        onPressed: () => controller.onShare(userReferralService));
   }
 }

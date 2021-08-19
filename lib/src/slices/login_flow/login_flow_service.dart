@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_email_sender/api_email_sender_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,6 @@ import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
 import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
-import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
@@ -279,6 +279,8 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+    registerLogout(() async => await apiAppDataService.logout());
+
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
     ApiEmailMsgService apiEmailMsgService =
@@ -300,7 +302,6 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
-      Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiGoogleService>.value(value: apiGoogleService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
       ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),

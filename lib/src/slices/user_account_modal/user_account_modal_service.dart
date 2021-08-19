@@ -14,13 +14,12 @@ class UserAccountModalService extends ChangeNotifier {
   late final UserAccountModalPresenter presenter;
   late final UserAccountModalController controller;
   late final UserAccountModalModel model;
-  late final UserReferralService referralService;
+  UserReferralService referralService;
 
-  UserAccountModalService({UserReferralService? referralService}) {
+  UserAccountModalService(this.referralService) {
     this.presenter = UserAccountModalPresenter(this);
     this.controller = UserAccountModalController(this);
     this.model = UserAccountModalModel();
-    this.referralService = UserReferralService();
   }
 
   updateSignups(ApiSignupService apiSignupService) async {

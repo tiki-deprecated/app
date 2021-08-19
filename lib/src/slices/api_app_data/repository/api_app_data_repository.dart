@@ -34,7 +34,7 @@ class ApiAppDataRepository {
 
   Future<ApiAppDataModel?> getById(int id) async {
     final List<Map<String, Object?>> rows =
-    await _database.query(_table, where: "id = ?", whereArgs: [id]);
+        await _database.query(_table, where: "id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
     return ApiAppDataModel.fromMap(rows[0]);
   }

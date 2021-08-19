@@ -4,8 +4,6 @@
  */
 
 import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/user_referral_service.dart';
 import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,10 +35,7 @@ class UserReferralViewCode extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(
                     left: 2.w, top: 1.5.h, right: 1.h, bottom: 1.5.h),
-                child: Text(
-                    service.model.code ??
-                        service.getCode(Provider.of<ApiAppDataService>(context),
-                            Provider.of<LoginFlowService>(context)),
+                child: Text(service.model.code ?? service.getCode(),
                     style: TextStyle(
                         fontSize: _fontSize.sp,
                         fontWeight: FontWeight.bold,

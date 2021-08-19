@@ -19,39 +19,40 @@ class UserReferralService extends ChangeNotifier {
   late final UserReferralPresenter presenter;
   late final UserReferralController controller;
   late final UserReferralModel model;
+  final ApiAppDataService apiAppDataService;
+  final LoginFlowService loginFlowService;
+  final ApiSignupService apiSignupService;
 
-  UserReferralService() {
+  UserReferralService(
+      this.apiAppDataService, this.loginFlowService, this.apiSignupService) {
     this.presenter = UserReferralPresenter(this);
     this.controller = UserReferralController(this);
     this.model = UserReferralModel();
+    getCode();
   }
 
-  String getCode(
-      ApiAppDataService apiAppDataService, LoginFlowService loginFlowService) {
+  String getCode() {
     String? code = this.model.code;
     if (code == null || code.isEmpty)
-      _updateCode(apiAppDataService, loginFlowService);
+      _updateCode(this.apiAppDataService, this.loginFlowService)
+          .then((_) => updateReferCount());
     return code ?? "";
   }
 
-  updateReferCount(ApiAppDataService apiAppDataService,
-      ApiSignupService apiSignupService) async {
-    if (!this.model.referCountUpdated) {
-      String? code =
-          (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
-              ?.value;
-      if (code != null) {
-        int? count = await apiSignupService.getTotal(code: code);
-        if (count != null) {
-          this.model.referCount = count;
-          this.model.referCountUpdated = true;
-          notifyListeners();
-        }
+  updateReferCount() async {
+    String? code =
+        (await this.apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
+            ?.value;
+    if (code != null) {
+      int? count = await this.apiSignupService.getTotal(code: code);
+      if (count != null) {
+        this.model.referCount = count;
+        notifyListeners();
       }
     }
   }
 
-  void _updateCode(ApiAppDataService apiAppDataService,
+  Future<void> _updateCode(ApiAppDataService apiAppDataService,
       LoginFlowService loginFlowService) async {
     String code =
         (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
