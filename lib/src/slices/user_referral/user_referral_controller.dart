@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/user_referral_service.dart';
@@ -20,8 +21,11 @@ class UserReferralController {
   copyLink(BuildContext context) async {
     LoginFlowService loginFlowService =
         Provider.of<LoginFlowService>(context, listen: false);
-    await Clipboard.setData(
-        new ClipboardData(text: _linkUrl + service.getCode(loginFlowService)));
+    ApiBlockchainService apiBlockchainService =
+        Provider.of<ApiBlockchainService>(context, listen: false);
+    await Clipboard.setData(new ClipboardData(
+        text: _linkUrl +
+            service.getCode(loginFlowService, apiBlockchainService)));
   }
 
   Future<void> updateReferCount(BuildContext context) async {

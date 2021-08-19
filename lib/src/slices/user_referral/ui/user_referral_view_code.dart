@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/config/config_color.dart';
+import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_referral/user_referral_service.dart';
 import 'package:app/src/utils/helper_image.dart';
@@ -18,9 +19,13 @@ class UserReferralViewCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var service = Provider.of<UserReferralService>(context);
+    UserReferralService userReferralService =
+        Provider.of<UserReferralService>(context);
+    LoginFlowService loginFlowService = Provider.of<LoginFlowService>(context);
+    ApiBlockchainService apiBlockchainService =
+        Provider.of<ApiBlockchainService>(context);
     return OutlinedButton(
-        onPressed: () async => service.controller.copyLink(context),
+        onPressed: () async => userReferralService.controller.copyLink(context),
         style: OutlinedButton.styleFrom(
             side: BorderSide(color: ConfigColor.greyFour),
             primary: ConfigColor.greyFive,
@@ -37,7 +42,8 @@ class UserReferralViewCode extends StatelessWidget {
                 margin: EdgeInsets.only(
                     left: 2.w, top: 1.5.h, right: 1.h, bottom: 1.5.h),
                 child: Text(
-                    service.getCode(Provider.of<LoginFlowService>(context)),
+                    userReferralService.getCode(
+                        loginFlowService, apiBlockchainService),
                     style: TextStyle(
                         fontSize: _fontSize.sp,
                         fontWeight: FontWeight.bold,
