@@ -166,8 +166,14 @@ revolution today.<br />
       for (var headerEntry in headers) {
         switch (headerEntry.name!.trim()) {
           case "To":
-            if (headerEntry.value!.trim() !=
-                _googleSignIn.currentUser!.email.trim()) return null;
+            String email = headerEntry.value!.contains("<")
+                ? headerEntry.value!
+                    .split("<")
+                    .toList()[1]
+                    .replaceFirst(">", "")
+                    .trim()
+                : headerEntry.value!;
+            if (email != _googleSignIn.currentUser!.email.trim()) return null;
             break;
         }
       }
