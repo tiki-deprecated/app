@@ -163,7 +163,9 @@ class LoginFlowService extends ChangeNotifier {
           ApiUserModelToken(
               bearer: data.accessToken,
               refresh: data.refreshToken,
-              expiresIn: data.expiresIn));
+              expires: data.expiresIn != null
+                  ? DateTime.now().add(Duration(seconds: data.expiresIn!))
+                  : null));
 
       if (this.model.user?.keys?.address != null) {
         this.model.user!.user!.isLoggedIn = true;
@@ -214,7 +216,9 @@ class LoginFlowService extends ChangeNotifier {
             ApiUserModelToken(
                 bearer: jwt.accessToken,
                 refresh: jwt.refreshToken,
-                expiresIn: jwt.expiresIn));
+                expires: jwt.expiresIn != null
+                    ? DateTime.now().add(Duration(seconds: jwt.expiresIn!))
+                    : null));
         await _loadUser();
         return;
       }
