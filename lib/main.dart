@@ -1,5 +1,3 @@
-import 'package:app/src/config/config_amplitude.dart';
-import 'package:app/src/config/config_sentry.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app.dart';
+import 'src/config/config_amplitude.dart';
 import 'src/config/config_log.dart';
+import 'src/config/config_sentry.dart';
 import 'src/slices/api_blockchain/api_blockchain_service.dart';
 import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';

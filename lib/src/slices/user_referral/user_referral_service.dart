@@ -5,7 +5,6 @@
 
 import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
 import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
@@ -13,8 +12,9 @@ import 'package:app/src/slices/user_referral/model/user_referral_model.dart';
 import 'package:app/src/slices/user_referral/user_referral_controller.dart';
 import 'package:app/src/slices/user_referral/user_referral_presenter.dart';
 import 'package:app/src/utils/api/helper_api_rsp.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../utils/api/helper_api_utils.dart';
 
 class UserReferralService extends ChangeNotifier {
   late final UserReferralPresenter presenter;
