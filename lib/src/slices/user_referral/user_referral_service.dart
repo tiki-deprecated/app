@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
@@ -24,9 +25,11 @@ class UserReferralService extends ChangeNotifier {
     this.model = UserReferralModel();
   }
 
-  String getCode(LoginFlowService loginFlowService) {
+  String getCode(LoginFlowService loginFlowService,
+      ApiBlockchainService apiBlockchainService) {
     String? code = loginFlowService.model.user!.user!.code;
-    if (code == null || code.isEmpty) _updateCode(loginFlowService);
+    if (code == null || code.isEmpty)
+      _updateCode(loginFlowService, apiBlockchainService);
     return code ?? "";
   }
 
@@ -42,16 +45,15 @@ class UserReferralService extends ChangeNotifier {
     }
   }
 
-  void _updateCode(LoginFlowService loginFlowService) async {
-    HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp = await loginFlowService
-        .apiBlockchainService
-        .referCode(loginFlowService.model.user!.user!.address!);
+  void _updateCode(LoginFlowService loginFlowService,
+      ApiBlockchainService apiBlockchainService) async {
+    HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
+        await apiBlockchainService
+            .referCode(loginFlowService.model.user!.user!.address!);
     if (HelperApiUtils.isOk(rsp.code)) {
       ApiBlockchainModelAddressRspCode data = rsp.data;
       loginFlowService.model.user!.user!.code = data.code;
-      await loginFlowService.apiUserService
-          .setUser(loginFlowService.model.user!.user!);
-      await loginFlowService.loadUser();
+      //await loginFlowService.apiUserService.setUser(loginFlowService.model.user!.user!);
       notifyListeners();
     }
   }

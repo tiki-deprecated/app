@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_blockchain/api_blockchain_service.dart';
 import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
@@ -26,7 +27,10 @@ class UserAccountModalController {
   void onShare(BuildContext context) {
     LoginFlowService loginFlowService =
         Provider.of<LoginFlowService>(context, listen: false);
-    String code = service.referralService.getCode(loginFlowService);
+    ApiBlockchainService apiBlockchainService =
+        Provider.of<ApiBlockchainService>(context, listen: false);
+    String code =
+        service.referralService.getCode(loginFlowService, apiBlockchainService);
     Share.share(_shareBody + _shareLink + code, subject: _shareSubject);
   }
 

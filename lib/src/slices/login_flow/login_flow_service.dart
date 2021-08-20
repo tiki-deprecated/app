@@ -45,16 +45,16 @@ import 'model/login_flow_model_state.dart';
 class LoginFlowService extends ChangeNotifier {
   final LoginFlowModel model;
   late final LoginFlowDelegate delegate;
-  late final ApiUserService apiUserService;
-  late final ApiBouncerService apiBouncerService;
-  late final ApiBlockchainService apiBlockchainService;
-  late final HelperApiAuth helperApiAuth;
-  List<void Function()> logoutCallbacks = [];
-  List<SingleChildWidget> providers = [];
+  late final ApiUserService _apiUserService;
+  late final ApiBouncerService _apiBouncerService;
+  late final ApiBlockchainService _apiBlockchainService;
+  late final HelperApiAuth _helperApiAuth;
+  List<void Function()> _logoutCallbacks = [];
+  List<SingleChildWidget> _providers = [];
 
   LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
-    initDynamicLinks();
+    _initDynamicLinks();
   }
 
   Future<void> initialize(
@@ -63,22 +63,17 @@ class LoginFlowService extends ChangeNotifier {
       required ApiBlockchainService apiBlockchainService,
       required HelperApiAuth helperApiAuth,
       Iterable<void Function()>? logoutCallbacks}) async {
-    this.apiUserService = apiUserService;
-    this.apiBouncerService = apiBouncerService;
-    this.apiBlockchainService = apiBlockchainService;
-    this.helperApiAuth = helperApiAuth;
-    if (logoutCallbacks != null) this.logoutCallbacks.addAll(logoutCallbacks);
-    await loadUser();
+    this._apiUserService = apiUserService;
+    this._apiBouncerService = apiBouncerService;
+    this._apiBlockchainService = apiBlockchainService;
+    this._helperApiAuth = helperApiAuth;
+    if (logoutCallbacks != null) this._logoutCallbacks.addAll(logoutCallbacks);
+    await _loadUser();
 
     if (this.model.user?.user?.isLoggedIn == true) {
       await _initServices();
       setLoggedIn();
     } else if (this.model.user?.current?.email != null) setReturningUser();
-  }
-
-  Future<void> loadUser() async {
-    this.model.user = await apiUserService.get();
-    notifyListeners();
   }
 
   bool onPopPage(Route<dynamic> route, result) {
@@ -105,40 +100,177 @@ class LoginFlowService extends ChangeNotifier {
       else if (this.model.state == LoginFlowModelState.keysCreated)
         KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
-        HomeScreenService(providers: providers).presenter
+        HomeScreenService(providers: _providers).presenter
     ];
   }
 
   void registerLogout(void Function() logout) {
-    if (!this.logoutCallbacks.contains(logout))
-      this.logoutCallbacks.add(logout);
+    if (!this._logoutCallbacks.contains(logout))
+      this._logoutCallbacks.add(logout);
   }
 
-  void changeState(LoginFlowModelState state) {
-    this.model.state = state;
-    notifyListeners();
-  }
+  void setReturningUser() => _changeState(LoginFlowModelState.returningUser);
 
-  void setReturningUser() => changeState(LoginFlowModelState.returningUser);
+  void setOtpRequested() => _changeState(LoginFlowModelState.otpRequested);
 
-  void setOtpRequested() => changeState(LoginFlowModelState.otpRequested);
+  void setCreatingKeys() => _changeState(LoginFlowModelState.creatingKeys);
 
-  void setCreatingKeys() => changeState(LoginFlowModelState.creatingKeys);
+  void setKeysCreated() => _changeState(LoginFlowModelState.keysCreated);
 
-  void setKeysCreated() => changeState(LoginFlowModelState.keysCreated);
-
-  void setLoggedIn() => changeState(LoginFlowModelState.loggedIn);
+  void setLoggedIn() => _changeState(LoginFlowModelState.loggedIn);
 
   void setLoggedOut() async {
     if (this.model.user?.user?.isLoggedIn == true) {
       this.model.user!.user!.isLoggedIn = false;
-      await apiUserService.setUser(this.model.user!.user!);
+      await _apiUserService.setUser(this.model.user!.user!);
     }
-    logoutCallbacks.forEach((func) => func());
+    _logoutCallbacks.forEach((func) => func());
     setReturningUser();
   }
 
-  Future<void> initDynamicLinks() async {
+  Future<bool> requestOtp({String? email}) async {
+    bool success = false;
+
+    if (email != null) {
+      this.model.user?.current = ApiUserModelCurrent(email: email);
+      _apiUserService.setCurrent(email);
+    }
+
+    setOtpRequested();
+    HelperApiRsp<ApiBouncerModelOtpRsp> rsp =
+        await _apiBouncerService.otpRequest(this.model.user!.current!.email!);
+
+    if (HelperApiUtils.isOk(rsp.code)) {
+      ApiBouncerModelOtpRsp data = rsp.data;
+      _apiUserService.setOtp(ApiUserModelOtp(
+          email: this.model.user!.current!.email!, salt: data.salt));
+      success = true;
+    } else
+      setReturningUser();
+
+    await _loadUser();
+    return success;
+  }
+
+  Future<bool> verifyOtp(String otp) async {
+    if (this.model.user!.user!.isLoggedIn == true) return true;
+    HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
+        await _apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
+    if (HelperApiUtils.isOk(rsp.code)) {
+      ApiBouncerModelJwtRsp data = rsp.data;
+      await _apiUserService.setToken(
+          this.model.user!.current!.email!,
+          ApiUserModelToken(
+              bearer: data.accessToken,
+              refresh: data.refreshToken,
+              expires: data.expiresIn != null
+                  ? DateTime.now().add(Duration(seconds: data.expiresIn!))
+                  : null));
+
+      if (this.model.user?.keys?.address != null) {
+        this.model.user!.user!.isLoggedIn = true;
+        await _apiUserService.setUser(this.model.user!.user!);
+        await _initServices();
+        setLoggedIn();
+      } else {
+        await _apiUserService.setUser(ApiUserModelUser(
+            email: this.model.user!.current!.email!, isLoggedIn: false));
+        setCreatingKeys();
+      }
+      await _loadUser();
+      return true;
+    } else
+      return false;
+  }
+
+  Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
+    if (await _saveKeys(keys: keys)) {
+      if (await _registerKeys(keys: keys)) {
+        await _initServices();
+        setLoggedIn();
+        await _loadUser();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
+    if (await _saveKeys(keys: keys)) {
+      await _initServices();
+      setLoggedIn();
+      await _loadUser();
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> refreshAuth() async {
+    if (model.user?.token != null && model.user?.token?.refresh != null) {
+      HelperApiRsp<ApiBouncerModelJwtRsp> refreshRsp =
+          await _apiBouncerService.refreshGrant(model.user!.token!.refresh!);
+      if (HelperApiUtils.is2xx(refreshRsp.code)) {
+        ApiBouncerModelJwtRsp jwt = refreshRsp.data;
+        await _apiUserService.setToken(
+            model.user!.user!.email!,
+            ApiUserModelToken(
+                bearer: jwt.accessToken,
+                refresh: jwt.refreshToken,
+                expires: jwt.expiresIn != null
+                    ? DateTime.now().add(Duration(seconds: jwt.expiresIn!))
+                    : null));
+        await _loadUser();
+        return;
+      }
+    }
+    ConfigSentry.message("Failed to refresh authorization. Logging out",
+        level: ConfigSentry.levelInfo);
+    setLoggedOut();
+  }
+
+  Future<void> _loadUser() async {
+    this.model.user = await _apiUserService.get();
+    notifyListeners();
+  }
+
+  Future<void> _initServices() async {
+    Database database =
+        await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
+
+    ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+    ApiEmailSenderService apiEmailSenderService =
+        ApiEmailSenderService(database: database);
+    ApiEmailMsgService apiEmailMsgService =
+        ApiEmailMsgService(database: database);
+    ApiCompanyService apiCompanyService =
+        ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
+
+    ApiGoogleService apiGoogleService = ApiGoogleService();
+    registerLogout(() async => await apiGoogleService.signOut());
+
+    DataBkgService dataBkgService = DataBkgService(
+        apiEmailMsgService: apiEmailMsgService,
+        apiCompanyService: apiCompanyService,
+        apiEmailSenderService: apiEmailSenderService,
+        apiGoogleService: apiGoogleService,
+        apiAppDataService: apiAppDataService);
+
+    _providers = [
+      Provider<ApiCompanyService>.value(value: apiCompanyService),
+      Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
+      Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
+      Provider<ApiAppDataService>.value(value: apiAppDataService),
+      Provider<ApiGoogleService>.value(value: apiGoogleService),
+      ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
+    ];
+  }
+
+  void _changeState(LoginFlowModelState state) {
+    this.model.state = state;
+    notifyListeners();
+  }
+
+  Future<void> _initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
       final Uri? deepLink = dynamicLink?.link;
@@ -152,30 +284,6 @@ class LoginFlowService extends ChangeNotifier {
     if (deepLink != null) _dynamicLinkHandler(deepLink);
   }
 
-  Future<bool> requestOtp({String? email}) async {
-    bool success = false;
-
-    if (email != null) {
-      this.model.user?.current = ApiUserModelCurrent(email: email);
-      apiUserService.setCurrent(email);
-    }
-
-    setOtpRequested();
-    HelperApiRsp<ApiBouncerModelOtpRsp> rsp =
-        await apiBouncerService.otpRequest(this.model.user!.current!.email!);
-
-    if (HelperApiUtils.isOk(rsp.code)) {
-      ApiBouncerModelOtpRsp data = rsp.data;
-      apiUserService.setOtp(ApiUserModelOtp(
-          email: this.model.user!.current!.email!, salt: data.salt));
-      success = true;
-    } else
-      setReturningUser();
-
-    await loadUser();
-    return success;
-  }
-
   Future<void> _dynamicLinkHandler(Uri link) async {
     final String dlPathBouncer = "/app/bouncer";
     if (link.path == dlPathBouncer) {
@@ -186,76 +294,10 @@ class LoginFlowService extends ChangeNotifier {
     }
   }
 
-  Future<bool> verifyOtp(String otp) async {
-    if (this.model.user!.user!.isLoggedIn == true) return true;
-    HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
-        await apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
-    if (HelperApiUtils.isOk(rsp.code)) {
-      ApiBouncerModelJwtRsp data = rsp.data;
-      await apiUserService.setToken(
-          this.model.user!.current!.email!,
-          ApiUserModelToken(
-              bearer: data.accessToken,
-              refresh: data.refreshToken,
-              expiresIn: data.expiresIn));
-
-      if (this.model.user?.keys?.address != null) {
-        this.model.user!.user!.isLoggedIn = true;
-        await apiUserService.setUser(this.model.user!.user!);
-        await _initServices();
-        setLoggedIn();
-      } else {
-        await apiUserService.setUser(ApiUserModelUser(
-            email: this.model.user!.current!.email!, isLoggedIn: false));
-        setCreatingKeys();
-      }
-      await loadUser();
-      return true;
-    } else
-      return false;
-  }
-
-  Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
-    if (await _saveKeys(keys: keys)) {
-      if (await _registerKeys(keys: keys)) {
-        await _initServices();
-        setLoggedIn();
-        await loadUser();
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
-    if (await _saveKeys(keys: keys)) {
-      await _initServices();
-      setLoggedIn();
-      await loadUser();
-      return true;
-    }
-    return false;
-  }
-
-  Future<bool> _saveKeys({ApiUserModelKeys? keys}) async {
-    if (keys != null) this.model.user!.keys = keys;
-    if (this.model.user?.keys != null) {
-      await this.apiUserService.setKeys(this.model.user!.keys!);
-      this.model.user!.user!.address = this.model.user!.keys!.address;
-      this.model.user!.user!.isLoggedIn = true;
-      await this.apiUserService.setUser(this.model.user!.user!);
-      return true;
-    } else {
-      ConfigSentry.message("Trying to save null keys. Skipping",
-          level: ConfigSentry.levelError);
-      return false;
-    }
-  }
-
   Future<bool> _registerKeys({ApiUserModelKeys? keys}) async {
     if (keys != null) this.model.user!.keys = keys;
     HelperApiRsp<ApiBlockchainModelAddressRsp> rsp = await this
-        .apiBlockchainService
+        ._apiBlockchainService
         .issue(ApiBlockchainModelAddressReq(
             this.model.user?.keys!.dataPublicKey,
             this.model.user?.keys!.signPublicKey));
@@ -274,35 +316,18 @@ class LoginFlowService extends ChangeNotifier {
     return true;
   }
 
-  Future<void> _initServices() async {
-    Database database =
-        await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
-
-    ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
-    ApiEmailSenderService apiEmailSenderService =
-        ApiEmailSenderService(database: database);
-    ApiEmailMsgService apiEmailMsgService =
-        ApiEmailMsgService(database: database);
-    ApiCompanyService apiCompanyService =
-        ApiCompanyService(database: database, helperApiAuth: helperApiAuth);
-
-    ApiGoogleService apiGoogleService = ApiGoogleService();
-    registerLogout(() async => await apiGoogleService.signOut());
-
-    DataBkgService dataBkgService = DataBkgService(
-        apiEmailMsgService: apiEmailMsgService,
-        apiCompanyService: apiCompanyService,
-        apiEmailSenderService: apiEmailSenderService,
-        apiGoogleService: apiGoogleService,
-        apiAppDataService: apiAppDataService);
-
-    providers = [
-      Provider<ApiCompanyService>.value(value: apiCompanyService),
-      Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
-      Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
-      Provider<ApiAppDataService>.value(value: apiAppDataService),
-      Provider<ApiGoogleService>.value(value: apiGoogleService),
-      ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
-    ];
+  Future<bool> _saveKeys({ApiUserModelKeys? keys}) async {
+    if (keys != null) this.model.user!.keys = keys;
+    if (this.model.user?.keys != null) {
+      await this._apiUserService.setKeys(this.model.user!.keys!);
+      this.model.user!.user!.address = this.model.user!.keys!.address;
+      this.model.user!.user!.isLoggedIn = true;
+      await this._apiUserService.setUser(this.model.user!.user!);
+      return true;
+    } else {
+      ConfigSentry.message("Trying to save null keys. Skipping",
+          level: ConfigSentry.levelError);
+      return false;
+    }
   }
 }
