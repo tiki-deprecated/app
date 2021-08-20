@@ -3,11 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_bouncer/api_bouncer_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
-
+import '../../slices/api_bouncer/api_bouncer_service.dart';
+import '../../slices/login_flow/login_flow_service.dart';
 import 'helper_api_rsp.dart';
+import 'helper_api_utils.dart';
 
 class HelperApiAuth {
   final LoginFlowService loginFlowService;

@@ -1,9 +1,10 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/info_carousel/ui/info_carousel_view_close.dart';
-import 'package:app/src/slices/info_carousel/ui/info_carousel_view_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import 'info_carousel_view_close.dart';
+import 'info_carousel_view_slider.dart';
 
 class InfoCarouselScreen extends StatelessWidget {
   @override

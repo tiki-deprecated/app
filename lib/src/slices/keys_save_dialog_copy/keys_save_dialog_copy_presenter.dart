@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_save_dialog_copy/ui/keys_save_dialog_copy_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'keys_save_dialog_copy_service.dart';
+import 'ui/keys_save_dialog_copy_layout.dart';
 
 class KeysSaveDialogCopyPresenter {
   final KeysSaveDialogCopyService service;

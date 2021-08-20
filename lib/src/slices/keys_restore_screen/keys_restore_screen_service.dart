@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_controller.dart';
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_presenter.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 
+import '../api_user/model/api_user_model_keys.dart';
+import '../login_flow/login_flow_service.dart';
+import 'keys_restore_screen_controller.dart';
+import 'keys_restore_screen_presenter.dart';
 import 'model/keys_restore_screen_model.dart';
 
 class KeysRestoreScreenService extends ChangeNotifier {

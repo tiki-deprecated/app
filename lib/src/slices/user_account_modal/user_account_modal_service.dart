@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_signup/api_signup_service.dart';
-import 'package:app/src/slices/user_account_modal/model/user_account_modal_model.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_controller.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_presenter.dart';
-import 'package:app/src/slices/user_referral/user_referral_service.dart';
 import 'package:flutter/widgets.dart';
+
+import '../api_signup/api_signup_service.dart';
+import '../user_referral/user_referral_service.dart';
+import 'model/user_account_modal_model.dart';
+import 'user_account_modal_controller.dart';
+import 'user_account_modal_presenter.dart';
 
 class UserAccountModalService extends ChangeNotifier {
   late final UserAccountModalPresenter presenter;

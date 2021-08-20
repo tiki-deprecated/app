@@ -5,11 +5,11 @@
 
 import 'dart:io';
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
 import '../keys_save_screen_service.dart';
 
 class KeysSaveScreenViewDownloadLink extends StatelessWidget {

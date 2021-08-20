@@ -1,9 +1,9 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../user_account_modal_service.dart';
 import 'user_account_modal_view_refer_count.dart';
 import 'user_account_modal_view_refer_share.dart';
 

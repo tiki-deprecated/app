@@ -6,13 +6,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../utils/helper_permission.dart';
 import 'info_carousel_card_controller.dart';
 import 'info_carousel_card_presenter.dart';
 import 'model/info_carousel_card_model.dart';

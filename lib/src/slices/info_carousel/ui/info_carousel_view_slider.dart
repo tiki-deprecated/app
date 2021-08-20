@@ -1,8 +1,8 @@
-import 'package:app/src/slices/info_carousel_card/info_carousel_card_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../info_carousel_card/info_carousel_card_service.dart';
 import '../info_carousel_service.dart';
 
 class InfoCarouselViewSlider extends StatelessWidget {

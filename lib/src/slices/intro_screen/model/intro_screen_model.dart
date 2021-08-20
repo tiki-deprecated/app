@@ -3,8 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-
+import '../../../config/config_color.dart';
 import 'intro_screen_model_card.dart';
 
 class IntroScreenModel {

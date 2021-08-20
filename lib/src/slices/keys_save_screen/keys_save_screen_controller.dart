@@ -1,15 +1,16 @@
 import 'dart:io';
 
 import 'package:android_intent/android_intent.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
-import 'package:app/src/slices/keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
-import 'package:app/src/slices/keys_save_dialog_download/keys_save_dialog_dl_service.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../api_user/model/api_user_model_keys.dart';
+import '../keys_restore_screen/keys_restore_screen_service.dart';
+import '../keys_save_dialog_copy/keys_save_dialog_copy_service.dart';
+import '../keys_save_dialog_download/keys_save_dialog_dl_service.dart';
+import 'keys_save_screen_service.dart';
 
 class KeysSaveScreenController {
   final KeysSaveScreenService service;

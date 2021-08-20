@@ -1,7 +1,8 @@
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
-import 'package:app/src/slices/api_app_data/repository/api_app_data_repository.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
+import 'api_app_data_key.dart';
+import 'model/api_app_data_model.dart';
+import 'repository/api_app_data_repository.dart';
 
 class ApiAppDataService {
   final ApiAppDataRepository _repository;

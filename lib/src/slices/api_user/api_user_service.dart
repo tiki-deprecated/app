@@ -3,20 +3,20 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_current.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_otp.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_token.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_user.dart';
-import 'package:app/src/slices/api_user/repository/api_user_repository_current.dart';
-import 'package:app/src/slices/api_user/repository/api_user_repository_keys.dart';
-import 'package:app/src/slices/api_user/repository/api_user_repository_otp.dart';
-import 'package:app/src/slices/api_user/repository/api_user_repository_token.dart';
-import 'package:app/src/slices/api_user/repository/api_user_repository_user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../config/config_sentry.dart';
 import 'model/api_user_model.dart';
+import 'model/api_user_model_current.dart';
+import 'model/api_user_model_keys.dart';
+import 'model/api_user_model_otp.dart';
+import 'model/api_user_model_token.dart';
+import 'model/api_user_model_user.dart';
+import 'repository/api_user_repository_current.dart';
+import 'repository/api_user_repository_keys.dart';
+import 'repository/api_user_repository_otp.dart';
+import 'repository/api_user_repository_token.dart';
+import 'repository/api_user_repository_user.dart';
 
 class ApiUserService {
   final ApiUserRepositoryCurrent _repositoryCurrent;

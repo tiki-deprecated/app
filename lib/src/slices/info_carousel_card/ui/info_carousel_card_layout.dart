@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/ui/info_carousel_card_layout_swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import 'info_carousel_card_layout_swipe.dart';
 
 class InfoCarouselCardLayout extends StatefulWidget {
   @override

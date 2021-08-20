@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_font.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
 
 class DecisionScreenViewLink extends StatelessWidget {
   static const String _add = "Add a Gmail account";

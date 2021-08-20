@@ -3,8 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
 import 'package:flutter/material.dart';
+
+import 'decision_card_spam_service.dart';
 
 class DecisionCardSpamController {
   final DecisionCardSpamService service;

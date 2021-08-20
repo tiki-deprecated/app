@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/widgets/link_account/link_account_view_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../config/config_color.dart';
+import 'link_account_view_account.dart';
 import 'link_account_view_see.dart';
 import 'link_account_view_unlink.dart';
 

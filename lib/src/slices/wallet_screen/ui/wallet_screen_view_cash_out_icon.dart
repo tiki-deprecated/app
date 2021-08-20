@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../../../utils/helper_image.dart';
 
 class WalletScreenViewCashOutIcon extends StatelessWidget {
   static const String _text = "Cash out";

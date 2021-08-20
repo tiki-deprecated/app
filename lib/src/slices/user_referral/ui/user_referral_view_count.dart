@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/user_referral/user_referral_service.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../../../utils/helper_image.dart';
+import '../user_referral_service.dart';
 
 class UserReferralViewCount extends StatelessWidget {
   static const num _fontSize = 13;

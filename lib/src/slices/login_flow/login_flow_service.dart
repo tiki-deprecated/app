@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_email_sender/api_email_sender_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +23,7 @@ import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
 import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
+import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
@@ -51,6 +51,8 @@ class LoginFlowService extends ChangeNotifier {
   late final HelperApiAuth _helperApiAuth;
   List<void Function()> _logoutCallbacks = [];
   List<SingleChildWidget> _providers = [];
+
+  get apiBlockchainService => _apiBlockchainService;
 
   LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);

@@ -1,10 +1,10 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/decision_card_spam/decision_card_spam_service.dart';
-import 'package:app/src/slices/decision_card_spam/model/decision_card_spam_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../decision_card_spam_service.dart';
+import '../model/decision_card_spam_model.dart';
 import 'decision_card_spam_view_company.dart';
 import 'decision_card_spam_view_data_info_row.dart';
 import 'decision_card_spam_view_frequency.dart';

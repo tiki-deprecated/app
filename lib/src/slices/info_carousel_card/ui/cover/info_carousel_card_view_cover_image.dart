@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../utils/helper_image.dart';
 import '../../info_carousel_card_service.dart';
 
 class InfoCarouselCardViewCoverImage extends StatelessWidget {

@@ -1,6 +1,7 @@
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
+import '../api_app_data_key.dart';
+import '../model/api_app_data_model.dart';
 
 class ApiAppDataRepository {
   static const String _table = 'app_data';

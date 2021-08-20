@@ -1,11 +1,11 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_font.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
+import '../../../utils/helper_image.dart';
 import '../decision_screen_service.dart';
 import 'decision_screen_abstract_card.dart';
 

@@ -3,15 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/config/config_font.dart';
-import 'package:app/src/slices/decision_screen/model/decision_screen_model.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
 import '../decision_screen_service.dart';
+import '../model/decision_screen_model.dart';
 
 class DecisionScreenViewEmpty extends StatelessWidget {
   static const String _noMore = "No more data decisions.\n";

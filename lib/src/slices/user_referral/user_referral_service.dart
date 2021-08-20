@@ -3,18 +3,18 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
-import 'package:app/src/slices/api_signup/api_signup_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
-import 'package:app/src/slices/user_referral/model/user_referral_model.dart';
-import 'package:app/src/slices/user_referral/user_referral_controller.dart';
-import 'package:app/src/slices/user_referral/user_referral_presenter.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../utils/api/helper_api_rsp.dart';
 import '../../utils/api/helper_api_utils.dart';
+import '../api_app_data/api_app_data_key.dart';
+import '../api_app_data/api_app_data_service.dart';
+import '../api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
+import '../api_signup/api_signup_service.dart';
+import '../login_flow/login_flow_service.dart';
+import 'model/user_referral_model.dart';
+import 'user_referral_controller.dart';
+import 'user_referral_presenter.dart';
 
 class UserReferralService extends ChangeNotifier {
   late final UserReferralPresenter presenter;

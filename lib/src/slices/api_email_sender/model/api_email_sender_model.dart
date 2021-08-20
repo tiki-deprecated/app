@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
+import '../../api_company/model/api_company_model_local.dart';
 
 class ApiEmailSenderModel {
   int? senderId;

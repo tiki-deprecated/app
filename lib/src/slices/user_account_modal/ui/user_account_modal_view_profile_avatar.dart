@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
 
 class UserAccountModalViewProfileAvatar extends StatelessWidget {
   static const num _labelWidth = 26.5;
