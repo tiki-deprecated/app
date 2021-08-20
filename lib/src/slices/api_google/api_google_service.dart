@@ -99,7 +99,7 @@ class ApiGoogleService {
   Future<ApiEmailMsgModel?> _gmailFetchMessage(String messageId,
       {String format = "metadata", List<String>? headers}) async {
     GmailApi? gmailApi = await _gmailApi;
-    List<String> metadataHeaders = ["From"];
+    List<String> metadataHeaders = ["From", "To"];
     metadataHeaders.addAll(headers ?? []);
     Message? message = await gmailApi?.users.messages
         .get("me", messageId, format: format, metadataHeaders: metadataHeaders);
@@ -159,8 +159,27 @@ revolution today.<br />
     return base64String;
   }
 
-  ApiEmailMsgModel _convertMessage(Message message) {
+  ApiEmailMsgModel? _convertMessage(Message message) {
     DateTime? openedDate;
+    List<MessagePartHeader>? headers = message.payload?.headers;
+    if (headers != null) {
+      for (var headerEntry in headers) {
+        switch (headerEntry.name!.trim()) {
+          case "To":
+            String email = headerEntry.value!.contains("<")
+                ? headerEntry.value!
+                    .split("<")
+                    .toList()[1]
+                    .replaceFirst(">", "")
+                    .trim()
+                : headerEntry.value!;
+            if (email.toLowerCase() !=
+                _googleSignIn.currentUser!.email.trim().toLowerCase())
+              return null;
+            break;
+        }
+      }
+    }
     if (message.labelIds != null) {
       message.labelIds!.forEach((label) {
         if (label.contains("CATEGORY_")) {
