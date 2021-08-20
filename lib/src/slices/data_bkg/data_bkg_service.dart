@@ -64,8 +64,14 @@ class DataBkgService extends ChangeNotifier {
                 .subtract(Duration(days: 1))
                 .isAfter(gmailLastFetch))) {
       DateTime run = DateTime.now();
-      await _checkGmailFetchList(
-          fetchAll: fetchAll, lastChecked: gmailLastFetch);
+      for (int i = 0; i < model.gmailCategoryList.length; i++) {
+        String category = model.gmailCategoryList[i];
+        await _checkGmailFetchList(
+            fetchAll: fetchAll,
+            lastChecked: gmailLastFetch,
+            query: "label: $category");
+      }
+
       await _apiAppDataService.save(
           ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
       await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, '');
@@ -75,16 +81,15 @@ class DataBkgService extends ChangeNotifier {
   }
 
   Future<void> _checkGmailFetchList(
-      {bool fetchAll = false, DateTime? lastChecked}) async {
-    String? query;
+      {bool fetchAll = false, DateTime? lastChecked, String query = ''}) async {
     String? page;
     if (!fetchAll) {
       int? secondsSinceEpoch = lastChecked != null
           ? (lastChecked.millisecondsSinceEpoch / 1000).floor()
           : null;
       query = secondsSinceEpoch != null
-          ? "after:" + secondsSinceEpoch.toString()
-          : null;
+          ? "after:" + secondsSinceEpoch.toString() + " " + query
+          : query;
     }
     ApiAppDataModel? appDataGmailLastPage =
         await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastPage);

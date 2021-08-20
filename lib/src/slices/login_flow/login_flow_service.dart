@@ -52,8 +52,6 @@ class LoginFlowService extends ChangeNotifier {
   List<void Function()> _logoutCallbacks = [];
   List<SingleChildWidget> _providers = [];
 
-  get apiBlockchainService => _apiBlockchainService;
-
   LoginFlowService() : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
     _initDynamicLinks();

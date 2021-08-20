@@ -9,6 +9,7 @@ import '../../utils/api/helper_api_rsp.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
+import '../api_blockchain/api_blockchain_service.dart';
 import '../api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import '../api_signup/api_signup_service.dart';
 import '../login_flow/login_flow_service.dart';
@@ -24,8 +25,10 @@ class UserReferralService extends ChangeNotifier {
   final LoginFlowService loginFlowService;
   final ApiSignupService apiSignupService;
 
-  UserReferralService(
-      this.apiAppDataService, this.loginFlowService, this.apiSignupService) {
+  final ApiBlockchainService apiBlockchainService;
+
+  UserReferralService(this.apiAppDataService, this.loginFlowService,
+      this.apiSignupService, this.apiBlockchainService) {
     this.presenter = UserReferralPresenter(this);
     this.controller = UserReferralController(this);
     this.model = UserReferralModel();
@@ -63,7 +66,7 @@ class UserReferralService extends ChangeNotifier {
     if (code.isEmpty) {
       String address = loginFlowService.model.user!.user!.address!;
       HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
-          await loginFlowService.apiBlockchainService.referCode(address);
+          await apiBlockchainService.referCode(address);
       if (HelperApiUtils.isOk(rsp.code)) {
         ApiBlockchainModelAddressRspCode data = rsp.data;
         code = data.code ?? '';

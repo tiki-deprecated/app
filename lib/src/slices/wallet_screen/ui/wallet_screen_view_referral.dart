@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
 import '../../api_app_data/api_app_data_service.dart';
+import '../../api_blockchain/api_blockchain_service.dart';
 import '../../api_signup/api_signup_service.dart';
 import '../../login_flow/login_flow_service.dart';
 import '../../user_referral/user_referral_service.dart';
@@ -22,6 +23,8 @@ class WalletScreenViewReferral extends StatelessWidget {
     ApiAppDataService apiAppDataService =
         Provider.of<ApiAppDataService>(context);
     ApiSignupService apiSignupService = Provider.of<ApiSignupService>(context);
+    ApiBlockchainService apiBlockchainService =
+        Provider.of<ApiBlockchainService>(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -50,7 +53,10 @@ class WalletScreenViewReferral extends StatelessWidget {
               Container(
                   margin: EdgeInsets.only(top: 2.h),
                   child: UserReferralService(
-                          apiAppDataService, loginFlowService, apiSignupService)
+                          apiAppDataService,
+                          loginFlowService,
+                          apiSignupService,
+                          apiBlockchainService)
                       .presenter
                       .render())
             ],

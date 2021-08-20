@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../config/config_size.dart';
 import '../../slices/api_app_data/api_app_data_service.dart';
+import '../../slices/api_blockchain/api_blockchain_service.dart';
 import '../../slices/api_signup/api_signup_service.dart';
 import '../../slices/login_flow/login_flow_service.dart';
 import '../../slices/user_account_modal/user_account_modal_service.dart';
@@ -22,8 +23,13 @@ class HeaderBar extends StatelessWidget {
     ApiAppDataService apiAppDataService =
         Provider.of<ApiAppDataService>(context);
     ApiSignupService apiSignupService = Provider.of<ApiSignupService>(context);
+    ApiBlockchainService apiBlockchainService =
+        Provider.of<ApiBlockchainService>(context);
     UserReferralService userReferralService = UserReferralService(
-        apiAppDataService, loginFlowService, apiSignupService);
+        apiAppDataService,
+        loginFlowService,
+        apiSignupService,
+        apiBlockchainService);
     return GestureDetector(
         onTap: () => UserAccountModalService(userReferralService)
             .presenter
