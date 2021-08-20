@@ -30,7 +30,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                         summary:
                             isLinked ? "All good!" : "Uh-oh. No data just yet!",
                         description: isLinked
-                            ? "Your account is linked now. See what data Gmail holds on you by tapping on the button below."
+                            ? "Your account is linked now. See what data Gmail holds by tapping on the button below."
                             : "Get started by adding a Gmail account",
                         color: isLinked ? ConfigColor.green : ConfigColor.blue),
                     Container(
