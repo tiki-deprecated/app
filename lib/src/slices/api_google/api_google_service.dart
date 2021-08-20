@@ -173,7 +173,9 @@ revolution today.<br />
                     .replaceFirst(">", "")
                     .trim()
                 : headerEntry.value!;
-            if (email != _googleSignIn.currentUser!.email.trim()) return null;
+            if (email.toLowerCase() !=
+                _googleSignIn.currentUser!.email.trim().toLowerCase())
+              return null;
             break;
         }
       }
