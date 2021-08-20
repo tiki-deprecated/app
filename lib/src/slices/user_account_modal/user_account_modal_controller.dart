@@ -25,9 +25,12 @@ class UserAccountModalController {
     Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
   }
 
-  void onShare(UserReferralService userReferralService) {
-    String code = userReferralService.getCode();
-    Share.share(_shareBody + _shareLink + code, subject: _shareSubject);
+  Future<void> onShare(UserReferralService userReferralService) async {
+    await userReferralService.getCode();
+    if (userReferralService.model.code.isNotEmpty) {
+      Share.share(_shareBody + _shareLink + userReferralService.model.code,
+          subject: _shareSubject);
+    }
   }
 
   void updateUserCount(BuildContext context) {

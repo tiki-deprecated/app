@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:app/src/slices/wallet_screen/model/wallet_screen_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,9 +14,7 @@ class WalletScreenService extends ChangeNotifier {
   late final WalletScreenPresenter presenter;
   late final WalletScreenController controller;
 
-  final ApiAppDataService appDataService;
-
-  WalletScreenService(this.appDataService) {
+  WalletScreenService() {
     model = WalletScreenModel();
     controller = WalletScreenController(this);
     presenter = WalletScreenPresenter(this);

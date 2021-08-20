@@ -16,7 +16,7 @@ class UserReferralController {
 
   copyLink(BuildContext context) async {
     await Clipboard.setData(
-        new ClipboardData(text: _linkUrl + service.getCode()));
+        new ClipboardData(text: _linkUrl + service.model.code));
   }
 
   Future<void> updateReferCount(BuildContext context) async {

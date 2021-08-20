@@ -31,12 +31,13 @@ class UserReferralService extends ChangeNotifier {
     getCode();
   }
 
-  String getCode() {
+  Future<void> getCode() async {
     String? code = this.model.code;
-    if (code == null || code.isEmpty)
-      _updateCode(this.apiAppDataService, this.loginFlowService)
-          .then((_) => updateReferCount());
-    return code ?? "";
+    if (code.isEmpty) {
+      await _updateCode(this.apiAppDataService, this.loginFlowService);
+      updateReferCount();
+    }
+    notifyListeners();
   }
 
   updateReferCount() async {

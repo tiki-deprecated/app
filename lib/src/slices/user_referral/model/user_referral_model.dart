@@ -5,6 +5,5 @@
 
 class UserReferralModel {
   int referCount = 0;
-  String? code;
-  bool referCountUpdated = false;
+  String code = '';
 }

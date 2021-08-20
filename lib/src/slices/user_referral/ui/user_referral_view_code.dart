@@ -35,7 +35,7 @@ class UserReferralViewCode extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(
                     left: 2.w, top: 1.5.h, right: 1.h, bottom: 1.5.h),
-                child: Text(service.model.code ?? service.getCode(),
+                child: Text(service.model.code,
                     style: TextStyle(
                         fontSize: _fontSize.sp,
                         fontWeight: FontWeight.bold,

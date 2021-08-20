@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,10 +19,8 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
   final ApiGoogleService _googleService;
-  final ApiAppDataService appDataService;
 
-  DataScreenService(
-      this._googleService, this._dataBkgService, this.appDataService) {
+  DataScreenService(this._googleService, this._dataBkgService) {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
