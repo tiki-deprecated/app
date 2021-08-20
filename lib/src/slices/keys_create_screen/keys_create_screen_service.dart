@@ -1,13 +1,13 @@
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
-import 'package:app/src/utils/crypto/helper_crypto.dart';
-import 'package:app/src/utils/crypto/helper_crypto_ecdsa.dart';
-import 'package:app/src/utils/crypto/helper_crypto_rsa.dart';
 import 'package:flutter/material.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/ecc/api.dart';
 
+import '../../utils/crypto/helper_crypto.dart';
+import '../../utils/crypto/helper_crypto_ecdsa.dart';
+import '../../utils/crypto/helper_crypto_rsa.dart';
+import '../api_user/model/api_user_model_keys.dart';
+import '../login_flow/login_flow_service.dart';
 import 'keys_create_screen_controller.dart';
 import 'keys_create_screen_presenter.dart';
 import 'model/keys_create_screen_model.dart';

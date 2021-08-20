@@ -3,13 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../../../utils/helper_image.dart';
+import '../keys_save_screen_service.dart';
 
 class KeysNewScreenSaveBk extends StatelessWidget {
   KeysNewScreenSaveBk();

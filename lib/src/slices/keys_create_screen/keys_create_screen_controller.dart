@@ -1,6 +1,6 @@
-import 'package:app/src/slices/keys_restore_screen/keys_restore_screen_service.dart';
 import 'package:flutter/material.dart';
 
+import '../keys_restore_screen/keys_restore_screen_service.dart';
 import 'keys_create_screen_service.dart';
 
 class KeysCreateScreenController {

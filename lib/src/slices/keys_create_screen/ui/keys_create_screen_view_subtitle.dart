@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
 
 class KeysCreateScreenViewSubtitle extends StatelessWidget {
   static const String _text = "I'm securing your account";

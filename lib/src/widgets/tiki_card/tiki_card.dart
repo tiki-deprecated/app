@@ -1,7 +1,7 @@
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../config/config_color.dart';
 import 'tiki_card_view_cta.dart';
 import 'tiki_card_view_cta_inline.dart';
 import 'tiki_card_view_figure.dart';

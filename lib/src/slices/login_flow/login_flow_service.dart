@@ -238,6 +238,8 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
+    registerLogout(() async => await apiAppDataService.logout());
+
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
     ApiEmailMsgService apiEmailMsgService =
@@ -259,8 +261,8 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
-      Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiGoogleService>.value(value: apiGoogleService),
+      Provider<ApiAppDataService>.value(value: apiAppDataService),
       ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
     ];
   }

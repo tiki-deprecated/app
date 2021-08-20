@@ -3,11 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../user_account_modal_service.dart';
 
 class UserAccountModalViewReferCount extends StatelessWidget {
   static const String _text = "people joined the TIKI tribe";

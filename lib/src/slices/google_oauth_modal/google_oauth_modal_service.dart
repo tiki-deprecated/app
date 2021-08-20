@@ -3,10 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:flutter/widgets.dart';
 
+import '../api_app_data/api_app_data_key.dart';
+import '../api_app_data/api_app_data_service.dart';
 import '../data_screen/data_screen_service.dart';
 import 'google_oauth_modal_controller.dart';
 import 'google_oauth_modal_presenter.dart';

@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/wallet_screen/model/wallet_screen_model.dart';
 import 'package:flutter/widgets.dart';
 
+import 'model/wallet_screen_model.dart';
 import 'wallet_screen_controller.dart';
 import 'wallet_screen_presenter.dart';
 

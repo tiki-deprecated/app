@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/home_screen/home_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +10,7 @@ import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../google_oauth_modal/google_oauth_modal_service.dart';
+import '../home_screen/home_screen_service.dart';
 import '../info_carousel/info_carousel_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_service.dart';

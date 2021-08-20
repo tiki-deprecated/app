@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/helper_permission.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/helper_permission.dart';
 import 'keys_restore_screen_service.dart';
 
 class KeysRestoreScreenController {

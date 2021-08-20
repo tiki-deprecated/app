@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/data_screen/ui/data_screen_view_soon_icon.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import 'data_screen_view_soon_icon.dart';
 
 class DataScreenViewSoon extends StatelessWidget {
   static const String _title = "COMING SOON";

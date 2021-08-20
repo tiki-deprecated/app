@@ -1,9 +1,9 @@
-import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
+import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service.dart';

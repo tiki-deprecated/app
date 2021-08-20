@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_sentry.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'config_environment.dart';
+import 'config_sentry.dart';
 
 class ConfigLog {
   ConfigLog() {

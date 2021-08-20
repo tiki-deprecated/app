@@ -1,12 +1,13 @@
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_back.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_divider.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_input.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_scan.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_submit.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_subtitle.dart';
-import 'package:app/src/slices/keys_restore_screen/ui/keys_restore_screen_view_title.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import 'keys_restore_screen_view_back.dart';
+import 'keys_restore_screen_view_divider.dart';
+import 'keys_restore_screen_view_input.dart';
+import 'keys_restore_screen_view_scan.dart';
+import 'keys_restore_screen_view_submit.dart';
+import 'keys_restore_screen_view_subtitle.dart';
+import 'keys_restore_screen_view_title.dart';
 
 class KeysRestoreScreenLayoutForeground extends StatelessWidget {
   @override

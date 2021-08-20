@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
-import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../api_app_data/api_app_data_key.dart';
+import '../api_app_data/api_app_data_service.dart';
+import '../api_app_data/model/api_app_data_model.dart';
 import '../home_screen/model/home_screen_model.dart';
 import 'home_screen_controller.dart';
 import 'home_screen_presenter.dart';

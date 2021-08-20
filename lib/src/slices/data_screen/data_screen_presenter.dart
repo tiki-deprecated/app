@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/data_screen/data_screen_service.dart';
-import 'package:app/src/slices/data_screen/ui/data_screen_layout.dart';
 import 'package:provider/provider.dart';
+
+import 'data_screen_service.dart';
+import 'ui/data_screen_layout.dart';
 
 class DataScreenPresenter {
   final DataScreenService service;

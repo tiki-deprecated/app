@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/security_score_modal/ui/security_score_modal_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../config/config_color.dart';
 import 'security_score_modal_service.dart';
+import 'ui/security_score_modal_layout.dart';
 
 class SecurityScoreModalPresenter {
   final SecurityScoreModalService service;

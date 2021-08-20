@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/info_carousel_card_controller.dart';
-import 'package:app/src/slices/info_carousel_card/info_carousel_card_service.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../utils/helper_image.dart';
+import '../../info_carousel_card_controller.dart';
+import '../../info_carousel_card_service.dart';
 
 class InfoCarouselCardViewCoverArrow extends StatelessWidget {
   final Animation<double> _animationValue;

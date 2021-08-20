@@ -3,18 +3,18 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_backup.dart';
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_continue.dart';
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_download.dart';
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_download_link.dart';
-import 'package:app/src/slices/keys_save_screen/ui/keys_save_screen_view_restore.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utils/helper_image.dart';
 import '../keys_save_screen_service.dart';
+import 'keys_save_screen_view_backup.dart';
+import 'keys_save_screen_view_continue.dart';
+import 'keys_save_screen_view_download.dart';
+import 'keys_save_screen_view_download_link.dart';
+import 'keys_save_screen_view_restore.dart';
 import 'keys_save_screen_view_subtitle.dart';
 import 'keys_save_screen_view_title.dart';
 

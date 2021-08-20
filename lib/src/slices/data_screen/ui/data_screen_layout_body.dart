@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/data_screen/data_screen_service.dart';
-import 'package:app/src/slices/data_screen/ui/data_screen_view_score.dart';
-import 'package:app/src/widgets/link_account/link_account.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../../../widgets/link_account/link_account.dart';
+import '../data_screen_service.dart';
+import 'data_screen_view_score.dart';
 import 'data_screen_view_soon.dart';
 
 class DataScreenLayoutBody extends StatelessWidget {

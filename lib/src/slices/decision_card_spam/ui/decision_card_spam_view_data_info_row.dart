@@ -1,7 +1,7 @@
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
 import 'decision_card_spam_view_opened.dart';
 import 'decision_card_spam_view_sent.dart';
 

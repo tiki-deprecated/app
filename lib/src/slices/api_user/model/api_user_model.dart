@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_user/model/api_user_model_current.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_otp.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_token.dart';
-import 'package:app/src/slices/api_user/model/api_user_model_user.dart';
+import 'api_user_model_current.dart';
+import 'api_user_model_keys.dart';
+import 'api_user_model_otp.dart';
+import 'api_user_model_token.dart';
+import 'api_user_model_user.dart';
 
 class ApiUserModel {
   ApiUserModelCurrent? current;

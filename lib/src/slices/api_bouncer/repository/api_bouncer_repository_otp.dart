@@ -5,13 +5,14 @@
 
 import 'dart:convert';
 
-import 'package:app/src/config/config_domain.dart';
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/api_bouncer/model/api_bouncer_model_otp_req.dart';
-import 'package:app/src/slices/api_bouncer/model/api_bouncer_model_otp_rsp.dart';
-import 'package:app/src/utils/api/helper_api_headers.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
 import 'package:http/http.dart';
+
+import '../../../config/config_domain.dart';
+import '../../../config/config_sentry.dart';
+import '../../../utils/api/helper_api_headers.dart';
+import '../../../utils/api/helper_api_rsp.dart';
+import '../model/api_bouncer_model_otp_req.dart';
+import '../model/api_bouncer_model_otp_rsp.dart';
 
 class ApiBouncerRepositoryOtp {
   static const String _path = '/api/latest/otp/email';

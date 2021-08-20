@@ -7,13 +7,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_service.dart';
-import 'package:app/src/utils/helper_permission.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/helper_permission.dart';
+import '../keys_save_screen/keys_save_screen_service.dart';
 import 'keys_save_dialog_dl_controller.dart';
 import 'keys_save_dialog_dl_presenter.dart';
 import 'model/keys_save_dialog_dl_model.dart';

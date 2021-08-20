@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/wallet_balance/ui/wallet_balance_view_amount.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../wallet_balance_service.dart';
+import 'wallet_balance_view_amount.dart';
 import 'wallet_balance_view_banner.dart';
 import 'wallet_balance_view_card.dart';
 import 'wallet_balance_view_soon.dart';

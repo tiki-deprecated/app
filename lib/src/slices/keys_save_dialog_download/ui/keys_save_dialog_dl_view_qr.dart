@@ -3,11 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
 
 class KeysSaveDialogDlViewQr extends StatelessWidget {
   final keyData;

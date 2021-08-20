@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/keys_save_dialog_download/ui/keys_save_dialog_dl_view_subtitle.dart';
-import 'package:app/src/slices/keys_save_dialog_download/ui/keys_save_dialog_dl_view_title.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
 import 'keys_save_dialog_dl_button.dart';
 import 'keys_save_dialog_dl_view_qr.dart';
+import 'keys_save_dialog_dl_view_subtitle.dart';
+import 'keys_save_dialog_dl_view_title.dart';
 import 'keys_save_dialog_dl_view_warning.dart';
 
 class KeysSaveDialogDlLayout extends StatelessWidget {

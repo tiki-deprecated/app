@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_signup/api_signup_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../api_signup/api_signup_service.dart';
+import '../login_flow/login_flow_service.dart';
 import 'wallet_balance_service.dart';
 
 class WalletBalanceController {

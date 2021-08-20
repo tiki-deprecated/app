@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/login_screen_email/ui/login_screen_email_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'login_screen_email_service.dart';
+import 'ui/login_screen_email_layout.dart';
 
 class LoginScreenEmailPresenter extends Page {
   final LoginScreenEmailService service;

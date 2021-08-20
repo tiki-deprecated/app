@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model_cover_header.dart';
+import 'info_carousel_card_model_cover_header.dart';
 
 class InfoCarouselCardModelCover {
   String? image;
