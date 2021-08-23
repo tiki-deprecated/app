@@ -64,10 +64,9 @@ class DataBkgService extends ChangeNotifier {
                 .subtract(Duration(days: 1))
                 .isAfter(gmailLastFetch))) {
       DateTime run = DateTime.now();
-      String activeCategory =
-          (await _apiAppDataService.getByKey(ApiAppDataKey.gmailCategory))
-                  ?.value ??
-              '';
+      ApiAppDataModel? savedActiveCategory =
+          await _apiAppDataService.getByKey(ApiAppDataKey.gmailCategory);
+      String activeCategory = savedActiveCategory?.value ?? '';
       int categoryStartIndex = activeCategory.isEmpty
           ? 0
           : model.gmailCategoryList.indexOf(activeCategory);
@@ -79,8 +78,10 @@ class DataBkgService extends ChangeNotifier {
         await _checkGmailFetchList(
             fetchAll: fetchAll,
             lastChecked: gmailLastFetch,
-            gmailCategory: "label: $category");
+            gmailCategory: category);
       }
+      await _apiAppDataService.save(
+          ApiAppDataKey.gmailCategory, model.gmailCategoryList[0]);
       await _apiAppDataService.save(
           ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
       await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, '');
@@ -103,7 +104,11 @@ class DataBkgService extends ChangeNotifier {
           ? "after:" + secondsSinceEpoch.toString()
           : '';
     }
-    query += gmailCategory.isNotEmpty ? " label: $gmailCategory" : '';
+    if (gmailCategory != 'none') {
+      query += gmailCategory.isNotEmpty ? " label: $gmailCategory" : '';
+    } else {
+      query += "NOT " + model.gmailCategoryList.join("AND NOT");
+    }
     ApiAppDataModel? appDataGmailLastPage =
         await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastPage);
     page = appDataGmailLastPage?.value;
