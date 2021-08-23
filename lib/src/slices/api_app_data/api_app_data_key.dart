@@ -5,6 +5,7 @@
 
 enum ApiAppDataKey {
   decisionOverlayShown,
+  gmailCategory,
   gmailLastFetch,
   gmailLastPage,
   googleOauthModalComplete,
@@ -17,6 +18,8 @@ extension ApiAppDataKeyExtension on ApiAppDataKey {
     switch (this) {
       case ApiAppDataKey.testCardsDone:
         return 'test_cards_done_bool';
+      case ApiAppDataKey.gmailCategory:
+        return 'gmail_category';
       case ApiAppDataKey.gmailLastFetch:
         return 'gmail_last_fetch_epoch';
       case ApiAppDataKey.gmailLastPage:
