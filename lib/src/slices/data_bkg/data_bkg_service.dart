@@ -218,7 +218,7 @@ class DataBkgService extends ChangeNotifier {
       _gmailAppendQuery(queryBuffer, category);
     } else {
       model.gmailCategoryList
-          .forEach((cat) => _gmailAppendQuery(queryBuffer, cat));
+          .forEach((cat) => _gmailAppendQuery(queryBuffer, "NOT $cat"));
     }
     return queryBuffer.toString();
   }
