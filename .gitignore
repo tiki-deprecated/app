@@ -65,3 +65,6 @@ app.*.map.json
 
 # ios build folder
 ios/build
+
+# auth providers data
+res/json/auth_providers_db.json
