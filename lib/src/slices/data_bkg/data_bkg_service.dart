@@ -72,7 +72,7 @@ class DataBkgService extends ChangeNotifier {
         String query = _gmailBuildQuery(appDataGmailLastFetch, category);
         await _checkGmailFetchList(query: query);
         int nextCatIndex = model.gmailCategoryList.indexOf(category) + 1;
-        String nextCat = nextCatIndex == model.gmailCategoryList.length
+        String nextCat = nextCatIndex == totalCats
             ? model.gmailCategoryList[0]
             : model.gmailCategoryList[nextCatIndex];
         await _apiAppDataService.save(ApiAppDataKey.gmailCategory, nextCat);
@@ -210,28 +210,26 @@ class DataBkgService extends ChangeNotifier {
         periodSplit[periodSplit.length - 1];
   }
 
-  String _gmailBuildQuery(int appDataGmailLastFetch, String category) {
+  String _gmailBuildQuery(int fetchEpoch, String category) {
     StringBuffer queryBuffer = new StringBuffer();
-    if (appDataGmailLastFetch > 0) {
-      DateTime gmailLastFetch =
-          DateTime.fromMillisecondsSinceEpoch(appDataGmailLastFetch);
-      int secondsSinceEpoch =
-          (gmailLastFetch.millisecondsSinceEpoch / 1000).floor();
-      queryBuffer.write("after:" + secondsSinceEpoch.toString());
-    }
+    DateTime gmailLastFetch = DateTime.fromMillisecondsSinceEpoch(fetchEpoch);
+    int secondsSinceEpoch =
+        (gmailLastFetch.millisecondsSinceEpoch / 1000).floor();
+    _gmailAppendQuery(queryBuffer, "after:" + secondsSinceEpoch.toString());
     if (category != 'category:' && category.isNotEmpty) {
-      if (queryBuffer.isNotEmpty) {
-        queryBuffer.write(" AND ");
-      }
-      queryBuffer.write("label: $category");
+      _gmailAppendQuery(queryBuffer, category);
     } else {
-      model.gmailCategoryList.forEach((cat) {
-        if (queryBuffer.isNotEmpty) {
-          queryBuffer.write(" AND ");
-        }
-        queryBuffer.write("NOT $cat");
-      });
+      model.gmailCategoryList
+          .forEach((cat) => _gmailAppendQuery(queryBuffer, cat));
     }
     return queryBuffer.toString();
+  }
+
+  StringBuffer _gmailAppendQuery(StringBuffer queryBuffer, String append) {
+    if (queryBuffer.isNotEmpty) {
+      queryBuffer.write(" AND ");
+    }
+    queryBuffer.write(append);
+    return queryBuffer;
   }
 }
