@@ -12,6 +12,6 @@ class DataBkgModel {
     'category:reservations',
     'category:purchases',
     'category:primary',
-    'none'
+    'category:',
   ];
 }
