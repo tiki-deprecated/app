@@ -210,11 +210,9 @@ class DataBkgService extends ChangeNotifier {
         periodSplit[periodSplit.length - 1];
   }
 
-  String _gmailBuildQuery(int fetchEpoch, String category) {
+  String _gmailBuildQuery(int fetchEpochInMilliseconds, String category) {
     StringBuffer queryBuffer = new StringBuffer();
-    DateTime gmailLastFetch = DateTime.fromMillisecondsSinceEpoch(fetchEpoch);
-    int secondsSinceEpoch =
-        (gmailLastFetch.millisecondsSinceEpoch / 1000).floor();
+    int secondsSinceEpoch = (fetchEpochInMilliseconds / 1000).floor();
     _gmailAppendQuery(queryBuffer, "after:" + secondsSinceEpoch.toString());
     if (category != 'category:' && category.isNotEmpty) {
       _gmailAppendQuery(queryBuffer, category);
