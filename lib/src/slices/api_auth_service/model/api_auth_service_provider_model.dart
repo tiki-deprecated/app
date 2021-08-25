@@ -1,5 +1,3 @@
-import 'api_auth_service_model.dart';
-
 /// The Provider Model for Auth Service
 ///
 /// This provider should be defined at res/json/auth_providers_db.json in the
@@ -13,17 +11,18 @@ import 'api_auth_service_model.dart';
 ///     }
 ///
 class ApiAuthServiceProviderModel {
+  static const String _defaultRedirectUri = "com.mytiki.app://oauth";
   late String clientId;
   late String authorizationEndpoint;
   late String tokenEndpoint;
   late String discoveryUrl;
-  late String redirectUrl;
+  late String redirectUri;
 
   ApiAuthServiceProviderModel.fromMap(map) {
     clientId = map['clientId'];
     authorizationEndpoint = map['authorizationEndpoint'];
     tokenEndpoint = map['tokenEndpoint'];
-    redirectUrl = map['redirectUrl'] ?? ApiAuthServiceModel.redirectUrl;
+    redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;
     discoveryUrl = map['discoveryUrl'];
   }
 }

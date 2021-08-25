@@ -47,7 +47,7 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
         manifestPlaceholders = [
-                'appAuthRedirectScheme': 'mytiki.app'
+                'appAuthRedirectScheme': 'com.mytiki.app'
         ]
     }
 
