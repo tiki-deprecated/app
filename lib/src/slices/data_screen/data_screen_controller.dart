@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_auth_service/api_auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:provider/provider.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -42,5 +44,12 @@ class DataScreenController {
     else
       await service.addGoogleAccount();
     return homeScreenService.showOverlay(apiAppDataService);
+  }
+
+  linkAccount(String providerName) async {
+    ApiAuthService apiAuthService = ApiAuthService();
+    AuthorizationTokenResponse? tokenResponse = await apiAuthService
+        .authorizeAndExchangeCode(providerName: providerName);
+    print(tokenResponse);
   }
 }
