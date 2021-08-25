@@ -47,48 +47,48 @@ class DataBkgService extends ChangeNotifier {
     _log.fine('Gmail fetch starting on: ' + DateTime.now().toIso8601String());
     GoogleSignInAccount? googleAccount =
         await _apiGoogleService.getConnectedUser();
+    if (googleAccount == null) {
+      _log.fine('Gmail fetch aborted. No Google Account.');
+      return;
+    }
     ApiAppDataModel? appDataGmailLastFetch =
         await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
-    DateTime? gmailLastFetch;
-    if (appDataGmailLastFetch != null)
-      gmailLastFetch = DateTime.fromMillisecondsSinceEpoch(
-          int.parse(appDataGmailLastFetch.value));
-    else {
-      fetchAll = true;
-      force = true;
-    }
-    if (googleAccount != null &&
-        (force == true ||
-            gmailLastFetch == null ||
-            DateTime.now()
-                .subtract(Duration(days: 1))
-                .isAfter(gmailLastFetch))) {
+    int? gmailLastFetchEpoch = fetchAll || appDataGmailLastFetch == null
+        ? null
+        : int.parse(appDataGmailLastFetch.value);
+    if (force == true ||
+        gmailLastFetchEpoch == null ||
+        DateTime.now().subtract(Duration(days: 1)).isAfter(
+            DateTime.fromMillisecondsSinceEpoch(gmailLastFetchEpoch))) {
       DateTime run = DateTime.now();
-      await _checkGmailFetchList(
-          fetchAll: fetchAll, lastChecked: gmailLastFetch);
+      String activeCategory =
+          (await _apiAppDataService.getByKey(ApiAppDataKey.gmailCategory))
+                  ?.value ??
+              model.gmailCategoryList[0];
+      int categoryStartIndex = model.gmailCategoryList.indexOf(activeCategory);
+      int totalCats = model.gmailCategoryList.length;
+      for (int i = categoryStartIndex; i < totalCats; i++) {
+        String category = model.gmailCategoryList[i];
+        String query = _gmailBuildQuery(gmailLastFetchEpoch, category);
+        await _checkGmailFetchList(query: query);
+        int nextCatIndex = model.gmailCategoryList.indexOf(category) + 1;
+        String nextCat = nextCatIndex == totalCats
+            ? model.gmailCategoryList[0]
+            : model.gmailCategoryList[nextCatIndex];
+        await _apiAppDataService.save(ApiAppDataKey.gmailCategory, nextCat);
+      }
       await _apiAppDataService.save(
           ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
-      await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, '');
       _log.fine(
           'Gmail fetch completed on: ' + DateTime.now().toIso8601String());
     }
   }
 
-  Future<void> _checkGmailFetchList(
-      {bool fetchAll = false, DateTime? lastChecked}) async {
-    String? query;
+  Future<void> _checkGmailFetchList({String query = ''}) async {
     String? page;
-    if (!fetchAll) {
-      int? secondsSinceEpoch = lastChecked != null
-          ? (lastChecked.millisecondsSinceEpoch / 1000).floor()
-          : null;
-      query = secondsSinceEpoch != null
-          ? "after:" + secondsSinceEpoch.toString()
-          : null;
-    }
-    ApiAppDataModel? appDataGmailLastPage =
-        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastPage);
-    page = appDataGmailLastPage?.value;
+    ApiAppDataModel? appDataGmailPage =
+        await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage);
+    page = appDataGmailPage?.value;
     return _checkGmailFetchListPage(query: query, page: page);
   }
 
@@ -104,10 +104,9 @@ class DataBkgService extends ChangeNotifier {
           res.data!.where((message) => !known.contains(message)).toList();
       await _checkGmailFetchMessage(unknown);
     }
-    if (res.next != null) {
-      await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, res.next);
+    await _apiAppDataService.save(ApiAppDataKey.gmailPage, res.next ?? '');
+    if (res.next != null)
       return _checkGmailFetchListPage(page: res.next, query: query);
-    }
   }
 
   Future<void> _checkGmailFetchMessage(List<String> messages) async {
@@ -207,5 +206,29 @@ class DataBkgService extends ChangeNotifier {
     return periodSplit[periodSplit.length - 2] +
         "." +
         periodSplit[periodSplit.length - 1];
+  }
+
+  String _gmailBuildQuery(int? fetchEpochInMilliseconds, String category) {
+    StringBuffer queryBuffer = new StringBuffer();
+    if (fetchEpochInMilliseconds != null) {
+      int secondsSinceEpoch = (fetchEpochInMilliseconds / 1000).floor();
+      _gmailAppendQuery(queryBuffer, "after:" + secondsSinceEpoch.toString());
+    }
+    if (category != 'category:' && category.isNotEmpty) {
+      _gmailAppendQuery(queryBuffer, category);
+    } else {
+      model.gmailCategoryList
+          .where((cat) => cat != 'category:')
+          .forEach((cat) => _gmailAppendQuery(queryBuffer, 'NOT $cat'));
+    }
+    return queryBuffer.toString();
+  }
+
+  StringBuffer _gmailAppendQuery(StringBuffer queryBuffer, String append) {
+    if (queryBuffer.isNotEmpty) {
+      queryBuffer.write(" AND ");
+    }
+    queryBuffer.write(append);
+    return queryBuffer;
   }
 }

@@ -27,7 +27,7 @@ class ApiAppDataService {
     List<ApiAppDataKey> keysToDelete = [
       ApiAppDataKey.userReferCode,
       ApiAppDataKey.gmailLastFetch,
-      ApiAppDataKey.gmailLastPage,
+      ApiAppDataKey.gmailPage,
       ApiAppDataKey.googleOauthModalComplete,
     ];
     keysToDelete.forEach((key) async {

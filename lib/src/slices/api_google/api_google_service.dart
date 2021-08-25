@@ -8,6 +8,8 @@ import 'dart:convert';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
+import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
+import 'package:http/http.dart';
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';
@@ -52,6 +54,7 @@ class ApiGoogleService {
       return await _gmailFetch(
           query: query, maxResults: maxResults, page: page);
     } catch (e) {
+      _log.warning("gmailFetch failed, retries: " + retries.toString(), e);
       if (retries > 1)
         return gmailFetch(
             query: query,
@@ -66,11 +69,15 @@ class ApiGoogleService {
       {String? query, int? maxResults, String? page}) async {
     GmailApi? gmailApi = await _gmailApi;
     List<String>? messages;
-    ListMessagesResponse? emails = await gmailApi?.users.messages.list("me",
-        maxResults: maxResults,
-        includeSpamTrash: true,
-        pageToken: page,
-        q: query);
+    ListMessagesResponse? emails = await gmailApi?.users.messages
+        .list("me",
+            maxResults: maxResults,
+            includeSpamTrash: true,
+            pageToken: page,
+            q: query)
+        .timeout(Duration(seconds: 10),
+            onTimeout: () =>
+                throw new ClientException('_gmailFetch timed out'));
     _log.finest(
         'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
     if (emails != null && emails.messages != null)
@@ -89,6 +96,8 @@ class ApiGoogleService {
       return await _gmailFetchMessage(messageId,
           format: format, headers: headers);
     } catch (e) {
+      _log.warning(
+          "gmailFetchMessage failed, retries: " + retries.toString(), e);
       if (retries > 1)
         return gmailFetchMessage(messageId,
             format: format, headers: headers, retries: retries - 1);
@@ -102,7 +111,10 @@ class ApiGoogleService {
     List<String> metadataHeaders = ["From", "To"];
     metadataHeaders.addAll(headers ?? []);
     Message? message = await gmailApi?.users.messages
-        .get("me", messageId, format: format, metadataHeaders: metadataHeaders);
+        .get("me", messageId, format: format, metadataHeaders: metadataHeaders)
+        .timeout(Duration(seconds: 10),
+            onTimeout: () =>
+                throw new ClientException('_gmailFetch timed out'));
     _log.finest('Fetched message ids: ' + (message?.id ?? ''));
     return message != null ? _convertMessage(message) : null;
   }
@@ -146,10 +158,8 @@ revolution today.<br />
   }
 
   Future<GmailApi?> get _gmailApi async {
-    var authClient = await _googleSignIn.authenticatedClient();
-    if (authClient != null) {
-      return GmailApi(authClient);
-    }
+    gapis.AuthClient? authClient = await _googleSignIn.authenticatedClient();
+    if (authClient != null) return GmailApi(authClient);
     return null;
   }
 
