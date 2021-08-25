@@ -14,10 +14,10 @@ class ApiAuthService {
 
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
       {required String providerName, List<String>? scopes}) async {
-    ApiAuthServiceProviderModel provider = getProvider(providerName);
+    ApiAuthServiceProviderModel? provider = await getProvider(providerName);
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
-            provider.authorizationEndpoint, provider.tokenEndpoint);
+            provider!.authorizationEndpoint, provider.tokenEndpoint);
     List<String> requestedScopes = scopes ?? List.empty(growable: false);
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
@@ -27,16 +27,20 @@ class ApiAuthService {
 
   Future<TokenResponse?> refreshToken(
       ApiAuthServiceAccountModel account) async {
-    ApiAuthServiceProviderModel provider =
-        _apiAuthServiceRepository.providers[account.provider];
-    return await _appAuth.token(TokenRequest(
-        provider.clientId, provider.redirectUri,
-        discoveryUrl: provider.discoveryUrl,
-        refreshToken: account.refreshToken,
-        scopes: account.scopes));
+    try {
+      ApiAuthServiceProviderModel? provider =
+          await getProvider(account.provider!);
+      return await _appAuth.token(TokenRequest(
+          provider!.clientId, provider.redirectUri,
+          discoveryUrl: provider.discoveryUrl,
+          refreshToken: account.refreshToken,
+          scopes: account.scopes));
+    } catch (e) {
+      print("Error in refreshToken");
+    }
   }
 
-  ApiAuthServiceProviderModel getProvider(String provider) {
-    return _apiAuthServiceRepository.providers[provider];
+  Future<ApiAuthServiceProviderModel?> getProvider(String provider) async {
+    return await _apiAuthServiceRepository.getProvider('provider');
   }
 }
