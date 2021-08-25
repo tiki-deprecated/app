@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:app/src/slices/api_auth_service/model/api_auth_service_provider_model.dart';
 import 'package:flutter/services.dart';
+
+import '../model/api_auth_service_provider_model.dart';
 
 class ApiAuthServiceRepository {
   static const _dbAuthProviders = "res/json/auth_providers_db.json";
@@ -20,6 +21,8 @@ class ApiAuthServiceRepository {
     if (providers == null) {
       await _loadProviders();
     }
-    return providers?['providerName'];
+    ApiAuthServiceProviderModel? providerModel =
+        ApiAuthServiceProviderModel.fromMap(providers?[providerName]);
+    return providerModel;
   }
 }

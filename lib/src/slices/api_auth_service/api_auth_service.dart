@@ -41,6 +41,6 @@ class ApiAuthService {
   }
 
   Future<ApiAuthServiceProviderModel?> getProvider(String provider) async {
-    return await _apiAuthServiceRepository.getProvider('provider');
+    return await _apiAuthServiceRepository.getProvider(provider);
   }
 }
