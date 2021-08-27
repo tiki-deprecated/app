@@ -66,4 +66,13 @@ class ApiAuthServiceRepository {
     if (rows.isEmpty) return [];
     return rows.map((e) => ApiAuthServiceAccountModel.fromMap(e)).toList();
   }
+
+  Future<ApiAuthServiceAccountModel?> getByProviderAndUsername(
+      String provider, String username) async {
+    final List<Map<String, Object?>> rows = await _database.query(_table,
+        where: "provider = ? AND username = ?",
+        whereArgs: [provider, username]);
+    if (rows.isEmpty) return null;
+    return ApiAuthServiceAccountModel.fromMap(rows[0]);
+  }
 }

@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_auth_service/model/api_auth_service_account_model.dart';
-import 'package:app/src/slices/api_auth_service/model/api_auth_service_provider_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +12,7 @@ import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../api_auth_service/api_auth_service.dart';
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -216,11 +215,13 @@ class DataBkgService extends ChangeNotifier {
         periodSplit[periodSplit.length - 1];
   }
 
-  Future<void> addAccount(String providerName) async {
+  Future<void> addAccount(String providerName,
+      {List<String> aditionalScopes = const []}) async {
+    List<String> scopes = [...aditionalScopes, "openid", "profile", "email"];
     AuthorizationTokenResponse? tokenResponse = await _apiAuthService
         .authorizeAndExchangeCode(providerName: providerName, scopes: scopes);
-    // TODO get account data to save username
     if (tokenResponse != null) {
+      // TODO get account data to get username
       ApiAuthServiceAccountModel apiAuthServiceAccountModel =
           ApiAuthServiceAccountModel(
               provider: providerName,

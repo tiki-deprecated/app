@@ -17,6 +17,7 @@ class ApiAuthServiceProviderModel {
   late String tokenEndpoint;
   late String discoveryUrl;
   late String redirectUri;
+  late String userInfoEndpoint;
 
   ApiAuthServiceProviderModel.fromMap(map) {
     clientId = map['clientId'];
@@ -24,5 +25,6 @@ class ApiAuthServiceProviderModel {
     tokenEndpoint = map['tokenEndpoint'];
     redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;
     discoveryUrl = map['discoveryUrl'];
+    userInfoEndpoint = map['userInfoEndpoint'];
   }
 }

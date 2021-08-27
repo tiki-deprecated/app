@@ -46,7 +46,16 @@ class ApiAuthService {
   }
 
   Future<ApiAuthServiceAccountModel?> upsert(
-      ApiAuthServiceAccountModel account) {
-    // TODO to be implemented
+      ApiAuthServiceAccountModel account) async {
+    ApiAuthServiceAccountModel? dbAccount =
+        account.provider != null && account.username != null
+            ? await _apiAuthServiceRepository.getByProviderAndUsername(
+                account.provider!, account.username!)
+            : null;
+    if (dbAccount != null) {
+      account.accountId = dbAccount.accountId;
+      return _apiAuthServiceRepository.update(account);
+    }
+    return _apiAuthServiceRepository.insert(account);
   }
 }
