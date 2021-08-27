@@ -85,7 +85,7 @@ class DataBkgService extends ChangeNotifier {
       }
       await _apiAppDataService.save(
           ApiAppDataKey.gmailLastFetch, run.millisecondsSinceEpoch.toString());
-      await _apiAppDataService.save(ApiAppDataKey.gmailLastPage, '');
+      await _apiAppDataService.save(ApiAppDataKey.gmailPage, '');
       _log.fine(
           'Gmail fetch completed on: ' + DateTime.now().toIso8601String());
     }
