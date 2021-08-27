@@ -1,4 +1,5 @@
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
@@ -8,9 +9,9 @@ class ApiAuthService {
   final FlutterAppAuth _appAuth;
   final ApiAuthServiceRepository _apiAuthServiceRepository;
 
-  ApiAuthService()
+  ApiAuthService({required Database database})
       : _appAuth = FlutterAppAuth(),
-        _apiAuthServiceRepository = ApiAuthServiceRepository();
+        _apiAuthServiceRepository = ApiAuthServiceRepository(database);
 
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
       {required String providerName, List<String>? scopes}) async {
@@ -42,5 +43,10 @@ class ApiAuthService {
 
   Future<ApiAuthServiceProviderModel?> getProvider(String provider) async {
     return await _apiAuthServiceRepository.getProvider(provider);
+  }
+
+  Future<ApiAuthServiceAccountModel?> upsert(
+      ApiAuthServiceAccountModel account) {
+    // TODO to be implemented
   }
 }

@@ -4,13 +4,11 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:provider/provider.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
-import '../api_auth_service/api_auth_service.dart';
 import '../google_oauth_modal/google_oauth_modal_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../info_carousel/info_carousel_service.dart';
@@ -47,16 +45,6 @@ class DataScreenController {
   }
 
   linkAccount(String providerName) async {
-    ApiAuthService apiAuthService = ApiAuthService();
-    AuthorizationTokenResponse? tokenResponse = await apiAuthService
-        .authorizeAndExchangeCode(providerName: providerName);
-    if (tokenResponse != null) {
-      print(tokenResponse.refreshToken);
-      print(tokenResponse.accessToken);
-      print(tokenResponse.accessTokenExpirationDateTime);
-      print(tokenResponse.idToken);
-      print(tokenResponse.tokenType);
-      print(tokenResponse.tokenAdditionalParameters);
-    }
+   service.linkAccount(providerName);
   }
 }

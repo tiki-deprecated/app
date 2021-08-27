@@ -53,7 +53,7 @@ class ApiAuthServiceAccountModel {
         'provider': provider,
         'access_token': accessToken,
         'access_token_expiration': accessTokenExpiration,
-        'refreshToken': refreshToken,
+        'refresh_token': refreshToken,
         'refresh_token_expiration': refreshTokenExpiration,
         'should_reconnect': shouldReconnect,
         'modified_epoch': modified?.millisecondsSinceEpoch,
