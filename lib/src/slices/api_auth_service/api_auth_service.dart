@@ -1,8 +1,11 @@
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:http/http.dart' as http;
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
+import '../../utils/api/helper_api_utils.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
+import 'model/api_auth_service_rsp.dart';
 import 'repository/api_auth_service_repository.dart';
 
 class ApiAuthService {
@@ -13,9 +16,12 @@ class ApiAuthService {
       : _appAuth = FlutterAppAuth(),
         _apiAuthServiceRepository = ApiAuthServiceRepository(database);
 
+  Future<ApiAuthServiceProviderModel?> _getProvider(providerName) async =>
+      _apiAuthServiceRepository.getProvider(providerName);
+
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
       {required String providerName, List<String>? scopes}) async {
-    ApiAuthServiceProviderModel? provider = await getProvider(providerName);
+    ApiAuthServiceProviderModel? provider = await _getProvider(providerName);
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
             provider!.authorizationEndpoint, provider.tokenEndpoint);
@@ -30,19 +36,22 @@ class ApiAuthService {
       ApiAuthServiceAccountModel account) async {
     try {
       ApiAuthServiceProviderModel? provider =
-          await getProvider(account.provider!);
+          await _getProvider(account.provider!);
       return await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
           discoveryUrl: provider.discoveryUrl,
           refreshToken: account.refreshToken,
           scopes: account.scopes));
     } catch (e) {
-      print("Error in refreshToken");
+      print(e.toString());
+      account.shouldReconnect = 1;
     }
   }
 
-  Future<ApiAuthServiceProviderModel?> getProvider(String provider) async {
-    return await _apiAuthServiceRepository.getProvider(provider);
+  Future<ApiAuthServiceAccountModel?> getAccount(
+      String provider, String username) async {
+    await _apiAuthServiceRepository.getByProviderAndUsername(
+        provider, username);
   }
 
   Future<ApiAuthServiceAccountModel?> upsert(
@@ -57,5 +66,30 @@ class ApiAuthService {
       return _apiAuthServiceRepository.update(account);
     }
     return _apiAuthServiceRepository.insert(account);
+  }
+
+  Future<dynamic> proxy(Future<dynamic> Function() request,
+      ApiAuthServiceAccountModel account) async {
+    ApiAuthServiceRsp rsp = await request();
+    if (HelperApiUtils.isUnauthorized(rsp.code)) {
+      await refreshToken(account);
+      rsp = await request();
+    }
+    return rsp;
+  }
+
+  Future<String?> getUsername(
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
+    ApiAuthServiceProviderModel? providerModel =
+        await this._getProvider(apiAuthServiceAccountModel.provider);
+    if (providerModel != null) {
+      ApiAuthServiceRsp rsp = await proxy(
+          () => http.get(Uri.parse(providerModel.userInfoEndpoint)),
+          apiAuthServiceAccountModel);
+      if (HelperApiUtils.is2xx(rsp.code)) {
+        return rsp.data?['name'];
+      }
+    }
+    return null;
   }
 }

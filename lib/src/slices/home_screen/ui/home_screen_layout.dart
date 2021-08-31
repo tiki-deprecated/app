@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../api_app_data/api_app_data_service.dart';
+import '../../api_auth_service/api_auth_service.dart';
 import '../../api_company/api_company_service.dart';
 import '../../api_email_msg/api_email_msg_service.dart';
 import '../../api_email_sender/api_email_sender_service.dart';
@@ -32,6 +33,8 @@ class HomeScreenLayout extends StatelessWidget {
         Provider.of<ApiEmailSenderService>(context, listen: false);
     ApiCompanyService apiCompanyService =
         Provider.of<ApiCompanyService>(context, listen: false);
+    ApiAuthService apiAuthService =
+        Provider.of<ApiAuthService>(context, listen: false);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
@@ -41,7 +44,8 @@ class HomeScreenLayout extends StatelessWidget {
               apiEmailSenderService: apiEmailSenderService,
               apiCompanyService: apiCompanyService,
               apiAppDataService: appDataService),
-          dataScreenService: DataScreenService(googleService, dataBkgService),
+          dataScreenService:
+              DataScreenService(googleService, dataBkgService, apiAuthService),
           walletScreenService: WalletScreenService(),
         ));
   }

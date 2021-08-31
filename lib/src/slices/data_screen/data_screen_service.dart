@@ -5,7 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 
+import '../api_auth_service/api_auth_service.dart';
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_google/api_google_service.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
@@ -19,8 +22,10 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
   final ApiGoogleService _googleService;
+  final ApiAuthService _apiAuthService;
 
-  DataScreenService(this._googleService, this._dataBkgService) {
+  DataScreenService(
+      this._googleService, this._dataBkgService, this._apiAuthService) {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
@@ -48,8 +53,25 @@ class DataScreenService extends ChangeNotifier {
     return await _googleService.gmailInfoCards();
   }
 
-  Future<void> linkAccount(String providerName) async {
-    _dataBkgService.addAccount(providerName);
+  Future<void> linkAccount(String providerName,
+      {List<String> aditionalScopes = const []}) async {
+    List<String> scopes = [...aditionalScopes, "openid", "profile", "email"];
+    AuthorizationTokenResponse? tokenResponse = await _apiAuthService
+        .authorizeAndExchangeCode(providerName: providerName, scopes: scopes);
+    if (tokenResponse != null) {
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel =
+          ApiAuthServiceAccountModel(
+              provider: providerName,
+              accessToken: tokenResponse.accessToken,
+              accessTokenExpiration: tokenResponse
+                  .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
+              refreshToken: tokenResponse.refreshToken,
+              shouldReconnect: 0);
+      String? username =
+          await _apiAuthService.getUsername(apiAuthServiceAccountModel);
+      apiAuthServiceAccountModel.username = username;
+      await _apiAuthService.upsert(apiAuthServiceAccountModel);
+    }
     notifyListeners();
   }
 }

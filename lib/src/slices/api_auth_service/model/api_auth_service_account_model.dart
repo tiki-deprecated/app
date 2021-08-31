@@ -3,6 +3,7 @@ import 'dart:convert';
 class ApiAuthServiceAccountModel {
   int? accountId;
   String? username;
+  String? displayName;
   String? provider;
   String? accessToken;
   int? accessTokenExpiration;
@@ -20,6 +21,7 @@ class ApiAuthServiceAccountModel {
   ApiAuthServiceAccountModel(
       {this.accountId,
       this.username,
+      this.displayName,
       this.provider,
       this.accessToken,
       this.accessTokenExpiration,
@@ -33,6 +35,7 @@ class ApiAuthServiceAccountModel {
   ApiAuthServiceAccountModel.fromMap(map) {
     this.accountId = map['account_id'];
     this.username = map['username'];
+    this.displayName = map['display_name'];
     this.provider = map['provider'];
     this.accessToken = map['access_token'];
     this.accessTokenExpiration = map['access_token_expiration'];
@@ -46,10 +49,10 @@ class ApiAuthServiceAccountModel {
       this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'account_id': accountId,
         'username': username,
+        'display_name': displayName,
         'provider': provider,
         'access_token': accessToken,
         'access_token_expiration': accessTokenExpiration,

@@ -21,6 +21,11 @@ class ApiAuthServiceRepository {
     this.providers = jsonDecode(jsonString);
   }
 
+  static Future<Map<String, dynamic>> getProviders() async {
+    String jsonString = await rootBundle.loadString(_dbAuthProviders);
+    return jsonDecode(jsonString);
+  }
+
   Future<ApiAuthServiceProviderModel?> getProvider(String providerName) async {
     if (providers == null) {
       await _loadProviders();
