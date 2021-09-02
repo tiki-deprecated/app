@@ -11,13 +11,14 @@
 ///     }
 ///
 class ApiAuthServiceProviderModel {
-  static const String _defaultRedirectUri = "com.mytiki.app://oauth";
+  static const String _defaultRedirectUri = "com.mytiki.app:/oauth";
   late String clientId;
   late String authorizationEndpoint;
   late String tokenEndpoint;
   late String discoveryUrl;
   late String redirectUri;
   late String userInfoEndpoint;
+  late List<String> scopes;
 
   ApiAuthServiceProviderModel.fromMap(map) {
     clientId = map['clientId'];
@@ -25,6 +26,9 @@ class ApiAuthServiceProviderModel {
     tokenEndpoint = map['tokenEndpoint'];
     redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;
     discoveryUrl = map['discoveryUrl'];
-    userInfoEndpoint = map['userInfoEndpoint'];
+    userInfoEndpoint = map['userinfo_endpoint'];
+    scopes = map['scopes'] != null
+        ? (map['scopes'] as List).map((item) => item as String).toList()
+        : List.empty();
   }
 }

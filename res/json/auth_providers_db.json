@@ -12,5 +12,18 @@
     "tokenEndpoint": "https://dev-gx7yq-57.us.auth0.com/oauth/token",
     "discoveryUrl": "https://dev-gx7yq-57.us.auth0.com/.well-known/openid-configuration",
     "userinfo_endpoint": "https://dev-gx7yq-57.us.auth0.com/userinfo"
+  },
+  "google": {
+    "clientId": "240428403253-51ahktup816e4bap6pj8np88s1c22rmf.apps.googleusercontent.com",
+    "authorizationEndpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+    "tokenEndpoint": "https://www.googleapis.com/oauth2/v4/token",
+    "discoveryUrl": "https://accounts.google.com/.well-known/openid-configuration",
+    "userinfo_endpoint": "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
+    "scopes": [
+      "openid",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.send"
+    ]
   }
 }

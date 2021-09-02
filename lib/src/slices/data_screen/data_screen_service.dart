@@ -44,20 +44,23 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<void> addGoogleAccount() async {
-    this.model.googleAccount = await _googleService.signIn();
-    _dataBkgService.checkGmail(fetchAll: true, force: true);
-    notifyListeners();
+    ApiAuthServiceAccountModel? account = await this.linkAccount('google');
+    print(account);
+    if (account != null) {
+      // this.model.googleAccount = await _googleService.signIn();
+      // _dataBkgService.checkGmail(fetchAll: true, force: true);
+      // notifyListeners();
+    }
   }
 
   Future<List<InfoCarouselCardModel>> getGmailCards() async {
     return await _googleService.gmailInfoCards();
   }
 
-  Future<void> linkAccount(String providerName,
-      {List<String> aditionalScopes = const []}) async {
-    List<String> scopes = [...aditionalScopes, "openid", "profile", "email"];
+  Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
+    ApiAuthServiceAccountModel? account;
     AuthorizationTokenResponse? tokenResponse = await _apiAuthService
-        .authorizeAndExchangeCode(providerName: providerName, scopes: scopes);
+        .authorizeAndExchangeCode(providerName: providerName);
     if (tokenResponse != null) {
       ApiAuthServiceAccountModel apiAuthServiceAccountModel =
           ApiAuthServiceAccountModel(
@@ -70,8 +73,8 @@ class DataScreenService extends ChangeNotifier {
       String? username =
           await _apiAuthService.getUsername(apiAuthServiceAccountModel);
       apiAuthServiceAccountModel.username = username;
-      await _apiAuthService.upsert(apiAuthServiceAccountModel);
+      account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
     }
-    notifyListeners();
+    return account;
   }
 }

@@ -20,15 +20,15 @@ class ApiAuthService {
       _apiAuthServiceRepository.getProvider(providerName);
 
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
-      {required String providerName, List<String>? scopes}) async {
+      {required String providerName}) async {
     ApiAuthServiceProviderModel? provider = await _getProvider(providerName);
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
             provider!.authorizationEndpoint, provider.tokenEndpoint);
-    List<String> requestedScopes = scopes ?? List.empty(growable: false);
+    List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
-          serviceConfiguration: authConfig, scopes: requestedScopes),
+          serviceConfiguration: authConfig, scopes: providerScopes),
     );
   }
 
@@ -50,8 +50,13 @@ class ApiAuthService {
 
   Future<ApiAuthServiceAccountModel?> getAccount(
       String provider, String username) async {
-    await _apiAuthServiceRepository.getByProviderAndUsername(
+    return await _apiAuthServiceRepository.getByProviderAndUsername(
         provider, username);
+  }
+
+  Future<List<ApiAuthServiceAccountModel>> getAccountsByProvider(
+      String provider) async {
+    return await _apiAuthServiceRepository.getByProvider(provider);
   }
 
   Future<ApiAuthServiceAccountModel?> upsert(

@@ -1,9 +1,9 @@
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_auth_service/model/api_auth_service_rsp.dart';
-import '../api_email_client/api_email_provider_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
+import '../data_bkg/api_email_provider_abstract.dart';
 
-class ApiMicrosoftService implements ApiEmailProviderService {
+class ApiMicrosoftService implements ApiEmailProviderAbstract {
   @override
   // TODO: implement account
   ApiAuthServiceAccountModel get account => throw UnimplementedError();

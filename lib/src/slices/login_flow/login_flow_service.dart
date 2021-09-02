@@ -257,7 +257,8 @@ class LoginFlowService extends ChangeNotifier {
         apiCompanyService: apiCompanyService,
         apiEmailSenderService: apiEmailSenderService,
         apiGoogleService: apiGoogleService,
-        apiAppDataService: apiAppDataService);
+        apiAppDataService: apiAppDataService,
+        apiAuthService: apiAuthService);
 
     _providers = [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

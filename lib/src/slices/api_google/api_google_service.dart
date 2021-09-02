@@ -10,9 +10,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
@@ -46,17 +48,18 @@ class ApiGoogleService {
   }
 
   Future<DataBkgModelPage<String>> gmailFetch(
+      ApiAuthServiceAccountModel account,
       {String? query,
       String? page,
       int retries = 3,
       int maxResults = 500}) async {
     try {
-      return await _gmailFetch(
+      return await _gmailFetch(account,
           query: query, maxResults: maxResults, page: page);
     } catch (e) {
       _log.warning("gmailFetch failed, retries: " + retries.toString(), e);
       if (retries > 1)
-        return gmailFetch(
+        return gmailFetch(account,
             query: query,
             retries: retries - 1,
             page: page,
@@ -66,8 +69,12 @@ class ApiGoogleService {
   }
 
   Future<DataBkgModelPage<String>> _gmailFetch(
-      {String? query, int? maxResults, String? page}) async {
-    GmailApi? gmailApi = await _gmailApi;
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel,
+      {String? query,
+      int? maxResults,
+      String? page}) async {
+    // GmailApi? gmailApi = await _gmailApi;
+    GmailApi? gmailApi = await _getGmailApi(apiAuthServiceAccountModel);
     List<String>? messages;
     ListMessagesResponse? emails = await gmailApi?.users.messages
         .list("me",
@@ -160,6 +167,29 @@ revolution today.<br />
   Future<GmailApi?> get _gmailApi async {
     gapis.AuthClient? authClient = await _googleSignIn.authenticatedClient();
     if (authClient != null) return GmailApi(authClient);
+    return null;
+  }
+
+  Future<GmailApi?> _getGmailApi(
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
+    if (apiAuthServiceAccountModel.accessToken != null) {
+      final gapis.AccessCredentials credentials = gapis.AccessCredentials(
+        gapis.AccessToken(
+          'Bearer',
+          apiAuthServiceAccountModel.accessToken!,
+          apiAuthServiceAccountModel.accessTokenExpiration != null
+              ? DateTime.fromMillisecondsSinceEpoch(
+                  apiAuthServiceAccountModel.accessTokenExpiration!)
+              : DateTime.now().toUtc().add(const Duration(days: 365)),
+        ),
+        apiAuthServiceAccountModel.refreshToken,
+        apiAuthServiceAccountModel.scopes,
+      );
+      // TODO check this authclient implementation and create an abstraction like that for our client
+      gapis.AuthClient authClient =
+          gapis.authenticatedClient(http.Client(), credentials);
+      return GmailApi(authClient);
+    }
     return null;
   }
 

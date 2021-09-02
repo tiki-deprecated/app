@@ -5,15 +5,15 @@ import 'package:logging/logging.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
-import '../data_bkg/model/data_bkg_model_page.dart';
-import 'api_email_provider_service.dart';
+import 'api_email_provider_abstract.dart';
+import 'model/data_bkg_model_page.dart';
 
-class ApiEmailClientService {
+class DataBkgServiceEmail {
   final _log = Logger('ApiEmailClientService');
   final ApiAuthService _apiAuthService;
-  final ApiEmailProviderService _emailProviderService;
+  final ApiEmailProviderAbstract _emailProviderService;
 
-  ApiEmailClientService(this._apiAuthService, this._emailProviderService);
+  DataBkgServiceEmail(this._apiAuthService, this._emailProviderService);
 
   Future<DataBkgModelPage<ApiEmailMsgModel>?> emailFetch(
       ApiAuthServiceAccountModel account,
