@@ -8,12 +8,14 @@
 CREATE TABLE auth_service_account (
     account_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT,
+    display_name TEXT,
     provider TEXT,
     access_token TEXT,
     access_token_expiration INTEGER,
     refresh_token TEXT,
     refresh_token_expiration INTEGER,
     should_reconnect INTEGER,
+    scopes TEXT,
     created_epoch INTEGER NOT NULL,
     modified_epoch INTEGER NOT NULL
 );

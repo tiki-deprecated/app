@@ -45,11 +45,9 @@ class DataScreenService extends ChangeNotifier {
 
   Future<void> addGoogleAccount() async {
     ApiAuthServiceAccountModel? account = await this.linkAccount('google');
-    print(account);
     if (account != null) {
-      // this.model.googleAccount = await _googleService.signIn();
-      // _dataBkgService.checkGmail(fetchAll: true, force: true);
-      // notifyListeners();
+      _dataBkgService.checkGmail(fetchAll: true, force: true);
+      notifyListeners();
     }
   }
 
@@ -70,11 +68,15 @@ class DataScreenService extends ChangeNotifier {
                   .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
               refreshToken: tokenResponse.refreshToken,
               shouldReconnect: 0);
-      String? username =
-          await _apiAuthService.getUsername(apiAuthServiceAccountModel);
-      apiAuthServiceAccountModel.username = username;
-      account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+      Map? userInfo =
+          await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
+      if (userInfo != null) {
+        apiAuthServiceAccountModel.displayName = userInfo['name'];
+        apiAuthServiceAccountModel.username = userInfo['id'];
+        account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+        return account;
+      }
     }
-    return account;
+    return null;
   }
 }

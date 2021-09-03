@@ -45,6 +45,6 @@ class DataScreenController {
   }
 
   linkAccount(String providerName) async {
-    service.linkAccount(providerName);
+    service.addGoogleAccount();
   }
 }

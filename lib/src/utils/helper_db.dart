@@ -33,6 +33,7 @@ class HelperDb {
     _log.fine('create');
     await _executeScript(db, 'create_v1');
     await _executeScript(db, 'create_v2');
+    await _executeScript(db, 'create_v4');
   }
 
   Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {

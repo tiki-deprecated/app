@@ -33,6 +33,8 @@ class ApiGoogleService {
 
   Future<GoogleSignInAccount?> signIn() => _googleSignIn.signIn();
 
+  // Future<GoogleSignInAccount?> signInWithAccount(ApiAuthServiceAccountModel account) => _getGmailApi(account);
+
   Future<bool> signOut() async {
     await _googleSignIn.signOut();
     var success = !await _googleSignIn.isSignedIn();
@@ -173,19 +175,23 @@ revolution today.<br />
   Future<GmailApi?> _getGmailApi(
       ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
     if (apiAuthServiceAccountModel.accessToken != null) {
-      final gapis.AccessCredentials credentials = gapis.AccessCredentials(
-        gapis.AccessToken(
-          'Bearer',
-          apiAuthServiceAccountModel.accessToken!,
+      String token = apiAuthServiceAccountModel.accessToken!;
+      DateTime tokenExp =
           apiAuthServiceAccountModel.accessTokenExpiration != null
               ? DateTime.fromMillisecondsSinceEpoch(
-                  apiAuthServiceAccountModel.accessTokenExpiration!)
-              : DateTime.now().toUtc().add(const Duration(days: 365)),
-        ),
-        apiAuthServiceAccountModel.refreshToken,
-        apiAuthServiceAccountModel.scopes,
-      );
-      // TODO check this authclient implementation and create an abstraction like that for our client
+                      apiAuthServiceAccountModel.accessTokenExpiration!)
+                  .toUtc()
+              : DateTime.now().toUtc().add(const Duration(days: 365));
+      gapis.AccessToken accessToken =
+          gapis.AccessToken('Bearer', token, tokenExp);
+      List<String> scopes = [
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.send"
+      ];
+      gapis.AccessCredentials credentials = gapis.AccessCredentials(
+          accessToken, apiAuthServiceAccountModel.refreshToken, scopes);
       gapis.AuthClient authClient =
           gapis.authenticatedClient(http.Client(), credentials);
       return GmailApi(authClient);

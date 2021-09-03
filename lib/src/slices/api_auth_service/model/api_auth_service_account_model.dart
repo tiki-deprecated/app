@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ApiAuthServiceAccountModel {
   int? accountId;
   String? username;
@@ -8,15 +6,10 @@ class ApiAuthServiceAccountModel {
   String? accessToken;
   int? accessTokenExpiration;
   String? refreshToken;
-  String? _scopes;
   int? refreshTokenExpiration;
   int? shouldReconnect;
   DateTime? modified;
   DateTime? created;
-
-  List<String> get scopes => jsonDecode(_scopes ?? "[]");
-
-  set scopes(List<String> scopeList) => jsonEncode(scopeList);
 
   ApiAuthServiceAccountModel(
       {this.accountId,
@@ -26,11 +19,8 @@ class ApiAuthServiceAccountModel {
       this.accessToken,
       this.accessTokenExpiration,
       this.refreshToken,
-      List<String>? scopeList,
       this.refreshTokenExpiration,
-      this.shouldReconnect}) {
-    this.scopes = scopeList ?? [];
-  }
+      this.shouldReconnect});
 
   ApiAuthServiceAccountModel.fromMap(map) {
     this.accountId = map['account_id'];
@@ -49,7 +39,8 @@ class ApiAuthServiceAccountModel {
       this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() =>
+      {
         'account_id': accountId,
         'username': username,
         'display_name': displayName,
@@ -59,7 +50,9 @@ class ApiAuthServiceAccountModel {
         'refresh_token': refreshToken,
         'refresh_token_expiration': refreshTokenExpiration,
         'should_reconnect': shouldReconnect,
-        'modified_epoch': modified?.millisecondsSinceEpoch,
-        'created_epoch': created?.millisecondsSinceEpoch
+        'modified_epoch': modified?.millisecondsSinceEpoch ??
+            DateTime.now().millisecondsSinceEpoch,
+        'created_epoch': created?.millisecondsSinceEpoch ??
+            DateTime.now().millisecondsSinceEpoch
       };
 }
