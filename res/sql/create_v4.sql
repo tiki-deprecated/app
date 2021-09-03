@@ -8,6 +8,7 @@
 CREATE TABLE auth_service_account (
     account_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT,
+    email TEXT,
     display_name TEXT,
     provider TEXT,
     access_token TEXT,

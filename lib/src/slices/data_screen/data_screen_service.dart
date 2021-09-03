@@ -73,6 +73,7 @@ class DataScreenService extends ChangeNotifier {
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
         apiAuthServiceAccountModel.username = userInfo['id'];
+        apiAuthServiceAccountModel.email = userInfo['email'];
         account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
         return account;
       }

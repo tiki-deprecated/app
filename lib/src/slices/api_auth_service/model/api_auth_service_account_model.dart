@@ -2,6 +2,7 @@ class ApiAuthServiceAccountModel {
   int? accountId;
   String? username;
   String? displayName;
+  String? email;
   String? provider;
   String? accessToken;
   int? accessTokenExpiration;
@@ -11,11 +12,10 @@ class ApiAuthServiceAccountModel {
   DateTime? modified;
   DateTime? created;
 
-  var email;
-
   ApiAuthServiceAccountModel(
       {this.accountId,
       this.username,
+      this.email,
       this.displayName,
       this.provider,
       this.accessToken,
@@ -28,6 +28,7 @@ class ApiAuthServiceAccountModel {
     this.accountId = map['account_id'];
     this.username = map['username'];
     this.displayName = map['display_name'];
+    this.email = map['email'];
     this.provider = map['provider'];
     this.accessToken = map['access_token'];
     this.accessTokenExpiration = map['access_token_expiration'];
@@ -46,6 +47,7 @@ class ApiAuthServiceAccountModel {
         'account_id': accountId,
         'username': username,
         'display_name': displayName,
+        'email': email,
         'provider': provider,
         'access_token': accessToken,
         'access_token_expiration': accessTokenExpiration,

@@ -222,7 +222,7 @@ revolution today.<br />
                     .trim()
                 : headerEntry.value!;
             if (email.toLowerCase() !=
-                _gmailAuthServiceAccount!.email.trim().toLowerCase())
+                _gmailAuthServiceAccount!.email!.trim().toLowerCase())
               return null;
             break;
         }
