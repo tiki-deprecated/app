@@ -175,6 +175,12 @@ revolution today.<br />
   Future<GmailApi?> _getGmailApi(
       ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
     if (apiAuthServiceAccountModel.accessToken != null) {
+      List<String> scopes = [
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.send"
+      ];
       String token = apiAuthServiceAccountModel.accessToken!;
       DateTime tokenExp =
           apiAuthServiceAccountModel.accessTokenExpiration != null
@@ -182,21 +188,15 @@ revolution today.<br />
                       apiAuthServiceAccountModel.accessTokenExpiration!)
                   .toUtc()
               : DateTime.now().toUtc().add(const Duration(days: 365));
-      gapis.AccessToken accessToken =
-          gapis.AccessToken('Bearer', token, tokenExp);
-      List<String> scopes = [
-        "openid",
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/gmail.readonly",
-        "https://www.googleapis.com/auth/gmail.send"
-      ];
-      gapis.AccessCredentials credentials = gapis.AccessCredentials(
-          accessToken, apiAuthServiceAccountModel.refreshToken, scopes);
-      gapis.AuthClient authClient =
+      final gapis.AccessCredentials credentials = gapis.AccessCredentials(
+        gapis.AccessToken('Bearer', token, tokenExp),
+        apiAuthServiceAccountModel.refreshToken,
+        scopes,
+      );
+      gapis.AuthClient? authClient =
           gapis.authenticatedClient(http.Client(), credentials);
       return GmailApi(authClient);
     }
-    return null;
   }
 
   String _getBase64Email({String? source}) {
