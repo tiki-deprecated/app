@@ -11,6 +11,8 @@ class ApiAuthServiceAccountModel {
   DateTime? modified;
   DateTime? created;
 
+  var email;
+
   ApiAuthServiceAccountModel(
       {this.accountId,
       this.username,

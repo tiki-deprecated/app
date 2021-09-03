@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/utils/api/helper_api_headers.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
+import '../../config/config_sentry.dart';
+import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';

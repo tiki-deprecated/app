@@ -33,7 +33,7 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<void> initializeGoogleRepo() async {
-    this.model.googleAccount = await _googleService.getConnectedUser();
+    this.model.googleAccount = await _googleService.getAccount();
     notifyListeners();
   }
 

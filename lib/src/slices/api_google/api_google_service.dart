@@ -5,8 +5,6 @@
 
 import 'dart:convert';
 
-import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart';
@@ -14,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';
+import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
@@ -23,25 +22,30 @@ import 'repository/api_google_repository_info.dart';
 
 class ApiGoogleService {
   final _log = Logger('ApiGoogleService');
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [GmailApi.gmailReadonlyScope, GmailApi.gmailSendScope]);
+
   final ApiGoogleRepositoryInfo _googleInfoRepository =
       ApiGoogleRepositoryInfo();
+  final ApiAuthService _apiAuthService;
+  ApiAuthServiceAccountModel? _gmailAuthServiceAccount;
 
-  Future<GoogleSignInAccount?> getConnectedUser() =>
-      _googleSignIn.signInSilently();
-
-  Future<GoogleSignInAccount?> signIn() => _googleSignIn.signIn();
-
-  // Future<GoogleSignInAccount?> signInWithAccount(ApiAuthServiceAccountModel account) => _getGmailApi(account);
-
-  Future<bool> signOut() async {
-    await _googleSignIn.signOut();
-    var success = !await _googleSignIn.isSignedIn();
-    return success;
+  ApiGoogleService(this._apiAuthService) {
+    _loadGmailAccount();
   }
 
-  Future<bool> isConnected() => _googleSignIn.isSignedIn();
+  Future<ApiAuthServiceAccountModel?> getAccount() async {
+    await _loadGmailAccount();
+    return _gmailAuthServiceAccount;
+  }
+
+  Future<void> signOut() async {}
+
+  Future<bool> isConnected() async {
+    await _loadGmailAccount();
+    if (_gmailAuthServiceAccount != null) {
+      _apiAuthService.getUserInfo(_gmailAuthServiceAccount!);
+    }
+    return _gmailAuthServiceAccount != null;
+  }
 
   Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
     List<dynamic>? infoJson = await _googleInfoRepository.gmail();
@@ -50,18 +54,17 @@ class ApiGoogleService {
   }
 
   Future<DataBkgModelPage<String>> gmailFetch(
-      ApiAuthServiceAccountModel account,
       {String? query,
       String? page,
       int retries = 3,
       int maxResults = 500}) async {
     try {
-      return await _gmailFetch(account,
+      return await _gmailFetch(
           query: query, maxResults: maxResults, page: page);
     } catch (e) {
       _log.warning("gmailFetch failed, retries: " + retries.toString(), e);
       if (retries > 1)
-        return gmailFetch(account,
+        return gmailFetch(
             query: query,
             retries: retries - 1,
             page: page,
@@ -71,12 +74,13 @@ class ApiGoogleService {
   }
 
   Future<DataBkgModelPage<String>> _gmailFetch(
-      ApiAuthServiceAccountModel apiAuthServiceAccountModel,
       {String? query,
       int? maxResults,
       String? page}) async {
     // GmailApi? gmailApi = await _gmailApi;
-    GmailApi? gmailApi = await _getGmailApi(apiAuthServiceAccountModel);
+    List<ApiAuthServiceAccountModel> gmailAccounts =
+        await _apiAuthService.getAccountsByProvider('google');
+    GmailApi? gmailApi = await _getGmailApi(gmailAccounts[0]);
     List<String>? messages;
     ListMessagesResponse? emails = await gmailApi?.users.messages
         .list("me",
@@ -116,7 +120,9 @@ class ApiGoogleService {
 
   Future<ApiEmailMsgModel?> _gmailFetchMessage(String messageId,
       {String format = "metadata", List<String>? headers}) async {
-    GmailApi? gmailApi = await _gmailApi;
+    await _loadGmailAccount();
+    if (_gmailAuthServiceAccount?.accessToken == null) return null;
+    GmailApi? gmailApi = await _getGmailApi(_gmailAuthServiceAccount!);
     List<String> metadataHeaders = ["From", "To"];
     metadataHeaders.addAll(headers ?? []);
     Message? message = await gmailApi?.users.messages
@@ -124,12 +130,14 @@ class ApiGoogleService {
         .timeout(Duration(seconds: 10),
             onTimeout: () =>
                 throw new ClientException('_gmailFetch timed out'));
-    _log.finest('Fetched message ids: ' + (message?.id ?? ''));
+    _log.finest("Fetched message id $messageId");
     return message != null ? _convertMessage(message) : null;
   }
 
   Future<bool> unsubscribe(String unsubscribeMailTo, String list) async {
-    GmailApi? gmailApi = await _gmailApi;
+    await _loadGmailAccount();
+    if (_gmailAuthServiceAccount?.accessToken == null) return false;
+    GmailApi? gmailApi = await _getGmailApi(_gmailAuthServiceAccount!);
     if (gmailApi == null) return false;
     Uri uri = Uri.parse(unsubscribeMailTo);
     String to = uri.path;
@@ -153,7 +161,7 @@ subject: $subject
 Hello,<br /><br />
 I'd like to stop receiving emails from this email list.<br /><br />
 Thanks,<br /><br />
-${_googleSignIn.currentUser?.displayName ?? ''}<br />
+${_gmailAuthServiceAccount?.displayName ?? ''}<br />
 <br />
 *Sent via http://www.mytiki.com. Join the data ownership<br />
 revolution today.<br />
@@ -164,12 +172,6 @@ revolution today.<br />
     await gmailApi.users.messages
         .send(Message.fromJson({'raw': _getBase64Email(source: email)}), "me");
     return true;
-  }
-
-  Future<GmailApi?> get _gmailApi async {
-    gapis.AuthClient? authClient = await _googleSignIn.authenticatedClient();
-    if (authClient != null) return GmailApi(authClient);
-    return null;
   }
 
   Future<GmailApi?> _getGmailApi(
@@ -220,7 +222,7 @@ revolution today.<br />
                     .trim()
                 : headerEntry.value!;
             if (email.toLowerCase() !=
-                _googleSignIn.currentUser!.email.trim().toLowerCase())
+                _gmailAuthServiceAccount!.email.trim().toLowerCase())
               return null;
             break;
         }
@@ -245,7 +247,7 @@ revolution today.<br />
                 int.parse(message.internalDate!))
             : null,
         openedDate: openedDate,
-        account: _googleSignIn.currentUser!.email,
+        account: _gmailAuthServiceAccount!.email,
         sender: _convertSender(message));
   }
 
@@ -281,5 +283,14 @@ revolution today.<br />
       });
     }
     return sender;
+  }
+
+  Future<void> _loadGmailAccount() async {
+    if (_gmailAuthServiceAccount == null) {
+      List<ApiAuthServiceAccountModel> gmailAccounts =
+          await this._apiAuthService.getAccountsByProvider('google');
+      _gmailAuthServiceAccount =
+          gmailAccounts.isNotEmpty ? gmailAccounts[0] : null;
+    }
   }
 }

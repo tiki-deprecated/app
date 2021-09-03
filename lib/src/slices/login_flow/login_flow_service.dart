@@ -249,7 +249,7 @@ class LoginFlowService extends ChangeNotifier {
         ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
     ApiAuthService apiAuthService = ApiAuthService(database: database);
 
-    ApiGoogleService apiGoogleService = ApiGoogleService();
+    ApiGoogleService apiGoogleService = ApiGoogleService(apiAuthService);
     registerLogout(() async => await apiGoogleService.signOut());
 
     DataBkgService dataBkgService = DataBkgService(

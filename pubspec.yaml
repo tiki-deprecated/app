@@ -33,7 +33,6 @@ dependencies:
   barcode_scan2: ^4.1.4
   flutter_markdown: ^0.6.4
   carousel_slider: ^4.0.0
-  google_sign_in: ^5.0.7
   googleapis: ^4.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.2
   intl_utils: ^2.4.0
