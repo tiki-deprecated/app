@@ -98,4 +98,9 @@ class ApiAuthService {
     }
     return null;
   }
+
+  Future<void> signOut(
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
+    await _apiAuthServiceRepository.delete(apiAuthServiceAccountModel);
+  }
 }

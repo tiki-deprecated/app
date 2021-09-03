@@ -80,4 +80,14 @@ class ApiAuthServiceRepository {
     if (rows.isEmpty) return null;
     return ApiAuthServiceAccountModel.fromMap(rows[0]);
   }
+
+  Future<void> delete(
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
+    await _database.delete(_table,
+        where: "provider = ? AND username = ?",
+        whereArgs: [
+          apiAuthServiceAccountModel.provider,
+          apiAuthServiceAccountModel.username
+        ]);
+  }
 }

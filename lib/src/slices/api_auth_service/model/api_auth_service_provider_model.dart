@@ -1,3 +1,5 @@
+import 'dart:io';
+
 /// The Provider Model for Auth Service
 ///
 /// This provider should be defined at res/json/auth_providers_db.json in the
@@ -21,7 +23,7 @@ class ApiAuthServiceProviderModel {
   late List<String> scopes;
 
   ApiAuthServiceProviderModel.fromMap(map) {
-    clientId = map['clientId'];
+    clientId = Platform.isIOS ? map['iosClientId'] : map['androidClientId'];
     authorizationEndpoint = map['authorizationEndpoint'];
     tokenEndpoint = map['tokenEndpoint'];
     redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;

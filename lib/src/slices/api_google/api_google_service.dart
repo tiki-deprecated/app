@@ -37,14 +37,33 @@ class ApiGoogleService {
     return _gmailAuthServiceAccount;
   }
 
-  Future<void> signOut() async {}
+  Future<void> signOut() async {
+    if (_gmailAuthServiceAccount != null) {
+      await _apiAuthService.signOut(_gmailAuthServiceAccount!);
+      _gmailAuthServiceAccount = null;
+    }
+  }
+
+  signIn() {
+    // TODO
+  }
 
   Future<bool> isConnected() async {
     await _loadGmailAccount();
     if (_gmailAuthServiceAccount != null) {
-      _apiAuthService.getUserInfo(_gmailAuthServiceAccount!);
+      return (await _apiAuthService.getUserInfo(_gmailAuthServiceAccount!)) !=
+          null;
     }
     return _gmailAuthServiceAccount != null;
+  }
+
+  Future<void> _loadGmailAccount() async {
+    if (_gmailAuthServiceAccount == null) {
+      List<ApiAuthServiceAccountModel> gmailAccounts =
+          await this._apiAuthService.getAccountsByProvider('google');
+      _gmailAuthServiceAccount =
+          gmailAccounts.isNotEmpty ? gmailAccounts[0] : null;
+    }
   }
 
   Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
@@ -283,14 +302,5 @@ revolution today.<br />
       });
     }
     return sender;
-  }
-
-  Future<void> _loadGmailAccount() async {
-    if (_gmailAuthServiceAccount == null) {
-      List<ApiAuthServiceAccountModel> gmailAccounts =
-          await this._apiAuthService.getAccountsByProvider('google');
-      _gmailAuthServiceAccount =
-          gmailAccounts.isNotEmpty ? gmailAccounts[0] : null;
-    }
   }
 }

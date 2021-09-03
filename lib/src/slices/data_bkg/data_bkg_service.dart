@@ -4,12 +4,14 @@
  */
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../api_auth_service/api_auth_service.dart';
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -17,6 +19,7 @@ import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_google/api_google_service.dart';
+import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'model/data_bkg_model.dart';
 import 'model/data_bkg_model_page.dart';
 
@@ -28,6 +31,7 @@ class DataBkgService extends ChangeNotifier {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiGoogleService _apiGoogleService;
   final ApiAppDataService _apiAppDataService;
+  final ApiAuthService _apiAuthService;
 
   DataBkgService({
     required ApiGoogleService apiGoogleService,
@@ -40,7 +44,8 @@ class DataBkgService extends ChangeNotifier {
         this._apiCompanyService = apiCompanyService,
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiAppDataService = apiAppDataService {
+        this._apiAppDataService = apiAppDataService,
+        this._apiAuthService = apiAuthService {
     checkGmail();
   }
 
@@ -230,5 +235,43 @@ class DataBkgService extends ChangeNotifier {
     }
     queryBuffer.write(append);
     return queryBuffer;
+  }
+
+  Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
+    ApiAuthServiceAccountModel? account;
+    AuthorizationTokenResponse? tokenResponse = await _apiAuthService
+        .authorizeAndExchangeCode(providerName: providerName);
+    if (tokenResponse != null) {
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel =
+          ApiAuthServiceAccountModel(
+              provider: providerName,
+              accessToken: tokenResponse.accessToken,
+              accessTokenExpiration: tokenResponse
+                  .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
+              refreshToken: tokenResponse.refreshToken,
+              shouldReconnect: 0);
+      Map? userInfo =
+          await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
+      if (userInfo != null) {
+        apiAuthServiceAccountModel.displayName = userInfo['name'];
+        apiAuthServiceAccountModel.username = userInfo['id'];
+        apiAuthServiceAccountModel.email = userInfo['email'];
+        account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+        return account;
+      }
+    }
+    return null;
+  }
+
+  Future<ApiAuthServiceAccountModel?> getGoogleAccount() async {
+    return await _apiGoogleService.getAccount();
+  }
+
+  Future<void> removeGoogleAccount() async {
+    await _apiGoogleService.signOut();
+  }
+
+  Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
+    return await _apiGoogleService.gmailInfoCards();
   }
 }

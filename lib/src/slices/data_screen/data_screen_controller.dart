@@ -47,4 +47,8 @@ class DataScreenController {
   linkAccount(String providerName) async {
     service.addGoogleAccount();
   }
+
+  removeAccount(String s) {
+    service.removeGoogleAccount();
+  }
 }
