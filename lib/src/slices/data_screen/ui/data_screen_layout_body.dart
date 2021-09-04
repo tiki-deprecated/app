@@ -40,8 +40,9 @@ class DataScreenLayoutBody extends StatelessWidget {
                         type: "Google",
                         linkedIcon: "account-soon-gmail",
                         unlinkedIcon: "google-icon",
-                        onLink: () => service.controller.linkGmail(context),
-                        onUnlink: () => service.removeGoogleAccount(),
+                        onLink: () => service.controller.linkAccount("google"),
+                        onUnlink: () =>
+                            service.controller.removeAccount("google"),
                         onSee: () => service.controller.openGmailCards(context),
                       ),
                     ),
