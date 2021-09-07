@@ -212,4 +212,22 @@ class DataBkgSvEmailProvGmail extends DataBkgSvEmailProvAbstract {
     queryBuffer.write(append);
     return queryBuffer;
   }
+
+  @override
+  getAccount() {
+    // TODO: implement getAccount
+    throw UnimplementedError();
+  }
+
+  @override
+  logIn() {
+    // TODO: implement logIn
+    throw UnimplementedError();
+  }
+
+  @override
+  logOut() {
+    // TODO: implement logOut
+    throw UnimplementedError();
+  }
 }

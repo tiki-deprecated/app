@@ -1,5 +1,12 @@
 import 'dart:convert';
 
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
+import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
+import 'package:app/src/slices/api_company/api_company_service.dart';
+import 'package:app/src/slices/api_company/model/api_company_model_local.dart';
+import 'package:app/src/slices/api_email_sender/api_email_sender_service.dart';
+import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
 import 'package:logging/logging.dart';
 
 import '../api_auth_service/api_auth_service.dart';
@@ -16,7 +23,12 @@ class DataBkgServiceEmail {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiAppDataService _apiAppDataService;
 
-  DataBkgServiceEmail(this._apiAuthService, this._emailProviderService);
+  DataBkgServiceEmail(
+      this._apiAuthService,
+      this._emailProviderService,
+      this._apiCompanyService,
+      this._apiEmailSenderService,
+      this._apiAppDataService);
 
   Future<DataBkgModelPage<ApiEmailMsgModel>?> emailFetch(
       ApiAuthServiceAccountModel account,
