@@ -1,108 +1,45 @@
-import 'dart:convert';
+import 'package:app/src/slices/api_auth_service/model/api_auth_service_account_model.dart';
+import 'package:app/src/slices/api_auth_service/model/api_auth_service_rsp.dart';
+import 'package:app/src/slices/api_email_msg/model/api_email_msg_model.dart';
 
-import 'package:logging/logging.dart';
-
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
 import 'data_bkg_sv_email_prov.dart';
-import 'model/data_bkg_model_page.dart';
 
-class DataBkgServiceEmail {
-  final _log = Logger('ApiEmailClientService');
-  final ApiAuthService _apiAuthService;
-  final DataBkgSvEmailProvAbstract _emailProviderService;
-  final ApiCompanyService _apiCompanyService;
-  final ApiEmailSenderService _apiEmailSenderService;
-  final ApiAppDataService _apiAppDataService;
+class DataBkgSvEmailProvGmail extends DataBkgSvEmailProvAbstract {
+  @override
+  // TODO: implement account
+  ApiAuthServiceAccountModel get account => throw UnimplementedError();
 
-  DataBkgServiceEmail(this._apiAuthService, this._emailProviderService);
+  @override
+  // TODO: implement displayName
+  String? get displayName => throw UnimplementedError();
 
-  Future<DataBkgModelPage<ApiEmailMsgModel>?> emailFetch(
-      ApiAuthServiceAccountModel account,
-      {String? query,
-      int? maxResults,
-      String? page}) async {
-    DataBkgModelPage<ApiEmailMsgModel>? emailsPage =
-        await _apiAuthService.proxy(
-            () => _emailProviderService.emailFecthList(
-                query: query, maxResults: maxResults, page: page),
-            _emailProviderService.account);
-    _log.finest(
-        'Fetched ' + (emailsPage?.data?.length.toString() ?? '') + ' messages');
-    return emailsPage;
+  @override
+  Future<ApiAuthServiceRsp> emailFecthList(
+      {String? query, int? maxResults, String? page}) {
+    // TODO: implement emailFecthList
+    throw UnimplementedError();
   }
 
+  @override
   Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
-      {String format = "metadata",
-      List<String>? headers,
-      int retries = 3}) async {
-    try {
-      return await _emailProviderService.emailFetchMessage(messageId,
-          format: format, headers: headers);
-    } catch (e) {
-      _log.warning(
-          "emailFetchMessage failed, retries: " + retries.toString(), e);
-      if (retries > 1)
-        return emailFetchMessage(messageId,
-            format: format, headers: headers, retries: retries - 1);
-      rethrow;
-    }
+      {String format, List<String>? headers}) {
+    // TODO: implement emailFetchMessage
+    throw UnimplementedError();
   }
 
-  Future<bool> unsubscribe(String unsubscribeMailTo, String list) async {
-    Uri uri = Uri.parse(unsubscribeMailTo);
-    String to = uri.path;
-    String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
-    String email = '''
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-to: $to
-from: me
-subject: $subject
-
-<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
-<html xmlns=“https://www.w3.org/1999/xhtml”>
-<head>
-<title>Test Email Sample</title>
-<meta http–equiv=“Content-Type” content=“text/html; charset=UTF-8” />
-<meta http–equiv=“X-UA-Compatible” content=“IE=edge” />
-<meta name=“viewport” content=“width=device-width, initial-scale=1.0 “ />
-</head>
-<body class=“em_body” style=“margin:0px; padding:0px;”> 
-Hello,<br /><br />
-I'd like to stop receiving emails from this email list.<br /><br />
-Thanks,<br /><br />
-${_emailProviderService.account.displayName ?? ''}<br />
-<br />
-*Sent via http://www.mytiki.com. Join the data ownership<br />
-revolution today.<br />
-</body>
-</html>
-''';
-    await _apiAuthService.proxy(
-        () => _emailProviderService
-            .sendRawMessage(base64UrlEncode(utf8.encode(email))),
-        _emailProviderService.account);
-    return true;
+  @override
+  Future sendRawMessage(String getBase64Email) {
+    // TODO: implement sendRawMessage
+    throw UnimplementedError();
   }
 
-  Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
-    if (sender.email != null) {
-      ApiCompanyModelLocal? company =
-          await _apiCompanyService.upsert(domainFromEmail(sender.email!));
-      if (company != null) {
-        sender.company = company;
-        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
-        return saved;
-      }
-    }
+  Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
+    return await _apiGoogleService.gmailInfoCards();
   }
 
-  Future<void> checkEmail(DataBkgSvEmailProvAbstract emailProvider,
-      {bool fetchAll = false, bool force = false}) async {
+  Future<void> checkGmail({bool fetchAll = false, bool force = false}) async {
     _log.fine('Gmail fetch starting on: ' + DateTime.now().toIso8601String());
-    if (!(await emailProvider.isConnected())) {
+    if (!(await _apiGoogleService.isConnected())) {
       _log.fine('Gmail fetch aborted. No Google Account.');
       return;
     }
@@ -140,7 +77,7 @@ revolution today.<br />
     }
   }
 
-  Future<void> _checkEmailFetchList({String query = ''}) async {
+  Future<void> _checkGmailFetchList({String query = ''}) async {
     String? page;
     ApiAppDataModel? appDataGmailPage =
         await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage);
@@ -148,7 +85,7 @@ revolution today.<br />
     return _checkGmailFetchListPage(query: query, page: page);
   }
 
-  Future<void> _checkEmailFetchListPage({String? page, String? query}) async {
+  Future<void> _checkGmailFetchListPage({String? page, String? query}) async {
     DataBkgModelPage<String> res = await _apiGoogleService.gmailFetch(
         query: query, page: page, maxResults: 5);
     if (res.data != null) {
@@ -165,7 +102,7 @@ revolution today.<br />
       return _checkGmailFetchListPage(page: res.next, query: query);
   }
 
-  Future<void> _checkEmailFetchMessage(List<String> messages) async {
+  Future<void> _checkGmailFetchMessage(List<String> messages) async {
     Set<String> processed = Set();
     for (String messageId in messages) {
       ApiEmailMsgModel? message = await _apiGoogleService.gmailFetchMessage(
@@ -198,7 +135,7 @@ revolution today.<br />
     }
   }
 
-  Future<Set<ApiEmailMsgModel>> _checkEmailNewSender(String email) async {
+  Future<Set<ApiEmailMsgModel>> _checkGmailNewSender(String email) async {
     List<String> messageIds = await _checkGmailNewSenderPage(
         email: email, messages: List.empty(growable: true));
     Set<ApiEmailMsgModel> messages = Set();
@@ -230,7 +167,7 @@ revolution today.<br />
     return messages;
   }
 
-  Future<List<String>> _checkEmailNewSenderPage(
+  Future<List<String>> _checkGmailNewSenderPage(
       {required String email,
       String? page,
       required List<String> messages}) async {
@@ -244,23 +181,35 @@ revolution today.<br />
       return messages;
   }
 
-  Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
-    if (sender.email != null) {
-      ApiCompanyModelLocal? company =
-          await _apiCompanyService.upsert(domainFromEmail(sender.email!));
-      if (company != null) {
-        sender.company = company;
-        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
-        return saved;
-      }
-    }
-  }
-
   String domainFromEmail(String email) {
     List<String> atSplit = email.split('@');
     List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
     return periodSplit[periodSplit.length - 2] +
         "." +
         periodSplit[periodSplit.length - 1];
+  }
+
+  String _gmailBuildQuery(int? fetchEpochInMilliseconds, String category) {
+    StringBuffer queryBuffer = new StringBuffer();
+    if (fetchEpochInMilliseconds != null) {
+      int secondsSinceEpoch = (fetchEpochInMilliseconds / 1000).floor();
+      _gmailAppendQuery(queryBuffer, "after:" + secondsSinceEpoch.toString());
+    }
+    if (category != 'category:' && category.isNotEmpty) {
+      _gmailAppendQuery(queryBuffer, category);
+    } else {
+      model.gmailCategoryList
+          .where((cat) => cat != 'category:')
+          .forEach((cat) => _gmailAppendQuery(queryBuffer, 'NOT $cat'));
+    }
+    return queryBuffer.toString();
+  }
+
+  StringBuffer _gmailAppendQuery(StringBuffer queryBuffer, String append) {
+    if (queryBuffer.isNotEmpty) {
+      queryBuffer.write(" AND ");
+    }
+    queryBuffer.write(append);
+    return queryBuffer;
   }
 }
