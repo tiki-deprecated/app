@@ -23,11 +23,12 @@ class ApiAuthService {
   Future<ApiAuthServiceProviderModel?> _getProvider(providerName) async =>
       _apiAuthServiceRepository.getProvider(providerName);
 
-  Future<AuthorizationTokenResponse?> authorizeAndExchangeCode({required String providerName}) async {
+  Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
+      {required String providerName}) async {
     ApiAuthServiceProviderModel? provider = await _getProvider(providerName);
     AuthorizationServiceConfiguration authConfig =
-    AuthorizationServiceConfiguration(
-        provider!.authorizationEndpoint, provider.tokenEndpoint);
+        AuthorizationServiceConfiguration(
+            provider!.authorizationEndpoint, provider.tokenEndpoint);
     List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
@@ -35,10 +36,11 @@ class ApiAuthService {
     );
   }
 
-  Future<TokenResponse?> refreshToken(ApiAuthServiceAccountModel account) async {
+  Future<TokenResponse?> refreshToken(
+      ApiAuthServiceAccountModel account) async {
     try {
       ApiAuthServiceProviderModel? provider =
-      await _getProvider(account.provider!);
+          await _getProvider(account.provider!);
       return await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
           discoveryUrl: provider.discoveryUrl,
@@ -50,16 +52,19 @@ class ApiAuthService {
     }
   }
 
-  Future<ApiAuthServiceAccountModel?> getAccount(String provider, String username) async {
+  Future<ApiAuthServiceAccountModel?> getAccount(
+      String provider, String username) async {
     return await _apiAuthServiceRepository.getByProviderAndUsername(
         provider, username);
   }
 
-  Future<List<ApiAuthServiceAccountModel>> getAccountsByProvider(String provider) async {
+  Future<List<ApiAuthServiceAccountModel>> getAccountsByProvider(
+      String provider) async {
     return await _apiAuthServiceRepository.getByProvider(provider);
   }
 
-  Future<ApiAuthServiceAccountModel?> upsert(ApiAuthServiceAccountModel account) async {
+  Future<ApiAuthServiceAccountModel?> upsert(
+      ApiAuthServiceAccountModel account) async {
     DataBkgProviderName providerName = account.provider!;
     ApiAuthServiceAccountModel? dbAccount =
         account.provider != null && account.username != null
@@ -107,4 +112,6 @@ class ApiAuthService {
   }
 
   getAllAccounts() {}
+
+  signOutAll() {}
 }

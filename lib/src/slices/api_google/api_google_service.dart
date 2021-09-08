@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-
 import 'package:logging/logging.dart';
 
 import '../../utils/helper_json.dart';

@@ -1,4 +1,3 @@
-import 'package:app/src/slices/api_email_sender/model/api_email_sender_model.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart' as http;
@@ -9,6 +8,7 @@ import '../api_app_data/model/api_app_data_model.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
+import '../api_email_sender/model/api_email_sender_model.dart';
 import '../data_bkg/data_bkg_sv_email_prov.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import 'api_google_service.dart';
@@ -212,14 +212,14 @@ class ApiGoogleServiceEmail extends ApiGoogleService
     if (gmailApi != null) {
       List<String> metadataHeaders = ["From", "To"];
       metadataHeaders.addAll(headers ?? []);
-      Message? message = await gmailApi?.users.messages
+      Message? message = await gmailApi.users.messages
           .get("me", messageId,
               format: format, metadataHeaders: metadataHeaders)
           .timeout(Duration(seconds: 10),
               onTimeout: () =>
                   throw new http.ClientException('_gmailFetch timed out'));
-      _log.finest('Fetched message ids: ' + (message?.id ?? ''));
-      return message != null ? _convertMessage(message) : null;
+      _log.finest('Fetched message ids: ' + (message.id ?? ''));
+      return _convertMessage(message);
     }
   }
 

@@ -5,8 +5,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../data_bkg/data_bkg_service.dart';
+import '../data_bkg/model/data_bkg_provider_name.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
 import 'data_screen_presenter.dart';
@@ -17,6 +20,8 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
+
+  var _apiAuthService;
 
   DataScreenService(this._dataBkgService) {
     model = DataScreenModel();
@@ -43,7 +48,7 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<ApiAuthServiceAccountModel?> linkAccount(
-      DataBkgProviderName provider, DataBkgProviderType type) async {
+      DataBkgProviderName provider) async {
     ApiAuthServiceAccountModel? account;
     String? providerName = provider.value;
     if (providerName != null) {
@@ -52,7 +57,7 @@ class DataScreenService extends ChangeNotifier {
       if (tokenResponse != null) {
         ApiAuthServiceAccountModel apiAuthServiceAccountModel =
             ApiAuthServiceAccountModel(
-                provider: providerName,
+                provider: provider,
                 accessToken: tokenResponse.accessToken,
                 accessTokenExpiration: tokenResponse
                     .accessTokenExpirationDateTime?.millisecondsSinceEpoch,

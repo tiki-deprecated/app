@@ -1,10 +1,9 @@
-import 'package:app/src/slices/api_auth_service/api_auth_service.dart';
-import 'package:app/src/slices/api_microsoft/api_microsoft_service.dart';
-import 'package:app/src/slices/data_bkg/model/data_bkg_model_page.dart';
-
+import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../data_bkg/data_bkg_sv_email_prov.dart';
+import '../data_bkg/model/data_bkg_model_page.dart';
+import 'api_microsoft_service.dart';
 
 class ApiMicrosoftServiceEmail extends ApiMicrosoftService
     implements DataBkgSvEmailProvInterface {

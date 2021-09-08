@@ -1,7 +1,6 @@
-import 'package:app/src/slices/api_auth_service/api_auth_service.dart';
-import 'package:app/src/slices/data_bkg/data_bkg_service_provider.dart';
-
+import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
+import '../data_bkg/data_bkg_service_provider.dart';
 
 class ApiMicrosoftService implements DataBkgServiceProvInterface {
   final ApiAuthServiceAccountModel _account;

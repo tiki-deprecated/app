@@ -1,4 +1,4 @@
-import 'package:app/src/slices/data_bkg/model/data_bkg_provider_name.dart';
+import '../../data_bkg/model/data_bkg_provider_name.dart';
 
 class ApiAuthServiceAccountModel {
   int? accountId;
@@ -44,8 +44,7 @@ class ApiAuthServiceAccountModel {
       this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'account_id': accountId,
         'username': username,
         'display_name': displayName,

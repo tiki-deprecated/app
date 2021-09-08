@@ -11,6 +11,7 @@ enum ApiAppDataKey {
   googleOauthModalComplete,
   testCardsDone,
   userReferCode,
+  dataBkgLastAccount
 }
 
 extension ApiAppDataKeyExtension on ApiAppDataKey {
@@ -30,6 +31,8 @@ extension ApiAppDataKeyExtension on ApiAppDataKey {
         return 'decision_overlay_shown_bool';
       case ApiAppDataKey.userReferCode:
         return 'user_refer_code';
+      case ApiAppDataKey.dataBkgLastAccount:
+        return 'data_background_last_account';
       default:
         return null;
     }

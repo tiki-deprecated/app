@@ -25,9 +25,7 @@ class DataBkgServiceEmail {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiAppDataService _apiAppDataService;
   final ApiEmailMsgService _apiEmailMsgService;
-
-  late DataBkgServiceProvInterface _provider;
-  late DataBkgSvEmailProvInterface _emailProvider;
+  final DataBkgServiceProvInterface _provider;
 
   DataBkgServiceEmail(
       this._apiAuthService,
@@ -35,7 +33,8 @@ class DataBkgServiceEmail {
       this._apiCompanyService,
       this._apiEmailSenderService,
       this._apiEmailMsgService,
-      this._apiAppDataService);
+      this._apiAppDataService)
+      : this._provider = _emailProviderService as DataBkgServiceProvInterface;
 
   Future<DataBkgModelPage<ApiEmailMsgModel>?> emailFetch(
       ApiAuthServiceAccountModel account,
@@ -118,10 +117,7 @@ revolution today.<br />
     }
   }
 
-  Future<void> checkEmail(DataBkgSvEmailProvInterface emailProvider,
-      {bool fetchAll = false, bool force = false}) async {
-    _emailProvider = emailProvider;
-    _provider = emailProvider as DataBkgServiceProvInterface;
+  Future<void> checkEmail({bool fetchAll = false, bool force = false}) async {
     DataBkgProviderName providerName = _provider.account.provider!;
     _log.fine(providerName.value! +
         ' fetch starting on: ' +
@@ -130,7 +126,7 @@ revolution today.<br />
       _log.fine(providerName.value! + ' fetch aborted. Not connected.');
       return;
     }
-    String query = await emailProvider.getQuery();
+    String query = await _emailProviderService.getQuery();
     await _checkEmailFetchList(query: query);
     await _apiAppDataService.save(ApiAppDataKey.gmailLastFetch,
         DateTime.now().millisecondsSinceEpoch.toString());
@@ -143,12 +139,12 @@ revolution today.<br />
     // ApiAppDataModel? appDataEmailPage =
     //     await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage);
     // page = appDataEmailPage?.value;
-    page = await _emailProvider.getPage();
+    page = await _emailProviderService.getPage();
     return _checkEmailFetchListPage(query: query, page: page);
   }
 
   Future<void> _checkEmailFetchListPage({String? page, String? query}) async {
-    DataBkgModelPage<String> res = await _emailProvider.emailFetchList(
+    DataBkgModelPage<String> res = await _emailProviderService.emailFetchList(
         query: query, page: page, maxResults: 5);
     if (res.data != null) {
       List<String> known =
@@ -168,7 +164,7 @@ revolution today.<br />
     Set<String> processed = Set();
     for (String messageId in messages) {
       ApiEmailMsgModel? message =
-          await _emailProvider.emailFetchMessage(messageId);
+          await _emailProviderService.emailFetchMessage(messageId);
       if (message?.extMessageId != null) processed.add(message!.extMessageId!);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
@@ -202,7 +198,7 @@ revolution today.<br />
     DateTime first = DateTime.now();
     for (String messageId in messageIds) {
       ApiEmailMsgModel? message =
-          await _emailProvider.emailFetchMessage(messageId);
+          await _emailProviderService.emailFetchMessage(messageId);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         messages.add(message!);
