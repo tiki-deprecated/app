@@ -1,9 +1,11 @@
+import 'package:app/src/slices/data_bkg/model/data_bkg_provider_name.dart';
+
 class ApiAuthServiceAccountModel {
   int? accountId;
   String? username;
   String? displayName;
   String? email;
-  String? provider;
+  DataBkgProviderName? provider;
   String? accessToken;
   int? accessTokenExpiration;
   String? refreshToken;

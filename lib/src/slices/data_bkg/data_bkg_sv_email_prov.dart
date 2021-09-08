@@ -1,21 +1,20 @@
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_service_rsp.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
-import 'data_bkg_service_provider.dart';
+import 'model/data_bkg_model_page.dart';
 
-abstract class DataBkgSvEmailProvAbstract
-    implements DataBkgServiceProvAbstract {
-  ApiAuthServiceAccountModel get account;
-
-  String? get displayName;
-
-  Future<ApiAuthServiceRsp> emailFecthList(
-      {String? query, int? maxResults, String? page});
+abstract class DataBkgSvEmailProvInterface {
+  Future<DataBkgModelPage<String>> emailFetchList(
+      {String? query, int? maxResults, String? page, int? retries});
 
   Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
       {String format, List<String>? headers});
 
   Future<dynamic> sendRawMessage(String getBase64Email);
 
-  isConnected() {}
+  Future<String> getQuery({bool fetchAll = true, bool force = true});
+
+  Future<String> getLastFetch();
+
+  Future<String> getPage();
+
+  Future<void> afterFetchList();
 }

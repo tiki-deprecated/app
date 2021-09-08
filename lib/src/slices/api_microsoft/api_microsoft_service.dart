@@ -1,36 +1,36 @@
+import 'package:app/src/slices/api_auth_service/api_auth_service.dart';
+import 'package:app/src/slices/data_bkg/data_bkg_service_provider.dart';
+
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_service_rsp.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
 
-class ApiMicrosoftService implements ApiEmailProviderAbstract {
-  @override
-  // TODO: implement account
-  ApiAuthServiceAccountModel get account => throw UnimplementedError();
+class ApiMicrosoftService implements DataBkgServiceProvInterface {
+  final ApiAuthServiceAccountModel _account;
+  final ApiAuthService _apiAuthService;
 
-  @override
-  // TODO: implement displayName
-  String? get displayName => throw UnimplementedError();
+  ApiMicrosoftService(ApiAuthServiceAccountModel this._account,
+      ApiAuthService this._apiAuthService);
 
   @override
-  Future<ApiAuthServiceRsp> emailFecthList(
-      {String? query, int? maxResults, String? page}) {
-    // TODO: implement emailFecthList
-    // https://graph.microsoft.com/v1.0/me/messages?$top=10&$skip=10
+  ApiAuthServiceAccountModel get account => this._account;
+
+  @override
+  String? get displayName => this._account.displayName;
+
+  @override
+  isConnected() {
+    // TODO: implement isConnected
     throw UnimplementedError();
   }
 
   @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
-      {String? format, List<String>? headers}) {
-    // TODO: implement emailFetchMessage
-    //
+  logIn() {
+    // TODO: implement logIn
     throw UnimplementedError();
   }
 
   @override
-  Future sendRawMessage(String getBase64Email) {
-    // TODO: implement sendRawMessage
-    // https://graph.microsoft.com/v1.0/me/sendMail
+  logOut() {
+    // TODO: implement logOut
     throw UnimplementedError();
   }
 }

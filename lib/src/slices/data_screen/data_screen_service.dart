@@ -22,12 +22,6 @@ class DataScreenService extends ChangeNotifier {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
-    initializeGoogleRepo();
-  }
-
-  Future<void> initializeGoogleRepo() async {
-    this.model.googleAccount = await _dataBkgService.getGoogleAccount();
-    notifyListeners();
   }
 
   Future<void> removeGoogleAccount() async {
@@ -46,5 +40,35 @@ class DataScreenService extends ChangeNotifier {
 
   Future<List<InfoCarouselCardModel>> getGmailCards() async {
     return await _dataBkgService.gmailInfoCards();
+  }
+
+  Future<ApiAuthServiceAccountModel?> linkAccount(
+      DataBkgProviderName provider, DataBkgProviderType type) async {
+    ApiAuthServiceAccountModel? account;
+    String? providerName = provider.value;
+    if (providerName != null) {
+      AuthorizationTokenResponse? tokenResponse = await _apiAuthService
+          .authorizeAndExchangeCode(providerName: providerName);
+      if (tokenResponse != null) {
+        ApiAuthServiceAccountModel apiAuthServiceAccountModel =
+            ApiAuthServiceAccountModel(
+                provider: providerName,
+                accessToken: tokenResponse.accessToken,
+                accessTokenExpiration: tokenResponse
+                    .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
+                refreshToken: tokenResponse.refreshToken,
+                shouldReconnect: 0);
+        Map? userInfo =
+            await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
+        if (userInfo != null) {
+          apiAuthServiceAccountModel.displayName = userInfo['name'];
+          apiAuthServiceAccountModel.username = userInfo['id'];
+          apiAuthServiceAccountModel.email = userInfo['email'];
+          account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+          return account;
+        }
+      }
+    }
+    return null;
   }
 }

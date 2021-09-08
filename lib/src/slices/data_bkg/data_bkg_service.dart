@@ -3,108 +3,81 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:logging/logging.dart';
 
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
+import '../api_google/api_google_service_email.dart';
+import '../api_microsoft/api_microsoft_service_email.dart';
 import 'data_bkg_service_provider.dart';
+import 'data_bkg_sv_email_prov.dart';
 import 'model/data_bkg_model.dart';
 import 'model/data_bkg_provider_name.dart';
-import 'model/data_bkg_provider_type.dart';
 
 class DataBkgService extends ChangeNotifier {
   final _log = Logger('DataBkgService');
   final DataBkgModel model = DataBkgModel();
   final ApiAuthService _apiAuthService;
-  final Map<DataBkgProviderName,
-          Map<DataBkgProviderType, Map<String, DataBkgServiceProvAbstract>>>
-      _providers;
+  List<ApiAuthServiceAccountModel> _accounts =
+      List<ApiAuthServiceAccountModel>.empty(growable: true);
 
-  DataBkgService({
-    required Map<DataBkgProviderName,
-            Map<DataBkgProviderType, Map<String, DataBkgServiceProvAbstract>>>
-        providers,
-    required ApiAuthService apiAuthService,
-  })  : this._providers = providers,
-        this._apiAuthService = apiAuthService;
+  final ApiAppDataService _apiAppDataService;
 
-  Future<ApiAuthServiceAccountModel?> linkAccount(
-      DataBkgProviderName provider, DataBkgProviderType type) async {
-    ApiAuthServiceAccountModel? account;
-    String? providerName = provider.value;
-    if (providerName != null) {
-      AuthorizationTokenResponse? tokenResponse = await _apiAuthService
-          .authorizeAndExchangeCode(providerName: providerName);
-      if (tokenResponse != null) {
-        ApiAuthServiceAccountModel apiAuthServiceAccountModel =
-            ApiAuthServiceAccountModel(
-                provider: providerName,
-                accessToken: tokenResponse.accessToken,
-                accessTokenExpiration: tokenResponse
-                    .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
-                refreshToken: tokenResponse.refreshToken,
-                shouldReconnect: 0);
-        Map? userInfo =
-            await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
-        if (userInfo != null) {
-          apiAuthServiceAccountModel.displayName = userInfo['name'];
-          apiAuthServiceAccountModel.username = userInfo['id'];
-          apiAuthServiceAccountModel.email = userInfo['email'];
-          account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
-          DataBkgServiceProvAbstract providerService =
-              DataBkgServiceProvAbstract(provider, type);
-          if (!_providers.containsKey(provider)) _providers[provider] = {};
-          if (!_providers[provider]!.containsKey(type))
-            _providers[provider]![type] = {};
-          _providers[provider]![type]![account!.username!] = providerService;
-          return account;
-        }
+  DataBkgService(
+      {required ApiAuthService apiAuthService,
+      required ApiAppDataService apiAppDataService})
+      : this._apiAuthService = apiAuthService,
+        this._apiAppDataService = apiAppDataService {
+    getExistingAccounts().then((_) => fetchAllData());
+  }
+
+  Future<void> getExistingAccounts() async {
+    _accounts = await _apiAuthService.getAllAccounts();
+  }
+
+  fetchAllData() async {
+    int startIndex = await _getStartIndex();
+    for (int i = startIndex; i < _accounts.length; i++) {
+      ApiAuthServiceAccountModel account = _accounts[i];
+      await _fetchData(account);
+    }
+  }
+
+  _fetchData(ApiAuthServiceAccountModel account) async {
+    DataBkgServiceProvInterface? provider = _getProvider(account);
+    if (provider != null) {
+      if (provider is DataBkgSvEmailProvInterface) {
+        await _fetchEmail(provider);
       }
     }
-    return null;
   }
 
-  DataBkgServiceProvAbstract? getAccount(
-      {required DataBkgProviderName name,
-      required DataBkgProviderType type,
-      String? accountId}) {
-    if (accountExists(name: name, type: type, accountId: accountId)) {
-      return accountId == null
-          ? _providers[name]![type]?.values.first
-          : _providers[name]![type]?[accountId];
-    }
-    return null;
+  addAccount(ApiAuthServiceAccountModel account) {
+    _accounts.add(account);
+    _fetchData(account);
   }
 
-  Future<void> removeAccount(
-      {required DataBkgProviderName name,
-      required DataBkgProviderType type,
-      String? accountId}) async {
-    if (accountExists(name: name, type: type, accountId: accountId)) {
-      DataBkgServiceProvAbstract removeProvider =
-          getAccount(name: name, type: type, accountId: accountId)!;
-      removeProvider.logOut();
-      accountId != null
-          ? _providers[name]![type]!.remove(accountId)
-          : _providers[name]![type]!
-              .remove(_providers[name]![type]!.values.first);
-      if (_providers[name]![type]!.isEmpty) _providers[name]!.remove(type);
-      if (_providers[name]!.isEmpty) _providers.remove(name);
+  Future<void> _fetchEmail(DataBkgServiceProvInterface provider) async {}
+
+  DataBkgServiceProvInterface? _getProvider(
+      ApiAuthServiceAccountModel account) {
+    switch (account.provider) {
+      case DataBkgProviderName.google:
+        return ApiGoogleServiceEmail(
+            account: account,
+            apiAppDataService: _apiAppDataService,
+            apiAuthService: _apiAuthService);
+      case DataBkgProviderName.microsoft:
+        return ApiMicrosoftServiceEmail(account, _apiAuthService);
+      default:
+        return null;
     }
   }
 
-  bool accountExists(
-      {required DataBkgProviderName name,
-      required DataBkgProviderType type,
-      String? accountId}) {
-    return _providers.containsKey(name) &&
-        _providers[name] != null &&
-        _providers[name]!.containsKey(type) &&
-        _providers[name]![type] != null &&
-        ((accountId != null && _providers[name]![type]!.isNotEmpty) ||
-            (_providers[name]![type]!.containsKey(accountId) &&
-                _providers[name]![type]![accountId] != null));
+  Future<int> _getStartIndex() async {
+    // TODO implement
+    return 0;
   }
 }

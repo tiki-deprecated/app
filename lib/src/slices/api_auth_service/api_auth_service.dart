@@ -7,6 +7,7 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
+import '../data_bkg/model/data_bkg_provider_name.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
 import 'repository/api_auth_service_repository.dart';
@@ -59,11 +60,12 @@ class ApiAuthService {
   }
 
   Future<ApiAuthServiceAccountModel?> upsert(ApiAuthServiceAccountModel account) async {
+    DataBkgProviderName providerName = account.provider!;
     ApiAuthServiceAccountModel? dbAccount =
-    account.provider != null && account.username != null
-        ? await _apiAuthServiceRepository.getByProviderAndUsername(
-        account.provider!, account.username!)
-        : null;
+        account.provider != null && account.username != null
+            ? await _apiAuthServiceRepository.getByProviderAndUsername(
+                providerName.value!, account.username!)
+            : null;
     if (dbAccount != null) {
       account.accountId = dbAccount.accountId;
       return _apiAuthServiceRepository.update(account);
@@ -103,4 +105,6 @@ class ApiAuthService {
       ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
     await _apiAuthServiceRepository.delete(apiAuthServiceAccountModel);
   }
+
+  getAllAccounts() {}
 }
