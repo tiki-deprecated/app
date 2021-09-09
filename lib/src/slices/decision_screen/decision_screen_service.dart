@@ -7,7 +7,6 @@ import '../api_auth_service/api_auth_service.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
-import '../api_google/api_google_service.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/decision_card_spam_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
@@ -22,19 +21,18 @@ class DecisionScreenService extends ChangeNotifier {
   late final DecisionScreenModel model;
 
   final ApiAppDataService _apiAppDataService;
-  final ApiGoogleService _apiGoogleService;
   final DecisionCardSpamService _decisionCardSpamService;
+  final DataBkgService _dataBkgService;
 
   DecisionScreenService(
-      {required ApiGoogleService apiGoogleService,
-      required ApiAppDataService apiAppDataService,
+      {required ApiAppDataService apiAppDataService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiCompanyService apiCompanyService,
       required ApiAuthService apiAuthService,
       required DataBkgService dataBkgService})
       : this._apiAppDataService = apiAppDataService,
-        this._apiGoogleService = apiGoogleService,
+        this._dataBkgService = dataBkgService,
         this._decisionCardSpamService = DecisionCardSpamService(
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService,
@@ -50,7 +48,7 @@ class DecisionScreenService extends ChangeNotifier {
 
   //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
-    bool isConnected = await _apiGoogleService.isConnected();
+    bool isConnected = await _dataBkgService.getAccountList().isNotEmpty;
     if (isConnected) await _generateSpamCards();
     await _addTests();
     this.model.isLinked = isConnected;

@@ -90,4 +90,10 @@ class ApiAuthServiceRepository {
           apiAuthServiceAccountModel.username
         ]);
   }
+
+  getAll() async {
+    final List<Map<String, Object?>> rows = await _database.query(_table);
+    if (rows.isEmpty) return [];
+    return rows.map((e) => ApiAuthServiceAccountModel.fromMap(e)).toList();
+  }
 }

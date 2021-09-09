@@ -140,4 +140,13 @@ class DataBkgService extends ChangeNotifier {
         this._apiAppDataService);
     await dataBkgServiceEmail.unsubscribe(mailTo, list);
   }
+
+  signOutAll() async {
+    _accounts.forEach((account) async {
+      DataBkgServiceProviderInterface? provider = await getProvider(account);
+      if (provider != null) {
+        provider.logOut();
+      }
+    });
+  }
 }

@@ -112,11 +112,13 @@ class ApiAuthService {
     await _apiAuthServiceRepository.delete(apiAuthServiceAccountModel);
   }
 
-  getAllAccounts() {}
+  getAllAccounts() async {
+    return await _apiAuthServiceRepository.getAll();
+  }
 
-  signOutAll() {}
-
-  getAccountById(int accountId) {}
+  getAccountById(int accountId) async {
+    return await _apiAuthServiceRepository.getById(accountId);
+  }
 
   Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
     ApiAuthServiceAccountModel? account;

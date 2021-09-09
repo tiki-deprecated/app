@@ -247,15 +247,14 @@ class LoginFlowService extends ChangeNotifier {
     ApiCompanyService apiCompanyService =
         ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
     ApiAuthService apiAuthService = ApiAuthService(database: database);
-
-    registerLogout(() async => await apiAuthService.signOutAll());
-
     DataBkgService dataBkgService = DataBkgService(
-        apiEmailMsgService: apiEmailMsgService,
+        apiAuthService: apiAuthService,
+        apiAppDataService: apiAppDataService,
         apiCompanyService: apiCompanyService,
         apiEmailSenderService: apiEmailSenderService,
-        apiAppDataService: apiAppDataService,
-        apiAuthService: apiAuthService);
+        apiEmailMsgService: apiEmailMsgService);
+
+    registerLogout(() async => await dataBkgService.signOutAll());
 
     _providers = [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

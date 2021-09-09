@@ -11,7 +11,6 @@ import '../../api_auth_service/api_auth_service.dart';
 import '../../api_company/api_company_service.dart';
 import '../../api_email_msg/api_email_msg_service.dart';
 import '../../api_email_sender/api_email_sender_service.dart';
-import '../../api_google/api_google_service.dart';
 import '../../data_bkg/data_bkg_service.dart';
 import '../../data_screen/data_screen_service.dart';
 import '../../decision_screen/decision_screen_service.dart';
@@ -21,8 +20,6 @@ import '../../wallet_screen/wallet_screen_service.dart';
 class HomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ApiGoogleService googleService =
-        Provider.of<ApiGoogleService>(context, listen: false);
     DataBkgService dataBkgService =
         Provider.of<DataBkgService>(context, listen: false);
     ApiAppDataService appDataService =
@@ -39,7 +36,6 @@ class HomeScreenLayout extends StatelessWidget {
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
           decisionScreenService: DecisionScreenService(
-              apiGoogleService: googleService,
               apiEmailMsgService: apiEmailMsgService,
               apiEmailSenderService: apiEmailSenderService,
               apiCompanyService: apiCompanyService,
