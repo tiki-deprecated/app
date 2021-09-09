@@ -40,15 +40,15 @@ class DataScreenController {
           .presenter
           .showModal(context);
     else
-      await service.addGoogleAccount();
+      await service.linkAccount('Google');
     return homeScreenService.showOverlay(apiAppDataService);
   }
 
   linkAccount(String providerName) async {
-    service.addGoogleAccount();
+    service.linkAccount(providerName);
   }
 
-  removeAccount(String s) {
-    service.removeGoogleAccount();
+  removeAccount(int accountId) {
+    service.removeAccount(accountId);
   }
 }

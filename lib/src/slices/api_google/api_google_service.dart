@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:logging/logging.dart';
-
 import '../../utils/helper_json.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
@@ -13,12 +11,8 @@ import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'model/api_google_model.dart';
 import 'repository/api_google_repository_info.dart';
 
-class ApiGoogleService implements DataBkgServiceProvInterface {
-  final _log = Logger('ApiGoogleService');
-
+class ApiGoogleService implements DataBkgServiceProviderInterface {
   final ApiGoogleModel model = ApiGoogleModel();
-  final ApiGoogleRepositoryInfo _googleInfoRepository =
-      ApiGoogleRepositoryInfo();
   final ApiAuthService _apiAuthService;
   ApiAuthServiceAccountModel _account;
 
@@ -40,8 +34,8 @@ class ApiGoogleService implements DataBkgServiceProvInterface {
     return (await _apiAuthService.getUserInfo(_account)) != null;
   }
 
-  Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
-    List<dynamic>? infoJson = await _googleInfoRepository.gmail();
+  static Future<List<InfoCarouselCardModel>> gmailInfoCards() async {
+    List<dynamic>? infoJson = await ApiGoogleRepositoryInfo().gmail();
     return HelperJson.listFromJson(
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }

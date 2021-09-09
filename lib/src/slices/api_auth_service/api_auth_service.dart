@@ -7,7 +7,6 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
-import '../data_bkg/model/data_bkg_provider_name.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
 import 'repository/api_auth_service_repository.dart';
@@ -15,6 +14,8 @@ import 'repository/api_auth_service_repository.dart';
 class ApiAuthService {
   final FlutterAppAuth _appAuth;
   final ApiAuthServiceRepository _apiAuthServiceRepository;
+
+  var _apiAuthService;
 
   ApiAuthService({required Database database})
       : _appAuth = FlutterAppAuth(),
@@ -65,11 +66,11 @@ class ApiAuthService {
 
   Future<ApiAuthServiceAccountModel?> upsert(
       ApiAuthServiceAccountModel account) async {
-    DataBkgProviderName providerName = account.provider!;
+    String providerName = account.provider!;
     ApiAuthServiceAccountModel? dbAccount =
         account.provider != null && account.username != null
             ? await _apiAuthServiceRepository.getByProviderAndUsername(
-                providerName.value!, account.username!)
+                providerName, account.username!)
             : null;
     if (dbAccount != null) {
       account.accountId = dbAccount.accountId;
@@ -114,4 +115,32 @@ class ApiAuthService {
   getAllAccounts() {}
 
   signOutAll() {}
+
+  getAccountById(int accountId) {}
+
+  Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
+    ApiAuthServiceAccountModel? account;
+    AuthorizationTokenResponse? tokenResponse = await _apiAuthService
+        .authorizeAndExchangeCode(providerName: providerName);
+    if (tokenResponse != null) {
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel =
+          ApiAuthServiceAccountModel(
+              provider: providerName,
+              accessToken: tokenResponse.accessToken,
+              accessTokenExpiration: tokenResponse
+                  .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
+              refreshToken: tokenResponse.refreshToken,
+              shouldReconnect: 0);
+      Map? userInfo =
+          await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
+      if (userInfo != null) {
+        apiAuthServiceAccountModel.displayName = userInfo['name'];
+        apiAuthServiceAccountModel.username = userInfo['id'];
+        apiAuthServiceAccountModel.email = userInfo['email'];
+        account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+        return account;
+      }
+    }
+    return null;
+  }
 }

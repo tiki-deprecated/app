@@ -28,6 +28,6 @@ class GoogleOauthModalService extends ChangeNotifier {
 
   Future<void> finished() async {
     _apiAppDataService.save(ApiAppDataKey.googleOauthModalComplete, "true");
-    _dataScreenService.addGoogleAccount();
+    _dataScreenService.linkAccount('Google');
   }
 }

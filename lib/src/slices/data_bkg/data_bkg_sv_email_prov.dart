@@ -1,7 +1,7 @@
 import '../api_email_msg/model/api_email_msg_model.dart';
 import 'model/data_bkg_model_page.dart';
 
-abstract class DataBkgSvEmailProvInterface {
+abstract class DataBkgServiceEmailInterface {
   Future<DataBkgModelPage<String>> emailFetchList(
       {String? query, int? maxResults, String? page, int? retries});
 

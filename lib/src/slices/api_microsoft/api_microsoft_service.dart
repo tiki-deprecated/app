@@ -2,7 +2,7 @@ import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../data_bkg/data_bkg_service_provider.dart';
 
-class ApiMicrosoftService implements DataBkgServiceProvInterface {
+class ApiMicrosoftService implements DataBkgServiceProviderInterface {
   final ApiAuthServiceAccountModel _account;
   final ApiAuthService _apiAuthService;
 

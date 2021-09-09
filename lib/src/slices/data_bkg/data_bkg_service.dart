@@ -19,7 +19,6 @@ import '../api_microsoft/api_microsoft_service_email.dart';
 import 'data_bkg_service_email.dart';
 import 'data_bkg_service_provider.dart';
 import 'data_bkg_sv_email_prov.dart';
-import 'model/data_bkg_provider_name.dart';
 
 class DataBkgService extends ChangeNotifier {
   final _log = Logger('DataBkgService');
@@ -56,18 +55,17 @@ class DataBkgService extends ChangeNotifier {
     int startIndex = await _getStartIndex();
     for (int i = startIndex; i < _accounts.length; i++) {
       ApiAuthServiceAccountModel account = _accounts[i];
-      await _fetchData(account);
+      await fetchData(account);
       await _apiAppDataService.save(
           ApiAppDataKey.dataBkgLastAccount, i.toString());
     }
   }
 
-  _fetchData(ApiAuthServiceAccountModel account) async {
-    DataBkgServiceProvInterface? provider = _getProvider(account);
+  Future<void> fetchData(ApiAuthServiceAccountModel account) async {
+    DataBkgServiceProviderInterface? provider = getProvider(account);
     if (provider != null) {
-      _log.fine("fetch data for " +
-          (provider.account.provider as DataBkgProviderName).value!);
-      if (provider is DataBkgSvEmailProvInterface) {
+      _log.fine("fetch data for " + provider.account.provider!);
+      if (provider is DataBkgServiceEmailInterface) {
         _log.fine("fetch email data for " + provider.account.email!);
         await _fetchEmail(provider);
       }
@@ -76,13 +74,13 @@ class DataBkgService extends ChangeNotifier {
 
   addAccount(ApiAuthServiceAccountModel account) {
     _accounts.add(account);
-    _fetchData(account);
+    fetchData(account);
   }
 
-  Future<void> _fetchEmail(DataBkgServiceProvInterface provider) async {
+  Future<void> _fetchEmail(DataBkgServiceProviderInterface provider) async {
     DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(
         this._apiAuthService,
-        provider as DataBkgSvEmailProvInterface,
+        provider as DataBkgServiceEmailInterface,
         this._apiCompanyService,
         this._apiEmailSenderService,
         this._apiEmailMsgService,
@@ -90,15 +88,15 @@ class DataBkgService extends ChangeNotifier {
     await dataBkgServiceEmail.checkEmail();
   }
 
-  DataBkgServiceProvInterface? _getProvider(
+  DataBkgServiceProviderInterface? getProvider(
       ApiAuthServiceAccountModel account) {
     switch (account.provider) {
-      case DataBkgProviderName.google:
+      case "Google":
         return ApiGoogleServiceEmail(
             account: account,
             apiAppDataService: _apiAppDataService,
             apiAuthService: _apiAuthService);
-      case DataBkgProviderName.microsoft:
+      case "Microsoft":
         return ApiMicrosoftServiceEmail(account, _apiAuthService);
       default:
         return null;
@@ -111,5 +109,35 @@ class DataBkgService extends ChangeNotifier {
     int currentFetchAccount =
         lastFetchAccount != null ? int.parse(lastFetchAccount.value) + 1 : 0;
     return currentFetchAccount;
+  }
+
+  removeAccount(int accountId) async {
+    ApiAuthServiceAccountModel account =
+        await _apiAuthService.getAccountById(accountId);
+    DataBkgServiceProviderInterface? provider = await getProvider(account);
+    if (provider != null) {
+      await provider.logOut();
+      _accounts.removeWhere((account) => account.accountId == accountId);
+    }
+  }
+
+  linkAccount(String provider) {}
+
+  List<ApiAuthServiceAccountModel> getAccountList() {
+    return _accounts;
+  }
+
+  unsubscribe(
+      ApiAuthServiceAccountModel account, String mailTo, String list) async {
+    DataBkgServiceEmailInterface provider =
+        (await getProvider(account)) as DataBkgServiceEmailInterface;
+    DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(
+        this._apiAuthService,
+        provider,
+        this._apiCompanyService,
+        this._apiEmailSenderService,
+        this._apiEmailMsgService,
+        this._apiAppDataService);
+    await dataBkgServiceEmail.unsubscribe(mailTo, list);
   }
 }

@@ -15,17 +15,16 @@ import '../api_email_sender/model/api_email_sender_model.dart';
 import 'data_bkg_service_provider.dart';
 import 'data_bkg_sv_email_prov.dart';
 import 'model/data_bkg_model_page.dart';
-import 'model/data_bkg_provider_name.dart';
 
 class DataBkgServiceEmail {
   final _log = Logger('ApiEmailClientService');
   final ApiAuthService _apiAuthService;
-  final DataBkgSvEmailProvInterface _emailProviderService;
+  final DataBkgServiceEmailInterface _emailProviderService;
   final ApiCompanyService _apiCompanyService;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiAppDataService _apiAppDataService;
   final ApiEmailMsgService _apiEmailMsgService;
-  final DataBkgServiceProvInterface _provider;
+  final DataBkgServiceProviderInterface _provider;
 
   DataBkgServiceEmail(
       this._apiAuthService,
@@ -34,7 +33,8 @@ class DataBkgServiceEmail {
       this._apiEmailSenderService,
       this._apiEmailMsgService,
       this._apiAppDataService)
-      : this._provider = _emailProviderService as DataBkgServiceProvInterface;
+      : this._provider =
+            _emailProviderService as DataBkgServiceProviderInterface;
 
   Future<DataBkgModelPage<ApiEmailMsgModel>?> emailFetch(
       ApiAuthServiceAccountModel account,
@@ -45,7 +45,7 @@ class DataBkgServiceEmail {
         await _apiAuthService.proxy(
             () => _emailProviderService.emailFetchList(
                 query: query, maxResults: maxResults, page: page),
-            (_emailProviderService as DataBkgServiceProvInterface).account);
+            (_emailProviderService as DataBkgServiceProviderInterface).account);
     _log.finest(
         'Fetched ' + (emailsPage?.data?.length.toString() ?? '') + ' messages');
     return emailsPage;
@@ -91,7 +91,7 @@ subject: $subject
 Hello,<br /><br />
 I'd like to stop receiving emails from this email list.<br /><br />
 Thanks,<br /><br />
-${(_emailProviderService as DataBkgServiceProvInterface).account.displayName ?? ''}<br />
+${(_emailProviderService as DataBkgServiceProviderInterface).account.displayName ?? ''}<br />
 <br />
 *Sent via http://www.mytiki.com. Join the data ownership<br />
 revolution today.<br />
@@ -101,7 +101,7 @@ revolution today.<br />
     await _apiAuthService.proxy(
         () => _emailProviderService
             .sendRawMessage(base64UrlEncode(utf8.encode(email))),
-        (_emailProviderService as DataBkgServiceProvInterface).account);
+        (_emailProviderService as DataBkgServiceProviderInterface).account);
     return true;
   }
 
@@ -118,16 +118,17 @@ revolution today.<br />
   }
 
   Future<void> checkEmail({bool fetchAll = false, bool force = false}) async {
-    DataBkgProviderName providerName = _provider.account.provider!;
-    _log.fine(providerName.value! +
+    String providerName = _provider.account.provider!;
+    _log.fine(providerName +
         ' fetch starting on: ' +
         DateTime.now().toIso8601String());
     if (!(await _provider.isConnected())) {
-      _log.fine(providerName.value! + ' fetch aborted. Not connected.');
+      _log.fine(providerName + ' fetch aborted. Not connected.');
       return;
     }
     String query = await _emailProviderService.getQuery();
     await _checkEmailFetchList(query: query);
+    await _emailProviderService.afterFetchList();
     await _apiAppDataService.save(ApiAppDataKey.gmailLastFetch,
         DateTime.now().millisecondsSinceEpoch.toString());
     await _apiAppDataService.save(ApiAppDataKey.gmailPage, '');
@@ -136,9 +137,6 @@ revolution today.<br />
 
   Future<void> _checkEmailFetchList({String query = ''}) async {
     String? page;
-    // ApiAppDataModel? appDataEmailPage =
-    //     await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage);
-    // page = appDataEmailPage?.value;
     page = await _emailProviderService.getPage();
     return _checkEmailFetchListPage(query: query, page: page);
   }

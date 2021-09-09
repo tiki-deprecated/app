@@ -14,7 +14,7 @@ import '../data_bkg/model/data_bkg_model_page.dart';
 import 'api_google_service.dart';
 
 class ApiGoogleServiceEmail extends ApiGoogleService
-    implements DataBkgSvEmailProvInterface {
+    implements DataBkgServiceEmailInterface {
   ApiAppDataService _apiAppDataService;
   var _log;
 

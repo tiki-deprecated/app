@@ -6,7 +6,7 @@ import '../data_bkg/model/data_bkg_model_page.dart';
 import 'api_microsoft_service.dart';
 
 class ApiMicrosoftServiceEmail extends ApiMicrosoftService
-    implements DataBkgSvEmailProvInterface {
+    implements DataBkgServiceEmailInterface {
   ApiMicrosoftServiceEmail(
       ApiAuthServiceAccountModel account, ApiAuthService apiAuthService)
       : super(account, apiAuthService);

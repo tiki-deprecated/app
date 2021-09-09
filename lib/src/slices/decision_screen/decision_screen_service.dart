@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
+import '../api_auth_service/api_auth_service.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service.dart';
+import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/decision_card_spam_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import '../decision_screen/ui/decision_screen_view_card_test.dart';
@@ -28,7 +30,9 @@ class DecisionScreenService extends ChangeNotifier {
       required ApiAppDataService apiAppDataService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
-      required ApiCompanyService apiCompanyService})
+      required ApiCompanyService apiCompanyService,
+      required ApiAuthService apiAuthService,
+      required DataBkgService dataBkgService})
       : this._apiAppDataService = apiAppDataService,
         this._apiGoogleService = apiGoogleService,
         this._decisionCardSpamService = DecisionCardSpamService(
@@ -36,7 +40,8 @@ class DecisionScreenService extends ChangeNotifier {
             apiEmailMsgService: apiEmailMsgService,
             apiAppDataService: apiAppDataService,
             apiCompanyService: apiCompanyService,
-            apiGoogleService: apiGoogleService) {
+            dataBkgService: dataBkgService,
+            apiAuthService: apiAuthService) {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController(this);
     model = DecisionScreenModel();

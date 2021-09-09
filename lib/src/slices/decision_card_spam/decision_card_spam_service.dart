@@ -8,12 +8,14 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_service.dart';
+import '../api_auth_service/api_auth_service.dart';
+import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
-import '../api_google/api_google_service.dart';
+import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
@@ -23,19 +25,23 @@ class DecisionCardSpamService extends ChangeNotifier {
   late final DecisionCardSpamController controller;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
-  final ApiGoogleService _apiGoogleService;
   final ApiCompanyService _apiCompanyService;
+  final ApiAuthService _apiAuthService;
+
+  final DataBkgService _dataBkgService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiAppDataService apiAppDataService,
-      required ApiGoogleService apiGoogleService,
-      required ApiCompanyService apiCompanyService})
+      required ApiCompanyService apiCompanyService,
+      required ApiAuthService apiAuthService,
+      required DataBkgService dataBkgService})
       : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiGoogleService = apiGoogleService,
-        this._apiCompanyService = apiCompanyService {
+        this._apiCompanyService = apiCompanyService,
+        this._apiAuthService = apiAuthService,
+        this._dataBkgService = dataBkgService {
     controller = DecisionCardSpamController(this);
   }
 
@@ -85,13 +91,16 @@ class DecisionCardSpamService extends ChangeNotifier {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
+      ApiAuthServiceAccountModel account =
+          await _apiAuthService.getAccountById(sender.accountId!);
       String? mailTo = sender.unsubscribeMailTo;
       if (mailTo != null) {
         String list = sender.name ?? sender.email!;
         await _apiEmailSenderService.markAsUnsubscribed(sender);
         bool unsubscribed = false;
         try {
-          unsubscribed = await _apiGoogleService.unsubscribe(mailTo, list);
+          unsubscribed =
+              await _dataBkgService.unsubscribe(account, mailTo, list);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());
         } catch (e) {
