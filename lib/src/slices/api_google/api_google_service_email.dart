@@ -1,6 +1,7 @@
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
@@ -16,7 +17,7 @@ import 'api_google_service.dart';
 class ApiGoogleServiceEmail extends ApiGoogleService
     implements DataBkgServiceEmailInterface {
   ApiAppDataService _apiAppDataService;
-  var _log;
+  var _log = Logger('ApiGoogleServiceEmail');
 
   ApiGoogleServiceEmail(
       {required ApiAuthServiceAccountModel account,
@@ -46,51 +47,46 @@ class ApiGoogleServiceEmail extends ApiGoogleService
     }
   }
 
-  Future<DataBkgModelPage<String>> _gmailFetch(
-      ApiAuthServiceAccountModel apiAuthServiceAccountModel,
-      {String? query,
-      int? maxResults,
-      String? page}) async {
-    GmailApi? gmailApi = await _getGmailApi();
-    List<String>? messages;
-    ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list("me",
-            maxResults: maxResults,
-            includeSpamTrash: true,
-            pageToken: page,
-            q: query)
-        .timeout(Duration(seconds: 10),
-            onTimeout: () =>
-                throw new http.ClientException('_gmailFetch timed out'));
-    _log.finest(
-        'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
-    if (emails != null && emails.messages != null)
-      messages = emails.messages!
-          .where((message) => message.id != null)
-          .map((message) => message.id!)
-          .toList();
-    return DataBkgModelPage(next: emails?.nextPageToken, data: messages);
+  @override
+  Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
+      {String format = "metadata",
+      List<String>? headers,
+      int retries = 3}) async {
+    try {
+      return await _gmailFetchMessage(messageId,
+          format: format, headers: headers);
+    } catch (e) {
+      _log.warning(
+          "gmailFetchMessage failed, retries: " + retries.toString(), e);
+      if (retries > 1)
+        return emailFetchMessage(messageId,
+            format: format, headers: headers, retries: retries - 1);
+      rethrow;
+    }
   }
 
   @override
-  Future<String> getLastFetch() {
-    // TODO: implement getLastFetch
-    throw UnimplementedError();
+  Future<int?> getLastFetch() async {
+    ApiAppDataModel? appDataGmailLastFetch =
+        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
+    return appDataGmailLastFetch != null
+        ? int.parse(appDataGmailLastFetch.value)
+        : null;
   }
 
   @override
-  Future<String> getPage() {
-    // TODO: implement getPage
-    throw UnimplementedError();
+  Future<String> getPage() async {
+    return (await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage))
+            ?.value ??
+        '';
   }
 
   @override
   Future<String> getQuery({bool fetchAll = true, bool force = true}) async {
-    ApiAppDataModel? appDataGmailLastFetch =
-        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch);
+    int? appDataGmailLastFetch = await getLastFetch();
     int? gmailLastFetchEpoch = fetchAll || appDataGmailLastFetch == null
         ? null
-        : int.parse(appDataGmailLastFetch.value);
+        : appDataGmailLastFetch;
     if (force == true ||
         gmailLastFetchEpoch == null ||
         DateTime.now().subtract(Duration(days: 1)).isAfter(
@@ -140,6 +136,32 @@ class ApiGoogleServiceEmail extends ApiGoogleService
         periodSplit[periodSplit.length - 1];
   }
 
+  Future<DataBkgModelPage<String>> _gmailFetch(
+      ApiAuthServiceAccountModel apiAuthServiceAccountModel,
+      {String? query,
+      int? maxResults,
+      String? page}) async {
+    GmailApi? gmailApi = await _getGmailApi();
+    List<String>? messages;
+    ListMessagesResponse? emails = await gmailApi?.users.messages
+        .list("me",
+            maxResults: maxResults,
+            includeSpamTrash: true,
+            pageToken: page,
+            q: query)
+        .timeout(Duration(seconds: 10),
+            onTimeout: () =>
+                throw new http.ClientException('_gmailFetch timed out'));
+    _log.finest(
+        'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
+    if (emails != null && emails.messages != null)
+      messages = emails.messages!
+          .where((message) => message.id != null)
+          .map((message) => message.id!)
+          .toList();
+    return DataBkgModelPage(next: emails?.nextPageToken, data: messages);
+  }
+
   String _gmailBuildQuery(int? fetchEpochInMilliseconds, String category) {
     StringBuffer queryBuffer = new StringBuffer();
     if (fetchEpochInMilliseconds != null) {
@@ -186,24 +208,6 @@ class ApiGoogleServiceEmail extends ApiGoogleService
       return GmailApi(authClient);
     }
     return null;
-  }
-
-  @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
-      {String format = "metadata",
-      List<String>? headers,
-      int retries = 3}) async {
-    try {
-      return await _gmailFetchMessage(messageId,
-          format: format, headers: headers);
-    } catch (e) {
-      _log.warning(
-          "gmailFetchMessage failed, retries: " + retries.toString(), e);
-      if (retries > 1)
-        return emailFetchMessage(messageId,
-            format: format, headers: headers, retries: retries - 1);
-      rethrow;
-    }
   }
 
   Future<ApiEmailMsgModel?> _gmailFetchMessage(String messageId,

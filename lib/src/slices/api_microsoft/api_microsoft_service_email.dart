@@ -26,7 +26,7 @@ class ApiMicrosoftServiceEmail extends ApiMicrosoftService
   }
 
   @override
-  Future<String> getLastFetch() {
+  Future<int?> getLastFetch() {
     // TODO: implement getLastFetch
     throw UnimplementedError();
   }

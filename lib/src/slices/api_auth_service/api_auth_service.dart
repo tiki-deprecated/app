@@ -145,4 +145,6 @@ class ApiAuthService {
     }
     return null;
   }
+
+  List<ApiAuthServiceAccountModel> getProviders() {}
 }

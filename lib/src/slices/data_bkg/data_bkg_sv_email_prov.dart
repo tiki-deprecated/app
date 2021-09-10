@@ -12,7 +12,7 @@ abstract class DataBkgServiceEmailInterface {
 
   Future<String> getQuery({bool fetchAll = true, bool force = true});
 
-  Future<String> getLastFetch();
+  Future<int?> getLastFetch();
 
   Future<String> getPage();
 
