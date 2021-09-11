@@ -93,12 +93,12 @@ class DataBkgService extends ChangeNotifier {
   DataBkgServiceProviderInterface? getProvider(
       ApiAuthServiceAccountModel account) {
     switch (account.provider) {
-      case "Google":
+      case "google":
         return ApiGoogleServiceEmail(
             account: account,
             apiAppDataService: _apiAppDataService,
             apiAuthService: _apiAuthService);
-      case "Microsoft":
+      case "microsoft":
         return ApiMicrosoftServiceEmail(account, _apiAuthService);
       default:
         return null;
@@ -131,9 +131,11 @@ class DataBkgService extends ChangeNotifier {
     ApiAuthServiceAccountModel? account =
         await _apiAuthService.linkAccount(provider);
     if (account != null) {
-      DataBkgServiceProviderInterface providerService = getProvider(account)!;
-      providerService.logIn();
-      fetchData(account);
+      DataBkgServiceProviderInterface? providerService = getProvider(account);
+      if (providerService != null) {
+        providerService.logIn();
+        fetchData(account);
+      }
     }
     notifyListeners();
   }
@@ -163,5 +165,19 @@ class DataBkgService extends ChangeNotifier {
         this._apiEmailMsgService,
         this._apiAppDataService);
     return dataBkgServiceEmail;
+  }
+
+  List<String> getProvidersList() {
+    return _apiAuthService.getProviders();
+  }
+
+  List<ApiAuthServiceAccountModel?> getAccountsByProvider(String provider) {
+    List<ApiAuthServiceAccountModel?> filtered = _accounts.map((el) {
+      if (el.provider == provider) {
+        return el;
+      }
+    }).toList();
+    filtered.removeWhere((element) => element == null);
+    return filtered;
   }
 }

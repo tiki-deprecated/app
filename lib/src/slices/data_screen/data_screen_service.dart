@@ -44,5 +44,11 @@ class DataScreenService extends ChangeNotifier {
     return _dataBkgService.getAccountList();
   }
 
-  List<ApiAuthServiceAccountModel> getProvidersList() {}
+  List<String> getProvidersList() {
+    return _dataBkgService.getProvidersList();
+  }
+
+  List<ApiAuthServiceAccountModel?> getAccountsByProvider(String provider) {
+    return _dataBkgService.getAccountsByProvider(provider);
+  }
 }

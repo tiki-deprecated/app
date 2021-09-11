@@ -4,7 +4,8 @@ import '../data_bkg/data_bkg_service_provider.dart';
 
 class ApiMicrosoftService implements DataBkgServiceProviderInterface {
   final ApiAuthServiceAccountModel _account;
-  final ApiAuthService _apiAuthService;
+
+  ApiAuthService _apiAuthService;
 
   ApiMicrosoftService(ApiAuthServiceAccountModel this._account,
       ApiAuthService this._apiAuthService);

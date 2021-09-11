@@ -15,8 +15,6 @@ class ApiAuthService {
   final FlutterAppAuth _appAuth;
   final ApiAuthServiceRepository _apiAuthServiceRepository;
 
-  var _apiAuthService;
-
   ApiAuthService({required Database database})
       : _appAuth = FlutterAppAuth(),
         _apiAuthServiceRepository = ApiAuthServiceRepository(database);
@@ -122,8 +120,8 @@ class ApiAuthService {
 
   Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
     ApiAuthServiceAccountModel? account;
-    AuthorizationTokenResponse? tokenResponse = await _apiAuthService
-        .authorizeAndExchangeCode(providerName: providerName);
+    AuthorizationTokenResponse? tokenResponse =
+        await this.authorizeAndExchangeCode(providerName: providerName);
     if (tokenResponse != null) {
       ApiAuthServiceAccountModel apiAuthServiceAccountModel =
           ApiAuthServiceAccountModel(
@@ -133,18 +131,21 @@ class ApiAuthService {
                   .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
               refreshToken: tokenResponse.refreshToken,
               shouldReconnect: 0);
-      Map? userInfo =
-          await _apiAuthService.getUserInfo(apiAuthServiceAccountModel);
+      Map? userInfo = await this.getUserInfo(apiAuthServiceAccountModel);
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
         apiAuthServiceAccountModel.username = userInfo['id'];
         apiAuthServiceAccountModel.email = userInfo['email'];
-        account = await _apiAuthService.upsert(apiAuthServiceAccountModel);
+        account = await this.upsert(apiAuthServiceAccountModel);
         return account;
       }
     }
     return null;
   }
 
-  List<ApiAuthServiceAccountModel> getProviders() {}
+  List<String> getProviders() {
+    return _apiAuthServiceRepository.providers!.keys
+        .map((el) => el as String)
+        .toList();
+  }
 }

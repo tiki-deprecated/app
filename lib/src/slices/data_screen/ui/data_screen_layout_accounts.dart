@@ -10,24 +10,28 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);
-    List<ApiAuthServiceAccountModel> accounts = service.getAccountList();
     List<String> providers = service.getProvidersList();
     return Column(
-        children: accounts
-            .map((account) => Container(
-                  margin: EdgeInsets.only(top: 2.h),
-                  child: LinkAccount(
-                    username: account.email,
-                    type: account.provider!,
-                    linkedIcon: "account-soon-" + account.provider!,
-                    unlinkedIcon: account.provider! + "-icon",
-                    onLink: () =>
-                        service.controller.linkAccount(account.provider!),
-                    onUnlink: () =>
-                        service.controller.removeAccount(account.accountId!),
-                    onSee: () => service.controller.openGmailCards(context),
-                  ),
-                ))
-            .toList());
+        children: providers.map((provider) {
+      List<ApiAuthServiceAccountModel?> accounts =
+          service.getAccountsByProvider(provider);
+      accounts.removeWhere((element) => element == null);
+      ApiAuthServiceAccountModel? account =
+          accounts.isEmpty ? null : accounts[0];
+      return Container(
+        margin: EdgeInsets.only(top: 2.h),
+        child: LinkAccount(
+          username: account?.username,
+          type: provider,
+          linkedIcon: "account-soon-" + provider,
+          unlinkedIcon: provider + "-icon",
+          onLink: () => service.controller.linkAccount(provider),
+          onUnlink: () => account != null
+              ? service.controller.removeAccount(account.accountId!)
+              : null,
+          onSee: () => service.controller.openGmailCards(context),
+        ),
+      );
+    }).toList());
   }
 }
