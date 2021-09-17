@@ -93,7 +93,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
       ApiAuthServiceAccountModel account =
-          await _apiAuthService.getAccountById(sender.accountId!);
+          (await _apiAuthService.getAccountById(sender.accountId!))!;
       String? mailTo = sender.unsubscribeMailTo;
       if (mailTo != null) {
         String list = sender.name ?? sender.email!;
@@ -101,7 +101,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         bool unsubscribed = false;
         try {
           DataBkgServiceEmail serviceEmail =
-              _dataBkgService.getServiceEmail(account);
+              DataBkgServiceEmail(_dataBkgService);
           unsubscribed = await serviceEmail.unsubscribe(account, mailTo, list);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());

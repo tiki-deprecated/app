@@ -7,17 +7,25 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
+import '../api_app_data/api_app_data_service.dart';
+import '../api_google/api_google_service_email.dart';
+import '../api_microsoft/api_microsoft_service_email.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
+import 'model/api_auth_sv_provider_interface.dart';
 import 'repository/api_auth_service_repository.dart';
 
 class ApiAuthService {
   final FlutterAppAuth _appAuth;
   final ApiAuthServiceRepository _apiAuthServiceRepository;
+  final ApiAppDataService _apiAppDataService;
 
-  ApiAuthService({required Database database})
+  ApiAuthService(
+      {required Database database,
+      required ApiAppDataService apiAppDataService})
       : _appAuth = FlutterAppAuth(),
-        _apiAuthServiceRepository = ApiAuthServiceRepository(database);
+        _apiAuthServiceRepository = ApiAuthServiceRepository(database),
+        _apiAppDataService = apiAppDataService;
 
   Future<ApiAuthServiceProviderModel?> _getProvider(providerName) async =>
       _apiAuthServiceRepository.getProvider(providerName);
@@ -110,11 +118,21 @@ class ApiAuthService {
     await _apiAuthServiceRepository.delete(apiAuthServiceAccountModel);
   }
 
-  getAllAccounts() async {
+  Future<void> signOutAccounts() async {
+    List<ApiAuthServiceAccountModel> accounts = await this.getAllAccounts();
+    accounts.forEach((account) async {
+      ApiAuthServiceProviderInterface? provider = getProvider(account);
+      if (provider != null) {
+        provider.logOut(account);
+      }
+    });
+  }
+
+  Future<List<ApiAuthServiceAccountModel>> getAllAccounts() async {
     return await _apiAuthServiceRepository.getAll();
   }
 
-  getAccountById(int accountId) async {
+  Future<ApiAuthServiceAccountModel?> getAccountById(int accountId) async {
     return await _apiAuthServiceRepository.getById(accountId);
   }
 
@@ -147,5 +165,23 @@ class ApiAuthService {
     return _apiAuthServiceRepository.providers!.keys
         .map((el) => el as String)
         .toList();
+  }
+
+  ApiAuthServiceProviderInterface? getProvider(
+      ApiAuthServiceAccountModel account) {
+    switch (account.provider) {
+      case "google":
+        return ApiGoogleServiceEmail(
+            account: account,
+            apiAppDataService: _apiAppDataService,
+            apiAuthService: this);
+      case "microsoft":
+        return ApiMicrosoftServiceEmail(
+            account: account,
+            apiAppDataService: _apiAppDataService,
+            apiAuthService: this);
+      default:
+        return null;
+    }
   }
 }

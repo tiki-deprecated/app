@@ -22,7 +22,7 @@ class DecisionScreenService extends ChangeNotifier {
 
   final ApiAppDataService _apiAppDataService;
   final DecisionCardSpamService _decisionCardSpamService;
-  final DataBkgService _dataBkgService;
+  final ApiAuthService _apiAuthService;
 
   DecisionScreenService(
       {required ApiAppDataService apiAppDataService,
@@ -32,7 +32,7 @@ class DecisionScreenService extends ChangeNotifier {
       required ApiAuthService apiAuthService,
       required DataBkgService dataBkgService})
       : this._apiAppDataService = apiAppDataService,
-        this._dataBkgService = dataBkgService,
+        this._apiAuthService = apiAuthService,
         this._decisionCardSpamService = DecisionCardSpamService(
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService,
@@ -48,7 +48,7 @@ class DecisionScreenService extends ChangeNotifier {
 
   //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
-    bool isConnected = await _dataBkgService.getAccountList().isNotEmpty;
+    bool isConnected = (await _apiAuthService.getAllAccounts()).isNotEmpty;
     if (isConnected) await _generateSpamCards();
     await _addTests();
     this.model.isLinked = isConnected;

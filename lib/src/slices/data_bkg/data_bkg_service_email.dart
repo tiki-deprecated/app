@@ -3,47 +3,32 @@ import 'dart:convert';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
-import '../api_app_data/api_app_data_service.dart';
-import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_company/api_company_service.dart';
+import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_company/model/api_company_model_local.dart';
-import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
-import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
-import 'data_bkg_sv_email_interface.dart';
+import 'data_bkg_service.dart';
 import 'model/data_bkg_model_page.dart';
 
 class DataBkgServiceEmail {
-  final _log = Logger('ApiEmailClientService');
-  final ApiAuthService _apiAuthService;
-  final DataBkgServiceEmailInterface _emailProviderService;
-  final ApiCompanyService _apiCompanyService;
-  final ApiEmailSenderService _apiEmailSenderService;
-  final ApiAppDataService _apiAppDataService;
-  final ApiEmailMsgService _apiEmailMsgService;
+  final _log = Logger('DataBkgServiceEmail');
+  final DataBkgService _dataBkgService;
 
-  DataBkgServiceEmail(
-      this._apiAuthService,
-      this._emailProviderService,
-      this._apiCompanyService,
-      this._apiEmailSenderService,
-      this._apiEmailMsgService,
-      this._apiAppDataService);
+  DataBkgServiceEmail(this._dataBkgService);
 
   Future<void> emailFetchList(ApiAuthServiceAccountModel account,
       {bool fetchAll = false, bool force = false}) async {
     String providerName = account.provider!;
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
     _log.fine(providerName +
         ' fetch starting on: ' +
         DateTime.now().toIso8601String());
-    String query = await _emailProviderService.getQuery();
+    String query = await emailProviderService.getQuery();
     await _checkEmailFetchList(account, query: query);
-    await _emailProviderService.afterFetchList();
-    await _apiAppDataService.save(ApiAppDataKey.bkgSvEmailLastFetch,
-        DateTime.now().millisecondsSinceEpoch.toString());
-    await _apiAppDataService.save(ApiAppDataKey.gmailPage, '');
+    await emailProviderService.afterFetchList();
     _log.fine('Email fetch completed on: ' + DateTime.now().toIso8601String());
   }
 
@@ -78,8 +63,11 @@ revolution today.<br />
 </body>
 </html>
 ''';
-    await _apiAuthService.proxy(
-        () => _emailProviderService.sendRawMessage(
+    ApiAuthServiceEmailInterface emailProviderService =
+        _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
+    await _dataBkgService.apiAuthService.proxy(
+        () => emailProviderService.sendRawMessage(
             account, base64UrlEncode(utf8.encode(email))),
         account);
     return true;
@@ -87,11 +75,12 @@ revolution today.<br />
 
   Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
     if (sender.email != null) {
-      ApiCompanyModelLocal? company =
-          await _apiCompanyService.upsert(_domainFromEmail(sender.email!));
+      ApiCompanyModelLocal? company = await _dataBkgService.apiCompanyService
+          .upsert(_domainFromEmail(sender.email!));
       if (company != null) {
         sender.company = company;
-        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
+        ApiEmailSenderModel saved =
+            await _dataBkgService.apiEmailSenderService.upsert(sender);
         return saved;
       }
     }
@@ -100,42 +89,53 @@ revolution today.<br />
   Future<void> _checkEmailFetchList(ApiAuthServiceAccountModel account,
       {String query = ''}) async {
     String? page;
-    page = await _emailProviderService.getPage();
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
+    page = await emailProviderService.getPage();
     return _checkEmailFetchListPage(account, query: query, page: page);
   }
 
   Future<void> _checkEmailFetchListPage(ApiAuthServiceAccountModel account,
       {String? page, String? query}) async {
-    DataBkgModelPage<String> res = await _emailProviderService
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
+    DataBkgModelPage<String> res = await emailProviderService
         .emailFetchList(account, query: query, page: page, maxResults: 5);
     if (res.data != null) {
-      List<String> known =
-          (await _apiEmailMsgService.getByExtMessageIds(res.data!))
-              .map((message) => message.extMessageId!)
-              .toList();
+      List<String> known = (await _dataBkgService.apiEmailMsgService
+              .getByExtMessageIds(res.data!))
+          .map((message) => message.extMessageId!)
+          .toList();
       List<String> unknown =
           res.data!.where((message) => !known.contains(message)).toList();
       await _checkEmailFetchMessage(account, unknown);
     }
-    await _apiAppDataService.save(ApiAppDataKey.gmailPage, res.next ?? '');
+    await _dataBkgService.apiAppDataService
+        .save(ApiAppDataKey.gmailPage, res.next ?? '');
     if (res.next != null)
       return _checkEmailFetchListPage(account, page: res.next, query: query);
   }
 
   Future<void> _checkEmailFetchMessage(
       ApiAuthServiceAccountModel account, List<String> messages) async {
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
     Set<String> processed = Set();
     for (String messageId in messages) {
       ApiEmailMsgModel? message =
-          await _emailProviderService.emailFetchMessage(account, messageId);
+          await emailProviderService.emailFetchMessage(account, messageId);
       if (message?.extMessageId != null) processed.add(message!.extMessageId!);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
-        ApiEmailSenderModel? sender =
-            await _apiEmailSenderService.getByEmail(message!.sender!.email!);
+        ApiEmailSenderModel? sender = await _dataBkgService
+            .apiEmailSenderService
+            .getByEmail(message!.sender!.email!);
         if (sender != null) {
           await _saveSender(sender);
-          await _apiEmailMsgService.upsert(message);
+          await _dataBkgService.apiEmailMsgService.upsert(message);
           _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
           // TODO check removed notifyListeners();
         } else {
@@ -145,8 +145,8 @@ revolution today.<br />
               senderMessages.map((message) => message.extMessageId!).toSet();
           List<String> newMessages = messages
               .where((message) =>
-                  !senderMessageIds.contains(message) &&
-                  !processed.contains(message))
+          !senderMessageIds.contains(message) &&
+              !processed.contains(message))
               .toList();
           return _checkEmailFetchMessage(account, newMessages);
         }
@@ -160,9 +160,12 @@ revolution today.<br />
         email: email, messages: List.empty(growable: true));
     Set<ApiEmailMsgModel> messages = Set();
     DateTime first = DateTime.now();
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
     for (String messageId in messageIds) {
       ApiEmailMsgModel? message =
-          await _emailProviderService.emailFetchMessage(account, messageId);
+          await emailProviderService.emailFetchMessage(account, messageId);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         messages.add(message!);
@@ -177,7 +180,7 @@ revolution today.<br />
     if (inserted != null) {
       for (ApiEmailMsgModel message in messages) {
         message.sender = inserted;
-        await _apiEmailMsgService.upsert(message);
+        await _dataBkgService.apiEmailMsgService.upsert(message);
       }
       _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
       // TODO check notifyListeners();
@@ -190,7 +193,10 @@ revolution today.<br />
       {required String email,
       String? page,
       required List<String> messages}) async {
-    DataBkgModelPage<String> res = await _emailProviderService
+    ApiAuthServiceEmailInterface emailProviderService =
+        await _dataBkgService.apiAuthService.getProvider(account)
+            as ApiAuthServiceEmailInterface;
+    DataBkgModelPage<String> res = await emailProviderService
         .emailFetchList(account, query: 'from:' + email, page: page);
     if (res.data != null) messages.addAll(res.data!);
     if (res.next != null)

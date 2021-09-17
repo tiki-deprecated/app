@@ -91,7 +91,7 @@ class ApiAuthServiceRepository {
         ]);
   }
 
-  getAll() async {
+  Future<List<ApiAuthServiceAccountModel>> getAll() async {
     final List<Map<String, Object?>> rows = await _database.query(_table);
     if (rows.isEmpty) return [];
     return rows.map((e) => ApiAuthServiceAccountModel.fromMap(e)).toList();

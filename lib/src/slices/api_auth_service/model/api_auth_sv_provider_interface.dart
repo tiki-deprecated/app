@@ -1,6 +1,6 @@
-import '../api_auth_service/model/api_auth_service_account_model.dart';
+import 'api_auth_service_account_model.dart';
 
-abstract class DataBkgServiceProviderInterface {
+abstract class ApiAuthServiceProviderInterface {
   logIn(ApiAuthServiceAccountModel account);
 
   logOut(ApiAuthServiceAccountModel account);

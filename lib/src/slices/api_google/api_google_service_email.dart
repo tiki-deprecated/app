@@ -9,22 +9,23 @@ import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
+import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
-import '../data_bkg/data_bkg_sv_email_interface.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'api_google_service.dart';
 import 'repository/api_google_repository_info.dart';
 
 class ApiGoogleServiceEmail extends ApiGoogleService
-    implements DataBkgServiceEmailInterface {
+    implements ApiAuthServiceEmailInterface {
   ApiAppDataService _apiAppDataService;
   var _log = Logger('ApiGoogleServiceEmail');
 
-  ApiGoogleServiceEmail({required ApiAuthServiceAccountModel account,
-    required ApiAuthService apiAuthService,
-    required ApiAppDataService apiAppDataService})
+  ApiGoogleServiceEmail(
+      {required ApiAuthServiceAccountModel account,
+      required ApiAuthService apiAuthService,
+      required ApiAppDataService apiAppDataService})
       : _apiAppDataService = apiAppDataService,
         super(apiAuthService);
 
@@ -32,9 +33,9 @@ class ApiGoogleServiceEmail extends ApiGoogleService
   Future<DataBkgModelPage<String>> emailFetchList(
       ApiAuthServiceAccountModel account,
       {String? query,
-        String? page,
-        int? retries = 3,
-        int? maxResults = 500}) async {
+      String? page,
+      int? retries = 3,
+      int? maxResults = 500}) async {
     try {
       return await _gmailFetch(account,
           query: query, maxResults: maxResults, page: page);
@@ -54,8 +55,8 @@ class ApiGoogleServiceEmail extends ApiGoogleService
   Future<ApiEmailMsgModel?> emailFetchMessage(
       ApiAuthServiceAccountModel account, String messageId,
       {String format = "metadata",
-        List<String>? headers,
-        int retries = 3}) async {
+      List<String>? headers,
+      int retries = 3}) async {
     try {
       return await _gmailFetchMessage(account, messageId,
           format: format, headers: headers);
@@ -72,7 +73,7 @@ class ApiGoogleServiceEmail extends ApiGoogleService
   @override
   Future<int?> getLastFetch() async {
     ApiAppDataModel? appDataGmailLastFetch =
-    await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
+        await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
     return appDataGmailLastFetch != null
         ? int.parse(appDataGmailLastFetch.value)
         : null;
@@ -122,8 +123,8 @@ class ApiGoogleServiceEmail extends ApiGoogleService
   }
 
   @override
-  Future<bool> sendRawMessage(ApiAuthServiceAccountModel account,
-      String getBase64Email) async {
+  Future<bool> sendRawMessage(
+      ApiAuthServiceAccountModel account, String getBase64Email) async {
     GmailApi? gmailApi = await _getGmailApi(account);
     if (gmailApi != null) {
       await gmailApi.users.messages
@@ -144,19 +145,19 @@ class ApiGoogleServiceEmail extends ApiGoogleService
   Future<DataBkgModelPage<String>> _gmailFetch(
       ApiAuthServiceAccountModel account,
       {String? query,
-        int? maxResults,
-        String? page}) async {
+      int? maxResults,
+      String? page}) async {
     GmailApi? gmailApi = await _getGmailApi(account);
     List<String>? messages;
     ListMessagesResponse? emails = await gmailApi?.users.messages
         .list("me",
-        maxResults: maxResults,
-        includeSpamTrash: true,
-        pageToken: page,
-        q: query)
+            maxResults: maxResults,
+            includeSpamTrash: true,
+            pageToken: page,
+            q: query)
         .timeout(Duration(seconds: 10),
-        onTimeout: () =>
-        throw new http.ClientException('_gmailFetch timed out'));
+            onTimeout: () =>
+                throw new http.ClientException('_gmailFetch timed out'));
     _log.finest(
         'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
     if (emails != null && emails.messages != null)
@@ -196,10 +197,10 @@ class ApiGoogleServiceEmail extends ApiGoogleService
       String token = account.accessToken!;
       DateTime tokenExp = account.accessTokenExpiration != null
           ? DateTime.fromMillisecondsSinceEpoch(account.accessTokenExpiration!)
-          .toUtc()
+              .toUtc()
           : DateTime.now().toUtc().add(const Duration(days: 365));
       gapis.AccessToken accessToken =
-      gapis.AccessToken('Bearer', token, tokenExp);
+          gapis.AccessToken('Bearer', token, tokenExp);
       List<String> scopes = [
         "openid",
         "https://www.googleapis.com/auth/userinfo.profile",
@@ -207,9 +208,9 @@ class ApiGoogleServiceEmail extends ApiGoogleService
         "https://www.googleapis.com/auth/gmail.send"
       ];
       gapis.AccessCredentials credentials =
-      gapis.AccessCredentials(accessToken, account.refreshToken, scopes);
+          gapis.AccessCredentials(accessToken, account.refreshToken, scopes);
       gapis.AuthClient authClient =
-      gapis.authenticatedClient(http.Client(), credentials);
+          gapis.authenticatedClient(http.Client(), credentials);
       return GmailApi(authClient);
     }
     return null;
@@ -224,10 +225,10 @@ class ApiGoogleServiceEmail extends ApiGoogleService
       metadataHeaders.addAll(headers ?? []);
       Message? message = await gmailApi.users.messages
           .get("me", messageId,
-          format: format, metadataHeaders: metadataHeaders)
+              format: format, metadataHeaders: metadataHeaders)
           .timeout(Duration(seconds: 10),
-          onTimeout: () =>
-          throw new http.ClientException('_gmailFetch timed out'));
+              onTimeout: () =>
+                  throw new http.ClientException('_gmailFetch timed out'));
       _log.finest('Fetched message ids: ' + (message.id ?? ''));
       return _convertMessage(message, account.email!);
     }
@@ -242,10 +243,10 @@ class ApiGoogleServiceEmail extends ApiGoogleService
           case "To":
             String headerEmail = headerEntry.value!.contains("<")
                 ? headerEntry.value!
-                .split("<")
-                .toList()[1]
-                .replaceFirst(">", "")
-                .trim()
+                    .split("<")
+                    .toList()[1]
+                    .replaceFirst(">", "")
+                    .trim()
                 : headerEntry.value!;
             if (email.toLowerCase() != headerEmail.trim().toLowerCase())
               return null;
@@ -269,7 +270,7 @@ class ApiGoogleServiceEmail extends ApiGoogleService
         extMessageId: message.id,
         receivedDate: message.internalDate != null
             ? DateTime.fromMillisecondsSinceEpoch(
-            int.parse(message.internalDate!))
+                int.parse(message.internalDate!))
             : null,
         openedDate: openedDate,
         account: email,

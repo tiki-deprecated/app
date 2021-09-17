@@ -57,8 +57,7 @@ class ApiEmailSenderModel {
       this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
   }
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'sender_id': senderId,
         'account_id': accountId,
         'company_id': company?.companyId,

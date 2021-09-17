@@ -1,8 +1,8 @@
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
-import 'model/data_bkg_model_page.dart';
+import '../../api_email_msg/model/api_email_msg_model.dart';
+import '../../data_bkg/model/data_bkg_model_page.dart';
+import 'api_auth_service_account_model.dart';
 
-abstract class DataBkgServiceEmailInterface {
+abstract class ApiAuthServiceEmailInterface {
   Future<DataBkgModelPage<String>> emailFetchList(
       ApiAuthServiceAccountModel account,
       {String? query,

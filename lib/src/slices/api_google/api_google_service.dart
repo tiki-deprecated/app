@@ -5,10 +5,10 @@
 
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../data_bkg/data_bkg_sv_provider_interface.dart';
+import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
 import 'model/api_google_model.dart';
 
-class ApiGoogleService implements DataBkgServiceProviderInterface {
+class ApiGoogleService implements ApiAuthServiceProviderInterface {
   final ApiGoogleModel model = ApiGoogleModel();
   final ApiAuthService _apiAuthService;
 
