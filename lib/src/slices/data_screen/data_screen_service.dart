@@ -6,8 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_google/api_google_service.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
@@ -19,8 +19,9 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
+  final ApiAuthService _apiAuthService;
 
-  DataScreenService(this._dataBkgService) {
+  DataScreenService(this._dataBkgService, this._apiAuthService) {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
@@ -32,12 +33,16 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<void> linkAccount(String provider) async {
-    await _dataBkgService.linkAccount(provider);
-    notifyListeners();
+    ApiAuthServiceAccountModel? account =
+        await _apiAuthService.linkAccount(provider);
+    if (account != null) {
+      _dataBkgService.addAccount(account);
+      notifyListeners();
+    }
   }
 
-  Future<List<InfoCarouselCardModel>> getGmailCards() async {
-    return await ApiGoogleService.gmailInfoCards();
+  Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
+    return await _dataBkgService.getInfoCards(accountId);
   }
 
   List<ApiAuthServiceAccountModel> getAccountList() {
@@ -45,10 +50,11 @@ class DataScreenService extends ChangeNotifier {
   }
 
   List<String> getProvidersList() {
-    return _dataBkgService.getProvidersList();
+    return _apiAuthService.getProviders();
   }
 
-  List<ApiAuthServiceAccountModel?> getAccountsByProvider(String provider) {
+  List<ApiAuthServiceAccountModel> getAccountsByProvider(String provider) {
+    // getting accounts from databkgservice because apiauth needs to await
     return _dataBkgService.getAccountsByProvider(provider);
   }
 }

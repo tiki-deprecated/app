@@ -13,9 +13,8 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
     List<String> providers = service.getProvidersList();
     return Column(
         children: providers.map((provider) {
-      List<ApiAuthServiceAccountModel?> accounts =
+      List<ApiAuthServiceAccountModel> accounts =
           service.getAccountsByProvider(provider);
-      accounts.removeWhere((element) => element == null);
       ApiAuthServiceAccountModel? account =
           accounts.isEmpty ? null : accounts[0];
       return Container(
@@ -29,7 +28,9 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
           onUnlink: () => account != null
               ? service.controller.removeAccount(account.accountId!)
               : null,
-          onSee: () => service.controller.openGmailCards(context),
+          onSee: () => account != null
+              ? service.controller.openGmailCards(context, account.accountId!)
+              : null,
         ),
       );
     }).toList());

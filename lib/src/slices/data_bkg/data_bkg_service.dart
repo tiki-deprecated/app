@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+// ignore: prefer_relative_imports
+import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
@@ -17,8 +19,8 @@ import '../api_email_sender/api_email_sender_service.dart';
 import '../api_google/api_google_service_email.dart';
 import '../api_microsoft/api_microsoft_service_email.dart';
 import 'data_bkg_service_email.dart';
-import 'data_bkg_service_provider.dart';
-import 'data_bkg_sv_email_prov.dart';
+import 'data_bkg_sv_email_interface.dart';
+import 'data_bkg_sv_provider_interface.dart';
 
 class DataBkgService extends ChangeNotifier {
   final _log = Logger('DataBkgService');
@@ -43,43 +45,97 @@ class DataBkgService extends ChangeNotifier {
         this._apiCompanyService = apiCompanyService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiEmailMsgService = apiEmailMsgService {
-    getExistingAccounts().then((_) => fetchAllData());
+    loadAccounts().then((_) => index());
   }
 
-  Future<void> getExistingAccounts() async {
+  Future<void> loadAccounts() async {
     _accounts = await _apiAuthService.getAllAccounts();
     notifyListeners();
   }
 
-  Future<void> fetchAllData() async {
+  Future<void> index() async {
     _log.fine("fetch all data started");
     int startIndex = await _getStartIndex();
     for (int i = startIndex; i < _accounts.length; i++) {
       ApiAuthServiceAccountModel account = _accounts[i];
-      await fetchData(account);
+      await _fetchData(account);
       await _apiAppDataService.save(
           ApiAppDataKey.dataBkgLastAccount, i.toString());
     }
-  }
-
-  Future<void> fetchData(ApiAuthServiceAccountModel account) async {
-    DataBkgServiceProviderInterface? provider = getProvider(account);
-    if (provider != null) {
-      _log.fine("fetch data for " + provider.account.provider!);
-      if (provider is DataBkgServiceEmailInterface) {
-        _log.fine("fetch email data for " + provider.account.email!);
-        await _fetchEmail(provider);
-      }
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
   void addAccount(ApiAuthServiceAccountModel account) {
-    _accounts.add(account);
-    fetchData(account);
+    DataBkgServiceProviderInterface? providerService = _getProvider(account);
+    if (providerService != null) {
+      providerService.logIn(account);
+      _accounts.add(account);
+      _fetchData(account);
+    }
+    notifyListeners();
   }
 
-  Future<void> _fetchEmail(DataBkgServiceProviderInterface provider) async {
+  Future<void> removeAccount(int accountId) async {
+    ApiAuthServiceAccountModel account =
+        await _apiAuthService.getAccountById(accountId);
+    DataBkgServiceProviderInterface? provider = _getProvider(account);
+    if (provider != null) await provider.logOut(account);
+    _accounts.removeWhere((account) => account.accountId == accountId);
+    notifyListeners();
+  }
+
+  List<ApiAuthServiceAccountModel> getAccountList() {
+    return _accounts;
+  }
+
+  Future<void> signOutAccounts() async {
+    _accounts.forEach((account) async {
+      DataBkgServiceProviderInterface? provider = await _getProvider(account);
+      if (provider != null) {
+        provider.logOut(account);
+      }
+    });
+    notifyListeners();
+  }
+
+  DataBkgServiceEmail getServiceEmail(ApiAuthServiceAccountModel account) {
+    DataBkgServiceEmailInterface provider =
+        _getProvider(account) as DataBkgServiceEmailInterface;
+    DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(
+        this._apiAuthService,
+        provider,
+        this._apiCompanyService,
+        this._apiEmailSenderService,
+        this._apiEmailMsgService,
+        this._apiAppDataService);
+    return dataBkgServiceEmail;
+  }
+
+  Future<void> _fetchData(ApiAuthServiceAccountModel account) async {
+    DataBkgServiceProviderInterface? provider = _getProvider(account);
+    if (provider != null) {
+      _log.fine("fetch data for " + account.provider!);
+      if (provider is DataBkgServiceEmailInterface) {
+        _log.fine("fetch email data for " + account.email!);
+        await _fetchEmail(provider, account);
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<int> _getStartIndex() async {
+    ApiAppDataModel? lastFetchAccount =
+        await _apiAppDataService.getByKey(ApiAppDataKey.dataBkgLastAccount);
+    int currentFetchAccount = lastFetchAccount != null &&
+            int.parse(lastFetchAccount.value) >= _accounts.length - 1
+        ? int.parse(lastFetchAccount.value) + 1
+        : 0;
+    _log.fine("last fetched account $lastFetchAccount");
+    return currentFetchAccount;
+  }
+
+  Future<void> _fetchEmail(DataBkgServiceProviderInterface provider,
+      ApiAuthServiceAccountModel account) async {
     DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(
         this._apiAuthService,
         provider as DataBkgServiceEmailInterface,
@@ -87,10 +143,10 @@ class DataBkgService extends ChangeNotifier {
         this._apiEmailSenderService,
         this._apiEmailMsgService,
         this._apiAppDataService);
-    await dataBkgServiceEmail.checkEmail();
+    await dataBkgServiceEmail.emailFetchList(account);
   }
 
-  DataBkgServiceProviderInterface? getProvider(
+  DataBkgServiceProviderInterface? _getProvider(
       ApiAuthServiceAccountModel account) {
     switch (account.provider) {
       case "google":
@@ -105,79 +161,19 @@ class DataBkgService extends ChangeNotifier {
     }
   }
 
-  Future<int> _getStartIndex() async {
-    ApiAppDataModel? lastFetchAccount =
-        await _apiAppDataService.getByKey(ApiAppDataKey.dataBkgLastAccount);
-    int currentFetchAccount = lastFetchAccount != null &&
-            int.parse(lastFetchAccount.value) >= _accounts.length - 1
-        ? int.parse(lastFetchAccount.value) + 1
-        : 0;
-    _log.fine("last fetched account $lastFetchAccount");
-    return currentFetchAccount;
-  }
-
-  Future<void> removeAccount(int accountId) async {
-    ApiAuthServiceAccountModel account =
-        await _apiAuthService.getAccountById(accountId);
-    DataBkgServiceProviderInterface? provider = getProvider(account);
-    if (provider != null) {
-      await provider.logOut();
-      _accounts.removeWhere((account) => account.accountId == accountId);
-      notifyListeners();
+  Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
+    List<ApiAuthServiceAccountModel> accounts =
+        _accounts.where((account) => account.accountId == accountId).toList();
+    if (accounts.isNotEmpty) {
+      ApiAuthServiceAccountModel account = accounts[0];
+      DataBkgServiceEmailInterface provider =
+          _getProvider(account) as DataBkgServiceEmailInterface;
+      return await provider.getInfoCards(account);
     }
+    return List<InfoCarouselCardModel>.empty();
   }
 
-  Future<void> linkAccount(String provider) async {
-    ApiAuthServiceAccountModel? account =
-        await _apiAuthService.linkAccount(provider);
-    if (account != null) {
-      DataBkgServiceProviderInterface? providerService = getProvider(account);
-      if (providerService != null) {
-        providerService.logIn();
-        fetchData(account);
-      }
-    }
-    notifyListeners();
-  }
-
-  List<ApiAuthServiceAccountModel> getAccountList() {
-    return _accounts;
-  }
-
-  Future<void> signOutAll() async {
-    _accounts.forEach((account) async {
-      DataBkgServiceProviderInterface? provider = await getProvider(account);
-      if (provider != null) {
-        provider.logOut();
-      }
-    });
-    notifyListeners();
-  }
-
-  DataBkgServiceEmail getServiceEmail(ApiAuthServiceAccountModel account) {
-    DataBkgServiceEmailInterface provider =
-        getProvider(account) as DataBkgServiceEmailInterface;
-    DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(
-        this._apiAuthService,
-        provider,
-        this._apiCompanyService,
-        this._apiEmailSenderService,
-        this._apiEmailMsgService,
-        this._apiAppDataService);
-    return dataBkgServiceEmail;
-  }
-
-  List<String> getProvidersList() {
-    return _apiAuthService.getProviders();
-  }
-
-  List<ApiAuthServiceAccountModel?> getAccountsByProvider(String provider) {
-    List<ApiAuthServiceAccountModel?> filtered = _accounts.map((el) {
-      if (el.provider == provider) {
-        return el;
-      }
-    }).toList();
-    filtered.removeWhere((element) => element == null);
-    return filtered;
+  List<ApiAuthServiceAccountModel> getAccountsByProvider(String provider) {
+    return _accounts.where((account) => account.provider == provider).toList();
   }
 }

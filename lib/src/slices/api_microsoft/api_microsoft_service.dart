@@ -1,35 +1,24 @@
+// ignore_for_file: unused_import
+
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../data_bkg/data_bkg_service_provider.dart';
+import '../data_bkg/data_bkg_sv_provider_interface.dart';
 
 class ApiMicrosoftService implements DataBkgServiceProviderInterface {
-  final ApiAuthServiceAccountModel _account;
-
-  ApiAuthService _apiAuthService;
-
-  ApiMicrosoftService(ApiAuthServiceAccountModel this._account,
-      ApiAuthService this._apiAuthService);
-
   @override
-  ApiAuthServiceAccountModel get account => this._account;
-
-  @override
-  String? get displayName => this._account.displayName;
-
-  @override
-  isConnected() {
+  isConnected(ApiAuthServiceAccountModel account) {
     // TODO: implement isConnected
     throw UnimplementedError();
   }
 
   @override
-  logIn() {
+  logIn(ApiAuthServiceAccountModel account) {
     // TODO: implement logIn
     throw UnimplementedError();
   }
 
   @override
-  logOut() {
+  logOut(ApiAuthServiceAccountModel account) {
     // TODO: implement logOut
     throw UnimplementedError();
   }

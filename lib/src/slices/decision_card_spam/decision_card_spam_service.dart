@@ -102,7 +102,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         try {
           DataBkgServiceEmail serviceEmail =
               _dataBkgService.getServiceEmail(account);
-          unsubscribed = await serviceEmail.unsubscribe(mailTo, list);
+          unsubscribed = await serviceEmail.unsubscribe(account, mailTo, list);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());
         } catch (e) {

@@ -1,7 +1,7 @@
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
-import '../data_bkg/data_bkg_sv_email_prov.dart';
+import '../data_bkg/data_bkg_sv_email_interface.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import 'api_microsoft_service.dart';
 
@@ -9,17 +9,22 @@ class ApiMicrosoftServiceEmail extends ApiMicrosoftService
     implements DataBkgServiceEmailInterface {
   ApiMicrosoftServiceEmail(
       ApiAuthServiceAccountModel account, ApiAuthService apiAuthService)
-      : super(account, apiAuthService);
+      : super();
 
   @override
   Future<DataBkgModelPage<String>> emailFetchList(
-      {String? query, int? maxResults, String? page, int? retries}) {
+      ApiAuthServiceAccountModel account,
+      {String? query,
+      int? maxResults,
+      String? page,
+      int? retries}) {
     // TODO: implement emailFetchList
     throw UnimplementedError();
   }
 
   @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
+  Future<ApiEmailMsgModel?> emailFetchMessage(
+      ApiAuthServiceAccountModel account, String messageId,
       {String format = '', List<String>? headers}) {
     // TODO: implement emailFetchMessage
     throw UnimplementedError();
@@ -44,7 +49,8 @@ class ApiMicrosoftServiceEmail extends ApiMicrosoftService
   }
 
   @override
-  Future sendRawMessage(String getBase64Email) {
+  Future sendRawMessage(
+      ApiAuthServiceAccountModel account, String getBase64Email) {
     // TODO: implement sendRawMessage
     throw UnimplementedError();
   }
@@ -52,6 +58,12 @@ class ApiMicrosoftServiceEmail extends ApiMicrosoftService
   @override
   Future<void> afterFetchList() {
     // TODO: implement afterFetchList
+    throw UnimplementedError();
+  }
+
+  @override
+  getInfoCards(ApiAuthServiceAccountModel account) {
+    // TODO: implement getInfoCards
     throw UnimplementedError();
   }
 }

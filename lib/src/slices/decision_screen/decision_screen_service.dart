@@ -53,7 +53,8 @@ class DecisionScreenService extends ChangeNotifier {
     await _addTests();
     this.model.isLinked = isConnected;
     this.model.isPending =
-        await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch) == null;
+        await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch) ==
+            null;
     return this.model.isLinked;
   }
 
@@ -83,9 +84,9 @@ class DecisionScreenService extends ChangeNotifier {
       List<DecisionCardSpamLayout>? cards =
           await _decisionCardSpamService.getCards();
       if (cards != null && cards.isNotEmpty) {
-        this.model.isPending =
-            await _apiAppDataService.getByKey(ApiAppDataKey.gmailLastFetch) ==
-                null;
+        this.model.isPending = await _apiAppDataService
+                .getByKey(ApiAppDataKey.bkgSvEmailLastFetch) ==
+            null;
         cards.forEach((card) {
           if (!this.model.cards.contains(card) && this.model.cards.length < 3)
             this.model.cards.add(card);

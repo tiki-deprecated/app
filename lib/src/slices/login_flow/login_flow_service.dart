@@ -254,7 +254,7 @@ class LoginFlowService extends ChangeNotifier {
         apiEmailSenderService: apiEmailSenderService,
         apiEmailMsgService: apiEmailMsgService);
 
-    registerLogout(() async => await dataBkgService.signOutAll());
+    registerLogout(() async => await dataBkgService.signOutAccounts());
 
     _providers = [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

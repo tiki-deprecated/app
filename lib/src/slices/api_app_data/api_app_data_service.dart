@@ -26,7 +26,7 @@ class ApiAppDataService {
   Future<void> logout() async {
     List<ApiAppDataKey> keysToDelete = [
       ApiAppDataKey.userReferCode,
-      ApiAppDataKey.gmailLastFetch,
+      ApiAppDataKey.bkgSvEmailLastFetch,
       ApiAppDataKey.gmailPage,
       ApiAppDataKey.googleOauthModalComplete,
     ];
