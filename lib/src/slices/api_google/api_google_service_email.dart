@@ -72,8 +72,9 @@ class ApiGoogleServiceEmail extends ApiGoogleService
 
   @override
   Future<int?> getLastFetch() async {
+    return null;
     ApiAppDataModel? appDataGmailLastFetch =
-        await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
+    await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
     return appDataGmailLastFetch != null
         ? int.parse(appDataGmailLastFetch.value)
         : null;

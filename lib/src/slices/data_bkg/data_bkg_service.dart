@@ -24,8 +24,7 @@ class DataBkgService extends ChangeNotifier {
   final ApiCompanyService _apiCompanyService;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
-
-  var _apiAuthService;
+  final ApiAuthService _apiAuthService;
 
   DataBkgService(
       {required ApiAuthService apiAuthService,
@@ -36,7 +35,8 @@ class DataBkgService extends ChangeNotifier {
       : this._apiAppDataService = apiAppDataService,
         this._apiCompanyService = apiCompanyService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiEmailMsgService = apiEmailMsgService;
+        this._apiEmailMsgService = apiEmailMsgService,
+        this._apiAuthService = apiAuthService;
 
   get apiCompanyService => _apiCompanyService;
 
@@ -74,11 +74,12 @@ class DataBkgService extends ChangeNotifier {
   }
 
   Future<int> _getStartIndex() async {
+    List<ApiAuthServiceAccountModel> accounts =
+        await _apiAuthService.getAllAccounts();
     ApiAppDataModel? lastFetchAccount =
         await _apiAppDataService.getByKey(ApiAppDataKey.dataBkgLastAccount);
     int currentFetchAccount = lastFetchAccount != null &&
-            int.parse(lastFetchAccount.value) >=
-                _apiAuthService.accounts.length - 1
+            int.parse(lastFetchAccount.value) >= accounts.length - 1
         ? int.parse(lastFetchAccount.value) + 1
         : 0;
     _log.fine("last fetched account $lastFetchAccount");

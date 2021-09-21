@@ -1,18 +1,4 @@
 {
-  "microsoft": {
-    "clientId": "6e52a878-7251-4669-8e42-70655255a263",
-    "authorizationEndpoint": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
-    "tokenEndpoint": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
-    "discoveryUrl": "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
-    "userinfo_endpoint": "https://graph.microsoft.com/oidc/userinfo"
-  },
-  "oauth0": {
-    "clientId": "9ShsNLQbVHiBQxAhpVekjG22jlhACLyW",
-    "authorizationEndpoint": "https://dev-gx7yq-57.us.auth0.com/authorize",
-    "tokenEndpoint": "https://dev-gx7yq-57.us.auth0.com/oauth/token",
-    "discoveryUrl": "https://dev-gx7yq-57.us.auth0.com/.well-known/openid-configuration",
-    "userinfo_endpoint": "https://dev-gx7yq-57.us.auth0.com/userinfo"
-  },
   "google": {
     "androidClientId": "240428403253-8bof2prkdatnsm8d2msgq2r81r12p5np.apps.googleusercontent.com",
     "iosClientId": "240428403253-v4qk9lt2l07cc8am12gggocpbbsjdvl7.apps.googleusercontent.com",

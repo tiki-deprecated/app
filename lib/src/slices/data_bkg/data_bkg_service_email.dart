@@ -104,7 +104,7 @@ revolution today.<br />
     DataBkgModelPage<String> res = await emailProviderService
         .emailFetchList(account, query: query, page: page, maxResults: 5);
     if (res.data != null) {
-      List<String> known = (await _dataBkgService.apiEmailMsgService
+      List known = (await _dataBkgService.apiEmailMsgService
               .getByExtMessageIds(res.data!))
           .map((message) => message.extMessageId!)
           .toList();
