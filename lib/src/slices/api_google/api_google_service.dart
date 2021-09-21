@@ -3,6 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/config/config_sentry.dart';
+import 'package:app/src/utils/api/helper_api_utils.dart';
+import 'package:http/http.dart';
+
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
@@ -16,8 +20,11 @@ class ApiGoogleService implements ApiAuthServiceProviderInterface {
 
   @override
   Future<void> logOut(ApiAuthServiceAccountModel account) async {
-    // TODO remove all data
-    await _apiAuthService.signOut(account);
+    Response rsp = await ConfigSentry.http.post(Uri.parse(
+        'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
+    if (HelperApiUtils.is2xx(rsp.statusCode)) {
+      await _apiAuthService.signOut(account);
+    }
   }
 
   @override
