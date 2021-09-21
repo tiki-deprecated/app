@@ -11,7 +11,6 @@ import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -65,7 +64,7 @@ class DataBkgService extends ChangeNotifier {
         _apiAuthService.getProvider(account);
     if (provider != null) {
       _log.fine("fetch data for " + account.provider!);
-      if (provider is ApiAuthServiceEmailInterface) {
+      if (provider.emailProvider != null) {
         _log.fine("fetch email data for " + account.email!);
         await _fetchEmail(provider, account);
       }
@@ -89,7 +88,7 @@ class DataBkgService extends ChangeNotifier {
   Future<void> _fetchEmail(ApiAuthServiceProviderInterface provider,
       ApiAuthServiceAccountModel account) async {
     DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(this);
-    await dataBkgServiceEmail.emailFetchList(account);
+    await dataBkgServiceEmail.index(account);
     await _apiAppDataService.save(ApiAppDataKey.bkgSvEmailLastFetch,
         DateTime.now().millisecondsSinceEpoch.toString());
     await _apiAppDataService.save(ApiAppDataKey.gmailPage, '');

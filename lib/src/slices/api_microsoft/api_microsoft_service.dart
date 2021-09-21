@@ -22,4 +22,8 @@ class ApiMicrosoftService implements ApiAuthServiceProviderInterface {
     // TODO: implement logOut
     throw UnimplementedError();
   }
+
+  @override
+  // TODO: implement emailProvider
+  get emailProvider => throw UnimplementedError();
 }

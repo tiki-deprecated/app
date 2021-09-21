@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
@@ -67,9 +66,10 @@ class DataScreenService extends ChangeNotifier {
         _accounts.where((account) => account.accountId == accountId).toList();
     if (accounts.isNotEmpty) {
       ApiAuthServiceAccountModel account = accounts[0];
-      ApiAuthServiceEmailInterface provider =
-          _apiAuthService.getProvider(account) as ApiAuthServiceEmailInterface;
-      return await provider.getInfoCards(account);
+      ApiAuthServiceProviderInterface? provider =
+          _apiAuthService.getProvider(account);
+      if (provider?.emailProvider != null)
+        return await provider!.emailProvider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
   }

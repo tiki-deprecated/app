@@ -3,20 +3,26 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:http/http.dart';
 
+import '../../config/config_sentry.dart';
+import '../../utils/api/helper_api_utils.dart';
+import '../api_app_data/api_app_data_service.dart';
 import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
-import 'model/api_google_model.dart';
+import 'api_google_service_email.dart';
 
 class ApiGoogleService implements ApiAuthServiceProviderInterface {
-  final ApiGoogleModel model = ApiGoogleModel();
   final ApiAuthService _apiAuthService;
+  final ApiGoogleServiceEmail _apiGoogleServiceEmail;
 
-  ApiGoogleService(this._apiAuthService);
+  ApiGoogleService(
+      {required ApiAuthService apiAuthService,
+      required ApiAppDataService apiAppDataService})
+      : this._apiAuthService = apiAuthService,
+        this._apiGoogleServiceEmail =
+            ApiGoogleServiceEmail(apiAppDataService: apiAppDataService);
 
   @override
   Future<void> logOut(ApiAuthServiceAccountModel account) async {
@@ -26,6 +32,8 @@ class ApiGoogleService implements ApiAuthServiceProviderInterface {
       await _apiAuthService.signOut(account);
     }
   }
+
+  get emailProvider => _apiGoogleServiceEmail;
 
   @override
   Future<void> logIn(ApiAuthServiceAccountModel _account) async {

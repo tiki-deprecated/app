@@ -1,4 +1,4 @@
-class ApiGoogleModel {
+class ApiGoogleModelEmail {
   List<String> gmailCategoryList = [
     'category:promotions',
     'category:updates',

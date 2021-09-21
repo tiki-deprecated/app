@@ -4,10 +4,8 @@ import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
-import 'api_microsoft_service.dart';
 
-class ApiMicrosoftServiceEmail extends ApiMicrosoftService
-    implements ApiAuthServiceEmailInterface {
+class ApiMicrosoftServiceEmail implements ApiAuthServiceEmailInterface {
   ApiMicrosoftServiceEmail(
       {required ApiAuthServiceAccountModel account,
       required ApiAuthService apiAuthService,
@@ -67,4 +65,6 @@ class ApiMicrosoftServiceEmail extends ApiMicrosoftService
     // TODO: implement getInfoCards
     throw UnimplementedError();
   }
+
+  get emailProvider => null;
 }

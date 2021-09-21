@@ -8,8 +8,7 @@ import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
-import '../api_google/api_google_service_email.dart';
-import '../api_microsoft/api_microsoft_service_email.dart';
+import '../api_google/api_google_service.dart';
 import 'model/api_auth_service_account_model.dart';
 import 'model/api_auth_service_provider_model.dart';
 import 'model/api_auth_sv_provider_interface.dart';
@@ -171,15 +170,8 @@ class ApiAuthService {
       ApiAuthServiceAccountModel account) {
     switch (account.provider) {
       case "google":
-        return ApiGoogleServiceEmail(
-            account: account,
-            apiAppDataService: _apiAppDataService,
-            apiAuthService: this);
-      case "microsoft":
-        return ApiMicrosoftServiceEmail(
-            account: account,
-            apiAppDataService: _apiAppDataService,
-            apiAuthService: this);
+        return ApiGoogleService(
+            apiAppDataService: _apiAppDataService, apiAuthService: this);
       default:
         return null;
     }

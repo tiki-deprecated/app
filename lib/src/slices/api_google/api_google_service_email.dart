@@ -7,27 +7,22 @@ import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
-import '../api_auth_service/api_auth_service.dart';
 import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
-import 'api_google_service.dart';
+import 'model/api_google_model_email.dart';
 import 'repository/api_google_repository_info.dart';
 
-class ApiGoogleServiceEmail extends ApiGoogleService
-    implements ApiAuthServiceEmailInterface {
+class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
+  final ApiGoogleModelEmail model = ApiGoogleModelEmail();
   ApiAppDataService _apiAppDataService;
   var _log = Logger('ApiGoogleServiceEmail');
 
-  ApiGoogleServiceEmail(
-      {required ApiAuthServiceAccountModel account,
-      required ApiAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService})
-      : _apiAppDataService = apiAppDataService,
-        super(apiAuthService);
+  ApiGoogleServiceEmail({required ApiAppDataService apiAppDataService})
+      : _apiAppDataService = apiAppDataService;
 
   @override
   Future<DataBkgModelPage<String>> emailFetchList(
