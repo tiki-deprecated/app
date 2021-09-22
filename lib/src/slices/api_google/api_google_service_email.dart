@@ -131,14 +131,6 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
     return false;
   }
 
-  String domainFromEmail(String email) {
-    List<String> atSplit = email.split('@');
-    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-    return periodSplit[periodSplit.length - 2] +
-        "." +
-        periodSplit[periodSplit.length - 1];
-  }
-
   Future<DataBkgModelPage<String>> _gmailFetch(ApiOAuthModelAccount account,
       {String? query, int? maxResults, String? page}) async {
     GmailApi? gmailApi = await _getGmailApi(account);

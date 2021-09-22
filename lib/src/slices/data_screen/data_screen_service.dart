@@ -17,18 +17,16 @@ import 'data_screen_presenter.dart';
 import 'model/data_screen_model.dart';
 
 class DataScreenService extends ChangeNotifier {
-  late final DataScreenModel model;
+  late final DataScreenModel _model;
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
   final ApiOAuthService _apiAuthService;
 
-  late List<ApiOAuthModelAccount> _accounts = List.empty(growable: true);
-
-  get accounts => _accounts;
+  get accounts => _model.accounts;
 
   DataScreenService(this._dataBkgService, this._apiAuthService) {
-    model = DataScreenModel();
+    _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
     _loadAccounts();
@@ -48,14 +46,15 @@ class DataScreenService extends ChangeNotifier {
       ApiOAuthInterfaceProvider? provider =
           _apiAuthService.getProvider(account);
       if (provider != null) await provider.logOut(account);
-      _accounts.removeWhere((account) => account.accountId == accountId);
+      _model.accounts.removeWhere((account) => account.accountId == accountId);
       notifyListeners();
     }
   }
 
   Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
-    List<ApiOAuthModelAccount> accounts =
-        _accounts.where((account) => account.accountId == accountId).toList();
+    List<ApiOAuthModelAccount> accounts = _model.accounts
+        .where((account) => account.accountId == accountId)
+        .toList();
     if (accounts.isNotEmpty) {
       ApiOAuthModelAccount account = accounts[0];
       DataBkgInterfaceProvider? provider =
@@ -71,7 +70,9 @@ class DataScreenService extends ChangeNotifier {
   }
 
   List<ApiOAuthModelAccount> getAccounts(String provider) {
-    return _accounts.where((account) => account.provider == provider).toList();
+    return _model.accounts
+        .where((account) => account.provider == provider)
+        .toList();
   }
 
   void _addAccount(ApiOAuthModelAccount account) {
@@ -79,14 +80,14 @@ class DataScreenService extends ChangeNotifier {
         _apiAuthService.getProvider(account);
     if (providerService != null) {
       providerService.logIn(account);
-      _accounts.add(account);
+      _model.accounts.add(account);
       _dataBkgService.fetchData(account);
     }
     notifyListeners();
   }
 
   Future<void> _loadAccounts() async {
-    _accounts = await _apiAuthService.getAllAccounts();
+    _model.accounts = await _apiAuthService.getAllAccounts();
     notifyListeners();
   }
 }
