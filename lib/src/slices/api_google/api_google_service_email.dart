@@ -68,7 +68,6 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
 
   @override
   Future<int?> getLastFetch() async {
-    return null;
     ApiAppDataModel? appDataGmailLastFetch =
         await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
     return appDataGmailLastFetch != null

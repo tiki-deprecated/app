@@ -48,7 +48,7 @@ class DecisionScreenService extends ChangeNotifier {
 
   //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
-    bool isConnected = (await _apiAuthService.getAllAccounts()).isNotEmpty;
+    bool isConnected = _apiAuthService.providers.isNotEmpty;
     if (isConnected) await _generateSpamCards();
     await _addTests();
     this.model.isLinked = isConnected;

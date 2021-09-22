@@ -70,4 +70,10 @@ class ApiOAuthRepositoryAccount {
     if (rows.isEmpty) return [];
     return rows.map((e) => ApiOAuthModelAccount.fromMap(e)).toList();
   }
+
+  Future<ApiOAuthModelAccount?> getSingleAccount() async {
+    List<ApiOAuthModelAccount> accounts = await getAll();
+    if (accounts.isEmpty) return null;
+    return accounts.first;
+  }
 }

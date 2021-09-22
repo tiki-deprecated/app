@@ -48,7 +48,7 @@ class DataBkgServiceEmail {
           ' fetch starting on: ' +
           DateTime.now().toIso8601String());
       String query = await emailInterface.getQuery();
-      await _checkEmailFetchList(account, query: query);
+      await _checkEmailFetchList(account, emailInterface, query: query);
       await emailInterface.afterFetchList();
       _log.fine(
           'Email fetch completed on: ' + DateTime.now().toIso8601String());
@@ -107,34 +107,31 @@ revolution today.<br />
     }
   }
 
-  Future<void> _checkEmailFetchList(ApiOAuthModelAccount account,
+  Future<void> _checkEmailFetchList(
+      ApiOAuthModelAccount account, DataBkgInterfaceEmail emailInterface,
       {String query = ''}) async {
-    String? page;
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
-    if (emailInterface != null) {
-      page = await emailInterface.getPage();
-      await _checkEmailFetchListPage(account, query: query, page: page);
-    }
+    String page = await emailInterface.getPage();
+    await _checkEmailFetchListPage(account, emailInterface,
+        query: query, page: page);
   }
 
-  Future<void> _checkEmailFetchListPage(ApiOAuthModelAccount account,
+  Future<void> _checkEmailFetchListPage(
+      ApiOAuthModelAccount account, DataBkgInterfaceEmail emailInterface,
       {String? page, String? query}) async {
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
-    if (emailInterface != null) {
-      DataBkgModelPage<String> res = await emailInterface
-          .emailFetchList(account, query: query, page: page, maxResults: 5);
-      if (res.data != null) {
-        List known = (await _apiEmailMsgService.getByExtMessageIds(res.data!))
-            .map((message) => message.extMessageId!)
-            .toList();
-        List<String> unknown =
-            res.data!.where((message) => !known.contains(message)).toList();
-        await _checkEmailFetchMessage(account, unknown);
-      }
-      await _apiAppDataService.save(ApiAppDataKey.gmailPage, res.next ?? '');
-      if (res.next != null)
-        return _checkEmailFetchListPage(account, page: res.next, query: query);
+    DataBkgModelPage<String> res = await emailInterface.emailFetchList(account,
+        query: query, page: page, maxResults: 5);
+    if (res.data != null) {
+      List known = (await _apiEmailMsgService.getByExtMessageIds(res.data!))
+          .map((message) => message.extMessageId!)
+          .toList();
+      List<String> unknown =
+          res.data!.where((message) => !known.contains(message)).toList();
+      await _checkEmailFetchMessage(account, unknown);
     }
+    await _apiAppDataService.save(ApiAppDataKey.gmailPage, res.next ?? '');
+    if (res.next != null)
+      return _checkEmailFetchListPage(account, emailInterface,
+          page: res.next, query: query);
   }
 
   Future<void> _checkEmailFetchMessage(
@@ -154,7 +151,6 @@ revolution today.<br />
           await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
           _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
-          // TODO check removed notifyListeners();
         } else {
           Set<ApiEmailMsgModel> senderMessages =
               await _checkEmailNewSender(account, message.sender!.email!);
@@ -198,8 +194,8 @@ revolution today.<br />
         message.sender = inserted;
         await _apiEmailMsgService.upsert(message);
       }
+      await _saveSender(sender);
       _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
-      // TODO check notifyListeners();
     }
     return messages;
   }
@@ -231,7 +227,7 @@ revolution today.<br />
   Future<DataBkgInterfaceEmail?> _getEmailInterface(
       ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? apiAuthProvider =
-        await _apiAuthService.getProvider(account);
+        await _apiAuthService.providers[account.provider];
     DataBkgInterfaceProvider? providerService =
         apiAuthProvider as DataBkgInterfaceProvider?;
     return providerService?.emailProvider;

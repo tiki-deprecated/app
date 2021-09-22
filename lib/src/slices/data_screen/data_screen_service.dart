@@ -23,40 +23,35 @@ class DataScreenService extends ChangeNotifier {
   final DataBkgService _dataBkgService;
   final ApiOAuthService _apiAuthService;
 
-  get accounts => _model.accounts;
+  get account => _model.account;
 
   DataScreenService(this._dataBkgService, this._apiAuthService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
-    _loadAccounts();
+    _loadAccount();
   }
 
   Future<void> linkAccount(String provider) async {
-    ApiOAuthModelAccount? account = await _apiAuthService.linkAccount(provider);
+    ApiOAuthModelAccount? account = await _apiAuthService.signIn(provider);
     if (account != null) {
       this._addAccount(account);
     }
   }
 
-  Future<void> removeAccount(int accountId) async {
-    ApiOAuthModelAccount? account =
-        await _apiAuthService.getAccountById(accountId);
-    if (account != null) {
-      ApiOAuthInterfaceProvider? provider =
-          _apiAuthService.getProvider(account);
-      if (provider != null) await provider.logOut(account);
-      _model.accounts.removeWhere((account) => account.accountId == accountId);
-      notifyListeners();
-    }
+  Future<void> removeAccount() async {
+    ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
+    if (account != null) _apiAuthService.signOut(account);
+    _model.account.removeWhere((account) => account.accountId == accountId);
+    notifyListeners();
   }
 
   Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
-    List<ApiOAuthModelAccount> accounts = _model.accounts
+    List<ApiOAuthModelAccount> account = _model.account
         .where((account) => account.accountId == accountId)
         .toList();
-    if (accounts.isNotEmpty) {
-      ApiOAuthModelAccount account = accounts[0];
+    if (account.isNotEmpty) {
+      ApiOAuthModelAccount account = account[0];
       DataBkgInterfaceProvider? provider =
           _apiAuthService.getProvider(account) as DataBkgInterfaceProvider?;
       if (provider?.emailProvider != null)

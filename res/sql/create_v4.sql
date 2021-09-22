@@ -20,11 +20,3 @@ CREATE TABLE auth_service_account (
     created_epoch INTEGER NOT NULL,
     modified_epoch INTEGER NOT NULL
 );
-
-
--- -----------------------------------------------------------------------
--- SENDER
--- TODO Sqlite doesn't support add constraint. Should us DROP/recreate table?
--- -----------------------------------------------------------------------
-ALTER TABLE sender
-    ADD COLUMN account_id INTEGER AFTER sender_id;

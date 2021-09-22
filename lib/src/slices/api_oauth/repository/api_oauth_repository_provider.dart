@@ -21,28 +21,18 @@ import '../model/api_oauth_model_provider.dart';
 ///
 class ApiOAuthRepositoryProvider {
   static const _dbAuthProviders = "res/json/auth_providers_db.json";
-  Map? providers;
+  late final Map<String, ApiOAuthModelProvider> _providers;
 
   ApiOAuthRepositoryProvider() {
     _loadProviders();
   }
 
+  Map<String, ApiOAuthModelProvider> get providers => _providers;
+
   Future<void> _loadProviders() async {
     String jsonString = await rootBundle.loadString(_dbAuthProviders);
-    this.providers = jsonDecode(jsonString);
-  }
-
-  static Future<Map<String, dynamic>> getProviders() async {
-    String jsonString = await rootBundle.loadString(_dbAuthProviders);
-    return jsonDecode(jsonString);
-  }
-
-  Future<ApiOAuthModelProvider?> getProvider(String providerName) async {
-    if (providers == null) {
-      await _loadProviders();
-    }
-    ApiOAuthModelProvider? providerModel =
-        ApiOAuthModelProvider.fromMap(providers?[providerName]);
-    return providerModel;
+    Map<String, Map<String, dynamic>> jsonMap = jsonDecode(jsonString);
+    _providers = jsonMap.map(
+        (key, value) => MapEntry(key, ApiOAuthModelProvider.fromMap(value)));
   }
 }

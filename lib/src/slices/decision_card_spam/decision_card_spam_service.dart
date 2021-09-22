@@ -91,21 +91,21 @@ class DecisionCardSpamService extends ChangeNotifier {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
-      ApiOAuthModelAccount account =
-          (await _apiAuthService.getAccountById(sender.accountId!))!;
-      String? mailTo = sender.unsubscribeMailTo;
-      if (mailTo != null) {
-        String list = sender.name ?? sender.email!;
-        await _apiEmailSenderService.markAsUnsubscribed(sender);
-        bool unsubscribed = false;
-        try {
+      try {
+        ApiOAuthModelAccount account = (await _apiAuthService.getAccount())!;
+        String? mailTo = sender.unsubscribeMailTo;
+        if (mailTo != null) {
+          String list = sender.name ?? sender.email!;
+          await _apiEmailSenderService.markAsUnsubscribed(sender);
+          bool unsubscribed = false;
           unsubscribed =
               await _dataBkgService.email.unsubscribe(account, mailTo, list);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());
-        } catch (e) {
-          _log.warning('Failed to unsubscribe from: ' + mailTo, e);
         }
+      } catch (e) {
+        _log.warning(
+            'Failed to unsubscribe from: ' + sender.unsubscribeMailTo!, e);
       }
     }
   }

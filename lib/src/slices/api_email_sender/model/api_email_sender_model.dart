@@ -7,7 +7,6 @@ import '../../api_company/model/api_company_model_local.dart';
 
 class ApiEmailSenderModel {
   int? senderId;
-  int? accountId;
   ApiCompanyModelLocal? company;
   String? name;
   String? email;
@@ -21,7 +20,6 @@ class ApiEmailSenderModel {
 
   ApiEmailSenderModel(
       {this.senderId,
-      this.accountId,
       this.company,
       this.name,
       this.email,
@@ -37,7 +35,6 @@ class ApiEmailSenderModel {
 
   ApiEmailSenderModel.fromMap(map) {
     this.senderId = map['sender_id'];
-    this.accountId = map['account_id'];
     this.company = ApiCompanyModelLocal.fromMap(map['company']);
     this.name = map['name'];
     this.email = map['email'];
@@ -59,7 +56,6 @@ class ApiEmailSenderModel {
 
   Map<String, dynamic> toMap() => {
         'sender_id': senderId,
-        'account_id': accountId,
         'company_id': company?.companyId,
         'name': name,
         'email': email,
@@ -74,6 +70,6 @@ class ApiEmailSenderModel {
 
   @override
   String toString() {
-    return 'ApiEmailSenderModel{senderId: $senderId, accountId: $accountId, company: $company, name: $name, email: $email, category: $category, unsubscribeMailTo: $unsubscribeMailTo, emailSince: $emailSince, unsubscribed: $unsubscribed, ignoreUntil: $ignoreUntil}';
+    return 'ApiEmailSenderModel{senderId: $senderId, company: $company, name: $name, email: $email, category: $category, unsubscribeMailTo: $unsubscribeMailTo, emailSince: $emailSince, unsubscribed: $unsubscribed, ignoreUntil: $ignoreUntil}';
   }
 }
