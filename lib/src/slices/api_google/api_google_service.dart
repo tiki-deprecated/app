@@ -21,11 +21,13 @@ class ApiGoogleService
     implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
   final ApiOAuthService _apiAuthService;
   final ApiGoogleServiceEmail _apiGoogleServiceEmail;
+  final ApiGoogleRepositoryInfo _apiGoogleRepositoryInfo;
 
   ApiGoogleService(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService})
       : this._apiAuthService = apiAuthService,
+        this._apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
         this._apiGoogleServiceEmail =
             ApiGoogleServiceEmail(apiAppDataService: apiAppDataService);
 
@@ -54,7 +56,7 @@ class ApiGoogleService
   @override
   Future<List<InfoCarouselCardModel>> getInfoCards(
       ApiOAuthModelAccount account) async {
-    List<dynamic>? infoJson = await ApiGoogleRepositoryInfo().gmail();
+    List<dynamic>? infoJson = await _apiGoogleRepositoryInfo.gmail();
     return HelperJson.listFromJson(
         infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
