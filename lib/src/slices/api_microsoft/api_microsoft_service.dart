@@ -1,24 +1,30 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 // ignore_for_file: unused_import
 
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
+import '../api_oauth/api_oauth_interface_provider.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_provider.dart';
 
-class ApiMicrosoftService implements ApiAuthServiceProviderInterface {
+class ApiMicrosoftService
+    implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
   @override
-  isConnected(ApiAuthServiceAccountModel account) {
+  isConnected(ApiOAuthModelAccount account) {
     // TODO: implement isConnected
     throw UnimplementedError();
   }
 
   @override
-  logIn(ApiAuthServiceAccountModel account) {
+  logIn(ApiOAuthModelAccount account) {
     // TODO: implement logIn
     throw UnimplementedError();
   }
 
   @override
-  logOut(ApiAuthServiceAccountModel account) {
+  logOut(ApiOAuthModelAccount account) {
     // TODO: implement logOut
     throw UnimplementedError();
   }
@@ -26,4 +32,10 @@ class ApiMicrosoftService implements ApiAuthServiceProviderInterface {
   @override
   // TODO: implement emailProvider
   get emailProvider => throw UnimplementedError();
+
+  @override
+  getInfoCards(ApiOAuthModelAccount account) {
+    // TODO: implement getInfoCards
+    throw UnimplementedError();
+  }
 }

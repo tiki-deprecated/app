@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'dart:convert';
 
 import 'package:flutter_appauth/flutter_appauth.dart';
@@ -9,29 +14,32 @@ import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
-import 'model/api_auth_service_account_model.dart';
-import 'model/api_auth_service_provider_model.dart';
-import 'model/api_auth_sv_provider_interface.dart';
-import 'repository/api_auth_service_repository.dart';
+import 'api_oauth_interface_provider.dart';
+import 'model/api_oauth_model_account.dart';
+import 'model/api_oauth_model_provider.dart';
+import 'repository/api_oauth_repository_account.dart';
+import 'repository/api_oauth_repository_provider.dart';
 
-class ApiAuthService {
+class ApiOAuthService {
   final FlutterAppAuth _appAuth;
-  final ApiAuthServiceRepository _apiAuthServiceRepository;
+  final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
+  final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
   final ApiAppDataService _apiAppDataService;
 
-  ApiAuthService(
+  ApiOAuthService(
       {required Database database,
       required ApiAppDataService apiAppDataService})
       : _appAuth = FlutterAppAuth(),
-        _apiAuthServiceRepository = ApiAuthServiceRepository(database),
+        _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
+        _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
         _apiAppDataService = apiAppDataService;
 
-  Future<ApiAuthServiceProviderModel?> _getProvider(providerName) async =>
-      _apiAuthServiceRepository.getProvider(providerName);
+  Future<ApiOAuthModelProvider?> _getProvider(providerName) async =>
+      _apiAuthRepositoryProvider.getProvider(providerName);
 
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode(
       {required String providerName}) async {
-    ApiAuthServiceProviderModel? provider = await _getProvider(providerName);
+    ApiOAuthModelProvider? provider = await _getProvider(providerName);
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
             provider!.authorizationEndpoint, provider.tokenEndpoint);
@@ -42,11 +50,9 @@ class ApiAuthService {
     );
   }
 
-  Future<TokenResponse?> refreshToken(
-      ApiAuthServiceAccountModel account) async {
+  Future<TokenResponse?> refreshToken(ApiOAuthModelAccount account) async {
     try {
-      ApiAuthServiceProviderModel? provider =
-          await _getProvider(account.provider!);
+      ApiOAuthModelProvider? provider = await _getProvider(account.provider!);
       return await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
           discoveryUrl: provider.discoveryUrl,
@@ -58,34 +64,33 @@ class ApiAuthService {
     }
   }
 
-  Future<ApiAuthServiceAccountModel?> getAccount(
+  Future<ApiOAuthModelAccount?> getAccount(
       String provider, String username) async {
-    return await _apiAuthServiceRepository.getByProviderAndUsername(
+    return await _apiAuthRepositoryAccount.getByProviderAndUsername(
         provider, username);
   }
 
-  Future<List<ApiAuthServiceAccountModel>> getAccountsByProvider(
+  Future<List<ApiOAuthModelAccount>> getAccountsByProvider(
       String provider) async {
-    return await _apiAuthServiceRepository.getByProvider(provider);
+    return await _apiAuthRepositoryAccount.getByProvider(provider);
   }
 
-  Future<ApiAuthServiceAccountModel?> upsert(
-      ApiAuthServiceAccountModel account) async {
+  Future<ApiOAuthModelAccount?> upsert(ApiOAuthModelAccount account) async {
     String providerName = account.provider!;
-    ApiAuthServiceAccountModel? dbAccount =
+    ApiOAuthModelAccount? dbAccount =
         account.provider != null && account.username != null
-            ? await _apiAuthServiceRepository.getByProviderAndUsername(
+            ? await _apiAuthRepositoryAccount.getByProviderAndUsername(
                 providerName, account.username!)
             : null;
     if (dbAccount != null) {
       account.accountId = dbAccount.accountId;
-      return _apiAuthServiceRepository.update(account);
+      return _apiAuthRepositoryAccount.update(account);
     }
-    return _apiAuthServiceRepository.insert(account);
+    return _apiAuthRepositoryAccount.insert(account);
   }
 
-  Future<dynamic> proxy(Future<dynamic> Function() request,
-      ApiAuthServiceAccountModel account) async {
+  Future<dynamic> proxy(
+      Future<dynamic> Function() request, ApiOAuthModelAccount account) async {
     Response rsp = await request();
     if (HelperApiUtils.isUnauthorized(rsp.statusCode)) {
       await refreshToken(account);
@@ -95,8 +100,8 @@ class ApiAuthService {
   }
 
   Future<Map?> getUserInfo(
-      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
-    ApiAuthServiceProviderModel? providerModel =
+      ApiOAuthModelAccount apiAuthServiceAccountModel) async {
+    ApiOAuthModelProvider? providerModel =
         await this._getProvider(apiAuthServiceAccountModel.provider);
     if (providerModel != null) {
       Response rsp = await proxy(
@@ -112,42 +117,40 @@ class ApiAuthService {
     return null;
   }
 
-  Future<void> signOut(
-      ApiAuthServiceAccountModel apiAuthServiceAccountModel) async {
-    await _apiAuthServiceRepository.delete(apiAuthServiceAccountModel);
+  Future<void> signOut(ApiOAuthModelAccount apiAuthServiceAccountModel) async {
+    await _apiAuthRepositoryAccount.delete(apiAuthServiceAccountModel);
   }
 
   Future<void> signOutAccounts() async {
-    List<ApiAuthServiceAccountModel> accounts = await this.getAllAccounts();
+    List<ApiOAuthModelAccount> accounts = await this.getAllAccounts();
     accounts.forEach((account) async {
-      ApiAuthServiceProviderInterface? provider = getProvider(account);
+      ApiOAuthInterfaceProvider? provider = getProvider(account);
       if (provider != null) {
         provider.logOut(account);
       }
     });
   }
 
-  Future<List<ApiAuthServiceAccountModel>> getAllAccounts() async {
-    return await _apiAuthServiceRepository.getAll();
+  Future<List<ApiOAuthModelAccount>> getAllAccounts() async {
+    return await _apiAuthRepositoryAccount.getAll();
   }
 
-  Future<ApiAuthServiceAccountModel?> getAccountById(int accountId) async {
-    return await _apiAuthServiceRepository.getById(accountId);
+  Future<ApiOAuthModelAccount?> getAccountById(int accountId) async {
+    return await _apiAuthRepositoryAccount.getById(accountId);
   }
 
-  Future<ApiAuthServiceAccountModel?> linkAccount(String providerName) async {
-    ApiAuthServiceAccountModel? account;
+  Future<ApiOAuthModelAccount?> linkAccount(String providerName) async {
+    ApiOAuthModelAccount? account;
     AuthorizationTokenResponse? tokenResponse =
         await this.authorizeAndExchangeCode(providerName: providerName);
     if (tokenResponse != null) {
-      ApiAuthServiceAccountModel apiAuthServiceAccountModel =
-          ApiAuthServiceAccountModel(
-              provider: providerName,
-              accessToken: tokenResponse.accessToken,
-              accessTokenExpiration: tokenResponse
-                  .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
-              refreshToken: tokenResponse.refreshToken,
-              shouldReconnect: 0);
+      ApiOAuthModelAccount apiAuthServiceAccountModel = ApiOAuthModelAccount(
+          provider: providerName,
+          accessToken: tokenResponse.accessToken,
+          accessTokenExpiration: tokenResponse
+              .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
+          refreshToken: tokenResponse.refreshToken,
+          shouldReconnect: 0);
       Map? userInfo = await this.getUserInfo(apiAuthServiceAccountModel);
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
@@ -161,13 +164,12 @@ class ApiAuthService {
   }
 
   List<String> getProviders() {
-    return _apiAuthServiceRepository.providers!.keys
+    return _apiAuthRepositoryProvider.providers!.keys
         .map((el) => el as String)
         .toList();
   }
 
-  ApiAuthServiceProviderInterface? getProvider(
-      ApiAuthServiceAccountModel account) {
+  ApiOAuthInterfaceProvider? getProvider(ApiOAuthModelAccount account) {
     switch (account.provider) {
       case "google":
         return ApiGoogleService(

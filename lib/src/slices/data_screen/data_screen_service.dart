@@ -6,9 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
+import '../api_oauth/api_oauth_interface_provider.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_provider.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
@@ -20,9 +21,9 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
   final DataBkgService _dataBkgService;
-  final ApiAuthService _apiAuthService;
+  final ApiOAuthService _apiAuthService;
 
-  late List<ApiAuthServiceAccountModel> _accounts = List.empty(growable: true);
+  late List<ApiOAuthModelAccount> _accounts = List.empty(growable: true);
 
   get accounts => _accounts;
 
@@ -34,18 +35,17 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<void> linkAccount(String provider) async {
-    ApiAuthServiceAccountModel? account =
-        await _apiAuthService.linkAccount(provider);
+    ApiOAuthModelAccount? account = await _apiAuthService.linkAccount(provider);
     if (account != null) {
       this._addAccount(account);
     }
   }
 
   Future<void> removeAccount(int accountId) async {
-    ApiAuthServiceAccountModel? account =
+    ApiOAuthModelAccount? account =
         await _apiAuthService.getAccountById(accountId);
     if (account != null) {
-      ApiAuthServiceProviderInterface? provider =
+      ApiOAuthInterfaceProvider? provider =
           _apiAuthService.getProvider(account);
       if (provider != null) await provider.logOut(account);
       _accounts.removeWhere((account) => account.accountId == accountId);
@@ -54,14 +54,14 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
-    List<ApiAuthServiceAccountModel> accounts =
+    List<ApiOAuthModelAccount> accounts =
         _accounts.where((account) => account.accountId == accountId).toList();
     if (accounts.isNotEmpty) {
-      ApiAuthServiceAccountModel account = accounts[0];
-      ApiAuthServiceProviderInterface? provider =
-          _apiAuthService.getProvider(account);
+      ApiOAuthModelAccount account = accounts[0];
+      DataBkgInterfaceProvider? provider =
+          _apiAuthService.getProvider(account) as DataBkgInterfaceProvider?;
       if (provider?.emailProvider != null)
-        return await provider!.emailProvider!.getInfoCards(account);
+        return await provider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
   }
@@ -70,12 +70,12 @@ class DataScreenService extends ChangeNotifier {
     return _apiAuthService.getProviders();
   }
 
-  List<ApiAuthServiceAccountModel> getAccounts(String provider) {
+  List<ApiOAuthModelAccount> getAccounts(String provider) {
     return _accounts.where((account) => account.provider == provider).toList();
   }
 
-  void _addAccount(ApiAuthServiceAccountModel account) {
-    ApiAuthServiceProviderInterface? providerService =
+  void _addAccount(ApiOAuthModelAccount account) {
+    ApiOAuthInterfaceProvider? providerService =
         _apiAuthService.getProvider(account);
     if (providerService != null) {
       providerService.logIn(account);

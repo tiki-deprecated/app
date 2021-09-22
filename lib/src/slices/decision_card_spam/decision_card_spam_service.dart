@@ -8,13 +8,13 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_service.dart';
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
@@ -26,7 +26,7 @@ class DecisionCardSpamService extends ChangeNotifier {
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
   final ApiCompanyService _apiCompanyService;
-  final ApiAuthService _apiAuthService;
+  final ApiOAuthService _apiAuthService;
 
   final DataBkgService _dataBkgService;
 
@@ -35,7 +35,7 @@ class DecisionCardSpamService extends ChangeNotifier {
       required ApiEmailMsgService apiEmailMsgService,
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
-      required ApiAuthService apiAuthService,
+      required ApiOAuthService apiAuthService,
       required DataBkgService dataBkgService})
       : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
@@ -91,7 +91,7 @@ class DecisionCardSpamService extends ChangeNotifier {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
-      ApiAuthServiceAccountModel account =
+      ApiOAuthModelAccount account =
           (await _apiAuthService.getAccountById(sender.accountId!))!;
       String? mailTo = sender.unsubscribeMailTo;
       if (mailTo != null) {

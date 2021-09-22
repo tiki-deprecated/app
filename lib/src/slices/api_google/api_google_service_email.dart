@@ -1,22 +1,24 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
-import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_email_interface.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_email.dart';
 import '../data_bkg/model/data_bkg_model_page.dart';
-import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'model/api_google_model_email.dart';
-import 'repository/api_google_repository_info.dart';
 
-class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
+class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
   final ApiGoogleModelEmail model = ApiGoogleModelEmail();
   ApiAppDataService _apiAppDataService;
   var _log = Logger('ApiGoogleServiceEmail');
@@ -25,8 +27,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
       : _apiAppDataService = apiAppDataService;
 
   @override
-  Future<DataBkgModelPage<String>> emailFetchList(
-      ApiAuthServiceAccountModel account,
+  Future<DataBkgModelPage<String>> emailFetchList(ApiOAuthModelAccount account,
       {String? query,
       String? page,
       int? retries = 3,
@@ -48,7 +49,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
 
   @override
   Future<ApiEmailMsgModel?> emailFetchMessage(
-      ApiAuthServiceAccountModel account, String messageId,
+      ApiOAuthModelAccount account, String messageId,
       {String format = "metadata",
       List<String>? headers,
       int retries = 3}) async {
@@ -69,7 +70,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
   Future<int?> getLastFetch() async {
     return null;
     ApiAppDataModel? appDataGmailLastFetch =
-    await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
+        await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
     return appDataGmailLastFetch != null
         ? int.parse(appDataGmailLastFetch.value)
         : null;
@@ -120,7 +121,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
 
   @override
   Future<bool> sendRawMessage(
-      ApiAuthServiceAccountModel account, String getBase64Email) async {
+      ApiOAuthModelAccount account, String getBase64Email) async {
     GmailApi? gmailApi = await _getGmailApi(account);
     if (gmailApi != null) {
       await gmailApi.users.messages
@@ -138,11 +139,8 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
         periodSplit[periodSplit.length - 1];
   }
 
-  Future<DataBkgModelPage<String>> _gmailFetch(
-      ApiAuthServiceAccountModel account,
-      {String? query,
-      int? maxResults,
-      String? page}) async {
+  Future<DataBkgModelPage<String>> _gmailFetch(ApiOAuthModelAccount account,
+      {String? query, int? maxResults, String? page}) async {
     GmailApi? gmailApi = await _getGmailApi(account);
     List<String>? messages;
     ListMessagesResponse? emails = await gmailApi?.users.messages
@@ -188,7 +186,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
     return queryBuffer;
   }
 
-  Future<GmailApi?> _getGmailApi(ApiAuthServiceAccountModel account) async {
+  Future<GmailApi?> _getGmailApi(ApiOAuthModelAccount account) async {
     if (account.accessToken != null) {
       String token = account.accessToken!;
       DateTime tokenExp = account.accessTokenExpiration != null
@@ -213,7 +211,7 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
   }
 
   Future<ApiEmailMsgModel?> _gmailFetchMessage(
-      ApiAuthServiceAccountModel account, String messageId,
+      ApiOAuthModelAccount account, String messageId,
       {String format = "metadata", List<String>? headers}) async {
     GmailApi? gmailApi = await _getGmailApi(account);
     if (gmailApi != null) {
@@ -305,14 +303,5 @@ class ApiGoogleServiceEmail implements ApiAuthServiceEmailInterface {
       });
     }
     return sender;
-  }
-
-  // TODO in the future we'll have account specific infocards
-  @override
-  Future<List<InfoCarouselCardModel>> getInfoCards(
-      ApiAuthServiceAccountModel account) async {
-    List<dynamic>? infoJson = await ApiGoogleRepositoryInfo().gmail();
-    return HelperJson.listFromJson(
-        infoJson, (s) => InfoCarouselCardModel.fromJson(s));
   }
 }

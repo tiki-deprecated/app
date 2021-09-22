@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/link_account/link_account.dart';
-import '../../api_auth_service/model/api_auth_service_account_model.dart';
+import '../../api_oauth/model/api_oauth_model_account.dart';
 import '../data_screen_service.dart';
 
 class DecisionScreenLayoutAccounts extends StatelessWidget {
@@ -13,9 +13,8 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
     List<String> providers = service.getProviders();
     return Column(
         children: providers.map((provider) {
-      List<ApiAuthServiceAccountModel> accounts = service.getAccounts(provider);
-      ApiAuthServiceAccountModel? account =
-          accounts.isEmpty ? null : accounts[0];
+      List<ApiOAuthModelAccount> accounts = service.getAccounts(provider);
+      ApiOAuthModelAccount? account = accounts.isEmpty ? null : accounts[0];
       return Container(
         margin: EdgeInsets.only(top: 2.h),
         child: LinkAccount(

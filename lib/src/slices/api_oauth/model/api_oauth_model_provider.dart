@@ -1,18 +1,11 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'dart:io';
 
-/// The Provider Model for Auth Service
-///
-/// This provider should be defined at res/json/auth_providers_db.json in the
-/// following format:
-///     "provider_name" : {
-///         "clientId" : the client identifier for the provider
-///         "authorizationEndpoint" : auth url
-///         "tokenEndpoint" : token url
-///         "redirectUrl" : redirect url (default [ApiAuthServiceModel.redirectUrl])
-///         "discoveryUrl" : discovery url
-///     }
-///
-class ApiAuthServiceProviderModel {
+class ApiOAuthModelProvider {
   static const String _defaultRedirectUri = "com.mytiki.app:/oauth";
   late String clientId;
   late String authorizationEndpoint;
@@ -22,7 +15,7 @@ class ApiAuthServiceProviderModel {
   late String userInfoEndpoint;
   late List<String> scopes;
 
-  ApiAuthServiceProviderModel.fromMap(map) {
+  ApiOAuthModelProvider.fromMap(map) {
     clientId = Platform.isIOS ? map['iosClientId'] : map['androidClientId'];
     authorizationEndpoint = map['authorizationEndpoint'];
     tokenEndpoint = map['tokenEndpoint'];

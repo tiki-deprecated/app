@@ -1,4 +1,9 @@
-class ApiAuthServiceAccountModel {
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+class ApiOAuthModelAccount {
   int? accountId;
   String? username;
   String? displayName;
@@ -12,7 +17,7 @@ class ApiAuthServiceAccountModel {
   DateTime? modified;
   DateTime? created;
 
-  ApiAuthServiceAccountModel(
+  ApiOAuthModelAccount(
       {this.accountId,
       this.username,
       this.email,
@@ -24,7 +29,7 @@ class ApiAuthServiceAccountModel {
       this.refreshTokenExpiration,
       this.shouldReconnect});
 
-  ApiAuthServiceAccountModel.fromMap(map) {
+  ApiOAuthModelAccount.fromMap(map) {
     this.accountId = map['account_id'];
     this.username = map['username'];
     this.displayName = map['display_name'];

@@ -9,22 +9,22 @@ import 'package:logging/logging.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import 'data_bkg_interface_provider.dart';
 import 'data_bkg_service_email.dart';
 
 class DataBkgService extends ChangeNotifier {
   final _log = Logger('DataBkgService');
   final ApiAppDataService _apiAppDataService;
-  final ApiAuthService _apiAuthService;
+  final ApiOAuthService _apiAuthService;
   late final DataBkgServiceEmail email;
 
   DataBkgService(
-      {required ApiAuthService apiAuthService,
+      {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
@@ -38,11 +38,11 @@ class DataBkgService extends ChangeNotifier {
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService);
 
-  Future<void> index(List<ApiAuthServiceAccountModel> accounts) async {
+  Future<void> index(List<ApiOAuthModelAccount> accounts) async {
     _log.fine("fetch all data started");
     int startIndex = await _getStartIndex();
     for (int i = startIndex; i < accounts.length; i++) {
-      ApiAuthServiceAccountModel account = accounts[i];
+      ApiOAuthModelAccount account = accounts[i];
       await fetchData(account);
       await _apiAppDataService.save(
           ApiAppDataKey.dataBkgLastAccount, i.toString());
@@ -50,21 +50,21 @@ class DataBkgService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchData(ApiAuthServiceAccountModel account) async {
-    ApiAuthServiceProviderInterface? provider =
-        _apiAuthService.getProvider(account);
+  Future<void> fetchData(ApiOAuthModelAccount account) async {
+    DataBkgInterfaceProvider? provider =
+        _apiAuthService.getProvider(account) as DataBkgInterfaceProvider?;
     if (provider != null) {
       _log.fine("fetch data for " + account.provider!);
       if (provider.emailProvider != null) {
         _log.fine("fetch email data for " + account.email!);
-        await _fetchEmail(provider, account);
+        await _fetchEmail(account);
       }
     }
     notifyListeners();
   }
 
   Future<int> _getStartIndex() async {
-    List<ApiAuthServiceAccountModel> accounts =
+    List<ApiOAuthModelAccount> accounts =
         await _apiAuthService.getAllAccounts();
     ApiAppDataModel? lastFetchAccount =
         await _apiAppDataService.getByKey(ApiAppDataKey.dataBkgLastAccount);
@@ -76,8 +76,7 @@ class DataBkgService extends ChangeNotifier {
     return currentFetchAccount;
   }
 
-  Future<void> _fetchEmail(ApiAuthServiceProviderInterface provider,
-      ApiAuthServiceAccountModel account) async {
+  Future<void> _fetchEmail(ApiOAuthModelAccount account) async {
     await email.index(account);
     await _apiAppDataService.save(ApiAppDataKey.bkgSvEmailLastFetch,
         DateTime.now().millisecondsSinceEpoch.toString());

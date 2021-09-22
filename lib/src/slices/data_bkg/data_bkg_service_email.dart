@@ -4,16 +4,17 @@ import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
-import '../api_auth_service/api_auth_service.dart';
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_sv_email_interface.dart';
-import '../api_auth_service/model/api_auth_sv_provider_interface.dart';
 import '../api_company/api_company_service.dart';
 import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_oauth/api_oauth_interface_provider.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import 'data_bkg_interface_email.dart';
+import 'data_bkg_interface_provider.dart';
 import 'model/data_bkg_model_page.dart';
 
 class DataBkgServiceEmail {
@@ -22,42 +23,39 @@ class DataBkgServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
-  final ApiAuthService _apiAuthService;
+  final ApiOAuthService _apiAuthService;
 
   DataBkgServiceEmail(
       {required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
-      required ApiAuthService apiAuthService})
+      required ApiOAuthService apiAuthService})
       : this._apiAuthService = apiAuthService,
         this._apiCompanyService = apiCompanyService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiAppDataService = apiAppDataService;
 
-  Future<void> index(ApiAuthServiceAccountModel account,
+  Future<void> index(ApiOAuthModelAccount account,
       {bool fetchAll = false, bool force = false}) async {
     String providerName = account.provider!;
-    ApiAuthServiceProviderInterface? providerService =
-        await _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
-    if (emailProviderService == null) {
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface == null) {
       _log.warning(providerName + ' email Provider Service is null');
     } else {
       _log.fine(providerName +
           ' fetch starting on: ' +
           DateTime.now().toIso8601String());
-      String query = await emailProviderService.getQuery();
+      String query = await emailInterface.getQuery();
       await _checkEmailFetchList(account, query: query);
-      await emailProviderService.afterFetchList();
+      await emailInterface.afterFetchList();
       _log.fine(
           'Email fetch completed on: ' + DateTime.now().toIso8601String());
     }
   }
 
-  Future<bool> unsubscribe(ApiAuthServiceAccountModel account,
+  Future<bool> unsubscribe(ApiOAuthModelAccount account,
       String unsubscribeMailTo, String list) async {
     Uri uri = Uri.parse(unsubscribeMailTo);
     String to = uri.path;
@@ -88,13 +86,10 @@ revolution today.<br />
 </body>
 </html>
 ''';
-    ApiAuthServiceProviderInterface? providerService =
-        _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
-    if (emailProviderService != null)
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface != null)
       await _apiAuthService.proxy(
-          () => emailProviderService.sendRawMessage(
+          () => emailInterface.sendRawMessage(
               account, base64UrlEncode(utf8.encode(email))),
           account);
     return true;
@@ -112,27 +107,21 @@ revolution today.<br />
     }
   }
 
-  Future<void> _checkEmailFetchList(ApiAuthServiceAccountModel account,
+  Future<void> _checkEmailFetchList(ApiOAuthModelAccount account,
       {String query = ''}) async {
     String? page;
-    ApiAuthServiceProviderInterface? providerService =
-        await _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
-    if (emailProviderService != null) {
-      page = await emailProviderService.getPage();
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface != null) {
+      page = await emailInterface.getPage();
       await _checkEmailFetchListPage(account, query: query, page: page);
     }
   }
 
-  Future<void> _checkEmailFetchListPage(ApiAuthServiceAccountModel account,
+  Future<void> _checkEmailFetchListPage(ApiOAuthModelAccount account,
       {String? page, String? query}) async {
-    ApiAuthServiceProviderInterface? providerService =
-        await _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
-    if (emailProviderService != null) {
-      DataBkgModelPage<String> res = await emailProviderService
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface != null) {
+      DataBkgModelPage<String> res = await emailInterface
           .emailFetchList(account, query: query, page: page, maxResults: 5);
       if (res.data != null) {
         List known = (await _apiEmailMsgService.getByExtMessageIds(res.data!))
@@ -149,16 +138,13 @@ revolution today.<br />
   }
 
   Future<void> _checkEmailFetchMessage(
-      ApiAuthServiceAccountModel account, List<String> messages) async {
-    ApiAuthServiceProviderInterface? providerService =
-        await _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
+      ApiOAuthModelAccount account, List<String> messages) async {
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     Set<String> processed = Set();
-    if (emailProviderService == null) return;
+    if (emailInterface == null) return;
     for (String messageId in messages) {
       ApiEmailMsgModel? message =
-          await emailProviderService.emailFetchMessage(account, messageId);
+          await emailInterface.emailFetchMessage(account, messageId);
       if (message?.extMessageId != null) processed.add(message!.extMessageId!);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
@@ -186,19 +172,16 @@ revolution today.<br />
   }
 
   Future<Set<ApiEmailMsgModel>> _checkEmailNewSender(
-      ApiAuthServiceAccountModel account, String email) async {
+      ApiOAuthModelAccount account, String email) async {
     List<String> messageIds = await _checkEmailNewSenderPage(account,
         email: email, messages: List.empty(growable: true));
     Set<ApiEmailMsgModel> messages = Set();
     DateTime first = DateTime.now();
-    ApiAuthServiceProviderInterface? providerService =
-        await _apiAuthService.getProvider(account);
-    ApiAuthServiceEmailInterface? emailProviderService =
-        providerService?.emailProvider;
-    if (emailProviderService == null) return messages;
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface == null) return messages;
     for (String messageId in messageIds) {
       ApiEmailMsgModel? message =
-          await emailProviderService.emailFetchMessage(account, messageId);
+          await emailInterface.emailFetchMessage(account, messageId);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         messages.add(message!);
@@ -221,21 +204,20 @@ revolution today.<br />
     return messages;
   }
 
-  Future<List<String>> _checkEmailNewSenderPage(
-      ApiAuthServiceAccountModel account,
+  Future<List<String>> _checkEmailNewSenderPage(ApiOAuthModelAccount account,
       {required String email,
       String? page,
       required List<String> messages}) async {
-    ApiAuthServiceEmailInterface emailProviderService = await _apiAuthService
-        .getProvider(account) as ApiAuthServiceEmailInterface;
-    DataBkgModelPage<String> res = await emailProviderService
-        .emailFetchList(account, query: 'from:' + email, page: page);
-    if (res.data != null) messages.addAll(res.data!);
-    if (res.next != null)
-      return _checkEmailNewSenderPage(account,
-          email: email, page: res.next, messages: messages);
-    else
-      return messages;
+    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    if (emailInterface != null) {
+      DataBkgModelPage<String> res = await emailInterface
+          .emailFetchList(account, query: 'from:' + email, page: page);
+      if (res.data != null) messages.addAll(res.data!);
+      if (res.next != null)
+        return _checkEmailNewSenderPage(account,
+            email: email, page: res.next, messages: messages);
+    }
+    return messages;
   }
 
   String _domainFromEmail(String email) {
@@ -244,5 +226,14 @@ revolution today.<br />
     return periodSplit[periodSplit.length - 2] +
         "." +
         periodSplit[periodSplit.length - 1];
+  }
+
+  Future<DataBkgInterfaceEmail?> _getEmailInterface(
+      ApiOAuthModelAccount account) async {
+    ApiOAuthInterfaceProvider? apiAuthProvider =
+        await _apiAuthService.getProvider(account);
+    DataBkgInterfaceProvider? providerService =
+        apiAuthProvider as DataBkgInterfaceProvider?;
+    return providerService?.emailProvider;
   }
 }
