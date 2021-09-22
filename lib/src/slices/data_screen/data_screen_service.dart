@@ -30,23 +30,15 @@ class DataScreenService extends ChangeNotifier {
     model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
-    loadAccounts();
+    _loadAccounts();
   }
 
-  void addAccount(ApiAuthServiceAccountModel account) {
-    ApiAuthServiceProviderInterface? providerService =
-        _apiAuthService.getProvider(account);
-    if (providerService != null) {
-      providerService.logIn(account);
-      _accounts.add(account);
-      _dataBkgService.fetchData(account);
+  Future<void> linkAccount(String provider) async {
+    ApiAuthServiceAccountModel? account =
+        await _apiAuthService.linkAccount(provider);
+    if (account != null) {
+      this._addAccount(account);
     }
-    notifyListeners();
-  }
-
-  Future<void> loadAccounts() async {
-    _accounts = await _apiAuthService.getAllAccounts();
-    notifyListeners();
   }
 
   Future<void> removeAccount(int accountId) async {
@@ -74,19 +66,27 @@ class DataScreenService extends ChangeNotifier {
     return List<InfoCarouselCardModel>.empty();
   }
 
-  List<ApiAuthServiceAccountModel> getAccountsByProvider(String provider) {
+  List<String> getProviders() {
+    return _apiAuthService.getProviders();
+  }
+
+  List<ApiAuthServiceAccountModel> getAccounts(String provider) {
     return _accounts.where((account) => account.provider == provider).toList();
   }
 
-  Future<void> linkAccount(String provider) async {
-    ApiAuthServiceAccountModel? account =
-        await _apiAuthService.linkAccount(provider);
-    if (account != null) {
-      this.addAccount(account);
+  void _addAccount(ApiAuthServiceAccountModel account) {
+    ApiAuthServiceProviderInterface? providerService =
+        _apiAuthService.getProvider(account);
+    if (providerService != null) {
+      providerService.logIn(account);
+      _accounts.add(account);
+      _dataBkgService.fetchData(account);
     }
+    notifyListeners();
   }
 
-  List<String> getProvidersList() {
-    return _apiAuthService.getProviders();
+  Future<void> _loadAccounts() async {
+    _accounts = await _apiAuthService.getAllAccounts();
+    notifyListeners();
   }
 }

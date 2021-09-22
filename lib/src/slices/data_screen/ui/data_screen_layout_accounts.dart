@@ -10,11 +10,10 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);
-    List<String> providers = service.getProvidersList();
+    List<String> providers = service.getProviders();
     return Column(
         children: providers.map((provider) {
-      List<ApiAuthServiceAccountModel> accounts =
-          service.getAccountsByProvider(provider);
+      List<ApiAuthServiceAccountModel> accounts = service.getAccounts(provider);
       ApiAuthServiceAccountModel? account =
           accounts.isEmpty ? null : accounts[0];
       return Container(
