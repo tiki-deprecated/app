@@ -16,7 +16,6 @@ import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../data_bkg/data_bkg_service.dart';
-import '../data_bkg/data_bkg_service_email.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
@@ -100,9 +99,8 @@ class DecisionCardSpamService extends ChangeNotifier {
         await _apiEmailSenderService.markAsUnsubscribed(sender);
         bool unsubscribed = false;
         try {
-          DataBkgServiceEmail serviceEmail =
-              DataBkgServiceEmail(_dataBkgService);
-          unsubscribed = await serviceEmail.unsubscribe(account, mailTo, list);
+          unsubscribed =
+              await _dataBkgService.email.unsubscribe(account, mailTo, list);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());
         } catch (e) {

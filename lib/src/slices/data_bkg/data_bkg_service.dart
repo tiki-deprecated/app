@@ -20,10 +20,8 @@ import 'data_bkg_service_email.dart';
 class DataBkgService extends ChangeNotifier {
   final _log = Logger('DataBkgService');
   final ApiAppDataService _apiAppDataService;
-  final ApiCompanyService _apiCompanyService;
-  final ApiEmailSenderService _apiEmailSenderService;
-  final ApiEmailMsgService _apiEmailMsgService;
   final ApiAuthService _apiAuthService;
+  late final DataBkgServiceEmail email;
 
   DataBkgService(
       {required ApiAuthService apiAuthService,
@@ -32,20 +30,13 @@ class DataBkgService extends ChangeNotifier {
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService})
       : this._apiAppDataService = apiAppDataService,
-        this._apiCompanyService = apiCompanyService,
-        this._apiEmailSenderService = apiEmailSenderService,
-        this._apiEmailMsgService = apiEmailMsgService,
-        this._apiAuthService = apiAuthService;
-
-  get apiCompanyService => _apiCompanyService;
-
-  get apiEmailSenderService => _apiEmailSenderService;
-
-  get apiEmailMsgService => _apiEmailMsgService;
-
-  get apiAppDataService => _apiAppDataService;
-
-  get apiAuthService => _apiAuthService;
+        this._apiAuthService = apiAuthService,
+        this.email = DataBkgServiceEmail(
+            apiAuthService: apiAuthService,
+            apiAppDataService: apiAppDataService,
+            apiCompanyService: apiCompanyService,
+            apiEmailSenderService: apiEmailSenderService,
+            apiEmailMsgService: apiEmailMsgService);
 
   Future<void> index(List<ApiAuthServiceAccountModel> accounts) async {
     _log.fine("fetch all data started");
@@ -87,8 +78,7 @@ class DataBkgService extends ChangeNotifier {
 
   Future<void> _fetchEmail(ApiAuthServiceProviderInterface provider,
       ApiAuthServiceAccountModel account) async {
-    DataBkgServiceEmail dataBkgServiceEmail = DataBkgServiceEmail(this);
-    await dataBkgServiceEmail.index(account);
+    await email.index(account);
     await _apiAppDataService.save(ApiAppDataKey.bkgSvEmailLastFetch,
         DateTime.now().millisecondsSinceEpoch.toString());
     await _apiAppDataService.save(ApiAppDataKey.gmailPage, '');
