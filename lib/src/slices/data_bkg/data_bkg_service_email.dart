@@ -76,8 +76,7 @@ revolution today.<br />
 ''';
     DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     if (emailInterface != null)
-      return await _apiAuthService.proxy(
-          () => emailInterface.send(account, email), account);
+      return await emailInterface.send(account, email);
     return false;
   }
 

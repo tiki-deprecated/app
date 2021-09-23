@@ -96,10 +96,10 @@ class DecisionCardSpamService extends ChangeNotifier {
         String? mailTo = sender.unsubscribeMailTo;
         if (mailTo != null) {
           String list = sender.name ?? sender.email!;
-          await _apiEmailSenderService.markAsUnsubscribed(sender);
           bool unsubscribed = false;
           unsubscribed =
               await _dataBkgService.email.unsubscribe(account, mailTo, list);
+          await _apiEmailSenderService.markAsUnsubscribed(sender);
           _log.finest(
               mailTo + ' unsubscribed status: ' + unsubscribed.toString());
         }
