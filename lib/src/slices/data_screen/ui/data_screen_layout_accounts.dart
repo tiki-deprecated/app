@@ -14,7 +14,7 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(top: 2.h),
         child: LinkAccount(
-          username: account?.username,
+          username: account?.email,
           type: 'google',
           linkedIcon: "account-soon-google",
           unlinkedIcon: "google-icon",
