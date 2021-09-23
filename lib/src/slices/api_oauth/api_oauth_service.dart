@@ -5,6 +5,7 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/api_oauth/model/api_oauth_model.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
@@ -21,22 +22,22 @@ import 'repository/api_oauth_repository_account.dart';
 import 'repository/api_oauth_repository_provider.dart';
 
 class ApiOAuthService {
+  late final ApiOauthModel _model;
   final FlutterAppAuth _appAuth;
   final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
   final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
   final ApiAppDataService _apiAppDataService;
-  final Map<String, ApiOAuthInterfaceProvider> _providers =
-      new Map<String, ApiOAuthInterfaceProvider>();
 
-  Map<String, ApiOAuthInterfaceProvider> get providers => _providers;
+  Map<String, ApiOAuthInterfaceProvider> get providers => _model.providers;
 
   ApiOAuthService(
       {required Database database,
       required ApiAppDataService apiAppDataService})
-      : _appAuth = FlutterAppAuth(),
-        _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
-        _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
-        _apiAppDataService = apiAppDataService {
+      : this._appAuth = FlutterAppAuth(),
+        this._apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
+        this._apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
+        this._model = ApiOauthModel(),
+        this._apiAppDataService = apiAppDataService {
     _getProviders();
   }
 
@@ -71,7 +72,7 @@ class ApiOAuthService {
   }
 
   Future<void> signOut(ApiOAuthModelAccount account) async {
-    ApiOAuthInterfaceProvider? provider = _providers[account.provider];
+    ApiOAuthInterfaceProvider? provider = _model.providers[account.provider];
     if (provider != null) await provider.revokeToken(account);
     await _apiAuthRepositoryAccount.delete(account);
   }
@@ -157,7 +158,7 @@ class ApiOAuthService {
     modelProviders.forEach((k, v) {
       switch (k) {
         case 'google':
-          _providers[k] = ApiGoogleService(
+          _model.providers[k] = ApiGoogleService(
               apiAuthService: this, apiAppDataService: _apiAppDataService);
       }
     });
