@@ -17,7 +17,7 @@ class DataScreenLayoutBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);
-    var isLinked = service.accounts.isNotEmpty;
+    var isLinked = service.account != null;
     return GestureDetector(
         child: SingleChildScrollView(
             physics: ClampingScrollPhysics(),

@@ -25,7 +25,8 @@ class ApiOAuthService {
   final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
   final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
   final ApiAppDataService _apiAppDataService;
-  late final Map<String, ApiOAuthInterfaceProvider> _providers;
+  final Map<String, ApiOAuthInterfaceProvider> _providers =
+      new Map<String, ApiOAuthInterfaceProvider>();
 
   Map<String, ApiOAuthInterfaceProvider> get providers => _providers;
 
@@ -36,7 +37,7 @@ class ApiOAuthService {
         _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
         _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
         _apiAppDataService = apiAppDataService {
-    _providers = _getProviders();
+    _getProviders();
   }
 
   Future<ApiOAuthModelAccount?> signIn(String providerName) async {
@@ -77,8 +78,8 @@ class ApiOAuthService {
 
   Future<Map?> getUserInfo(
       ApiOAuthModelAccount apiAuthServiceAccountModel) async {
-    ApiOAuthModelProvider? providerModel = _apiAuthRepositoryProvider
-        .providers[apiAuthServiceAccountModel.provider];
+    ApiOAuthModelProvider? providerModel = (await _apiAuthRepositoryProvider
+        .providers)[apiAuthServiceAccountModel.provider];
     if (providerModel != null) {
       Response rsp = await proxy(
           () => ConfigSentry.http.get(Uri.parse(providerModel.userInfoEndpoint),
@@ -110,7 +111,7 @@ class ApiOAuthService {
   Future<AuthorizationTokenResponse?> _authorizeAndExchangeCode(
       {required String providerName}) async {
     ApiOAuthModelProvider? provider =
-        await _apiAuthRepositoryProvider.providers[providerName];
+        (await _apiAuthRepositoryProvider.providers)[providerName];
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
             provider!.authorizationEndpoint, provider.tokenEndpoint);
@@ -124,7 +125,7 @@ class ApiOAuthService {
   Future<TokenResponse?> _refreshToken(ApiOAuthModelAccount account) async {
     try {
       ApiOAuthModelProvider? provider =
-          await _apiAuthRepositoryProvider.providers[account.provider!];
+          (await _apiAuthRepositoryProvider.providers)[account.provider!];
       return await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
           discoveryUrl: provider.discoveryUrl,
@@ -150,17 +151,15 @@ class ApiOAuthService {
     return _apiAuthRepositoryAccount.insert(account);
   }
 
-  Map<String, ApiOAuthInterfaceProvider> _getProviders() {
+  Future<void> _getProviders() async {
     Map<String, ApiOAuthModelProvider> modelProviders =
-        _apiAuthRepositoryProvider.providers;
-    Map<String, ApiOAuthInterfaceProvider> providers = new Map();
+        await _apiAuthRepositoryProvider.providers;
     modelProviders.forEach((k, v) {
       switch (k) {
         case 'google':
-          providers[k] = ApiGoogleService(
+          _providers[k] = ApiGoogleService(
               apiAuthService: this, apiAppDataService: _apiAppDataService);
       }
     });
-    return providers;
   }
 }
