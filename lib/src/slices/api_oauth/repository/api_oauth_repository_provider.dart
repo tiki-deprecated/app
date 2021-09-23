@@ -28,8 +28,10 @@ class ApiOAuthRepositoryProvider {
     _loadProviders();
   }
 
-  Future<Map<String, ApiOAuthModelProvider>> get providers async =>
-      _getProviders();
+  Future<Map<String, ApiOAuthModelProvider>> get providers async {
+    if (_providers.isEmpty) await _loadProviders();
+    return _providers;
+  }
 
   Future<void> _loadProviders() async {
     String jsonString = await rootBundle.loadString(_dbAuthProviders);
@@ -37,10 +39,5 @@ class ApiOAuthRepositoryProvider {
     jsonMap.forEach((name, providerData) {
       _providers[name] = ApiOAuthModelProvider.fromMap(providerData);
     });
-  }
-
-  Future<Map<String, ApiOAuthModelProvider>> _getProviders() async {
-    if (_providers.isEmpty) await _loadProviders();
-    return _providers;
   }
 }
