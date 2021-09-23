@@ -65,7 +65,8 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
           format: 'metadata',
           metadataHeaders: [
             'From',
-            'To'
+            'To',
+            'List-Unsubscribe'
           ]).timeout(Duration(seconds: 10),
           onTimeout: () =>
               throw new http.ClientException('_gmailFetch timed out'));
@@ -144,7 +145,7 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
     }
     if (label != null && label.isNotEmpty && label != 'category:') {
       _appendQuery(queryBuffer, label);
-    } else {
+    } else if (from == null) {
       model.categories
           .where((cat) => cat != 'category:')
           .forEach((cat) => _appendQuery(queryBuffer, 'NOT $cat'));

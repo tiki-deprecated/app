@@ -116,16 +116,18 @@ revolution today.<br />
   Future<void> _loopLabels(
       DataBkgInterfaceEmail interfaceEmail, ApiOAuthModelAccount account,
       {int? indexEpoch}) async {
+    _log.fine('Loop Labels for ${account.email}');
     ApiAppDataModel? appDataIndexLabel =
         await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
     String activeLabel = appDataIndexLabel?.value ?? interfaceEmail.labels[0];
     for (int i = interfaceEmail.labels.indexOf(activeLabel);
         i < interfaceEmail.labels.length;
         i++) {
+      String label = interfaceEmail.labels[i];
       await _pageList(
           interfaceEmail: interfaceEmail,
           account: account,
-          label: interfaceEmail.labels[i],
+          label: label,
           indexEpoch: indexEpoch);
       await _apiAppDataService.save(
           ApiAppDataKey.emailIndexLabel,
@@ -146,6 +148,7 @@ revolution today.<br />
           await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
       page = appDataIndexPage?.value;
     }
+    _log.fine('${account.email} List page $page for $label after $indexEpoch');
     DataBkgModelPage<String> res = await _getList(
         account: account,
         interfaceEmail: interfaceEmail,
@@ -160,7 +163,9 @@ revolution today.<br />
               .toList();
       List<String> unknown =
           res.data!.where((message) => !known.contains(message)).toList();
+      _log.fine("${known.length} known messages");
       await _processMessages(interfaceEmail, account, unknown);
+      _log.fine("${unknown.length} unknown messages");
     }
     await _apiAppDataService.save(ApiAppDataKey.emailIndexPage, res.next ?? '');
     if (res.next != null)
@@ -175,6 +180,7 @@ revolution today.<br />
   Future<void> _processMessages(DataBkgInterfaceEmail interfaceEmail,
       ApiOAuthModelAccount account, List<String> messages) async {
     Set<String> processed = Set();
+    _log.fine("Processing ${messages.length} messages");
     for (String messageId in messages) {
       ApiEmailMsgModel? message = await _getMessage(
           account: account,
@@ -186,11 +192,13 @@ revolution today.<br />
         ApiEmailSenderModel? sender =
             await _apiEmailSenderService.getByEmail(message!.sender!.email!);
         if (sender != null) {
+          _log.fine("Known sender ${sender.name}");
           await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
           _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
           notifyListeners();
         } else {
+          _log.fine("New sender ${message.sender!.email}");
           Set<ApiEmailMsgModel> senderMessages = await _indexSender(
               interfaceEmail, account, message.sender!.email!);
           Set<String> senderMessageIds =
@@ -210,6 +218,7 @@ revolution today.<br />
       DataBkgInterfaceEmail interfaceEmail,
       ApiOAuthModelAccount account,
       String email) async {
+    _log.fine("Indexing sender $email");
     List<String> messageIds = await _pageSender(
         interfaceEmail: interfaceEmail,
         account: account,
@@ -246,6 +255,7 @@ revolution today.<br />
 
   Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
     if (sender.email != null) {
+      _log.fine("Saving sender: ${sender.name}.");
       List<String> atSplit = sender.email!.split('@');
       List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
       String domain = periodSplit[periodSplit.length - 2] +
@@ -266,6 +276,7 @@ revolution today.<br />
       required String email,
       required List<String> messages,
       String? page}) async {
+    _log.fine("Page sender $email");
     DataBkgModelPage<String> res = await _getList(
         account: account,
         interfaceEmail: interfaceEmail,
@@ -281,7 +292,8 @@ revolution today.<br />
           page: res.next,
           messages: messages);
     else
-      return messages;
+      _log.fine("${messages.length} from page sender $email");
+    return messages;
   }
 
   Future<DataBkgModelPage<String>> _getList(
