@@ -3,39 +3,40 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-// ignore_for_file: unused_import
-
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_email.dart';
 import '../data_bkg/data_bkg_interface_provider.dart';
+import '../info_carousel_card/model/info_carousel_card_model.dart';
+import 'api_microsoft_service_email.dart';
 
 class ApiMicrosoftService
     implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
+  final ApiMicrosoftServiceEmail _apiMicrosoftServiceEmail;
+
+  ApiMicrosoftService()
+      : this._apiMicrosoftServiceEmail = ApiMicrosoftServiceEmail();
+
   @override
-  isConnected(ApiOAuthModelAccount account) {
+  // TODO: implement email
+  DataBkgInterfaceEmail? get email => _apiMicrosoftServiceEmail;
+
+  @override
+  Future<List<InfoCarouselCardModel>> getInfoCards(
+      ApiOAuthModelAccount account) {
+    // TODO: implement getInfoCards
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isConnected(ApiOAuthModelAccount account) {
     // TODO: implement isConnected
     throw UnimplementedError();
   }
 
   @override
-  logIn(ApiOAuthModelAccount account) {
-    // TODO: implement logIn
-    throw UnimplementedError();
-  }
-
-  @override
-  logOut(ApiOAuthModelAccount account) {
-    // TODO: implement logOut
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement emailProvider
-  get emailProvider => throw UnimplementedError();
-
-  @override
-  getInfoCards(ApiOAuthModelAccount account) {
-    // TODO: implement getInfoCards
+  Future<void> revokeToken(ApiOAuthModelAccount account) {
+    // TODO: implement revokeToken
     throw UnimplementedError();
   }
 }

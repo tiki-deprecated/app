@@ -23,13 +23,15 @@ class DataBkgService extends ChangeNotifier {
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
-      required ApiEmailMsgService apiEmailMsgService})
-      : this.email = DataBkgServiceEmail(
-            apiAuthService: apiAuthService,
-            apiAppDataService: apiAppDataService,
-            apiCompanyService: apiCompanyService,
-            apiEmailSenderService: apiEmailSenderService,
-            apiEmailMsgService: apiEmailMsgService);
+      required ApiEmailMsgService apiEmailMsgService}) {
+    this.email = DataBkgServiceEmail(
+        apiAuthService: apiAuthService,
+        apiAppDataService: apiAppDataService,
+        apiEmailMsgService: apiEmailMsgService,
+        apiEmailSenderService: apiEmailSenderService,
+        apiCompanyService: apiCompanyService,
+        notifyListeners: notifyListeners);
+  }
 
   Future<void> index(ApiOAuthModelAccount account) async {
     _log.fine('DataBkgService index');

@@ -66,14 +66,12 @@ class ApiOAuthService {
   Future<void> signOutAll() async {
     List<ApiOAuthModelAccount> accounts =
         await _apiAuthRepositoryAccount.getAll();
-    accounts.forEach((account) {
-      _providers[account.provider]!.logOut(account);
-    });
+    accounts.forEach((account) async => await signOut(account));
   }
 
   Future<void> signOut(ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? provider = _providers[account.provider];
-    if (provider != null) await provider.logOut(account);
+    if (provider != null) await provider.revokeToken(account);
     await _apiAuthRepositoryAccount.delete(account);
   }
 

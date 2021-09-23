@@ -3,64 +3,43 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../api_app_data/api_app_data_service.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
-import '../api_oauth/api_oauth_service.dart';
+// ignore_for_file: unused_import
+
+import 'package:app/src/slices/api_email_msg/model/api_email_msg_model.dart';
+import 'package:app/src/slices/data_bkg/data_bkg_interface_email.dart';
+import 'package:app/src/slices/data_bkg/model/data_bkg_model_page.dart';
+import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
+
+import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/model/data_bkg_model_page.dart';
+import '../data_bkg/data_bkg_interface_provider.dart';
 
 class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
-  ApiMicrosoftServiceEmail(
-      {required ApiOAuthModelAccount account,
-      required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService})
-      : super();
-
   @override
-  Future<DataBkgModelPage<String>> emailFetchList(ApiOAuthModelAccount account,
-      {String? query, int? maxResults, String? page, int? retries}) {
-    // TODO: implement emailFetchList
+  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+      {String? label,
+      String? from,
+      int? afterEpoch,
+      int? maxResults,
+      String? page}) {
+    // TODO: implement getList
     throw UnimplementedError();
   }
 
   @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(
-      ApiOAuthModelAccount account, String messageId,
-      {String format = '', List<String>? headers}) {
-    // TODO: implement emailFetchMessage
+  Future<ApiEmailMsgModel?> getMessage(
+      ApiOAuthModelAccount account, String messageId) {
+    // TODO: implement getMessage
     throw UnimplementedError();
   }
 
   @override
-  Future<int?> getLastFetch() {
-    // TODO: implement getLastFetch
-    throw UnimplementedError();
-  }
+  // TODO: implement labels
+  List<String> get labels => throw UnimplementedError();
 
   @override
-  Future<String> getPage() {
-    // TODO: implement getPage
+  Future<bool> send(ApiOAuthModelAccount account, String email) {
+    // TODO: implement send
     throw UnimplementedError();
   }
-
-  @override
-  Future<String> getQuery({bool fetchAll = true, bool force = true}) async {
-    // TODO: implement getQuery
-    throw UnimplementedError();
-  }
-
-  @override
-  Future sendRawMessage(ApiOAuthModelAccount account, String getBase64Email) {
-    // TODO: implement sendRawMessage
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> afterFetchList() {
-    // TODO: implement afterFetchList
-    throw UnimplementedError();
-  }
-
-  get emailProvider => null;
 }

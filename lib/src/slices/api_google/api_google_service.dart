@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import '../data_bkg/data_bkg_interface_email.dart';
 import 'package:http/http.dart';
 
 import '../../config/config_sentry.dart';
@@ -20,36 +21,31 @@ import 'repository/api_google_repository_info.dart';
 class ApiGoogleService
     implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
   final ApiOAuthService _apiAuthService;
-  final ApiGoogleServiceEmail _apiGoogleServiceEmail;
   final ApiGoogleRepositoryInfo _apiGoogleRepositoryInfo;
+  final ApiGoogleServiceEmail _apiGoogleServiceEmail;
 
   ApiGoogleService(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService})
       : this._apiAuthService = apiAuthService,
         this._apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
-        this._apiGoogleServiceEmail =
-            ApiGoogleServiceEmail(apiAppDataService: apiAppDataService);
+        this._apiGoogleServiceEmail = ApiGoogleServiceEmail();
 
   @override
-  Future<void> logOut(ApiOAuthModelAccount account) async {
+  DataBkgInterfaceEmail? get email => _apiGoogleServiceEmail;
+
+  @override
+  Future<bool> isConnected(ApiOAuthModelAccount account) async {
+    return (await _apiAuthService.getUserInfo(account)) != null;
+  }
+
+  @override
+  Future<void> revokeToken(ApiOAuthModelAccount account) async {
     Response rsp = await ConfigSentry.http.post(Uri.parse(
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
     if (HelperApiUtils.is2xx(rsp.statusCode)) {
       await _apiAuthService.signOut(account);
     }
-  }
-
-  get emailProvider => _apiGoogleServiceEmail;
-
-  @override
-  Future<void> logIn(ApiOAuthModelAccount _account) async {
-    // TODO any specific routine?
-  }
-
-  @override
-  Future<bool> isConnected(ApiOAuthModelAccount account) async {
-    return (await _apiAuthService.getUserInfo(account)) != null;
   }
 
   // TODO in the future we'll have account specific infocards

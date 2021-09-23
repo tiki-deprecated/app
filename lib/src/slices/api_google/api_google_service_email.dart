@@ -3,14 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'dart:convert';
+
+import 'package:collection/collection.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
-import '../api_app_data/api_app_data_key.dart';
-import '../api_app_data/api_app_data_service.dart';
-import '../api_app_data/model/api_app_data_model.dart';
+import '../../config/config_sentry.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
@@ -19,132 +20,34 @@ import '../data_bkg/model/data_bkg_model_page.dart';
 import 'model/api_google_model_email.dart';
 
 class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
-  final ApiGoogleModelEmail model = ApiGoogleModelEmail();
-  ApiAppDataService _apiAppDataService;
-  var _log = Logger('ApiGoogleServiceEmail');
+  final ApiGoogleModelEmail model;
+  final _log = Logger('ApiGoogleServiceEmail');
 
-  ApiGoogleServiceEmail({required ApiAppDataService apiAppDataService})
-      : _apiAppDataService = apiAppDataService;
+  ApiGoogleServiceEmail() : this.model = ApiGoogleModelEmail();
 
   @override
-  Future<DataBkgModelPage<String>> emailFetchList(ApiOAuthModelAccount account,
-      {String? query,
-      String? page,
-      int? retries = 3,
-      int? maxResults = 500}) async {
-    try {
-      return await _gmailFetch(account,
-          query: query, maxResults: maxResults, page: page);
-    } catch (e) {
-      _log.warning("gmailFetch failed, retries: " + retries.toString(), e);
-      if ((retries ?? 0) > 1)
-        return emailFetchList(account,
-            query: query,
-            retries: retries! - 1,
-            page: page,
-            maxResults: maxResults);
-      rethrow;
-    }
-  }
+  List<String> get labels => this.model.categories;
 
   @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(
-      ApiOAuthModelAccount account, String messageId,
-      {String format = "metadata",
-      List<String>? headers,
-      int retries = 3}) async {
-    try {
-      return await _gmailFetchMessage(account, messageId,
-          format: format, headers: headers);
-    } catch (e) {
-      _log.warning(
-          "gmailFetchMessage failed, retries: " + retries.toString(), e);
-      if (retries > 1)
-        return emailFetchMessage(account, messageId,
-            format: format, headers: headers, retries: retries - 1);
-      rethrow;
-    }
-  }
-
-  @override
-  Future<int?> getLastFetch() async {
-    ApiAppDataModel? appDataGmailLastFetch =
-        await _apiAppDataService.getByKey(ApiAppDataKey.bkgSvEmailLastFetch);
-    return appDataGmailLastFetch != null
-        ? int.parse(appDataGmailLastFetch.value)
-        : null;
-  }
-
-  @override
-  Future<String> getPage() async {
-    return (await _apiAppDataService.getByKey(ApiAppDataKey.gmailPage))
-            ?.value ??
-        '';
-  }
-
-  @override
-  Future<String> getQuery({bool fetchAll = true, bool force = true}) async {
-    int? appDataGmailLastFetch = await getLastFetch();
-    int? gmailLastFetchEpoch = fetchAll || appDataGmailLastFetch == null
-        ? null
-        : appDataGmailLastFetch;
-    if (force == true ||
-        gmailLastFetchEpoch == null ||
-        DateTime.now().subtract(Duration(days: 1)).isAfter(
-            DateTime.fromMillisecondsSinceEpoch(gmailLastFetchEpoch))) {
-      String activeCategory =
-          (await _apiAppDataService.getByKey(ApiAppDataKey.gmailCategory))
-                  ?.value ??
-              model.gmailCategoryList[0];
-      int categoryStartIndex = model.gmailCategoryList.indexOf(activeCategory);
-      String category = model.gmailCategoryList[categoryStartIndex];
-      String query = _gmailBuildQuery(gmailLastFetchEpoch, category);
-      return query;
-    }
-    return '';
-  }
-
-  @override
-  Future<void> afterFetchList() async {
-    String activeCategory =
-        (await _apiAppDataService.getByKey(ApiAppDataKey.gmailCategory))
-                ?.value ??
-            model.gmailCategoryList[0];
-    int totalCats = model.gmailCategoryList.length;
-    int nextCatIndex = model.gmailCategoryList.indexOf(activeCategory) + 1;
-    String nextCat = nextCatIndex == totalCats
-        ? model.gmailCategoryList[0]
-        : model.gmailCategoryList[nextCatIndex];
-    await _apiAppDataService.save(ApiAppDataKey.gmailCategory, nextCat);
-  }
-
-  @override
-  Future<bool> sendRawMessage(
-      ApiOAuthModelAccount account, String getBase64Email) async {
-    GmailApi? gmailApi = await _getGmailApi(account);
-    if (gmailApi != null) {
-      await gmailApi.users.messages
-          .send(Message.fromJson({'raw': getBase64Email}), "me");
-      return true;
-    }
-    return false;
-  }
-
-  Future<DataBkgModelPage<String>> _gmailFetch(ApiOAuthModelAccount account,
-      {String? query, int? maxResults, String? page}) async {
-    GmailApi? gmailApi = await _getGmailApi(account);
+  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+      {String? label,
+      String? from,
+      int? afterEpoch,
+      int? maxResults = 100,
+      String? page}) async {
     List<String>? messages;
+    GmailApi? gmailApi = await _getGmailApi(account);
     ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list("me",
+        .list('me',
             maxResults: maxResults,
             includeSpamTrash: true,
             pageToken: page,
-            q: query)
+            q: _buildQuery(label: label, from: from, afterEpoch: afterEpoch))
         .timeout(Duration(seconds: 10),
-            onTimeout: () =>
-                throw new http.ClientException('_gmailFetch timed out'));
+            onTimeout: () => throw new http.ClientException(
+                'ApiGoogleServiceEmail getList timed out'));
     _log.finest(
-        'Fetched ' + (emails?.messages?.length.toString() ?? '') + ' messages');
+        'Got ' + (emails?.messages?.length.toString() ?? '') + ' messages');
     if (emails != null && emails.messages != null)
       messages = emails.messages!
           .where((message) => message.id != null)
@@ -153,28 +56,61 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
     return DataBkgModelPage(next: emails?.nextPageToken, data: messages);
   }
 
-  String _gmailBuildQuery(int? fetchEpochInMilliseconds, String category) {
-    StringBuffer queryBuffer = new StringBuffer();
-    if (fetchEpochInMilliseconds != null) {
-      int secondsSinceEpoch = (fetchEpochInMilliseconds / 1000).floor();
-      _gmailAppendQuery(queryBuffer, "after:" + secondsSinceEpoch.toString());
+  @override
+  Future<ApiEmailMsgModel?> getMessage(
+      ApiOAuthModelAccount account, String messageId) async {
+    GmailApi? gmailApi = await _getGmailApi(account);
+    if (gmailApi != null) {
+      Message? message = await gmailApi.users.messages.get('me', messageId,
+          format: 'metadata',
+          metadataHeaders: [
+            'From',
+            'To'
+          ]).timeout(Duration(seconds: 10),
+          onTimeout: () =>
+              throw new http.ClientException('_gmailFetch timed out'));
+      _log.finest('Fetched message ids: ' + (message.id ?? ''));
+      if (_checkTo(account.email, message)) {
+        List<String> from = List.empty(growable: true);
+        String? unsubscribeMailTo;
+        message.payload?.headers?.forEach((header) {
+          switch (header.name?.trim()) {
+            case 'From':
+              from = _fromEmailHeader(header);
+              break;
+            case 'List-Unsubscribe':
+              unsubscribeMailTo = _listUnsubscribeHeader(header);
+              break;
+          }
+        });
+        return ApiEmailMsgModel(
+            extMessageId: message.id,
+            receivedDate: message.internalDate != null
+                ? DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(message.internalDate!))
+                : null,
+            openedDate: _openDate(message),
+            account: account.email,
+            sender: ApiEmailSenderModel(
+              category: _categoryHeader(message.labelIds),
+              unsubscribeMailTo: unsubscribeMailTo,
+              email: from.isNotEmpty ? from[0] : null,
+              name: from.length >= 2 ? from[1] : null,
+            ));
+      }
     }
-    if (category != 'category:' && category.isNotEmpty) {
-      _gmailAppendQuery(queryBuffer, category);
-    } else {
-      model.gmailCategoryList
-          .where((cat) => cat != 'category:')
-          .forEach((cat) => _gmailAppendQuery(queryBuffer, 'NOT $cat'));
-    }
-    return queryBuffer.toString();
   }
 
-  StringBuffer _gmailAppendQuery(StringBuffer queryBuffer, String append) {
-    if (queryBuffer.isNotEmpty) {
-      queryBuffer.write(" AND ");
+  @override
+  Future<bool> send(ApiOAuthModelAccount account, String email) async {
+    GmailApi? gmailApi = await _getGmailApi(account);
+    String base64Email = base64UrlEncode(utf8.encode(email));
+    if (gmailApi != null) {
+      await gmailApi.users.messages
+          .send(Message.fromJson({'raw': base64Email}), 'me');
+      return true;
     }
-    queryBuffer.write(append);
-    return queryBuffer;
+    return false;
   }
 
   Future<GmailApi?> _getGmailApi(ApiOAuthModelAccount account) async {
@@ -187,112 +123,98 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
       gapis.AccessToken accessToken =
           gapis.AccessToken('Bearer', token, tokenExp);
       List<String> scopes = [
-        "openid",
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/gmail.readonly",
-        "https://www.googleapis.com/auth/gmail.send"
+        'openid',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/gmail.readonly',
+        'https://www.googleapis.com/auth/gmail.send'
       ];
       gapis.AccessCredentials credentials =
           gapis.AccessCredentials(accessToken, account.refreshToken, scopes);
       gapis.AuthClient authClient =
-          gapis.authenticatedClient(http.Client(), credentials);
+          gapis.authenticatedClient(ConfigSentry.http, credentials);
       return GmailApi(authClient);
     }
-    return null;
   }
 
-  Future<ApiEmailMsgModel?> _gmailFetchMessage(
-      ApiOAuthModelAccount account, String messageId,
-      {String format = "metadata", List<String>? headers}) async {
-    GmailApi? gmailApi = await _getGmailApi(account);
-    if (gmailApi != null) {
-      List<String> metadataHeaders = ["From", "To"];
-      metadataHeaders.addAll(headers ?? []);
-      Message? message = await gmailApi.users.messages
-          .get("me", messageId,
-              format: format, metadataHeaders: metadataHeaders)
-          .timeout(Duration(seconds: 10),
-              onTimeout: () =>
-                  throw new http.ClientException('_gmailFetch timed out'));
-      _log.finest('Fetched message ids: ' + (message.id ?? ''));
-      return _convertMessage(message, account.email!);
+  String _buildQuery({int? afterEpoch, String? label, String? from}) {
+    StringBuffer queryBuffer = new StringBuffer();
+    if (afterEpoch != null) {
+      int secondsSinceEpoch = (afterEpoch / 1000).floor();
+      _appendQuery(queryBuffer, 'after:' + secondsSinceEpoch.toString());
     }
+    if (label != null && label.isNotEmpty && label != 'category:') {
+      _appendQuery(queryBuffer, label);
+    } else {
+      model.categories
+          .where((cat) => cat != 'category:')
+          .forEach((cat) => _appendQuery(queryBuffer, 'NOT $cat'));
+    }
+    if (from != null) _appendQuery(queryBuffer, 'from:' + from);
+    return queryBuffer.toString();
   }
 
-  ApiEmailMsgModel? _convertMessage(Message message, String email) {
-    DateTime? openedDate;
+  StringBuffer _appendQuery(StringBuffer queryBuffer, String append) {
+    if (queryBuffer.isNotEmpty) {
+      queryBuffer.write(' AND ');
+    }
+    queryBuffer.write(append);
+    return queryBuffer;
+  }
+
+  bool _checkTo(String? email, Message message) {
     List<MessagePartHeader>? headers = message.payload?.headers;
-    if (headers != null) {
-      for (var headerEntry in headers) {
-        switch (headerEntry.name!.trim()) {
-          case "To":
-            String headerEmail = headerEntry.value!.contains("<")
-                ? headerEntry.value!
-                    .split("<")
-                    .toList()[1]
-                    .replaceFirst(">", "")
-                    .trim()
-                : headerEntry.value!;
-            if (email.toLowerCase() != headerEmail.trim().toLowerCase())
-              return null;
-            break;
-        }
+    if (email == null || headers == null || headers.isEmpty) return false;
+    MessagePartHeader? toHeader =
+        headers.firstWhereOrNull((header) => header.name?.trim() == "To");
+    if (toHeader == null || toHeader.value == null) return false;
+    String toHeaderEmail = toHeader.value!.contains("<")
+        ? toHeader.value!.split("<").toList()[1].replaceFirst(">", "").trim()
+        : toHeader.value!;
+    if (email.toLowerCase() != toHeaderEmail.trim().toLowerCase()) return false;
+    return true;
+  }
+
+  DateTime? _openDate(Message message) {
+    //TODO implement this correctly.
+    /*DateTime? openedDate;
+    if (message.labelIds != null) {
+      return !message.labelIds!.contains("UNREAD") &&
+              message.internalDate != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              int.parse(message.internalDate!))
+          : null;
+    }*/
+  }
+
+  List<String> _fromEmailHeader(MessagePartHeader header) {
+    List<String> rsp = List.empty(growable: true);
+    if (header.value != null) {
+      List<String> values = header.value!.split('<');
+      if (values.length == 1)
+        rsp.add(values[0].trim());
+      else if (values.length == 2) {
+        rsp.add(values[1].trim().replaceAll('>', ''));
+        rsp.add(values[0].trim().replaceAll("\"", ''));
       }
     }
-    if (message.labelIds != null) {
-      message.labelIds!.forEach((label) {
-        if (label.contains("CATEGORY_")) {
-          if ("PROMOTION" == label.replaceFirst('CATEGORY_', '')) return null;
-        }
-      });
-      openedDate =
-          message.labelIds!.contains("UNREAD") && message.internalDate != null
-              ? DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(message.internalDate!))
-              : null;
-    }
-    return ApiEmailMsgModel(
-        extMessageId: message.id,
-        receivedDate: message.internalDate != null
-            ? DateTime.fromMillisecondsSinceEpoch(
-                int.parse(message.internalDate!))
-            : null,
-        openedDate: openedDate,
-        account: email,
-        sender: _convertSender(message));
+    return rsp;
   }
 
-  ApiEmailSenderModel _convertSender(Message message) {
-    ApiEmailSenderModel sender = ApiEmailSenderModel();
-    List<MessagePartHeader>? headers = message.payload?.headers;
-    if (headers != null) {
-      for (var headerEntry in headers) {
-        switch (headerEntry.name!.trim()) {
-          case "From":
-            var values = headerEntry.value!.split('<');
-            if (values.length == 1)
-              sender.email = values[0].trim();
-            else if (values.length == 2) {
-              sender.name = values[0].trim().replaceAll("\"", '');
-              sender.email = values[1].trim().replaceAll('>', '');
-            }
-            break;
-          case "List-Unsubscribe":
-            String removeCaret =
-                headerEntry.value!.replaceAll('<', '').replaceAll(">", '');
-            List<String> splitMailTo = removeCaret.split('mailto:');
-            if (splitMailTo.length > 1)
-              sender.unsubscribeMailTo = splitMailTo[1].split(',')[0];
-            break;
-        }
-      }
+  String? _listUnsubscribeHeader(MessagePartHeader header) {
+    if (header.value != null) {
+      String removeCaret =
+          header.value!.replaceAll('<', '').replaceAll(">", '');
+      List<String> splitMailTo = removeCaret.split('mailto:');
+      if (splitMailTo.length > 1) return splitMailTo[1].split(',')[0];
     }
-    if (message.labelIds != null) {
-      message.labelIds!.forEach((label) {
-        if (label.contains("CATEGORY_"))
-          sender.category = label.replaceFirst('CATEGORY_', '');
-      });
+  }
+
+  String? _categoryHeader(List<String>? labelIds) {
+    if (labelIds != null) {
+      String? categoryLabel =
+          labelIds.firstWhereOrNull((label) => label.contains("CATEGORY_"));
+      if (categoryLabel != null)
+        return categoryLabel.replaceFirst('CATEGORY_', '');
     }
-    return sender;
   }
 }

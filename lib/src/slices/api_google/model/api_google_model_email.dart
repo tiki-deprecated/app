@@ -1,5 +1,10 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 class ApiGoogleModelEmail {
-  List<String> gmailCategoryList = [
+  List<String> categories = [
     'category:promotions',
     'category:updates',
     'category:social',

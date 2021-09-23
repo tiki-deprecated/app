@@ -8,21 +8,17 @@ import '../api_oauth/model/api_oauth_model_account.dart';
 import 'model/data_bkg_model_page.dart';
 
 abstract class DataBkgInterfaceEmail {
-  Future<DataBkgModelPage<String>> emailFetchList(ApiOAuthModelAccount account,
-      {String? query, int? maxResults, String? page, int? retries});
+  List<String> get labels;
 
-  Future<ApiEmailMsgModel?> emailFetchMessage(
-      ApiOAuthModelAccount account, String messageId,
-      {String format, List<String>? headers});
+  Future<ApiEmailMsgModel?> getMessage(
+      ApiOAuthModelAccount account, String messageId);
 
-  Future<dynamic> sendRawMessage(
-      ApiOAuthModelAccount account, String getBase64Email);
+  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+      {String? label,
+      String? from,
+      int? afterEpoch,
+      int? maxResults,
+      String? page});
 
-  Future<String> getQuery({bool fetchAll = true, bool force = true});
-
-  Future<int?> getLastFetch();
-
-  Future<String> getPage();
-
-  Future<void> afterFetchList();
+  Future<bool> send(ApiOAuthModelAccount account, String email);
 }

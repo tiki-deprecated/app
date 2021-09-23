@@ -6,9 +6,7 @@
 import 'model/api_oauth_model_account.dart';
 
 abstract class ApiOAuthInterfaceProvider {
-  logIn(ApiOAuthModelAccount account);
+  Future<void> revokeToken(ApiOAuthModelAccount account);
 
-  logOut(ApiOAuthModelAccount account);
-
-  isConnected(ApiOAuthModelAccount account);
+  Future<bool> isConnected(ApiOAuthModelAccount account);
 }

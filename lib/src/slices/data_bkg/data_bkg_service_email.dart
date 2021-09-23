@@ -1,9 +1,13 @@
-import 'dart:convert';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
+import '../api_app_data/model/api_app_data_model.dart';
 import '../api_company/api_company_service.dart';
 import '../api_company/model/api_company_model_local.dart';
 import '../api_email_msg/api_email_msg_service.dart';
@@ -19,41 +23,25 @@ import 'model/data_bkg_model_page.dart';
 
 class DataBkgServiceEmail {
   final _log = Logger('DataBkgServiceEmail');
-  final ApiAppDataService _apiAppDataService;
-  final ApiCompanyService _apiCompanyService;
-  final ApiEmailSenderService _apiEmailSenderService;
-  final ApiEmailMsgService _apiEmailMsgService;
   final ApiOAuthService _apiAuthService;
+  final ApiAppDataService _apiAppDataService;
+  final ApiEmailMsgService _apiEmailMsgService;
+  final ApiEmailSenderService _apiEmailSenderService;
+  final ApiCompanyService _apiCompanyService;
+  final Function notifyListeners;
 
   DataBkgServiceEmail(
-      {required ApiAppDataService apiAppDataService,
-      required ApiCompanyService apiCompanyService,
-      required ApiEmailSenderService apiEmailSenderService,
+      {required ApiOAuthService apiAuthService,
+      required ApiAppDataService apiAppDataService,
       required ApiEmailMsgService apiEmailMsgService,
-      required ApiOAuthService apiAuthService})
+      required ApiEmailSenderService apiEmailSenderService,
+      required ApiCompanyService apiCompanyService,
+      required this.notifyListeners})
       : this._apiAuthService = apiAuthService,
-        this._apiCompanyService = apiCompanyService,
-        this._apiEmailSenderService = apiEmailSenderService,
+        this._apiAppDataService = apiAppDataService,
         this._apiEmailMsgService = apiEmailMsgService,
-        this._apiAppDataService = apiAppDataService;
-
-  Future<void> index(ApiOAuthModelAccount account,
-      {bool fetchAll = false, bool force = false}) async {
-    String providerName = account.provider!;
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
-    if (emailInterface == null) {
-      _log.warning(providerName + ' email Provider Service is null');
-    } else {
-      _log.fine(providerName +
-          ' fetch starting on: ' +
-          DateTime.now().toIso8601String());
-      String query = await emailInterface.getQuery();
-      await _checkEmailFetchList(account, emailInterface, query: query);
-      await emailInterface.afterFetchList();
-      _log.fine(
-          'Email fetch completed on: ' + DateTime.now().toIso8601String());
-    }
-  }
+        this._apiEmailSenderService = apiEmailSenderService,
+        this._apiCompanyService = apiCompanyService;
 
   Future<bool> unsubscribe(ApiOAuthModelAccount account,
       String unsubscribeMailTo, String list) async {
@@ -88,60 +76,110 @@ revolution today.<br />
 ''';
     DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     if (emailInterface != null)
-      await _apiAuthService.proxy(
-          () => emailInterface.sendRawMessage(
-              account, base64UrlEncode(utf8.encode(email))),
-          account);
-    return true;
+      return await _apiAuthService.proxy(
+          () => emailInterface.send(account, email), account);
+    return false;
   }
 
-  Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
-    if (sender.email != null) {
-      ApiCompanyModelLocal? company =
-          await _apiCompanyService.upsert(_domainFromEmail(sender.email!));
-      if (company != null) {
-        sender.company = company;
-        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
-        return saved;
-      }
+  Future<void> index(ApiOAuthModelAccount account) async {
+    _log.fine('Email index for ' +
+        (account.email ?? '') +
+        ' started on: ' +
+        DateTime.now().toIso8601String());
+
+    ApiOAuthInterfaceProvider? apiOauthInterface =
+        await _apiAuthService.providers[account.provider];
+    DataBkgInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
+    if (apiOauthInterface == null ||
+        interfaceEmail == null ||
+        !await apiOauthInterface.isConnected(account)) return;
+
+    ApiAppDataModel? appDataIndexEpoch =
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch);
+    int? indexEpoch =
+        appDataIndexEpoch != null ? int.parse(appDataIndexEpoch.value) : null;
+
+    if (indexEpoch == null ||
+        DateTime.now()
+            .subtract(Duration(days: 1))
+            .isAfter(DateTime.fromMillisecondsSinceEpoch(indexEpoch))) {
+      await _loopLabels(interfaceEmail, account, indexEpoch: indexEpoch);
+      await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch,
+          DateTime.now().millisecondsSinceEpoch.toString());
+      _log.fine('Email index for ' +
+          (account.email ?? '') +
+          ' completed on: ' +
+          DateTime.now().toIso8601String());
     }
   }
 
-  Future<void> _checkEmailFetchList(
-      ApiOAuthModelAccount account, DataBkgInterfaceEmail emailInterface,
-      {String query = ''}) async {
-    String page = await emailInterface.getPage();
-    await _checkEmailFetchListPage(account, emailInterface,
-        query: query, page: page);
+  Future<void> _loopLabels(
+      DataBkgInterfaceEmail interfaceEmail, ApiOAuthModelAccount account,
+      {int? indexEpoch}) async {
+    ApiAppDataModel? appDataIndexLabel =
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
+    String activeLabel = appDataIndexLabel?.value ?? interfaceEmail.labels[0];
+    for (int i = interfaceEmail.labels.indexOf(activeLabel);
+        i < interfaceEmail.labels.length;
+        i++) {
+      await _pageList(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          label: interfaceEmail.labels[i],
+          indexEpoch: indexEpoch);
+      await _apiAppDataService.save(
+          ApiAppDataKey.emailIndexLabel,
+          (i + 1 == interfaceEmail.labels.length)
+              ? interfaceEmail.labels[0]
+              : interfaceEmail.labels[i + 1]);
+    }
   }
 
-  Future<void> _checkEmailFetchListPage(
-      ApiOAuthModelAccount account, DataBkgInterfaceEmail emailInterface,
-      {String? page, String? query}) async {
-    DataBkgModelPage<String> res = await emailInterface.emailFetchList(account,
-        query: query, page: page, maxResults: 5);
+  Future<void> _pageList(
+      {required DataBkgInterfaceEmail interfaceEmail,
+      required ApiOAuthModelAccount account,
+      String? page,
+      String? label,
+      int? indexEpoch}) async {
+    if (page == null) {
+      ApiAppDataModel? appDataIndexPage =
+          await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
+      page = appDataIndexPage?.value;
+    }
+    DataBkgModelPage<String> res = await _getList(
+        account: account,
+        interfaceEmail: interfaceEmail,
+        label: label,
+        afterEpoch: indexEpoch,
+        page: page,
+        maxResults: 5);
     if (res.data != null) {
-      List known = (await _apiEmailMsgService.getByExtMessageIds(res.data!))
-          .map((message) => message.extMessageId!)
-          .toList();
+      List<String> known =
+          (await _apiEmailMsgService.getByExtMessageIds(res.data!))
+              .map((message) => message.extMessageId!)
+              .toList();
       List<String> unknown =
           res.data!.where((message) => !known.contains(message)).toList();
-      await _checkEmailFetchMessage(account, unknown);
+      await _processMessages(interfaceEmail, account, unknown);
     }
-    await _apiAppDataService.save(ApiAppDataKey.gmailPage, res.next ?? '');
+    await _apiAppDataService.save(ApiAppDataKey.emailIndexPage, res.next ?? '');
     if (res.next != null)
-      return _checkEmailFetchListPage(account, emailInterface,
-          page: res.next, query: query);
+      return _pageList(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          label: label,
+          indexEpoch: indexEpoch,
+          page: res.next);
   }
 
-  Future<void> _checkEmailFetchMessage(
+  Future<void> _processMessages(DataBkgInterfaceEmail interfaceEmail,
       ApiOAuthModelAccount account, List<String> messages) async {
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     Set<String> processed = Set();
-    if (emailInterface == null) return;
     for (String messageId in messages) {
-      ApiEmailMsgModel? message =
-          await emailInterface.emailFetchMessage(account, messageId);
+      ApiEmailMsgModel? message = await _getMessage(
+          account: account,
+          interfaceEmail: interfaceEmail,
+          messageId: messageId);
       if (message?.extMessageId != null) processed.add(message!.extMessageId!);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
@@ -151,9 +189,10 @@ revolution today.<br />
           await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
           _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
+          notifyListeners();
         } else {
-          Set<ApiEmailMsgModel> senderMessages =
-              await _checkEmailNewSender(account, message.sender!.email!);
+          Set<ApiEmailMsgModel> senderMessages = await _indexSender(
+              interfaceEmail, account, message.sender!.email!);
           Set<String> senderMessageIds =
               senderMessages.map((message) => message.extMessageId!).toSet();
           List<String> newMessages = messages
@@ -161,23 +200,28 @@ revolution today.<br />
                   !senderMessageIds.contains(message) &&
                   !processed.contains(message))
               .toList();
-          return _checkEmailFetchMessage(account, newMessages);
+          return _processMessages(interfaceEmail, account, newMessages);
         }
       }
     }
   }
 
-  Future<Set<ApiEmailMsgModel>> _checkEmailNewSender(
-      ApiOAuthModelAccount account, String email) async {
-    List<String> messageIds = await _checkEmailNewSenderPage(account,
-        email: email, messages: List.empty(growable: true));
+  Future<Set<ApiEmailMsgModel>> _indexSender(
+      DataBkgInterfaceEmail interfaceEmail,
+      ApiOAuthModelAccount account,
+      String email) async {
+    List<String> messageIds = await _pageSender(
+        interfaceEmail: interfaceEmail,
+        account: account,
+        email: email,
+        messages: List.empty(growable: true));
     Set<ApiEmailMsgModel> messages = Set();
     DateTime first = DateTime.now();
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
-    if (emailInterface == null) return messages;
     for (String messageId in messageIds) {
-      ApiEmailMsgModel? message =
-          await emailInterface.emailFetchMessage(account, messageId);
+      ApiEmailMsgModel? message = await _getMessage(
+          account: account,
+          interfaceEmail: interfaceEmail,
+          messageId: messageId);
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         messages.add(message!);
@@ -194,42 +238,121 @@ revolution today.<br />
         message.sender = inserted;
         await _apiEmailMsgService.upsert(message);
       }
-      await _saveSender(sender);
       _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
+      notifyListeners();
     }
     return messages;
   }
 
-  Future<List<String>> _checkEmailNewSenderPage(ApiOAuthModelAccount account,
-      {required String email,
+  Future<ApiEmailSenderModel?> _saveSender(ApiEmailSenderModel sender) async {
+    if (sender.email != null) {
+      List<String> atSplit = sender.email!.split('@');
+      List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
+      String domain = periodSplit[periodSplit.length - 2] +
+          "." +
+          periodSplit[periodSplit.length - 1];
+      ApiCompanyModelLocal? company = await _apiCompanyService.upsert(domain);
+      if (company != null) {
+        sender.company = company;
+        ApiEmailSenderModel saved = await _apiEmailSenderService.upsert(sender);
+        return saved;
+      }
+    }
+  }
+
+  Future<List<String>> _pageSender(
+      {required DataBkgInterfaceEmail interfaceEmail,
+      required ApiOAuthModelAccount account,
+      required String email,
+      required List<String> messages,
+      String? page}) async {
+    DataBkgModelPage<String> res = await _getList(
+        account: account,
+        interfaceEmail: interfaceEmail,
+        from: email,
+        maxResults: 500,
+        page: page);
+    if (res.data != null) messages.addAll(res.data!);
+    if (res.next != null)
+      return _pageSender(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          email: email,
+          page: res.next,
+          messages: messages);
+    else
+      return messages;
+  }
+
+  Future<DataBkgModelPage<String>> _getList(
+      {required ApiOAuthModelAccount account,
+      required DataBkgInterfaceEmail interfaceEmail,
+      String? label,
+      String? from,
+      int? afterEpoch,
+      int? maxResults,
       String? page,
-      required List<String> messages}) async {
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
-    if (emailInterface != null) {
-      DataBkgModelPage<String> res = await emailInterface
-          .emailFetchList(account, query: 'from:' + email, page: page);
-      if (res.data != null) messages.addAll(res.data!);
-      if (res.next != null)
-        return _checkEmailNewSenderPage(account,
-            email: email, page: res.next, messages: messages);
+      int? retries = 3}) async {
+    try {
+      return await interfaceEmail.getList(account,
+          label: label,
+          from: from,
+          afterEpoch: afterEpoch,
+          maxResults: maxResults,
+          page: page);
+    } catch (e) {
+      _log.warning(
+          "getList failed(" +
+              (account.provider ?? "") +
+              "), retries: " +
+              retries.toString(),
+          [e, StackTrace.current]);
+      if ((retries ?? 0) > 1)
+        return _getList(
+          account: account,
+          interfaceEmail: interfaceEmail,
+          label: label,
+          from: from,
+          afterEpoch: afterEpoch,
+          maxResults: maxResults,
+          page: page,
+          retries: retries! - 1,
+        );
+      rethrow;
     }
-    return messages;
   }
 
-  String _domainFromEmail(String email) {
-    List<String> atSplit = email.split('@');
-    List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-    return periodSplit[periodSplit.length - 2] +
-        "." +
-        periodSplit[periodSplit.length - 1];
+  Future<ApiEmailMsgModel?> _getMessage(
+      {required ApiOAuthModelAccount account,
+      required DataBkgInterfaceEmail interfaceEmail,
+      required String messageId,
+      int? retries = 3}) async {
+    try {
+      return await interfaceEmail.getMessage(account, messageId);
+    } catch (e) {
+      _log.warning(
+          "getMessage failed(" +
+              (account.provider ?? "") +
+              "), retries: " +
+              retries.toString(),
+          [e, StackTrace.current]);
+      if ((retries ?? 0) > 1)
+        return _getMessage(
+          account: account,
+          interfaceEmail: interfaceEmail,
+          messageId: messageId,
+          retries: retries! - 1,
+        );
+      rethrow;
+    }
   }
 
   Future<DataBkgInterfaceEmail?> _getEmailInterface(
       ApiOAuthModelAccount account) async {
-    ApiOAuthInterfaceProvider? apiAuthProvider =
+    ApiOAuthInterfaceProvider? apiOAuthProvider =
         await _apiAuthService.providers[account.provider];
-    DataBkgInterfaceProvider? providerService =
-        apiAuthProvider as DataBkgInterfaceProvider?;
-    return providerService?.emailProvider;
+    DataBkgInterfaceProvider? dataBkgProvider =
+        apiOAuthProvider as DataBkgInterfaceProvider?;
+    return dataBkgProvider?.email;
   }
 }
