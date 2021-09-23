@@ -28,7 +28,8 @@ class ApiOAuthService {
   final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
   final ApiAppDataService _apiAppDataService;
 
-  Map<String, ApiOAuthInterfaceProvider> get providers => _model.providers;
+  Map<String, ApiOAuthInterfaceProvider> get interfaceProviders =>
+      _model.interfaceProviders;
 
   ApiOAuthService(
       {required Database database,
@@ -72,7 +73,8 @@ class ApiOAuthService {
   }
 
   Future<void> signOut(ApiOAuthModelAccount account) async {
-    ApiOAuthInterfaceProvider? provider = _model.providers[account.provider];
+    ApiOAuthInterfaceProvider? provider =
+        _model.interfaceProviders[account.provider];
     if (provider != null) await provider.revokeToken(account);
     await _apiAuthRepositoryAccount.delete(account);
   }
@@ -153,12 +155,12 @@ class ApiOAuthService {
   }
 
   Future<void> _getProviders() async {
-    Map<String, ApiOAuthModelProvider> modelProviders =
+    Map<String, ApiOAuthModelProvider> repositoryProviders =
         await _apiAuthRepositoryProvider.providers;
-    modelProviders.forEach((k, v) {
+    repositoryProviders.forEach((k, v) {
       switch (k) {
         case 'google':
-          _model.providers[k] = ApiGoogleService(
+          _model.interfaceProviders[k] = ApiGoogleService(
               apiAuthService: this, apiAppDataService: _apiAppDataService);
       }
     });
