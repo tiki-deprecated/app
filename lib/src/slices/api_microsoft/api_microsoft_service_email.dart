@@ -5,14 +5,13 @@
 
 // ignore_for_file: unused_import
 
-import 'package:app/src/slices/api_email_msg/model/api_email_msg_model.dart';
-import 'package:app/src/slices/data_bkg/data_bkg_interface_email.dart';
-import 'package:app/src/slices/data_bkg/model/data_bkg_model_page.dart';
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model.dart';
-
+import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_email.dart';
 import '../data_bkg/data_bkg_interface_provider.dart';
+import '../data_bkg/model/data_bkg_model_page.dart';
+import '../info_carousel_card/model/info_carousel_card_model.dart';
 
 class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
   @override

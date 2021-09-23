@@ -10,27 +10,20 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);
-    List<String> providers = service.getProviders();
-    return Column(
-        children: providers.map((provider) {
-      List<ApiOAuthModelAccount> accounts = service.getAccounts(provider);
-      ApiOAuthModelAccount? account = accounts.isEmpty ? null : accounts[0];
-      return Container(
+    ApiOAuthModelAccount? account = service.account;
+    return Container(
         margin: EdgeInsets.only(top: 2.h),
         child: LinkAccount(
           username: account?.username,
-          type: provider,
-          linkedIcon: "account-soon-" + provider,
-          unlinkedIcon: provider + "-icon",
-          onLink: () => service.controller.linkAccount(provider),
-          onUnlink: () => account != null
-              ? service.controller.removeAccount(account.accountId!)
-              : null,
+          type: 'google',
+          linkedIcon: "account-soon-google",
+          unlinkedIcon: "google-icon",
+          onLink: () => service.controller.linkAccount(),
+          onUnlink: () =>
+              account != null ? service.controller.removeAccount() : null,
           onSee: () => account != null
               ? service.controller.openGmailCards(context, account.accountId!)
               : null,
-        ),
-      );
-    }).toList());
+        ));
   }
 }

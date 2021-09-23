@@ -6,5 +6,5 @@
 import '../../api_oauth/model/api_oauth_model_account.dart';
 
 class DataScreenModel {
-  List<ApiOAuthModelAccount> accounts = List.empty(growable: true);
+  ApiOAuthModelAccount? account;
 }
