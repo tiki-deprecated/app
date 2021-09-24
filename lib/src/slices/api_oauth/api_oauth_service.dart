@@ -5,6 +5,7 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
 import 'package:app/src/slices/api_oauth/model/api_oauth_model.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
@@ -77,6 +78,9 @@ class ApiOAuthService {
         _model.interfaceProviders[account.provider];
     if (provider != null) await provider.revokeToken(account);
     await _apiAuthRepositoryAccount.delete(account);
+    await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch, '');
+    await _apiAppDataService.save(ApiAppDataKey.emailIndexPage, '');
+    await _apiAppDataService.save(ApiAppDataKey.emailIndexLabel, '');
   }
 
   Future<Map?> getUserInfo(
