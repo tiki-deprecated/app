@@ -3,16 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../data_bkg/data_bkg_interface_email.dart';
-import 'package:http/http.dart';
 
 import '../../config/config_sentry.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_email.dart';
 import '../data_bkg/data_bkg_interface_provider.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'api_google_service_email.dart';
@@ -41,11 +39,8 @@ class ApiGoogleService
 
   @override
   Future<void> revokeToken(ApiOAuthModelAccount account) async {
-    Response rsp = await ConfigSentry.http.post(Uri.parse(
+    await ConfigSentry.http.post(Uri.parse(
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
-    if (HelperApiUtils.is2xx(rsp.statusCode)) {
-      await _apiAuthService.signOut(account);
-    }
   }
 
   // TODO in the future we'll have account specific infocards

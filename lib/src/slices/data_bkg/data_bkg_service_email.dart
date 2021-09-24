@@ -86,12 +86,8 @@ revolution today.<br />
         ' started on: ' +
         DateTime.now().toIso8601String());
 
-    ApiOAuthInterfaceProvider? apiOauthInterface =
-        await _apiAuthService.providers[account.provider];
     DataBkgInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
-    if (apiOauthInterface == null ||
-        interfaceEmail == null ||
-        !await apiOauthInterface.isConnected(account)) return;
+    if (interfaceEmail == null || !await _isConnected(account)) return;
 
     ApiAppDataModel? appDataIndexEpoch =
         await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch);
@@ -361,9 +357,16 @@ revolution today.<br />
   Future<DataBkgInterfaceEmail?> _getEmailInterface(
       ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? apiOAuthProvider =
-        await _apiAuthService.providers[account.provider];
+        await _apiAuthService.interfaceProviders[account.provider];
     DataBkgInterfaceProvider? dataBkgProvider =
         apiOAuthProvider as DataBkgInterfaceProvider?;
     return dataBkgProvider?.email;
+  }
+
+  Future<bool> _isConnected(ApiOAuthModelAccount account) async {
+    ApiOAuthInterfaceProvider? apiOauthInterface =
+        await _apiAuthService.interfaceProviders[account.provider];
+    return apiOauthInterface != null &&
+        await apiOauthInterface.isConnected(account);
   }
 }

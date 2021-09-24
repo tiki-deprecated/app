@@ -28,6 +28,11 @@ class DataScreenService extends ChangeNotifier {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
+    _apiAuthService.getAccount().then((account) {
+      _model.account = account;
+      if (account != null) _dataBkgService.index(account);
+      notifyListeners();
+    });
   }
 
   Future<void> linkAccount(String provider) async {
@@ -50,7 +55,7 @@ class DataScreenService extends ChangeNotifier {
     ApiOAuthModelAccount? account = _model.account;
     if (account != null) {
       DataBkgInterfaceProvider? provider = _apiAuthService
-          .providers[account.provider] as DataBkgInterfaceProvider?;
+          .interfaceProviders[account.provider] as DataBkgInterfaceProvider?;
       if (provider?.email != null) return await provider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
