@@ -92,7 +92,13 @@ jobs:
         run: flutter build appbundle --build-number=42$GITHUB_RUN_NUMBER
 
       - name: Build IPA (IOS)
-        run: flutter build ipa --build-number=42$GITHUB_RUN_NUMBER
+        env:
+          CONNECT_USERNAME: ${{ secrets.CONNECT_USERNAME }}
+          CONNECT_PASSWORD: ${{ secrets.CONNECT_PASSWORD }}
+        run: |
+          flutter build ipa --build-number=42$GITHUB_RUN_NUMBER
+          xcodebuild -exportArchive -exportOptionsPlist ios/exportOptionsUpload.plist -archivePath build/ios/archive/Runner.xcarchive -exportPath build/ios/release/
+          xcrun altool --validate-app -t ios -f build/ios/release/app.ipa -u "$CONNECT_USERNAME" -p "$CONNECT_PASSWORD"
 
       - name: Create Release
         uses: ncipollo/release-action@v1
