@@ -50,6 +50,6 @@ Link your accounts to the TIKI app and we'll get you paid your fair share.
 3. **Monetize** Get paid your fair share for granting buyers access to your data.
 
 ## Contact Us
-Follow us, tweet us, hit us up. Together we're a revolution.
+Follow us, tweet us, hit us up. Together we're a revolution. 
 
 [Twitter](https://twitter.com/my_tiki_) - [Instagram](https://www.instagram.com/my.tiki/) - [Facebook](https://www.facebook.com/mytikiapp) - [Tiktok](https://www.tiktok.com/@my.tiki?) - [LinkedIn](https://www.linkedin.com/company/mytiki/) - [Discord](https://discord.com/invite/evjYQq48Be) - [Telegram](https://t.me/mytikiapp) - [Signal](https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP)
