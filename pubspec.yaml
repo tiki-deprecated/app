@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.2.3+1
+version: 0.2.5+1
 publish_to: 'none'
 
 environment:
