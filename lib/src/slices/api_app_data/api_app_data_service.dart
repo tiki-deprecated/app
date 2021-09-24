@@ -23,6 +23,11 @@ class ApiAppDataService {
         : await _repository.update(dataToInsert);
   }
 
+  Future<void> delete(ApiAppDataKey key) async {
+    ApiAppDataModel? data = await this.getByKey(key);
+    if (data != null) await _repository.delete(data.id!);
+  }
+
   Future<void> logout() async {
     List<ApiAppDataKey> keysToDelete = [
       ApiAppDataKey.userReferCode,
@@ -31,7 +36,7 @@ class ApiAppDataService {
       ApiAppDataKey.emailIndexPage,
     ];
     keysToDelete.forEach((key) async {
-      await _repository.deleteByKey(key);
+      await _repository.deleteByKey(key.value!);
     });
   }
 }

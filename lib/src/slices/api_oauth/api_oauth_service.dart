@@ -78,9 +78,9 @@ class ApiOAuthService {
         _model.interfaceProviders[account.provider];
     if (provider != null) await provider.revokeToken(account);
     await _apiAuthRepositoryAccount.delete(account);
-    await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch, '');
-    await _apiAppDataService.save(ApiAppDataKey.emailIndexPage, '');
-    await _apiAppDataService.save(ApiAppDataKey.emailIndexLabel, '');
+    await _apiAppDataService.delete(ApiAppDataKey.emailIndexEpoch);
+    await _apiAppDataService.delete(ApiAppDataKey.emailIndexPage);
+    await _apiAppDataService.delete(ApiAppDataKey.emailIndexLabel);
   }
 
   Future<Map?> getUserInfo(
