@@ -1,4 +1,3 @@
-import 'package:app/src/slices/decision_screen/ui/decision_screen_abstract_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +5,7 @@ import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
 import '../../data_bkg/data_bkg_service.dart';
 import '../decision_screen_service.dart';
+import 'decision_screen_abstract_card.dart';
 import 'decision_screen_view_card.dart';
 import 'decision_screen_view_empty.dart';
 import 'decision_screen_view_link.dart';

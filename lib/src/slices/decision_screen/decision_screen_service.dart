@@ -1,12 +1,13 @@
-import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_app_data/model/api_app_data_model.dart';
+import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
-import '../api_google/api_google_service.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/decision_card_spam_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import '../decision_screen/ui/decision_screen_view_card_test.dart';
@@ -20,23 +21,25 @@ class DecisionScreenService extends ChangeNotifier {
   late final DecisionScreenModel model;
 
   final ApiAppDataService _apiAppDataService;
-  final ApiGoogleService _apiGoogleService;
   final DecisionCardSpamService _decisionCardSpamService;
+  final ApiOAuthService _apiAuthService;
 
   DecisionScreenService(
-      {required ApiGoogleService apiGoogleService,
-      required ApiAppDataService apiAppDataService,
+      {required ApiAppDataService apiAppDataService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
-      required ApiCompanyService apiCompanyService})
+      required ApiCompanyService apiCompanyService,
+      required ApiOAuthService apiAuthService,
+      required DataBkgService dataBkgService})
       : this._apiAppDataService = apiAppDataService,
-        this._apiGoogleService = apiGoogleService,
+        this._apiAuthService = apiAuthService,
         this._decisionCardSpamService = DecisionCardSpamService(
             apiEmailSenderService: apiEmailSenderService,
             apiEmailMsgService: apiEmailMsgService,
             apiAppDataService: apiAppDataService,
             apiCompanyService: apiCompanyService,
-            apiGoogleService: apiGoogleService) {
+            dataBkgService: dataBkgService,
+            apiAuthService: apiAuthService) {
     presenter = DecisionScreenPresenter(this);
     controller = DecisionScreenController(this);
     model = DecisionScreenModel();
@@ -45,10 +48,13 @@ class DecisionScreenService extends ChangeNotifier {
 
   //TODO fix this future builder anti-pattern
   Future<bool> refresh() async {
-    bool isConnected = await _apiGoogleService.isConnected();
+    bool isConnected = await _apiAuthService.getAccount() != null;
     if (isConnected) await _generateSpamCards();
     await _addTests();
     this.model.isLinked = isConnected;
+    this.model.isPending =
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch) ==
+            null;
     return this.model.isLinked;
   }
 
@@ -78,7 +84,9 @@ class DecisionScreenService extends ChangeNotifier {
       List<DecisionCardSpamLayout>? cards =
           await _decisionCardSpamService.getCards();
       if (cards != null && cards.isNotEmpty) {
-        this.model.isPending = false;
+        this.model.isPending =
+            await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch) ==
+                null;
         cards.forEach((card) {
           if (!this.model.cards.contains(card) && this.model.cards.length < 3)
             this.model.cards.add(card);

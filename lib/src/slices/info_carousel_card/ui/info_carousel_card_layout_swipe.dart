@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/ui/cover/info_carousel_card_layout_cover.dart';
-import 'package:app/src/slices/info_carousel_card/ui/scroll/info_carousel_card_layout_scroll.dart';
 import 'package:flutter/material.dart';
+
+import 'cover/info_carousel_card_layout_cover.dart';
+import 'scroll/info_carousel_card_layout_scroll.dart';
 
 class InfoCarouselCardLayoutSwipe extends AnimatedWidget {
   final AnimationController _animationController;

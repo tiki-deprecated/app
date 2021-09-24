@@ -1,5 +1,7 @@
-import 'package:app/src/slices/api_app_data/model/api_app_data_model.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
+import '../api_app_data_key.dart';
+import '../model/api_app_data_model.dart';
 
 class ApiAppDataRepository {
   static const String _table = 'app_data';
@@ -43,5 +45,9 @@ class ApiAppDataRepository {
         await _database.query(_table, where: "key = ?", whereArgs: [key]);
     if (rows.isEmpty) return null;
     return ApiAppDataModel.fromMap(rows[0]);
+  }
+
+  deleteByKey(ApiAppDataKey key) async {
+    await _database.delete(_table, where: "key = ?", whereArgs: [key]);
   }
 }

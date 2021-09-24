@@ -3,11 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_signup/repository/api_signup_repository.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
-
+import '../../utils/api/helper_api_rsp.dart';
+import '../../utils/api/helper_api_utils.dart';
 import 'model/api_signup_model_user_rsp.dart';
+import 'repository/api_signup_repository.dart';
 
 class ApiSignupService {
   Future<HelperApiRsp<ApiSignupModelUserRsp>> getTotalRsp(

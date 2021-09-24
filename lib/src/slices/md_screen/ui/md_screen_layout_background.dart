@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../config/config_color.dart';
+import '../../../utils/helper_image.dart';
 
 class MdScreenLayoutBackground extends StatelessWidget {
   @override

@@ -5,14 +5,15 @@
 
 import 'dart:convert';
 
-import 'package:app/src/config/config_domain.dart';
-import 'package:app/src/config/config_sentry.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_req.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp.dart';
-import 'package:app/src/slices/api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
-import 'package:app/src/utils/api/helper_api_headers.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
 import 'package:http/http.dart';
+
+import '../../../config/config_domain.dart';
+import '../../../config/config_sentry.dart';
+import '../../../utils/api/helper_api_headers.dart';
+import '../../../utils/api/helper_api_rsp.dart';
+import '../model/api_blockchain_model_address_req.dart';
+import '../model/api_blockchain_model_address_rsp.dart';
+import '../model/api_blockchain_model_address_rsp_code.dart';
 
 class ApiBlockchainRepositoryAddress {
   static final String _pathAddress = '/api/latest/address';

@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_restore.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_subtitle.dart';
-import 'package:app/src/slices/keys_create_screen/ui/keys_create_screen_view_title.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+
+import 'keys_create_screen_view_restore.dart';
+import 'keys_create_screen_view_subtitle.dart';
+import 'keys_create_screen_view_title.dart';
 
 class KeysCreateScreenLayoutForeground extends StatelessWidget {
   static final double _marginTopTitle = 5.h;

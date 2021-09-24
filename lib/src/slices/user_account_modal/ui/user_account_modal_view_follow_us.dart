@@ -1,12 +1,13 @@
-import 'package:app/src/utils/helper_image.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_controller.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_view_cta_grid.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_view_figure.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_view_text.dart';
-import 'package:app/src/widgets/tiki_card/tiki_card_view_title.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../utils/helper_image.dart';
+import '../../../widgets/tiki_card/tiki_card.dart';
+import '../../../widgets/tiki_card/tiki_card_controller.dart';
+import '../../../widgets/tiki_card/tiki_card_view_cta_grid.dart';
+import '../../../widgets/tiki_card/tiki_card_view_figure.dart';
+import '../../../widgets/tiki_card/tiki_card_view_text.dart';
+import '../../../widgets/tiki_card/tiki_card_view_title.dart';
 
 class UserAccountModalViewFollowUs extends StatelessWidget {
   static const num _btnPaddingHorizontal = 2;

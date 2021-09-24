@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../config/config_color.dart';
 
 class LinkAccountViewSee extends StatelessWidget {
   final String type;
@@ -20,7 +21,7 @@ class LinkAccountViewSee extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 1.75.h),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("What data " + type + " holds on me",
+            Text("What data does " + type + " hold",
                 style: TextStyle(
                     fontSize: 11.5.sp,
                     fontWeight: FontWeight.bold,

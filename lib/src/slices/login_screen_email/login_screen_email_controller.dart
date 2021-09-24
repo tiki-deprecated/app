@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/md_screen/md_screen_service.dart';
 import 'package:flutter/material.dart';
 
+import '../md_screen/md_screen_service.dart';
 import 'login_screen_email_service.dart';
 
 class LoginScreenEmailController {

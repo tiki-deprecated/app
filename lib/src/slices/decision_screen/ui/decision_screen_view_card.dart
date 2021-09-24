@@ -1,6 +1,7 @@
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../utils/helper_image.dart';
 
 class DecisionScreenViewCard extends StatefulWidget {
   final Widget child;

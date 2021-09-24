@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utils/helper_image.dart';
 import 'login_screen_inbox_back_button.dart';
 import 'login_screen_inbox_resend.dart';
 import 'login_screen_inbox_sent_to.dart';

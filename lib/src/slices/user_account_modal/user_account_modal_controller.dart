@@ -3,12 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_signup/api_signup_service.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../api_signup/api_signup_service.dart';
+import '../login_flow/login_flow_service.dart';
+import '../user_referral/user_referral_service.dart';
+import 'user_account_modal_service.dart';
 
 class UserAccountModalController {
   static const String _shareBody =
@@ -23,11 +25,12 @@ class UserAccountModalController {
   void onLogout(BuildContext context) =>
       Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
 
-  void onShare(BuildContext context) {
-    LoginFlowService loginFlowService =
-        Provider.of<LoginFlowService>(context, listen: false);
-    String code = service.referralService.getCode(loginFlowService);
-    Share.share(_shareBody + _shareLink + code, subject: _shareSubject);
+  Future<void> onShare(UserReferralService userReferralService) async {
+    await userReferralService.getCode();
+    if (userReferralService.model.code.isNotEmpty) {
+      Share.share(_shareBody + _shareLink + userReferralService.model.code,
+          subject: _shareSubject);
+    }
   }
 
   void updateUserCount(BuildContext context) {

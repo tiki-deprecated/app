@@ -3,13 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_blockchain/repository/api_blockchain_repository_address.dart';
-import 'package:app/src/utils/api/helper_api_auth.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-
+import '../../utils/api/helper_api_auth.dart';
+import '../../utils/api/helper_api_rsp.dart';
 import 'model/api_blockchain_model_address_req.dart';
 import 'model/api_blockchain_model_address_rsp.dart';
 import 'model/api_blockchain_model_address_rsp_code.dart';
+import 'repository/api_blockchain_repository_address.dart';
 
 class ApiBlockchainService {
   final HelperApiAuth helperApiAuth;

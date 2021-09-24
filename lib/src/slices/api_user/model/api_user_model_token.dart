@@ -6,21 +6,23 @@
 class ApiUserModelToken {
   String? bearer;
   String? refresh;
-  int? expiresIn;
+  DateTime? expires;
 
-  ApiUserModelToken({this.bearer, this.refresh, this.expiresIn});
+  ApiUserModelToken({this.bearer, this.refresh, this.expires});
 
   ApiUserModelToken.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.bearer = json['bearer'];
       this.refresh = json['refresh'];
-      this.expiresIn = json['expiresIn'];
+      if (json['expires_epoch'] != null)
+        this.expires =
+            DateTime.fromMillisecondsSinceEpoch(json['expires_epoch']);
     }
   }
 
   Map<String, dynamic> toJson() => {
         'bearer': bearer,
         'refresh': refresh,
-        'expiresIn': expiresIn,
+        'expires_epoch': expires?.millisecondsSinceEpoch,
       };
 }

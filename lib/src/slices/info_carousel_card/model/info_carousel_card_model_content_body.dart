@@ -3,10 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model_content_text.dart';
-import 'package:app/src/utils/helper_json.dart';
-
+import '../../../utils/helper_json.dart';
 import 'info_carousel_card_model_content_icon.dart';
+import 'info_carousel_card_model_content_text.dart';
 
 class InfoCarouselCardModelContentBody {
   List<InfoCarouselCardModelContentText>? explain;

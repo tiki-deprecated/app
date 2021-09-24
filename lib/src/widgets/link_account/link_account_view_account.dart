@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../config/config_color.dart';
 
 class LinkAccountViewAccount extends StatelessWidget {
   final String icon;
@@ -29,12 +30,14 @@ class LinkAccountViewAccount extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(type,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      color: ConfigColor.greyFive,
-                      height: 1,
-                      fontSize: 11.sp)),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 0.25.h),
+                  child: Text(type,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: ConfigColor.greyFive,
+                          height: 1,
+                          fontSize: 12.sp))),
               Text(username,
                   style: TextStyle(
                       fontWeight: FontWeight.w600,

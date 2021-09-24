@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/abstract_ss_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../utils/abstract_ss_repository.dart';
 import '../model/api_user_model_otp.dart';
 
 class ApiUserRepositoryOtp extends AbstractSsRepository<ApiUserModelOtp> {

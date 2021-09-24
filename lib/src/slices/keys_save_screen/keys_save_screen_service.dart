@@ -1,8 +1,9 @@
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_controller.dart';
-import 'package:app/src/slices/keys_save_screen/keys_save_screen_presenter.dart';
-import 'package:app/src/slices/keys_save_screen/model/keys_save_screen_model.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
+
+import '../login_flow/login_flow_service.dart';
+import 'keys_save_screen_controller.dart';
+import 'keys_save_screen_presenter.dart';
+import 'model/keys_save_screen_model.dart';
 
 class KeysSaveScreenService extends ChangeNotifier {
   late KeysSaveScreenPresenter presenter;

@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel/model/info_carousel_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'info_carousel_controller.dart';
 import 'info_carousel_presenter.dart';
+import 'model/info_carousel_model.dart';
 
 class InfoCarouselService extends ChangeNotifier {
   late final InfoCarouselPresenter presenter;

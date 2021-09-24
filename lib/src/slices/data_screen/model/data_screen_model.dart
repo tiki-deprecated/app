@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_sign_in/google_sign_in.dart';
+import '../../api_oauth/model/api_oauth_model_account.dart';
 
 class DataScreenModel {
-  GoogleSignInAccount? googleAccount;
+  ApiOAuthModelAccount? account;
 }

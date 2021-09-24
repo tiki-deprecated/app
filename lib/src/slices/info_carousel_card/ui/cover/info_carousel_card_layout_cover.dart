@@ -53,7 +53,8 @@ class InfoCarouselCardLayoutCover extends StatelessWidget {
                     child: Container(
                         alignment: Alignment.bottomCenter,
                         padding: EdgeInsets.only(bottom: 4.h),
-                        child: InfoCarouselCardViewCoverArrow(_animationValue)))
+                        child: InfoCarouselCardViewCoverArrow(
+                            _animationController, _animationValue)))
               ],
             ))));
   }

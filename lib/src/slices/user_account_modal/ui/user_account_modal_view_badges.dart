@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_badges_select.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import 'user_account_modal_view_badges_select.dart';
 
 class UserAccountModalViewBadges extends StatelessWidget {
   static const String _soon = "COMING SOON";

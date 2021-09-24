@@ -3,12 +3,13 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/wallet_balance/wallet_balance_service.dart';
-import 'package:app/src/slices/wallet_screen/ui/wallet_screen_view_cash_out.dart';
-import 'package:app/src/slices/wallet_screen/ui/wallet_screen_view_referral.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../wallet_balance/wallet_balance_service.dart';
+import 'wallet_screen_view_cash_out.dart';
+import 'wallet_screen_view_referral.dart';
 
 class WalletScreenLayoutBody extends StatelessWidget {
   @override

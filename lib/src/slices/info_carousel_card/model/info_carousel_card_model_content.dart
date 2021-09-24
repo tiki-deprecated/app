@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model_content_body.dart';
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model_content_cta.dart';
+import 'info_carousel_card_model_content_body.dart';
+import 'info_carousel_card_model_content_cta.dart';
 
 class InfoCarouselCardModelContent {
   InfoCarouselCardModelContentBody? body;

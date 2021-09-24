@@ -3,8 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/helper_json.dart';
-
+import '../../../utils/helper_json.dart';
 import 'info_carousel_card_model_content_text.dart';
 
 class InfoCarouselCardModelContentCta {

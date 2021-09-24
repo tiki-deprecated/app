@@ -3,9 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_bouncer/model/api_bouncer_model_jwt_req_otp.dart';
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-
+import '../../utils/api/helper_api_rsp.dart';
+import 'model/api_bouncer_model_jwt_req_otp.dart';
 import 'model/api_bouncer_model_jwt_req_refresh.dart';
 import 'model/api_bouncer_model_jwt_rsp.dart';
 import 'model/api_bouncer_model_otp_req.dart';

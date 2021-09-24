@@ -3,15 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/info_carousel_card/info_carousel_card_service.dart';
-import 'package:app/src/slices/info_carousel_card/model/info_carousel_card_model_content_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../config/config_color.dart';
 import '../../info_carousel_card_controller.dart';
+import '../../info_carousel_card_service.dart';
+import '../../model/info_carousel_card_model_content_text.dart';
 
 class InfoCarouselCardViewScrollCtaExplain extends StatelessWidget {
   @override

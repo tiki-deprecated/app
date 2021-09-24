@@ -1,17 +1,17 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../config/config_color.dart';
+import '../user_account_modal_service.dart';
 import 'user_account_modal_view_refer_count.dart';
 import 'user_account_modal_view_refer_share.dart';
 
 class UserAccountModalViewRefer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var referralService =
-        Provider.of<UserAccountModalService>(context).referralService;
+    UserAccountModalService userAccountModalService =
+        Provider.of<UserAccountModalService>(context);
     return Container(
         decoration: BoxDecoration(
           color: ConfigColor.greyTwo,
@@ -28,7 +28,8 @@ class UserAccountModalViewRefer extends StatelessWidget {
               ),
               Container(
                   margin: EdgeInsets.only(top: 3.5.h),
-                  child: referralService.presenter.render()),
+                  child: userAccountModalService.referralService.presenter
+                      .render()),
               Container(
                   margin: EdgeInsets.only(
                       top: 4.5.h, bottom: 5.5.h, left: 13.w, right: 13.w),

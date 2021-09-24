@@ -3,10 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/widgets/link_account/link_account_view_add.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'link_account_view_add.dart';
 import 'link_account_view_linked.dart';
 
 class LinkAccount extends StatelessWidget {
@@ -31,7 +31,7 @@ class LinkAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return username == null
         ? LinkAccountViewAdd(
-            text: "Add a " + type + " account",
+            text: "Sign in with " + type,
             icon: unlinkedIcon,
             onLink: onLink,
           )

@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.2.3+1
+version: 0.2.5+1
 publish_to: 'none'
 
 environment:
@@ -13,13 +13,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  firebase_core: ^1.4.0
-  firebase_dynamic_links: ^2.0.7
+  firebase_core: ^1.5.0
+  firebase_dynamic_links: ^2.0.8
   flutter_secure_storage: ^4.2.1
   http: ^0.13.3
   package_info: ^2.0.2
   sentry_flutter: ^5.1.0
-  pointycastle: ^3.2.0
+  pointycastle: ^3.3.1
   qr_flutter: ^4.0.0
   share_plus: ^2.1.4
   path_provider: ^2.0.2
@@ -33,13 +33,13 @@ dependencies:
   barcode_scan2: ^4.1.4
   flutter_markdown: ^0.6.4
   carousel_slider: ^4.0.0
-  google_sign_in: ^5.0.7
   googleapis: ^4.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.2
   intl_utils: ^2.4.0
-  provider: ^5.0.0
+  provider: ^6.0.0
   sizer: ^2.0.13
   logging: ^1.0.1
+  flutter_appauth: ^1.1.0
 
 dependency_overrides:
   sqflite:
@@ -111,3 +111,7 @@ flutter:
         - asset: res/fonts/NunitoSans-ExtraLightItalic.ttf
           weight: 200
           style: italic
+    - family: Roboto
+      fonts:
+        - asset: res/fonts/Roboto-Medium.ttf
+          weight: 500

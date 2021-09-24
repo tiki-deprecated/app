@@ -3,10 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/security_score_modal/security_score_modal_controller.dart';
 import 'package:flutter/widgets.dart';
 
 import 'model/security_score_modal_model.dart';
+import 'security_score_modal_controller.dart';
 import 'security_score_modal_presenter.dart';
 
 class SecurityScoreModalService extends ChangeNotifier {
