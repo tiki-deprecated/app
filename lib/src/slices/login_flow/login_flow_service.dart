@@ -15,7 +15,6 @@ import '../../utils/api/helper_api_rsp.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../../utils/helper_db.dart';
 import '../api_app_data/api_app_data_service.dart';
-import '../api_auth_service/api_auth_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
 import '../api_blockchain/model/api_blockchain_model_address_req.dart';
 import '../api_blockchain/model/api_blockchain_model_address_rsp.dart';
@@ -25,7 +24,7 @@ import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
-import '../api_google/api_google_service.dart';
+import '../api_oauth/api_oauth_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
 import '../api_user/model/api_user_model_keys.dart';
@@ -247,26 +246,23 @@ class LoginFlowService extends ChangeNotifier {
         ApiEmailMsgService(database: database);
     ApiCompanyService apiCompanyService =
         ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
-    ApiAuthService apiAuthService = ApiAuthService(database: database);
-
-    ApiGoogleService apiGoogleService = ApiGoogleService(apiAuthService);
-    registerLogout(() async => await apiGoogleService.signOut());
-
+    ApiOAuthService apiAuthService = ApiOAuthService(
+        database: database, apiAppDataService: apiAppDataService);
     DataBkgService dataBkgService = DataBkgService(
-        apiEmailMsgService: apiEmailMsgService,
+        apiAuthService: apiAuthService,
+        apiAppDataService: apiAppDataService,
         apiCompanyService: apiCompanyService,
         apiEmailSenderService: apiEmailSenderService,
-        apiGoogleService: apiGoogleService,
-        apiAppDataService: apiAppDataService,
-        apiAuthService: apiAuthService);
+        apiEmailMsgService: apiEmailMsgService);
+
+    registerLogout(() async => await apiAuthService.signOutAll());
 
     _providers = [
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
-      Provider<ApiGoogleService>.value(value: apiGoogleService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
-      Provider<ApiAuthService>.value(value: apiAuthService),
+      Provider<ApiOAuthService>.value(value: apiAuthService),
       ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
     ];
   }

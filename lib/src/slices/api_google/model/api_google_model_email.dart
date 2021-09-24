@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class DataBkgModel {
-  List<String> gmailCategoryList = [
+class ApiGoogleModelEmail {
+  List<String> categories = [
     'category:promotions',
     'category:updates',
     'category:social',

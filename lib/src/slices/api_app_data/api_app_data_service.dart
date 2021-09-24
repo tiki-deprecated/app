@@ -26,9 +26,9 @@ class ApiAppDataService {
   Future<void> logout() async {
     List<ApiAppDataKey> keysToDelete = [
       ApiAppDataKey.userReferCode,
-      ApiAppDataKey.gmailLastFetch,
-      ApiAppDataKey.gmailPage,
-      ApiAppDataKey.googleOauthModalComplete,
+      ApiAppDataKey.emailIndexLabel,
+      ApiAppDataKey.emailIndexEpoch,
+      ApiAppDataKey.emailIndexPage,
     ];
     keysToDelete.forEach((key) async {
       await _repository.deleteByKey(key);

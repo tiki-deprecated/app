@@ -1,37 +1,42 @@
-import '../api_auth_service/model/api_auth_service_account_model.dart';
-import '../api_auth_service/model/api_auth_service_rsp.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
-import '../data_bkg/api_email_provider_abstract.dart';
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
-class ApiMicrosoftService implements ApiEmailProviderAbstract {
-  @override
-  // TODO: implement account
-  ApiAuthServiceAccountModel get account => throw UnimplementedError();
+import '../api_oauth/api_oauth_interface_provider.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_interface_email.dart';
+import '../data_bkg/data_bkg_interface_provider.dart';
+import '../info_carousel_card/model/info_carousel_card_model.dart';
+import 'api_microsoft_service_email.dart';
+
+class ApiMicrosoftService
+    implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
+  final ApiMicrosoftServiceEmail _apiMicrosoftServiceEmail;
+
+  ApiMicrosoftService()
+      : this._apiMicrosoftServiceEmail = ApiMicrosoftServiceEmail();
 
   @override
-  // TODO: implement displayName
-  String? get displayName => throw UnimplementedError();
+  // TODO: implement email
+  DataBkgInterfaceEmail? get email => _apiMicrosoftServiceEmail;
 
   @override
-  Future<ApiAuthServiceRsp> emailFecthList(
-      {String? query, int? maxResults, String? page}) {
-    // TODO: implement emailFecthList
-    // https://graph.microsoft.com/v1.0/me/messages?$top=10&$skip=10
+  Future<List<InfoCarouselCardModel>> getInfoCards(
+      ApiOAuthModelAccount account) {
+    // TODO: implement getInfoCards
     throw UnimplementedError();
   }
 
   @override
-  Future<ApiEmailMsgModel?> emailFetchMessage(String messageId,
-      {String? format, List<String>? headers}) {
-    // TODO: implement emailFetchMessage
-    //
+  Future<bool> isConnected(ApiOAuthModelAccount account) {
+    // TODO: implement isConnected
     throw UnimplementedError();
   }
 
   @override
-  Future sendRawMessage(String getBase64Email) {
-    // TODO: implement sendRawMessage
-    // https://graph.microsoft.com/v1.0/me/sendMail
+  Future<void> revokeToken(ApiOAuthModelAccount account) {
+    // TODO: implement revokeToken
     throw UnimplementedError();
   }
 }

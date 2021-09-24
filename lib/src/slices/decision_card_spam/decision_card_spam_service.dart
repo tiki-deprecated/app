@@ -13,7 +13,9 @@ import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
-import '../api_google/api_google_service.dart';
+import '../api_oauth/api_oauth_service.dart';
+import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_bkg/data_bkg_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
@@ -23,19 +25,23 @@ class DecisionCardSpamService extends ChangeNotifier {
   late final DecisionCardSpamController controller;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiEmailMsgService _apiEmailMsgService;
-  final ApiGoogleService _apiGoogleService;
   final ApiCompanyService _apiCompanyService;
+  final ApiOAuthService _apiAuthService;
+
+  final DataBkgService _dataBkgService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiAppDataService apiAppDataService,
-      required ApiGoogleService apiGoogleService,
-      required ApiCompanyService apiCompanyService})
+      required ApiCompanyService apiCompanyService,
+      required ApiOAuthService apiAuthService,
+      required DataBkgService dataBkgService})
       : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiGoogleService = apiGoogleService,
-        this._apiCompanyService = apiCompanyService {
+        this._apiCompanyService = apiCompanyService,
+        this._apiAuthService = apiAuthService,
+        this._dataBkgService = dataBkgService {
     controller = DecisionCardSpamController(this);
   }
 
@@ -85,18 +91,19 @@ class DecisionCardSpamService extends ChangeNotifier {
     ApiEmailSenderModel? sender =
         await _apiEmailSenderService.getById(senderId);
     if (sender != null) {
-      String? mailTo = sender.unsubscribeMailTo;
-      if (mailTo != null) {
-        String list = sender.name ?? sender.email!;
-        await _apiEmailSenderService.markAsUnsubscribed(sender);
-        bool unsubscribed = false;
-        try {
-          unsubscribed = await _apiGoogleService.unsubscribe(mailTo, list);
-          _log.finest(
-              mailTo + ' unsubscribed status: ' + unsubscribed.toString());
-        } catch (e) {
-          _log.warning('Failed to unsubscribe from: ' + mailTo, e);
+      try {
+        ApiOAuthModelAccount account = (await _apiAuthService.getAccount())!;
+        String? mailTo = sender.unsubscribeMailTo;
+        if (mailTo != null) {
+          String list = sender.name ?? sender.email!;
+          _dataBkgService.email.unsubscribe(account, mailTo, list).then(
+              (success) => _log.finest(
+                  mailTo + ' unsubscribed status: ' + success.toString()));
+          await _apiEmailSenderService.markAsUnsubscribed(sender);
         }
+      } catch (e) {
+        _log.warning(
+            'Failed to unsubscribe from: ' + sender.unsubscribeMailTo!, e);
       }
     }
   }

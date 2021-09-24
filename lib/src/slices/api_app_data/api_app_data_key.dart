@@ -4,28 +4,25 @@
  */
 
 enum ApiAppDataKey {
-  decisionOverlayShown,
-  gmailCategory,
-  gmailLastFetch,
-  gmailPage,
-  googleOauthModalComplete,
+  emailIndexEpoch,
+  emailIndexLabel,
+  emailIndexPage,
   testCardsDone,
   userReferCode,
+  decisionOverlayShown,
 }
 
 extension ApiAppDataKeyExtension on ApiAppDataKey {
   String? get value {
     switch (this) {
+      case ApiAppDataKey.emailIndexEpoch:
+        return 'email_index_epoch';
+      case ApiAppDataKey.emailIndexLabel:
+        return 'email_index_label';
+      case ApiAppDataKey.emailIndexPage:
+        return 'email_index_page';
       case ApiAppDataKey.testCardsDone:
         return 'test_cards_done_bool';
-      case ApiAppDataKey.gmailCategory:
-        return 'gmail_category';
-      case ApiAppDataKey.gmailLastFetch:
-        return 'gmail_last_fetch_epoch';
-      case ApiAppDataKey.gmailPage:
-        return 'gmail_last_page';
-      case ApiAppDataKey.googleOauthModalComplete:
-        return 'google_oauth_modal_complete_bool';
       case ApiAppDataKey.decisionOverlayShown:
         return 'decision_overlay_shown_bool';
       case ApiAppDataKey.userReferCode:

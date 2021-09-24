@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../api_auth_service/model/api_auth_service_account_model.dart';
+import '../../api_oauth/model/api_oauth_model_account.dart';
 
 class DataScreenModel {
-  ApiAuthServiceAccountModel? googleAccount;
+  ApiOAuthModelAccount? account;
 }
