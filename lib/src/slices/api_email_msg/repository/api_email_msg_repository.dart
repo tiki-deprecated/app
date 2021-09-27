@@ -115,4 +115,9 @@ class ApiEmailMsgRepository {
       return messageMap;
     }).toList();
   }
+
+  Future<bool> deleteAll() async {
+    await _database.delete(_table);
+    return true;
+  }
 }

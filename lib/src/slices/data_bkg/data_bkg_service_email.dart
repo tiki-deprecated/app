@@ -369,4 +369,9 @@ revolution today.<br />
     return apiOauthInterface != null &&
         await apiOauthInterface.isConnected(account);
   }
+
+  Future<void> logOut() async {
+    await _apiEmailSenderService.deleteAll();
+    await _apiEmailMsgService.deleteAll();
+  }
 }

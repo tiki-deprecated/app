@@ -218,4 +218,6 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
         return categoryLabel.replaceFirst('CATEGORY_', '');
     }
   }
+
+  void logOut(ApiOAuthModelAccount account) {}
 }

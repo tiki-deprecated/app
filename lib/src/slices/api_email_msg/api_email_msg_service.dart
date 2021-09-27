@@ -37,4 +37,9 @@ class ApiEmailMsgService {
   Future<List<ApiEmailMsgModel>> getByExtMessageIds(
           List<String> extMessageIds) async =>
       _repository.getByExtMessageIds(extMessageIds);
+
+  Future<bool> deleteAll() async {
+    await _repository.deleteAll();
+    return true;
+  }
 }

@@ -48,4 +48,9 @@ class ApiEmailSenderService {
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
     _repository.update(sender);
   }
+
+  Future<bool> deleteAll() async {
+    await _repository.deleteAll();
+    return true;
+  }
 }

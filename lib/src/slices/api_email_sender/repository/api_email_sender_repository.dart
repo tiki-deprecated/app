@@ -98,4 +98,9 @@ class ApiEmailSenderRepository {
       return senderMap;
     }).toList();
   }
+
+  Future<bool> deleteAll() async {
+    await _database.delete(_table);
+    return true;
+  }
 }
