@@ -219,5 +219,4 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
     }
   }
 
-  void logOut(ApiOAuthModelAccount account) {}
 }
