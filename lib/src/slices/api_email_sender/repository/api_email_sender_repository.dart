@@ -99,8 +99,8 @@ class ApiEmailSenderRepository {
     }).toList();
   }
 
-  Future<bool> deleteAll() async {
-    await _database.delete(_table);
-    return true;
+  Future<void> delete(ApiEmailSenderModel sender) async {
+    await _database
+        .delete(_table, where: 'sender_id = ?', whereArgs: [sender.senderId]);
   }
 }

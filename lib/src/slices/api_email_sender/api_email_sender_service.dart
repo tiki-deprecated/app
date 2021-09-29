@@ -49,8 +49,10 @@ class ApiEmailSenderService {
     _repository.update(sender);
   }
 
-  Future<bool> deleteAll() async {
-    await _repository.deleteAll();
-    return true;
+  Future<void> deleteList(List<ApiEmailSenderModel> senders) async {
+    for (int i = 0; i < senders.length; i++) {
+      ApiEmailSenderModel sender = senders[i];
+      await _repository.delete(sender);
+    }
   }
 }

@@ -48,7 +48,7 @@ class DataScreenService extends ChangeNotifier {
     ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
     if (account != null) {
       _apiAuthService.signOut(account);
-      _dataBkgService.email.logOut();
+      _dataBkgService.email.deleteAccountData(account);
     }
     _model.account = null;
     notifyListeners();
