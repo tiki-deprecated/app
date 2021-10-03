@@ -14,13 +14,12 @@ import '../../../utils/api/helper_api_rsp.dart';
 import '../model/api_company_model_index.dart';
 
 class ApiCompanyRepositoryIndex {
-  static final String _path = '/api/latest/company';
+  static final String _path = '/api/latest/vertex/company';
 
   static Future<HelperApiRsp<ApiCompanyModelIndex>> find(
       String? bearer, String domain) async {
     Response rsp = await ConfigSentry.http.get(
-        ConfigDomain.asUri(
-            ConfigDomain.companyIndex, _path, {"domain": domain}),
+        ConfigDomain.asUri(ConfigDomain.knowledge, _path, {"domain": domain}),
         headers: HelperApiHeaders(auth: bearer).header);
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
