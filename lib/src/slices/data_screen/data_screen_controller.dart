@@ -22,7 +22,7 @@ class DataScreenController {
   }
 
   linkAccount() async {
-    service.linkAccount('google');
+    service.linkAccount('microsoft');
   }
 
   removeAccount() {

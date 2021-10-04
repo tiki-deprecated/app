@@ -49,12 +49,6 @@ class DataBkgServiceEmail {
     String to = uri.path;
     String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
     String email = '''
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-to: $to
-from: me
-subject: $subject
-
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=“https://www.w3.org/1999/xhtml”>
 <head>
@@ -76,7 +70,7 @@ revolution today.<br />
 ''';
     DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     if (emailInterface != null)
-      return await emailInterface.send(account, email);
+      return await emailInterface.send(account, email, to, subject);
     return false;
   }
 
