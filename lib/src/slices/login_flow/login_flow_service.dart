@@ -24,6 +24,7 @@ import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
+import '../api_knowledge/api_knowledge_service.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
@@ -240,12 +241,17 @@ class LoginFlowService extends ChangeNotifier {
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
     registerLogout(() async => await apiAppDataService.logout());
 
+    ApiKnowledgeService apiKnowledgeService =
+        ApiKnowledgeService(_helperApiAuth);
+
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
     ApiEmailMsgService apiEmailMsgService =
         ApiEmailMsgService(database: database);
-    ApiCompanyService apiCompanyService =
-        ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
+    ApiCompanyService apiCompanyService = ApiCompanyService(
+        database: database,
+        helperApiAuth: _helperApiAuth,
+        apiKnowledgeService: apiKnowledgeService);
     ApiOAuthService apiAuthService = ApiOAuthService(
         database: database, apiAppDataService: apiAppDataService);
     DataBkgService dataBkgService = DataBkgService(
@@ -263,6 +269,7 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiOAuthService>.value(value: apiAuthService),
+      Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
       ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
     ];
   }

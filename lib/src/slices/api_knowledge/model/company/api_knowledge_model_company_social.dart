@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModelIndexSocial {
+class ApiKnowledgeModelCompanySocial {
   String? facebook;
   String? twitter;
   String? linkedin;
 
-  ApiCompanyModelIndexSocial({this.facebook, this.twitter, this.linkedin});
+  ApiKnowledgeModelCompanySocial({this.facebook, this.twitter, this.linkedin});
 
-  ApiCompanyModelIndexSocial.fromJson(Map<String, dynamic>? json) {
+  ApiKnowledgeModelCompanySocial.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.facebook = json['facebook'];
       this.twitter = json['twitter'];

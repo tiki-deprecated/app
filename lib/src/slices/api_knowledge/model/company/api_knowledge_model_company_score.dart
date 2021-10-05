@@ -3,15 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModelIndexScore {
+class ApiKnowledgeModelCompanyScore {
   double? sensitivityScore;
   double? breachScore;
   double? securityScore;
 
-  ApiCompanyModelIndexScore(
+  ApiKnowledgeModelCompanyScore(
       {this.sensitivityScore, this.breachScore, this.securityScore});
 
-  ApiCompanyModelIndexScore.fromJson(Map<String, dynamic>? json) {
+  ApiKnowledgeModelCompanyScore.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.sensitivityScore = json['sensitivityScore'];
       this.breachScore = json['breachScore'];

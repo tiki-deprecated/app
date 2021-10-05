@@ -3,21 +3,21 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModelIndexType {
+class ApiKnowledgeModelCompanyType {
   String? sector;
   String? industry;
   String? subIndustry;
   List<String>? tags;
 
-  ApiCompanyModelIndexType(
+  ApiKnowledgeModelCompanyType(
       {this.sector, this.industry, this.subIndustry, this.tags});
 
-  ApiCompanyModelIndexType.fromJson(Map<String, dynamic>? json) {
+  ApiKnowledgeModelCompanyType.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.sector = json['sector'];
       this.industry = json['industry'];
       this.subIndustry = json['subIndustry'];
-      this.tags = List.from(json['tags']);
+      this.tags = json['tags'] != null ? List.from(json['tags']) : null;
     }
   }
 
@@ -25,6 +25,6 @@ class ApiCompanyModelIndexType {
         'sector': sector,
         'industry': industry,
         'subIndustry': subIndustry,
-        'tags': tags
+        'tags': tags,
       };
 }

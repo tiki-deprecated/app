@@ -11,19 +11,20 @@ import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
 import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
-import '../model/api_company_model_index.dart';
+import '../model/company/api_knowledge_model_company.dart';
 
-class ApiCompanyRepositoryIndex {
-  static final String _path = '/api/latest/company';
+class ApiKnowledgeRepositoryCompany {
+  static final String _path = '/api/latest/vertex/company';
 
-  static Future<HelperApiRsp<ApiCompanyModelIndex>> find(
+  static Future<HelperApiRsp<ApiKnowledgeModelCompany>> get(
       String? bearer, String domain) async {
     Response rsp = await ConfigSentry.http.get(
-        ConfigDomain.asUri(
-            ConfigDomain.companyIndex, _path, {"domain": domain}),
+        ConfigDomain.asUri(ConfigDomain.knowledge, _path, {"domain": domain}),
         headers: HelperApiHeaders(auth: bearer).header);
     Map? rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
-        (json) => ApiCompanyModelIndex.fromJson(json as Map<String, dynamic>?));
+    return HelperApiRsp.fromJson(
+        rspMap as Map<String, dynamic>?,
+        (json) =>
+            ApiKnowledgeModelCompany.fromJson(json as Map<String, dynamic>?));
   }
 }
