@@ -42,7 +42,6 @@ class ApiGoogleService
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
   }
 
-  // TODO in the future we'll have account specific infocards
   @override
   Future<List<InfoCarouselCardModel>> getInfoCards(
       ApiOAuthModelAccount account) async {

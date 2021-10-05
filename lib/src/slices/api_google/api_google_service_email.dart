@@ -103,9 +103,19 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
   }
 
   @override
-  Future<bool> send(ApiOAuthModelAccount account, String email) async {
+  Future<bool> send(ApiOAuthModelAccount account, String email, String to,
+      String subject) async {
     GmailApi? gmailApi = await _getGmailApi(account);
-    String base64Email = base64UrlEncode(utf8.encode(email));
+    String message = '''
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+to: $to
+from: me
+subject: $subject
+
+$email
+''';
+    String base64Email = base64UrlEncode(utf8.encode(message));
     if (gmailApi != null) {
       await gmailApi.users.messages
           .send(Message.fromJson({'raw': base64Email}), 'me');

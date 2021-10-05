@@ -14,6 +14,7 @@ import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
+import '../api_microsoft/api_microsoft_service.dart';
 import 'api_oauth_interface_provider.dart';
 import 'model/api_oauth_model.dart';
 import 'model/api_oauth_model_account.dart';
@@ -106,7 +107,8 @@ class ApiOAuthService {
   Future<dynamic> proxy(
       Future<dynamic> Function() request, ApiOAuthModelAccount account) async {
     Response rsp = await request();
-    if (HelperApiUtils.isUnauthorized(rsp.statusCode)) {
+    if (HelperApiUtils.isUnauthorized(rsp.statusCode) &&
+        account.refreshToken != null) {
       await _refreshToken(account);
       rsp = await request();
     }
@@ -164,6 +166,11 @@ class ApiOAuthService {
         case 'google':
           _model.interfaceProviders[k] = ApiGoogleService(
               apiAuthService: this, apiAppDataService: _apiAppDataService);
+          break;
+        case 'microsoft':
+          _model.interfaceProviders[k] = ApiMicrosoftService(
+              apiAuthService: this, apiAppDataService: _apiAppDataService);
+          break;
       }
     });
   }

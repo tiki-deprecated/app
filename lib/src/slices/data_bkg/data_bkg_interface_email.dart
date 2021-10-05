@@ -20,5 +20,6 @@ abstract class DataBkgInterfaceEmail {
       int? maxResults,
       String? page});
 
-  Future<bool> send(ApiOAuthModelAccount account, String email);
+  Future<bool> send(
+      ApiOAuthModelAccount account, String email, String to, String subject);
 }

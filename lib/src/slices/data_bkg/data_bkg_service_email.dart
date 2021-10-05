@@ -49,12 +49,6 @@ class DataBkgServiceEmail {
     String to = uri.path;
     String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
     String email = '''
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-to: $to
-from: me
-subject: $subject
-
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=“https://www.w3.org/1999/xhtml”>
 <head>
@@ -76,7 +70,7 @@ revolution today.<br />
 ''';
     DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
     if (emailInterface != null)
-      return await emailInterface.send(account, email);
+      return await emailInterface.send(account, email, to, subject);
     return false;
   }
 
@@ -98,7 +92,10 @@ revolution today.<br />
         DateTime.now()
             .subtract(Duration(days: 1))
             .isAfter(DateTime.fromMillisecondsSinceEpoch(indexEpoch))) {
-      await _loopLabels(interfaceEmail, account, indexEpoch: indexEpoch);
+      await _pageList(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          indexEpoch: indexEpoch);
       await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch,
           DateTime.now().millisecondsSinceEpoch.toString());
       _log.fine('Email index for ' +
@@ -108,46 +105,20 @@ revolution today.<br />
     }
   }
 
-  Future<void> _loopLabels(
-      DataBkgInterfaceEmail interfaceEmail, ApiOAuthModelAccount account,
-      {int? indexEpoch}) async {
-    _log.fine('Loop Labels for ${account.email}');
-    ApiAppDataModel? appDataIndexLabel =
-        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
-    String activeLabel = appDataIndexLabel?.value ?? interfaceEmail.labels[0];
-    for (int i = interfaceEmail.labels.indexOf(activeLabel);
-        i < interfaceEmail.labels.length;
-        i++) {
-      String label = interfaceEmail.labels[i];
-      await _pageList(
-          interfaceEmail: interfaceEmail,
-          account: account,
-          label: label,
-          indexEpoch: indexEpoch);
-      await _apiAppDataService.save(
-          ApiAppDataKey.emailIndexLabel,
-          (i + 1 == interfaceEmail.labels.length)
-              ? interfaceEmail.labels[0]
-              : interfaceEmail.labels[i + 1]);
-    }
-  }
-
   Future<void> _pageList(
       {required DataBkgInterfaceEmail interfaceEmail,
       required ApiOAuthModelAccount account,
       String? page,
-      String? label,
       int? indexEpoch}) async {
     if (page == null) {
       ApiAppDataModel? appDataIndexPage =
           await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
       page = appDataIndexPage?.value;
     }
-    _log.fine('${account.email} List page $page for $label after $indexEpoch');
+    _log.fine('${account.email} List page $page after $indexEpoch');
     DataBkgModelPage<String> res = await _getList(
         account: account,
         interfaceEmail: interfaceEmail,
-        label: label,
         afterEpoch: indexEpoch,
         page: page,
         maxResults: 5);
@@ -167,7 +138,6 @@ revolution today.<br />
       return _pageList(
           interfaceEmail: interfaceEmail,
           account: account,
-          label: label,
           indexEpoch: indexEpoch,
           page: res.next);
   }
@@ -294,7 +264,6 @@ revolution today.<br />
   Future<DataBkgModelPage<String>> _getList(
       {required ApiOAuthModelAccount account,
       required DataBkgInterfaceEmail interfaceEmail,
-      String? label,
       String? from,
       int? afterEpoch,
       int? maxResults,
@@ -302,7 +271,6 @@ revolution today.<br />
       int? retries = 3}) async {
     try {
       return await interfaceEmail.getList(account,
-          label: label,
           from: from,
           afterEpoch: afterEpoch,
           maxResults: maxResults,
@@ -318,7 +286,6 @@ revolution today.<br />
         return _getList(
           account: account,
           interfaceEmail: interfaceEmail,
-          label: label,
           from: from,
           afterEpoch: afterEpoch,
           maxResults: maxResults,
