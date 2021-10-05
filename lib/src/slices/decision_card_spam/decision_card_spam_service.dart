@@ -28,7 +28,7 @@ class DecisionCardSpamService extends ChangeNotifier {
   final ApiCompanyService _apiCompanyService;
   final ApiOAuthService _apiAuthService;
 
-  final DataFetchService _DataFetchService;
+  final DataFetchService _dataFetchService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
@@ -41,7 +41,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiCompanyService = apiCompanyService,
         this._apiAuthService = apiAuthService,
-        this._DataFetchService = DataFetchService {
+        this._dataFetchService = DataFetchService {
     controller = DecisionCardSpamController(this);
   }
 
@@ -96,7 +96,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         String? mailTo = sender.unsubscribeMailTo;
         if (mailTo != null) {
           String list = sender.name ?? sender.email!;
-          _DataFetchService.email.unsubscribe(account, mailTo, list).then(
+          _dataFetchService.email.unsubscribe(account, mailTo, list).then(
               (success) => _log.finest(
                   mailTo + ' unsubscribed status: ' + success.toString()));
           await _apiEmailSenderService.markAsUnsubscribed(sender);

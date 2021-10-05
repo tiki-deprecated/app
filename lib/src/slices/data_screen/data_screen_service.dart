@@ -6,6 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../api_email_msg/api_email_msg_service.dart';
+import '../api_email_msg/model/api_email_msg_model.dart';
+import '../api_email_sender/api_email_sender_service.dart';
+import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
@@ -19,18 +23,23 @@ class DataScreenService extends ChangeNotifier {
   late final DataScreenModel _model;
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
-  final DataFetchService _DataFetchService;
+  final DataFetchService _dataFetchService;
   final ApiOAuthService _apiAuthService;
+
+  ApiEmailMsgService _apiEmailMsgService;
+
+  ApiEmailSenderService _apiEmailSenderService;
 
   get account => _model.account;
 
-  DataScreenService(this._DataFetchService, this._apiAuthService) {
+  DataScreenService(this._dataFetchService, this._apiAuthService,
+      this._apiEmailMsgService, this._apiEmailSenderService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
     _apiAuthService.getAccount().then((account) {
       _model.account = account;
-      if (account != null) _DataFetchService.index(account);
+      if (account != null) _dataFetchService.index(account);
       notifyListeners();
     });
   }
@@ -39,7 +48,7 @@ class DataScreenService extends ChangeNotifier {
     ApiOAuthModelAccount? account = await _apiAuthService.signIn(provider);
     if (account != null) {
       _model.account = account;
-      _DataFetchService.index(account);
+      _dataFetchService.index(account);
       notifyListeners();
     }
   }
@@ -51,8 +60,8 @@ class DataScreenService extends ChangeNotifier {
       DataFetchInterfaceProvider? provider = _apiAuthService
           .interfaceProviders[account.provider] as DataFetchInterfaceProvider?;
       if (provider?.email != null) {
-        await _DataFetchService.email.deleteMessages(account);
-        await _DataFetchService.email.deleteApiAppData(account);
+        await _deleteMessages(account);
+        await _dataFetchService.email.deleteApiAppData(account);
       }
     }
     _model.account = null;
@@ -67,5 +76,14 @@ class DataScreenService extends ChangeNotifier {
       if (provider?.email != null) return await provider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
+  }
+
+  Future<void> _deleteMessages(ApiOAuthModelAccount account) async {
+    List<ApiEmailMsgModel> messages =
+        await _apiEmailMsgService.getByAccount(account);
+    await _apiEmailMsgService.deleteList(messages);
+    List<ApiEmailSenderModel> senders =
+        messages.map((message) => message.sender!).toSet().toList();
+    await _apiEmailSenderService.deleteList(senders);
   }
 }

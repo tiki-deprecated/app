@@ -348,12 +348,5 @@ revolution today.<br />
     });
   }
 
-  Future<void> deleteMessages(ApiOAuthModelAccount account) async {
-    List<ApiEmailMsgModel> messages =
-        await _apiEmailMsgService.getByAccount(account);
-    await _apiEmailMsgService.deleteList(messages);
-    List<ApiEmailSenderModel> senders =
-        messages.map((message) => message.sender!).toSet().toList();
-    await _apiEmailSenderService.deleteList(senders);
-  }
+  Future<void> deleteMessages(ApiOAuthModelAccount account) async {}
 }
