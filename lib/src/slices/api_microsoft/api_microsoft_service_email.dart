@@ -76,7 +76,8 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
               _findRecipient(message['toRecipients'], account.email!))
           .map((message) => message['id'] as String)
           .toList();
-      page = msgBody['@odata.nextLink'] != null ? (pageNum + 1).toString() : "1";
+      page =
+          msgBody['@odata.nextLink'] != null ? (pageNum + 1).toString() : null;
     }
     return DataBkgModelPage(next: page, data: messages);
   }
@@ -84,8 +85,9 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
   @override
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId) async {
-    Uri uri = Uri.parse(_messagesEndpoint +
-        '/messageId?\$select=internetMessageHeaders,sender,receivedDateTime');
+    String urlStr = _messagesEndpoint +
+        '/$messageId?\$select=internetMessageHeaders,sender,receivedDateTime';
+    Uri uri = Uri.parse(urlStr);
     Response rsp = await this
         .apiOAuthService
         .proxy(
@@ -98,21 +100,24 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
     Map<String, dynamic> message = json.decode(rsp.body);
     String? unsubscribeMailTo;
     _log.finest('Fetched message ids: ' + (message['id'] ?? ''));
-    message['internetMessageHeaders'].forEach((header) {
-      switch (header['name']?.trim()) {
-        case 'List-Unsubscribe':
-          unsubscribeMailTo = _listUnsubscribeHeader(header['value']);
-          break;
-      }
-    });
+    if (message['internetMessageHeaders'] != null) {
+      message['internetMessageHeaders'].forEach((header) {
+        switch (header['name']?.trim()) {
+          case 'List-Unsubscribe':
+            unsubscribeMailTo = _listUnsubscribeHeader(header['value']);
+            break;
+        }
+      });
+    }
     return ApiEmailMsgModel(
         extMessageId: messageId,
         receivedDate: DateTime.parse(message['receivedDateTime']),
         openedDate: null,
-        // TODO implement
+        // TODO implement opened date
         account: account.email,
         sender: ApiEmailSenderModel(
-            category: message['categories']?.isNotEmpty
+            category: message['categories'] != null &&
+                    message['categories'].isNotEmpty
                 ? message['categories'][0]
                 : null,
             unsubscribeMailTo: unsubscribeMailTo,
