@@ -12,19 +12,19 @@ import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import 'data_bkg_service_email.dart';
+import 'data_fetch_service_email.dart';
 
-class DataBkgService extends ChangeNotifier {
-  final _log = Logger('DataBkgService');
-  late final DataBkgServiceEmail email;
+class DataFetchService extends ChangeNotifier {
+  final _log = Logger('DataFetchService');
+  late final DataFetchServiceEmail email;
 
-  DataBkgService(
+  DataFetchService(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService}) {
-    this.email = DataBkgServiceEmail(
+    this.email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiEmailMsgService: apiEmailMsgService,
@@ -34,7 +34,7 @@ class DataBkgService extends ChangeNotifier {
   }
 
   Future<void> index(ApiOAuthModelAccount account) async {
-    _log.fine('DataBkgService index');
+    _log.fine('DataFetchService index');
     await email.index(account);
     notifyListeners();
   }

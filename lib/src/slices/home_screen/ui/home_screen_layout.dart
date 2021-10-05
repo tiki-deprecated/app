@@ -11,7 +11,7 @@ import '../../api_company/api_company_service.dart';
 import '../../api_email_msg/api_email_msg_service.dart';
 import '../../api_email_sender/api_email_sender_service.dart';
 import '../../api_oauth/api_oauth_service.dart';
-import '../../data_bkg/data_bkg_service.dart';
+import '../../data_fetch/data_fetch_service.dart';
 import '../../data_screen/data_screen_service.dart';
 import '../../decision_screen/decision_screen_service.dart';
 import '../../home_screen/ui/home_screen_view_stack.dart';
@@ -20,8 +20,8 @@ import '../../wallet_screen/wallet_screen_service.dart';
 class HomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DataBkgService dataBkgService =
-        Provider.of<DataBkgService>(context, listen: false);
+    DataFetchService dataFetchService =
+        Provider.of<DataFetchService>(context, listen: false);
     ApiAppDataService appDataService =
         Provider.of<ApiAppDataService>(context, listen: false);
     ApiEmailMsgService apiEmailMsgService =
@@ -40,9 +40,10 @@ class HomeScreenLayout extends StatelessWidget {
               apiEmailSenderService: apiEmailSenderService,
               apiCompanyService: apiCompanyService,
               apiAppDataService: appDataService,
-              dataBkgService: dataBkgService,
+              DataFetchService: dataFetchService,
               apiAuthService: apiAuthService),
-          dataScreenService: DataScreenService(dataBkgService, apiAuthService),
+          dataScreenService:
+              DataScreenService(dataFetchService, apiAuthService),
           walletScreenService: WalletScreenService(),
         ));
   }

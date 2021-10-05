@@ -19,13 +19,13 @@ import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/data_bkg_interface_provider.dart';
-import '../data_bkg/model/data_bkg_model_page.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/data_fetch_interface_provider.dart';
+import '../data_fetch/model/data_fetch_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'model/api_google_model_email.dart';
 
-class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
+class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   final ApiMicrosoftModelEmail model;
   final _log = Logger('ApiMicrosoftServiceEmail');
 
@@ -42,7 +42,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
   List<String> get labels => this.model.categories;
 
   @override
-  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
       {String? label,
       String? from,
       int? afterEpoch,
@@ -79,7 +79,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
       page =
           msgBody['@odata.nextLink'] != null ? (pageNum + 1).toString() : null;
     }
-    return DataBkgModelPage(next: page, data: messages);
+    return DataFetchModelPage(next: page, data: messages);
   }
 
   @override

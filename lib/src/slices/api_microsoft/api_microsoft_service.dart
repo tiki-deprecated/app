@@ -9,14 +9,14 @@ import '../api_app_data/api_app_data_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/data_bkg_interface_provider.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/data_fetch_interface_provider.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'api_microsoft_service_email.dart';
 import 'repository/api_google_repository_info.dart';
 
 class ApiMicrosoftService
-    implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
+    implements ApiOAuthInterfaceProvider, DataFetchInterfaceProvider {
   final ApiOAuthService _apiAuthService;
   final ApiMicrosoftRepositoryInfo _apiMicrosoftRepositoryInfo;
   final ApiMicrosoftServiceEmail _apiMicrosoftServiceEmail;
@@ -30,7 +30,7 @@ class ApiMicrosoftService
             ApiMicrosoftServiceEmail(apiAuthService);
 
   @override
-  DataBkgInterfaceEmail? get email => _apiMicrosoftServiceEmail;
+  DataFetchInterfaceEmail? get email => _apiMicrosoftServiceEmail;
 
   @override
   Future<bool> isConnected(ApiOAuthModelAccount account) async {
