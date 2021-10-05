@@ -28,17 +28,6 @@ class ApiAppDataService {
     if (data != null) await _repository.delete(data.id!);
   }
 
-  Future<void> deleteEmailData() async {
-    List<ApiAppDataKey> keysToDelete = [
-      ApiAppDataKey.emailIndexLabel,
-      ApiAppDataKey.emailIndexEpoch,
-      ApiAppDataKey.emailIndexPage,
-    ];
-    keysToDelete.forEach((key) async {
-      await _repository.deleteByKey(key.value!);
-    });
-  }
-
   Future<void> deleteUserData() async {
     List<ApiAppDataKey> keysToDelete = [
       ApiAppDataKey.userReferCode,

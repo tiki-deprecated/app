@@ -370,13 +370,23 @@ revolution today.<br />
         await apiOauthInterface.isConnected(account);
   }
 
-  Future<void> deleteAccountData(ApiOAuthModelAccount account) async {
+  Future<void> deleteApiAppData(ApiOAuthModelAccount account) async {
+    List<ApiAppDataKey> keysToDelete = [
+      ApiAppDataKey.emailIndexLabel,
+      ApiAppDataKey.emailIndexEpoch,
+      ApiAppDataKey.emailIndexPage,
+    ];
+    keysToDelete.forEach((key) async {
+      await _apiAppDataService.delete(key);
+    });
+  }
+
+  Future<void> deleteMessages(ApiOAuthModelAccount account) async {
     List<ApiEmailMsgModel> messages =
         await _apiEmailMsgService.getByAccount(account);
     await _apiEmailMsgService.deleteList(messages);
     List<ApiEmailSenderModel> senders =
         messages.map((message) => message.sender!).toSet().toList();
     await _apiEmailSenderService.deleteList(senders);
-    await _apiAppDataService.deleteEmailData();
   }
 }
