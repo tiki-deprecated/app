@@ -5,8 +5,6 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_oauth/model/api_oauth_model.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
@@ -17,6 +15,7 @@ import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
 import 'api_oauth_interface_provider.dart';
+import 'model/api_oauth_model.dart';
 import 'model/api_oauth_model_account.dart';
 import 'model/api_oauth_model_provider.dart';
 import 'repository/api_oauth_repository_account.dart';
@@ -76,11 +75,10 @@ class ApiOAuthService {
   Future<void> signOut(ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? provider =
         _model.interfaceProviders[account.provider];
-    if (provider != null) await provider.revokeToken(account);
+    if (provider != null) {
+      await provider.revokeToken(account);
+    }
     await _apiAuthRepositoryAccount.delete(account);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexEpoch);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexPage);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexLabel);
   }
 
   Future<Map?> getUserInfo(

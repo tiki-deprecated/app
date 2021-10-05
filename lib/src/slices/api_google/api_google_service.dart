@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-
 import '../../config/config_sentry.dart';
 import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_service.dart';

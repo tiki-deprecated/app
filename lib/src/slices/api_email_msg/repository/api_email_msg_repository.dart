@@ -115,4 +115,16 @@ class ApiEmailMsgRepository {
       return messageMap;
     }).toList();
   }
+
+  Future<List<ApiEmailMsgModel>> getByAccount(String account) async {
+    final List<Map<String, Object?>> rows =
+        await _select(where: 'account = ?', whereArgs: [account]);
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+  }
+
+  Future<void> delete(ApiEmailMsgModel message) async {
+    await _database.delete(_table,
+        where: 'message_id = ?', whereArgs: [message.messageId]);
+  }
 }

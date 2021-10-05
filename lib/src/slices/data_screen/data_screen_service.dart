@@ -46,7 +46,15 @@ class DataScreenService extends ChangeNotifier {
 
   Future<void> removeAccount() async {
     ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
-    if (account != null) _apiAuthService.signOut(account);
+    if (account != null) {
+      _apiAuthService.signOut(account);
+      DataBkgInterfaceProvider? provider = _apiAuthService
+          .interfaceProviders[account.provider] as DataBkgInterfaceProvider?;
+      if (provider?.email != null) {
+        await _dataBkgService.email.deleteMessages(account);
+        await _dataBkgService.email.deleteApiAppData(account);
+      }
+    }
     _model.account = null;
     notifyListeners();
   }

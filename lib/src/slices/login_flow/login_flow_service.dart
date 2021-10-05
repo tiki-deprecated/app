@@ -239,7 +239,7 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
-    registerLogout(() async => await apiAppDataService.logout());
+    registerLogout(() async => await apiAppDataService.deleteAllData());
 
     ApiKnowledgeService apiKnowledgeService =
         ApiKnowledgeService(_helperApiAuth);

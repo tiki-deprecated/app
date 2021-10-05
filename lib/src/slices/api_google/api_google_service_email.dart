@@ -218,4 +218,5 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
         return categoryLabel.replaceFirst('CATEGORY_', '');
     }
   }
+
 }
