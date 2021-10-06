@@ -56,7 +56,7 @@ class DataScreenService extends ChangeNotifier {
   Future<void> removeAccount() async {
     ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
     if (account != null) {
-      _apiAuthService.signOut(account);
+      await _apiAuthService.signOut(account);
       DataFetchInterfaceProvider? provider = _apiAuthService
           .interfaceProviders[account.provider] as DataFetchInterfaceProvider?;
       if (provider?.email != null) {

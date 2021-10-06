@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:http/http.dart';
+
 import '../../config/config_sentry.dart';
 import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_service.dart';
@@ -37,8 +39,8 @@ class ApiGoogleService
   }
 
   @override
-  Future<void> revokeToken(ApiOAuthModelAccount account) async {
-    await ConfigSentry.http.post(Uri.parse(
+  Future<Response> revokeToken(ApiOAuthModelAccount account) async {
+    return await ConfigSentry.http.post(Uri.parse(
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
   }
 

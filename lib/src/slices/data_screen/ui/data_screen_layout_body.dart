@@ -31,8 +31,7 @@ class DataScreenLayoutBody extends StatelessWidget {
                             isLinked ? "All good!" : "Uh-oh. No data just yet!",
                         description: isLinked
                             ? "Your account is linked now. See what data ${service.account.provider} holds by tapping on the button below."
-                            : "Get started by adding a Gmail account",
-                        // TODO check the wording for multiple providers
+                            : "Get started by adding an account",
                         color: isLinked ? ConfigColor.green : ConfigColor.blue),
                     DecisionScreenLayoutAccounts(),
                     Container(

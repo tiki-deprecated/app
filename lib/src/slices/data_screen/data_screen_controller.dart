@@ -21,8 +21,8 @@ class DataScreenController {
             InfoCarouselService(cards: cards).presenter.render()));
   }
 
-  linkAccount() async {
-    service.linkAccount('microsoft');
+  linkAccount(String provider) async {
+    service.linkAccount(provider);
   }
 
   removeAccount() {
