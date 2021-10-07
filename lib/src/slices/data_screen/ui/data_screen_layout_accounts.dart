@@ -36,7 +36,7 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
               child: LinkAccount(
                 username: account?.email,
                 type: 'Microsoft',
-                linkedIcon: "account-soon-outlook",
+                linkedIcon: "windows-logo",
                 unlinkedIcon: "windows-logo",
                 onLink: () => service.controller.linkAccount('microsoft'),
                 onUnlink: () =>
