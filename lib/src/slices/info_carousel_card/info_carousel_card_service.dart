@@ -24,7 +24,7 @@ class InfoCarouselCardService extends ChangeNotifier {
 
   InfoCarouselCardService({InfoCarouselCardModel? card}) {
     presenter = InfoCarouselCardPresenter(this);
-    controller = InfoCarouselCardController();
+    controller = InfoCarouselCardController(this);
     if (card != null)
       model = card;
     else

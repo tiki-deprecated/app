@@ -20,8 +20,10 @@ class InfoCarouselCardViewCoverArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InfoCarouselCardController controller =
-        Provider.of<InfoCarouselCardService>(context).controller;
+    InfoCarouselCardService service =
+        Provider.of<InfoCarouselCardService>(context);
+    if (service.model.content?.body == null) return Container();
+    InfoCarouselCardController controller = service.controller;
     return GestureDetector(
         onTap: () => controller.tapArrowSlideUp(_animationController),
         child: Opacity(
