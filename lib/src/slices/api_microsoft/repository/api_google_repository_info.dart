@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 class ApiMicrosoftRepositoryInfo {
   // TODO Microsoft cards
-  static const _dbLocationOutlook = "res/json/microsoft_info_gmail_db.json";
+  static const _dbLocationOutlook = "res/json/microsoft_info_outlook_db.json";
 
   Future<List<dynamic>> outlook() => _load(_dbLocationOutlook);
 

@@ -47,8 +47,6 @@ class DataScreenViewSoon extends StatelessWidget {
                       DataScreenViewSoonIcon(
                           image: "account-soon-apple", label: "Apple Mail"),
                       DataScreenViewSoonIcon(
-                          image: "account-soon-outlook", label: "Outlook"),
-                      DataScreenViewSoonIcon(
                           image: "account-soon-yahoo", label: "Yahoo"),
                       DataScreenViewSoonIcon(
                           image: "account-soon-more", label: "...and more"),

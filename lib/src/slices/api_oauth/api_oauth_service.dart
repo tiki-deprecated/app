@@ -58,7 +58,8 @@ class ApiOAuthService {
       Map? userInfo = await this.getUserInfo(apiAuthServiceAccountModel);
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
-        apiAuthServiceAccountModel.username = userInfo['id'];
+        apiAuthServiceAccountModel.username =
+            userInfo['id'] ?? userInfo['email'];
         apiAuthServiceAccountModel.email = userInfo['email'];
         account = await _upsert(apiAuthServiceAccountModel);
         return account;
@@ -77,7 +78,8 @@ class ApiOAuthService {
     ApiOAuthInterfaceProvider? provider =
         _model.interfaceProviders[account.provider];
     if (provider != null) {
-      await provider.revokeToken(account);
+      Response rsp = await provider.revokeToken(account);
+      print(rsp);
     }
     await _apiAuthRepositoryAccount.delete(account);
   }
@@ -147,7 +149,7 @@ class ApiOAuthService {
   Future<ApiOAuthModelAccount?> _upsert(ApiOAuthModelAccount account) async {
     String providerName = account.provider!;
     ApiOAuthModelAccount? dbAccount =
-        account.provider != null && account.username != null
+    account.provider != null && account.email != null
             ? await _apiAuthRepositoryAccount.getByProviderAndUsername(
                 providerName, account.username!)
             : null;
