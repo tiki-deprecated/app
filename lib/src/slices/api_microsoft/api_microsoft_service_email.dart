@@ -56,7 +56,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
         page: pageNum,
         maxResults: maxResults!);
     Uri uri = Uri.parse(
-        _messagesEndpoint + "?\$select=id,toRecipients&\$filter=$query");
+        _messagesEndpoint + "?\$select=id,toRecipients&\$search=$query");
     Response rsp = await this
         .apiOAuthService
         .proxy(
@@ -160,8 +160,6 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   String _buildQuery(
       {int? afterEpoch, String? from, int page = 0, int maxResults = 10}) {
     StringBuffer queryBuffer = new StringBuffer();
-    int skip = page * maxResults;
-    queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     if (afterEpoch != null) {
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(afterEpoch);
       _appendQuery(
@@ -169,6 +167,8 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
     }
     if (from != null)
       _appendQuery(queryBuffer, "from/emailAddress/address eq $from");
+    int skip = page * maxResults;
+    queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     return queryBuffer.toString();
   }
 
