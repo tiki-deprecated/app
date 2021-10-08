@@ -119,7 +119,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
             category: message['categories'] != null &&
                     message['categories'].isNotEmpty
                 ? message['categories'][0]
-                : null,
+                : "Inbox",
             unsubscribeMailTo: unsubscribeMailTo,
             email: message['sender']['emailAddress']['address'],
             name: message['sender']['emailAddress']['name']));
