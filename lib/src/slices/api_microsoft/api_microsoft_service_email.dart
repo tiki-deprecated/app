@@ -55,8 +55,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
         from: from,
         page: pageNum,
         maxResults: maxResults!);
-    Uri uri = Uri.parse(
-        _messagesEndpoint + "?\$select=id,toRecipients&\$search=$query");
+    Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
     Response rsp = await this
         .apiOAuthService
         .proxy(
@@ -71,9 +70,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
       List messageList = msgBody['value'];
       _log.finest('Got ' + (messageList.length.toString()) + ' messages');
       messages = messageList
-          .where((message) =>
-              message['id'] != null &&
-              _findRecipient(message['toRecipients'], account.email!))
+          .where((message) => message['id'] != null)
           .map((message) => message['id'] as String)
           .toList();
       page =
@@ -86,7 +83,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId) async {
     String urlStr = _messagesEndpoint +
-        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime';
+        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime,toRecipients';
     Uri uri = Uri.parse(urlStr);
     Response rsp = await this
         .apiOAuthService
@@ -100,6 +97,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
     Map<String, dynamic> message = json.decode(rsp.body);
     String? unsubscribeMailTo;
     _log.finest('Fetched message ids: ' + (message['id'] ?? ''));
+    if (!_isRecipient(message['toRecipients'], account.email!)) return null;
     if (message['internetMessageHeaders'] != null) {
       message['internetMessageHeaders'].forEach((header) {
         switch (header['name']?.trim()) {
@@ -166,7 +164,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
           queryBuffer, "receivedDateTime ge ${dateTime.toIso8601String()}");
     }
     if (from != null)
-      _appendQuery(queryBuffer, "from/emailAddress/address eq $from");
+      _appendQuery(queryBuffer, "from/emailAddress/address eq '$from'");
     int skip = page * maxResults;
     queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     return queryBuffer.toString();
@@ -186,7 +184,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
     if (splitMailTo.length > 1) return splitMailTo[1].split(',')[0];
   }
 
-  bool _findRecipient(List recipients, String email) {
+  bool _isRecipient(List recipients, String email) {
     bool found = false;
     recipients.forEach((recipient) {
       if (recipient['emailAddress']["address"] == email) found = true;
