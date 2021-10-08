@@ -52,7 +52,7 @@ class DecisionCardSpamService extends ChangeNotifier {
   Future<List<DecisionCardSpamLayout>?> getCards() async {
     List<ApiEmailSenderModel> senders =
         await _apiEmailSenderService.getUnsubscribed();
-    ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
+    _account = await _apiAuthService.getAccount();
     List<int> senderIds = List.empty(growable: true);
     for (ApiEmailSenderModel sender in senders) {
       if (sender.senderId != null) senderIds.add(sender.senderId!);
