@@ -86,7 +86,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId) async {
     String urlStr = _messagesEndpoint +
-        '/$messageId?\$select=internetMessageHeaders,sender,receivedDateTime';
+        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime';
     Uri uri = Uri.parse(urlStr);
     Response rsp = await this
         .apiOAuthService
@@ -121,8 +121,8 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
                 ? message['categories'][0]
                 : "Inbox",
             unsubscribeMailTo: unsubscribeMailTo,
-            email: message['sender']['emailAddress']['address'],
-            name: message['sender']['emailAddress']['name']));
+            email: message['from']['emailAddress']['address'],
+            name: message['from']['emailAddress']['name']));
   }
 
   @override
