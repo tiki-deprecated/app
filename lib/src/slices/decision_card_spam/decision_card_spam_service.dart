@@ -15,7 +15,7 @@ import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_service.dart';
+import '../data_fetch/data_fetch_service.dart';
 import '../decision_card_spam/ui/decision_card_spam_layout.dart';
 import 'decision_card_spam_controller.dart';
 import 'model/decision_card_spam_model.dart';
@@ -28,7 +28,7 @@ class DecisionCardSpamService extends ChangeNotifier {
   final ApiCompanyService _apiCompanyService;
   final ApiOAuthService _apiAuthService;
 
-  final DataBkgService _dataBkgService;
+  final DataFetchService _dataFetchService;
 
   DecisionCardSpamService(
       {required ApiEmailSenderService apiEmailSenderService,
@@ -36,12 +36,12 @@ class DecisionCardSpamService extends ChangeNotifier {
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiOAuthService apiAuthService,
-      required DataBkgService dataBkgService})
+      required DataFetchService DataFetchService})
       : this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
         this._apiCompanyService = apiCompanyService,
         this._apiAuthService = apiAuthService,
-        this._dataBkgService = dataBkgService {
+        this._dataFetchService = DataFetchService {
     controller = DecisionCardSpamController(this);
   }
 
@@ -96,7 +96,7 @@ class DecisionCardSpamService extends ChangeNotifier {
         String? mailTo = sender.unsubscribeMailTo;
         if (mailTo != null) {
           String list = sender.name ?? sender.email!;
-          _dataBkgService.email.unsubscribe(account, mailTo, list).then(
+          _dataFetchService.email.unsubscribe(account, mailTo, list).then(
               (success) => _log.finest(
                   mailTo + ' unsubscribed status: ' + success.toString()));
           await _apiEmailSenderService.markAsUnsubscribed(sender);

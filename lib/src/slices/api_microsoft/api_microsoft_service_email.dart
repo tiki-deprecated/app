@@ -19,13 +19,13 @@ import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/data_bkg_interface_provider.dart';
-import '../data_bkg/model/data_bkg_model_page.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/data_fetch_interface_provider.dart';
+import '../data_fetch/model/data_fetch_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'model/api_google_model_email.dart';
 
-class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
+class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   final ApiMicrosoftModelEmail model;
   final _log = Logger('ApiMicrosoftServiceEmail');
 
@@ -42,7 +42,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
   List<String> get labels => this.model.categories;
 
   @override
-  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
       {String? label,
       String? from,
       int? afterEpoch,
@@ -55,8 +55,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
         from: from,
         page: pageNum,
         maxResults: maxResults!);
-    Uri uri = Uri.parse(
-        _messagesEndpoint + "?\$select=id,toRecipients&\$filter=$query");
+    Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
     Response rsp = await this
         .apiOAuthService
         .proxy(
@@ -71,22 +70,20 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
       List messageList = msgBody['value'];
       _log.finest('Got ' + (messageList.length.toString()) + ' messages');
       messages = messageList
-          .where((message) =>
-              message['id'] != null &&
-              _findRecipient(message['toRecipients'], account.email!))
+          .where((message) => message['id'] != null)
           .map((message) => message['id'] as String)
           .toList();
       page =
           msgBody['@odata.nextLink'] != null ? (pageNum + 1).toString() : null;
     }
-    return DataBkgModelPage(next: page, data: messages);
+    return DataFetchModelPage(next: page, data: messages);
   }
 
   @override
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId) async {
     String urlStr = _messagesEndpoint +
-        '/$messageId?\$select=internetMessageHeaders,sender,receivedDateTime';
+        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime,toRecipients';
     Uri uri = Uri.parse(urlStr);
     Response rsp = await this
         .apiOAuthService
@@ -100,6 +97,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
     Map<String, dynamic> message = json.decode(rsp.body);
     String? unsubscribeMailTo;
     _log.finest('Fetched message ids: ' + (message['id'] ?? ''));
+    if (!_isRecipient(message['toRecipients'], account.email!)) return null;
     if (message['internetMessageHeaders'] != null) {
       message['internetMessageHeaders'].forEach((header) {
         switch (header['name']?.trim()) {
@@ -119,10 +117,10 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
             category: message['categories'] != null &&
                     message['categories'].isNotEmpty
                 ? message['categories'][0]
-                : null,
+                : "Inbox",
             unsubscribeMailTo: unsubscribeMailTo,
-            email: message['sender']['emailAddress']['address'],
-            name: message['sender']['emailAddress']['name']));
+            email: message['from']['emailAddress']['address'],
+            name: message['from']['emailAddress']['name']));
   }
 
   @override
@@ -160,15 +158,15 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
   String _buildQuery(
       {int? afterEpoch, String? from, int page = 0, int maxResults = 10}) {
     StringBuffer queryBuffer = new StringBuffer();
-    int skip = page * maxResults;
-    queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     if (afterEpoch != null) {
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(afterEpoch);
       _appendQuery(
           queryBuffer, "receivedDateTime ge ${dateTime.toIso8601String()}");
     }
     if (from != null)
-      _appendQuery(queryBuffer, "from/emailAddress/address eq $from");
+      _appendQuery(queryBuffer, "from/emailAddress/address eq '$from'");
+    int skip = page * maxResults;
+    queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     return queryBuffer.toString();
   }
 
@@ -186,7 +184,7 @@ class ApiMicrosoftServiceEmail implements DataBkgInterfaceEmail {
     if (splitMailTo.length > 1) return splitMailTo[1].split(',')[0];
   }
 
-  bool _findRecipient(List recipients, String email) {
+  bool _isRecipient(List recipients, String email) {
     bool found = false;
     recipients.forEach((recipient) {
       if (recipient['emailAddress']["address"] == email) found = true;

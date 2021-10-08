@@ -32,7 +32,7 @@ import '../api_user/model/api_user_model_keys.dart';
 import '../api_user/model/api_user_model_otp.dart';
 import '../api_user/model/api_user_model_token.dart';
 import '../api_user/model/api_user_model_user.dart';
-import '../data_bkg/data_bkg_service.dart';
+import '../data_fetch/data_fetch_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
 import '../keys_create_screen/keys_create_screen_service.dart';
@@ -254,7 +254,7 @@ class LoginFlowService extends ChangeNotifier {
         apiKnowledgeService: apiKnowledgeService);
     ApiOAuthService apiAuthService = ApiOAuthService(
         database: database, apiAppDataService: apiAppDataService);
-    DataBkgService dataBkgService = DataBkgService(
+    DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiCompanyService: apiCompanyService,
@@ -270,7 +270,7 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiOAuthService>.value(value: apiAuthService),
       Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
-      ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
+      ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
     ];
   }
 

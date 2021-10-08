@@ -13,6 +13,7 @@ class ApiOAuthModelProvider {
   late String discoveryUrl;
   late String redirectUri;
   late String userInfoEndpoint;
+  late List<String>? promptValues;
   late List<String> scopes;
 
   ApiOAuthModelProvider.fromMap(map) {
@@ -22,6 +23,9 @@ class ApiOAuthModelProvider {
     redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;
     discoveryUrl = map['discoveryUrl'];
     userInfoEndpoint = map['userinfo_endpoint'];
+    promptValues = map['promptValues'] != null
+        ? (map['promptValues'] as List).map((item) => item as String).toList()
+        : null;
     scopes = map['scopes'] != null
         ? (map['scopes'] as List).map((item) => item as String).toList()
         : List.empty();

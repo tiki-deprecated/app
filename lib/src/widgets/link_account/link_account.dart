@@ -31,6 +31,7 @@ class LinkAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return username == null
         ? LinkAccountViewAdd(
+            type,
             text: "Sign in with " + type,
             icon: unlinkedIcon,
             onLink: onLink,

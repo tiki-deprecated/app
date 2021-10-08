@@ -37,13 +37,15 @@ class InfoCarouselCardViewCoverHeader extends StatelessWidget {
               color: ConfigColor.tikiBlue),
         )
       ])),
-      GestureDetector(
-          onTap: () => service.controller
-              .shareCard(context, model.share!.message!, model.share!.image!),
-          child: Icon(Icons.share,
-              color: ConfigColor.orange,
-              size: service.controller
-                  .calculateAnimation(36.sp, _animationValue.value, 0)))
+      service.model.cover?.header?.share?.message == null
+          ? Container()
+          : GestureDetector(
+              onTap: () => service.controller.shareCard(
+                  context, model.share!.message!, model.share!.image!),
+              child: Icon(Icons.share,
+                  color: ConfigColor.orange,
+                  size: service.controller
+                      .calculateAnimation(36.sp, _animationValue.value, 0)))
     ]);
   }
 }

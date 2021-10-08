@@ -3,20 +3,22 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:http/http.dart';
+
 import '../../config/config_sentry.dart';
 import '../../utils/helper_json.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/data_bkg_interface_provider.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/data_fetch_interface_provider.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'api_google_service_email.dart';
 import 'repository/api_google_repository_info.dart';
 
 class ApiGoogleService
-    implements ApiOAuthInterfaceProvider, DataBkgInterfaceProvider {
+    implements ApiOAuthInterfaceProvider, DataFetchInterfaceProvider {
   final ApiOAuthService _apiAuthService;
   final ApiGoogleRepositoryInfo _apiGoogleRepositoryInfo;
   final ApiGoogleServiceEmail _apiGoogleServiceEmail;
@@ -29,7 +31,7 @@ class ApiGoogleService
         this._apiGoogleServiceEmail = ApiGoogleServiceEmail();
 
   @override
-  DataBkgInterfaceEmail? get email => _apiGoogleServiceEmail;
+  DataFetchInterfaceEmail? get email => _apiGoogleServiceEmail;
 
   @override
   Future<bool> isConnected(ApiOAuthModelAccount account) async {
@@ -37,8 +39,8 @@ class ApiGoogleService
   }
 
   @override
-  Future<void> revokeToken(ApiOAuthModelAccount account) async {
-    await ConfigSentry.http.post(Uri.parse(
+  Future<Response> revokeToken(ApiOAuthModelAccount account) async {
+    return await ConfigSentry.http.post(Uri.parse(
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
   }
 

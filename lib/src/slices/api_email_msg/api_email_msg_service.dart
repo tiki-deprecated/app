@@ -19,6 +19,7 @@ class ApiEmailMsgService {
     ApiEmailMsgModel? dbModel = await _repository.getByExtMessageIdAndAccount(
         message.extMessageId!, message.account!);
     message.messageId = dbModel?.messageId;
+    message.created = dbModel?.created;
     return dbModel == null
         ? _repository.insert(message)
         : _repository.update(message);
