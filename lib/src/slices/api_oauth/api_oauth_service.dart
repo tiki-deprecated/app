@@ -127,7 +127,9 @@ class ApiOAuthService {
     List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
-          serviceConfiguration: authConfig, scopes: providerScopes),
+          promptValues: provider.promptValues,
+          serviceConfiguration: authConfig,
+          scopes: providerScopes),
     );
   }
 

@@ -56,7 +56,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
         page: pageNum,
         maxResults: maxResults!);
     Uri uri = Uri.parse(
-        _messagesEndpoint + "?\$select=id,toRecipients&\$filter=$query");
+        _messagesEndpoint + "?\$select=id,toRecipients&\$search=$query");
     Response rsp = await this
         .apiOAuthService
         .proxy(
@@ -86,7 +86,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId) async {
     String urlStr = _messagesEndpoint +
-        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime';
+        '/$messageId?\$select=internetMessageHeaders,sender,receivedDateTime';
     Uri uri = Uri.parse(urlStr);
     Response rsp = await this
         .apiOAuthService
@@ -119,10 +119,10 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
             category: message['categories'] != null &&
                     message['categories'].isNotEmpty
                 ? message['categories'][0]
-                : null,
+                : "Inbox",
             unsubscribeMailTo: unsubscribeMailTo,
-            email: message['from']['emailAddress']['address'],
-            name: message['from']['emailAddress']['name']));
+            email: message['sender']['emailAddress']['address'],
+            name: message['sender']['emailAddress']['name']));
   }
 
   @override
@@ -166,7 +166,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
           queryBuffer, "receivedDateTime ge ${dateTime.toIso8601String()}");
     }
     if (from != null)
-      _appendQuery(queryBuffer, "from/emailAddress/address eq '$from'");
+      _appendQuery(queryBuffer, "from/emailAddress/address eq $from");
     int skip = page * maxResults;
     queryBuffer.write("&\$skip=$skip&\$top=$maxResults");
     return queryBuffer.toString();

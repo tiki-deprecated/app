@@ -64,9 +64,6 @@ flutter:
     - res/json/
     - res/sql/
   fonts:
-    - family: TikiIcons
-      fonts:
-        - asset: res/fonts/tiki_icons.ttf
     - family: Koara
       fonts:
         - asset: res/fonts/Koara-Bold.ttf
@@ -115,3 +112,6 @@ flutter:
       fonts:
         - asset: res/fonts/Roboto-Medium.ttf
           weight: 500
+    - family: SegoeUI
+      fonts:
+        - asset: res/fonts/Segoe-UI.ttf
