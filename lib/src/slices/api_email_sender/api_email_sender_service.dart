@@ -18,6 +18,7 @@ class ApiEmailSenderService {
     ApiEmailSenderModel? dbSender = await _repository.getByEmail(sender.email!);
     if (dbSender != null) {
       sender.senderId = dbSender.senderId;
+      sender.created = dbSender.created;
       if (sender.emailSince != null) {
         sender.emailSince = dbSender.emailSince!.isBefore(sender.emailSince!)
             ? dbSender.emailSince
