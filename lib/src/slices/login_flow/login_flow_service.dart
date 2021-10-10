@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/data_push/data_push_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -243,6 +244,8 @@ class LoginFlowService extends ChangeNotifier {
 
     ApiKnowledgeService apiKnowledgeService =
         ApiKnowledgeService(_helperApiAuth);
+    DataPushService dataPushService = DataPushService(
+        apiKnowledgeService: apiKnowledgeService, database: database);
 
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
@@ -254,12 +257,15 @@ class LoginFlowService extends ChangeNotifier {
         apiKnowledgeService: apiKnowledgeService);
     ApiOAuthService apiAuthService = ApiOAuthService(
         database: database, apiAppDataService: apiAppDataService);
+
     DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiCompanyService: apiCompanyService,
         apiEmailSenderService: apiEmailSenderService,
-        apiEmailMsgService: apiEmailMsgService);
+        apiEmailMsgService: apiEmailMsgService,
+        apiKnowledgeService: apiKnowledgeService,
+        dataPushService: dataPushService);
 
     registerLogout(() async => await apiAuthService.signOutAll());
 
@@ -270,6 +276,7 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiOAuthService>.value(value: apiAuthService),
       Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
+      Provider<DataPushService>.value(value: dataPushService),
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
     ];
   }

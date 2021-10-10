@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_knowledge/api_knowledge_service.dart';
+import 'package:app/src/slices/data_push/data_push_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
@@ -16,6 +18,7 @@ import 'data_fetch_service_email.dart';
 
 class DataFetchService extends ChangeNotifier {
   final _log = Logger('DataFetchService');
+  final DataPushService _dataPushService;
   late final DataFetchServiceEmail email;
 
   DataFetchService(
@@ -23,13 +26,18 @@ class DataFetchService extends ChangeNotifier {
       required ApiAppDataService apiAppDataService,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
-      required ApiEmailMsgService apiEmailMsgService}) {
+      required ApiEmailMsgService apiEmailMsgService,
+      required ApiKnowledgeService apiKnowledgeService,
+      required DataPushService dataPushService})
+      : this._dataPushService = dataPushService {
     this.email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
+        apiKnowledgeService: apiKnowledgeService,
+        dataPushService: _dataPushService,
         notifyListeners: notifyListeners);
   }
 

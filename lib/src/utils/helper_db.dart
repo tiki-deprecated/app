@@ -12,7 +12,7 @@ class HelperDb {
   final _log = Logger('HelperDb');
 
   Future<Database> open(String password,
-      {int version = 4, bool drop = false}) async {
+      {int version = 5, bool drop = false}) async {
     String databasePath = await getDatabasesPath() + '/' + _dbName;
     if (drop) await deleteDatabase(databasePath);
     return await openDatabase(databasePath,
@@ -34,12 +34,14 @@ class HelperDb {
     await _executeScript(db, 'create_v1');
     await _executeScript(db, 'create_v2');
     await _executeScript(db, 'create_v4');
+    await _executeScript(db, 'create_v5');
   }
 
   Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
     _log.fine('upgrade');
     if (oldVersion < 2) await _executeScript(db, 'create_v2');
     if (oldVersion < 4) await _executeScript(db, 'create_v4');
+    if (oldVersion < 5) await _executeScript(db, 'create_v5');
   }
 
   Future<void> onDowngrade(Database db, int oldVersion, int newVersion) async {
