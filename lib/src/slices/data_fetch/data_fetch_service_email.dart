@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/data_push/data_push_convert.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -14,9 +15,11 @@ import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_knowledge/api_knowledge_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_push/data_push_service.dart';
 import 'data_fetch_interface_email.dart';
 import 'data_fetch_interface_provider.dart';
 import 'model/data_fetch_model_page.dart';
@@ -28,6 +31,8 @@ class DataFetchServiceEmail {
   final ApiEmailMsgService _apiEmailMsgService;
   final ApiEmailSenderService _apiEmailSenderService;
   final ApiCompanyService _apiCompanyService;
+  final ApiKnowledgeService _apiKnowledgeService;
+  final DataPushService _dataPushService;
   final Function notifyListeners;
 
   DataFetchServiceEmail(
@@ -36,12 +41,16 @@ class DataFetchServiceEmail {
       required ApiEmailMsgService apiEmailMsgService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiCompanyService apiCompanyService,
+      required ApiKnowledgeService apiKnowledgeService,
+      required DataPushService dataPushService,
       required this.notifyListeners})
       : this._apiAuthService = apiAuthService,
         this._apiAppDataService = apiAppDataService,
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiCompanyService = apiCompanyService;
+        this._apiCompanyService = apiCompanyService,
+        this._apiKnowledgeService = apiKnowledgeService,
+        this._dataPushService = dataPushService;
 
   Future<bool> unsubscribe(ApiOAuthModelAccount account,
       String unsubscribeMailTo, String list) async {
@@ -92,7 +101,7 @@ revolution today.<br />
         DateTime.now()
             .subtract(Duration(days: 1))
             .isAfter(DateTime.fromMillisecondsSinceEpoch(indexEpoch))) {
-      await _pageList(
+      await _indexLabel(
           interfaceEmail: interfaceEmail,
           account: account,
           indexEpoch: indexEpoch);
@@ -105,9 +114,30 @@ revolution today.<br />
     }
   }
 
+  Future<void> _indexLabel(
+      {required DataFetchInterfaceEmail interfaceEmail,
+      required ApiOAuthModelAccount account,
+      int? indexEpoch}) async {
+    ApiAppDataModel? appDataIndexLabel =
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
+    String? indexLabel = appDataIndexLabel?.value;
+    int start =
+        indexLabel != null ? interfaceEmail.labels.indexOf(indexLabel) : 0;
+    for (int i = start; i < interfaceEmail.labels.length; i++) {
+      await _pageList(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          label: interfaceEmail.labels[i],
+          indexEpoch: indexEpoch);
+      await _apiAppDataService.save(
+          ApiAppDataKey.emailIndexLabel, interfaceEmail.labels[i]);
+    }
+  }
+
   Future<void> _pageList(
       {required DataFetchInterfaceEmail interfaceEmail,
       required ApiOAuthModelAccount account,
+      String? label,
       String? page,
       int? indexEpoch}) async {
     if (page == null) {
@@ -120,6 +150,7 @@ revolution today.<br />
         account: account,
         interfaceEmail: interfaceEmail,
         afterEpoch: indexEpoch,
+        label: label,
         page: page,
         maxResults: 5);
     if (res.data != null) {
@@ -138,6 +169,7 @@ revolution today.<br />
       return _pageList(
           interfaceEmail: interfaceEmail,
           account: account,
+          label: label,
           indexEpoch: indexEpoch,
           page: res.next);
   }
@@ -158,8 +190,9 @@ revolution today.<br />
             await _apiEmailSenderService.getByEmail(message!.sender!.email!);
         if (sender != null) {
           _log.fine("Known sender ${sender.name}");
-          await _saveSender(sender);
+          message.sender = await _saveSender(sender);
           await _apiEmailMsgService.upsert(message);
+          await _dataPushService.write(DataPushConvert.message(message));
           _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
           notifyListeners();
         } else {
@@ -211,6 +244,7 @@ revolution today.<br />
       for (ApiEmailMsgModel message in messages) {
         message.sender = inserted;
         await _apiEmailMsgService.upsert(message);
+        await _dataPushService.write(DataPushConvert.message(message));
       }
       _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
       notifyListeners();
@@ -267,11 +301,13 @@ revolution today.<br />
       String? from,
       int? afterEpoch,
       int? maxResults,
+      String? label,
       String? page,
       int? retries = 3}) async {
     try {
       return await interfaceEmail.getList(account,
           from: from,
+          label: label,
           afterEpoch: afterEpoch,
           maxResults: maxResults,
           page: page);
@@ -290,6 +326,7 @@ revolution today.<br />
           afterEpoch: afterEpoch,
           maxResults: maxResults,
           page: page,
+          label: label,
           retries: retries! - 1,
         );
       rethrow;
