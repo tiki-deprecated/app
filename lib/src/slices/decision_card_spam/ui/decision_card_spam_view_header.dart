@@ -15,15 +15,16 @@ class DecisionCardSpamViewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String provider = service.account?.provider;
     return Container(
         padding: EdgeInsets.only(left: 3.w, right: 3.w, top: 1.h),
         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
               child: Row(children: [
-            HelperImage("gmail-round-logo", width: 5.5.w),
+            HelperImage("$provider-round-logo", width: 5.5.w),
             Padding(padding: EdgeInsets.only(right: 2.w)),
             Text(
-              "Your Gmail account",
+              "Your $provider account",
               style: TextStyle(
                   fontFamily: ConfigFont.familyNunitoSans,
                   fontSize: 12.sp,
@@ -37,7 +38,7 @@ class DecisionCardSpamViewHeader extends StatelessWidget {
                   onTap: () => service.controller
                       .shareCard(context, shareKey, shareMessage),
                   child:
-                      Icon(Icons.share, color: ConfigColor.orange, size: 8.w)))
+                  Icon(Icons.share, color: ConfigColor.orange, size: 8.w)))
         ]));
   }
 }

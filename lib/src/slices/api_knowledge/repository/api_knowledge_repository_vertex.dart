@@ -11,19 +11,20 @@ import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
 import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
-import '../model/api_company_model_index.dart';
+import '../model/vertex/api_knowledge_model_vertex.dart';
 
-class ApiCompanyRepositoryIndex {
-  static final String _path = '/api/latest/company';
+class ApiKnowledgeRepositoryVertex {
+  static final String _path = '/api/latest/vertex';
 
-  static Future<HelperApiRsp<ApiCompanyModelIndex>> find(
-      String? bearer, String domain) async {
+  static Future<HelperApiRsp<ApiKnowledgeModelVertex>> get(
+      String? bearer) async {
     Response rsp = await ConfigSentry.http.get(
-        ConfigDomain.asUri(
-            ConfigDomain.companyIndex, _path, {"domain": domain}),
+        ConfigDomain.asUri(ConfigDomain.knowledge, _path),
         headers: HelperApiHeaders(auth: bearer).header);
     Map? rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?,
-        (json) => ApiCompanyModelIndex.fromJson(json as Map<String, dynamic>?));
+    return HelperApiRsp.fromJson(
+        rspMap as Map<String, dynamic>?,
+        (json) =>
+            ApiKnowledgeModelVertex.fromJson(json as Map<String, dynamic>?));
   }
 }

@@ -12,9 +12,12 @@ import 'info_carousel_card_service.dart';
 class InfoCarouselCardController {
   late DragStartDetails startVerticalDragDetails;
   late DragUpdateDetails updateVerticalDragDetails;
+  final InfoCarouselCardService service;
   AnimationController? animationController;
   double? scrollStartPos;
   double scrollUpdatePos = 0.0;
+
+  InfoCarouselCardController(this.service);
 
   calculateAnimation(double initialValue, double rate, double minimalValue) {
     double decrease = rate * initialValue;
@@ -30,6 +33,7 @@ class InfoCarouselCardController {
       updateVerticalDragDetails = dragDetails;
 
   onVerticalDragEndCover(endDetails, animationController) {
+    if (service.model.content == null) return;
     double dx = updateVerticalDragDetails.globalPosition.dx -
         startVerticalDragDetails.globalPosition.dx;
     double dy = updateVerticalDragDetails.globalPosition.dy -
@@ -71,6 +75,7 @@ class InfoCarouselCardController {
   }
 
   tapArrowSlideUp(animationController) {
-    animationController.animateTo(1.0, curve: Curves.easeOut);
+    if (service.model.content != null)
+      animationController.animateTo(1.0, curve: Curves.easeOut);
   }
 }

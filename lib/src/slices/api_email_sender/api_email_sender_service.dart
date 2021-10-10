@@ -18,6 +18,7 @@ class ApiEmailSenderService {
     ApiEmailSenderModel? dbSender = await _repository.getByEmail(sender.email!);
     if (dbSender != null) {
       sender.senderId = dbSender.senderId;
+      sender.created = dbSender.created;
       if (sender.emailSince != null) {
         sender.emailSince = dbSender.emailSince!.isBefore(sender.emailSince!)
             ? dbSender.emailSince
@@ -47,5 +48,12 @@ class ApiEmailSenderService {
     sender.unsubscribed = false;
     sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
     _repository.update(sender);
+  }
+
+  Future<void> deleteList(List<ApiEmailSenderModel> senders) async {
+    for (int i = 0; i < senders.length; i++) {
+      ApiEmailSenderModel sender = senders[i];
+      await _repository.delete(sender);
+    }
   }
 }

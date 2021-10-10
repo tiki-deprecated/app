@@ -15,11 +15,11 @@ import '../../config/config_sentry.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_bkg/data_bkg_interface_email.dart';
-import '../data_bkg/model/data_bkg_model_page.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/model/data_fetch_model_page.dart';
 import 'model/api_google_model_email.dart';
 
-class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
+class ApiGoogleServiceEmail implements DataFetchInterfaceEmail {
   final ApiGoogleModelEmail model;
   final _log = Logger('ApiGoogleServiceEmail');
 
@@ -29,7 +29,7 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
   List<String> get labels => this.model.categories;
 
   @override
-  Future<DataBkgModelPage<String>> getList(ApiOAuthModelAccount account,
+  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
       {String? label,
       String? from,
       int? afterEpoch,
@@ -53,7 +53,7 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
           .where((message) => message.id != null)
           .map((message) => message.id!)
           .toList();
-    return DataBkgModelPage(next: emails?.nextPageToken, data: messages);
+    return DataFetchModelPage(next: emails?.nextPageToken, data: messages);
   }
 
   @override
@@ -103,9 +103,19 @@ class ApiGoogleServiceEmail implements DataBkgInterfaceEmail {
   }
 
   @override
-  Future<bool> send(ApiOAuthModelAccount account, String email) async {
+  Future<bool> send(ApiOAuthModelAccount account, String email, String to,
+      String subject) async {
     GmailApi? gmailApi = await _getGmailApi(account);
-    String base64Email = base64UrlEncode(utf8.encode(email));
+    String message = '''
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+to: $to
+from: me
+subject: $subject
+
+$email
+''';
+    String base64Email = base64UrlEncode(utf8.encode(message));
     if (gmailApi != null) {
       await gmailApi.users.messages
           .send(Message.fromJson({'raw': base64Email}), 'me');

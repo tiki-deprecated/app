@@ -24,6 +24,7 @@ import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_sender/api_email_sender_service.dart';
+import '../api_knowledge/api_knowledge_service.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
@@ -31,7 +32,7 @@ import '../api_user/model/api_user_model_keys.dart';
 import '../api_user/model/api_user_model_otp.dart';
 import '../api_user/model/api_user_model_token.dart';
 import '../api_user/model/api_user_model_user.dart';
-import '../data_bkg/data_bkg_service.dart';
+import '../data_fetch/data_fetch_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
 import '../keys_create_screen/keys_create_screen_service.dart';
@@ -238,17 +239,22 @@ class LoginFlowService extends ChangeNotifier {
         await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
-    registerLogout(() async => await apiAppDataService.logout());
+    registerLogout(() async => await apiAppDataService.deleteAllData());
+
+    ApiKnowledgeService apiKnowledgeService =
+        ApiKnowledgeService(_helperApiAuth);
 
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
     ApiEmailMsgService apiEmailMsgService =
         ApiEmailMsgService(database: database);
-    ApiCompanyService apiCompanyService =
-        ApiCompanyService(database: database, helperApiAuth: _helperApiAuth);
+    ApiCompanyService apiCompanyService = ApiCompanyService(
+        database: database,
+        helperApiAuth: _helperApiAuth,
+        apiKnowledgeService: apiKnowledgeService);
     ApiOAuthService apiAuthService = ApiOAuthService(
         database: database, apiAppDataService: apiAppDataService);
-    DataBkgService dataBkgService = DataBkgService(
+    DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiCompanyService: apiCompanyService,
@@ -263,7 +269,8 @@ class LoginFlowService extends ChangeNotifier {
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
       Provider<ApiAppDataService>.value(value: apiAppDataService),
       Provider<ApiOAuthService>.value(value: apiAuthService),
-      ChangeNotifierProvider<DataBkgService>.value(value: dataBkgService),
+      Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
+      ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
     ];
   }
 

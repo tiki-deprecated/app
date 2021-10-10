@@ -21,7 +21,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
+          flutter-version: '2.5.0'
 
       - name: Android Config
         env:
@@ -110,6 +110,7 @@ jobs:
           packageName: com.mytiki.app
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
+          status: completed
 
   sentry_release:
     name: Sentry Release 

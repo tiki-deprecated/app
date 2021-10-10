@@ -5,8 +5,6 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_app_data/api_app_data_key.dart';
-import 'package:app/src/slices/api_oauth/model/api_oauth_model.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
@@ -16,7 +14,9 @@ import '../../utils/api/helper_api_headers.dart';
 import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
+import '../api_microsoft/api_microsoft_service.dart';
 import 'api_oauth_interface_provider.dart';
+import 'model/api_oauth_model.dart';
 import 'model/api_oauth_model_account.dart';
 import 'model/api_oauth_model_provider.dart';
 import 'repository/api_oauth_repository_account.dart';
@@ -58,7 +58,8 @@ class ApiOAuthService {
       Map? userInfo = await this.getUserInfo(apiAuthServiceAccountModel);
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
-        apiAuthServiceAccountModel.username = userInfo['id'];
+        apiAuthServiceAccountModel.username =
+            userInfo['id'] ?? userInfo['email'];
         apiAuthServiceAccountModel.email = userInfo['email'];
         account = await _upsert(apiAuthServiceAccountModel);
         return account;
@@ -76,11 +77,11 @@ class ApiOAuthService {
   Future<void> signOut(ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? provider =
         _model.interfaceProviders[account.provider];
-    if (provider != null) await provider.revokeToken(account);
+    if (provider != null) {
+      Response rsp = await provider.revokeToken(account);
+      print(rsp);
+    }
     await _apiAuthRepositoryAccount.delete(account);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexEpoch);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexPage);
-    await _apiAppDataService.delete(ApiAppDataKey.emailIndexLabel);
   }
 
   Future<Map?> getUserInfo(
@@ -108,7 +109,8 @@ class ApiOAuthService {
   Future<dynamic> proxy(
       Future<dynamic> Function() request, ApiOAuthModelAccount account) async {
     Response rsp = await request();
-    if (HelperApiUtils.isUnauthorized(rsp.statusCode)) {
+    if (HelperApiUtils.isUnauthorized(rsp.statusCode) &&
+        account.refreshToken != null) {
       await _refreshToken(account);
       rsp = await request();
     }
@@ -125,7 +127,9 @@ class ApiOAuthService {
     List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
-          serviceConfiguration: authConfig, scopes: providerScopes),
+          promptValues: provider.promptValues,
+          serviceConfiguration: authConfig,
+          scopes: providerScopes),
     );
   }
 
@@ -147,7 +151,7 @@ class ApiOAuthService {
   Future<ApiOAuthModelAccount?> _upsert(ApiOAuthModelAccount account) async {
     String providerName = account.provider!;
     ApiOAuthModelAccount? dbAccount =
-        account.provider != null && account.username != null
+    account.provider != null && account.email != null
             ? await _apiAuthRepositoryAccount.getByProviderAndUsername(
                 providerName, account.username!)
             : null;
@@ -166,6 +170,11 @@ class ApiOAuthService {
         case 'google':
           _model.interfaceProviders[k] = ApiGoogleService(
               apiAuthService: this, apiAppDataService: _apiAppDataService);
+          break;
+        case 'microsoft':
+          _model.interfaceProviders[k] = ApiMicrosoftService(
+              apiAuthService: this, apiAppDataService: _apiAppDataService);
+          break;
       }
     });
   }

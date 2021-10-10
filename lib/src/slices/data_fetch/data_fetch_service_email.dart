@@ -17,12 +17,12 @@ import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import 'data_bkg_interface_email.dart';
-import 'data_bkg_interface_provider.dart';
-import 'model/data_bkg_model_page.dart';
+import 'data_fetch_interface_email.dart';
+import 'data_fetch_interface_provider.dart';
+import 'model/data_fetch_model_page.dart';
 
-class DataBkgServiceEmail {
-  final _log = Logger('DataBkgServiceEmail');
+class DataFetchServiceEmail {
+  final _log = Logger('DataFetchServiceEmail');
   final ApiOAuthService _apiAuthService;
   final ApiAppDataService _apiAppDataService;
   final ApiEmailMsgService _apiEmailMsgService;
@@ -30,7 +30,7 @@ class DataBkgServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final Function notifyListeners;
 
-  DataBkgServiceEmail(
+  DataFetchServiceEmail(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
       required ApiEmailMsgService apiEmailMsgService,
@@ -49,12 +49,6 @@ class DataBkgServiceEmail {
     String to = uri.path;
     String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
     String email = '''
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-to: $to
-from: me
-subject: $subject
-
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=“https://www.w3.org/1999/xhtml”>
 <head>
@@ -74,9 +68,9 @@ revolution today.<br />
 </body>
 </html>
 ''';
-    DataBkgInterfaceEmail? emailInterface = await _getEmailInterface(account);
+    DataFetchInterfaceEmail? emailInterface = await _getEmailInterface(account);
     if (emailInterface != null)
-      return await emailInterface.send(account, email);
+      return await emailInterface.send(account, email, to, subject);
     return false;
   }
 
@@ -86,7 +80,7 @@ revolution today.<br />
         ' started on: ' +
         DateTime.now().toIso8601String());
 
-    DataBkgInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
+    DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null || !await _isConnected(account)) return;
 
     ApiAppDataModel? appDataIndexEpoch =
@@ -98,7 +92,10 @@ revolution today.<br />
         DateTime.now()
             .subtract(Duration(days: 1))
             .isAfter(DateTime.fromMillisecondsSinceEpoch(indexEpoch))) {
-      await _loopLabels(interfaceEmail, account, indexEpoch: indexEpoch);
+      await _pageList(
+          interfaceEmail: interfaceEmail,
+          account: account,
+          indexEpoch: indexEpoch);
       await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch,
           DateTime.now().millisecondsSinceEpoch.toString());
       _log.fine('Email index for ' +
@@ -108,46 +105,20 @@ revolution today.<br />
     }
   }
 
-  Future<void> _loopLabels(
-      DataBkgInterfaceEmail interfaceEmail, ApiOAuthModelAccount account,
-      {int? indexEpoch}) async {
-    _log.fine('Loop Labels for ${account.email}');
-    ApiAppDataModel? appDataIndexLabel =
-        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
-    String activeLabel = appDataIndexLabel?.value ?? interfaceEmail.labels[0];
-    for (int i = interfaceEmail.labels.indexOf(activeLabel);
-        i < interfaceEmail.labels.length;
-        i++) {
-      String label = interfaceEmail.labels[i];
-      await _pageList(
-          interfaceEmail: interfaceEmail,
-          account: account,
-          label: label,
-          indexEpoch: indexEpoch);
-      await _apiAppDataService.save(
-          ApiAppDataKey.emailIndexLabel,
-          (i + 1 == interfaceEmail.labels.length)
-              ? interfaceEmail.labels[0]
-              : interfaceEmail.labels[i + 1]);
-    }
-  }
-
   Future<void> _pageList(
-      {required DataBkgInterfaceEmail interfaceEmail,
+      {required DataFetchInterfaceEmail interfaceEmail,
       required ApiOAuthModelAccount account,
       String? page,
-      String? label,
       int? indexEpoch}) async {
     if (page == null) {
       ApiAppDataModel? appDataIndexPage =
           await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
       page = appDataIndexPage?.value;
     }
-    _log.fine('${account.email} List page $page for $label after $indexEpoch');
-    DataBkgModelPage<String> res = await _getList(
+    _log.fine('${account.email} List page $page after $indexEpoch');
+    DataFetchModelPage<String> res = await _getList(
         account: account,
         interfaceEmail: interfaceEmail,
-        label: label,
         afterEpoch: indexEpoch,
         page: page,
         maxResults: 5);
@@ -167,12 +138,11 @@ revolution today.<br />
       return _pageList(
           interfaceEmail: interfaceEmail,
           account: account,
-          label: label,
           indexEpoch: indexEpoch,
           page: res.next);
   }
 
-  Future<void> _processMessages(DataBkgInterfaceEmail interfaceEmail,
+  Future<void> _processMessages(DataFetchInterfaceEmail interfaceEmail,
       ApiOAuthModelAccount account, List<String> messages) async {
     Set<String> processed = Set();
     _log.fine("Processing ${messages.length} messages");
@@ -210,7 +180,7 @@ revolution today.<br />
   }
 
   Future<Set<ApiEmailMsgModel>> _indexSender(
-      DataBkgInterfaceEmail interfaceEmail,
+      DataFetchInterfaceEmail interfaceEmail,
       ApiOAuthModelAccount account,
       String email) async {
     _log.fine("Indexing sender $email");
@@ -266,13 +236,13 @@ revolution today.<br />
   }
 
   Future<List<String>> _pageSender(
-      {required DataBkgInterfaceEmail interfaceEmail,
+      {required DataFetchInterfaceEmail interfaceEmail,
       required ApiOAuthModelAccount account,
       required String email,
       required List<String> messages,
       String? page}) async {
     _log.fine("Page sender $email");
-    DataBkgModelPage<String> res = await _getList(
+    DataFetchModelPage<String> res = await _getList(
         account: account,
         interfaceEmail: interfaceEmail,
         from: email,
@@ -291,10 +261,9 @@ revolution today.<br />
     return messages;
   }
 
-  Future<DataBkgModelPage<String>> _getList(
+  Future<DataFetchModelPage<String>> _getList(
       {required ApiOAuthModelAccount account,
-      required DataBkgInterfaceEmail interfaceEmail,
-      String? label,
+      required DataFetchInterfaceEmail interfaceEmail,
       String? from,
       int? afterEpoch,
       int? maxResults,
@@ -302,7 +271,6 @@ revolution today.<br />
       int? retries = 3}) async {
     try {
       return await interfaceEmail.getList(account,
-          label: label,
           from: from,
           afterEpoch: afterEpoch,
           maxResults: maxResults,
@@ -318,7 +286,6 @@ revolution today.<br />
         return _getList(
           account: account,
           interfaceEmail: interfaceEmail,
-          label: label,
           from: from,
           afterEpoch: afterEpoch,
           maxResults: maxResults,
@@ -331,7 +298,7 @@ revolution today.<br />
 
   Future<ApiEmailMsgModel?> _getMessage(
       {required ApiOAuthModelAccount account,
-      required DataBkgInterfaceEmail interfaceEmail,
+      required DataFetchInterfaceEmail interfaceEmail,
       required String messageId,
       int? retries = 3}) async {
     try {
@@ -354,13 +321,13 @@ revolution today.<br />
     }
   }
 
-  Future<DataBkgInterfaceEmail?> _getEmailInterface(
+  Future<DataFetchInterfaceEmail?> _getEmailInterface(
       ApiOAuthModelAccount account) async {
     ApiOAuthInterfaceProvider? apiOAuthProvider =
         await _apiAuthService.interfaceProviders[account.provider];
-    DataBkgInterfaceProvider? dataBkgProvider =
-        apiOAuthProvider as DataBkgInterfaceProvider?;
-    return dataBkgProvider?.email;
+    DataFetchInterfaceProvider? DataFetchProvider =
+        apiOAuthProvider as DataFetchInterfaceProvider?;
+    return DataFetchProvider?.email;
   }
 
   Future<bool> _isConnected(ApiOAuthModelAccount account) async {
@@ -369,4 +336,17 @@ revolution today.<br />
     return apiOauthInterface != null &&
         await apiOauthInterface.isConnected(account);
   }
+
+  Future<void> deleteApiAppData(ApiOAuthModelAccount account) async {
+    List<ApiAppDataKey> keysToDelete = [
+      ApiAppDataKey.emailIndexLabel,
+      ApiAppDataKey.emailIndexEpoch,
+      ApiAppDataKey.emailIndexPage,
+    ];
+    keysToDelete.forEach((key) async {
+      await _apiAppDataService.delete(key);
+    });
+  }
+
+  Future<void> deleteMessages(ApiOAuthModelAccount account) async {}
 }

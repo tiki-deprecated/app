@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModelIndexAbout {
+class ApiKnowledgeModelCompanyAbout {
   String? domain;
   String? name;
   String? description;
@@ -12,7 +12,7 @@ class ApiCompanyModelIndexAbout {
   String? address;
   String? phone;
 
-  ApiCompanyModelIndexAbout(
+  ApiKnowledgeModelCompanyAbout(
       {this.domain,
       this.name,
       this.description,
@@ -21,7 +21,7 @@ class ApiCompanyModelIndexAbout {
       this.address,
       this.phone});
 
-  ApiCompanyModelIndexAbout.fromJson(Map<String, dynamic>? json) {
+  ApiKnowledgeModelCompanyAbout.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.domain = json['domain'];
       this.name = json['name'];
