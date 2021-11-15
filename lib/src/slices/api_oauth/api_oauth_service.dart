@@ -151,7 +151,7 @@ class ApiOAuthService {
   Future<ApiOAuthModelAccount?> _upsert(ApiOAuthModelAccount account) async {
     String providerName = account.provider!;
     ApiOAuthModelAccount? dbAccount =
-    account.provider != null && account.email != null
+        account.provider != null && account.email != null
             ? await _apiAuthRepositoryAccount.getByProviderAndUsername(
                 providerName, account.username!)
             : null;

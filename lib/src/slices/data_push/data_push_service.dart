@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
+import '../../utils/api/helper_api_rsp.dart';
+import '../../utils/api/helper_api_utils.dart';
 import '../api_knowledge/api_knowledge_service.dart';
 import 'model/data_push_model.dart';
 import 'repository/data_push_repository.dart';

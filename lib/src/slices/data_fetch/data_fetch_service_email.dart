@@ -3,7 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/data_push/data_push_convert.dart';
+import '../data_push/data_push_convert.dart';
+
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';

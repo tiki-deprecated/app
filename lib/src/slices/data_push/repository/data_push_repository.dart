@@ -74,7 +74,7 @@ class DataPushRepository {
   }
 
 //get all
-  //delete by ids
-  //get length
-  //add
+//delete by ids
+//get length
+//add
 }

@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/data_push/data_push_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +33,7 @@ import '../api_user/model/api_user_model_otp.dart';
 import '../api_user/model/api_user_model_token.dart';
 import '../api_user/model/api_user_model_user.dart';
 import '../data_fetch/data_fetch_service.dart';
+import '../data_push/data_push_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
 import '../keys_create_screen/keys_create_screen_service.dart';
