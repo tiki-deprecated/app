@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class HelperDb {
+class DatabaseService {
   static const String _dbName = 'tiki_enc.db';
-  final _log = Logger('HelperDb');
+  final _log = Logger('DatabaseService');
 
   Future<Database> open(String password,
       {int version = 5, bool drop = false}) async {

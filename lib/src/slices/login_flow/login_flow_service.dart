@@ -13,7 +13,7 @@ import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_auth.dart';
 import '../../utils/api/helper_api_rsp.dart';
 import '../../utils/api/helper_api_utils.dart';
-import '../../utils/helper_db.dart';
+import '../../utils/database_service.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
 import '../api_blockchain/model/api_blockchain_model_address_req.dart';
@@ -237,7 +237,7 @@ class LoginFlowService extends ChangeNotifier {
 
   Future<void> _initServices() async {
     Database database =
-        await HelperDb().open(this.model.user!.keys!.signPrivateKey!);
+        await DatabaseService().open(this.model.user!.keys!.signPrivateKey!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
     registerLogout(() async => await apiAppDataService.deleteAllData());
