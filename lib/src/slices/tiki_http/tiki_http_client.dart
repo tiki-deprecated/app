@@ -25,9 +25,9 @@ class TikiHttpClient{
 
   /// Run the request, handle callbacks and errors.
   Future<void> _dispatchRequest(TikiHttpRequest tikiRequest) async {
-    _activeRequests++;
     final client = SentryHttpClient();
     try {
+      _activeRequests++;
       String type = tikiRequest.type!.value!;
       Uri uri = tikiRequest.uri!;
       Request baseRequest = Request(
@@ -66,7 +66,6 @@ class TikiHttpClient{
   /// Remove next [TikiHttpRequest] from the queue and run.
   _next() {
     if (_activeRequests < _queueLimit && _queue.isNotEmpty){
-      _activeRequests++;
       TikiHttpRequest request = _queue.removeFirst();
       _dispatchRequest(request);
     }
