@@ -46,7 +46,7 @@ class TikiHttpClient{
             throw error ?? "$uriStr $type request - client send error";
           });
       Response response = await Response.fromStream(streamedResponse);
-      if(!is2xx(response.statusCode)){
+      if(isNot2xx(response.statusCode)){
         String code = response.statusCode.toString();
         String uriStr = tikiRequest.uri.toString();
         String type = tikiRequest.type!.value!;
