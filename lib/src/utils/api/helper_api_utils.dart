@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+@Deprecated('Use TikiHttpClient instead')
 class HelperApiUtils {
   static bool is2xx(int? code) => (code != null && code >= 200 && code < 300);
 
