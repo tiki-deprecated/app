@@ -37,7 +37,7 @@ class TikiHttpClient{
           type,
           uri
       );
-      if(tikiRequest.headers != null) baseRequest.headers.addAll(tikiRequest.headers!);
+      if (tikiRequest.headers != null) baseRequest.headers.addAll(tikiRequest.headers!);
       if (tikiRequest.type != TikiRequestType.GET && tikiRequest.body != null) {
         baseRequest.body = tikiRequest.body!;
       }
@@ -49,12 +49,6 @@ class TikiHttpClient{
         throw error ?? "$uriStr $type request - client send error";
       });
       Response response = await Response.fromStream(streamedResponse);
-      if(isNot2xx(response.statusCode)){
-        String code = response.statusCode.toString();
-        String uriStr = tikiRequest.uri.toString();
-        String type = tikiRequest.type.value!;
-        throw "$uriStr $type request failed with error code $code";
-      }
       tikiRequest.onSuccess(response);
     } catch (error) {
       _log.warning(error);
