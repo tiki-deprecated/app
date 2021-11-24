@@ -50,8 +50,7 @@ void main() {
       };
       tikiHttpClient.request(request);
       expect(tikiHttpClient.activeRequests, i >= 100 ? 100 : i + 1);
-      expect(tikiHttpClient.queuedRequests, i > 100 ? 100 - i : 0);
-
+      expect(tikiHttpClient.queuedRequests, i >= 100 ? i + 1 - 100 : 0);
     }
   });
 }
