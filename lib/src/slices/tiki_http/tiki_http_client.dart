@@ -17,7 +17,7 @@ class TikiHttpClient{
   /// Add a [TikiHttpRequest] to the queue
   Future<void> request(TikiHttpRequest request) async {
     if (_activeRequests < _queueLimit) {
-      _dispatchRequest(request);
+      await _dispatchRequest(request);
     }else{
       _queue.add(request);
     }
@@ -28,17 +28,34 @@ class TikiHttpClient{
     final client = SentryHttpClient();
     try {
       _activeRequests++;
-      Response response = await _sendRequest(tikiRequest, client);
+      String type = tikiRequest.type.value!;
+      Uri uri = tikiRequest.uri;
+      Request baseRequest = Request(
+          type,
+          uri
+      );
+      if(tikiRequest.headers != null) baseRequest.headers.addAll(tikiRequest.headers!);
+      if (tikiRequest.type != TikiRequestType.GET && tikiRequest.body != null) {
+        baseRequest.body = tikiRequest.body!;
+      }
+      tikiRequest.body = tikiRequest.body;
+      StreamedResponse streamedResponse = await client.send(baseRequest)
+          .onError((error, stackTrace) {
+        String uriStr = tikiRequest.uri.toString();
+        String type = tikiRequest.type.value!;
+        throw error ?? "$uriStr $type request - client send error";
+      });
+      Response response = await Response.fromStream(streamedResponse);
       if(isNot2xx(response.statusCode)){
         String code = response.statusCode.toString();
         String uriStr = tikiRequest.uri.toString();
-        String type = tikiRequest.type.toString();
+        String type = tikiRequest.type.value!;
         throw "$uriStr $type request failed with error code $code";
       }
-      if(tikiRequest.onSuccess != null) tikiRequest.onSuccess!(response);
+      tikiRequest.onSuccess(response);
     } catch (error) {
       _log.warning(error);
-      if(tikiRequest.onError != null) tikiRequest.onError!(error);
+      tikiRequest.onError(error);
     }finally{
       client.close();
       _activeRequests--;
@@ -54,35 +71,10 @@ class TikiHttpClient{
     }
   }
 
-  Future<Response>_sendRequest(TikiHttpRequest tikiRequest, SentryHttpClient client) async {
-    Uri uri = tikiRequest.uri;
-    Response response;
-    switch(tikiRequest.type){
-      case TikiRequestType.GET :
-        response = await client.get(uri, headers: tikiRequest.headers);
-        break;
-      case TikiRequestType.POST :
-        response = await client.post(uri, headers: tikiRequest.headers, body: tikiRequest.body);
-        break;
-      case TikiRequestType.PUT :
-        response = await client.put(uri, headers: tikiRequest.headers, body: tikiRequest.body);
-        break;
-      case TikiRequestType.DELETE :
-        response = await client.delete(uri, headers: tikiRequest.headers);
-        break;
-      case TikiRequestType.HEAD :
-        response = await client.head(uri, headers: tikiRequest.headers);
-        break;
-      default :
-        throw Exception("HTTP request type not allowed");
-    }
-    return response;
-  }
-
   static bool is2xx(int? code) => (code != null && code >= 200 && code < 300);
 
   static bool isNot2xx(int? code) =>
-      (code == null || code < 200 || code <= 300);
+      (code == null || code < 200 || code >= 300);
 
   static bool is3xx(int? code) => (code != null && code >= 300 && code < 400);
 
@@ -103,6 +95,4 @@ class TikiHttpClient{
   static bool isNotFound(int? code) => (code != null && code == 404);
 
   static bool isUnprocessable(int? code) => (code != null && code == 422);
-
-
 }

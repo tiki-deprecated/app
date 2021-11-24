@@ -11,9 +11,11 @@ void main() {
    TikiHttpRequest request = TikiHttpRequest(
      uri: Uri.parse("https://google.com"),
      type: TikiRequestType.GET,
-     onError: (error) => print(error),
-     onSuccess: (success) => print(success),
    );
+   request.onSuccess = (response){
+     expect(response is Response, true);
+     expect(response.statusCode, 200);
+   };
    await tikiHttpClient.request(request);
   });
 }
