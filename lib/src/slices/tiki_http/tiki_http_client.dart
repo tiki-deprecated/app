@@ -14,6 +14,9 @@ class TikiHttpClient{
   int _activeRequests = 0;
   ListQueue<TikiHttpRequest> _queue = ListQueue<TikiHttpRequest>();
 
+  get activeRequests => _activeRequests;
+  get queuedRequests => _queue.length;
+
   /// Add a [TikiHttpRequest] to the queue
   Future<void> request(TikiHttpRequest request) async {
     if (_activeRequests < _queueLimit) {
