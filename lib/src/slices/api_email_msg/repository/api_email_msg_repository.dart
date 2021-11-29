@@ -127,4 +127,11 @@ class ApiEmailMsgRepository {
     await _database.delete(_table,
         where: 'message_id = ?', whereArgs: [message.messageId]);
   }
+
+  Future<List<ApiEmailMsgModel>> getByNullSender() async {
+    final List<Map<String, Object?>> rows =
+        await _select(where: 'sender is NULL');
+    if (rows.isEmpty) return List.empty();
+    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+  }
 }

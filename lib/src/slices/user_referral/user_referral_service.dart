@@ -6,13 +6,13 @@
 import 'package:flutter/widgets.dart';
 
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
 import '../api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
 import '../api_signup/api_signup_service.dart';
 import '../login_flow/login_flow_service.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/user_referral_model.dart';
 import 'user_referral_controller.dart';
 import 'user_referral_presenter.dart';
@@ -67,7 +67,7 @@ class UserReferralService extends ChangeNotifier {
       String address = loginFlowService.model.user!.user!.address!;
       HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
           await apiBlockchainService.referCode(address);
-      if (HelperApiUtils.isOk(rsp.code)) {
+      if (TikiHttpClient.isOk(rsp.code)) {
         ApiBlockchainModelAddressRspCode data = rsp.data;
         code = data.code ?? '';
         await apiAppDataService.save(ApiAppDataKey.userReferCode, code);

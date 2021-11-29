@@ -14,6 +14,7 @@ import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_email.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'api_google_service_email.dart';
 import 'repository/api_google_repository_info.dart';
 
@@ -25,10 +26,12 @@ class ApiGoogleService
 
   ApiGoogleService(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService})
+      required ApiAppDataService apiAppDataService,
+      required TikiHttpClient tikiHttpClient})
       : this._apiAuthService = apiAuthService,
         this._apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
-        this._apiGoogleServiceEmail = ApiGoogleServiceEmail();
+        this._apiGoogleServiceEmail =
+            ApiGoogleServiceEmail(tikiHttpClient: tikiHttpClient);
 
   @override
   DataFetchInterfaceEmail? get email => _apiGoogleServiceEmail;

@@ -17,13 +17,36 @@ import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_email.dart';
 import '../data_fetch/model/data_fetch_model_page.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/api_google_model_email.dart';
 
-class ApiGoogleServiceEmail implements DataFetchInterfaceEmail {
+class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
   final ApiGoogleModelEmail model;
+  final TikiHttpClient _tikiHttpClient;
   final _log = Logger('ApiGoogleServiceEmail');
 
-  ApiGoogleServiceEmail() : this.model = ApiGoogleModelEmail();
+  ApiGoogleServiceEmail({required TikiHttpClient tikiHttpClient})
+      : this._tikiHttpClient = tikiHttpClient,
+        this.model = ApiGoogleModelEmail();
+
+  @override
+  Future<void> fetchInbox(ApiOAuthModelAccount account,
+      {DateTime? since,
+      required Future<void>? Function(List<ApiEmailMsgModel> messages) onResult,
+      required Future<void>? Function(ApiOAuthModelAccount account)
+          onFinish}) async {
+    // TODO: implement fetchMessage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> fetchMessage(ApiOAuthModelAccount account,
+      {required ApiEmailMsgModel message,
+      required Future<void>? Function(ApiEmailMsgModel message)
+          onResult}) async {
+    // TODO: implement fetchMessage
+    throw UnimplementedError();
+  }
 
   @override
   List<String> get labels => this.model.categories;

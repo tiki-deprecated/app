@@ -1,27 +1,28 @@
-import 'model/tiki_request_type.dart';
-import 'package:logging/logging.dart';
-
-import 'package:http/http.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'dart:collection';
 
+import 'package:http/http.dart';
+import 'package:logging/logging.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
 import 'model/tiki_http_request.dart';
+import 'model/tiki_request_type.dart';
 
 /// A http client with a queue to handle simultaneous requests.
-class TikiHttpClient{
+class TikiHttpClient {
   Logger _log = Logger("tikiHttpClient");
   int _queueLimit = 100;
   int _activeRequests = 0;
   ListQueue<TikiHttpRequest> _queue = ListQueue<TikiHttpRequest>();
 
   get activeRequests => _activeRequests;
+
   get queuedRequests => _queue.length;
 
   /// Add a [TikiHttpRequest] to the queue
   Future<void> request(TikiHttpRequest request) async {
     if (_activeRequests < _queueLimit) {
       await _dispatchRequest(request);
-    }else{
+    } else {
       _queue.add(request);
     }
   }
@@ -33,17 +34,15 @@ class TikiHttpClient{
       _activeRequests++;
       String type = tikiRequest.type.value!;
       Uri uri = tikiRequest.uri;
-      Request baseRequest = Request(
-          type,
-          uri
-      );
-      if (tikiRequest.headers != null) baseRequest.headers.addAll(tikiRequest.headers!);
+      Request baseRequest = Request(type, uri);
+      if (tikiRequest.headers != null)
+        baseRequest.headers.addAll(tikiRequest.headers!);
       if (tikiRequest.type != TikiRequestType.GET && tikiRequest.body != null) {
         baseRequest.body = tikiRequest.body!;
       }
       tikiRequest.body = tikiRequest.body;
-      StreamedResponse streamedResponse = await client.send(baseRequest)
-          .onError((error, stackTrace) {
+      StreamedResponse streamedResponse =
+          await client.send(baseRequest).onError((error, stackTrace) {
         String uriStr = tikiRequest.uri.toString();
         String type = tikiRequest.type.value!;
         throw error ?? "$uriStr $type request - client send error";
@@ -53,7 +52,7 @@ class TikiHttpClient{
     } catch (error) {
       _log.warning(error);
       tikiRequest.onError(error);
-    }finally{
+    } finally {
       client.close();
       _activeRequests--;
       _next();
@@ -62,7 +61,7 @@ class TikiHttpClient{
 
   /// Remove next [TikiHttpRequest] from the queue and run.
   _next() {
-    if (_activeRequests < _queueLimit && _queue.isNotEmpty){
+    if (_activeRequests < _queueLimit && _queue.isNotEmpty) {
       TikiHttpRequest request = _queue.removeFirst();
       _dispatchRequest(request);
     }

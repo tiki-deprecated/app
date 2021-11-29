@@ -51,4 +51,18 @@ class ApiEmailMsgService {
       await _repository.delete(message);
     }
   }
+
+  Future<void> saveList(List<ApiEmailMsgModel> messages) async {
+    for (int i = 0; i < messages.length; i++) {
+      ApiEmailMsgModel message = messages[i];
+      await this.upsert(message);
+    }
+  }
+
+  Future<void> delete(ApiEmailMsgModel message) async {
+    await _repository.delete(message);
+  }
+
+  Future<List<ApiEmailMsgModel>> getUnfetchedMessages() async =>
+      await _repository.getByNullSender();
 }

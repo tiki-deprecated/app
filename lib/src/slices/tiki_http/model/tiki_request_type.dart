@@ -1,27 +1,20 @@
-enum TikiRequestType{
-  GET,
-  POST,
-  PUT,
-  DELETE,
-  HEAD
-}
+enum TikiRequestType { GET, POST, PUT, DELETE, HEAD }
 
-extension TikiRequestTypeExt on TikiRequestType{
+extension TikiRequestTypeExt on TikiRequestType {
   String? get value {
     switch (this) {
-      case TikiRequestType.GET :
+      case TikiRequestType.GET:
         return "GET";
-      case TikiRequestType.POST :
+      case TikiRequestType.POST:
         return "POST";
-      case TikiRequestType.PUT :
+      case TikiRequestType.PUT:
         return "PUT";
-      case TikiRequestType.DELETE :
+      case TikiRequestType.DELETE:
         return "DELETE";
-      case TikiRequestType.HEAD :
+      case TikiRequestType.HEAD:
         return "HEAD";
-      default :
+      default:
         return null;
     }
   }
 }
-
