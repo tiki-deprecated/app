@@ -7,10 +7,10 @@ import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../../utils/api/helper_api_auth.dart';
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../api_company/repository/api_company_repository_local.dart';
 import '../api_knowledge/api_knowledge_service.dart';
 import '../api_knowledge/model/company/api_knowledge_model_company.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/api_company_model_local.dart';
 
 class ApiCompanyService {
@@ -31,7 +31,7 @@ class ApiCompanyService {
       if (local == null) {
         HelperApiRsp<ApiKnowledgeModelCompany> indexRsp =
             await _apiKnowledgeService.getCompany(domain);
-        if (HelperApiUtils.is2xx(indexRsp.code))
+        if (TikiHttpClient.is2xx(indexRsp.code))
           return _repositoryLocal.insert(ApiCompanyModelLocal(
             domain: domain,
             logo: indexRsp.data.about?.logo,
@@ -45,7 +45,7 @@ class ApiCompanyService {
               .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
         HelperApiRsp<ApiKnowledgeModelCompany> indexRsp =
             await _apiKnowledgeService.getCompany(domain);
-        if (HelperApiUtils.is2xx(indexRsp.code))
+        if (TikiHttpClient.is2xx(indexRsp.code))
           return _repositoryLocal.update(ApiCompanyModelLocal(
               companyId: local.companyId,
               domain: domain,

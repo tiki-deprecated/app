@@ -7,8 +7,8 @@ import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../api_knowledge/api_knowledge_service.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/data_push_model.dart';
 import 'repository/data_push_repository.dart';
 
@@ -32,7 +32,7 @@ class DataPushService {
           await _repository.getAll(limit: _pushOn);
       HelperApiRsp rsp = await _apiKnowledgeService
           .addEdges(edgesToPush.map((e) => e.toEdge()).toList());
-      if (HelperApiUtils.is2xx(rsp.code)) {
+      if (TikiHttpClient.is2xx(rsp.code)) {
         List<int> ids = edgesToPush
             .where((e) => e.queueId != null)
             .map((e) => e.queueId!)

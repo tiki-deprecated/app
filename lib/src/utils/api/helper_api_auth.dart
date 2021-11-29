@@ -5,8 +5,8 @@
 
 import '../../slices/api_bouncer/api_bouncer_service.dart';
 import '../../slices/login_flow/login_flow_service.dart';
+import '../../slices/tiki_http/tiki_http_client.dart';
 import 'helper_api_rsp.dart';
-import 'helper_api_utils.dart';
 
 class HelperApiAuth {
   final LoginFlowService loginFlowService;
@@ -17,7 +17,7 @@ class HelperApiAuth {
   Future<HelperApiRsp<T>> proxy<T>(
       Future<HelperApiRsp<T>> Function() request) async {
     HelperApiRsp<T> rsp = await request();
-    if (HelperApiUtils.isUnauthorized(rsp.code)) {
+    if (TikiHttpClient.isUnauthorized(rsp.code)) {
       await loginFlowService.refreshAuth();
       rsp = await request();
     }

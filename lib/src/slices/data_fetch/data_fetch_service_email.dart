@@ -90,17 +90,17 @@ revolution today.<br />
 
     DateTime? afterEpoch = await _getLastFetchDatetime(account);
 
-    if(afterEpoch == null ||
-        DateTime.now().subtract(Duration(days: 1)).isAfter(afterEpoch)){
-        interfaceEmail.fetchInbox(
-            account,
-            since: afterEpoch,
-            onResult: _saveMessageIds,
-            onFinish: _endFetchMessageIds);
+    if (afterEpoch == null ||
+        DateTime.now().subtract(Duration(days: 1)).isAfter(afterEpoch)) {
+      interfaceEmail.fetchInbox(account,
+          since: afterEpoch,
+          onResult: _saveMessageIds,
+          onFinish: _endFetchMessageIds);
     }
   }
 
-  Future<void> fetchMessages(ApiOAuthModelAccount account, {bool newAccount = false}) async {
+  Future<void> fetchMessages(ApiOAuthModelAccount account,
+      {bool newAccount = false}) async {
     _log.fine('Fetch messages for ' +
         (account.email ?? '') +
         ' started on: ' +
@@ -109,12 +109,12 @@ revolution today.<br />
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null || !await _isConnected(account)) return;
 
-    List<ApiEmailMsgModel> messages = await _apiEmailMsgService.getUnfetchedMessages();
+    List<ApiEmailMsgModel> messages =
+        await _apiEmailMsgService.getUnfetchedMessages();
     interfaceEmail.fetchMessages(account,
-      messages: messages,
-      onResult: _saveMessageData,
-      onFinish: _endFetchMessages
-      );
+        messages: messages,
+        onResult: _saveMessageData,
+        onFinish: _endFetchMessages);
   }
 
   Future<void> deleteApiAppData(ApiOAuthModelAccount account) async {
@@ -128,40 +128,27 @@ revolution today.<br />
     });
   }
 
-  Future<void> _saveMessageIds(List<ApiEmailMsgModel> messages) async{
+  Future<void> _saveMessageIds(List<ApiEmailMsgModel> messages) async {
     _log.fine('Saving ' + messages.length.toString() + " message ids");
     _apiEmailMsgService.saveList(messages);
   }
 
-  Future<void> _saveMessageData(ApiEmailMsgModel message) async{
-    // remove messages that are not from a list?
-    if (message.sender?.email != null ||
-        message.sender?.unsubscribeMailTo != null) {
+  Future<void> _saveMessageData(ApiEmailMsgModel message) async {
+    if (message.sender?.email == null ||
+        message.sender?.unsubscribeMailTo == null) {
       _apiEmailMsgService.delete(message);
       return;
     }
-    ApiEmailSenderModel? sender =
-      await _apiEmailSenderService.getByEmail(message.sender!.email!);
-    if (sender != null) {
-      // update sender data?
-      _log.fine("Known sender ${sender.name}");
-      if(sender.emailSince!.isAfter(message.receivedDate ?? DateTime.now())){
-        sender.emailSince = message.receivedDate ?? DateTime.now();
-      }
-      message.sender = sender;
-    } else {
-      _log.fine("New sender ${message.sender!.email}");
-      sender = message.sender!;
-      sender.emailSince = message.receivedDate ?? DateTime.now();
-      message.sender = await _saveSender(sender);
-    }
+    ApiEmailSenderModel sender =
+        (await _apiEmailSenderService.getByEmail(message.sender!.email!)) ??
+            message.sender!;
+    message.sender = await _saveSender(sender);
     await _apiEmailMsgService.upsert(message);
-    await _dataPushService.write(DataPushConvert.message(message));
-    _log.fine('Sender upsert: ' + (sender.company?.domain ?? ''));
+    //await _dataPushService.write(DataPushConvert.message(message));
     notifyListeners();
   }
 
-  Future<void> _endFetchMessages(ApiOAuthModelAccount account) async{
+  Future<void> _endFetchMessages(ApiOAuthModelAccount account) async {
     await _apiAppDataService.save(ApiAppDataKey.emailIndexEpoch,
         DateTime.now().millisecondsSinceEpoch.toString());
     _log.fine('Fetch message for ' +
@@ -251,9 +238,9 @@ revolution today.<br />
     if (interfaceEmail == null || !await _isConnected(account)) return;
 
     ApiAppDataModel? appDataIndexEpoch =
-    await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch);
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch);
     int? indexEpoch =
-    appDataIndexEpoch != null ? int.parse(appDataIndexEpoch.value) : null;
+        appDataIndexEpoch != null ? int.parse(appDataIndexEpoch.value) : null;
 
     if (indexEpoch == null ||
         DateTime.now()
@@ -316,10 +303,10 @@ revolution today.<br />
   @Deprecated('Use async index flow. To be removed in 0.2.9.')
   Future<List<String>> _pageSender(
       {required DataFetchInterfaceEmail interfaceEmail,
-        required ApiOAuthModelAccount account,
-        required String email,
-        required List<String> messages,
-        String? page}) async {
+      required ApiOAuthModelAccount account,
+      required String email,
+      required List<String> messages,
+      String? page}) async {
     _log.fine("Page sender $email");
     DataFetchModelPage<String> res = await _getList(
         account: account,
@@ -343,13 +330,13 @@ revolution today.<br />
   @Deprecated('Use async index flow. To be removed in 0.2.9.')
   Future<DataFetchModelPage<String>> _getList(
       {required ApiOAuthModelAccount account,
-        required DataFetchInterfaceEmail interfaceEmail,
-        String? from,
-        int? afterEpoch,
-        int? maxResults,
-        String? label,
-        String? page,
-        int? retries = 3}) async {
+      required DataFetchInterfaceEmail interfaceEmail,
+      String? from,
+      int? afterEpoch,
+      int? maxResults,
+      String? label,
+      String? page,
+      int? retries = 3}) async {
     try {
       return await interfaceEmail.getList(account,
           from: from,
@@ -379,17 +366,16 @@ revolution today.<br />
     }
   }
 
-
   @Deprecated('Use asyncIndex flow. To be removed in 0.2.9.')
   Future<void> _indexLabel(
       {required DataFetchInterfaceEmail interfaceEmail,
-        required ApiOAuthModelAccount account,
-        int? indexEpoch}) async {
+      required ApiOAuthModelAccount account,
+      int? indexEpoch}) async {
     ApiAppDataModel? appDataIndexLabel =
-    await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
+        await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexLabel);
     String? indexLabel = appDataIndexLabel?.value;
     int start =
-    indexLabel != null ? interfaceEmail.labels.indexOf(indexLabel) : 0;
+        indexLabel != null ? interfaceEmail.labels.indexOf(indexLabel) : 0;
     for (int i = start; i < interfaceEmail.labels.length; i++) {
       await _pageList(
           interfaceEmail: interfaceEmail,
@@ -404,13 +390,13 @@ revolution today.<br />
   @Deprecated('Use asyncIndex flow. To be removed in 0.2.9.')
   Future<void> _pageList(
       {required DataFetchInterfaceEmail interfaceEmail,
-        required ApiOAuthModelAccount account,
-        String? label,
-        String? page,
-        int? indexEpoch}) async {
+      required ApiOAuthModelAccount account,
+      String? label,
+      String? page,
+      int? indexEpoch}) async {
     if (page == null) {
       ApiAppDataModel? appDataIndexPage =
-      await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
+          await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexPage);
       page = appDataIndexPage?.value;
     }
     _log.fine('${account.email} List page $page after $indexEpoch');
@@ -423,11 +409,11 @@ revolution today.<br />
         maxResults: 5);
     if (res.data != null) {
       List<String> known =
-      (await _apiEmailMsgService.getByExtMessageIds(res.data!))
-          .map((message) => message.extMessageId!)
-          .toList();
+          (await _apiEmailMsgService.getByExtMessageIds(res.data!))
+              .map((message) => message.extMessageId!)
+              .toList();
       List<String> unknown =
-      res.data!.where((message) => !known.contains(message)).toList();
+          res.data!.where((message) => !known.contains(message)).toList();
       _log.fine("${known.length} known messages");
       await _processMessages(interfaceEmail, account, unknown);
       _log.fine("${unknown.length} unknown messages");
@@ -456,7 +442,7 @@ revolution today.<br />
       if (message?.sender?.email != null &&
           message?.sender?.unsubscribeMailTo != null) {
         ApiEmailSenderModel? sender =
-        await _apiEmailSenderService.getByEmail(message!.sender!.email!);
+            await _apiEmailSenderService.getByEmail(message!.sender!.email!);
         if (sender != null) {
           _log.fine("Known sender ${sender.name}");
           message.sender = await _saveSender(sender);
@@ -469,11 +455,11 @@ revolution today.<br />
           Set<ApiEmailMsgModel> senderMessages = await _indexSender(
               interfaceEmail, account, message.sender!.email!);
           Set<String> senderMessageIds =
-          senderMessages.map((message) => message.extMessageId!).toSet();
+              senderMessages.map((message) => message.extMessageId!).toSet();
           List<String> newMessages = messages
               .where((message) =>
-          !senderMessageIds.contains(message) &&
-              !processed.contains(message))
+                  !senderMessageIds.contains(message) &&
+                  !processed.contains(message))
               .toList();
           return _processMessages(interfaceEmail, account, newMessages);
         }
@@ -484,8 +470,9 @@ revolution today.<br />
   Future<DateTime?> _getLastFetchDatetime(ApiOAuthModelAccount account) async {
     ApiAppDataModel? appDataIndexEpoch =
         await _apiAppDataService.getByKey(ApiAppDataKey.emailIndexEpoch);
-    return appDataIndexEpoch == null ? null :
-      DateTime.fromMillisecondsSinceEpoch(
-        int.parse(appDataIndexEpoch.value));
+    return appDataIndexEpoch == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(
+            int.parse(appDataIndexEpoch.value));
   }
 }

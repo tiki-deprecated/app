@@ -52,18 +52,17 @@ class ApiEmailMsgService {
     }
   }
 
-  // TODO saveList
   Future<void> saveList(List<ApiEmailMsgModel> messages) async {
-    throw UnimplementedError();
+    for (int i = 0; i < messages.length; i++) {
+      ApiEmailMsgModel message = messages[i];
+      await this.upsert(message);
+    }
   }
 
-  // TODO delete
   Future<void> delete(ApiEmailMsgModel message) async {
-    throw UnimplementedError();
+    await _repository.delete(message);
   }
 
-  // TODO getUnfetchedMessages
-  Future<List<ApiEmailMsgModel>> getUnfetchedMessages() async {
-    throw UnimplementedError();
-  }
+  Future<List<ApiEmailMsgModel>> getUnfetchedMessages() async =>
+      await _repository.getByNullSender();
 }

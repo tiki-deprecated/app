@@ -29,14 +29,15 @@ Future<void> main() async {
 }
 
 Future<void> init() async {
+  TikiHttpClient tikiHttpClient = TikiHttpClient();
   ApiUserService apiUserService = ApiUserService(FlutterSecureStorage());
   ApiBouncerService apiBouncerService = ApiBouncerService();
-  LoginFlowService loginFlowService = LoginFlowService();
+  LoginFlowService loginFlowService =
+      LoginFlowService(tikiHttpClient: tikiHttpClient);
   HelperApiAuth helperApiAuth =
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
       ApiBlockchainService(helperApiAuth);
-  TikiHttpClient tikiHttpClient = TikiHttpClient();
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
@@ -58,6 +59,6 @@ Future<void> init() async {
             Provider<ApiBouncerService>.value(value: apiBouncerService),
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
-            Provider<TikiHttpClient>.value(value:tikiHttpClient)
+            Provider<TikiHttpClient>.value(value: tikiHttpClient)
           ], child: App(loginFlowService))));
 }

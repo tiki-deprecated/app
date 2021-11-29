@@ -12,7 +12,6 @@ import 'package:sqflite_sqlcipher/sqlite_api.dart';
 import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_auth.dart';
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../../utils/database_service.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
@@ -41,6 +40,7 @@ import '../keys_save_screen/keys_save_screen_service.dart';
 import '../login_flow/login_flow_delegate.dart';
 import '../login_screen_email/login_screen_email_service.dart';
 import '../login_screen_inbox/login_screen_inbox_service.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/login_flow_model.dart';
 import 'model/login_flow_model_state.dart';
 
@@ -51,10 +51,12 @@ class LoginFlowService extends ChangeNotifier {
   late final ApiBouncerService _apiBouncerService;
   late final ApiBlockchainService _apiBlockchainService;
   late final HelperApiAuth _helperApiAuth;
+  late final TikiHttpClient tikiHttpClient;
   List<void Function()> _logoutCallbacks = [];
   List<SingleChildWidget> _providers = [];
 
-  LoginFlowService() : this.model = LoginFlowModel() {
+  LoginFlowService({required this.tikiHttpClient})
+      : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
     _initDynamicLinks();
   }
@@ -142,7 +144,7 @@ class LoginFlowService extends ChangeNotifier {
     HelperApiRsp<ApiBouncerModelOtpRsp> rsp =
         await _apiBouncerService.otpRequest(this.model.user!.current!.email!);
 
-    if (HelperApiUtils.isOk(rsp.code)) {
+    if (TikiHttpClient.isOk(rsp.code)) {
       ApiBouncerModelOtpRsp data = rsp.data;
       _apiUserService.setOtp(ApiUserModelOtp(
           email: this.model.user!.current!.email!, salt: data.salt));
@@ -158,7 +160,7 @@ class LoginFlowService extends ChangeNotifier {
     if (this.model.user!.user!.isLoggedIn == true) return true;
     HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
         await _apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
-    if (HelperApiUtils.isOk(rsp.code)) {
+    if (TikiHttpClient.isOk(rsp.code)) {
       ApiBouncerModelJwtRsp data = rsp.data;
       await _apiUserService.setToken(
           this.model.user!.current!.email!,
@@ -211,7 +213,7 @@ class LoginFlowService extends ChangeNotifier {
     if (model.user?.token != null && model.user?.token?.refresh != null) {
       HelperApiRsp<ApiBouncerModelJwtRsp> refreshRsp =
           await _apiBouncerService.refreshGrant(model.user!.token!.refresh!);
-      if (HelperApiUtils.is2xx(refreshRsp.code)) {
+      if (TikiHttpClient.is2xx(refreshRsp.code)) {
         ApiBouncerModelJwtRsp jwt = refreshRsp.data;
         await _apiUserService.setToken(
             model.user!.user!.email!,
@@ -256,7 +258,9 @@ class LoginFlowService extends ChangeNotifier {
         helperApiAuth: _helperApiAuth,
         apiKnowledgeService: apiKnowledgeService);
     ApiOAuthService apiAuthService = ApiOAuthService(
-        database: database, apiAppDataService: apiAppDataService);
+        tikiHttpClient: tikiHttpClient,
+        database: database,
+        apiAppDataService: apiAppDataService);
 
     DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
@@ -317,7 +321,7 @@ class LoginFlowService extends ChangeNotifier {
         .issue(ApiBlockchainModelAddressReq(
             this.model.user?.keys!.dataPublicKey,
             this.model.user?.keys!.signPublicKey));
-    if (HelperApiUtils.isOk(rsp.code)) {
+    if (TikiHttpClient.isOk(rsp.code)) {
       ApiBlockchainModelAddressRsp data = rsp.data;
       if (data.address != this.model.user!.keys!.address) {
         ConfigSentry.message("Failed to issue Blockchain Address.Skipping",

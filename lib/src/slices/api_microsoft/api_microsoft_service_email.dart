@@ -23,23 +23,40 @@ import '../data_fetch/data_fetch_interface_email.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
 import '../data_fetch/model/data_fetch_model_page.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'model/api_google_model_email.dart';
 
-class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
+class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
   final ApiMicrosoftModelEmail model;
   final _log = Logger('ApiMicrosoftServiceEmail');
-
+  final TikiHttpClient tikiHttpClient;
   final ApiOAuthService apiOAuthService;
 
   String _messagesEndpoint = "https://graph.microsoft.com/v1.0/me/messages";
 
   String _sendEmailEndpoint = "https://graph.microsoft.com/v1.0/me/sendMail";
 
-  ApiMicrosoftServiceEmail(this.apiOAuthService)
+  ApiMicrosoftServiceEmail(this.apiOAuthService, this.tikiHttpClient)
       : this.model = ApiMicrosoftModelEmail();
 
   @override
   List<String> get labels => this.model.categories;
+  @override
+  Future<void> fetchInbox(ApiOAuthModelAccount account,
+      {DateTime? since,
+      required Future<void> Function(List<ApiEmailMsgModel> messages) onResult,
+      required Future<void> Function(ApiOAuthModelAccount account) onFinish}) {
+    // TODO: implement fetchInbox
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> fetchMessage(ApiOAuthModelAccount account,
+      {required ApiEmailMsgModel message,
+      required Future<void> Function(ApiEmailMsgModel message) onResult}) {
+    // TODO: implement fetchMessage
+    throw UnimplementedError();
+  }
 
   @override
   Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
@@ -65,7 +82,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
         .timeout(Duration(seconds: 10),
             onTimeout: () => throw new http.ClientException(
                 'ApiMicrosoftServiceEmail getList timed out'));
-    if (HelperApiUtils.is2xx(rsp.statusCode)) {
+    if (TikiHttpClient.is2xx(rsp.statusCode)) {
       Map msgBody = json.decode(rsp.body);
       List messageList = msgBody['value'];
       _log.finest('Got ' + (messageList.length.toString()) + ' messages');
@@ -148,7 +165,7 @@ class ApiMicrosoftServiceEmail implements DataFetchInterfaceEmail {
         .timeout(Duration(seconds: 10),
             onTimeout: () => throw new http.ClientException(
                 'ApiMicrosoftServiceEmail sendEmail timed out'));
-    if (HelperApiUtils.is2xx(rsp.statusCode)) {
+    if (TikiHttpClient.is2xx(rsp.statusCode)) {
       _log.finest('unsubscribe mail sent to ' + to);
       return true;
     }

@@ -14,6 +14,7 @@ import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_email.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
+import '../tiki_http/tiki_http_client.dart';
 import 'api_microsoft_service_email.dart';
 import 'repository/api_google_repository_info.dart';
 
@@ -25,11 +26,12 @@ class ApiMicrosoftService
 
   ApiMicrosoftService(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService})
+      required ApiAppDataService apiAppDataService,
+      required TikiHttpClient tikiHttpClient})
       : this._apiAuthService = apiAuthService,
         this._apiMicrosoftRepositoryInfo = ApiMicrosoftRepositoryInfo(),
         this._apiMicrosoftServiceEmail =
-            ApiMicrosoftServiceEmail(apiAuthService);
+            ApiMicrosoftServiceEmail(apiAuthService, tikiHttpClient);
 
   @override
   DataFetchInterfaceEmail? get email => _apiMicrosoftServiceEmail;
