@@ -36,14 +36,19 @@ class DataFetchService extends ChangeNotifier {
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
-        apiKnowledgeService: apiKnowledgeService,
         dataPushService: _dataPushService,
         notifyListeners: notifyListeners);
   }
 
+  @Deprecated('Use asyncIndex instead.')
   Future<void> index(ApiOAuthModelAccount account) async {
     _log.fine('DataFetchService index');
     await email.index(account);
     notifyListeners();
+  }
+
+  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+    _log.fine('DataFetchService async index');
+    email.asyncIndex(account);
   }
 }

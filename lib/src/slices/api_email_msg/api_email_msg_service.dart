@@ -51,4 +51,19 @@ class ApiEmailMsgService {
       await _repository.delete(message);
     }
   }
+
+  // TODO saveList
+  Future<void> saveList(List<ApiEmailMsgModel> messages) async {
+    throw UnimplementedError();
+  }
+
+  // TODO delete
+  Future<void> delete(ApiEmailMsgModel message) async {
+    throw UnimplementedError();
+  }
+
+  // TODO getUnfetchedMessages
+  Future<List<ApiEmailMsgModel>> getUnfetchedMessages() async {
+    throw UnimplementedError();
+  }
 }

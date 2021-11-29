@@ -16,6 +16,7 @@ import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/api_user/api_user_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
+import 'src/slices/tiki_http/tiki_http_client.dart';
 import 'src/utils/api/helper_api_auth.dart';
 
 Future<void> main() async {
@@ -35,6 +36,7 @@ Future<void> init() async {
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
       ApiBlockchainService(helperApiAuth);
+  TikiHttpClient tikiHttpClient = TikiHttpClient();
 
   await loginFlowService.initialize(
       apiUserService: apiUserService,
@@ -56,5 +58,6 @@ Future<void> init() async {
             Provider<ApiBouncerService>.value(value: apiBouncerService),
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+            Provider<TikiHttpClient>.value(value:tikiHttpClient)
           ], child: App(loginFlowService))));
 }
