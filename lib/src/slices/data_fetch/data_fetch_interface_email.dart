@@ -10,13 +10,13 @@ import 'model/data_fetch_model_page.dart';
 abstract class DataFetchInterfaceEmail {
   Future<void> fetchInbox(ApiOAuthModelAccount account,
       {DateTime? since,
-      required Future<void> Function(List<ApiEmailMsgModel> messages) onResult,
-      required Future<void> Function(ApiOAuthModelAccount account) onFinish});
+      required Future Function(List messages) onResult,
+      required Future Function(ApiOAuthModelAccount account) onFinish});
 
   Future<void> fetchMessages(ApiOAuthModelAccount account,
       {required List<ApiEmailMsgModel> messages,
-      required Future<void> Function(ApiEmailMsgModel message) onResult,
-      required Future<void> Function(ApiOAuthModelAccount account)
+      required Future Function(ApiEmailMsgModel message) onResult,
+      required Future Function(ApiOAuthModelAccount account)
           onFinish}) async {
     await Future.wait(messages.map((message) =>
         fetchMessage(account, message: message, onResult: onResult)));
@@ -25,7 +25,7 @@ abstract class DataFetchInterfaceEmail {
 
   Future<void> fetchMessage(ApiOAuthModelAccount account,
       {required ApiEmailMsgModel message,
-      required Future<void> Function(ApiEmailMsgModel message) onResult});
+      required Future Function(ApiEmailMsgModel message) onResult});
 
   Future<ApiEmailMsgModel?> getMessage(
       ApiOAuthModelAccount account, String messageId);

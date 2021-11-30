@@ -7,6 +7,8 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/tiki_http/model/tiki_http_request.dart';
+import 'package:app/src/slices/tiki_http/model/tiki_request_type.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -42,12 +44,39 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
   @override
   List<String> get labels => this.model.categories;
   @override
-  Future<void> fetchInbox(ApiOAuthModelAccount account,
-      {DateTime? since,
-      required Future<void> Function(List<ApiEmailMsgModel> messages) onResult,
-      required Future<void> Function(ApiOAuthModelAccount account) onFinish}) {
-    // TODO: implement fetchInbox
-    throw UnimplementedError();
+  Future<void> fetchInbox(ApiOAuthModelAccount account, {
+      DateTime? since,
+      String? page,
+      required Future Function(List messages) onResult,
+      required Future Function(ApiOAuthModelAccount account) onFinish}) async {
+    // check not completed status, with uncompleted emails
+    int pageNum = int.parse(page ?? "0");
+    List<Future<void>> requests = List<Future<void>>.empty();
+    for(int i = 0; i < 100; i++) {
+      String query = _buildQuery(
+          page: pageNum,
+          maxResults: 500);
+      Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
+      TikiHttpRequest tikiHttpRequest = TikiHttpRequest(uri: uri, type: TikiRequestType.GET);
+      tikiHttpRequest.onSuccess((rsp) {
+        if (TikiHttpClient.is2xx(rsp.statusCode)) {
+          Map msgBody = json.decode(rsp.body);
+          List messageList = msgBody['value'];
+          _log.finest('Got ' + (messageList.length.toString()) + ' messages');
+          List messages = messageList
+              .where((message) => message['id'] != null)
+              .map((message) => ApiEmailMsgModel(extMessageId: message['id']))
+              .toList();
+          onResult(messages);
+          if (i == 99 && msgBody['@odata.nextLink'] != null){
+            fetchInbox(account, onResult: onResult, onFinish: onFinish);
+          }else{
+            onFinish(account);
+          }
+        }
+      });
+      tikiHttpClient.request(tikiHttpRequest);
+    }
   }
 
   @override
