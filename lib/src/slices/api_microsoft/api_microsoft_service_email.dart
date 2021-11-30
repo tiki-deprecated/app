@@ -7,8 +7,9 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/tiki_http/model/tiki_http_request.dart';
-import 'package:app/src/slices/tiki_http/model/tiki_request_type.dart';
+import '../api_app_data/model/api_app_data_model.dart';
+import '../tiki_http/model/tiki_http_request.dart';
+import '../tiki_http/model/tiki_request_type.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -42,39 +43,37 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       : this.model = ApiMicrosoftModelEmail();
 
   @override
-  List<String> get labels => this.model.categories;
-  @override
   Future<void> fetchInbox(ApiOAuthModelAccount account, {
       DateTime? since,
       String? page,
-      required Future Function(List messages) onResult,
+      required Future Function(DataFetchModelPage data) onResult,
       required Future Function(ApiOAuthModelAccount account) onFinish}) async {
-    // check not completed status, with uncompleted emails
     int pageNum = int.parse(page ?? "0");
-    List<Future<void>> requests = List<Future<void>>.empty();
     for(int i = 0; i < 100; i++) {
+      int currentPage = pageNum + i;
       String query = _buildQuery(
-          page: pageNum,
+          page: currentPage,
           maxResults: 500);
       Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
       TikiHttpRequest tikiHttpRequest = TikiHttpRequest(uri: uri, type: TikiRequestType.GET);
-      tikiHttpRequest.onSuccess((rsp) {
+      tikiHttpRequest.onSuccess = (rsp) {
         if (TikiHttpClient.is2xx(rsp.statusCode)) {
           Map msgBody = json.decode(rsp.body);
           List messageList = msgBody['value'];
           _log.finest('Got ' + (messageList.length.toString()) + ' messages');
-          List messages = messageList
+          List<ApiEmailMsgModel> messages = messageList
               .where((message) => message['id'] != null)
               .map((message) => ApiEmailMsgModel(extMessageId: message['id']))
               .toList();
-          onResult(messages);
-          if (i == 99 && msgBody['@odata.nextLink'] != null){
-            fetchInbox(account, onResult: onResult, onFinish: onFinish);
-          }else{
-            onFinish(account);
-          }
+          int? next = msgBody['@odata.nextLink'] != null
+              ? currentPage + 1
+              : null;
+          DataFetchModelPage data = DataFetchModelPage(
+              data: messages, next: next.toString());
+          onResult(data);
         }
-      });
+        // TODO handle http errors
+      };
       tikiHttpClient.request(tikiHttpRequest);
     }
   }
@@ -85,44 +84,6 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       required Future<void> Function(ApiEmailMsgModel message) onResult}) {
     // TODO: implement fetchMessage
     throw UnimplementedError();
-  }
-
-  @override
-  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
-      {String? label,
-      String? from,
-      int? afterEpoch,
-      int? maxResults = 10,
-      String? page = "0"}) async {
-    int pageNum = int.parse(page ?? "0");
-    List<String> messages = List.empty();
-    String query = _buildQuery(
-        afterEpoch: afterEpoch,
-        from: from,
-        page: pageNum,
-        maxResults: maxResults!);
-    Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
-    Response rsp = await this
-        .apiOAuthService
-        .proxy(
-            () => ConfigSentry.http.get(uri,
-                headers: HelperApiHeaders(auth: account.accessToken).header),
-            account)
-        .timeout(Duration(seconds: 10),
-            onTimeout: () => throw new http.ClientException(
-                'ApiMicrosoftServiceEmail getList timed out'));
-    if (TikiHttpClient.is2xx(rsp.statusCode)) {
-      Map msgBody = json.decode(rsp.body);
-      List messageList = msgBody['value'];
-      _log.finest('Got ' + (messageList.length.toString()) + ' messages');
-      messages = messageList
-          .where((message) => message['id'] != null)
-          .map((message) => message['id'] as String)
-          .toList();
-      page =
-          msgBody['@odata.nextLink'] != null ? (pageNum + 1).toString() : null;
-    }
-    return DataFetchModelPage(next: page, data: messages);
   }
 
   @override

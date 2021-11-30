@@ -29,55 +29,6 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
       : this._tikiHttpClient = tikiHttpClient,
         this.model = ApiGoogleModelEmail();
 
-  @override
-  Future<void> fetchInbox(ApiOAuthModelAccount account,
-      {DateTime? since,
-      required Future<void>? Function(List<ApiEmailMsgModel> messages) onResult,
-      required Future<void>? Function(ApiOAuthModelAccount account)
-          onFinish}) async {
-    // TODO: implement fetchMessage
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> fetchMessage(ApiOAuthModelAccount account,
-      {required ApiEmailMsgModel message,
-      required Future<void>? Function(ApiEmailMsgModel message)
-          onResult}) async {
-    // TODO: implement fetchMessage
-    throw UnimplementedError();
-  }
-
-  @override
-  List<String> get labels => this.model.categories;
-
-  @override
-  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
-      {String? label,
-      String? from,
-      int? afterEpoch,
-      int? maxResults = 100,
-      String? page}) async {
-    List<String>? messages;
-    GmailApi? gmailApi = await _getGmailApi(account);
-    ListMessagesResponse? emails = await gmailApi?.users.messages
-        .list('me',
-            maxResults: maxResults,
-            includeSpamTrash: true,
-            pageToken: page,
-            q: _buildQuery(label: label, from: from, afterEpoch: afterEpoch))
-        .timeout(Duration(seconds: 10),
-            onTimeout: () => throw new http.ClientException(
-                'ApiGoogleServiceEmail getList timed out'));
-    _log.finest(
-        'Got ' + (emails?.messages?.length.toString() ?? '') + ' messages');
-    if (emails != null && emails.messages != null)
-      messages = emails.messages!
-          .where((message) => message.id != null)
-          .map((message) => message.id!)
-          .toList();
-    return DataFetchModelPage(next: emails?.nextPageToken, data: messages);
-  }
 
   @override
   Future<ApiEmailMsgModel?> getMessage(
@@ -250,5 +201,17 @@ $email
       if (categoryLabel != null)
         return categoryLabel.replaceFirst('CATEGORY_', '');
     }
+  }
+
+  @override
+  Future<void> fetchInbox(ApiOAuthModelAccount account, {DateTime? since, required Future Function(DataFetchModelPage data) onResult, required Future Function(ApiOAuthModelAccount account) onFinish}) {
+    // TODO: implement fetchInbox
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> fetchMessage(ApiOAuthModelAccount account, {required ApiEmailMsgModel message, required Future Function(ApiEmailMsgModel message) onResult}) {
+    // TODO: implement fetchMessage
+    throw UnimplementedError();
   }
 }

@@ -10,7 +10,7 @@ import 'model/data_fetch_model_page.dart';
 abstract class DataFetchInterfaceEmail {
   Future<void> fetchInbox(ApiOAuthModelAccount account,
       {DateTime? since,
-      required Future Function(List messages) onResult,
+      required Future Function(DataFetchModelPage data) onResult,
       required Future Function(ApiOAuthModelAccount account) onFinish});
 
   Future<void> fetchMessages(ApiOAuthModelAccount account,
@@ -33,14 +33,4 @@ abstract class DataFetchInterfaceEmail {
   Future<bool> send(
       ApiOAuthModelAccount account, String email, String to, String subject);
 
-  @Deprecated('Use the new asyncIndex flow. To be removed in 0.2.9')
-  List<String> get labels;
-
-  @Deprecated('Use the new asyncIndex flow. To be removed in 0.2.9')
-  Future<DataFetchModelPage<String>> getList(ApiOAuthModelAccount account,
-      {String? label,
-      String? from,
-      int? afterEpoch,
-      int? maxResults,
-      String? page});
 }

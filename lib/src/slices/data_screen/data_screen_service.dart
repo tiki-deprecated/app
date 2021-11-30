@@ -39,7 +39,7 @@ class DataScreenService extends ChangeNotifier {
     presenter = DataScreenPresenter(this);
     _apiAuthService.getAccount().then((account) {
       _model.account = account;
-      if (account != null) _dataFetchService.index(account);
+      if (account != null) _dataFetchService.asyncIndex(account);
       notifyListeners();
     });
   }
@@ -48,7 +48,7 @@ class DataScreenService extends ChangeNotifier {
     ApiOAuthModelAccount? account = await _apiAuthService.signIn(provider);
     if (account != null) {
       _model.account = account;
-      _dataFetchService.index(account);
+      _dataFetchService.asyncIndex(account);
       notifyListeners();
     }
   }
