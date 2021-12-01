@@ -114,7 +114,7 @@ class ApiOAuthService {
     Response rsp = await request();
     if (TikiHttpClient.isUnauthorized(rsp.statusCode) &&
         account.refreshToken != null) {
-      await _refreshToken(account);
+      await refreshToken(account);
       rsp = await request();
     }
     return rsp;
@@ -136,7 +136,7 @@ class ApiOAuthService {
     );
   }
 
-  Future<TokenResponse?> _refreshToken(ApiOAuthModelAccount account) async {
+  Future<TokenResponse?> refreshToken(ApiOAuthModelAccount account) async {
     try {
       ApiOAuthModelProvider? provider =
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
