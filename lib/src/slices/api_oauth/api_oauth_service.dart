@@ -140,11 +140,14 @@ class ApiOAuthService {
     try {
       ApiOAuthModelProvider? provider =
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
-      return await _appAuth.token(TokenRequest(
+      TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
           discoveryUrl: provider.discoveryUrl,
           refreshToken: account.refreshToken,
-          scopes: provider.scopes));
+          scopes: provider.scopes)))!;
+      account.accessToken = tokenResponse.accessToken;
+      account.refreshToken = tokenResponse.refreshToken;
+      _upsert(account);
     } catch (e) {
       print(e.toString());
       account.shouldReconnect = 1;
