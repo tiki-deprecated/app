@@ -82,7 +82,6 @@ class ApiOAuthService {
         _model.interfaceProviders[account.provider];
     if (provider != null) {
       Response rsp = await provider.revokeToken(account);
-      print(rsp);
     }
     await _apiAuthRepositoryAccount.delete(account);
   }
@@ -136,7 +135,7 @@ class ApiOAuthService {
     );
   }
 
-  Future<TokenResponse?> refreshToken(ApiOAuthModelAccount account) async {
+  Future<ApiOAuthModelAccount?> refreshToken(ApiOAuthModelAccount account) async {
     try {
       ApiOAuthModelProvider? provider =
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
@@ -148,6 +147,7 @@ class ApiOAuthService {
       account.accessToken = tokenResponse.accessToken;
       account.refreshToken = tokenResponse.refreshToken;
       _upsert(account);
+      return account;
     } catch (e) {
       print(e.toString());
       account.shouldReconnect = 1;

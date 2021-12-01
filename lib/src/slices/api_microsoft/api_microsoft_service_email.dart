@@ -49,33 +49,63 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       required Future Function(DataFetchModelPage data) onResult,
       required Future Function(ApiOAuthModelAccount account) onFinish}) async {
     int pageNum = int.parse(page ?? "0");
-    for(int i = 0; i < 100; i++) {
+    _log.finest('Fetch inbox ${account.username} started.');
+    bool finished = false;
+    List<TikiHttpRequest> requests = List<TikiHttpRequest>.empty(growable: true);
+    for(int i = 0; i < 10; i++) {
       int currentPage = pageNum + i;
       String query = _buildQuery(
           page: currentPage,
-          maxResults: 500);
+          maxResults: 1);
       Uri uri = Uri.parse(_messagesEndpoint + "?\$select=id&\$filter=$query");
-      TikiHttpRequest tikiHttpRequest = TikiHttpRequest(uri: uri, type: TikiRequestType.GET);
-      tikiHttpRequest.onSuccess = (rsp) {
+      TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
+          uri: uri,
+          type: TikiRequestType.GET,
+          headers: HelperApiHeaders(auth: account.accessToken).header);
+      tikiHttpRequest.onSuccess = (rsp) async {
+        _log.finest('Fetch inbox ${account.username} $currentPage onSuccess callback with ${rsp.statusCode} code.');
+        if (TikiHttpClient.isTooManyRequests(rsp.statusCode)){
+          int retry = int.parse(rsp.headers.entries.singleWhere((element) => element.key == 'retry-after').value);
+          _log.warning('Too many requests. Retry after $retry');
+          await Future.delayed(Duration(seconds: retry));
+          await tikiHttpClient.request(tikiHttpRequest);
+        }
         if (TikiHttpClient.is2xx(rsp.statusCode)) {
           Map msgBody = json.decode(rsp.body);
           List messageList = msgBody['value'];
-          _log.finest('Got ' + (messageList.length.toString()) + ' messages');
-          List<ApiEmailMsgModel> messages = messageList
-              .where((message) => message['id'] != null)
-              .map((message) => ApiEmailMsgModel(extMessageId: message['id']))
-              .toList();
-          int? next = msgBody['@odata.nextLink'] != null
-              ? currentPage + 1
-              : null;
-          DataFetchModelPage data = DataFetchModelPage(
-              data: messages, next: next.toString());
-          onResult(data);
+          if (messageList.isEmpty) {
+            finished = true;
+            _cancelAll(requests);
+          } else {
+            _log.finest('Got ' + (messageList.length.toString()) + ' messages');
+            List<ApiEmailMsgModel> messages = messageList
+                .where((message) => message['id'] != null)
+                .map((message) => ApiEmailMsgModel(extMessageId: message['id'], account: account.email))
+                .toList();
+            int? next = msgBody['@odata.nextLink'] != null
+                ? currentPage + 1
+                : null;
+            DataFetchModelPage data = DataFetchModelPage(
+                data: messages, next: next.toString());
+            onResult(data);
+          }
+        }
+        if (TikiHttpClient.isUnauthorized(rsp.statusCode)){
+          apiOAuthService.refreshToken(account);
+          tikiHttpRequest.headers = HelperApiHeaders(auth: account.accessToken).header;
+          tikiHttpClient.request(tikiHttpRequest);
         }
         // TODO handle http errors
       };
-      tikiHttpClient.request(tikiHttpRequest);
+      tikiHttpRequest.onError((error) {
+        _log.finest('Fetch inbox ${account.username} $currentPage onError callback.');
+        _log.warning(error);
+      });
+      requests.add(tikiHttpRequest);
     }
+    await Future.wait(requests.map((e) => tikiHttpClient.request(e)));
+    _log.finest('Fetch inbox ${account.username} $pageNum finished.');
+    onFinish(account);
   }
 
   @override
@@ -197,5 +227,9 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       if (recipient['emailAddress']["address"] == email) found = true;
     });
     return found;
+  }
+
+  void _cancelAll(List<TikiHttpRequest> requests) {
+    requests.forEach((req) => req.cancel());
   }
 }
