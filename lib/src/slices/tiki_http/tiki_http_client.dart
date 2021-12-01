@@ -31,24 +31,31 @@ class TikiHttpClient {
   Future<void> _dispatchRequest(TikiHttpRequest tikiRequest) async {
     final client = SentryHttpClient();
     try {
-      _activeRequests++;
-      String type = tikiRequest.type.value!;
-      Uri uri = tikiRequest.uri;
-      Request baseRequest = Request(type, uri);
-      if (tikiRequest.headers != null)
-        baseRequest.headers.addAll(tikiRequest.headers!);
-      if (tikiRequest.type != TikiRequestType.GET && tikiRequest.body != null) {
-        baseRequest.body = tikiRequest.body!;
-      }
-      tikiRequest.body = tikiRequest.body;
-      StreamedResponse streamedResponse =
-          await client.send(baseRequest).onError((error, stackTrace) {
-        String uriStr = tikiRequest.uri.toString();
+      if (tikiRequest.isCanceled) {
+        _log.warning('ignoring canceled request');
+      } else {
+        _activeRequests++;
         String type = tikiRequest.type.value!;
-        throw error ?? "$uriStr $type request - client send error";
-      });
-      Response response = await Response.fromStream(streamedResponse);
-      tikiRequest.onSuccess(response);
+        Uri uri = tikiRequest.uri;
+        Request baseRequest = Request(type, uri);
+        if (tikiRequest.headers != null)
+          baseRequest.headers.addAll(tikiRequest.headers!);
+        if (tikiRequest.type != TikiRequestType.GET &&
+            tikiRequest.body != null) {
+          baseRequest.body = tikiRequest.body!;
+        }
+        tikiRequest.body = tikiRequest.body;
+        StreamedResponse streamedResponse =
+        await client.send(baseRequest).onError((error, stackTrace) {
+          String uriStr = tikiRequest.uri.toString();
+          String type = tikiRequest.type.value!;
+          throw error ?? "$uriStr $type request - client send error";
+        });
+        Response response = await Response.fromStream(streamedResponse);
+        if (!tikiRequest.isCanceled) {
+          tikiRequest.onSuccess(response);
+        }
+      }
     } catch (error) {
       _log.warning(error);
       tikiRequest.onError(error);
@@ -91,4 +98,6 @@ class TikiHttpClient {
   static bool isNotFound(int? code) => (code != null && code == 404);
 
   static bool isUnprocessable(int? code) => (code != null && code == 422);
+
+  static bool isTooManyRequests(int? code) => (code != null && code == 429);
 }

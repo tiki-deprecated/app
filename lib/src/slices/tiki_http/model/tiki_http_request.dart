@@ -10,6 +10,7 @@ class TikiHttpRequest {
   void Function(Response) onSuccess = (resp) => print(resp);
   void Function(Object) onError = (error) => print(error);
   void Function(Response)? onRefresh;
+  bool _canceled = false;
 
   TikiHttpRequest({
     required this.uri,
@@ -23,6 +24,10 @@ class TikiHttpRequest {
     if (onSuccess != null) this.onSuccess = onSuccess;
     if (onError != null) this.onSuccess = onError;
   }
+
+  void cancel() => _canceled = true;
+
+  get isCanceled => _canceled;
 
   @override
   bool operator ==(Object other) => identical(this, other);

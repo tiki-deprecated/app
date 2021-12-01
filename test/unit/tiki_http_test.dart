@@ -96,6 +96,30 @@ void main() {
       await Future.wait(tikiRequests);
       expect(tikiHttpClient.activeRequests, 0);
       expect(tikiHttpClient.queuedRequests, 0);
+  });
+
+  test('100 http requests with odds canceled', () async {
+    int total = 100;
+    int rcount = 0;
+    List<Future<void>> tikiRequests = List<Future<void>>.empty(growable: true);
+    final TikiHttpClient tikiHttpClient = TikiHttpClient();
+    for(int i = 0; i < total; i++) {
+      TikiHttpRequest request = TikiHttpRequest(
+        uri: Uri.parse("https://google.com"),
+        type: TikiRequestType.GET,
+      );
+      request.onSuccess = (response) {
+        rcount++;
+        expect(response is Response, true);
+        expect(response.statusCode, 200);
+      };
+      tikiRequests.add(tikiHttpClient.request(request));
+      if(i%2>0) request.cancel();
+    }
+    await Future.wait(tikiRequests);
+    expect(rcount, 50);
+    expect(tikiHttpClient.activeRequests, 0);
+    expect(tikiHttpClient.queuedRequests, 0);
 
   });
 }
