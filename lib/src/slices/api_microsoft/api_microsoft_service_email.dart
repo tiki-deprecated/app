@@ -52,7 +52,7 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
     _log.finest('Fetch inbox ${account.username} started.');
     bool finished = false;
     List<TikiHttpRequest> requests = List<TikiHttpRequest>.empty(growable: true);
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 1; i++) {
       int currentPage = pageNum + i;
       String query = _buildQuery(
           page: currentPage,

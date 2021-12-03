@@ -12,7 +12,7 @@ class DatabaseService {
   final _log = Logger('DatabaseService');
 
   Future<Database> open(String password,
-      {int version = 5, bool drop = false}) async {
+      {int version = 6, bool drop = false}) async {
     String databasePath = await getDatabasesPath() + '/' + _dbName;
     if (drop) await deleteDatabase(databasePath);
     return await openDatabase(databasePath,
@@ -35,6 +35,7 @@ class DatabaseService {
     await _executeScript(db, 'create_v2');
     await _executeScript(db, 'create_v4');
     await _executeScript(db, 'create_v5');
+    await _executeScript(db, 'create_v6');
   }
 
   Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -42,6 +43,7 @@ class DatabaseService {
     if (oldVersion < 2) await _executeScript(db, 'create_v2');
     if (oldVersion < 4) await _executeScript(db, 'create_v4');
     if (oldVersion < 5) await _executeScript(db, 'create_v5');
+    if (oldVersion < 6) await _executeScript(db, 'create_v6');
   }
 
   Future<void> onDowngrade(Database db, int oldVersion, int newVersion) async {

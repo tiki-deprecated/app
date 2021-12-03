@@ -5,6 +5,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_app_data/api_app_data_service.dart';
 import '../api_company/api_company_service.dart';
@@ -28,7 +29,8 @@ class DataFetchService extends ChangeNotifier {
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiKnowledgeService apiKnowledgeService,
-      required DataPushService dataPushService})
+      required DataPushService dataPushService,
+      required Database database})
       : this._dataPushService = dataPushService {
     this.email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
@@ -37,6 +39,7 @@ class DataFetchService extends ChangeNotifier {
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
         dataPushService: _dataPushService,
+        database: database,
         notifyListeners: notifyListeners);
   }
 

@@ -3,7 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'model/data_fetch_model_msg.dart';
+import 'repository/data_fetch_msg_repository.dart';
 import 'package:logging/logging.dart';
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
@@ -31,6 +34,8 @@ class DataFetchServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final Function notifyListeners;
 
+  final DataFetchMsgRepository _dataFetchMsgRepository;
+
   DataFetchServiceEmail(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
@@ -38,12 +43,14 @@ class DataFetchServiceEmail {
       required ApiEmailSenderService apiEmailSenderService,
       required ApiCompanyService apiCompanyService,
       required DataPushService dataPushService,
+      required Database database,
       required this.notifyListeners})
       : this._apiAuthService = apiAuthService,
         this._apiAppDataService = apiAppDataService,
         this._apiEmailMsgService = apiEmailMsgService,
         this._apiEmailSenderService = apiEmailSenderService,
-        this._apiCompanyService = apiCompanyService;
+        this._apiCompanyService = apiCompanyService,
+        this._dataFetchMsgRepository = DataFetchMsgRepository(database);
 
   Future<bool> unsubscribe(ApiOAuthModelAccount account,
       String unsubscribeMailTo, String list) async {
@@ -106,8 +113,8 @@ revolution today.<br />
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null || !await _isConnected(account)) return;
 
-    List<ApiEmailMsgModel> messages =
-        await _apiEmailMsgService.getUnfetchedMessages();
+    List<DataFetchModelMsg> messages =
+        await _dataFetchMsgRepository.getByAccount(account.username!);
     interfaceEmail.fetchMessages(account,
         messages: messages,
         onResult: _saveMessageData,
@@ -125,9 +132,9 @@ revolution today.<br />
     });
   }
 
-  Future<void> _saveMessageIds(List<ApiEmailMsgModel> messages) async {
+  Future<void> _saveMessageIds(List<DataFetchModelMsg> messages) async {
     _log.fine('Saving ' + messages.length.toString() + " message ids");
-    _apiEmailMsgService.saveList(messages);
+    _dataFetchMsgRepository.saveList(messages);
   }
 
   Future<void> _saveMessageData(ApiEmailMsgModel message) async {
@@ -217,6 +224,6 @@ revolution today.<br />
       }
     }
     if(fetchedPage.data != null && fetchedPage.data!.isNotEmpty)
-      _saveMessageIds(fetchedPage.data!);
+      _saveMessageIds(fetchedPage.data! as List<DataFetchModelMsg>);
   }
 }
