@@ -36,7 +36,6 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
   final ApiOAuthService apiOAuthService;
 
   String _messagesEndpoint = "https://graph.microsoft.com/v1.0/me/messages";
-
   String _sendEmailEndpoint = "https://graph.microsoft.com/v1.0/me/sendMail";
 
   ApiMicrosoftServiceEmail(this.apiOAuthService, this.tikiHttpClient)
@@ -50,7 +49,6 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       required Future Function(ApiOAuthModelAccount account) onFinish}) async {
     int pageNum = int.parse(page ?? "0");
     _log.finest('Fetch inbox ${account.username} started.');
-    bool finished = false;
     List<TikiHttpRequest> requests = List<TikiHttpRequest>.empty(growable: true);
     for(int i = 0; i < 1; i++) {
       int currentPage = pageNum + i;
@@ -74,7 +72,6 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
           Map msgBody = json.decode(rsp.body);
           List messageList = msgBody['value'];
           if (messageList.isEmpty) {
-            finished = true;
             _cancelAll(requests);
           } else {
             _log.finest('Got ' + (messageList.length.toString()) + ' messages');
@@ -110,10 +107,46 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
 
   @override
   Future<void> fetchMessage(ApiOAuthModelAccount account,
-      {required ApiEmailMsgModel message,
-      required Future<void> Function(ApiEmailMsgModel message) onResult}) {
-    // TODO: implement fetchMessage
-    throw UnimplementedError();
+      {required String messageId,
+      required Future<void> Function(ApiEmailMsgModel message) onResult}) async {
+    String urlStr = _messagesEndpoint +
+        '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime,toRecipients';
+    Uri uri = Uri.parse(urlStr);
+    TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
+        uri: uri,
+        type: TikiRequestType.GET,
+        headers: HelperApiHeaders(auth: account.accessToken).header);
+    tikiHttpRequest.onSuccess = (rsp) {
+      // TODO handle http errors
+      Map<String, dynamic> message = json.decode(rsp.body);
+      String? unsubscribeMailTo;
+      _log.finest('Fetched message ids: ' + (message['id'] ?? ''));
+      if (!_isRecipient(message['toRecipients'], account.email!)) return null;
+      if (message['internetMessageHeaders'] != null) {
+        message['internetMessageHeaders'].forEach((header) {
+          switch (header['name']?.trim()) {
+            case 'List-Unsubscribe':
+              unsubscribeMailTo = _listUnsubscribeHeader(header['value']);
+              break;
+          }
+        });
+      }
+      onResult(ApiEmailMsgModel(
+          extMessageId: messageId,
+          receivedDate: DateTime.parse(message['receivedDateTime']),
+          openedDate: null,
+          // TODO implement opened date
+          account: account.email,
+          sender: ApiEmailSenderModel(
+              category: message['categories'] != null &&
+                  message['categories'].isNotEmpty
+                  ? message['categories'][0]
+                  : "Inbox",
+              unsubscribeMailTo: unsubscribeMailTo,
+              email: message['from']['emailAddress']['address'],
+              name: message['from']['emailAddress']['name']))
+      );
+    };
   }
 
   @override

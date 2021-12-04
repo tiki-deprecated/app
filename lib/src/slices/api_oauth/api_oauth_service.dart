@@ -81,7 +81,7 @@ class ApiOAuthService {
     ApiOAuthInterfaceProvider? provider =
         _model.interfaceProviders[account.provider];
     if (provider != null) {
-      Response rsp = await provider.revokeToken(account);
+      await provider.revokeToken(account);
     }
     await _apiAuthRepositoryAccount.delete(account);
   }

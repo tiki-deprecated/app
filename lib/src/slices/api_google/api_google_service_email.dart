@@ -5,6 +5,10 @@
 
 import 'dart:convert';
 
+import '../api_oauth/api_oauth_service.dart';
+import '../tiki_http/model/tiki_http_request.dart';
+import '../tiki_http/model/tiki_request_type.dart';
+import '../../utils/api/helper_api_headers.dart';
 import 'package:collection/collection.dart';
 import 'package:googleapis/gmail/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
@@ -24,11 +28,13 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
   final ApiGoogleModelEmail model;
   final TikiHttpClient _tikiHttpClient;
   final _log = Logger('ApiGoogleServiceEmail');
+  final ApiOAuthService apiOAuthService;
 
-  ApiGoogleServiceEmail({required TikiHttpClient tikiHttpClient})
+  ApiGoogleServiceEmail(this.apiOAuthService, tikiHttpClient)
       : this._tikiHttpClient = tikiHttpClient,
         this.model = ApiGoogleModelEmail();
 
+  String _messagesEndpoint = "https://gmail.googleapis.com/gmail/v1/users/me/messages/";
 
   @override
   Future<ApiEmailMsgModel?> getMessage(
@@ -45,7 +51,7 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
           onTimeout: () =>
               throw new http.ClientException('_gmailFetch timed out'));
       _log.finest('Fetched message ids: ' + (message.id ?? ''));
-      if (_checkTo(account.email, message)) {
+      if (_checkTo(account.email, json.decode(json.encode(message)))) {
         List<String> from = List.empty(growable: true);
         String? unsubscribeMailTo;
         message.payload?.headers?.forEach((header) {
@@ -130,7 +136,7 @@ $email
     if (label != null && label.isNotEmpty && label != 'category:') {
       _appendQuery(queryBuffer, label);
     } else if (from == null) {
-      model.categories
+      ApiGoogleModelEmail.categories
           .where((cat) => cat != 'category:')
           .forEach((cat) => _appendQuery(queryBuffer, 'NOT $cat'));
     }
@@ -146,8 +152,8 @@ $email
     return queryBuffer;
   }
 
-  bool _checkTo(String? email, Message message) {
-    List<MessagePartHeader>? headers = message.payload?.headers;
+  bool _checkTo(String? email, Map message) {
+    List<MessagePartHeader>? headers = message['payload']['headers'];
     if (email == null || headers == null || headers.isEmpty) return false;
     MessagePartHeader? toHeader =
         headers.firstWhereOrNull((header) => header.name?.trim() == "To");
@@ -204,14 +210,105 @@ $email
   }
 
   @override
-  Future<void> fetchInbox(ApiOAuthModelAccount account, {DateTime? since, required Future Function(DataFetchModelPage data) onResult, required Future Function(ApiOAuthModelAccount account) onFinish}) {
-    // TODO: implement fetchInbox
-    throw UnimplementedError();
+  Future<void> fetchInbox(ApiOAuthModelAccount account, {
+    DateTime? since,
+    String? page,
+    required Future Function(DataFetchModelPage data) onResult,
+    required Future Function(ApiOAuthModelAccount account) onFinish}) async {
+    String? pageToken = page;
+    _log.finest('Fetch inbox ${account.username} started.');
+    int? afterEpoch = since != null ? (since.millisecondsSinceEpoch/1000).round() : null;
+    String query = _buildQuery(afterEpoch: afterEpoch);
+    String pageQuery = pageToken == null ? '' : 'pageToken=$page';
+    Uri uri = Uri.parse(_messagesEndpoint + "?$pageQuery&q=$query");
+    TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
+        uri: uri,
+        type: TikiRequestType.GET,
+        headers: HelperApiHeaders(auth: account.accessToken).header);
+    tikiHttpRequest.onSuccess = (rsp) async {
+      _log.finest('Fetch inbox ${account.username} $pageQuery onSuccess callback with ${rsp.statusCode} code.');
+      if (TikiHttpClient.is2xx(rsp.statusCode)) {
+        Map msgBody = json.decode(rsp.body);
+        List messageList = msgBody['messages'];
+        _log.finest('Got ' + (messageList.length.toString()) + ' messages');
+        List<ApiEmailMsgModel> messages = messageList
+            .where((message) => message['id'] != null)
+            .map((message) =>
+            ApiEmailMsgModel(
+                extMessageId: message['id'], account: account.email))
+            .toList();
+        String? next = msgBody['nextMessageToken'];
+        DataFetchModelPage data = DataFetchModelPage(
+            data: messages, next: next.toString());
+        onResult(data);
+        if(next == null){
+          _log.finest('Fetch inbox ${account.username} finished.');
+          onFinish(account);
+        }
+      }
+      if (TikiHttpClient.isUnauthorized(rsp.statusCode)){
+        apiOAuthService.refreshToken(account);
+        tikiHttpRequest.headers = HelperApiHeaders(auth: account.accessToken).header;
+        _tikiHttpClient.request(tikiHttpRequest);
+      }
+      // TODO handle http errors
+    };
+    tikiHttpRequest.onError((error) {
+      _log.finest('Fetch inbox ${account.username} $page onError callback.');
+      _log.warning(error);
+    });
+    _tikiHttpClient.request(tikiHttpRequest);
   }
 
   @override
-  Future<void> fetchMessage(ApiOAuthModelAccount account, {required ApiEmailMsgModel message, required Future Function(ApiEmailMsgModel message) onResult}) {
-    // TODO: implement fetchMessage
-    throw UnimplementedError();
+  Future<void> fetchMessage(ApiOAuthModelAccount account,
+      {required String messageId,
+        required Future<void> Function(ApiEmailMsgModel message) onResult}) async {
+    String format = 'metadata';
+    String metadataHeaders = 'From,To,List-Unsubscribe';
+    String urlStr = '$_messagesEndpoint$messageId?format=$format&metadataHeaders=$metadataHeaders';
+    Uri uri = Uri.parse(urlStr);
+    TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
+        uri: uri,
+        type: TikiRequestType.GET,
+        headers: HelperApiHeaders(auth: account.accessToken).header);
+    tikiHttpRequest.onSuccess = (rsp) {
+      // TODO handle http errors
+      Map<String, dynamic> message = json.decode(rsp.body);
+      _log.finest('Fetched message ids: ' + (message['id'] ?? ''));
+      if (!_checkTo(account.email!, message)) return null;
+      if (_checkTo(account.email, json.decode(json.encode(message)))) {
+        List<String> from = List.empty(growable: true);
+        String? unsubscribeMailTo;
+        if (message['internetMessageHeaders'] != null) {
+          message['internetMessageHeaders'].forEach((header) {
+            switch (header['name']?.trim()) {
+              case 'From':
+                from = _fromEmailHeader(header);
+                break;
+              case 'List-Unsubscribe':
+                unsubscribeMailTo = _listUnsubscribeHeader(header);
+                break;
+            }
+          });
+        }
+        onResult(ApiEmailMsgModel(
+            extMessageId: messageId,
+            receivedDate: DateTime.parse(message['receivedDateTime']),
+            openedDate: null,
+            // TODO implement opened date
+            account: account.email,
+            sender: ApiEmailSenderModel(
+                category: message['categories'] != null &&
+                    message['categories'].isNotEmpty
+                    ? message['categories'][0]
+                    : "Inbox",
+                unsubscribeMailTo: unsubscribeMailTo,
+                email: message['from']['emailAddress']['address'],
+                name: message['from']['emailAddress']['name']))
+        );
+      }
+    };
+    _tikiHttpClient.request(tikiHttpRequest);
   }
 }

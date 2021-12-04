@@ -4,7 +4,7 @@
  */
 
 class ApiGoogleModelEmail {
-  List<String> categories = [
+  static List<String> categories = [
     'category:promotions',
     'category:updates',
     'category:social',

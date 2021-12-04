@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
+import 'model/data_fetch_model_msg.dart';
 
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
@@ -22,13 +22,13 @@ abstract class DataFetchInterfaceEmail {
           onFinish}) async {
       await Future.wait(messages.map( (message) {
         ApiEmailMsgModel messageToFetch = ApiEmailMsgModel(extMessageId: message.extMessageId);
-        return fetchMessage(account, message: messageToFetch, onResult: onResult);
+        return fetchMessage(account, messageId: messageToFetch.extMessageId!, onResult: onResult);
       }));
       onFinish(account);
   }
 
   Future<void> fetchMessage(ApiOAuthModelAccount account,
-      {required ApiEmailMsgModel message,
+      {required String messageId,
       required Future Function(ApiEmailMsgModel message) onResult});
 
   Future<ApiEmailMsgModel?> getMessage(

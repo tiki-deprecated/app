@@ -31,7 +31,7 @@ class ApiGoogleService
       : this._apiAuthService = apiAuthService,
         this._apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
         this._apiGoogleServiceEmail =
-            ApiGoogleServiceEmail(tikiHttpClient: tikiHttpClient);
+            ApiGoogleServiceEmail(apiAuthService, tikiHttpClient);
 
   @override
   DataFetchInterfaceEmail? get email => _apiGoogleServiceEmail;
