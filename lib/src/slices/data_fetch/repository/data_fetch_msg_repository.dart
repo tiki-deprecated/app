@@ -17,7 +17,7 @@ class DataFetchMsgRepository {
   Future<DataFetchModelMsg> insert(DataFetchModelMsg message) async {
     int id = await _database.insert(_table, message.toMap());
     _log.finest("Insert #" + id.toString());
-    message.messageId = id;
+    message.data_fetch_message_id = id;
     return message;
   }
 
@@ -58,7 +58,7 @@ class DataFetchMsgRepository {
 
   Future<void> delete(DataFetchModelMsg message) async {
     await _database.delete(_table,
-        where: 'data_fetch_message_id = ?', whereArgs: [message.messageId]);
+        where: 'data_fetch_message_id = ?', whereArgs: [message.data_fetch_message_id]);
   }
 
   Future<void> saveList(List<DataFetchModelMsg> messages) async {

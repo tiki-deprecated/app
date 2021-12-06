@@ -217,9 +217,25 @@ $email
     required Future Function(ApiOAuthModelAccount account) onFinish}) async {
     String? pageToken = page;
     _log.finest('Fetch inbox ${account.username} started.');
-    int? afterEpoch = since != null ? (since.millisecondsSinceEpoch/1000).round() : null;
+    int? afterEpoch = since != null ? (since.millisecondsSinceEpoch / 1000)
+        .round() : null;
     String query = _buildQuery(afterEpoch: afterEpoch);
-    String pageQuery = pageToken == null ? '' : 'pageToken=$page';
+    _fetchPage(
+        account: account,
+        query: query,
+        pageToken: pageToken,
+        onResult: onResult,
+        onFinish: onFinish
+    );
+  }
+
+  Future<void> _fetchPage({
+    required ApiOAuthModelAccount account,
+    required String query,
+    String? pageToken,
+    required Future Function(DataFetchModelPage data) onResult,
+    required Future Function(ApiOAuthModelAccount account) onFinish}) async {
+    String pageQuery = pageToken == null ? '' : 'pageToken=$pageToken';
     Uri uri = Uri.parse(_messagesEndpoint + "?$pageQuery&q=$query");
     TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
         uri: uri,
@@ -241,7 +257,10 @@ $email
         DataFetchModelPage data = DataFetchModelPage(
             data: messages, next: next.toString());
         onResult(data);
-        if(next == null){
+        if(next != null) {
+          _log.finest('Fetch page $pageToken finished.');
+          _fetchPage(account: account, pageToken: next, query: query, onResult: onResult, onFinish: onFinish);
+        }else{
           _log.finest('Fetch inbox ${account.username} finished.');
           onFinish(account);
         }
@@ -254,7 +273,7 @@ $email
       // TODO handle http errors
     };
     tikiHttpRequest.onError((error) {
-      _log.finest('Fetch inbox ${account.username} $page onError callback.');
+      _log.finest('Fetch inbox ${account.username} $pageToken onError callback.');
       _log.warning(error);
     });
     _tikiHttpClient.request(tikiHttpRequest);
