@@ -90,17 +90,18 @@ revolution today.<br />
         DateTime.now().toIso8601String());
 
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
-    if (interfaceEmail == null || !await _isConnected(account)) return;
+    if (interfaceEmail == null) throw "Invalid email interface";
+    if (!await _isConnected(account)) throw "ApiOauthAccount ${account.provider} not connected.";
 
-    DateTime? afterEpoch = await _getLastFetchDatetime(account);
+    DateTime? afterEpoch = null;//await _getLastFetchDatetime(account);
 
-    if (afterEpoch == null ||
-        DateTime.now().subtract(Duration(days: 1)).isAfter(afterEpoch)) {
+    // if (afterEpoch == null ||
+    //     DateTime.now().subtract(Duration(days: 1)).isAfter(afterEpoch)) {
       interfaceEmail.fetchInbox(account,
           since: afterEpoch,
           onResult: _processFetchedData,
           onFinish: _endFetchMessageIds);
-    }
+    //}
   }
 
   Future<void> fetchMessages(ApiOAuthModelAccount account,
@@ -225,5 +226,10 @@ revolution today.<br />
     }
     if(fetchedPage.data != null && fetchedPage.data!.isNotEmpty)
       _saveMessageIds(fetchedPage.data! as List<DataFetchModelMsg>);
+  }
+
+  Future<void> deleteMessagesByAccount(ApiOAuthModelAccount account) async {
+    List<DataFetchModelMsg> messages = await _dataFetchMsgRepository.getByAccount(account.provider!);
+    await Future.wait(messages.map((message) =>_dataFetchMsgRepository.delete(message)));
   }
 }

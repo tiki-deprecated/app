@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -79,6 +80,7 @@ class DataScreenService extends ChangeNotifier {
   }
 
   Future<void> _deleteMessages(ApiOAuthModelAccount account) async {
+    await _dataFetchService.email.deleteMessagesByAccount(account);
     List<ApiEmailMsgModel> messages =
         await _apiEmailMsgService.getByAccount(account);
     await _apiEmailMsgService.deleteList(messages);

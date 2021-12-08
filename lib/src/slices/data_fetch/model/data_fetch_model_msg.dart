@@ -22,7 +22,7 @@ class DataFetchModelMsg {
 
   Map<String, dynamic> toMap() {
     return {
-      'message_id': data_fetch_message_id,
+      'data_fetch_message_id': data_fetch_message_id,
       'ext_message_id': extMessageId,
       'account': account,
     };

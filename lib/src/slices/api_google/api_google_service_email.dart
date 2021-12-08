@@ -5,6 +5,8 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
+
 import '../api_oauth/api_oauth_service.dart';
 import '../tiki_http/model/tiki_http_request.dart';
 import '../tiki_http/model/tiki_request_type.dart';
@@ -135,10 +137,6 @@ $email
     }
     if (label != null && label.isNotEmpty && label != 'category:') {
       _appendQuery(queryBuffer, label);
-    } else if (from == null) {
-      ApiGoogleModelEmail.categories
-          .where((cat) => cat != 'category:')
-          .forEach((cat) => _appendQuery(queryBuffer, 'NOT $cat'));
     }
     if (from != null) _appendQuery(queryBuffer, 'from:' + from);
     return queryBuffer.toString();
@@ -236,7 +234,7 @@ $email
     required Future Function(DataFetchModelPage data) onResult,
     required Future Function(ApiOAuthModelAccount account) onFinish}) async {
     String pageQuery = pageToken == null ? '' : 'pageToken=$pageToken';
-    Uri uri = Uri.parse(_messagesEndpoint + "?$pageQuery&q=$query");
+    Uri uri = Uri.parse(_messagesEndpoint + "?maxResults=500&$pageQuery&q=$query");
     TikiHttpRequest tikiHttpRequest = TikiHttpRequest(
         uri: uri,
         type: TikiRequestType.GET,
@@ -247,13 +245,13 @@ $email
         Map msgBody = json.decode(rsp.body);
         List messageList = msgBody['messages'];
         _log.finest('Got ' + (messageList.length.toString()) + ' messages');
-        List<ApiEmailMsgModel> messages = messageList
+        List<DataFetchModelMsg> messages = messageList
             .where((message) => message['id'] != null)
             .map((message) =>
-            ApiEmailMsgModel(
+            DataFetchModelMsg(
                 extMessageId: message['id'], account: account.email))
             .toList();
-        String? next = msgBody['nextMessageToken'];
+        String? next = msgBody['nextPageToken'];
         DataFetchModelPage data = DataFetchModelPage(
             data: messages, next: next.toString());
         onResult(data);
