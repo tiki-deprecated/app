@@ -32,12 +32,9 @@ class DataFetchMsgRepository {
 
   Future<List<Map<String, Object?>>> _select(
       {String? where, List<Object?>? whereArgs}) async {
-    List<Map<String, Object?>> rows = await _database.rawQuery(
-        'SELECT data_fetch_message.data_fetch_message_id AS \'message@message_id\', '
-                'data_fetch_message.ext_message_id AS \'message@ext_message_id\', '
-                'data_fetch_message.account AS \'message@account\'' +
-            (where != null ? 'WHERE ' + where : ''),
-        whereArgs);
+    List<Map<String, Object?>> rows = await _select(
+        where: where,
+        whereArgs: whereArgs);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) {
       Map<String, Object?> messageMap = Map();
@@ -62,8 +59,12 @@ class DataFetchMsgRepository {
   }
 
   Future<void> saveList(List<DataFetchModelMsg> messages) async {
-    messages.forEach((message) async {
-      await insert(message);
-    });
+    for(int i = 0; i < messages.length; i++) {
+      DataFetchModelMsg msg = messages[i];
+      DataFetchModelMsg? dbMsg = await getByExtMessageIdAndAccount(msg.extMessageId!, msg.account!);
+      if (dbMsg != null) {
+        await insert(msg);
+      }
+    }
   }
 }

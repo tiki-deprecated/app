@@ -7,6 +7,8 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
+
 import '../api_app_data/model/api_app_data_model.dart';
 import '../tiki_http/model/tiki_http_request.dart';
 import '../tiki_http/model/tiki_request_type.dart';
@@ -75,9 +77,9 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
             _cancelAll(requests);
           } else {
             _log.finest('Got ' + (messageList.length.toString()) + ' messages');
-            List<ApiEmailMsgModel> messages = messageList
+            List<DataFetchModelMsg> messages = messageList
                 .where((message) => message['id'] != null)
-                .map((message) => ApiEmailMsgModel(extMessageId: message['id'], account: account.email))
+                .map((message) => DataFetchModelMsg(extMessageId: message['id'], account: account.email))
                 .toList();
             int? next = msgBody['@odata.nextLink'] != null
                 ? currentPage + 1
