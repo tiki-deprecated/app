@@ -5,6 +5,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
 import 'src/config/config_color.dart';
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    openZendesk();
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         title: _title,
@@ -40,5 +42,10 @@ class App extends StatelessWidget {
         navigatorObservers: [ConfigSentry.navigatorObserver],
       );
     });
+  }
+
+  Future<void> openZendesk() async {
+    const platform = MethodChannel('com.mytiki.app/zendesk');
+    platform.invokeMethod('starttZendeskMesssages');
   }
 }
