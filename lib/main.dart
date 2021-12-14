@@ -43,6 +43,8 @@ Future<void> init() async {
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
 
+
+
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn

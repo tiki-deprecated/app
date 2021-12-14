@@ -22,7 +22,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    openZendesk();
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         title: _title,
@@ -44,8 +43,4 @@ class App extends StatelessWidget {
     });
   }
 
-  Future<void> openZendesk() async {
-    const platform = MethodChannel('com.mytiki.app/zendesk');
-    platform.invokeMethod('starttZendeskMesssages');
-  }
 }
