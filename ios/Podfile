@@ -30,6 +30,7 @@ flutter_ios_podfile_setup
 target 'Runner' do
 
   pod 'SQLCipher', '~>4.4.2'
+  pod 'ZendeskSupportSDK'
   pod 'ZendeskSupportProvidersSDK'
   
   use_frameworks!

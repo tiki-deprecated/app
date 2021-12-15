@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_zendesk/api_zendesk_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,9 @@ Future<void> init() async {
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
 
-
-
+  ApiZendeskService apiZendeskService = ApiZendeskService();
+  var categories = await apiZendeskService.getZendeskCategories();
+  print(categories);
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn

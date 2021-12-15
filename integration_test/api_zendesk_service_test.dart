@@ -15,7 +15,7 @@ void main() {
     await tester.pumpAndSettle();
     ApiZendeskService apiZendeskService = ApiZendeskService();
     var categories = await apiZendeskService.getZendeskCategories();
-    expect(categories, true);
+    expect(categories.length > 0, true);
   });
 
 }
