@@ -46,8 +46,8 @@ class ZendeskApi {
     }
 
     fun getZendeskSections(call: MethodCall, result: MethodChannel.Result) {
-        val categoryID = if ( call.hasArgument("categoryID") ) call.argument<Any?>("categoryID" )
-        else result.error("400", "categoryID argument is missing", null)
+        val categoryID = if ( call.hasArgument("categoryId") ) call.argument<Any?>("categoryId" )
+        else result.error("400", "categoryId argument is missing", null)
         getSections(
             categoryID as Long,
             {sections -> result.success(sections)},
@@ -68,23 +68,19 @@ class ZendeskApi {
     fun getZendeskArticle(call: MethodCall, result: MethodChannel.Result) {
         val articleId = if ( call.hasArgument("articleId") ) call.argument<Any?>("articleId" )
         else result.error("400", "articleId argument is missing", null)
-        getArticles(
+        getArticle(
             articleId as Long,
             {sections -> result.success(sections)},
             {error -> result.error(error.status.toString(), error.reason, error)}
         )
     }
 
-    private fun getCategories(onSuccess: ListCallback<ArrayList<Map<Long,String>>>, onError: ErrorCallback){
+    private fun getCategories(onSuccess: ListCallback<ArrayList<Map<String, Any>>>, onError: ErrorCallback){
         helpCenterProvider.getCategories( object: ZendeskCallback<List<Category>>(){
             override fun onSuccess(categories: List<Category>){
-                val cats : ArrayList<Map<Long,String>> = ArrayList<Map<Long,String>>()
+                val cats : ArrayList<Map<String,Any>> = ArrayList<Map<String, Any>>()
                 categories.forEach{
-                    if(it.id != null){
-                            cats.add(
-                                mapOf(it.id!! to it.name!!)
-                            )
-                    }
+                    cats.add(processCategory(it)!!)
                 }
                 onSuccess(cats)
             }
@@ -94,16 +90,25 @@ class ZendeskApi {
         })
     }
 
-    private fun getSections(category: Long, onSuccess: ListCallback<ArrayList<Map<Long,String>>>, onError: ErrorCallback){
+    private fun processCategory(it: Category): Map<String, Any>? {
+        if(it.id != null && it.name != null && it.description != null){
+            return mapOf(
+                    "id" to it.id!!,
+                    "name" to it.name!!,
+                    "description" to it.description!!
+            )
+        }
+        return null
+    }
+
+    private fun getSections(category: Long, onSuccess: ListCallback<ArrayList<Map<String, Any>?>>, onError: ErrorCallback){
         helpCenterProvider.getSections( category, object: ZendeskCallback<List<Section>>(){
             override fun onSuccess(sections: List<Section>){
-                val sectionList : ArrayList<Map<Long,String>> = ArrayList<Map<Long,String>>()
+                val sectionList : ArrayList<Map<String, Any>?> = ArrayList<Map<String, Any>?>()
                 sections.forEach{
-                    if(it.id != null){
-                        sectionList.add(
-                            mapOf(it.id!! to it.name!!)
-                        )
-                    }
+                    sectionList.add(
+                        processSection(it)
+                    )
                 }
                 onSuccess(sectionList)
             }
@@ -113,16 +118,23 @@ class ZendeskApi {
         })
     }
 
-    private fun getArticles(section: Long, onSuccess: ListCallback<ArrayList<Map<Long,String>>>, onError: ErrorCallback){
+    private fun processSection(it: Section): Map<String, Any>? {
+        if(it.id != null && it.name != null && it.description != null){
+            return mapOf(
+                "id" to it.id!!,
+                "name" to it.name!!,
+                "description" to it.description!!
+            )
+        }
+        return null
+    }
+
+    private fun getArticles(section: Long, onSuccess: ListCallback<ArrayList<Map<String,Any>?>>, onError: ErrorCallback){
         helpCenterProvider.getArticles( section, object: ZendeskCallback<List<Article>>(){
             override fun onSuccess(articles: List<Article>){
-                val articleList : ArrayList<Map<Long,String>> = ArrayList<Map<Long,String>>()
+                val articleList : ArrayList<Map<String, Any>?> = ArrayList<Map<String, Any>?>()
                 articles.forEach{
-                    if(it.id != null){
-                        articleList.add(
-                            mapOf(it.id!! to it.title!!)
-                        )
-                    }
+                    articleList.add(processArticle(it))
                 }
                 onSuccess(articleList)
             }
@@ -132,18 +144,27 @@ class ZendeskApi {
         })
     }
 
-    private fun getArticle(articleId: Long, onSuccess: SingleCallback<Map<String,Any>>, onError: ErrorCallback){
+    private fun getArticle(articleId: Long, onSuccess: SingleCallback<Map<String,Any>?>, onError: ErrorCallback){
         helpCenterProvider.getArticle( articleId, object: ZendeskCallback<Article>(){
             override fun onSuccess(article: Article){
-                onSuccess(mapOf<String, Any>(
-                    "id" to article.id,
-                    "body" to article.body!!
-                ))
+                onSuccess(processArticle(article))
             }
             override fun onError(error: ErrorResponse){
                 onError(error)
             }
         })
+    }
+
+    private fun processArticle(it: Article): Map<String, Any>? {
+        if(it.id != null && it.updatedAt != null && it.body != null&& it.title != null){
+            return mapOf(
+                "id" to it.id!!,
+                "title" to it.title!!,
+                "updateAt" to it.updatedAt!!,
+                "description" to it.body!!
+            )
+        }
+        return null
     }
 
 }

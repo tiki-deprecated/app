@@ -18,7 +18,7 @@ class MainActivity: FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler {
             call, result -> when(call.method){
                 "getZendeskCategories" -> zendeskApi.getZendeskCategories(result)
-                "getZendeskSection" -> zendeskApi.getZendeskSections(call, result)
+                "getZendeskSections" -> zendeskApi.getZendeskSections(call, result)
                 "getZendeskArticles" -> zendeskApi.getZendeskArticles(call, result)
                 "getZendeskArticle" -> zendeskApi.getZendeskArticle(call, result)
                 else -> result.notImplemented()

@@ -44,9 +44,6 @@ Future<void> init() async {
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
 
-  ApiZendeskService apiZendeskService = ApiZendeskService();
-  var categories = await apiZendeskService.getZendeskCategories();
-  print(categories);
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn

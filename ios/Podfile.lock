@@ -104,9 +104,19 @@ PODS:
   - SwiftProtobuf (1.18.0)
   - url_launcher (0.0.1):
     - Flutter
+  - ZendeskCommonUISDK (6.1.1)
   - ZendeskCoreSDK (2.5.1)
+  - ZendeskMessagingAPISDK (3.8.2):
+    - ZendeskSDKConfigurationsSDK (~> 1.1.8)
+  - ZendeskMessagingSDK (3.8.2):
+    - ZendeskCommonUISDK (~> 6.1.1)
+    - ZendeskMessagingAPISDK (~> 3.8.2)
+  - ZendeskSDKConfigurationsSDK (1.1.8)
   - ZendeskSupportProvidersSDK (5.3.0):
     - ZendeskCoreSDK (~> 2.5.1)
+  - ZendeskSupportSDK (5.3.0):
+    - ZendeskMessagingSDK (~> 3.8.2)
+    - ZendeskSupportProvidersSDK (~> 5.3.0)
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
@@ -129,6 +139,7 @@ DEPENDENCIES:
   - SQLCipher (~> 4.4.2)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - ZendeskSupportProvidersSDK
+  - ZendeskSupportSDK
 
 SPEC REPOS:
   trunk:
@@ -150,8 +161,13 @@ SPEC REPOS:
     - Sentry
     - SQLCipher
     - SwiftProtobuf
+    - ZendeskCommonUISDK
     - ZendeskCoreSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskMessagingSDK
+    - ZendeskSDKConfigurationsSDK
     - ZendeskSupportProvidersSDK
+    - ZendeskSupportSDK
 
 EXTERNAL SOURCES:
   amplitude_flutter:
@@ -228,9 +244,14 @@ SPEC CHECKSUMS:
   SQLCipher: 1ab0b9486a77d141e72e92ff30681926ed79c07a
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
   url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
+  ZendeskCommonUISDK: 5808802951ad2bb424f0bed4259dc3c0ce9b52ec
   ZendeskCoreSDK: 19a18e5ef2edcb18f4dbc0ea0d12bd31f515712a
+  ZendeskMessagingAPISDK: 144e0fb0e633a3c4e73149b781ab65338938d5a8
+  ZendeskMessagingSDK: 500e83d9413481e95180c37ddca0d4ef9d515600
+  ZendeskSDKConfigurationsSDK: 8371b468db0d09e9198f6c5a97818826943ee1ee
   ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
+  ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
 
-PODFILE CHECKSUM: c36ad304e36d6aceb1da2147d5532be11518c3bf
+PODFILE CHECKSUM: acd5b06dc81b3c17a1dbd859931516ed647b6afb
 
 COCOAPODS: 1.11.2

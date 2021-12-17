@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_zendesk/model/api_zendesk_category.dart';
 import 'package:flutter/services.dart';
 
 class ApiZendeskService{
@@ -14,4 +15,8 @@ class ApiZendeskService{
 
   Future getZendeskArticle(num articleId) async =>
       await _platform.invokeMethod("getZendeskArticle", {"articleId": articleId});
+
+  num getZendeskArticlesCount(ApiZendeskCategory category) {
+    return 5;
+  }
 }
