@@ -29,10 +29,10 @@ class SupporScreenViewHeader extends StatelessWidget {
                   padding: EdgeInsets.only(right: _paddingHoriz.w),
                   child: Center(
                       child: Image(
-                        width: 12.sp,
-                        height: 12.sp,
-                        image: AssetImage('res/images/icon-x.png'),
-                      ))))),
+                    width: 12.sp,
+                    height: 12.sp,
+                    image: AssetImage('res/images/icon-x.png'),
+                  ))))),
       Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(

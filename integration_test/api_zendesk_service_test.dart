@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:app/src/slices/api_zendesk/api_zendesk_service.dart';
 import 'package:flutter_test/flutter_test.dart';

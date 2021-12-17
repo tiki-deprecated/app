@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import '../api_zendesk/model/api_zendesk_category.dart';
+import '../api_zendesk/model/api_zendesk_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../config/config_color.dart';
@@ -17,9 +18,21 @@ class SupportScreenPresenter {
 
   SupportScreenPresenter(this.service);
 
-  ChangeNotifierProvider<SupportScreenService> render() {
-    return ChangeNotifierProvider.value(
-        value: service, child: SupportScreenLayout());
+  Navigator render() {
+    final  GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
+    return Navigator(
+      key: navigatorKey,
+      pages:  <Page<void>>[
+        MaterialPage(key: ValueKey(service.data), child: SupportScreenLayout(null)),
+        if (service.data is ApiZendeskCategory)
+          MaterialPage(key: ValueKey(service.data), child: SupportScreenLayout(service.data)),
+        if (service.data is ApiZendeskSection)
+          MaterialPage(key: ValueKey(service.data), child: SupportScreenLayout(service.data)),
+        if (service.data is ApiZendeskCategory)
+          MaterialPage(key: ValueKey(service.data), child: SupportScreenLayout(service.data)),
+      ],
+      onPopPage: _handlePopPage,
+    );
   }
 
   Future<void> showModal(BuildContext context) {
@@ -31,5 +44,14 @@ class SupportScreenPresenter {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
         builder: (BuildContext context) => render());
+  }
+
+  bool _handlePopPage(Route route, result) {
+    final bool success = route.didPop(result);
+    if (success) {
+      service.data =  null;
+      service.update();
+    }
+    return success;
   }
 }

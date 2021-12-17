@@ -3,8 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/support_screen/ui/support_screen_view_box_content.dart';
-import 'package:app/src/slices/support_screen/ui/support_screen_view_hi_there.dart';
+import '../../api_zendesk/model/api_zendesk_article.dart';
+import '../../api_zendesk/model/api_zendesk_category.dart';
+import '../../api_zendesk/model/api_zendesk_section.dart';
+
+import 'support_screen_view_box.dart';
+import 'support_screen_view_hi_there.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,11 +16,12 @@ import 'support_screen_view_breadcrumb.dart';
 import 'support_screen_view_header.dart';
 
 class SupportScreenLayout extends StatelessWidget {
-  static const num _cardMarginTop = 2.25;
+  final dynamic data;
+
+  const SupportScreenLayout(this.data);
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
         child: Container(
             height: 85.h,
@@ -28,13 +33,23 @@ class SupportScreenLayout extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: 6.w, right: 6.w, bottom: 5.h),
                           child:
-                          Column(mainAxisSize: MainAxisSize.min, children: [
+                              Column(mainAxisSize: MainAxisSize.min, children: [
                             SupportScreenViewHiThere(),
                             SupportScreenViewBreadcrumb(),
                             Container(
-                                margin: EdgeInsets.only(top: 4.h),
-                                child: SupportScreenViewBoxContent()),
+                                child: getSupportContent(context)),
                           ]))))
             ])));
+  }
+
+  Widget getSupportContent(BuildContext context) {
+    if( data == null ||
+        data is ApiZendeskCategory ||
+        data is ApiZendeskSection ||
+        data is ApiZendeskArticle )
+        return Column(
+            children: data.children
+                .map((data) => SupportScreenViewBox(data)));
+    return SupportScreenViewBox(data);
   }
 }

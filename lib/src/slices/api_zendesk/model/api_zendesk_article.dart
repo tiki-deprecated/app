@@ -1,8 +1,9 @@
-class ApiZendeskArticle{
+class ApiZendeskArticle {
   late num id;
   late String title;
-  late DateTime updatedAt;
+  late String category;
+  late String section;
   late String description;
   late String content;
-  late String section;
+  late DateTime updatedAt;
 }

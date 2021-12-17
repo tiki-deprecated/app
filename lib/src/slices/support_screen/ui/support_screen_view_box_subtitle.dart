@@ -1,57 +1,51 @@
-import '../../../config/config_color.dart';
-import '../../api_zendesk/model/api_zendesk_article.dart';
-import '../../api_zendesk/model/api_zendesk_category.dart';
-import '../model/support_screen_type.dart';
+import '../../api_zendesk/model/api_zendesk_section.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config_color.dart';
+import '../../api_zendesk/model/api_zendesk_article.dart';
+import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../support_screen_service.dart';
 
-class SupportScreenViewBoxSubtitle extends StatelessWidget{
+class SupportScreenViewBoxSubtitle extends StatelessWidget {
+  final dynamic data;
+
+  SupportScreenViewBoxSubtitle(this.data);
 
   @override
   Widget build(BuildContext context) {
     SupportScreenService service = Provider.of<SupportScreenService>(context);
     TextSpan text = getSubtitle(service);
-    return RichText(
-        text:text
-    );
+    return RichText(text: text);
   }
 
-  TextSpan getSubtitle(SupportScreenService service) {
-    Color color = getColor(service);
-    switch(service.model.type){
-      case SupportScreenType.category:
-        ApiZendeskCategory category = service.model.data as ApiZendeskCategory;
-        num count = service.getArticlesCount(category);
-        return TextSpan(text: count.toString() + " articles", style: TextStyle(color: color));
-      case SupportScreenType.section:
-        return TextSpan(
-            text: "published in ", style: TextStyle(color: color),
-            children: [
-              TextSpan(
-                text: service.model.parentName,
-                style: TextStyle(fontWeight: FontWeight.bold)
-              )
-            ],
-        );
-     case SupportScreenType.article:
-       DateTime date = (service.model.data as ApiZendeskArticle).updatedAt;
-       String publishedDate = DateFormat("dd MMMM YYYY").format(date);
-       return TextSpan(
-         text: "published on $publishedDate", style: TextStyle(color: color),
-       );
+  TextSpan getSubtitle(dynamic data) {
+    Color color = getColor(data);
+    if (data is ApiZendeskCategory) {
+      num count = data.sections.length;
+      String text = count.toString() + " sections";
+      return TextSpan(text: text, style: TextStyle(color: color));
     }
+    if (data is ApiZendeskSection) {
+      num count = data.articles.length;
+      String text = count.toString() + " articles";
+      return TextSpan(text: text, style: TextStyle(color: color));
+    }
+    if (data is ApiZendeskArticle) {
+      DateTime date = data.updatedAt;
+      String publishedDate = DateFormat("dd MMMM YYYY").format(date);
+      return TextSpan(
+        text: "published on $publishedDate",
+        style: TextStyle(color: color),
+      );
+    }
+    return TextSpan(text: '');
   }
 
-  Color getColor(SupportScreenService service) {
-    switch(service.model.type){
-      case SupportScreenType.category:
-        return ConfigColor.blue;
-      case SupportScreenType.section:
-      case SupportScreenType.article:
-        return ConfigColor.greyFive;
-    }
+  Color getColor(data) {
+    if (data is ApiZendeskCategory || data is ApiZendeskSection)
+      return ConfigColor.blue;
+    return ConfigColor.greyFive;
   }
 }

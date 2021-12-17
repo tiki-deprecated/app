@@ -1,5 +1,1 @@
-enum SupportScreenType{
-  category,
-  section,
-  article
-}
+enum SupportScreenType { home, category, section, article }

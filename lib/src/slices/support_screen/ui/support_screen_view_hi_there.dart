@@ -17,14 +17,14 @@ class SupportScreenViewHiThere extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(
-            top: _paddingVert.h,
-          ),
-          child: Text(_text,
-              style: TextStyle(
-                  color: ConfigColor.tikiPurple,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12.sp)));
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(
+          top: _paddingVert.h,
+        ),
+        child: Text(_text,
+            style: TextStyle(
+                color: ConfigColor.tikiPurple,
+                fontWeight: FontWeight.w800,
+                fontSize: 12.sp)));
   }
 }

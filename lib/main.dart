@@ -1,4 +1,3 @@
-import 'package:app/src/slices/api_zendesk/api_zendesk_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

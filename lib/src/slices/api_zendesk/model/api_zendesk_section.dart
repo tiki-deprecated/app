@@ -1,8 +1,9 @@
 import 'api_zendesk_article.dart';
 
-class ApiZendeskSection{
+class ApiZendeskSection {
   late int id;
-  late String name;
-  late int count;
+  late String title;
+  late String category;
+  late String content;
   late List<ApiZendeskArticle> articles;
 }

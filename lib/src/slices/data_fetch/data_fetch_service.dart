@@ -36,7 +36,6 @@ class DataFetchService extends ChangeNotifier {
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
-        apiKnowledgeService: apiKnowledgeService,
         dataPushService: _dataPushService,
         notifyListeners: notifyListeners);
   }

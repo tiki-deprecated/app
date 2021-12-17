@@ -1,8 +1,8 @@
-import 'package:app/src/slices/api_zendesk/model/api_zendesk_section.dart';
+import 'api_zendesk_section.dart';
 
-class ApiZendeskCategory{
+class ApiZendeskCategory {
   late num id;
-  late String name;
-  late String description;
+  late String title;
+  late String content;
   late List<ApiZendeskSection> sections;
 }
