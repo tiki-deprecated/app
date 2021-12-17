@@ -4,6 +4,7 @@
  */
 
 import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_support.dart';
+import 'package:app/src/widgets/bottomsheet_modal_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,14 +24,12 @@ class UserAccountModalLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Container(
-            height: 85.h,
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              UserAccountModalViewHeader(),
-              Expanded(
-                  child: SingleChildScrollView(
-                      child: Padding(
+    return BottomsheetModalLayout(
+        children:<Widget>[
+          UserAccountModalViewHeader(),
+          Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
                           padding: EdgeInsets.only(
                               left: 6.w, right: 6.w, bottom: 5.h),
                           child:
@@ -56,7 +55,7 @@ class UserAccountModalLayout extends StatelessWidget {
                                 child: UserAccountModalViewBadges()),
                             Container(
                                 margin: EdgeInsets.only(top: _cardMarginTop.h),
-                                child: UserAccountModalViewSupport()),
+                                child: UserAccountModalViewSupport(this.service)),
                             Container(
                             margin: EdgeInsets.only(top: 1.5.h),
                             child: UserAccountModalViewVersion()),
@@ -64,6 +63,6 @@ class UserAccountModalLayout extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 3.h),
                                 child: UserAccountModalViewLogout()),
                           ]))))
-            ])));
+        ]);
   }
 }
