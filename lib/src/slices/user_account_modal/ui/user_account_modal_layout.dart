@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_support.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -54,8 +55,11 @@ class UserAccountModalLayout extends StatelessWidget {
                                 margin: EdgeInsets.only(top: _cardMarginTop.h),
                                 child: UserAccountModalViewBadges()),
                             Container(
-                                margin: EdgeInsets.only(top: 1.5.h),
-                                child: UserAccountModalViewVersion()),
+                                margin: EdgeInsets.only(top: _cardMarginTop.h),
+                                child: UserAccountModalViewSupport()),
+                            Container(
+                            margin: EdgeInsets.only(top: 1.5.h),
+                            child: UserAccountModalViewVersion()),
                             Container(
                                 margin: EdgeInsets.only(top: 3.h),
                                 child: UserAccountModalViewLogout()),

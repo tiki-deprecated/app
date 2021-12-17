@@ -2,7 +2,6 @@ import '../../../config/config_color.dart';
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../../api_zendesk/model/api_zendesk_section.dart';
-import '../model/support_screen_type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,29 +20,24 @@ class SupportScreenViewBreadcrumb extends StatelessWidget {
     String text = getBreadcrumbText(service);
     return Text(text,
         style: TextStyle(
-            color: service.data.type == SupportScreenType.category
-                ? this.catColor
-                : this.defaultColor));
+            color: service.data == null ? this.catColor : this.defaultColor));
   }
 
   String getBreadcrumbText(SupportScreenService service) {
-    SupportScreenType type = service.data.type;
     String leadText = "All categories";
-    switch (type) {
-      case SupportScreenType.home:
-        return catText;
-      case SupportScreenType.category:
-        ApiZendeskCategory category = service.data as ApiZendeskCategory;
-        return leadText + separator + category.title;
-      case SupportScreenType.section:
-      case SupportScreenType.category:
-        ApiZendeskSection section = service.data as ApiZendeskSection;
-        return leadText +
-            separator +
-            section.category +
-            separator +
-            section.title;
-      case SupportScreenType.article:
+    if(service.data is List<ApiZendeskCategory>) {
+      ApiZendeskCategory category = service.data as ApiZendeskCategory;
+      return leadText + separator + category.title;
+    }
+    if(service.data is List<ApiZendeskSection>) {
+      ApiZendeskSection section = service.data as ApiZendeskSection;
+      return leadText +
+          separator +
+          section.category +
+          separator +
+          section.title;
+    }
+    if(service.data is ApiZendeskArticle || service.data is List<ApiZendeskArticle>) {
         ApiZendeskArticle article = service.data as ApiZendeskArticle;
         return leadText +
             separator +
@@ -53,5 +47,6 @@ class SupportScreenViewBreadcrumb extends StatelessWidget {
             separator +
             article.title;
     }
+    return catText;
   }
 }

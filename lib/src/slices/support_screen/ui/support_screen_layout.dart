@@ -43,10 +43,11 @@ class SupportScreenLayout extends StatelessWidget {
   }
 
   Widget getSupportContent(BuildContext context) {
-    if( data == null ||
-        data is ApiZendeskCategory ||
-        data is ApiZendeskSection ||
-        data is ApiZendeskArticle )
+    if( data == null)
+      return CircularProgressIndicator();
+    if( data is List<ApiZendeskCategory> ||
+        data is List<ApiZendeskSection> ||
+        data is List<ApiZendeskArticle> )
         return Column(
             children: data.children
                 .map((data) => SupportScreenViewBox(data)));
