@@ -1,21 +1,19 @@
+import '../../bottom_sheet_modal/bottom_sheet_modal_service.dart';
+import 'package:provider/provider.dart';
+
 import '../../../config/config_color.dart';
 import '../../../utils/helper_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
-import '../user_account_modal_service.dart';
 
 class UserAccountModalViewSupport extends StatelessWidget {
   static const String _title = "Need help?";
 
-  final UserAccountModalService service;
-
-  UserAccountModalViewSupport(this.service);
-
   @override
   Widget build(BuildContext context) {
+    BottomSheetModalService bottomSheetModalService = Provider.of<BottomSheetModalService>(context);
     return GestureDetector(
-        onTap: service.goToSupport(),
+        onTap: bottomSheetModalService.goToSupport,
         child: Container(
         padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal:1.5.h),
         decoration: BoxDecoration(

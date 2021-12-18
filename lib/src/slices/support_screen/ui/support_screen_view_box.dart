@@ -1,7 +1,6 @@
 import '../../../config/config_color.dart';
 import '../../../widgets/tiki_card/tiki_card_view_title.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 import 'support_screen_view_box_content.dart';
 import 'support_screen_view_box_subtitle.dart';

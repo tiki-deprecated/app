@@ -3,8 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_support.dart';
-import 'package:app/src/widgets/bottomsheet_modal_layout.dart';
+import 'user_account_modal_view_support.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,8 +23,7 @@ class UserAccountModalLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomsheetModalLayout(
-        children:<Widget>[
+    return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           UserAccountModalViewHeader(),
           Expanded(
               child: SingleChildScrollView(
@@ -55,7 +53,7 @@ class UserAccountModalLayout extends StatelessWidget {
                                 child: UserAccountModalViewBadges()),
                             Container(
                                 margin: EdgeInsets.only(top: _cardMarginTop.h),
-                                child: UserAccountModalViewSupport(this.service)),
+                                child: UserAccountModalViewSupport()),
                             Container(
                             margin: EdgeInsets.only(top: 1.5.h),
                             child: UserAccountModalViewVersion()),
