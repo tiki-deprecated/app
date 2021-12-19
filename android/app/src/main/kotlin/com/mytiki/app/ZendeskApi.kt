@@ -94,7 +94,7 @@ class ZendeskApi {
         if(it.id != null && it.name != null && it.description != null){
             return mapOf(
                     "id" to it.id!!,
-                    "name" to it.name!!,
+                    "title" to it.name!!,
                     "description" to it.description!!
             )
         }
@@ -122,7 +122,7 @@ class ZendeskApi {
         if(it.id != null && it.name != null && it.description != null){
             return mapOf(
                 "id" to it.id!!,
-                "name" to it.name!!,
+                "title" to it.name!!,
                 "description" to it.description!!
             )
         }
@@ -156,15 +156,14 @@ class ZendeskApi {
     }
 
     private fun processArticle(it: Article): Map<String, Any>? {
-        if(it.id != null && it.updatedAt != null && it.body != null&& it.title != null){
+        if(it.id != null && it.updatedAt != null && it.body != null && it.title != null){
             return mapOf(
-                "id" to it.id!!,
-                "title" to it.title!!,
-                "updateAt" to it.updatedAt!!,
-                "description" to it.body!!
+                "id"  to it.id!!,
+                "title"  to it.title!!,
+                "content"  to it.body!!,
+                "updatedAt"  to it.updatedAt!!,
             )
         }
         return null
     }
-
 }

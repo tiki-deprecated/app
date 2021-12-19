@@ -22,9 +22,6 @@ class BottomSheetModalService extends ChangeNotifier{
     setPages();
   }
 
-
-
-
   void goToSupport() {
     this.model.activePage = BottomSheetModalPage.support;
     notifyListeners();
@@ -33,7 +30,7 @@ class BottomSheetModalService extends ChangeNotifier{
   void setPages() {
     this.model.pages = [
       UserAccountModalService(referralService).presenter.render(),
-      if(this.model.activePage == BottomSheetModalPage.support)
+      if(true) //this.model.activePage == BottomSheetModalPage.support)
         SupportScreenService().presenter.render()
     ];
   }

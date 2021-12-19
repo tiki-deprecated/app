@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+
 import '../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -12,10 +14,10 @@ class BottomSheetModalPresenter{
   BottomSheetModalPresenter(this.service);
 
   Widget render(){
-    return Navigator(
+    return ChangeNotifierProvider.value(value: this.service, child: Navigator(
       pages: service.model.pages,
       onPopPage: (route, result) => route.didPop(result),
-    );
+    ));
   }
 
   Future<void> showModal(BuildContext context) {

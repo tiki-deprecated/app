@@ -5,4 +5,11 @@ class ApiZendeskCategory {
   late String title;
   late String content;
   late List<ApiZendeskSection> sections;
+
+  ApiZendeskCategory.fromMap(Map map){
+    this.id = map['id'];
+    this.title = map['title'];
+    this.content = map['description'];
+    this.sections = map['sections'] ?? [];
+  }
 }

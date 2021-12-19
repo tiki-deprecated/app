@@ -18,10 +18,11 @@ class SupportScreenService extends ChangeNotifier {
   SupportScreenService() {
     this.presenter = SupportScreenPresenter(this);
     this.controller = SupportScreenController(this);
+    getCategories();
   }
 
   Future<void> getCategories() async {
-    this.data = zendeskService.getZendeskCategories();
+    this.data = await zendeskService.getZendeskCategories();
     notifyListeners();
   }
 
