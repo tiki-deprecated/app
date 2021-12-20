@@ -1,3 +1,6 @@
+import 'package:app/src/slices/api_zendesk/model/api_zendesk_article.dart';
+import 'package:app/src/slices/api_zendesk/model/api_zendesk_category.dart';
+import 'package:app/src/slices/api_zendesk/model/api_zendesk_section.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,7 @@ import 'src/slices/api_blockchain/api_blockchain_service.dart';
 import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/api_user/api_user_service.dart';
+import 'src/slices/api_zendesk/api_zendesk_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
 import 'src/utils/api/helper_api_auth.dart';
 
@@ -42,6 +46,19 @@ Future<void> init() async {
       apiBlockchainService: apiBlockchainService,
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
+
+  ApiZendeskService apiZendeskService = ApiZendeskService();
+  List<ApiZendeskCategory> categories = await apiZendeskService.getZendeskCategories();
+  print(categories);
+  ApiZendeskCategory firstCategory = categories[0];
+  List<ApiZendeskSection> sections = await apiZendeskService.getZendeskSections(firstCategory.id);
+  print(sections);
+  ApiZendeskSection firstSection = sections[0];
+  List<ApiZendeskArticle> articles = await apiZendeskService.getZendeskArticles(firstSection.id);
+  print(articles);
+  ApiZendeskArticle firstArticle = articles[0];
+  ApiZendeskArticle article = await apiZendeskService.getZendeskArticle(firstArticle.id);
+  print(article);
 
   SentryFlutter.init(
       (options) async => options
