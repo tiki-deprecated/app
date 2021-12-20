@@ -23,7 +23,7 @@ class UserAccountModalService extends ChangeNotifier {
     this.model = UserAccountModalModel();
   }
 
-  updateSignups(ApiSignupService apiSignupService) async {
+  Future<void> updateSignups(ApiSignupService apiSignupService) async {
     int? total = await apiSignupService.getTotal();
     if (total != null) {
       this.model.signupCount = total;

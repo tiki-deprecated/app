@@ -5,4 +5,6 @@
 
 class UserAccountModalModel {
   int? signupCount;
+
+  bool logoutModalActive = false;
 }
