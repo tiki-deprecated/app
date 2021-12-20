@@ -1,4 +1,3 @@
-import '../../api_zendesk/model/api_zendesk_section.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -6,16 +5,17 @@ import 'package:provider/provider.dart';
 import '../../../config/config_color.dart';
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
-import '../support_screen_service.dart';
+import '../../api_zendesk/model/api_zendesk_section.dart';
+import '../support_modal_service.dart';
 
-class SupportScreenViewBoxSubtitle extends StatelessWidget {
+class SupportModalViewBoxSubtitle extends StatelessWidget {
   final dynamic data;
 
-  SupportScreenViewBoxSubtitle(this.data);
+  SupportModalViewBoxSubtitle(this.data);
 
   @override
   Widget build(BuildContext context) {
-    SupportScreenService service = Provider.of<SupportScreenService>(context);
+    SupportModalService service = Provider.of<SupportModalService>(context);
     TextSpan text = getSubtitle(service);
     return RichText(text: text);
   }

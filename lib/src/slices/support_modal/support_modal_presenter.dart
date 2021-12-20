@@ -3,23 +3,23 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import 'ui/user_account_modal_layout.dart';
-import 'user_account_modal_service.dart';
+import '../../config/config_color.dart';
+import 'support_modal_service.dart';
+import 'ui/support_modal_layout.dart';
 
-class UserAccountModalPresenter {
-  final UserAccountModalService service;
+class SupportModalPresenter {
+  final SupportModalService service;
 
-  UserAccountModalPresenter(this.service);
+  SupportModalPresenter(this.service);
 
-  ChangeNotifierProvider<UserAccountModalService> render() {
+  ChangeNotifierProvider<SupportModalService> render() {
     return ChangeNotifierProvider.value(
-        value: service, child: UserAccountModalLayout());
+        value: service, child: SupportModalLayout());
   }
 
   Future<void> showModal(BuildContext context) {

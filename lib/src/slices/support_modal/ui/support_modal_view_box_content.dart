@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class SupportScreenViewBoxContent extends StatelessWidget {
+class SupportModalViewBoxContent extends StatelessWidget {
   final dynamic data;
 
-  SupportScreenViewBoxContent(this.data);
+  SupportModalViewBoxContent(this.data);
 
   @override
   Widget build(BuildContext context) {

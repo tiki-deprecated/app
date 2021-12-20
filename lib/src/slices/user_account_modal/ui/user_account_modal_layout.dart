@@ -15,6 +15,7 @@ import 'user_account_modal_view_news.dart';
 import 'user_account_modal_view_profile.dart';
 import 'user_account_modal_view_refer.dart';
 import 'user_account_modal_view_release.dart';
+import 'user_account_modal_view_support.dart';
 import 'user_account_modal_view_version.dart';
 
 class UserAccountModalLayout extends StatelessWidget {
@@ -51,6 +52,9 @@ class UserAccountModalLayout extends StatelessWidget {
                         Container(
                             margin: EdgeInsets.only(top: _cardMarginTop.h),
                             child: UserAccountModalViewBadges()),
+                        Container(
+                            margin: EdgeInsets.only(top: _cardMarginTop.h),
+                            child: UserAccountModalViewSupport()),
                         Container(
                             margin: EdgeInsets.only(top: 1.5.h),
                             child: UserAccountModalViewVersion()),

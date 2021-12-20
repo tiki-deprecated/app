@@ -3,7 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/logout_modal/logout_modal_service.dart';
+import '../logout_modal/logout_modal_service.dart';
+import '../support_modal/support_modal_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -40,5 +41,10 @@ class UserAccountModalController {
     ApiSignupService apiSignupService =
         Provider.of<ApiSignupService>(context, listen: false);
     service.updateSignups(apiSignupService);
+  }
+
+  void goToSupport(BuildContext context) {
+    Navigator.of(context).pop();
+    SupportModalService().presenter.showModal(context);
   }
 }

@@ -10,7 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
 
-class SupportScreenViewHiThere extends StatelessWidget {
+class SupportModalViewHiThere extends StatelessWidget {
   static const String _text = "Hi, there 👋";
   static const num _paddingVert = 2.5;
 

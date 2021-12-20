@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../slices/bottom_sheet_modal/bottom_sheet_modal_service.dart';
+import '../../slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -32,7 +32,7 @@ class HeaderBar extends StatelessWidget {
         apiBlockchainService);
     // TODO fix bottom sheet modal service rebuilds in every tap
     return GestureDetector(
-        onTap: () => BottomSheetModalService(userReferralService).presenter.showModal(context),
+        onTap: () => UserAccountModalService(userReferralService).presenter.showModal(context),
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(

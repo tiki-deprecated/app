@@ -1,4 +1,4 @@
-import '../../bottom_sheet_modal/bottom_sheet_modal_service.dart';
+import '../user_account_modal_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config_color.dart';
@@ -11,9 +11,9 @@ class UserAccountModalViewSupport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BottomSheetModalService bottomSheetModalService = Provider.of<BottomSheetModalService>(context);
+    UserAccountModalService service = Provider.of<UserAccountModalService>(context);
     return GestureDetector(
-        onTap: bottomSheetModalService.goToSupport,
+        onTap: () => service.controller.goToSupport(context),
         child: Container(
         padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal:1.5.h),
         decoration: BoxDecoration(

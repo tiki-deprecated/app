@@ -10,7 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
 
-class SupporScreenViewHeader extends StatelessWidget {
+class SupportModalViewHeader extends StatelessWidget {
   static const String _text = "Help Center";
   static const num _paddingHoriz = 6;
   static const num _paddingVert = 2.5;

@@ -1,6 +1,6 @@
-import 'package:app/src/slices/api_zendesk/model/api_zendesk_article.dart';
-import 'package:app/src/slices/api_zendesk/model/api_zendesk_category.dart';
-import 'package:app/src/slices/api_zendesk/model/api_zendesk_section.dart';
+import 'src/slices/api_zendesk/model/api_zendesk_article.dart';
+import 'src/slices/api_zendesk/model/api_zendesk_category.dart';
+import 'src/slices/api_zendesk/model/api_zendesk_section.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,18 +47,18 @@ Future<void> init() async {
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
 
-  ApiZendeskService apiZendeskService = ApiZendeskService();
-  List<ApiZendeskCategory> categories = await apiZendeskService.getZendeskCategories();
-  print(categories);
-  ApiZendeskCategory firstCategory = categories[0];
-  List<ApiZendeskSection> sections = await apiZendeskService.getZendeskSections(firstCategory.id);
-  print(sections);
-  ApiZendeskSection firstSection = sections[0];
-  List<ApiZendeskArticle> articles = await apiZendeskService.getZendeskArticles(firstSection.id);
-  print(articles);
-  ApiZendeskArticle firstArticle = articles[0];
-  ApiZendeskArticle article = await apiZendeskService.getZendeskArticle(firstArticle.id);
-  print(article);
+  // ApiZendeskService apiZendeskService = ApiZendeskService();
+  // List<ApiZendeskCategory> categories = await apiZendeskService.getZendeskCategories();
+  // print(categories);
+  // ApiZendeskCategory firstCategory = categories[0];
+  // List<ApiZendeskSection> sections = await apiZendeskService.getZendeskSections(firstCategory.id);
+  // print(sections);
+  // ApiZendeskSection firstSection = sections[0];
+  // List<ApiZendeskArticle> articles = await apiZendeskService.getZendeskArticles(firstSection.id);
+  // print(articles);
+  // ApiZendeskArticle firstArticle = articles[0];
+  // ApiZendeskArticle article = await apiZendeskService.getZendeskArticle(firstArticle.id);
+  // print(article);
 
   SentryFlutter.init(
       (options) async => options
