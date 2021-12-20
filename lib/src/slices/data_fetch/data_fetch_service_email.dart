@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../data_push/data_push_convert.dart';
-
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_key.dart';
@@ -20,6 +18,7 @@ import '../api_knowledge/api_knowledge_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_push/data_push_convert.dart';
 import '../data_push/data_push_service.dart';
 import 'data_fetch_interface_email.dart';
 import 'data_fetch_interface_provider.dart';

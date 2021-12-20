@@ -21,7 +21,7 @@ class LogoutModalViewHeader extends StatelessWidget {
             top: _paddingVert.h,
             bottom: _paddingVert.h,
           ),
-          child: HelperImage('modal-top')
-      )]);
+          child: HelperImage('modal-top'))
+    ]);
   }
 }
