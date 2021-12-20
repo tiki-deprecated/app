@@ -46,7 +46,7 @@ class HeaderBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image(
-                image: AssetImage('res/images/icon-account.png'),
+                image: AssetImage('res/images/badge-beta-avatar.png'),
                 height: 4.h,
                 fit: BoxFit.fitHeight,
                 alignment: Alignment.centerLeft,
