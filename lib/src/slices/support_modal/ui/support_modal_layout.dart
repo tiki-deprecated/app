@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/config/config_color.dart';
+
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../../api_zendesk/model/api_zendesk_section.dart';
@@ -15,6 +17,7 @@ import 'support_modal_view_box.dart';
 import 'support_modal_view_breadcrumb.dart';
 import 'support_modal_view_header.dart';
 import 'support_modal_view_hi_there.dart';
+import 'support_modal_view_search.dart';
 
 class SupportModalLayout extends StatelessWidget {
   @override
@@ -32,6 +35,7 @@ class SupportModalLayout extends StatelessWidget {
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             SupportModalViewHiThere(),
+                            SupportModalSearch(),
                             SupportModalViewBreadcrumb(),
                             Container(child: getSupportContent(context)),
                           ]))))
@@ -40,13 +44,13 @@ class SupportModalLayout extends StatelessWidget {
 
   Widget getSupportContent(BuildContext context) {
     SupportModalService service = Provider.of<SupportModalService>(context);
-    if (service.data == null) return CircularProgressIndicator();
+    if (service.data == null) return Container(padding: EdgeInsets.only(top:5.h), child:CircularProgressIndicator());
     if (service.data is List<ApiZendeskCategory> ||
         service.data is List<ApiZendeskSection> ||
         service.data is List<ApiZendeskArticle>)
       return Column(
           children:
-              service.data.map((data) => SupportModalViewBox(service.data)));
+              service.data.map((data) => SupportModalViewBox(service.data)).toList() as List<SupportModalViewBox>);
     return SupportModalViewBox(service.data);
   }
 }

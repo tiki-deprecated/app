@@ -1,5 +1,7 @@
+import 'package:app/src/config/config_font.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
 import '../../api_zendesk/model/api_zendesk_article.dart';
@@ -18,11 +20,21 @@ class SupportModalViewBreadcrumb extends StatelessWidget {
   Widget build(BuildContext context) {
     SupportModalService service = Provider.of<SupportModalService>(context);
     String text = _getBreadcrumbText(service);
-    return Text(text,
+    return Container(
+        padding: EdgeInsets.only(top:3.h),
+        alignment: Alignment.centerLeft,
+        child:
+        Text(text,
         style: TextStyle(
-            color: service.data is List<ApiZendeskCategory>
+            color: service.data == null || service.data is List<ApiZendeskCategory>
                 ? this.catColor
-                : this.defaultColor));
+                : this.defaultColor,
+            fontFamily: ConfigFont.familyNunitoSans,
+            fontWeight: FontWeight.w600,
+            fontSize: 11.sp
+            ),
+        textAlign: TextAlign.start
+    ));
   }
 
   String _getBreadcrumbText(SupportModalService service) {

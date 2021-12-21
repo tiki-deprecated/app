@@ -27,9 +27,9 @@ class SupportModalPresenter {
         context: context,
         isScrollControlled: true,
         isDismissible: true,
-        backgroundColor: ConfigColor.white,
+        backgroundColor: ConfigColor.greyTwo,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(4.5.h))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(6.h))),
         builder: (BuildContext context) => render());
   }
 }
