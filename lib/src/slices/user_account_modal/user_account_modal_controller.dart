@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/logout_modal/logout_modal_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,8 +23,10 @@ class UserAccountModalController {
 
   UserAccountModalController(this.service);
 
-  void onLogout(BuildContext context) =>
-      Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+  void onLogout(BuildContext context) {
+    Navigator.of(context).pop();
+    LogoutModalService().presenter.showModal(context);
+  }
 
   Future<void> onShare(UserReferralService userReferralService) async {
     await userReferralService.getCode();

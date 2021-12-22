@@ -38,7 +38,7 @@ class DecisionCardSpamViewHeader extends StatelessWidget {
                   onTap: () => service.controller
                       .shareCard(context, shareKey, shareMessage),
                   child:
-                  Icon(Icons.share, color: ConfigColor.orange, size: 8.w)))
+                      Icon(Icons.share, color: ConfigColor.orange, size: 8.w)))
         ]));
   }
 }
