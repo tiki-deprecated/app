@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_color.dart';
-
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../../api_zendesk/model/api_zendesk_section.dart';
@@ -37,20 +35,27 @@ class SupportModalLayout extends StatelessWidget {
                             SupportModalViewHiThere(),
                             SupportModalSearch(),
                             SupportModalViewBreadcrumb(),
-                            Container(child: getSupportContent(context)),
+                            Container(child: _getSupportContent(context)),
                           ]))))
             ])));
   }
 
-  Widget getSupportContent(BuildContext context) {
+  Widget _getSupportContent(BuildContext context) {
     SupportModalService service = Provider.of<SupportModalService>(context);
-    if (service.data == null) return Container(padding: EdgeInsets.only(top:5.h), child:CircularProgressIndicator());
+    if (service.data == null)
+      return Container(
+          padding: EdgeInsets.only(top: 5.h),
+          child: CircularProgressIndicator());
     if (service.data is List<ApiZendeskCategory> ||
         service.data is List<ApiZendeskSection> ||
         service.data is List<ApiZendeskArticle>)
-      return Column(
-          children:
-              service.data.map((data) => SupportModalViewBox(service.data)).toList() as List<SupportModalViewBox>);
+      return Column(children: _getViewBoxList(service.data));
     return SupportModalViewBox(service.data);
+  }
+
+  List<Widget> _getViewBoxList(dynamic data) {
+    List<Widget> viewBoxList = [];
+    data.forEach((el) => viewBoxList.add(SupportModalViewBox(el)));
+    return viewBoxList;
   }
 }

@@ -1,12 +1,12 @@
+import '../../../config/config_font.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../../api_zendesk/model/api_zendesk_section.dart';
-import '../support_modal_service.dart';
 
 class SupportModalViewBoxSubtitle extends StatelessWidget {
   final dynamic data;
@@ -15,29 +15,39 @@ class SupportModalViewBoxSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SupportModalService service = Provider.of<SupportModalService>(context);
-    TextSpan text = getSubtitle(service);
-    return RichText(text: text);
+    TextSpan text = getSubtitle();
+    return Container(
+        alignment: Alignment.centerLeft, child: RichText(text: text));
   }
 
-  TextSpan getSubtitle(dynamic data) {
+  TextSpan getSubtitle() {
     Color color = getColor(data);
     if (data is ApiZendeskCategory) {
       num count = data.sections.length;
       String text = count.toString() + " sections";
-      return TextSpan(text: text, style: TextStyle(color: color));
+      return TextSpan(
+        text: text,
+        style: TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+            color: color,
+            fontFamily: ConfigFont.familyNunitoSans),
+      );
     }
     if (data is ApiZendeskSection) {
       num count = data.articles.length;
       String text = count.toString() + " articles";
-      return TextSpan(text: text, style: TextStyle(color: color));
+      return TextSpan(
+          text: text,
+          style:
+              TextStyle(color: color, fontFamily: ConfigFont.familyNunitoSans));
     }
     if (data is ApiZendeskArticle) {
       DateTime date = data.updatedAt;
       String publishedDate = DateFormat("dd MMMM YYYY").format(date);
       return TextSpan(
         text: "published on $publishedDate",
-        style: TextStyle(color: color),
+        style: TextStyle(color: color, fontFamily: ConfigFont.familyNunitoSans),
       );
     }
     return TextSpan(text: '');

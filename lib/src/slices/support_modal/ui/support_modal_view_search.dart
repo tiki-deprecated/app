@@ -1,4 +1,4 @@
-import 'package:app/src/config/config_color.dart';
+import '../../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,7 +20,8 @@ class SupportModalSearch extends StatelessWidget {
                 fillColor: Colors.white,
                 filled: true,
                 contentPadding: EdgeInsets.all(20.0),
-                prefixIcon: Icon(Icons.search, color: ConfigColor.tikiPurple, size: 30),
+                prefixIcon:
+                    Icon(Icons.search, color: ConfigColor.tikiPurple, size: 30),
                 hintText: _text,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
@@ -29,8 +30,6 @@ class SupportModalSearch extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(3.w),
-                )
-            )
-        ));
+                ))));
   }
 }

@@ -8,7 +8,9 @@ class SupportModalViewBoxContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String content = data.content;
-    return Html(data: content);
+    String content = data.content
+        .substring(0, data.content.length > 30 ? 30 : data.content.length);
+    return Container(
+        alignment: Alignment.centerLeft, child: Html(data: content));
   }
 }

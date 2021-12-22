@@ -161,7 +161,7 @@ class ZendeskApi {
                 "id"  to it.id!!,
                 "title"  to it.title!!,
                 "content"  to it.body!!,
-                "updatedAt"  to it.updatedAt!!,
+                "updatedAt"  to it.updatedAt!!.toString(),
             )
         }
         return null

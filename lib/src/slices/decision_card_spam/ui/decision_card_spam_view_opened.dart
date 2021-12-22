@@ -32,8 +32,8 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
             Center(
                 child: RichText(
                     text: TextSpan(
-                        text:
-                            "${(this.percent! * 100).round().toString()}", //TODO FIX!
+                        text: "${(this.percent! * 100).round().toString()}",
+                        //TODO FIX!
                         style: TextStyle(
                             color: _getProgressColor(this.percent! * 100),
                             fontFamily: ConfigFont.familyKoara,

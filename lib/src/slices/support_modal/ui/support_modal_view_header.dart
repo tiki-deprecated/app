@@ -3,14 +3,14 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/config/config_font.dart';
-import 'package:app/src/utils/helper_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
+import '../../../utils/helper_image.dart';
 
 class SupportModalViewHeader extends StatelessWidget {
   static const String _text = "Help Center";
@@ -30,9 +30,11 @@ class SupportModalViewHeader extends StatelessWidget {
                   height: _paddingVert.h * 3,
                   padding: EdgeInsets.only(right: _paddingHoriz.w),
                   child: Center(
-                      child: HelperImage("icon-x",
+                      child: HelperImage(
+                    "icon-x",
                     width: 20.sp,
-                    height: 20.sp,))))),
+                    height: 20.sp,
+                  ))))),
       Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(

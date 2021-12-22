@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../config/config_color.dart';
 import 'ui/user_account_modal_layout.dart';
 import 'user_account_modal_service.dart';
 

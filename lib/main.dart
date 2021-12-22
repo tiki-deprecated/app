@@ -1,6 +1,3 @@
-import 'src/slices/api_zendesk/model/api_zendesk_article.dart';
-import 'src/slices/api_zendesk/model/api_zendesk_category.dart';
-import 'src/slices/api_zendesk/model/api_zendesk_section.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +15,6 @@ import 'src/slices/api_blockchain/api_blockchain_service.dart';
 import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/api_user/api_user_service.dart';
-import 'src/slices/api_zendesk/api_zendesk_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
 import 'src/utils/api/helper_api_auth.dart';
 

@@ -3,10 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
-import '../login_flow/login_flow_service.dart';
+import '../api_zendesk/model/api_zendesk_article.dart';
+import '../api_zendesk/model/api_zendesk_category.dart';
+import '../api_zendesk/model/api_zendesk_section.dart';
 import 'support_modal_service.dart';
 
 class SupportModalController {
@@ -14,6 +13,9 @@ class SupportModalController {
 
   SupportModalController(this.service);
 
-  void onLogout(BuildContext context) =>
-      Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+  void onBoxTap(dynamic boxData) {
+    if (boxData is ApiZendeskCategory) service.getSectionsForCategory(boxData);
+    if (boxData is ApiZendeskSection) service.getArticlesForSection(boxData);
+    if (boxData is ApiZendeskArticle) service.getArticleById(boxData);
+  }
 }

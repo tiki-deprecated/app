@@ -7,11 +7,11 @@ class ApiZendeskSection {
   late String content;
   late List<ApiZendeskArticle> articles;
 
-  ApiZendeskSection.fromMap(Map map){
+  ApiZendeskSection.fromMap(Map map) {
     this.id = map['id'];
     this.title = map['title'];
     this.content = map['description'];
     this.category = map['category'] ?? '';
-    this.articles = map['sections'] ?? [];
+    this.articles = map['articles'] ?? <ApiZendeskArticle>[];
   }
 }

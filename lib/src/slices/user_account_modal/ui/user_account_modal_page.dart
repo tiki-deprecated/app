@@ -5,7 +5,6 @@ import '../user_account_modal_service.dart';
 import 'user_account_modal_layout.dart';
 
 class UserAccountModalPage extends Page {
-
   final UserAccountModalService service;
 
   UserAccountModalPage(this.service)
@@ -15,9 +14,7 @@ class UserAccountModalPage extends Page {
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
         settings: this,
-        builder: (BuildContext context) =>
-            ChangeNotifierProvider.value(
-                value: service, child: UserAccountModalLayout())
-    );
+        builder: (BuildContext context) => ChangeNotifierProvider.value(
+            value: service, child: UserAccountModalLayout()));
   }
 }

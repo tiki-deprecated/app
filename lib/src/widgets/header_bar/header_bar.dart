@@ -32,7 +32,9 @@ class HeaderBar extends StatelessWidget {
         apiBlockchainService);
     // TODO fix bottom sheet modal service rebuilds in every tap
     return GestureDetector(
-        onTap: () => UserAccountModalService(userReferralService).presenter.showModal(context),
+        onTap: () => UserAccountModalService(userReferralService)
+            .presenter
+            .showModal(context),
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(
