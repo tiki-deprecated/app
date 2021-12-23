@@ -3,9 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_zendesk/model/api_zendesk_category.dart';
+import 'package:app/src/slices/support_modal/support_modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
@@ -19,6 +22,7 @@ class SupportModalViewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SupportModalService service = Provider.of<SupportModalService>(context);
     return Stack(children: [
       GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -35,6 +39,21 @@ class SupportModalViewHeader extends StatelessWidget {
                     width: 20.sp,
                     height: 20.sp,
                   ))))),
+      if(service.data != null && service.data !is List<ApiZendeskCategory>) GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => service.controller.navigateBack(context),
+          child: Container(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  width: _paddingHoriz.w * 3,
+                  height: _paddingVert.h * 3,
+                  padding: EdgeInsets.only(right: _paddingHoriz.w),
+                  child: Center(
+                      child: HelperImage(
+                        "icon-back",
+                        width: 20.sp,
+                        height: 20.sp,
+                      ))))),
       Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(

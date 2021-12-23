@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 
 class ApiZendeskArticle {
   late num id;
+  late num parentId;
   late String title;
   late String category;
   late String section;

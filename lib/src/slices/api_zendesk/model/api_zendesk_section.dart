@@ -1,7 +1,8 @@
 import 'api_zendesk_article.dart';
 
 class ApiZendeskSection {
-  late int id;
+  late num id;
+  late num parentId;
   late String title;
   late String category;
   late String content;

@@ -25,6 +25,7 @@ class ApiZendeskService {
       ApiZendeskCategory category) async {
     return (await getZendeskSections(category.id)).map((section) {
       section.category = category.title;
+      section.parentId = category.id;
       return section;
     }).toList();
   }
@@ -49,22 +50,32 @@ class ApiZendeskService {
     return (await getZendeskArticles(section.id)).map((article) {
       article.category = section.category;
       article.section = section.title;
+      article.parentId = section.id;
       return article;
     }).toList();
   }
 
   Future<List<ApiZendeskArticle>> getZendeskArticles(num sectionId,
-      {bool includeContent = false}) async {
+      {String category = '', String section = ''}) async {
     List apiArticles = await _platform
         .invokeMethod("getZendeskArticles", {"sectionId": sectionId});
     List<ApiZendeskArticle> articles =
-        apiArticles.map((e) => ApiZendeskArticle.fromMap(e)).toList();
+        apiArticles.map((e) {
+          ApiZendeskArticle article = ApiZendeskArticle.fromMap(e);
+          article.category = category;
+          article.section = section;
+          return article;
+        }).toList();
     return articles;
   }
 
-  Future<ApiZendeskArticle> getZendeskArticle(num articleId) async {
+  Future<ApiZendeskArticle> getZendeskArticle(num articleId, {
+      num parentId = 0,
+      String section = '',
+      String category = ''}) async {
     ApiZendeskArticle article = ApiZendeskArticle.fromMap(await _platform
         .invokeMethod("getZendeskArticle", {"articleId": articleId}));
+    article.parentId = parentId;
     return article;
   }
 }
