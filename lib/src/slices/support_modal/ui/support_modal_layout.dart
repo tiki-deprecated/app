@@ -41,15 +41,15 @@ class SupportModalLayout extends StatelessWidget {
 
   Widget _getSupportContent(BuildContext context) {
     SupportModalService service = Provider.of<SupportModalService>(context);
-    if (service.data == null)
+    if (service.model.data == null)
       return Container(
           padding: EdgeInsets.only(top: 5.h),
           child: CircularProgressIndicator());
-    if (service.data is List<ApiZendeskCategory> ||
-        service.data is List<ApiZendeskSection> ||
-        service.data is List<ApiZendeskArticle>)
-      return Column(children: _getViewBoxList(service.data));
-    return SupportModalViewBox(service.data, excerpt: false);
+    if (service.model.data is List<ApiZendeskCategory> ||
+        service.model.data is List<ApiZendeskSection> ||
+        service.model.data is List<ApiZendeskArticle>)
+      return Column(children: _getViewBoxList(service.model.data));
+    return SupportModalViewBox(service.model.data, excerpt: false);
   }
 
   List<Widget> _getViewBoxList(dynamic data) {

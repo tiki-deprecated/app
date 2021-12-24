@@ -9,51 +9,49 @@ import '../api_zendesk/api_zendesk_service.dart';
 import '../api_zendesk/model/api_zendesk_article.dart';
 import '../api_zendesk/model/api_zendesk_category.dart';
 import '../api_zendesk/model/api_zendesk_section.dart';
+import 'model/support_modal_model.dart';
 import 'support_modal_controller.dart';
 import 'support_modal_presenter.dart';
 
 class SupportModalService extends ChangeNotifier {
   late final SupportModalPresenter presenter;
   late final SupportModalController controller;
+  late final SupportModalModel model;
   final ApiZendeskService zendeskService = ApiZendeskService();
-
-  dynamic data;
-  late ApiZendeskCategory? category;
-  late ApiZendeskSection? section;
-  late ApiZendeskArticle? article;
 
   SupportModalService() {
     this.presenter = SupportModalPresenter(this);
     this.controller = SupportModalController(this);
+    this.model = SupportModalModel();
     getCategories();
   }
 
   Future<void> getCategories() async {
-    this.data =
+    this.model.data =
         await zendeskService.getZendeskCategories(includeSections: true);
-    this.category = null;
+    this.model.category = null;
     notifyListeners();
   }
 
   Future<void> getSectionsForCategory(ApiZendeskCategory category) async {
-    this.data = await zendeskService.getZendeskSections(category.id,
+    this.model.data = await zendeskService.getZendeskSections(category.id,
         includeArticles: true);
-    this.category = category;
+    this.model.category = category;
     notifyListeners();
   }
 
   Future<void> getArticlesForSection(ApiZendeskSection section) async {
-    this.data = await zendeskService.getZendeskArticles(section.id,
+    this.model.data = await zendeskService.getZendeskArticles(section.id,
         category: section.category);
-    this.section = section;
-    this.article = null;
+    this.model.section = section;
+    this.model.article = null;
     notifyListeners();
   }
 
   Future<void> getArticleById(ApiZendeskArticle article) async {
-    this.data = await zendeskService.getZendeskArticle(article.id,
+    this.model.data = await zendeskService.getZendeskArticle(article.id,
         section: article.section, category: article.category);
-    this.article = article;
+    this.model.article = article;
     notifyListeners();
   }
 }

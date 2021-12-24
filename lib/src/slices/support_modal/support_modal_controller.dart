@@ -23,11 +23,11 @@ class SupportModalController {
   }
 
   navigateBack(BuildContext context) {
-    if (service.data is List<ApiZendeskSection>) service.getCategories();
-    if (service.data is List<ApiZendeskArticle>)
-      service.getSectionsForCategory(service.category!);
-    if (service.data is ApiZendeskArticle)
-      service.getArticlesForSection(service.section!);
+    if (service.model.data is List<ApiZendeskSection>) service.getCategories();
+    if (service.model.data is List<ApiZendeskArticle>)
+      service.getSectionsForCategory(service.model.category!);
+    if (service.model.data is ApiZendeskArticle)
+      service.getArticlesForSection(service.model.section!);
   }
 
   Future<void> launchUrl(String url, BuildContext context) async {

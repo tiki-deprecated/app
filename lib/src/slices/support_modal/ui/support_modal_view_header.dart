@@ -39,7 +39,7 @@ class SupportModalViewHeader extends StatelessWidget {
                     width: 15.sp,
                     height: 15.sp,
                   ))))),
-      if (service.data != null && !(service.data is List<ApiZendeskCategory>))
+      if (service.model.data != null && !(service.model.data is List<ApiZendeskCategory>))
         GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => service.controller.navigateBack(context),

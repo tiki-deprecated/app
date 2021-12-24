@@ -25,8 +25,8 @@ class SupportModalViewBreadcrumb extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(text,
             style: TextStyle(
-                color: service.data == null ||
-                        service.data is List<ApiZendeskCategory>
+                color: service.model.data == null ||
+                        service.model.data is List<ApiZendeskCategory>
                     ? this.catColor
                     : this.defaultColor,
                 fontFamily: ConfigFont.familyNunitoSans,
@@ -37,25 +37,25 @@ class SupportModalViewBreadcrumb extends StatelessWidget {
 
   String _getBreadcrumbText(SupportModalService service) {
     String leadText = "All categories";
-    if (service.data == null) return '';
-    if (service.data is List<ApiZendeskSection> && service.data.length > 0) {
-      String cat = service.category?.title ?? '';
+    if (service.model.data == null) return '';
+    if (service.model.data is List<ApiZendeskSection> && service.model.data.length > 0) {
+      String cat = service.model.category?.title ?? '';
       return leadText + separator + cat;
     }
-    if (service.data is List<ApiZendeskArticle>) {
-      String cat = service.category?.title ?? '';
-      String section = service.section?.title ?? '';
+    if (service.model.data is List<ApiZendeskArticle>) {
+      String cat = service.model.category?.title ?? '';
+      String section = service.model.section?.title ?? '';
       return leadText + separator + cat + separator + section;
-    } else if (service.data is ApiZendeskArticle) {
-      String cat = service.category?.title ?? '';
-      String section = service.section?.title ?? '';
+    } else if (service.model.data is ApiZendeskArticle) {
+      String cat = service.model.category?.title ?? '';
+      String section = service.model.section?.title ?? '';
       return leadText +
           separator +
           cat +
           separator +
           section +
           separator +
-          service.data.title;
+          service.model.data.title;
     }
     return catText;
   }
