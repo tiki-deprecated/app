@@ -3,19 +3,18 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../api_zendesk/model/api_zendesk_article.dart';
-import '../../api_zendesk/model/api_zendesk_category.dart';
-import '../../api_zendesk/model/api_zendesk_section.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../api_zendesk/model/api_zendesk_article.dart';
+import '../../api_zendesk/model/api_zendesk_category.dart';
+import '../../api_zendesk/model/api_zendesk_section.dart';
 import '../support_modal_service.dart';
 import 'support_modal_view_box.dart';
 import 'support_modal_view_breadcrumb.dart';
 import 'support_modal_view_header.dart';
 import 'support_modal_view_hi_there.dart';
-import 'support_modal_view_search.dart';
 
 class SupportModalLayout extends StatelessWidget {
   @override
@@ -33,7 +32,7 @@ class SupportModalLayout extends StatelessWidget {
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             SupportModalViewHiThere(),
-                            SupportModalSearch(),
+                            //SupportModalSearch(),
                             SupportModalViewBreadcrumb(),
                             Container(child: _getSupportContent(context)),
                           ]))))
@@ -50,7 +49,7 @@ class SupportModalLayout extends StatelessWidget {
         service.data is List<ApiZendeskSection> ||
         service.data is List<ApiZendeskArticle>)
       return Column(children: _getViewBoxList(service.data));
-    return SupportModalViewBox(service.data);
+    return SupportModalViewBox(service.data, excerpt: false);
   }
 
   List<Widget> _getViewBoxList(dynamic data) {

@@ -1,9 +1,9 @@
-import '../../../config/config_font.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
 import '../../api_zendesk/model/api_zendesk_article.dart';
 import '../../api_zendesk/model/api_zendesk_category.dart';
 import '../../api_zendesk/model/api_zendesk_section.dart';

@@ -39,21 +39,23 @@ class SupportModalViewBreadcrumb extends StatelessWidget {
     String leadText = "All categories";
     if (service.data == null) return '';
     if (service.data is List<ApiZendeskSection> && service.data.length > 0) {
-      ApiZendeskSection section = service.data[0] as ApiZendeskSection;
-      return leadText + separator + section.category;
+      String cat = service.category?.title ?? '';
+      return leadText + separator + cat;
     }
-    if (service.data is ApiZendeskArticle ||
-        service.data is List<ApiZendeskArticle>) {
-      ApiZendeskArticle article = (service.data is List<ApiZendeskArticle>
-          ? service.data[0]
-          : service.data) as ApiZendeskArticle;
+    if (service.data is List<ApiZendeskArticle>) {
+      String cat = service.category?.title ?? '';
+      String section = service.section?.title ?? '';
+      return leadText + separator + cat + separator + section;
+    } else if (service.data is ApiZendeskArticle) {
+      String cat = service.category?.title ?? '';
+      String section = service.section?.title ?? '';
       return leadText +
           separator +
-          article.category +
+          cat +
           separator +
-          article.section +
+          section +
           separator +
-          article.title;
+          service.data.title;
     }
     return catText;
   }

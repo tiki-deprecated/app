@@ -10,7 +10,7 @@ import '../../../config/config_color.dart';
 import '../../../config/config_font.dart';
 
 class DecisionScreenViewLink extends StatelessWidget {
-  static const String _add = "Add a Gmail account";
+  static const String _add = "Add an email account";
   static const String _choices = "to start making choices";
   static const num _fontSize = 15;
 

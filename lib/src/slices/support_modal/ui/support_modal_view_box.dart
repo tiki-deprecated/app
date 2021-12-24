@@ -1,9 +1,9 @@
+import 'support_modal_view_box_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
 import '../support_modal_service.dart';
 import 'support_modal_view_box_content.dart';
 import 'support_modal_view_box_subtitle.dart';
@@ -11,8 +11,9 @@ import 'support_modal_view_box_subtitle.dart';
 class SupportModalViewBox extends StatelessWidget {
   static const double _cardMarginTop = 2.25;
   final dynamic data;
+  final bool excerpt;
 
-  const SupportModalViewBox(this.data);
+  const SupportModalViewBox(this.data, {this.excerpt = true});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class SupportModalViewBox extends StatelessWidget {
             child: Column(children: <Widget>[
               SupportModalViewBoxTitle(data),
               SupportModalViewBoxSubtitle(data),
-              SupportModalViewBoxContent(data)
+              SupportModalViewBoxContent(data, excerpt: this.excerpt)
             ])));
   }
 
@@ -36,23 +37,5 @@ class SupportModalViewBox extends StatelessWidget {
     SupportModalService service =
         Provider.of<SupportModalService>(context, listen: false);
     service.controller.onBoxTap(this.data);
-  }
-}
-
-class SupportModalViewBoxTitle extends StatelessWidget {
-  final dynamic data;
-
-  const SupportModalViewBoxTitle(this.data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.centerLeft,
-        child: Text(data.title ?? "",
-            style: TextStyle(
-                color: ConfigColor.tikiPurple,
-                fontSize: 20.sp,
-                fontFamily: ConfigFont.familyNunitoSans,
-                fontWeight: FontWeight.w700)));
   }
 }

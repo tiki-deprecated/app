@@ -22,7 +22,6 @@ class SupportModalService extends ChangeNotifier {
   late ApiZendeskSection? section;
   late ApiZendeskArticle? article;
 
-
   SupportModalService() {
     this.presenter = SupportModalPresenter(this);
     this.controller = SupportModalController(this);
@@ -44,7 +43,8 @@ class SupportModalService extends ChangeNotifier {
   }
 
   Future<void> getArticlesForSection(ApiZendeskSection section) async {
-    this.data = await zendeskService.getZendeskArticles(section.id, category: section.category);
+    this.data = await zendeskService.getZendeskArticles(section.id,
+        category: section.category);
     this.section = section;
     this.article = null;
     notifyListeners();
@@ -52,12 +52,8 @@ class SupportModalService extends ChangeNotifier {
 
   Future<void> getArticleById(ApiZendeskArticle article) async {
     this.data = await zendeskService.getZendeskArticle(article.id,
-      parentId: article.parentId,
-      section: article.section,
-      category: article.category
-    );
+        section: article.section, category: article.category);
     this.article = article;
     notifyListeners();
   }
-
 }

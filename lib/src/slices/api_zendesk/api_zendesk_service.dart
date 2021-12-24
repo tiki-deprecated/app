@@ -59,20 +59,17 @@ class ApiZendeskService {
       {String category = '', String section = ''}) async {
     List apiArticles = await _platform
         .invokeMethod("getZendeskArticles", {"sectionId": sectionId});
-    List<ApiZendeskArticle> articles =
-        apiArticles.map((e) {
-          ApiZendeskArticle article = ApiZendeskArticle.fromMap(e);
-          article.category = category;
-          article.section = section;
-          return article;
-        }).toList();
+    List<ApiZendeskArticle> articles = apiArticles.map((e) {
+      ApiZendeskArticle article = ApiZendeskArticle.fromMap(e);
+      article.category = category;
+      article.section = section;
+      return article;
+    }).toList();
     return articles;
   }
 
-  Future<ApiZendeskArticle> getZendeskArticle(num articleId, {
-      num parentId = 0,
-      String section = '',
-      String category = ''}) async {
+  Future<ApiZendeskArticle> getZendeskArticle(num articleId,
+      {num parentId = 0, String section = '', String category = ''}) async {
     ApiZendeskArticle article = ApiZendeskArticle.fromMap(await _platform
         .invokeMethod("getZendeskArticle", {"articleId": articleId}));
     article.parentId = parentId;
