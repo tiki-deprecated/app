@@ -12,17 +12,16 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
       
-      zendeskApi.initZendesk()
       let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
       let zendeskChannel = FlutterMethodChannel(name: channel, binaryMessenger: controller.binaryMessenger)
       zendeskChannel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
           switch call.method {
-              case "getZendeskCategories" : zendeskApi.getZendeskCategories(result)
-              case "getZendeskSection" : zendeskApi.getZendeskSections(call, result)
-              case "getZendeskArticles" : zendeskApi.getZendeskArticles(call, result)
-              case "getZendeskArticle" : zendeskApi.getZendeskArticle(call, result)
-              default : result.notImplemented()
+            case "getZendeskCategories" : self.zendeskApi.getZendeskCategories(result: result)
+            case "getZendeskSection" : self.zendeskApi.getZendeskSections(call: call, result: result)
+            case "getZendeskArticles" : self.zendeskApi.getZendeskArticles(call: call, result: result)
+            case "getZendeskArticle" : self.zendeskApi.getZendeskArticle(call: call, result: result)
+            default : result(FlutterError(code: "-1", message: "Not implemented", details: nil))
           }
       })
     GeneratedPluginRegistrant.register(with: self)

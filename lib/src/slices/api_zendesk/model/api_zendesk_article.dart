@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 
 class ApiZendeskArticle {
@@ -16,8 +18,14 @@ class ApiZendeskArticle {
     this.section = map['section'] ?? '';
     this.category = map['category'] ?? '';
     this.updatedAt = map['updatedAt'] != null
-        ? DateFormat("EEE MMM dd HH:mm:ss yyyy")
-            .parse(map['updatedAt'].replaceRange(20, 30, ''))
+        ? formatDate(map['updatedAt'])
         : null;
+  }
+
+  DateTime formatDate(String date){
+    if(Platform.isAndroid){
+      date = date.replaceRange(20, 30, '');
+    }
+    return DateFormat("EEE MMM dd HH:mm:ss YYYY").parse(date);
   }
 }
