@@ -22,6 +22,8 @@ class DataFetchService extends ChangeNotifier {
   final DataPushService _dataPushService;
   late final DataFetchServiceEmail email;
 
+  Set<int> _indexMutex = Set();
+
   DataFetchService(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
@@ -44,7 +46,14 @@ class DataFetchService extends ChangeNotifier {
   }
 
   Future<void> asyncIndex(ApiOAuthModelAccount account) async {
-    _log.fine('DataFetchService async index');
-    email.asyncIndex(account);
+    if (!_indexMutex.contains(account.accountId!)) {
+      _indexMutex.add(account.accountId!);
+      _log.fine(
+          'DataFetchService async index for account ${account.accountId}');
+      Future f1 = email.asyncIndex(account);
+      Future f2 = email.asyncProcess(account);
+      await Future.wait([f1, f2]);
+      _indexMutex.remove(account.accountId!);
+    }
   }
 }

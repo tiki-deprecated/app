@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiOAuthModelAccount {
+import '../../../utils/json/json_object.dart';
+
+class ApiOAuthModelAccount extends JsonObject {
   int? accountId;
   String? username;
   String? displayName;
@@ -29,25 +31,29 @@ class ApiOAuthModelAccount {
       this.refreshTokenExpiration,
       this.shouldReconnect});
 
-  ApiOAuthModelAccount.fromMap(map) {
-    this.accountId = map['account_id'];
-    this.username = map['username'];
-    this.displayName = map['display_name'];
-    this.email = map['email'];
-    this.provider = map['provider'];
-    this.accessToken = map['access_token'];
-    this.accessTokenExpiration = map['access_token_expiration'];
-    this.refreshToken = map['refreshToken'];
-    this.refreshTokenExpiration = map['refresh_token_expiration'];
-    this.shouldReconnect = map['should_reconnect'] ?? 0;
-    if (map['modified_epoch'] != null)
-      this.modified =
-          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
-    if (map['created_epoch'] != null)
-      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
+  ApiOAuthModelAccount.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      this.accountId = json['account_id'];
+      this.username = json['username'];
+      this.displayName = json['display_name'];
+      this.email = json['email'];
+      this.provider = json['provider'];
+      this.accessToken = json['access_token'];
+      this.accessTokenExpiration = json['access_token_expiration'];
+      this.refreshToken = json['refreshToken'];
+      this.refreshTokenExpiration = json['refresh_token_expiration'];
+      this.shouldReconnect = json['should_reconnect'] ?? 0;
+      if (json['modified_epoch'] != null)
+        this.modified =
+            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+      if (json['created_epoch'] != null)
+        this.created =
+            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+    }
   }
 
-  Map<String, dynamic> toMap() => {
+  @override
+  Map<String, dynamic> toJson() => {
         'account_id': accountId,
         'username': username,
         'display_name': displayName,

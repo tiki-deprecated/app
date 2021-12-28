@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelEdgeVertex {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelEdgeVertex extends JsonObject {
   String? type;
   String? value;
 
@@ -16,6 +18,7 @@ class ApiKnowledgeModelEdgeVertex {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'type': type,
         'value': value,

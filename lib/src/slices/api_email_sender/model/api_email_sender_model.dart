@@ -3,11 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../api_company/model/api_company_model_local.dart';
+import '../../../utils/json/json_object.dart';
+import '../../api_company/model/api_company_model.dart';
 
-class ApiEmailSenderModel {
+class ApiEmailSenderModel extends JsonObject {
   int? senderId;
-  ApiCompanyModelLocal? company;
+  ApiCompanyModel? company;
   String? name;
   String? email;
   String? category;
@@ -33,28 +34,32 @@ class ApiEmailSenderModel {
       : this.ignoreUntil =
             ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
-  ApiEmailSenderModel.fromMap(map) {
-    this.senderId = map['sender_id'];
-    this.company = ApiCompanyModelLocal.fromMap(map['company']);
-    this.name = map['name'];
-    this.email = map['email'];
-    this.category = map['category'];
-    this.unsubscribeMailTo = map['unsubscribe_mail_to'];
-    this.unsubscribed = map['unsubscribed_bool'] == 1 ? true : false;
-    if (map['ignore_until_epoch'] != null)
-      this.ignoreUntil =
-          DateTime.fromMillisecondsSinceEpoch(map['ignore_until_epoch']);
-    if (map['email_since_epoch'] != null)
-      this.emailSince =
-          DateTime.fromMillisecondsSinceEpoch(map['email_since_epoch']);
-    if (map['modified_epoch'] != null)
-      this.modified =
-          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
-    if (map['created_epoch'] != null)
-      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
+  ApiEmailSenderModel.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      this.senderId = json['sender_id'];
+      this.company = ApiCompanyModel.fromJson(json['company']);
+      this.name = json['name'];
+      this.email = json['email'];
+      this.category = json['category'];
+      this.unsubscribeMailTo = json['unsubscribe_mail_to'];
+      this.unsubscribed = json['unsubscribed_bool'] == 1 ? true : false;
+      if (json['ignore_until_epoch'] != null)
+        this.ignoreUntil =
+            DateTime.fromMillisecondsSinceEpoch(json['ignore_until_epoch']);
+      if (json['email_since_epoch'] != null)
+        this.emailSince =
+            DateTime.fromMillisecondsSinceEpoch(json['email_since_epoch']);
+      if (json['modified_epoch'] != null)
+        this.modified =
+            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+      if (json['created_epoch'] != null)
+        this.created =
+            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+    }
   }
 
-  Map<String, dynamic> toMap() => {
+  @override
+  Map<String, dynamic> toJson() => {
         'sender_id': senderId,
         'company_id': company?.companyId,
         'name': name,

@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiUserModelToken {
+import '../../../utils/json/json_object.dart';
+
+class ApiUserModelToken extends JsonObject {
   String? bearer;
   String? refresh;
   DateTime? expires;
@@ -20,6 +22,7 @@ class ApiUserModelToken {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'bearer': bearer,
         'refresh': refresh,

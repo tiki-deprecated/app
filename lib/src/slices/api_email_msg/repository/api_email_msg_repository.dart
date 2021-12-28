@@ -11,6 +11,20 @@ import '../model/api_email_msg_model.dart';
 class ApiEmailMsgRepository {
   final _log = Logger('ApiEmailMsgRepository');
   static const String _table = 'message';
+  static const String _upsertQuery = 'INSERT OR REPLACE INTO $_table '
+      '(message_id, ext_message_id, sender_id, received_date_epoch, opened_date_epoch, account, created_epoch, modified_epoch) '
+      'VALUES('
+      '(SELECT message_id '
+      'FROM $_table '
+      'WHERE ext_message_id = ?1 AND account = ?5), '
+      '?1, ?2, ?3, ?4, ?5, '
+      '(SELECT IFNULL('
+      '(SELECT created_epoch '
+      'FROM $_table '
+      'WHERE ext_message_id = ?1 AND account = ?5), '
+      'strftime(\'%s\', \'now\') * 1000)), '
+      'strftime(\'%s\', \'now\') * 1000)';
+
   final Database _database;
 
   ApiEmailMsgRepository(this._database);
@@ -19,7 +33,7 @@ class ApiEmailMsgRepository {
     DateTime now = DateTime.now();
     message.modified = now;
     message.created = now;
-    int id = await _database.insert(_table, message.toMap());
+    int id = await _database.insert(_table, message.toJson());
     _log.finest("Insert #" + id.toString());
     message.messageId = id;
     return message;
@@ -29,12 +43,43 @@ class ApiEmailMsgRepository {
     message.modified = DateTime.now();
     await _database.update(
       _table,
-      message.toMap(),
+      message.toJson(),
       where: 'message_id = ?',
       whereArgs: [message.messageId],
     );
     _log.finest("update #" + message.messageId.toString());
     return message;
+  }
+
+  Future<int> batchUpsert(List<ApiEmailMsgModel> messages) async {
+    if (messages.length > 0) {
+      Batch batch = _database.batch();
+      messages.forEach((data) => batch.rawInsert(
+            _upsertQuery,
+            [
+              data.extMessageId,
+              data.sender?.senderId,
+              data.receivedDate?.millisecondsSinceEpoch,
+              data.openedDate?.millisecondsSinceEpoch,
+              data.account
+            ],
+          ));
+      List res = await batch.commit(continueOnError: true);
+      return res.length;
+    } else
+      return 0;
+  }
+
+  Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel data) async {
+    int id = await _database.rawInsert(_upsertQuery, [
+      data.extMessageId,
+      data.sender?.senderId,
+      data.receivedDate?.millisecondsSinceEpoch,
+      data.openedDate?.millisecondsSinceEpoch,
+      data.account
+    ]);
+    data.messageId = id;
+    return data;
   }
 
   Future<ApiEmailMsgModel?> getByExtMessageIdAndAccount(
@@ -43,7 +88,7 @@ class ApiEmailMsgRepository {
         where: 'ext_message_id = ? AND account = ?',
         whereArgs: [extMessageId, account]);
     if (rows.isEmpty) return null;
-    return ApiEmailMsgModel.fromMap(rows[0]);
+    return ApiEmailMsgModel.fromJson(rows[0]);
   }
 
   Future<List<ApiEmailMsgModel>> getByExtMessageIds(
@@ -53,14 +98,14 @@ class ApiEmailMsgRepository {
             extMessageIds.map((s) => '\'' + s + '\'').join(", ") +
             ')');
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+    return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
 
   Future<List<ApiEmailMsgModel>> getBySenderId(int senderId) async {
     final List<Map<String, Object?>> rows =
         await _select(where: 'sender.sender_id = ?', whereArgs: [senderId]);
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+    return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
 
   Future<List<Map<String, Object?>>> _select(
@@ -120,7 +165,7 @@ class ApiEmailMsgRepository {
     final List<Map<String, Object?>> rows =
         await _select(where: 'account = ?', whereArgs: [account]);
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+    return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
 
   Future<void> delete(ApiEmailMsgModel message) async {
@@ -132,6 +177,6 @@ class ApiEmailMsgRepository {
     final List<Map<String, Object?>> rows =
         await _select(where: 'sender is NULL');
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailMsgModel.fromMap(row)).toList();
+    return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
 }

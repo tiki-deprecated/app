@@ -37,7 +37,7 @@ class ApiOAuthRepositoryProvider {
     String jsonString = await rootBundle.loadString(_dbAuthProviders);
     Map jsonMap = jsonDecode(jsonString);
     jsonMap.forEach((name, providerData) {
-      _providers[name] = ApiOAuthModelProvider.fromMap(providerData);
+      _providers[name] = ApiOAuthModelProvider.fromJson(providerData);
     });
   }
 }

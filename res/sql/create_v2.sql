@@ -21,9 +21,9 @@ CREATE TABLE company (
 -- -----------------------------------------------------------------------
 CREATE TABLE sender (
     sender_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    company_id INTEGER NOT NULL,
+    company_id INTEGER,
     name TEXT,
-    email TEXT,
+    email TEXT UNIQUE,
     category TEXT,
     unsubscribe_mail_to TEXT,
     ignore_until_epoch INTEGER,

@@ -42,6 +42,8 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   url_launcher: ^6.0.12
   uuid: ^3.0.5
+  httpp:
+    path: ../httpp/
 
 dependency_overrides:
   sqflite:

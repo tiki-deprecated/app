@@ -7,14 +7,13 @@ import 'dart:convert';
 
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
+import 'package:httpp/httpp.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import '../../config/config_sentry.dart';
-import '../../utils/api/helper_api_headers.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
 import '../api_microsoft/api_microsoft_service.dart';
-import '../tiki_http/tiki_http_client.dart';
 import 'api_oauth_interface_provider.dart';
 import 'model/api_oauth_model.dart';
 import 'model/api_oauth_model_account.dart';
@@ -28,7 +27,10 @@ class ApiOAuthService {
   final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
   final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
   final ApiAppDataService _apiAppDataService;
-  final TikiHttpClient tikiHttpClient;
+  final Httpp httpp;
+
+  static const String PROVIDER_GOOGLE = 'google';
+  static const String PROVIDER_MICROSOFT = 'microsoft';
 
   Map<String, ApiOAuthInterfaceProvider> get interfaceProviders =>
       _model.interfaceProviders;
@@ -36,13 +38,13 @@ class ApiOAuthService {
   ApiOAuthService(
       {required Database database,
       required ApiAppDataService apiAppDataService,
-      required TikiHttpClient tikiHttpClient})
+      required Httpp httpp})
       : this._appAuth = FlutterAppAuth(),
         this._apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
         this._apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
         this._model = ApiOauthModel(),
         this._apiAppDataService = apiAppDataService,
-        this.tikiHttpClient = tikiHttpClient {
+        this.httpp = httpp {
     _getProviders();
   }
 
@@ -93,11 +95,11 @@ class ApiOAuthService {
     if (providerModel != null) {
       Response rsp = await proxy(
           () => ConfigSentry.http.get(Uri.parse(providerModel.userInfoEndpoint),
-              headers:
-                  HelperApiHeaders(auth: apiAuthServiceAccountModel.accessToken)
-                      .header),
+              headers: HttppHeaders.typical(
+                      bearerToken: apiAuthServiceAccountModel.accessToken)
+                  .map),
           apiAuthServiceAccountModel);
-      if (TikiHttpClient.is2xx(rsp.statusCode)) {
+      if (HttppUtils.is2xx(rsp.statusCode)) {
         return jsonDecode(rsp.body);
       }
     }
@@ -111,7 +113,7 @@ class ApiOAuthService {
   Future<dynamic> proxy(
       Future<dynamic> Function() request, ApiOAuthModelAccount account) async {
     Response rsp = await request();
-    if (TikiHttpClient.isUnauthorized(rsp.statusCode) &&
+    if (HttppUtils.isUnauthorized(rsp.statusCode) &&
         account.refreshToken != null) {
       await refreshToken(account);
       rsp = await request();
@@ -135,7 +137,8 @@ class ApiOAuthService {
     );
   }
 
-  Future<ApiOAuthModelAccount?> refreshToken(ApiOAuthModelAccount account) async {
+  Future<ApiOAuthModelAccount?> refreshToken(
+      ApiOAuthModelAccount account) async {
     try {
       ApiOAuthModelProvider? provider =
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
@@ -173,17 +176,17 @@ class ApiOAuthService {
         await _apiAuthRepositoryProvider.providers;
     repositoryProviders.forEach((k, v) {
       switch (k) {
-        case 'google':
+        case PROVIDER_GOOGLE:
           _model.interfaceProviders[k] = ApiGoogleService(
               apiAuthService: this,
               apiAppDataService: _apiAppDataService,
-              tikiHttpClient: tikiHttpClient);
+              httpp: httpp);
           break;
-        case 'microsoft':
+        case PROVIDER_MICROSOFT:
           _model.interfaceProviders[k] = ApiMicrosoftService(
               apiAuthService: this,
               apiAppDataService: _apiAppDataService,
-              tikiHttpClient: tikiHttpClient);
+              httpp: httpp);
           break;
       }
     });

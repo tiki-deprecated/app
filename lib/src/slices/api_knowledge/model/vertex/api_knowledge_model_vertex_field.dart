@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelVertexField {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelVertexField extends JsonObject {
   String? name;
   String? dataType;
 
@@ -16,6 +18,7 @@ class ApiKnowledgeModelVertexField {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'name': name,
         'dataType': dataType,

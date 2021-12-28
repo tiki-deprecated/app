@@ -9,6 +9,20 @@ import '../model/api_email_sender_model.dart';
 
 class ApiEmailSenderRepository {
   static const String _table = 'sender';
+  static const String _upsertQuery = 'INSERT OR REPLACE INTO $_table '
+      '(sender_id, name, email, category, unsubscribe_mail_to, ignore_until_epoch, email_since_epoch, unsubscribed_bool, created_epoch, modified_epoch) '
+      'VALUES('
+      '(SELECT sender_id '
+      'FROM $_table '
+      'WHERE email = ?2), '
+      '?1, ?2, ?3, ?4, ?5, ?6, ?7,'
+      '(SELECT IFNULL('
+      '(SELECT created_epoch '
+      'FROM $_table '
+      'WHERE email = ?2), '
+      'strftime(\'%s\', \'now\') * 1000)), '
+      'strftime(\'%s\', \'now\') * 1000)';
+
   final Database _database;
 
   ApiEmailSenderRepository(this._database);
@@ -17,7 +31,7 @@ class ApiEmailSenderRepository {
     DateTime now = DateTime.now();
     sender.modified = now;
     sender.created = now;
-    int id = await _database.insert(_table, sender.toMap());
+    int id = await _database.insert(_table, sender.toJson());
     sender.senderId = id;
     return sender;
   }
@@ -26,18 +40,53 @@ class ApiEmailSenderRepository {
     sender.modified = DateTime.now();
     await _database.update(
       _table,
-      sender.toMap(),
+      sender.toJson(),
       where: 'sender_id = ?',
       whereArgs: [sender.senderId],
     );
     return sender;
   }
 
+  Future<int> batchUpsert(List<ApiEmailSenderModel> senders) async {
+    if (senders.length > 0) {
+      Batch batch = _database.batch();
+      senders.forEach((data) => batch.rawInsert(
+            _upsertQuery,
+            [
+              data.name,
+              data.email,
+              data.category,
+              data.unsubscribeMailTo,
+              data.ignoreUntil?.millisecondsSinceEpoch,
+              data.emailSince?.millisecondsSinceEpoch,
+              data.unsubscribed
+            ],
+          ));
+      List res = await batch.commit(continueOnError: true);
+      return res.length;
+    } else
+      return 0;
+  }
+
+  Future<ApiEmailSenderModel> upsert(ApiEmailSenderModel data) async {
+    int id = await _database.rawInsert(_upsertQuery, [
+      data.name,
+      data.email,
+      data.category,
+      data.unsubscribeMailTo,
+      data.ignoreUntil?.millisecondsSinceEpoch,
+      data.emailSince?.millisecondsSinceEpoch,
+      data.unsubscribed
+    ]);
+    data.senderId = id;
+    return data;
+  }
+
   Future<ApiEmailSenderModel?> getById(int id) async {
     final List<Map<String, Object?>> rows =
         await _select(where: "sender_id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
-    return ApiEmailSenderModel.fromMap(rows[0]);
+    return ApiEmailSenderModel.fromJson(rows[0]);
   }
 
   Future<List<ApiEmailSenderModel>> getByUnsubscribedAndIgnoreUntilBefore(
@@ -49,14 +98,14 @@ class ApiEmailSenderRepository {
           beforeDate.millisecondsSinceEpoch
         ]);
     if (rows.isEmpty) return List.empty();
-    return rows.map((row) => ApiEmailSenderModel.fromMap(row)).toList();
+    return rows.map((row) => ApiEmailSenderModel.fromJson(row)).toList();
   }
 
   Future<ApiEmailSenderModel?> getByEmail(String email) async {
     final List<Map<String, Object?>> rows =
         await _select(where: "email = ?", whereArgs: [email]);
     if (rows.isEmpty) return null;
-    return ApiEmailSenderModel.fromMap(rows[0]);
+    return ApiEmailSenderModel.fromJson(rows[0]);
   }
 
   Future<List<Map<String, Object?>>> _select(

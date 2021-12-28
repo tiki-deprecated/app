@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelCompanySocial {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelCompanySocial extends JsonObject {
   String? facebook;
   String? twitter;
   String? linkedin;
@@ -18,6 +20,7 @@ class ApiKnowledgeModelCompanySocial {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() =>
       {'facebook': facebook, 'twitter': twitter, 'linkedin': linkedin};
 }

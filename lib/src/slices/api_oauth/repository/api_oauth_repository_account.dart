@@ -17,7 +17,7 @@ class ApiOAuthRepositoryAccount {
     DateTime now = DateTime.now();
     account.modified = now;
     account.created = now;
-    int id = await _database.insert(_table, account.toMap());
+    int id = await _database.insert(_table, account.toJson());
     account.accountId = id;
     return account;
   }
@@ -26,7 +26,7 @@ class ApiOAuthRepositoryAccount {
     account.modified = DateTime.now();
     await _database.update(
       _table,
-      account.toMap(),
+      account.toJson(),
       where: 'account_id = ?',
       whereArgs: [account.accountId],
     );
@@ -37,14 +37,14 @@ class ApiOAuthRepositoryAccount {
     final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "account_id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
-    return ApiOAuthModelAccount.fromMap(rows[0]);
+    return ApiOAuthModelAccount.fromJson(rows[0]);
   }
 
   Future<List<ApiOAuthModelAccount>> getByProvider(String provider) async {
     final List<Map<String, Object?>> rows = await _database
         .query(_table, where: "provider = ?", whereArgs: [provider]);
     if (rows.isEmpty) return [];
-    return rows.map((e) => ApiOAuthModelAccount.fromMap(e)).toList();
+    return rows.map((e) => ApiOAuthModelAccount.fromJson(e)).toList();
   }
 
   Future<ApiOAuthModelAccount?> getByProviderAndUsername(
@@ -53,7 +53,7 @@ class ApiOAuthRepositoryAccount {
         where: "provider = ? AND username = ?",
         whereArgs: [provider, username]);
     if (rows.isEmpty) return null;
-    return ApiOAuthModelAccount.fromMap(rows[0]);
+    return ApiOAuthModelAccount.fromJson(rows[0]);
   }
 
   Future<void> delete(ApiOAuthModelAccount apiAuthServiceAccountModel) async {
@@ -68,7 +68,7 @@ class ApiOAuthRepositoryAccount {
   Future<List<ApiOAuthModelAccount>> getAll() async {
     final List<Map<String, Object?>> rows = await _database.query(_table);
     if (rows.isEmpty) return [];
-    return rows.map((e) => ApiOAuthModelAccount.fromMap(e)).toList();
+    return rows.map((e) => ApiOAuthModelAccount.fromJson(e)).toList();
   }
 
   Future<ApiOAuthModelAccount?> getSingleAccount() async {

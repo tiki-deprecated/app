@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:httpp/httpp.dart';
 
 import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
 import '../model/api_bouncer_model_otp_req.dart';
 import '../model/api_bouncer_model_otp_rsp.dart';
@@ -21,7 +21,7 @@ class ApiBouncerRepositoryOtp {
       ApiBouncerModelOtpReq req) async {
     Response rsp = await ConfigSentry.http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _path),
-        headers: HelperApiHeaders().header,
+        headers: HttppHeaders.typical().map,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(

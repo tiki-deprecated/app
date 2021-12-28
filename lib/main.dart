@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:httpp/httpp.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -16,7 +17,6 @@ import 'src/slices/api_bouncer/api_bouncer_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/api_user/api_user_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
-import 'src/slices/tiki_http/tiki_http_client.dart';
 import 'src/utils/api/helper_api_auth.dart';
 
 Future<void> main() async {
@@ -29,11 +29,10 @@ Future<void> main() async {
 }
 
 Future<void> init() async {
-  TikiHttpClient tikiHttpClient = TikiHttpClient();
+  Httpp httpp = Httpp(useClient: () => SentryHttpClient());
   ApiUserService apiUserService = ApiUserService(FlutterSecureStorage());
   ApiBouncerService apiBouncerService = ApiBouncerService();
-  LoginFlowService loginFlowService =
-      LoginFlowService(tikiHttpClient: tikiHttpClient);
+  LoginFlowService loginFlowService = LoginFlowService(httpp: httpp);
   HelperApiAuth helperApiAuth =
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
@@ -59,6 +58,6 @@ Future<void> init() async {
             Provider<ApiBouncerService>.value(value: apiBouncerService),
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
-            Provider<TikiHttpClient>.value(value: tikiHttpClient)
+            Provider<Httpp>.value(value: httpp)
           ], child: App(loginFlowService))));
 }

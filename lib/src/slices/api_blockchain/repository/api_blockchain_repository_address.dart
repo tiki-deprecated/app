@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:httpp/httpp.dart';
 
 import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
 import '../model/api_blockchain_model_address_req.dart';
 import '../model/api_blockchain_model_address_rsp.dart';
@@ -23,7 +23,7 @@ class ApiBlockchainRepositoryAddress {
       String? bearer, ApiBlockchainModelAddressReq req) async {
     Response rsp = await ConfigSentry.http.post(
         ConfigDomain.asUri(ConfigDomain.blockchain, _pathIssue),
-        headers: HelperApiHeaders(auth: bearer).header,
+        headers: HttppHeaders.typical(bearerToken: bearer).map,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(
@@ -37,7 +37,7 @@ class ApiBlockchainRepositoryAddress {
     Response rsp = await ConfigSentry.http.get(
         ConfigDomain.asUri(
             ConfigDomain.blockchain, _pathAddress + "/" + address + "/code"),
-        headers: HelperApiHeaders(auth: bearer).header);
+        headers: HttppHeaders.typical(bearerToken: bearer).map);
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(
         rspMap as Map<String, dynamic>?,

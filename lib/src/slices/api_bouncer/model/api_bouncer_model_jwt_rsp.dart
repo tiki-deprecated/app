@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiBouncerModelJwtRsp {
+import '../../../utils/json/json_object.dart';
+
+class ApiBouncerModelJwtRsp extends JsonObject {
   String? accessToken;
   String? tokenType;
   int? expiresIn;
@@ -21,6 +23,7 @@ class ApiBouncerModelJwtRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'accessToken': accessToken,
         'tokenType': tokenType,
