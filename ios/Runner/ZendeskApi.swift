@@ -83,22 +83,24 @@ class ZendeskApi {
         )
     }
     
-    private func getCategories(onSuccess: @escaping  ([String: Any]) -> Void,
+    private func getCategories(onSuccess: @escaping  ([[String: Any]]) -> Void,
                                onError: @escaping  (Error?) -> Void){
-        helpcenterProvider.getCategoriesWithCallback({ categories, error -> Void in
-            let result = categories.map { element -> [String:Any] in
-                let category = element as AnyObject
-                guard let cat = category as? ZDKHelpCenterCategory else{
-                    onError(error)
-                    return [:]
-                }
-                return [
+        helpcenterProvider.getCategoriesWithCallback({ anyOptinoalList, error -> Void in
+            guard let anyList = anyOptinoalList as? [Any],
+                  let anyObjectList = anyList as? [AnyObject],
+                  let categories = anyObjectList as? [ZDKHelpCenterCategory] else{
+                      let error = NSError(domain: "com.mytiki.app", code: -1, userInfo: ["en":"Could not convert element to ZDKHelCenterCategory"])
+                      onError(error)
+                      return
+            }
+            let result = categories.map { cat -> [String:Any] in
+            return [
                     "id" : cat.identifier ?? 0,
                     "title" : cat.name ?? "",
                     "description"  : cat.description
                 ]
             }
-            onSuccess(result!)
+            onSuccess(result)
         })
     }
     
