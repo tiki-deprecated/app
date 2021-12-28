@@ -5,6 +5,7 @@
 
 import 'dart:convert';
 
+import 'package:app/src/slices/api_google/model/api_google_model_error.dart';
 import 'package:app/src/slices/api_google/model/api_google_model_header.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:httpp/httpp.dart';
@@ -257,7 +258,15 @@ $body
 
   void _handleTooManyRequests(HttppClient client, HttppResponse response) {
     if (HttppUtils.isForbidden(response.statusCode)) {
-      _log.warning('Too many requests. Retry after');
+      ApiGoogleModelError error =
+          ApiGoogleModelError.fromJson(response.body?.jsonBody['error']);
+      error.errors?.forEach((error) {
+        if (error.reason == 'rateLimitExceeded') {
+          _log.warning('Too many requests. Retry after');
+          client.denyFor(response.request!, Duration(seconds: 1));
+          return;
+        }
+      });
     }
   }
 }
