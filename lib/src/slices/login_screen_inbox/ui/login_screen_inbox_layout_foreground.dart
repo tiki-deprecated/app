@@ -3,9 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/helper_image.dart';

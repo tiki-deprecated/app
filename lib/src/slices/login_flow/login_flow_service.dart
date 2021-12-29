@@ -4,7 +4,7 @@
  */
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';

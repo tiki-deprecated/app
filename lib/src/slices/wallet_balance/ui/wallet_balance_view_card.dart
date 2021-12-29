@@ -2,8 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class WalletBalanceViewCard extends StatelessWidget {
   @override

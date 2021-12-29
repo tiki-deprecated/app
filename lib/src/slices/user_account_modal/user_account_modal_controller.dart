@@ -3,13 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/logout_modal/logout_modal_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
+import '../logout_modal/logout_modal_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'user_account_modal_service.dart';
 
