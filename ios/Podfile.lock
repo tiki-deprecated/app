@@ -17,10 +17,10 @@ PODS:
   - Firebase/DynamicLinks (8.9.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 8.9.0)
-  - firebase_core (1.10.0):
+  - firebase_core (1.10.6):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_dynamic_links (3.0.1):
+  - firebase_dynamic_links (3.0.2):
     - Firebase/DynamicLinks (= 8.9.0)
     - firebase_core
     - Flutter
@@ -62,8 +62,6 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
-  - integration_test (0.0.1):
-    - Flutter
   - MTBBarcodeScanner (5.0.11)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -102,13 +100,7 @@ PODS:
   - SQLCipher/standard (4.4.2):
     - SQLCipher/common
   - SwiftProtobuf (1.18.0)
-  - url_launcher (0.0.1):
-    - Flutter
-  - video_player (0.0.1):
-    - Flutter
-  - wakelock (0.0.1):
-    - Flutter
-  - webview_flutter_wkwebview (0.0.1):
+  - url_launcher_ios (0.0.1):
     - Flutter
   - ZendeskCommonUISDK (6.1.1)
   - ZendeskCoreSDK (2.5.1)
@@ -133,7 +125,6 @@ DEPENDENCIES:
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
@@ -142,11 +133,7 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - sqflite_sqlcipher (from `.symlinks/plugins/sqflite_sqlcipher/ios`)
-  - SQLCipher (~> 4.4.2)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
-  - wakelock (from `.symlinks/plugins/wakelock/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - ZendeskSupportProvidersSDK
   - ZendeskSupportSDK
 
@@ -195,8 +182,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   package_info_plus:
@@ -213,14 +198,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   sqflite_sqlcipher:
     :path: ".symlinks/plugins/sqflite_sqlcipher/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
-  wakelock:
-    :path: ".symlinks/plugins/wakelock/ios"
-  webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   Amplitude: ef9ed339ddd33c9183edf63fa4bbaa86cf873321
@@ -228,8 +207,8 @@ SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_core: f770e033e790657b3505f04be4cb24c482912f11
-  firebase_dynamic_links: 9bf840ceeda753adfb296c6a6f3fdd705e3b6c77
+  firebase_core: c263d7daf1dc92fcd9895e6abdc04872b0ee07ff
+  firebase_dynamic_links: d79118550dc36eccc182e4990ed5d4342d5ab900
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseDynamicLinks: 50980cbe21d2bbe8374afcdccd94dc2db20dffca
@@ -243,7 +222,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
-  integration_test: 7db6d89f336f671dcbc7563ee27a5b08f6f8aee1
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
@@ -258,10 +236,7 @@ SPEC CHECKSUMS:
   sqflite_sqlcipher: 70eb7fd8d4f0b0352d0bde5cf345b810737f54bb
   SQLCipher: 1ab0b9486a77d141e72e92ff30681926ed79c07a
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
-  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
-  video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
-  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
-  webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
+  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
   ZendeskCommonUISDK: 5808802951ad2bb424f0bed4259dc3c0ce9b52ec
   ZendeskCoreSDK: 19a18e5ef2edcb18f4dbc0ea0d12bd31f515712a
   ZendeskMessagingAPISDK: 144e0fb0e633a3c4e73149b781ab65338938d5a8
@@ -270,6 +245,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
   ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
 
-PODFILE CHECKSUM: da8e9e4c5450d8ab120f9887dec41c6c3c25d3f5
+PODFILE CHECKSUM: 7b3d467666c90d5476ea094703b54347b27f00f4
 
 COCOAPODS: 1.11.2

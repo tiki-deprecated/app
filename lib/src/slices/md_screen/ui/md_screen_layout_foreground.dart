@@ -2,8 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'md_screen_view_back_button.dart';

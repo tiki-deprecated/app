@@ -123,7 +123,8 @@ class ApiOAuthService {
         (await _apiAuthRepositoryProvider.providers)[providerName];
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
-            provider!.authorizationEndpoint, provider.tokenEndpoint);
+            authorizationEndpoint: provider!.authorizationEndpoint,
+            tokenEndpoint: provider.tokenEndpoint);
     List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,

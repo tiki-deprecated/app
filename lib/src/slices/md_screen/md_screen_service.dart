@@ -4,7 +4,7 @@
  */
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import 'md_screen_controller.dart';
 import 'md_screen_presenter.dart';

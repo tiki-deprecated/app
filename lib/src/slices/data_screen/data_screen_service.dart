@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
