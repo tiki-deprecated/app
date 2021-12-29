@@ -127,7 +127,8 @@ class ApiOAuthService {
         (await _apiAuthRepositoryProvider.providers)[providerName];
     AuthorizationServiceConfiguration authConfig =
         AuthorizationServiceConfiguration(
-            provider!.authorizationEndpoint, provider.tokenEndpoint);
+            authorizationEndpoint: provider!.authorizationEndpoint,
+            tokenEndpoint: provider.tokenEndpoint);
     List<String> providerScopes = provider.scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(provider.clientId, provider.redirectUri,
@@ -144,7 +145,11 @@ class ApiOAuthService {
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
       TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
-          discoveryUrl: provider.discoveryUrl,
+          //discoveryUrl: provider.discoveryUrl,
+          //issuer: 'https://login.microsoftonline.com/common/v2.0',
+          serviceConfiguration: AuthorizationServiceConfiguration(
+              authorizationEndpoint: provider.authorizationEndpoint,
+              tokenEndpoint: provider.tokenEndpoint),
           refreshToken: account.refreshToken,
           scopes: provider.scopes)))!;
       account.accessToken = tokenResponse.accessToken;

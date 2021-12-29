@@ -40,7 +40,7 @@ class ApiOAuthModelAccount extends JsonObject {
       this.provider = json['provider'];
       this.accessToken = json['access_token'];
       this.accessTokenExpiration = json['access_token_expiration'];
-      this.refreshToken = json['refreshToken'];
+      this.refreshToken = json['refresh_token'];
       this.refreshTokenExpiration = json['refresh_token_expiration'];
       this.shouldReconnect = json['should_reconnect'] ?? 0;
       if (json['modified_epoch'] != null)

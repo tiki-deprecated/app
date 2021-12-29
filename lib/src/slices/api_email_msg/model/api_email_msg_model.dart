@@ -12,8 +12,7 @@ class ApiEmailMsgModel extends JsonObject {
   ApiEmailSenderModel? sender;
   DateTime? receivedDate;
   DateTime? openedDate;
-  String?
-      account; //TODO move this to account id as a FK & should have a "to" email field
+  String? toEmail;
   DateTime? created;
   DateTime? modified;
 
@@ -23,7 +22,7 @@ class ApiEmailMsgModel extends JsonObject {
       this.sender,
       this.receivedDate,
       this.openedDate,
-      this.account,
+      this.toEmail,
       this.modified,
       this.created});
 
@@ -32,7 +31,7 @@ class ApiEmailMsgModel extends JsonObject {
       this.messageId = json['message_id'];
       this.extMessageId = json['ext_message_id'];
       this.sender = ApiEmailSenderModel.fromJson(json['sender']);
-      this.account = json['account'];
+      this.toEmail = json['to_email'];
       if (json['received_date_epoch'] != null)
         this.receivedDate =
             DateTime.fromMillisecondsSinceEpoch(json['received_date_epoch']);
@@ -52,10 +51,10 @@ class ApiEmailMsgModel extends JsonObject {
     return {
       'message_id': messageId,
       'ext_message_id': extMessageId,
-      'sender_id': sender?.senderId,
+      'sender_email': sender?.email,
       'received_date_epoch': receivedDate?.millisecondsSinceEpoch,
       'opened_date_epoch': openedDate?.millisecondsSinceEpoch,
-      'account': account,
+      'to_email': toEmail,
       'modified_epoch': modified?.millisecondsSinceEpoch,
       'created_epoch': created?.millisecondsSinceEpoch
     };
@@ -63,6 +62,6 @@ class ApiEmailMsgModel extends JsonObject {
 
   @override
   String toString() {
-    return 'ApiEmailMsgModel{messageId: $messageId, extMessageId: $extMessageId, sender: $sender, receivedDate: $receivedDate, openedDate: $openedDate, account: $account}';
+    return 'ApiEmailMsgModel{messageId: $messageId, extMessageId: $extMessageId, sender: $sender, receivedDate: $receivedDate, openedDate: $openedDate, toEmail: $toEmail, created: $created, modified: $modified}';
   }
 }

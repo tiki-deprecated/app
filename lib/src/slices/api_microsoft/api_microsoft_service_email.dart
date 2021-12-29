@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/api_company/api_company_service.dart';
+import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
@@ -67,14 +69,18 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
               extMessageId: message.id,
               receivedDate: message.receivedDateTime,
               openedDate: null, //TODO implement open date detection
-              account:
-                  _accountFromRecipients(message.toRecipients, account.email!),
+              toEmail:
+                  _toEmailFromRecipients(message.toRecipients, account.email!),
               sender: ApiEmailSenderModel(
                   email: message.from?.emailAddress?.address,
                   name: message.from?.emailAddress?.name,
                   category: 'inbox',
                   unsubscribeMailTo:
-                      _unsubscribeMailTo(message.internetMessageHeaders))));
+                      _unsubscribeMailTo(message.internetMessageHeaders),
+                  unsubscribed: false,
+                  company: ApiCompanyModel(
+                      domain: ApiCompanyService.domainFromEmail(
+                          message.from?.emailAddress?.address)))));
         },
         onResult: (response) {
           _log.warning(
@@ -141,7 +147,7 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
     }
   }
 
-  String? _accountFromRecipients(
+  String? _toEmailFromRecipients(
       List<ApiMicrosoftModelRecipient>? recipients, String expected) {
     if (recipients == null || recipients.length == 0) return expected;
     for (ApiMicrosoftModelRecipient recipient in recipients) {

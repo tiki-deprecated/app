@@ -12,7 +12,7 @@ class DatabaseService {
   final _log = Logger('DatabaseService');
 
   Future<Database> open(String password,
-      {int version = 6, bool drop = false}) async {
+      {int version = 7, bool drop = false}) async {
     String databasePath = await getDatabasesPath() + '/' + _dbName;
     if (drop) await deleteDatabase(databasePath);
     return await openDatabase(databasePath,
@@ -31,19 +31,21 @@ class DatabaseService {
 
   Future<void> onCreate(Database db, int version) async {
     _log.fine('create');
-    await _executeScript(db, 'create_v1');
-    await _executeScript(db, 'create_v2');
-    await _executeScript(db, 'create_v4');
-    await _executeScript(db, 'create_v5');
-    await _executeScript(db, 'create_v6');
+    await _executeScript(db, 'sql_v1');
+    await _executeScript(db, 'sql_v2');
+    await _executeScript(db, 'sql_v4');
+    await _executeScript(db, 'sql_v5');
+    await _executeScript(db, 'sql_v6');
+    await _executeScript(db, 'sql_v7');
   }
 
   Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
     _log.fine('upgrade');
-    if (oldVersion < 2) await _executeScript(db, 'create_v2');
-    if (oldVersion < 4) await _executeScript(db, 'create_v4');
-    if (oldVersion < 5) await _executeScript(db, 'create_v5');
-    if (oldVersion < 6) await _executeScript(db, 'create_v6');
+    if (oldVersion < 2) await _executeScript(db, 'sql_v2');
+    if (oldVersion < 4) await _executeScript(db, 'sql_v4');
+    if (oldVersion < 5) await _executeScript(db, 'sql_v5');
+    if (oldVersion < 6) await _executeScript(db, 'sql_v6');
+    if (oldVersion < 7) await _executeScript(db, 'sql_v7');
   }
 
   Future<void> onDowngrade(Database db, int oldVersion, int newVersion) async {

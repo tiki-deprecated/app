@@ -12,16 +12,16 @@ class ApiEmailMsgRepository {
   final _log = Logger('ApiEmailMsgRepository');
   static const String _table = 'message';
   static const String _upsertQuery = 'INSERT OR REPLACE INTO $_table '
-      '(message_id, ext_message_id, sender_id, received_date_epoch, opened_date_epoch, account, created_epoch, modified_epoch) '
+      '(message_id, ext_message_id, sender_email, received_date_epoch, opened_date_epoch, to_email, created_epoch, modified_epoch) '
       'VALUES('
       '(SELECT message_id '
       'FROM $_table '
-      'WHERE ext_message_id = ?1 AND account = ?5), '
+      'WHERE ext_message_id = ?1 AND to_email = ?5), '
       '?1, ?2, ?3, ?4, ?5, '
       '(SELECT IFNULL('
       '(SELECT created_epoch '
       'FROM $_table '
-      'WHERE ext_message_id = ?1 AND account = ?5), '
+      'WHERE ext_message_id = ?1 AND to_email = ?5), '
       'strftime(\'%s\', \'now\') * 1000)), '
       'strftime(\'%s\', \'now\') * 1000)';
 
@@ -58,10 +58,10 @@ class ApiEmailMsgRepository {
             _upsertQuery,
             [
               data.extMessageId,
-              data.sender?.senderId,
+              data.sender?.email,
               data.receivedDate?.millisecondsSinceEpoch,
               data.openedDate?.millisecondsSinceEpoch,
-              data.account
+              data.toEmail
             ],
           ));
       List res = await batch.commit(continueOnError: true);
@@ -73,20 +73,20 @@ class ApiEmailMsgRepository {
   Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel data) async {
     int id = await _database.rawInsert(_upsertQuery, [
       data.extMessageId,
-      data.sender?.senderId,
+      data.sender?.email,
       data.receivedDate?.millisecondsSinceEpoch,
       data.openedDate?.millisecondsSinceEpoch,
-      data.account
+      data.toEmail
     ]);
     data.messageId = id;
     return data;
   }
 
-  Future<ApiEmailMsgModel?> getByExtMessageIdAndAccount(
-      String extMessageId, String account) async {
+  Future<ApiEmailMsgModel?> getByExtMessageIdAndTo(
+      String extMessageId, String toEmail) async {
     final List<Map<String, Object?>> rows = await _select(
-        where: 'ext_message_id = ? AND account = ?',
-        whereArgs: [extMessageId, account]);
+        where: 'ext_message_id = ? AND to_email = ?',
+        whereArgs: [extMessageId, toEmail]);
     if (rows.isEmpty) return null;
     return ApiEmailMsgModel.fromJson(rows[0]);
   }
@@ -101,9 +101,9 @@ class ApiEmailMsgRepository {
     return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
 
-  Future<List<ApiEmailMsgModel>> getBySenderId(int senderId) async {
+  Future<List<ApiEmailMsgModel>> getBySenderEmail(String email) async {
     final List<Map<String, Object?>> rows =
-        await _select(where: 'sender.sender_id = ?', whereArgs: [senderId]);
+        await _select(where: 'sender.email = ?', whereArgs: [email]);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }
@@ -113,13 +113,14 @@ class ApiEmailMsgRepository {
     List<Map<String, Object?>> rows = await _database.rawQuery(
         'SELECT message.message_id AS \'message@message_id\', '
                 'message.ext_message_id AS \'message@ext_message_id\', '
-                'message.account AS \'message@account\', '
+                'message.to_email AS \'message@to_email\', '
                 'message.received_date_epoch AS \'message@received_date_epoch\', '
                 'message.opened_date_epoch AS \'message@opened_date_epoch\', '
                 'message.created_epoch AS \'message@created_epoch\', '
                 'message.modified_epoch AS \'message@modified_epoch\', '
                 'sender.sender_id AS \'sender@sender_id\', '
-                'sender.name AS \'sender@name\', sender.email AS \'sender@email\', '
+                'sender.name AS \'sender@name\', '
+                'message.sender_email AS \'sender@email\', '
                 'sender.category AS \'sender@category\', '
                 'sender.unsubscribe_mail_to AS \'sender@unsubscribe_mail_to\', '
                 'sender.email_since_epoch AS \'sender@email_since_epoch\', '
@@ -132,14 +133,14 @@ class ApiEmailMsgRepository {
                 'company.security_score AS \'company@security_score\', '
                 'company.breach_score AS \'company@breach_score\', '
                 'company.sensitivity_score AS \'company@sensitivity_score\', '
-                'company.domain AS \'company@domain\', '
+                'sender.company_domain AS \'company@domain\', '
                 'company.created_epoch AS \'company@created_epoch\', '
                 'company.modified_epoch AS \'company@modified_epoch\' '
                 'FROM message AS message '
-                'INNER JOIN sender AS sender '
-                'ON sender.sender_id = message.sender_id '
-                'INNER JOIN company AS company '
-                'ON company.company_id = sender.company_id ' +
+                'LEFT JOIN sender AS sender '
+                'ON sender.email = message.sender_email '
+                'LEFT JOIN company AS company '
+                'ON company.domain = sender.company_domain ' +
             (where != null ? 'WHERE ' + where : ''),
         whereArgs);
     if (rows.isEmpty) return List.empty();
@@ -161,9 +162,9 @@ class ApiEmailMsgRepository {
     }).toList();
   }
 
-  Future<List<ApiEmailMsgModel>> getByAccount(String account) async {
+  Future<List<ApiEmailMsgModel>> getByTo(String toEmail) async {
     final List<Map<String, Object?>> rows =
-        await _select(where: 'account = ?', whereArgs: [account]);
+        await _select(where: 'to_email = ?', whereArgs: [toEmail]);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) => ApiEmailMsgModel.fromJson(row)).toList();
   }

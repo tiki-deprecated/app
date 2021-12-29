@@ -4,6 +4,7 @@
  */
 
 import 'package:httpp/httpp.dart';
+import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../../utils/api/helper_api_auth.dart';
@@ -14,6 +15,7 @@ import '../api_knowledge/model/company/api_knowledge_model_company.dart';
 import 'model/api_company_model.dart';
 
 class ApiCompanyService {
+  final _log = Logger('ApiCompanyService');
   final HelperApiAuth helperApiAuth;
   final ApiCompanyRepository _repositoryLocal;
   final ApiKnowledgeService _apiKnowledgeService;
@@ -64,5 +66,15 @@ class ApiCompanyService {
     if (companyId == null) return null;
     var company = await _repositoryLocal.getById(companyId);
     return company;
+  }
+
+  static String? domainFromEmail(String? email) {
+    if (email != null) {
+      List<String> atSplit = email.split('@');
+      List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
+      return periodSplit[periodSplit.length - 2] +
+          "." +
+          periodSplit[periodSplit.length - 1];
+    }
   }
 }

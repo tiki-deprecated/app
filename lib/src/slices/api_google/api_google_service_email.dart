@@ -5,17 +5,19 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_google/model/api_google_model_error.dart';
-import 'package:app/src/slices/api_google/model/api_google_model_header.dart';
+import 'package:app/src/slices/api_company/api_company_service.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
+import '../api_company/model/api_company_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_email.dart';
+import 'model/api_google_model_error.dart';
+import 'model/api_google_model_header.dart';
 import 'model/api_google_model_message.dart';
 import 'model/api_google_model_messages.dart';
 import 'repository/api_google_repository_email.dart';
@@ -103,13 +105,17 @@ $body
               extMessageId: message.id,
               receivedDate: message.internalDate,
               openedDate: null, //TODO implement open date detection
-              account: _account(message.payload?.headers, account.email!),
+              toEmail: _toEmail(message.payload?.headers, account.email!),
               sender: ApiEmailSenderModel(
                   email: from?['email'],
                   name: from?['name'],
                   category: _category(message.labelIds),
                   unsubscribeMailTo:
-                      _unsubscribeMailTo(message.payload?.headers))));
+                      _unsubscribeMailTo(message.payload?.headers),
+                  unsubscribed: false,
+                  company: ApiCompanyModel(
+                      domain:
+                          ApiCompanyService.domainFromEmail(from?['email'])))));
         },
         onResult: (response) {
           _log.warning(
@@ -203,7 +209,7 @@ $body
     }
   }
 
-  String? _account(List<ApiGoogleModelHeader>? headers, String expected) {
+  String? _toEmail(List<ApiGoogleModelHeader>? headers, String expected) {
     if (headers != null) {
       for (ApiGoogleModelHeader header in headers) {
         if (header.name?.trim() == 'To' && header.value != null) {

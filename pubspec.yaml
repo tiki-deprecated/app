@@ -20,7 +20,7 @@ dependencies:
   extension_google_sign_in_as_googleapis_auth: ^2.0.4
   firebase_core: ^1.10.0
   firebase_dynamic_links: ^3.0.1
-  flutter_appauth: ^1.1.1
+  flutter_appauth: ^2.2.0
   flutter_lints: ^1.0.4
   flutter_markdown: ^0.6.8
   flutter_secure_storage: ^5.0.2

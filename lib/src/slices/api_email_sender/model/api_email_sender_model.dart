@@ -61,7 +61,7 @@ class ApiEmailSenderModel extends JsonObject {
   @override
   Map<String, dynamic> toJson() => {
         'sender_id': senderId,
-        'company_id': company?.companyId,
+        'company_domain': company?.domain,
         'name': name,
         'email': email,
         'category': category,

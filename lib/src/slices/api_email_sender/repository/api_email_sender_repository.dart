@@ -10,12 +10,12 @@ import '../model/api_email_sender_model.dart';
 class ApiEmailSenderRepository {
   static const String _table = 'sender';
   static const String _upsertQuery = 'INSERT OR REPLACE INTO $_table '
-      '(sender_id, name, email, category, unsubscribe_mail_to, ignore_until_epoch, email_since_epoch, unsubscribed_bool, created_epoch, modified_epoch) '
+      '(sender_id, name, email, category, unsubscribe_mail_to, ignore_until_epoch, email_since_epoch, unsubscribed_bool, company_domain, created_epoch, modified_epoch) '
       'VALUES('
       '(SELECT sender_id '
       'FROM $_table '
       'WHERE email = ?2), '
-      '?1, ?2, ?3, ?4, ?5, ?6, ?7,'
+      '?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8,'
       '(SELECT IFNULL('
       '(SELECT created_epoch '
       'FROM $_table '
@@ -59,7 +59,8 @@ class ApiEmailSenderRepository {
               data.unsubscribeMailTo,
               data.ignoreUntil?.millisecondsSinceEpoch,
               data.emailSince?.millisecondsSinceEpoch,
-              data.unsubscribed
+              data.unsubscribed,
+              data.company?.domain
             ],
           ));
       List res = await batch.commit(continueOnError: true);
@@ -76,7 +77,8 @@ class ApiEmailSenderRepository {
       data.unsubscribeMailTo,
       data.ignoreUntil?.millisecondsSinceEpoch,
       data.emailSince?.millisecondsSinceEpoch,
-      data.unsubscribed
+      data.unsubscribed,
+      data.company?.domain
     ]);
     data.senderId = id;
     return data;
@@ -112,7 +114,8 @@ class ApiEmailSenderRepository {
       {String? where, List<Object?>? whereArgs}) async {
     List<Map<String, Object?>> rows = await _database.rawQuery(
         'SELECT sender.sender_id AS \'sender@sender_id\', '
-                'sender.name AS \'sender@name\', sender.email AS \'sender@email\', '
+                'sender.name AS \'sender@name\', '
+                'sender.email AS \'sender@email\', '
                 'sender.category AS \'sender@category\', '
                 'sender.unsubscribe_mail_to AS \'sender@unsubscribe_mail_to\', '
                 'sender.email_since_epoch AS \'sender@email_since_epoch\', '
@@ -125,12 +128,12 @@ class ApiEmailSenderRepository {
                 'company.security_score AS \'company@security_score\', '
                 'company.breach_score AS \'company@breach_score\', '
                 'company.sensitivity_score AS \'company@sensitivity_score\', '
-                'company.domain AS \'company@domain\', '
+                'sender.company_domain AS \'company@domain\', '
                 'company.created_epoch AS \'company@created_epoch\', '
                 'company.modified_epoch AS \'company@modified_epoch\' '
                 'FROM sender AS sender '
-                'INNER JOIN company AS company '
-                'ON company.company_id = sender.company_id ' +
+                'LEFT JOIN company AS company '
+                'ON sender.company_domain = company.domain ' +
             (where != null ? 'WHERE ' + where : ''),
         whereArgs);
     if (rows.isEmpty) return List.empty();
