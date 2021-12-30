@@ -42,6 +42,7 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   url_launcher: ^6.0.17
   uuid: ^3.0.5
+  flutter_html: ^2.2.1
 
 dependency_overrides:
   sqflite:
