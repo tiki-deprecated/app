@@ -18,7 +18,7 @@ import Flutter
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
           switch call.method {
             case "getZendeskCategories" : self.zendeskApi.getZendeskCategories(result: result)
-            case "getZendeskSection" : self.zendeskApi.getZendeskSections(call: call, result: result)
+            case "getZendeskSections" : self.zendeskApi.getZendeskSections(call: call, result: result)
             case "getZendeskArticles" : self.zendeskApi.getZendeskArticles(call: call, result: result)
             case "getZendeskArticle" : self.zendeskApi.getZendeskArticle(call: call, result: result)
             default : result(FlutterError(code: "-1", message: "Not implemented", details: nil))
