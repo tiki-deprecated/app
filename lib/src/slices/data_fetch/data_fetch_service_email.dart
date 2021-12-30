@@ -143,66 +143,67 @@ ${account.displayName ?? ''}<br />
           (account.email ?? '') +
           ' started on: ' +
           DateTime.now().toIso8601String());
-
-      DataFetchInterfaceEmail? interfaceEmail =
-          await _getEmailInterface(account);
-      if (interfaceEmail == null) throw 'Invalid email interface';
-      if (!await _isConnected(account))
-        throw 'ApiOauthAccount ${account.provider} not connected.';
-
-      List<DataFetchModelPart<ApiEmailMsgModel>> parts =
-          await _repositoryPart.getByAccountAndApi<ApiEmailMsgModel>(
-              account.accountId!,
-              _apiFromProvider(account.provider)!,
-              (json) => ApiEmailMsgModel.fromJson(json),
-              max: 100);
-      if (parts.length > 0) {
-        _log.fine('Got  ${parts.length} parts');
-        List<String> ids = parts
-            .where((part) => part.obj?.extMessageId != null)
-            .map((part) => part.obj!.extMessageId!)
-            .toList();
-        List<ApiEmailMsgModel> fetched = List.empty(growable: true);
-        List<ApiEmailMsgModel> save = List.empty(growable: true);
-        await interfaceEmail.fetchMessages(
-            account: account,
-            messageIds: ids,
-            onResult: (message) {
-              if (message.toEmail == account.email! &&
-                  message.sender?.unsubscribeMailTo != null) save.add(message);
-              fetched.add(message);
-            },
-            onFinish: () async {
-              _log.fine('Fetched ${fetched.length} messages');
-              Map<String, ApiEmailSenderModel> senders = Map();
-              save
-                  .where(
-                      (msg) => msg.sender != null && msg.sender?.email != null)
-                  .forEach((msg) => senders[msg.sender!.email!] = msg.sender!);
-
-              _log.fine('Saving ${senders.length} senders');
-              await _apiEmailSenderService.batchUpsert(List.of(senders.values));
-
-              _log.fine('Saving ${save.length} messages');
-              await _apiEmailMsgService.batchUpsert(save);
-
-              Set<String> domains = Set();
-              senders.values.forEach((sender) {
-                if (sender.company?.domain != null)
-                  domains.add(sender.company!.domain!);
-              });
-              _log.fine('Saving ${domains.length} companies');
-              domains.forEach((domain) => _apiCompanyService.upsert(domain));
-
-              int count = await _repositoryPart.batchDeleteByExtIdsAndAccount(
-                  fetched.map((msg) => msg.extMessageId!).toList(),
-                  account.accountId!);
-              _log.fine('finished & deleted $count parts');
-              asyncProcess(account);
-            });
-      } else
-        _processMutex.remove(account.accountId!);
+      _asyncProcess(account);
     }
+  }
+
+  Future<void> _asyncProcess(ApiOAuthModelAccount account) async {
+    DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
+    if (interfaceEmail == null) throw 'Invalid email interface';
+    if (!await _isConnected(account))
+      throw 'ApiOauthAccount ${account.provider} not connected.';
+
+    List<DataFetchModelPart<ApiEmailMsgModel>> parts =
+        await _repositoryPart.getByAccountAndApi<ApiEmailMsgModel>(
+            account.accountId!,
+            _apiFromProvider(account.provider)!,
+            (json) => ApiEmailMsgModel.fromJson(json),
+            max: 100);
+    if (parts.length > 0) {
+      _log.fine('Got  ${parts.length} parts');
+      List<String> ids = parts
+          .where((part) => part.obj?.extMessageId != null)
+          .map((part) => part.obj!.extMessageId!)
+          .toList();
+      List<ApiEmailMsgModel> fetched = List.empty(growable: true);
+      List<ApiEmailMsgModel> save = List.empty(growable: true);
+      await interfaceEmail.fetchMessages(
+          account: account,
+          messageIds: ids,
+          onResult: (message) {
+            if (message.toEmail == account.email! &&
+                message.sender?.unsubscribeMailTo != null) save.add(message);
+            fetched.add(message);
+          },
+          onFinish: () async {
+            _log.fine('Fetched ${fetched.length} messages');
+            Map<String, ApiEmailSenderModel> senders = Map();
+            save
+                .where((msg) => msg.sender != null && msg.sender?.email != null)
+                .forEach((msg) => senders[msg.sender!.email!] = msg.sender!);
+
+            _log.fine('Saving ${senders.length} senders');
+            await _apiEmailSenderService.batchUpsert(List.of(senders.values));
+
+            _log.fine('Saving ${save.length} messages');
+            await _apiEmailMsgService.batchUpsert(save);
+
+            Set<String> domains = Set();
+            senders.values.forEach((sender) {
+              if (sender.company?.domain != null)
+                domains.add(sender.company!.domain!);
+            });
+            _log.fine('Saving ${domains.length} companies');
+            domains.forEach((domain) => _apiCompanyService.upsert(domain));
+
+            int count = await _repositoryPart.batchDeleteByExtIdsAndAccount(
+                fetched.map((msg) => msg.extMessageId!).toList(),
+                account.accountId!);
+            _log.fine('finished & deleted $count parts');
+            _asyncProcess(account);
+          });
+    } else
+      _processMutex.remove(account.accountId!);
   }
 
   Future<DataFetchInterfaceEmail?> _getEmailInterface(
