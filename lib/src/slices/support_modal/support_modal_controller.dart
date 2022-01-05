@@ -31,6 +31,9 @@ class SupportModalController {
   }
 
   Future<void> launchUrl(String url, BuildContext context) async {
+    if(!url.startsWith(RegExp('https?\:\/\/'))){
+      url = "http://" + url;
+    }
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }
