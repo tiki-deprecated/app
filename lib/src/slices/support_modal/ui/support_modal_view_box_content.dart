@@ -31,6 +31,7 @@ class SupportModalViewBoxContent extends StatelessWidget {
                 if (attrs != null) {
                   double? width = double.tryParse(attrs['width'] ?? "");
                   double? height = double.tryParse(attrs['height'] ?? "");
+                  print("attrs['src']");
                   return Container(
                     width: width ?? (height ?? 150) * 2,
                     height: height ?? (width ?? 300) / 2,
