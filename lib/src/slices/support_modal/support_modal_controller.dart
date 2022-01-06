@@ -30,7 +30,7 @@ class SupportModalController {
       service.getArticlesForSection(service.model.section!);
   }
 
-  Future<void> launchUrl(String url, BuildContext context) async {
+  Future<void> launchUrl(String url) async {
     if(!url.startsWith(RegExp('https?\:\/\/'))){
       url = "http://" + url;
     }

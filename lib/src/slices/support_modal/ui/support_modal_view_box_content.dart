@@ -23,7 +23,7 @@ class SupportModalViewBoxContent extends StatelessWidget {
         child: Html(
             data: content,
             onLinkTap: (String? url, _, __, ___) {
-              if (url != null) service.controller.launchUrl(url, context);
+              if (url != null) service.controller.launchUrl(url);
             },
             customRender: {
               "iframe": (RenderContext context, Widget child) {
@@ -31,19 +31,15 @@ class SupportModalViewBoxContent extends StatelessWidget {
                 if (attrs != null) {
                   double? width = double.tryParse(attrs['width'] ?? "");
                   double? height = double.tryParse(attrs['height'] ?? "");
-                  print("attrs['src']");
                   return Container(
                     width: width ?? (height ?? 150) * 2,
                     height: height ?? (width ?? 300) / 2,
                     child: Webview.WebView(
-                        initialUrl: attrs['src'] ?? "about:blank",
+                        initialUrl: attrs['src'] != null ? "https:" + attrs['src']! : "about:blank",
                         javascriptMode: Webview.JavascriptMode.unrestricted,
-                        gestureRecognizers: attrs['src'] != null &&
-                                attrs['src']!.contains("youtube.com/embed")
-                            ? null
-                            : _gestureRecognizerFactorySet(),
+                        gestureRecognizers: _gestureRecognizerFactorySet(),
                         navigationDelegate: (request) =>
-                            _getNavigationDelegate(request, attrs)),
+                            _getNavigationDelegate(request, service)),
                   );
                 } else {
                   return Container(height: 0);
@@ -52,16 +48,9 @@ class SupportModalViewBoxContent extends StatelessWidget {
             }));
   }
 
-  _getNavigationDelegate(request, attrs) {
-    if (attrs['src'] != null && attrs['src']!.contains("youtube.com/embed")) {
-      if (!request.url.contains("youtube.com/embed")) {
-        return NavigationDecision.prevent;
-      } else {
-        return NavigationDecision.navigate;
-      }
-    } else {
-      return NavigationDecision.navigate;
-    }
+  _getNavigationDelegate(request, service) {
+      service.controller.launchUrl(request.url);
+      return NavigationDecision.prevent;
   }
 
   String _getExcerpt(String text) {
