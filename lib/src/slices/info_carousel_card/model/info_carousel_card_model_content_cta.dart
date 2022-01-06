@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../../utils/helper_json.dart';
+import '../../../utils/json/json_object.dart';
+import '../../../utils/json/json_utils.dart';
 import 'info_carousel_card_model_content_text.dart';
 
-class InfoCarouselCardModelContentCta {
+class InfoCarouselCardModelContentCta extends JsonObject {
   List<InfoCarouselCardModelContentText>? explain;
   String? buttonText;
   String? buttonUrl;
@@ -18,14 +19,15 @@ class InfoCarouselCardModelContentCta {
     if (json != null) {
       this.buttonText = json['buttonText'];
       this.buttonUrl = json['buttonUrl'];
-      this.explain = HelperJson.listFromJson(
+      this.explain = JsonUtils.listFromJson(
           json['explain'], (s) => InfoCarouselCardModelContentText.fromJson(s));
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'buttonText': buttonText,
         'buttonUrl': buttonUrl,
-        'explain': HelperJson.listToJson(explain)
+        'explain': JsonUtils.listToJson(explain)
       };
 }

@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiBouncerModelOtpRsp {
+import '../../../utils/json/json_object.dart';
+
+class ApiBouncerModelOtpRsp extends JsonObject {
   String? salt;
   DateTime? issued;
   DateTime? expires;
@@ -18,6 +20,7 @@ class ApiBouncerModelOtpRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'salt': salt,
         'issued': issued?.toUtc().toIso8601String(),

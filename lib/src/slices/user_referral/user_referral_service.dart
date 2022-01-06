@@ -4,9 +4,9 @@
  */
 
 import 'package:flutter/widgets.dart';
+import 'package:httpp/httpp.dart';
 
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
@@ -67,7 +67,7 @@ class UserReferralService extends ChangeNotifier {
       String address = loginFlowService.model.user!.user!.address!;
       HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
           await apiBlockchainService.referCode(address);
-      if (HelperApiUtils.isOk(rsp.code)) {
+      if (HttppUtils.isOk(rsp.code)) {
         ApiBlockchainModelAddressRspCode data = rsp.data;
         code = data.code ?? '';
         await apiAppDataService.save(ApiAppDataKey.userReferCode, code);

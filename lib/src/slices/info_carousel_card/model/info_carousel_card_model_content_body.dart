@@ -3,11 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../../utils/helper_json.dart';
+import '../../../utils/json/json_object.dart';
+import '../../../utils/json/json_utils.dart';
 import 'info_carousel_card_model_content_icon.dart';
 import 'info_carousel_card_model_content_text.dart';
 
-class InfoCarouselCardModelContentBody {
+class InfoCarouselCardModelContentBody extends JsonObject {
   List<InfoCarouselCardModelContentText>? explain;
   List<InfoCarouselCardModelContentIcon>? theySay;
   List<InfoCarouselCardModelContentIcon>? shouldKnow;
@@ -17,18 +18,19 @@ class InfoCarouselCardModelContentBody {
 
   InfoCarouselCardModelContentBody.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.theySay = HelperJson.listFromJson(
+      this.theySay = JsonUtils.listFromJson(
           json['theySay'], (s) => InfoCarouselCardModelContentIcon.fromJson(s));
-      this.shouldKnow = HelperJson.listFromJson(json['shouldKnow'],
+      this.shouldKnow = JsonUtils.listFromJson(json['shouldKnow'],
           (s) => InfoCarouselCardModelContentIcon.fromJson(s));
-      this.explain = HelperJson.listFromJson(
+      this.explain = JsonUtils.listFromJson(
           json['explain'], (s) => InfoCarouselCardModelContentText.fromJson(s));
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
-        'theySay': HelperJson.listToJson(theySay),
-        'shouldKnow': HelperJson.listToJson(shouldKnow),
-        'explain': HelperJson.listToJson(explain)
+        'theySay': JsonUtils.listToJson(theySay),
+        'shouldKnow': JsonUtils.listToJson(shouldKnow),
+        'explain': JsonUtils.listToJson(explain)
       };
 }

@@ -3,13 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+//import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api_email_msg/api_email_msg_service.dart';
-import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/api_email_sender_service.dart';
-import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
@@ -39,7 +38,7 @@ class DataScreenService extends ChangeNotifier {
     presenter = DataScreenPresenter(this);
     _apiAuthService.getAccount().then((account) {
       _model.account = account;
-      if (account != null) _dataFetchService.index(account);
+      if (account != null) _dataFetchService.asyncIndex(account);
       notifyListeners();
     });
   }
@@ -48,7 +47,7 @@ class DataScreenService extends ChangeNotifier {
     ApiOAuthModelAccount? account = await _apiAuthService.signIn(provider);
     if (account != null) {
       _model.account = account;
-      _dataFetchService.index(account);
+      _dataFetchService.asyncIndex(account);
       notifyListeners();
     }
   }
@@ -60,15 +59,16 @@ class DataScreenService extends ChangeNotifier {
       DataFetchInterfaceProvider? provider = _apiAuthService
           .interfaceProviders[account.provider] as DataFetchInterfaceProvider?;
       if (provider?.email != null) {
-        await _deleteMessages(account);
-        await _dataFetchService.email.deleteApiAppData(account);
+        // TODO
+        // await _deleteMessages(account);
+        // await _dataFetchService.email.deleteApiAppData(account);
       }
     }
     _model.account = null;
     notifyListeners();
   }
 
-  Future<List<InfoCarouselCardModel>> getInfoCards(int accountId) async {
+  Future<List<InfoCarouselCardModel>?> getInfoCards(int accountId) async {
     ApiOAuthModelAccount? account = _model.account;
     if (account != null) {
       DataFetchInterfaceProvider? provider = _apiAuthService
@@ -76,14 +76,5 @@ class DataScreenService extends ChangeNotifier {
       if (provider?.email != null) return await provider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
-  }
-
-  Future<void> _deleteMessages(ApiOAuthModelAccount account) async {
-    List<ApiEmailMsgModel> messages =
-        await _apiEmailMsgService.getByAccount(account);
-    await _apiEmailMsgService.deleteList(messages);
-    List<ApiEmailSenderModel> senders =
-        messages.map((message) => message.sender!).toSet().toList();
-    await _apiEmailSenderService.deleteList(senders);
   }
 }

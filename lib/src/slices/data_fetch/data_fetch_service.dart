@@ -5,6 +5,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_app_data/api_app_data_service.dart';
 import '../api_company/api_company_service.dart';
@@ -21,6 +22,8 @@ class DataFetchService extends ChangeNotifier {
   final DataPushService _dataPushService;
   late final DataFetchServiceEmail email;
 
+  Set<int> _indexMutex = Set();
+
   DataFetchService(
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
@@ -28,7 +31,8 @@ class DataFetchService extends ChangeNotifier {
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiKnowledgeService apiKnowledgeService,
-      required DataPushService dataPushService})
+      required DataPushService dataPushService,
+      required Database database})
       : this._dataPushService = dataPushService {
     this.email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
@@ -36,14 +40,20 @@ class DataFetchService extends ChangeNotifier {
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
-        apiKnowledgeService: apiKnowledgeService,
         dataPushService: _dataPushService,
+        database: database,
         notifyListeners: notifyListeners);
   }
 
-  Future<void> index(ApiOAuthModelAccount account) async {
-    _log.fine('DataFetchService index');
-    await email.index(account);
-    notifyListeners();
+  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+    if (!_indexMutex.contains(account.accountId!)) {
+      _indexMutex.add(account.accountId!);
+      _log.fine(
+          'DataFetchService async index for account ${account.accountId}');
+      Future f1 = email.asyncIndex(account);
+      Future f2 = email.asyncProcess(account);
+      await Future.wait([f1, f2]);
+      _indexMutex.remove(account.accountId!);
+    }
   }
 }

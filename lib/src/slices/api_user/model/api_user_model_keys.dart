@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiUserModelKeys {
+import '../../../utils/json/json_object.dart';
+
+class ApiUserModelKeys extends JsonObject {
   String? address;
   String? signPrivateKey;
   String? signPublicKey;
@@ -27,6 +29,7 @@ class ApiUserModelKeys {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'address': address,
         'signPrivateKey': signPrivateKey,

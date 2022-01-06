@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiUserModelCurrent {
+import '../../../utils/json/json_object.dart';
+
+class ApiUserModelCurrent extends JsonObject {
   String? email;
 
   ApiUserModelCurrent({required this.email});
@@ -14,5 +16,6 @@ class ApiUserModelCurrent {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {'email': email};
 }

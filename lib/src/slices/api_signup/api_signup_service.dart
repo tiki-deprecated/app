@@ -3,8 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:httpp/httpp.dart';
+
 import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import 'model/api_signup_model_user_rsp.dart';
 import 'repository/api_signup_repository.dart';
 
@@ -15,7 +16,7 @@ class ApiSignupService {
 
   Future<int?> getTotal({String? code}) async {
     HelperApiRsp<ApiSignupModelUserRsp> rsp = await getTotalRsp(code: code);
-    if (HelperApiUtils.isOk(rsp.code)) {
+    if (HttppUtils.isOk(rsp.code)) {
       ApiSignupModelUserRsp data = rsp.data;
       return data.total;
     } else

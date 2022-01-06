@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelFingerprintReq {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelFingerprintReq extends JsonObject {
   Set<String>? fingerprints;
 
   ApiKnowledgeModelFingerprintReq({this.fingerprints});
@@ -15,6 +17,7 @@ class ApiKnowledgeModelFingerprintReq {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'fingerprints': fingerprints,
       };

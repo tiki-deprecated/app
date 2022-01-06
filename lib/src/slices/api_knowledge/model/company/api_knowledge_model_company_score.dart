@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelCompanyScore {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelCompanyScore extends JsonObject {
   double? sensitivityScore;
   double? breachScore;
   double? securityScore;
@@ -19,6 +21,7 @@ class ApiKnowledgeModelCompanyScore {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'sensitivityScore': sensitivityScore,
         'breachScore': breachScore,

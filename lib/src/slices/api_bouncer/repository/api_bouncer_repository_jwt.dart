@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:httpp/httpp.dart';
 
 import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
 import '../model/api_bouncer_model_jwt_req_otp.dart';
 import '../model/api_bouncer_model_jwt_req_refresh.dart';
@@ -24,7 +24,7 @@ class ApiBouncerRepositoryJwt {
       ApiBouncerModelJwtReqOtp req) async {
     Response rsp = await ConfigSentry.http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathOtp),
-        headers: HelperApiHeaders().header,
+        headers: HttppHeaders.typical().map,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(
@@ -37,7 +37,7 @@ class ApiBouncerRepositoryJwt {
       ApiBouncerModelJwtReqRefresh req) async {
     Response rsp = await ConfigSentry.http.post(
         ConfigDomain.asUri(ConfigDomain.bouncer, _pathRefresh),
-        headers: HelperApiHeaders().header,
+        headers: HttppHeaders.typical().map,
         body: jsonEncode(req.toJson()));
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp.fromJson(

@@ -6,10 +6,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:httpp/httpp.dart';
 
 import '../../../config/config_domain.dart';
 import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_headers.dart';
 import '../../../utils/api/helper_api_rsp.dart';
 import '../model/api_signup_model_user_rsp.dart';
 
@@ -22,7 +22,7 @@ class ApiSignupRepository {
     if (code != null) query = {"referrer": code};
     Response rsp = await ConfigSentry.http.get(
         ConfigDomain.asUri(ConfigDomain.signup, _path, query),
-        headers: HelperApiHeaders().header);
+        headers: HttppHeaders.typical().map);
     Map? rspMap = jsonDecode(rsp.body);
     return HelperApiRsp(
         code: rsp.statusCode,

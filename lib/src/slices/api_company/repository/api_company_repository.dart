@@ -5,45 +5,45 @@
 
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
-import '../model/api_company_model_local.dart';
+import '../model/api_company_model.dart';
 
-class ApiCompanyRepositoryLocal {
+class ApiCompanyRepository {
   static const String _table = 'company';
   final Database _database;
 
-  ApiCompanyRepositoryLocal(this._database);
+  ApiCompanyRepository(this._database);
 
-  Future<ApiCompanyModelLocal> insert(ApiCompanyModelLocal company) async {
+  Future<ApiCompanyModel> insert(ApiCompanyModel company) async {
     DateTime now = DateTime.now();
     company.modified = now;
     company.created = now;
-    int id = await _database.insert(_table, company.toMap());
+    int id = await _database.insert(_table, company.toJson());
     company.companyId = id;
     return company;
   }
 
-  Future<ApiCompanyModelLocal> update(ApiCompanyModelLocal company) async {
+  Future<ApiCompanyModel> update(ApiCompanyModel company) async {
     company.modified = DateTime.now();
     await _database.update(
       _table,
-      company.toMap(),
+      company.toJson(),
       where: 'company_id = ?',
       whereArgs: [company.companyId],
     );
     return company;
   }
 
-  Future<ApiCompanyModelLocal?> getById(int id) async {
+  Future<ApiCompanyModel?> getById(int id) async {
     final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "company_id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
-    return ApiCompanyModelLocal.fromMap(rows[0]);
+    return ApiCompanyModel.fromJson(rows[0]);
   }
 
-  Future<ApiCompanyModelLocal?> getByDomain(String domain) async {
+  Future<ApiCompanyModel?> getByDomain(String domain) async {
     final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "domain = ?", whereArgs: [domain]);
     if (rows.isEmpty) return null;
-    return ApiCompanyModelLocal.fromMap(rows[0]);
+    return ApiCompanyModel.fromJson(rows[0]);
   }
 }
