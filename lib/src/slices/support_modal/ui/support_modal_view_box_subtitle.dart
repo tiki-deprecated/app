@@ -44,7 +44,7 @@ class SupportModalViewBoxSubtitle extends StatelessWidget {
     }
     if (data is ApiZendeskArticle) {
       DateTime date = data.updatedAt;
-      String publishedDate = DateFormat("dd MMMM YYYY").format(date);
+      String publishedDate = DateFormat("dd MMMM yyyy").format(date);
       return TextSpan(
         text: "published on $publishedDate",
         style: TextStyle(color: color, fontFamily: ConfigFont.familyNunitoSans),

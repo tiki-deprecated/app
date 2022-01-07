@@ -31,15 +31,17 @@ class SupportModalViewBoxContent extends StatelessWidget {
                 if (attrs != null) {
                   double? width = double.tryParse(attrs['width'] ?? "");
                   double? height = double.tryParse(attrs['height'] ?? "");
+                  final initialUrl = attrs['src'] != null ? "https:" + attrs['src']! : "about:blank";
                   return Container(
                     width: width ?? (height ?? 150) * 2,
                     height: height ?? (width ?? 300) / 2,
                     child: Webview.WebView(
-                        initialUrl: attrs['src'] != null ? "https:" + attrs['src']! : "about:blank",
+                        initialUrl: initialUrl,
                         javascriptMode: Webview.JavascriptMode.unrestricted,
                         gestureRecognizers: _gestureRecognizerFactorySet(),
                         navigationDelegate: (request) =>
-                            _getNavigationDelegate(request, service)),
+                            _getNavigationDelegate(request, initialUrl)
+                    ),
                   );
                 } else {
                   return Container(height: 0);
@@ -48,9 +50,10 @@ class SupportModalViewBoxContent extends StatelessWidget {
             }));
   }
 
-  _getNavigationDelegate(request, service) {
-      service.controller.launchUrl(request.url);
-      return NavigationDecision.prevent;
+  _getNavigationDelegate(Webview.NavigationRequest request, String initialUrl) {
+        return request.url == initialUrl ?
+          Webview.NavigationDecision.navigate :
+          Webview.NavigationDecision.prevent;
   }
 
   String _getExcerpt(String text) {
