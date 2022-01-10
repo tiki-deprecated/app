@@ -5,10 +5,7 @@
 
 //import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../api_email_msg/api_email_msg_service.dart';
-import '../api_email_sender/api_email_sender_service.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
@@ -25,14 +22,9 @@ class DataScreenService extends ChangeNotifier {
   final DataFetchService _dataFetchService;
   final ApiOAuthService _apiAuthService;
 
-  ApiEmailMsgService _apiEmailMsgService;
-
-  ApiEmailSenderService _apiEmailSenderService;
-
   get account => _model.account;
 
-  DataScreenService(this._dataFetchService, this._apiAuthService,
-      this._apiEmailMsgService, this._apiEmailSenderService) {
+  DataScreenService(this._dataFetchService, this._apiAuthService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);

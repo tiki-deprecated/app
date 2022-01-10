@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/json/json_utils.dart';
 import 'package:http/http.dart';
 import 'package:httpp/httpp.dart';
 
 import '../../config/config_sentry.dart';
+import '../../utils/json/json_utils.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';

@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/api_company/api_company_service.dart';
-import 'package:app/src/slices/api_company/model/api_company_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
+import '../api_company/api_company_service.dart';
+import '../api_company/model/api_company_model.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
 import '../api_email_sender/model/api_email_sender_model.dart';
 import '../api_oauth/api_oauth_service.dart';

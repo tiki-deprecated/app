@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/config_color.dart';
@@ -32,8 +31,8 @@ class DecisionCardSpamViewOpened extends StatelessWidget {
             Center(
                 child: RichText(
                     text: TextSpan(
-                        text:
-                            "${(this.percent! * 100).round().toString()}", //TODO FIX!
+                        text: "${(this.percent! * 100).round().toString()}",
+                        //TODO FIX!
                         style: TextStyle(
                             color: _getProgressColor(this.percent! * 100),
                             fontFamily: ConfigFont.familyKoara,

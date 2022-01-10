@@ -2,8 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -30,6 +29,7 @@ class HeaderBar extends StatelessWidget {
         loginFlowService,
         apiSignupService,
         apiBlockchainService);
+    // TODO fix bottom sheet modal service rebuilds in every tap
     return GestureDetector(
         onTap: () => UserAccountModalService(userReferralService)
             .presenter

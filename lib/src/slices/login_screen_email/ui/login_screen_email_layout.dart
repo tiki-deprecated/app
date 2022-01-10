@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'login_screen_email_layout_background.dart';
 import 'login_screen_email_layout_foreground.dart';

@@ -2,8 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import '../api_signup/api_signup_service.dart';
 import '../user_referral/user_referral_service.dart';
@@ -30,4 +29,6 @@ class UserAccountModalService extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  goToSupport() {}
 }

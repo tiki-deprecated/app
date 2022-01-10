@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -44,6 +43,19 @@ Future<void> init() async {
       apiBlockchainService: apiBlockchainService,
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
+
+  // ApiZendeskService apiZendeskService = ApiZendeskService();
+  // List<ApiZendeskCategory> categories = await apiZendeskService.getZendeskCategories();
+  // print(categories);
+  // ApiZendeskCategory firstCategory = categories[0];
+  // List<ApiZendeskSection> sections = await apiZendeskService.getZendeskSections(firstCategory.id);
+  // print(sections);
+  // ApiZendeskSection firstSection = sections[0];
+  // List<ApiZendeskArticle> articles = await apiZendeskService.getZendeskArticles(firstSection.id);
+  // print(articles);
+  // ApiZendeskArticle firstArticle = articles[0];
+  // ApiZendeskArticle article = await apiZendeskService.getZendeskArticle(firstArticle.id);
+  // print(article);
 
   SentryFlutter.init(
       (options) async => options

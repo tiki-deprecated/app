@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'md_screen_layout_background.dart';
 import 'md_screen_layout_foreground.dart';

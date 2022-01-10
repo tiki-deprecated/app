@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../login_flow/login_flow_service.dart';
 import 'login_screen_inbox_controller.dart';

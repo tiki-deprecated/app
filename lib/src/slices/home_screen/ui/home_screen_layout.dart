@@ -42,8 +42,8 @@ class HomeScreenLayout extends StatelessWidget {
               apiAppDataService: appDataService,
               DataFetchService: dataFetchService,
               apiAuthService: apiAuthService),
-          dataScreenService: DataScreenService(dataFetchService, apiAuthService,
-              apiEmailMsgService, apiEmailSenderService),
+          dataScreenService:
+              DataScreenService(dataFetchService, apiAuthService),
           walletScreenService: WalletScreenService(),
         ));
   }

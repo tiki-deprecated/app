@@ -7,12 +7,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
-import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asn1.dart';
-import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/export.dart';
-import 'package:pointycastle/key_generators/api.dart';
-import 'package:pointycastle/key_generators/rsa_key_generator.dart';
 
 import 'helper_crypto.dart';
 
