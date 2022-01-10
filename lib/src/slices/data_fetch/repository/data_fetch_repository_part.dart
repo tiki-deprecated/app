@@ -79,7 +79,7 @@ class DataFetchRepositoryPart {
       T fromJson(Map<String, dynamic>? json),
       {int? max}) async {
     final List<Map<String, Object?>> rows = await _select(
-        where: 'part.api_enum = ? AND account.account_id = ?',
+        where: 'part.api_enum = ? AND account.account_id = ? ',
         whereArgs: [api.value, accountId],
         limit: max);
     if (rows.isEmpty) return List.empty();
