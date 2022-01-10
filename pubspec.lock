@@ -287,7 +287,7 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.6"
+    version: "1.11.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -535,10 +535,12 @@ packages:
   httpp:
     dependency: "direct main"
     description:
-      path: "../httpp"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "28901296878ad17a4da6c68e7f3667e28a2784e5"
+      url: "https://github.com/tiki/httpp"
+    source: git
+    version: "0.0.2"
   intl:
     dependency: "direct main"
     description:
@@ -811,7 +813,7 @@ packages:
       name: pointycastle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.0"
+    version: "3.5.0"
   pool:
     dependency: transitive
     description:
@@ -839,7 +841,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.2"
   pub_semver:
     dependency: transitive
     description:
@@ -1077,7 +1079,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.17"
+    version: "6.0.18"
   url_launcher_android:
     dependency: transitive
     description:

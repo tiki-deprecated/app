@@ -1,6 +1,7 @@
-import '../../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
 
 class SupportModalSearch extends StatelessWidget {
   static const String _text = "Search for answers...";

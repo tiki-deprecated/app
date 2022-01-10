@@ -1,4 +1,3 @@
-import '../support_modal_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,8 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart' as Webview;
+
+import '../support_modal_service.dart';
 
 class SupportModalViewBoxContent extends StatelessWidget {
   final dynamic data;
@@ -31,7 +32,9 @@ class SupportModalViewBoxContent extends StatelessWidget {
                 if (attrs != null) {
                   double? width = double.tryParse(attrs['width'] ?? "");
                   double? height = double.tryParse(attrs['height'] ?? "");
-                  final initialUrl = attrs['src'] != null ? "https:" + attrs['src']! : "about:blank";
+                  final initialUrl = attrs['src'] != null
+                      ? "https:" + attrs['src']!
+                      : "about:blank";
                   return Container(
                     width: width ?? (height ?? 150) * 2,
                     height: height ?? (width ?? 300) / 2,
@@ -40,8 +43,7 @@ class SupportModalViewBoxContent extends StatelessWidget {
                         javascriptMode: Webview.JavascriptMode.unrestricted,
                         gestureRecognizers: _gestureRecognizerFactorySet(),
                         navigationDelegate: (request) =>
-                            _getNavigationDelegate(request, initialUrl)
-                    ),
+                            _getNavigationDelegate(request, initialUrl)),
                   );
                 } else {
                   return Container(height: 0);
@@ -51,9 +53,9 @@ class SupportModalViewBoxContent extends StatelessWidget {
   }
 
   _getNavigationDelegate(Webview.NavigationRequest request, String initialUrl) {
-        return request.url == initialUrl ?
-          Webview.NavigationDecision.navigate :
-          Webview.NavigationDecision.prevent;
+    return request.url == initialUrl
+        ? Webview.NavigationDecision.navigate
+        : Webview.NavigationDecision.prevent;
   }
 
   String _getExcerpt(String text) {

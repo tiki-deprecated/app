@@ -11,7 +11,7 @@ class ApiBouncerModelJwtReqRefresh extends JsonObject {
   ApiBouncerModelJwtReqRefresh(this.refreshToken);
 
   ApiBouncerModelJwtReqRefresh.fromJson(Map<String, dynamic>? json) {
-    if(json != null) {
+    if (json != null) {
       this.refreshToken = json['refreshToken'];
     }
   }

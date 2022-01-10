@@ -1,4 +1,3 @@
-import 'support_modal_view_box_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -7,6 +6,7 @@ import '../../../config/config_color.dart';
 import '../support_modal_service.dart';
 import 'support_modal_view_box_content.dart';
 import 'support_modal_view_box_subtitle.dart';
+import 'support_modal_view_box_title.dart';
 
 class SupportModalViewBox extends StatelessWidget {
   static const double _cardMarginTop = 2.25;

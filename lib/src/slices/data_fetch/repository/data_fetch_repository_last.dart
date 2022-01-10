@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/data_fetch/model/data_fetch_model_api.dart';
-import 'package:app/src/slices/data_fetch/model/data_fetch_model_last.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
+import '../model/data_fetch_model_api.dart';
+import '../model/data_fetch_model_last.dart';
 
 class DataFetchRepositoryLast {
   static const String _table = 'data_fetch_last';

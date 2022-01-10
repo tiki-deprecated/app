@@ -38,7 +38,8 @@ class SupportModalViewBreadcrumb extends StatelessWidget {
   String _getBreadcrumbText(SupportModalService service) {
     String leadText = "All categories";
     if (service.model.data == null) return '';
-    if (service.model.data is List<ApiZendeskSection> && service.model.data.length > 0) {
+    if (service.model.data is List<ApiZendeskSection> &&
+        service.model.data.length > 0) {
       String cat = service.model.category?.title ?? '';
       return leadText + separator + cat;
     }

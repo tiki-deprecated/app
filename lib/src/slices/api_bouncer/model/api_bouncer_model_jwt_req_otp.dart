@@ -12,7 +12,7 @@ class ApiBouncerModelJwtReqOtp extends JsonObject {
   ApiBouncerModelJwtReqOtp(this.otp, this.salt);
 
   ApiBouncerModelJwtReqOtp.fromJson(Map<String, dynamic>? json) {
-    if(json != null) {
+    if (json != null) {
       this.otp = json['otp'];
       this.salt = json['salt'];
     }

@@ -3,10 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../api_zendesk/model/api_zendesk_category.dart';
-import '../support_modal_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -14,6 +11,8 @@ import 'package:sizer/sizer.dart';
 import '../../../config/config_color.dart';
 import '../../../config/config_font.dart';
 import '../../../utils/helper_image.dart';
+import '../../api_zendesk/model/api_zendesk_category.dart';
+import '../support_modal_service.dart';
 
 class SupportModalViewHeader extends StatelessWidget {
   static const String _text = "Help Center";
@@ -39,7 +38,8 @@ class SupportModalViewHeader extends StatelessWidget {
                     width: 15.sp,
                     height: 15.sp,
                   ))))),
-      if (service.model.data != null && !(service.model.data is List<ApiZendeskCategory>))
+      if (service.model.data != null &&
+          !(service.model.data is List<ApiZendeskCategory>))
         GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => service.controller.navigateBack(context),

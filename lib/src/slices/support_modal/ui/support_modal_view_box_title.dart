@@ -1,7 +1,8 @@
-import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/config_color.dart';
+import '../../../config/config_font.dart';
 
 class SupportModalViewBoxTitle extends StatelessWidget {
   final dynamic data;
