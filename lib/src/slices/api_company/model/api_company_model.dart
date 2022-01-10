@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiCompanyModelLocal {
+import '../../../utils/json/json_object.dart';
+
+class ApiCompanyModel extends JsonObject {
   int? companyId;
   String? logo;
   double? securityScore;
@@ -13,7 +15,7 @@ class ApiCompanyModelLocal {
   DateTime? created;
   DateTime? modified;
 
-  ApiCompanyModelLocal(
+  ApiCompanyModel(
       {this.companyId,
       this.logo,
       this.securityScore,
@@ -23,21 +25,25 @@ class ApiCompanyModelLocal {
       this.created,
       this.modified});
 
-  ApiCompanyModelLocal.fromMap(map) {
-    this.companyId = map['company_id'];
-    this.logo = map['logo'];
-    this.securityScore = map['security_score'];
-    this.breachScore = map['breach_score'];
-    this.sensitivityScore = map['sensitivity_score'];
-    this.domain = map['domain'];
-    if (map['modified_epoch'] != null)
-      this.modified =
-          DateTime.fromMillisecondsSinceEpoch(map['modified_epoch']);
-    if (map['created_epoch'] != null)
-      this.created = DateTime.fromMillisecondsSinceEpoch(map['created_epoch']);
+  ApiCompanyModel.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      this.companyId = json['company_id'];
+      this.logo = json['logo'];
+      this.securityScore = json['security_score'];
+      this.breachScore = json['breach_score'];
+      this.sensitivityScore = json['sensitivity_score'];
+      this.domain = json['domain'];
+      if (json['modified_epoch'] != null)
+        this.modified =
+            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+      if (json['created_epoch'] != null)
+        this.created =
+            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+    }
   }
 
-  Map<String, dynamic> toMap() => {
+  @override
+  Map<String, dynamic> toJson() => {
         'company_id': companyId,
         'logo': logo,
         'security_score': securityScore,

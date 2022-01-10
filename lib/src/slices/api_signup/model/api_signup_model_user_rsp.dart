@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiSignupModelUserRsp {
+import '../../../utils/json/json_object.dart';
+
+class ApiSignupModelUserRsp extends JsonObject {
   int? total;
 
   ApiSignupModelUserRsp({this.total});
@@ -14,5 +16,6 @@ class ApiSignupModelUserRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {'total': total};
 }

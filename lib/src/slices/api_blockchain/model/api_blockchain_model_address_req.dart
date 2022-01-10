@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiBlockchainModelAddressReq {
+import '../../../utils/json/json_object.dart';
+
+class ApiBlockchainModelAddressReq extends JsonObject {
   String? dataKey;
   String? signKey;
 
@@ -14,5 +16,6 @@ class ApiBlockchainModelAddressReq {
     this.signKey = json['signKey'];
   }
 
+  @override
   Map<String, dynamic> toJson() => {'dataKey': dataKey, 'signKey': signKey};
 }

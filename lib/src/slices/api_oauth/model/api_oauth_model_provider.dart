@@ -16,18 +16,22 @@ class ApiOAuthModelProvider {
   late List<String>? promptValues;
   late List<String> scopes;
 
-  ApiOAuthModelProvider.fromMap(map) {
-    clientId = Platform.isIOS ? map['iosClientId'] : map['androidClientId'];
-    authorizationEndpoint = map['authorizationEndpoint'];
-    tokenEndpoint = map['tokenEndpoint'];
-    redirectUri = map['redirectUrl'] ?? _defaultRedirectUri;
-    discoveryUrl = map['discoveryUrl'];
-    userInfoEndpoint = map['userinfo_endpoint'];
-    promptValues = map['promptValues'] != null
-        ? (map['promptValues'] as List).map((item) => item as String).toList()
-        : null;
-    scopes = map['scopes'] != null
-        ? (map['scopes'] as List).map((item) => item as String).toList()
-        : List.empty();
+  ApiOAuthModelProvider.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      clientId = Platform.isIOS ? json['iosClientId'] : json['androidClientId'];
+      authorizationEndpoint = json['authorizationEndpoint'];
+      tokenEndpoint = json['tokenEndpoint'];
+      redirectUri = json['redirectUrl'] ?? _defaultRedirectUri;
+      discoveryUrl = json['discoveryUrl'];
+      userInfoEndpoint = json['userinfo_endpoint'];
+      promptValues = json['promptValues'] != null
+          ? (json['promptValues'] as List)
+              .map((item) => item as String)
+              .toList()
+          : null;
+      scopes = json['scopes'] != null
+          ? (json['scopes'] as List).map((item) => item as String).toList()
+          : List.empty();
+    }
   }
 }

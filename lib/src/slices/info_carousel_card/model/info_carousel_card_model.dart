@@ -3,10 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import '../../../utils/json/json_object.dart';
 import 'info_carousel_card_model_content.dart';
 import 'info_carousel_card_model_cover.dart';
 
-class InfoCarouselCardModel {
+class InfoCarouselCardModel extends JsonObject {
   InfoCarouselCardModelCover? cover;
   InfoCarouselCardModelContent? content;
 
@@ -19,6 +20,7 @@ class InfoCarouselCardModel {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'cover': cover!.toJson(),
         'content': content!.toJson(),

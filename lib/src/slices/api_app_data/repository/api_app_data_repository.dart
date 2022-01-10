@@ -9,7 +9,7 @@ class ApiAppDataRepository {
   ApiAppDataRepository(this._database);
 
   Future<ApiAppDataModel?> insert(ApiAppDataModel data) async {
-    int dataId = await _database.insert(_table, data.toMap());
+    int dataId = await _database.insert(_table, data.toJson());
     data.id = dataId;
     return data;
   }
@@ -17,7 +17,7 @@ class ApiAppDataRepository {
   Future<ApiAppDataModel> update(ApiAppDataModel data) async {
     await _database.update(
       _table,
-      data.toMap(),
+      data.toJson(),
       where: 'id = ?',
       whereArgs: [data.id],
     );
@@ -36,14 +36,14 @@ class ApiAppDataRepository {
     final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "id = ?", whereArgs: [id]);
     if (rows.isEmpty) return null;
-    return ApiAppDataModel.fromMap(rows[0]);
+    return ApiAppDataModel.fromJson(rows[0]);
   }
 
   Future<ApiAppDataModel?> getByKey(String key) async {
     final List<Map<String, Object?>> rows =
         await _database.query(_table, where: "key = ?", whereArgs: [key]);
     if (rows.isEmpty) return null;
-    return ApiAppDataModel.fromMap(rows[0]);
+    return ApiAppDataModel.fromJson(rows[0]);
   }
 
   deleteByKey(String key) async {

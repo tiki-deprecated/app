@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:httpp/httpp.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -27,9 +28,10 @@ Future<void> main() async {
 }
 
 Future<void> init() async {
+  Httpp httpp = Httpp(useClient: () => SentryHttpClient());
   ApiUserService apiUserService = ApiUserService(FlutterSecureStorage());
   ApiBouncerService apiBouncerService = ApiBouncerService();
-  LoginFlowService loginFlowService = LoginFlowService();
+  LoginFlowService loginFlowService = LoginFlowService(httpp: httpp);
   HelperApiAuth helperApiAuth =
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
@@ -68,5 +70,6 @@ Future<void> init() async {
             Provider<ApiBouncerService>.value(value: apiBouncerService),
             Provider<ApiBlockchainService>.value(value: apiBlockchainService),
             Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+            Provider<Httpp>.value(value: httpp)
           ], child: App(loginFlowService))));
 }

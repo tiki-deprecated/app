@@ -14,20 +14,11 @@ class ApiEmailSenderService {
   ApiEmailSenderService({required Database database})
       : this._repository = ApiEmailSenderRepository(database);
 
-  Future<ApiEmailSenderModel> upsert(ApiEmailSenderModel sender) async {
-    ApiEmailSenderModel? dbSender = await _repository.getByEmail(sender.email!);
-    if (dbSender != null) {
-      sender.senderId = dbSender.senderId;
-      sender.created = dbSender.created;
-      if (sender.emailSince != null) {
-        sender.emailSince = dbSender.emailSince!.isBefore(sender.emailSince!)
-            ? dbSender.emailSince
-            : sender.emailSince;
-      }
-      return _repository.update(sender);
-    }
-    return _repository.insert(sender);
-  }
+  Future<ApiEmailSenderModel> upsert(ApiEmailSenderModel sender) async =>
+      await _repository.upsert(sender);
+
+  Future<int> batchUpsert(List<ApiEmailSenderModel> senders) async =>
+      await _repository.batchUpsert(senders);
 
   Future<List<ApiEmailSenderModel>> getUnsubscribed() async => await _repository
       .getByUnsubscribedAndIgnoreUntilBefore(false, DateTime.now());

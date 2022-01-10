@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiBlockchainModelAddressReferRsp {
+import '../../../utils/json/json_object.dart';
+
+class ApiBlockchainModelAddressReferRsp extends JsonObject {
   int? count;
 
   ApiBlockchainModelAddressReferRsp({this.count});
@@ -14,5 +16,6 @@ class ApiBlockchainModelAddressReferRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {'count': count};
 }

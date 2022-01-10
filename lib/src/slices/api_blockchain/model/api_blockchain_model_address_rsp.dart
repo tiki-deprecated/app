@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiBlockchainModelAddressRsp {
+import '../../../utils/json/json_object.dart';
+
+class ApiBlockchainModelAddressRsp extends JsonObject {
   String? address;
   DateTime? issued;
 
@@ -16,6 +18,7 @@ class ApiBlockchainModelAddressRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() =>
       {'address': address, 'issued': issued?.toUtc().toIso8601String()};
 }

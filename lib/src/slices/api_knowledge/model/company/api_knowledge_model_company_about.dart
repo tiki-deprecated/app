@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiKnowledgeModelCompanyAbout {
+import '../../../../utils/json/json_object.dart';
+
+class ApiKnowledgeModelCompanyAbout extends JsonObject {
   String? domain;
   String? name;
   String? description;
@@ -33,6 +35,7 @@ class ApiKnowledgeModelCompanyAbout {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'domain': domain,
         'name': name,

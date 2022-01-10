@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class ApiUserModelOtp {
+import '../../../utils/json/json_object.dart';
+
+class ApiUserModelOtp extends JsonObject {
   String? email;
   String? salt;
 
@@ -16,6 +18,7 @@ class ApiUserModelOtp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'email': email,
         'salt': salt,

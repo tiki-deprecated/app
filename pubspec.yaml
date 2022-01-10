@@ -43,6 +43,8 @@ dependencies:
   url_launcher: ^6.0.17
   uuid: ^3.0.5
   flutter_html: ^2.2.1
+  httpp:
+    path: ../httpp/
 
 dependency_overrides:
   sqflite:

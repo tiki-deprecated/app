@@ -13,10 +13,10 @@ class HelperApiRspPage {
 
   HelperApiRspPage.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.size = json['size'];
-      this.totalElements = json['totalElements'];
-      this.totalPages = json['totalPages'];
-      this.page = json['page'];
+      size = json['size'];
+      totalElements = json['totalElements'];
+      totalPages = json['totalPages'];
+      page = json['page'];
     }
   }
 

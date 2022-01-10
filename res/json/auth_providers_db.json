@@ -15,7 +15,8 @@
       "email",
       "profile",
       "mail.read",
-      "mail.send"
+      "mail.send",
+      "offline_access"
     ]
   },
   "google": {

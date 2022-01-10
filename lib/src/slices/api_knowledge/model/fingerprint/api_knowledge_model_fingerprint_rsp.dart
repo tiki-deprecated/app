@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import '../../../../utils/json/json_object.dart';
 import 'api_knowledge_model_fingerprint_rsp_edge.dart';
 
-class ApiKnowledgeModelFingerprintRsp {
+class ApiKnowledgeModelFingerprintRsp extends JsonObject {
   Set<String>? fingerprints;
   ApiKnowledgeModelFingerprintRspEdge? from;
   ApiKnowledgeModelFingerprintRspEdge? to;
@@ -21,6 +22,7 @@ class ApiKnowledgeModelFingerprintRsp {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'fingerprints': fingerprints,
         'from': from?.toJson(),
