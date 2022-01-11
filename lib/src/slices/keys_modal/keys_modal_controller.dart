@@ -9,4 +9,16 @@ class KeysModalController {
   final KeysModalService service;
 
   KeysModalController(this.service);
+
+  void createNewKeys() {}
+
+  void goToKeyScan() {}
+
+  void scanQrCode() {}
+
+  void enterPinCode() {}
+
+  submitPincode(String text) {}
+
+  submitPassphrase(String text) {}
 }

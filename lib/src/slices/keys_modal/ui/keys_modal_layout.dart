@@ -10,6 +10,10 @@ import 'package:sizer/sizer.dart';
 import '../keys_modal_service.dart';
 import '../model/keys_modal_steps.dart';
 import 'keys_modal_view_header.dart';
+import 'keys_modal_view_new_account.dart';
+import 'keys_modal_view_passphrase.dart';
+import 'keys_modal_view_pincode.dart';
+import 'keys_modal_view_qr_code_question.dart';
 
 class KeysModalLayout extends StatelessWidget {
   @override
@@ -38,49 +42,12 @@ class KeysModalLayout extends StatelessWidget {
         return KeysModalViewNewAccount();
       case KeysModalSteps.qrCodeQuestion:
         return KeysModalViewQrCodeQuestion();
-      case KeysModalSteps.qrCodeScanner:
-        return KeysModalViewQrCodeScanner();
       case KeysModalSteps.enterPinCode:
         return KeysModalViewPinCode();
       case KeysModalSteps.enterPassPhrase:
-        return KeysModalViewPassPhrase();
+        return KeysModalViewPassphrase();
       default:
         return KeysModalViewNewAccount();
     }
-  }
-}
-
-class KeysModalViewPassPhrase extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class KeysModalViewPinCode extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class KeysModalViewQrCodeScanner extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class KeysModalViewQrCodeQuestion extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class KeysModalViewNewAccount extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
