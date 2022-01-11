@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../config/config_color.dart';
-import '../../../utils/helper_image.dart';
 import '../user_account_modal_service.dart';
 
 class UserAccountModalViewQrCodeShow extends StatelessWidget {

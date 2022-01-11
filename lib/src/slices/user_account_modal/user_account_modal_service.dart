@@ -2,11 +2,11 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
-import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_signup/api_signup_service.dart';
+import '../api_user/model/api_user_model_keys.dart';
+import '../login_flow/login_flow_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'model/user_account_modal_model.dart';
 import 'user_account_modal_controller.dart';

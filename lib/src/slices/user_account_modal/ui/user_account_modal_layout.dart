@@ -3,12 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_qr_code_btn.dart';
-import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../user_account_modal_service.dart';
 import 'user_account_modal_view_badges.dart';
 import 'user_account_modal_view_community.dart';
 import 'user_account_modal_view_follow_us.dart';
@@ -16,6 +15,7 @@ import 'user_account_modal_view_header.dart';
 import 'user_account_modal_view_logout.dart';
 import 'user_account_modal_view_news.dart';
 import 'user_account_modal_view_profile.dart';
+import 'user_account_modal_view_qr_code_btn.dart';
 import 'user_account_modal_view_qr_code_show.dart';
 import 'user_account_modal_view_refer.dart';
 import 'user_account_modal_view_release.dart';
