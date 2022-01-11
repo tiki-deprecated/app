@@ -2,6 +2,8 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+import 'package:app/src/slices/api_user/model/api_user_model_keys.dart';
+import 'package:app/src/slices/login_flow/login_flow_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_signup/api_signup_service.dart';
@@ -14,9 +16,12 @@ class UserAccountModalService extends ChangeNotifier {
   late final UserAccountModalPresenter presenter;
   late final UserAccountModalController controller;
   late final UserAccountModalModel model;
+  late final LoginFlowService loginFlowService;
+
   UserReferralService referralService;
 
-  UserAccountModalService(this.referralService) {
+
+  UserAccountModalService(this.referralService, this.loginFlowService) {
     this.presenter = UserAccountModalPresenter(this);
     this.controller = UserAccountModalController(this);
     this.model = UserAccountModalModel();
@@ -30,5 +35,16 @@ class UserAccountModalService extends ChangeNotifier {
     }
   }
 
-  goToSupport() {}
+  void showQrCode() {
+    ApiUserModelKeys keys = this.loginFlowService.model.user!.keys!;
+    String combinedKey = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
+    this.model.showQrCode = true;
+    this.model.qrCode = combinedKey;
+    notifyListeners();
+  }
+
+  void hideQrCode() {
+    this.model.showQrCode = false;
+    this.notifyListeners();
+  }
 }

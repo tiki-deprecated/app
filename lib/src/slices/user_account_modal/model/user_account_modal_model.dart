@@ -7,4 +7,8 @@ class UserAccountModalModel {
   int? signupCount;
 
   bool logoutModalActive = false;
+
+  bool showQrCode = false;
+
+  String? qrCode;
 }

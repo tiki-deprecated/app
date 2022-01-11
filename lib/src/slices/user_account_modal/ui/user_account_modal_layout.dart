@@ -3,7 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/user_account_modal/ui/user_account_modal_view_qr_code_btn.dart';
+import 'package:app/src/slices/user_account_modal/user_account_modal_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'user_account_modal_view_badges.dart';
@@ -13,6 +16,7 @@ import 'user_account_modal_view_header.dart';
 import 'user_account_modal_view_logout.dart';
 import 'user_account_modal_view_news.dart';
 import 'user_account_modal_view_profile.dart';
+import 'user_account_modal_view_qr_code_show.dart';
 import 'user_account_modal_view_refer.dart';
 import 'user_account_modal_view_release.dart';
 import 'user_account_modal_view_support.dart';
@@ -23,6 +27,7 @@ class UserAccountModalLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserAccountModalService service = Provider.of<UserAccountModalService>(context);
     return Container(
         height: 85.h,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -52,6 +57,11 @@ class UserAccountModalLayout extends StatelessWidget {
                         Container(
                             margin: EdgeInsets.only(top: _cardMarginTop.h),
                             child: UserAccountModalViewBadges()),
+                        Container(
+                            margin: EdgeInsets.only(top: _cardMarginTop.h),
+                            child: service.model.showQrCode ?
+                            UserAccountModalViewQrCodeShow():
+                            UserAccountModalViewQrCodeBtn()),
                         Container(
                             margin: EdgeInsets.only(top: _cardMarginTop.h),
                             child: UserAccountModalViewSupport()),

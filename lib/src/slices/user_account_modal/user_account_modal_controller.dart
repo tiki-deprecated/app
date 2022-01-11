@@ -47,4 +47,8 @@ class UserAccountModalController {
     Navigator.of(context).pop();
     SupportModalService().presenter.showModal(context);
   }
+
+  void showQrCode(BuildContext context) {
+    this.service.showQrCode();
+  }
 }
