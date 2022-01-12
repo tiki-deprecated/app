@@ -21,4 +21,6 @@ class KeysModalController {
   submitPincode(String text) {}
 
   submitPassphrase(String text) {}
+
+  passphraseChanged(String text) {}
 }

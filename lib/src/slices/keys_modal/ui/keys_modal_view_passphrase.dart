@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../keys_modal_service.dart';
 
 class KeysModalViewPassphrase extends StatelessWidget {
-  final String question = "Enter a 8 digits passphrase.";
+  final String question = "Enter at least 8 digits passphrase.";
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,9 @@ class KeysModalViewPassphrase extends StatelessWidget {
     return Column(children: [
       Text(question),
       TextField(
+        obscureText: true,
         onSubmitted: (text) => service.controller.submitPassphrase(text),
+        onChanged: (text) => service.controller.passphraseChanged(text),
       )
     ]);
   }

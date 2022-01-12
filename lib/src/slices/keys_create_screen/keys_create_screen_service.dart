@@ -22,7 +22,6 @@ class KeysCreateScreenService extends ChangeNotifier {
     presenter = KeysCreateScreenPresenter(this);
     controller = KeysCreateScreenController(this);
     model = KeysCreateScreenModel();
-    genKeysWithTimer();
   }
 
   Future<void> genKeysWithTimer() async {
