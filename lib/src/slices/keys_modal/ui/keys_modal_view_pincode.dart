@@ -23,7 +23,7 @@ class KeysModalViewPinCode extends StatelessWidget {
           highlightPinBoxColor: Colors.orange,
           maxLength: 6,
           maskCharacter: "*",
-          onDone: (text) => service.controller.submitPincode(text),
+          onDone: (text) => service.controller.submitPincode(int.parse(text)),
           pinBoxWidth: 50,
           pinBoxHeight: 64,
           hasUnderline: true,

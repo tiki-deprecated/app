@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-import 'keys_create_screen_view_restore.dart';
 import 'keys_create_screen_view_subtitle.dart';
 import 'keys_create_screen_view_title.dart';
 
@@ -54,10 +53,6 @@ class KeysCreateScreenLayoutForeground extends StatelessWidget {
           ),
         ],
       )),
-      Container(
-          alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.only(bottom: _marginBottomButton),
-          child: KeysCreateScreenViewRestore()),
     ]);
   }
 }

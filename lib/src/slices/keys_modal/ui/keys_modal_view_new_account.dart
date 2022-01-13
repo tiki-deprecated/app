@@ -31,12 +31,12 @@ class KeysModalViewNewAccount extends StatelessWidget {
   }
 
   _noTap(BuildContext context) {
-    KeysModalService service = Provider.of<KeysModalService>(context);
-    service.controller.goToKeyScan();
+    KeysModalService service = Provider.of<KeysModalService>(context, listen: false);
+    service.controller.goToKeysScan();
   }
 
   _yesTap(BuildContext context) {
-    KeysModalService service = Provider.of<KeysModalService>(context);
+    KeysModalService service = Provider.of<KeysModalService>(context, listen:false);
     service.controller.createNewKeys();
   }
 }

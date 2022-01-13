@@ -20,7 +20,7 @@ class KeysModalLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
-            height: 85.h,
+            height: 50.h,
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               KeysModalViewHeader(),
               Expanded(

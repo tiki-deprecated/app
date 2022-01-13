@@ -37,7 +37,6 @@ import '../data_push/data_push_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
 import '../keys_create_screen/keys_create_screen_service.dart';
-import '../keys_save_screen/keys_save_screen_service.dart';
 import '../login_flow/login_flow_delegate.dart';
 import '../login_screen_email/login_screen_email_service.dart';
 import '../login_screen_inbox/login_screen_inbox_service.dart';
@@ -100,8 +99,6 @@ class LoginFlowService extends ChangeNotifier {
         LoginScreenInboxService(this).presenter
       else if (this.model.state == LoginFlowModelState.creatingKeys)
         KeysCreateScreenService(this).presenter
-      else if (this.model.state == LoginFlowModelState.keysCreated)
-        KeysSaveScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
         HomeScreenService(providers: _providers).presenter
     ];

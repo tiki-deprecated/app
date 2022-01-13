@@ -15,12 +15,14 @@ class KeysCreateScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     KeysCreateScreenService service = Provider.of<KeysCreateScreenService>(context);
-    KeysModalService(service).presenter.showModal(context);
-    return Scaffold(
-        body: Center(
-            child: Stack(children: [
-      KeysCreateScreenLayoutBackground(),
-      KeysCreateScreenLayoutForeground()
-    ])));
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) =>
+      KeysModalService(service).presenter.showModal(context)
+    );
+      return Scaffold(
+          body: Center(
+              child: Stack(children: [
+                KeysCreateScreenLayoutBackground(),
+                KeysCreateScreenLayoutForeground()
+              ])));
+    }
   }
-}
