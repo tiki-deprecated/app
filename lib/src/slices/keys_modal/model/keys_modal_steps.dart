@@ -1,14 +1,18 @@
 enum KeysModalSteps {
+  enterPinCode,
+  enterPassPhrase,
+  generateKeys,
   newAccountQuestion,
   qrCodeQuestion,
   qrCodeScanner,
-  enterPinCode,
-  enterPassPhrase
+  cycleKeys
 }
 
 extension KeysModalStepsTitle on KeysModalSteps {
   String? get title {
     switch (this) {
+      case KeysModalSteps.cycleKeys:
+        return "New Account";
       case KeysModalSteps.newAccountQuestion:
         return "New Account";
       case KeysModalSteps.qrCodeQuestion:
@@ -19,6 +23,8 @@ extension KeysModalStepsTitle on KeysModalSteps {
         return "Pin Code";
       case KeysModalSteps.enterPassPhrase:
         return "Passphrase";
+      case KeysModalSteps.generateKeys:
+        return "Creating the keys";
     }
   }
 }

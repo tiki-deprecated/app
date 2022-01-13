@@ -44,6 +44,10 @@ dependencies:
   url_launcher: ^6.0.18
   uuid: ^3.0.5
   flutter_html: ^2.2.1
+  wallet:
+    git:
+      url: https://github.com/ricardobrg/wallet/
+      ref: patch-1
   httpp:
     git:
       url: https://github.com/tiki/httpp

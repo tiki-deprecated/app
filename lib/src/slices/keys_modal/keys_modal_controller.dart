@@ -3,6 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'dart:convert';
+
+import 'package:wallet/wallet.dart';
+
 import 'keys_modal_service.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,8 +26,7 @@ class KeysModalController {
     if (await HelperPermission.request(Permission.camera)) {
       ScanResult result = await BarcodeScanner.scan();
       if (result.type == ResultType.Barcode) {
-        service.updateCombinedKeys(result.rawContent);
-        if (service.canSubmit()) service.saveAndLogin();
+        service.provideKeys(TikiKeysModel.fromCombinedString(result.rawContent));
       }
     }
   }
