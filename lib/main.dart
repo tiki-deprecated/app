@@ -44,19 +44,6 @@ Future<void> init() async {
       helperApiAuth: helperApiAuth,
       logoutCallbacks: []);
 
-  // ApiZendeskService apiZendeskService = ApiZendeskService();
-  // List<ApiZendeskCategory> categories = await apiZendeskService.getZendeskCategories();
-  // print(categories);
-  // ApiZendeskCategory firstCategory = categories[0];
-  // List<ApiZendeskSection> sections = await apiZendeskService.getZendeskSections(firstCategory.id);
-  // print(sections);
-  // ApiZendeskSection firstSection = sections[0];
-  // List<ApiZendeskArticle> articles = await apiZendeskService.getZendeskArticles(firstSection.id);
-  // print(articles);
-  // ApiZendeskArticle firstArticle = articles[0];
-  // ApiZendeskArticle article = await apiZendeskService.getZendeskArticle(firstArticle.id);
-  // print(article);
-
   SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn

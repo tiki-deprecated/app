@@ -5,10 +5,12 @@
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
+import 'package:wallet/wallet.dart';
 
 import '../../config/config_sentry.dart';
 import '../../utils/api/helper_api_auth.dart';
@@ -16,8 +18,6 @@ import '../../utils/api/helper_api_rsp.dart';
 import '../../utils/database_service.dart';
 import '../api_app_data/api_app_data_service.dart';
 import '../api_blockchain/api_blockchain_service.dart';
-import '../api_blockchain/model/api_blockchain_model_address_req.dart';
-import '../api_blockchain/model/api_blockchain_model_address_rsp.dart';
 import '../api_bouncer/api_bouncer_service.dart';
 import '../api_bouncer/model/api_bouncer_model_jwt_rsp.dart';
 import '../api_bouncer/model/api_bouncer_model_otp_rsp.dart';
@@ -28,7 +28,6 @@ import '../api_knowledge/api_knowledge_service.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_user/api_user_service.dart';
 import '../api_user/model/api_user_model_current.dart';
-import '../api_user/model/api_user_model_keys.dart';
 import '../api_user/model/api_user_model_otp.dart';
 import '../api_user/model/api_user_model_token.dart';
 import '../api_user/model/api_user_model_user.dart';
@@ -36,7 +35,6 @@ import '../data_fetch/data_fetch_service.dart';
 import '../data_push/data_push_service.dart';
 import '../home_screen/home_screen_service.dart';
 import '../intro_screen/intro_screen_service.dart';
-import '../keys_create_screen/keys_create_screen_service.dart';
 import '../login_flow/login_flow_delegate.dart';
 import '../login_screen_email/login_screen_email_service.dart';
 import '../login_screen_inbox/login_screen_inbox_service.dart';
@@ -48,11 +46,12 @@ class LoginFlowService extends ChangeNotifier {
   late final LoginFlowDelegate delegate;
   late final ApiUserService _apiUserService;
   late final ApiBouncerService _apiBouncerService;
-  late final ApiBlockchainService _apiBlockchainService;
   late final HelperApiAuth _helperApiAuth;
   late final Httpp httpp;
+  late final TikiKeysService _tikiKeysService;
   List<void Function()> _logoutCallbacks = [];
   List<SingleChildWidget> _providers = [];
+
 
   LoginFlowService({required this.httpp}) : this.model = LoginFlowModel() {
     this.delegate = LoginFlowDelegate(this);
@@ -67,8 +66,8 @@ class LoginFlowService extends ChangeNotifier {
       Iterable<void Function()>? logoutCallbacks}) async {
     this._apiUserService = apiUserService;
     this._apiBouncerService = apiBouncerService;
-    this._apiBlockchainService = apiBlockchainService;
     this._helperApiAuth = helperApiAuth;
+    _tikiKeysService = TikiKeysService(secureStorage: FlutterSecureStorage());
     if (logoutCallbacks != null) this._logoutCallbacks.addAll(logoutCallbacks);
     await _loadUser();
 
@@ -95,10 +94,8 @@ class LoginFlowService extends ChangeNotifier {
       IntroScreenService().presenter,
       if (this.model.state == LoginFlowModelState.returningUser)
         LoginScreenEmailService(this).presenter
-      else if (this.model.state == LoginFlowModelState.otpRequested)
+      else if (this.model.state == LoginFlowModelState.otpRequested || this.model.state == LoginFlowModelState.creatingKeys)
         LoginScreenInboxService(this).presenter
-      else if (this.model.state == LoginFlowModelState.creatingKeys)
-        KeysCreateScreenService(this).presenter
       else if (this.model.state == LoginFlowModelState.loggedIn)
         HomeScreenService(providers: _providers).presenter
     ];
@@ -153,50 +150,44 @@ class LoginFlowService extends ChangeNotifier {
   }
 
   Future<bool> verifyOtp(String otp) async {
-    if (this.model.user!.user!.isLoggedIn == true) return true;
-    HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
-        await _apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
-    if (HttppUtils.isOk(rsp.code)) {
-      ApiBouncerModelJwtRsp data = rsp.data;
-      await _apiUserService.setToken(
-          this.model.user!.current!.email!,
-          ApiUserModelToken(
-              bearer: data.accessToken,
-              refresh: data.refreshToken,
-              expires: data.expiresIn != null
-                  ? DateTime.now().add(Duration(seconds: data.expiresIn!))
-                  : null));
-
-      if (this.model.user?.keys?.address != null) {
-        this.model.user!.user!.isLoggedIn = true;
-        await _apiUserService.setUser(this.model.user!.user!);
-        await _initServices();
-        setLoggedIn();
-      } else {
-        await _apiUserService.setUser(ApiUserModelUser(
-            email: this.model.user!.current!.email!, isLoggedIn: false));
-        setCreatingKeys();
-      }
-      await _loadUser();
-      return true;
-    } else
-      return false;
-  }
-
-  Future<bool> registerAndLogin({ApiUserModelKeys? keys}) async {
-    if (await _saveKeys(keys: keys)) {
-      if (await _registerKeys(keys: keys)) {
-        await _initServices();
-        setLoggedIn();
+    try {
+      if (this.model.user!.user!.isLoggedIn == true) return true;
+      HelperApiRsp<ApiBouncerModelJwtRsp> rsp =
+      await _apiBouncerService.otpGrant(otp, this.model.user!.otp!.salt!);
+      if (HttppUtils.isOk(rsp.code)) {
+        ApiBouncerModelJwtRsp data = rsp.data;
+        this.model.user!.token = ApiUserModelToken(
+            bearer: data.accessToken,
+            refresh: data.refreshToken,
+            expires: data.expiresIn != null
+                ? DateTime.now().add(Duration(seconds: data.expiresIn!))
+                : null);
+        await _apiUserService.setToken(
+            this.model.user!.current!.email!,
+            this.model.user!.token!);
+        if (this.model.user?.user?.address != null) {
+          this.model.user!.user!.isLoggedIn = true;
+          await _apiUserService.setUser(this.model.user!.user!);
+          await _initServices();
+          setLoggedIn();
+        } else {
+          await _apiUserService.setUser(ApiUserModelUser(
+              email: this.model.user!.current!.email!, isLoggedIn: false));
+          setCreatingKeys();
+        }
         await _loadUser();
         return true;
-      }
+      } else
+        return false;
+    }catch(e){
+      print(e);
+      ConfigSentry.exception(e);
+      return false;
     }
-    return false;
   }
 
-  Future<bool> saveAndLogin({ApiUserModelKeys? keys}) async {
-    if (await _saveKeys(keys: keys)) {
+  Future<bool> saveAndLogin({String? address}) async {
+    if (await _saveAddress(address)) {
       await _initServices();
       setLoggedIn();
       await _loadUser();
@@ -235,7 +226,7 @@ class LoginFlowService extends ChangeNotifier {
 
   Future<void> _initServices() async {
     Database database =
-        await DatabaseService().open(this.model.user!.keys!.signPrivateKey!);
+        await DatabaseService().open(this.model.user!.user!.address!);
 
     ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
     registerLogout(() async => await apiAppDataService.deleteAllData());
@@ -309,33 +300,9 @@ class LoginFlowService extends ChangeNotifier {
     }
   }
 
-  Future<bool> _registerKeys({ApiUserModelKeys? keys}) async {
-    if (keys != null) this.model.user!.keys = keys;
-    HelperApiRsp<ApiBlockchainModelAddressRsp> rsp = await this
-        ._apiBlockchainService
-        .issue(ApiBlockchainModelAddressReq(
-            this.model.user?.keys!.dataPublicKey,
-            this.model.user?.keys!.signPublicKey));
-    if (HttppUtils.isOk(rsp.code)) {
-      ApiBlockchainModelAddressRsp data = rsp.data;
-      if (data.address != this.model.user!.keys!.address) {
-        ConfigSentry.message("Failed to issue Blockchain Address.Skipping",
-            level: ConfigSentry.levelError);
-        return false;
-      }
-    } else {
-      ConfigSentry.message("Failed to issue Blockchain Address.Skipping",
-          level: ConfigSentry.levelError);
-      return false;
-    }
-    return true;
-  }
-
-  Future<bool> _saveKeys({ApiUserModelKeys? keys}) async {
-    if (keys != null) this.model.user!.keys = keys;
-    if (this.model.user?.keys != null) {
-      await this._apiUserService.setKeys(this.model.user!.keys!);
-      this.model.user!.user!.address = this.model.user!.keys!.address;
+  Future<bool> _saveAddress(address) async {
+    if((await _tikiKeysService.get(address)) != null){
+      this.model.user!.user!.address = address;
       this.model.user!.user!.isLoggedIn = true;
       await this._apiUserService.setUser(this.model.user!.user!);
       return true;

@@ -3,9 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:wallet/wallet.dart';
 
 import '../api_signup/api_signup_service.dart';
-import '../api_user/model/api_user_model_keys.dart';
 import '../login_flow/login_flow_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'model/user_account_modal_model.dart';
@@ -17,6 +18,7 @@ class UserAccountModalService extends ChangeNotifier {
   late final UserAccountModalController controller;
   late final UserAccountModalModel model;
   late final LoginFlowService loginFlowService;
+  late final TikiKeysService _tikiKeysService;
 
   UserReferralService referralService;
 
@@ -25,6 +27,7 @@ class UserAccountModalService extends ChangeNotifier {
     this.presenter = UserAccountModalPresenter(this);
     this.controller = UserAccountModalController(this);
     this.model = UserAccountModalModel();
+    _tikiKeysService = TikiKeysService(secureStorage: FlutterSecureStorage());
   }
 
   Future<void> updateSignups(ApiSignupService apiSignupService) async {
@@ -35,12 +38,14 @@ class UserAccountModalService extends ChangeNotifier {
     }
   }
 
-  void showQrCode() {
-    ApiUserModelKeys keys = this.loginFlowService.model.user!.keys!;
-    String combinedKey = keys.address! + '.' + keys.dataPrivateKey! + '.' + keys.signPrivateKey!;
-    this.model.showQrCode = true;
-    this.model.qrCode = combinedKey;
-    notifyListeners();
+  Future<void> showQrCode() async {
+    TikiKeysModel? keys = await _tikiKeysService.get(loginFlowService.model.user!.user!.address!);
+    if(keys != null) {
+      String combinedKey = keys.address + '.' + keys.data.encode() + '.' + keys.sign.privateKey.encode();
+      this.model.showQrCode = true;
+      this.model.qrCode = combinedKey;
+      notifyListeners();
+    }
   }
 
   void hideQrCode() {

@@ -3,9 +3,9 @@ import 'keys_modal_steps.dart';
 class KeysModalModel {
   KeysModalSteps step = KeysModalSteps.newAccountQuestion;
 
-  String? rcvPassphrase;
+  String? newPassphrase;
   String? bkpPassphrase;
-  String? rcvPincode;
+  String? newPincode;
   String? bkpPincode;
 
   String? error;

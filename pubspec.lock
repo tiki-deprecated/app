@@ -536,11 +536,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "28901296878ad17a4da6c68e7f3667e28a2784e5"
+      ref: "0.0.3"
+      resolved-ref: "1f6a31faaf0d333a1221df9bbb4ef53b870b24b9"
       url: "https://github.com/tiki/httpp"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   intl:
     dependency: "direct main"
     description:
@@ -1210,11 +1210,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: patch-1
-      resolved-ref: "742cf505fe16f5e11857489cd580c08f583cd612"
-      url: "https://github.com/ricardobrg/wallet/"
+      ref: "0.0.2"
+      resolved-ref: f765ce6a4b2eed05ae3bc305c2bb5148f4632466
+      url: "https://github.com/tiki/wallet"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   watcher:
     dependency: transitive
     description:

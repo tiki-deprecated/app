@@ -17,5 +17,5 @@ class ApiBouncerModelOtpReq extends JsonObject {
   }
 
   @override
-  Map<String, dynamic> toJson() => {'email': email};
+  Map<String, dynamic> toJson() => {"email": email};
 }

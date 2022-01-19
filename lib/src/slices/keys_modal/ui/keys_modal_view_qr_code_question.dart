@@ -31,12 +31,12 @@ class KeysModalViewQrCodeQuestion extends StatelessWidget {
   }
 
   _noTap(BuildContext context) {
-    KeysModalService service = Provider.of<KeysModalService>(context);
-    service.controller.enterPinCode();
+    KeysModalService service = Provider.of<KeysModalService>(context, listen:false);
+    service.controller.restoreKeys();
   }
 
   _yesTap(BuildContext context) {
-    KeysModalService service = Provider.of<KeysModalService>(context);
+    KeysModalService service = Provider.of<KeysModalService>(context, listen:false);
     service.controller.scanQrCode();
   }
 }

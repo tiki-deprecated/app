@@ -3,8 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:convert';
-
+import 'model/keys_modal_steps.dart';
 import 'package:wallet/wallet.dart';
 
 import 'keys_modal_service.dart';
@@ -19,41 +18,52 @@ class KeysModalController {
   KeysModalController(this.service);
 
   void createNewKeys() {
-    this.service.startKeysCreation();
+    this.service.enterNewPinCode();
   }
 
   Future<void> scanQrCode() async {
     if (await HelperPermission.request(Permission.camera)) {
       ScanResult result = await BarcodeScanner.scan();
       if (result.type == ResultType.Barcode) {
-        service.provideKeys(TikiKeysModel.fromCombinedString(result.rawContent));
+        List keys = result.rawContent.split(".");
+        service.provideKeys(TikiKeysModel.decode(keys[0], keys[1], keys[2]));
       }
     }
   }
 
-  void enterPinCode() {
-    this.service.startPincode();
-  }
-
-  submitPincode(int pin) {
-    if(this.service.verifyPincode(pin)){
-      this.service.startPassphraseWithPin(pin);
+  void submitPincode(String pin) {
+    if(this.service.checkPinCode(pin)){
+      if(this.service.model.step == KeysModalSteps.enterNewPinCode){
+        this.service.model.newPincode = pin;
+        this.service.enterNewPassphrase();
+      }else if(this.service.model.step == KeysModalSteps.enterBkpPinCode){
+        this.service.model.bkpPincode = pin;
+        this.service.enterBkpPassphrase();
+      }
     }else{
       this.service.pincodeError();
     }
   }
 
-  submitPassphrase(String pass) {
-    if(this.service.verifyPassphrase(pass)){
-      this.service.createKeysAndSaveWithPass(pass);
+  void submitPassphrase(String pass) {
+    if(this.service.checkPassphrase(pass)){
+      if(this.service.model.step == KeysModalSteps.enterNewPassPhrase){
+        this.service.model.newPassphrase = pass;
+        this.service.createKeysAndSave();
+      }else if(this.service.model.step == KeysModalSteps.enterBkpPassPhrase){
+        this.service.model.bkpPassphrase = pass;
+        this.service.recoverKeys();
+      }
     }else{
-      this.service.passphraseError();
+      this.service.pincodeError();
     }
   }
 
-  passphraseChanged(String text) {}
+  void passphraseChanged(String text) {}
 
   void goToKeysScan() {
     this.service.goToKeysScanQuestion();
   }
+
+  void restoreKeys() {}
 }

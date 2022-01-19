@@ -1,3 +1,4 @@
+import '../../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:provider/provider.dart';
@@ -17,13 +18,13 @@ class KeysModalViewPinCode extends StatelessWidget {
           autofocus: true,
           hideCharacter: true,
           highlight: true,
-          highlightColor: Colors.blue,
-          defaultBorderColor: Colors.black,
-          hasTextBorderColor: Colors.green,
-          highlightPinBoxColor: Colors.orange,
+          highlightColor: ConfigColor.tikiBlue,
+          defaultBorderColor: ConfigColor.tikiPurple,
+          hasTextBorderColor: ConfigColor.green,
+          highlightPinBoxColor: Colors.transparent,
           maxLength: 6,
           maskCharacter: "*",
-          onDone: (text) => service.controller.submitPincode(int.parse(text)),
+          onDone: (text) => service.controller.submitPincode(text),
           pinBoxWidth: 50,
           pinBoxHeight: 64,
           hasUnderline: true,
@@ -32,7 +33,7 @@ class KeysModalViewPinCode extends StatelessWidget {
           pinTextStyle: TextStyle(fontSize: 22.0),
           pinTextAnimatedSwitcherTransition:
               ProvidedPinBoxTextAnimation.scalingTransition,
-          pinTextAnimatedSwitcherDuration: Duration(milliseconds: 300),
+          pinTextAnimatedSwitcherDuration: Duration(milliseconds: 100),
           highlightAnimationBeginColor: Colors.black,
           highlightAnimationEndColor: Colors.white12,
           keyboardType: TextInputType.number,

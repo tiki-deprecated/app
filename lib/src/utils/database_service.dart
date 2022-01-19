@@ -4,15 +4,19 @@
  */
 
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:wallet/wallet.dart';
 
 class DatabaseService {
   static const String _dbName = 'tiki_enc.db';
   final _log = Logger('DatabaseService');
 
-  Future<Database> open(String password,
+  Future<Database> open(String address,
       {int version = 7, bool drop = false}) async {
+    // TODO move the encode to the wallet
+    String password = (await TikiKeysService(secureStorage: FlutterSecureStorage()).get(address))!.sign.privateKey.encode();
     String databasePath = await getDatabasesPath() + '/' + _dbName;
     if (drop) await deleteDatabase(databasePath);
     return await openDatabase(databasePath,
