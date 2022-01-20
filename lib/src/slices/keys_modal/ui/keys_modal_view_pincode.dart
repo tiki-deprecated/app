@@ -10,7 +10,6 @@ class KeysModalViewPinCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    KeysModalService service = Provider.of<KeysModalService>(context);
     return Column(
       children: [
         Text(question),
@@ -24,7 +23,7 @@ class KeysModalViewPinCode extends StatelessWidget {
           highlightPinBoxColor: Colors.transparent,
           maxLength: 6,
           maskCharacter: "*",
-          onDone: (text) => service.controller.submitPincode(text),
+          onDone: (text) => submitPincode(text, context),
           pinBoxWidth: 50,
           pinBoxHeight: 64,
           hasUnderline: true,
@@ -41,4 +40,11 @@ class KeysModalViewPinCode extends StatelessWidget {
       ],
     );
   }
+
+  submitPincode(String text, BuildContext context) {
+    KeysModalService service = Provider.of<KeysModalService>(context, listen:false);
+    service.controller.submitPincode(text);
+  }
+
+
 }

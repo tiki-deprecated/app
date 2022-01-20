@@ -26,7 +26,7 @@ class KeysModalLayout extends StatelessWidget {
           KeysModalViewHeader(),
           Expanded(
               child: SingleChildScrollView(
-                  child: Padding(
+                  child: Container(
                       padding:
                           EdgeInsets.only(left: 6.w, right: 6.w, bottom: 5.h),
                       child: _getContent(context),
