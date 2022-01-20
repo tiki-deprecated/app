@@ -70,7 +70,7 @@ class LoginFlowService extends ChangeNotifier {
     _tikiKeysService = TikiKeysService(secureStorage: FlutterSecureStorage());
     if (logoutCallbacks != null) this._logoutCallbacks.addAll(logoutCallbacks);
     await _loadUser();
-
+    // TODO handle user migration from old keychain
     if (this.model.user?.user?.isLoggedIn == true) {
       await _initServices();
       setLoggedIn();

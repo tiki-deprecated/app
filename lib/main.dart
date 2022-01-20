@@ -18,6 +18,8 @@ import 'src/slices/api_user/api_user_service.dart';
 import 'src/slices/login_flow/login_flow_service.dart';
 import 'src/utils/api/helper_api_auth.dart';
 
+late LoginFlowService loginFlowService;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -31,7 +33,7 @@ Future<void> init() async {
   Httpp httpp = Httpp(useClient: () => SentryHttpClient());
   ApiUserService apiUserService = ApiUserService(FlutterSecureStorage());
   ApiBouncerService apiBouncerService = ApiBouncerService();
-  LoginFlowService loginFlowService = LoginFlowService(httpp: httpp);
+  loginFlowService = LoginFlowService(httpp: httpp);
   HelperApiAuth helperApiAuth =
       HelperApiAuth(loginFlowService, apiBouncerService);
   ApiBlockchainService apiBlockchainService =
