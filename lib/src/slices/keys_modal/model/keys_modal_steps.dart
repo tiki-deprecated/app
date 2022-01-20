@@ -6,6 +6,7 @@ enum KeysModalSteps {
   generateKeys,
   newAccountQuestion,
   qrCodeQuestion,
+  error,
 }
 
 extension KeysModalStepsTitle on KeysModalSteps {
@@ -25,6 +26,8 @@ extension KeysModalStepsTitle on KeysModalSteps {
         return "New Passphrase";
       case KeysModalSteps.enterBkpPassPhrase:
         return "Backup Pass Phrase";
+      case KeysModalSteps.error:
+        return "Error";
     }
   }
 }

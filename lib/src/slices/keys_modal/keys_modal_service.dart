@@ -61,7 +61,8 @@ class KeysModalService extends ChangeNotifier {
           }
       );
     }catch(e){
-      print(e); // TODO add error control
+      this.model.step = KeysModalSteps.error;
+      this.model.error = e.toString();
     }
   }
 
@@ -148,6 +149,15 @@ class KeysModalService extends ChangeNotifier {
 
   Future<void> login(String address) async {
     this.loginFlowService.saveAndLogin(address: address);
+  }
+
+  void restart() {
+    this.model = KeysModalModel();
+    notifyListeners();
+  }
+
+  void back() {
+
   }
 
 

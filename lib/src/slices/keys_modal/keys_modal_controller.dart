@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/material.dart';
+
 import 'model/keys_modal_steps.dart';
 import 'package:wallet/wallet.dart';
 
@@ -71,5 +73,13 @@ class KeysModalController {
 
   void restoreKeys() {
     this.service.enterBkpPincode();
+  }
+
+  restart() {
+    this.service.restart();
+  }
+
+  back(BuildContext context) {
+
   }
 }

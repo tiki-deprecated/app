@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 import '../keys_modal_service.dart';
 import '../model/keys_modal_steps.dart';
+import 'keys_modal_view_error.dart';
 import 'keys_modal_view_generate_keys.dart';
 import 'keys_modal_view_header.dart';
 import 'keys_modal_view_new_account.dart';
@@ -48,6 +49,9 @@ class KeysModalLayout extends StatelessWidget {
       case KeysModalSteps.enterNewPassPhrase:
       case KeysModalSteps.enterBkpPassPhrase:
         return KeysModalViewPassphrase();
+      case KeysModalSteps.error:
+        return KeysModalViewError();
     }
   }
 }
+
