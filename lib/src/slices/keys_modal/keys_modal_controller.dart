@@ -26,7 +26,7 @@ class KeysModalController {
       ScanResult result = await BarcodeScanner.scan();
       if (result.type == ResultType.Barcode) {
         List keys = result.rawContent.split(".");
-        service.provideKeys(TikiKeysModel.decode(keys[0], keys[1], keys[2]));
+        service.provideKeys(TikiKeysModel.decode(keys[0], keys[2], keys[1]));
       }
     }
   }
@@ -49,7 +49,11 @@ class KeysModalController {
     if(this.service.checkPassphrase(pass)){
       if(this.service.model.step == KeysModalSteps.enterNewPassPhrase){
         this.service.model.newPassphrase = pass;
-        this.service.createKeysAndSave();
+        if(this.service.model.bkpPassphrase != null) {
+          this.service.cycleKeysInBkpService();
+        }else{
+          this.service.createKeysAndSave();
+        }
       }else if(this.service.model.step == KeysModalSteps.enterBkpPassPhrase){
         this.service.model.bkpPassphrase = pass;
         this.service.recoverKeys();
@@ -65,5 +69,7 @@ class KeysModalController {
     this.service.goToKeysScanQuestion();
   }
 
-  void restoreKeys() {}
+  void restoreKeys() {
+    this.service.enterBkpPincode();
+  }
 }

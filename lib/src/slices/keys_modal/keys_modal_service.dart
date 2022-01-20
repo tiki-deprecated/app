@@ -85,15 +85,17 @@ class KeysModalService extends ChangeNotifier {
         passphrase: this.model.bkpPassphrase!,
         onSuccess: (keys) async {
           await _tikiKeysService.provide(keys);
-          this.enterBkpPincode();
+          this.loginFlowService.model.user!.user!.address = keys.address;
+          this.model.step = KeysModalSteps.enterNewPinCode;
+          notifyListeners();
         },
         onError: (error) {
-          print('error');
+          print(error);
         }
     );
   }
 
-  Future<void> cycleKeysInBkpService(pin, pass) async {
+  Future<void> cycleKeysInBkpService() async {
     String email = this.loginFlowService.model.user!.user!.email!;
     String accessToken = this.loginFlowService.model.user!.token!.bearer!;
     TikiKeysModel? keys = await _tikiKeysService.get(this.loginFlowService.model.user!.user!.address!);
@@ -102,13 +104,13 @@ class KeysModalService extends ChangeNotifier {
         accessToken: accessToken,
         oldPin: this.model.bkpPincode!,
         newPin: this.model.newPincode!,
-        passphrase: this.model.bkpPassphrase!,
+        passphrase: this.model.newPassphrase!,
         keys: keys!,
         onSuccess: () {
           this.login(keys.address);
         },
         onError: (error) {
-          print('error');
+          print(error);
         }
     );
   }
@@ -140,6 +142,7 @@ class KeysModalService extends ChangeNotifier {
 
   void provideKeys(TikiKeysModel keys) async {
     await _tikiKeysService.provide(keys);
+    login(keys.address);
     notifyListeners();
   }
 

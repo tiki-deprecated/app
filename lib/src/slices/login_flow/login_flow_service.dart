@@ -187,7 +187,7 @@ class LoginFlowService extends ChangeNotifier {
   }
 
   Future<bool> saveAndLogin({String? address}) async {
-    if (await _saveAddress(address)) {
+    if (await saveAddress(address)) {
       await _initServices();
       setLoggedIn();
       await _loadUser();
@@ -300,7 +300,7 @@ class LoginFlowService extends ChangeNotifier {
     }
   }
 
-  Future<bool> _saveAddress(address) async {
+  Future<bool> saveAddress(address) async {
     if((await _tikiKeysService.get(address)) != null){
       this.model.user!.user!.address = address;
       this.model.user!.user!.isLoggedIn = true;
