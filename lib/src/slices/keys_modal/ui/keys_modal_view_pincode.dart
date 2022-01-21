@@ -4,12 +4,14 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:provider/provider.dart';
 
 import '../keys_modal_service.dart';
+import 'keys_modal_view_pincode_error.dart';
 
 class KeysModalViewPinCode extends StatelessWidget {
   final String question = "Enter a 6 digits Pin Code";
 
   @override
   Widget build(BuildContext context) {
+    KeysModalService service = Provider.of<KeysModalService>(context);
     return Column(
       children: [
         Text(question),
@@ -37,6 +39,7 @@ class KeysModalViewPinCode extends StatelessWidget {
           highlightAnimationEndColor: Colors.white12,
           keyboardType: TextInputType.number,
         ),
+        if(service.model.error != null) KeysModalViewPincodeError()
       ],
     );
   }

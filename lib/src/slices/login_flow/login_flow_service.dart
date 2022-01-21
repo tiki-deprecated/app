@@ -116,7 +116,7 @@ class LoginFlowService extends ChangeNotifier {
 
   void setLoggedIn() => _changeState(LoginFlowModelState.loggedIn);
 
-  void setLoggedOut() async {
+    Future<void> setLoggedOut() async {
     if (this.model.user?.user?.isLoggedIn == true) {
       this.model.user!.user!.isLoggedIn = false;
       await _apiUserService.setUser(this.model.user!.user!);
