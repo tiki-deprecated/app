@@ -177,8 +177,8 @@ $body
             if (values.length == 1)
               rsp['email'] = values[0].trim();
             else if (values.length == 2) {
-              rsp['name'] = values[1].trim().replaceAll('>', '');
-              rsp['email'] = values[0].trim().replaceAll("\"", '');
+              rsp['email'] = values[1].trim().replaceAll('>', '');
+              rsp['name'] = values[0].trim().replaceAll("\"", '');
             }
           }
           return rsp;
