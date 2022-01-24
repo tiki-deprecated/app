@@ -25,7 +25,7 @@ class UserAccountModalViewQrCodeBtn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  HelperImage("icon-qr-code", width: 4.5.h),
+                  HelperImage("save-qr-icon", width: 4.5.h),
                   Padding(padding: EdgeInsets.only(right: 2.w)),
                   Expanded(
                       child: Text(_title,

@@ -21,14 +21,17 @@ class KeysModalPresenter {
         value: service, child: KeysModalLayout());
   }
 
-  Future<void> showModal(BuildContext context) {
-    return showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        isDismissible: true,
-        backgroundColor: ConfigColor.greyTwo,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(6.h))),
-        builder: (BuildContext context) => render());
+  Future<void> showModal(BuildContext context) async {
+    if(!service.model.isVisible) {
+      service.model.isVisible = true;
+      return showModalBottomSheet<void>(
+          context: context,
+          isScrollControlled: true,
+          isDismissible: true,
+          backgroundColor: ConfigColor.greyTwo,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(6.h))),
+          builder: (BuildContext context) => render());
+    }
   }
 }

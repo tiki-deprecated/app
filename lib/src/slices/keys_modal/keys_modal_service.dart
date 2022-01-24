@@ -5,6 +5,7 @@
 
 import '../login_flow/login_flow_service.dart';
 
+import 'model/keys_modal_error.dart';
 import 'model/keys_modal_steps.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wallet/wallet.dart';
@@ -32,16 +33,19 @@ class KeysModalService extends ChangeNotifier {
   }
 
   void enterNewPinCode() {
+    this.model.error = null;
     this.model.step = KeysModalSteps.enterNewPinCode;
     notifyListeners();
   }
 
   void enterNewPassphrase() {
+    this.model.error = null;
     this.model.step = KeysModalSteps.enterNewPassPhrase;
     notifyListeners();
   }
 
   Future<void> createKeysAndSave() async {
+    this.model.error = null;
     this.model.step = KeysModalSteps.generateKeys;
     try {
       String email = this.loginFlowService.model.user!.user!.email!;
@@ -62,21 +66,24 @@ class KeysModalService extends ChangeNotifier {
       );
     }catch(e){
       this.model.step = KeysModalSteps.error;
-      this.model.error = e.toString();
+      this.model.error = KeysModalError.serverError;
     }
   }
 
   void enterBkpPincode() {
+    this.model.error = null;
     this.model.step = KeysModalSteps.enterBkpPinCode;
     notifyListeners();
   }
 
-  void enterBkpPassphrase() {
+  void enterBkpPassphrase(){
+    this.model.error = null;
     this.model.step = KeysModalSteps.enterBkpPassPhrase;
     notifyListeners();
   }
 
   Future<void> recoverKeys() async {
+    this.model.error = null;
     String email = this.loginFlowService.model.user!.user!.email!;
     String accessToken = this.loginFlowService.model.user!.token!.bearer!;
     await _tikiBkupService.recover(
@@ -97,6 +104,7 @@ class KeysModalService extends ChangeNotifier {
   }
 
   Future<void> cycleKeysInBkpService() async {
+    this.model.error = null;
     String email = this.loginFlowService.model.user!.user!.email!;
     String accessToken = this.loginFlowService.model.user!.token!.bearer!;
     TikiKeysModel? keys = await _tikiKeysService.get(this.loginFlowService.model.user!.user!.address!);
@@ -116,16 +124,6 @@ class KeysModalService extends ChangeNotifier {
     );
   }
 
-  void pincodeError() {
-    this.model.error = "Invalid pincode";
-    notifyListeners();
-  }
-
-  void passphraseError() {
-    this.model.error = "Invalid passphrase";
-    notifyListeners();
-  }
-
   bool checkPinCode(String pin){
     if(pin.length != 6) return false;
     return true;
@@ -134,11 +132,6 @@ class KeysModalService extends ChangeNotifier {
   bool checkPassphrase(String pass){
     if(pass.length < 8) return false;
     return true;
-  }
-
-  void goToKeysScanQuestion() {
-    this.model.step = KeysModalSteps.qrCodeQuestion;
-    notifyListeners();
   }
 
   void provideKeys(TikiKeysModel keys) async {
@@ -156,10 +149,19 @@ class KeysModalService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void back() {
-
+  void setError(KeysModalError error){
+    this.model.error = error;
+    notifyListeners();
   }
 
+  void recoverAccountQuestion() {
+    this.model.step = KeysModalSteps.recoverAccountQuestion;
+    notifyListeners();
+  }
 
+  void recoverAccount() {
+    this.model.step = KeysModalSteps.enterBkpPinCode;
+    notifyListeners();
+  }
 
 }

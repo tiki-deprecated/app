@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../keys_modal_service.dart';
 
-class KeysModalViewNewAccountRecover extends StatelessWidget {
-  final String _text = "I already have an account";
+class KeysModalViewRecoverAccountQr extends StatelessWidget {
+  final String _text = "I have a QR code";
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class KeysModalViewNewAccountRecover extends StatelessWidget {
       child: Text(_text,
           style:
           TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
-      onPressed: () => service.controller.goToRecoverAccount()
+      onPressed: () => service.controller.scanQrCode()
     );
   }
 }

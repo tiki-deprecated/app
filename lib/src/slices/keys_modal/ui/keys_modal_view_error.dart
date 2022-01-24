@@ -10,7 +10,7 @@ class KeysModalViewError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     KeysModalService service = Provider.of<KeysModalService>(context);
-    String error = service.model.error ?? "An error occurred, please try again.";
+    String error = service.model.errorMessage ?? "An error occurred, please try again.";
     return Column(children: [
       Text(error),
       ElevatedButton(

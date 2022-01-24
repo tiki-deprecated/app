@@ -15,7 +15,6 @@ class KeysModalViewPassphrase extends StatelessWidget {
       TextField(
         obscureText: true,
         onSubmitted: (text) => service.controller.submitPassphrase(text),
-        onChanged: (text) => service.controller.passphraseChanged(text),
       ),
       if(service.model.error != null) KeysModalViewPassphraseError()
     ]);

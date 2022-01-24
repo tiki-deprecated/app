@@ -15,7 +15,7 @@ import 'keys_modal_view_header.dart';
 import 'keys_modal_view_new_account.dart';
 import 'keys_modal_view_passphrase.dart';
 import 'keys_modal_view_pincode.dart';
-import 'keys_modal_view_qr_code_question.dart';
+import 'keys_modal_view_recover_account.dart';
 
 class KeysModalLayout extends StatelessWidget {
   @override
@@ -39,8 +39,8 @@ class KeysModalLayout extends StatelessWidget {
     switch (service.model.step) {
       case KeysModalSteps.newAccountQuestion:
         return KeysModalViewNewAccount();
-      case KeysModalSteps.qrCodeQuestion:
-        return KeysModalViewQrCodeQuestion();
+      case KeysModalSteps.recoverAccountQuestion:
+        return KeysModalViewRecoverAccount();
       case KeysModalSteps.generateKeys:
         return KeysModalViewGenerateKeys();
       case KeysModalSteps.enterBkpPinCode:

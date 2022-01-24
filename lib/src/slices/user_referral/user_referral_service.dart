@@ -38,8 +38,8 @@ class UserReferralService extends ChangeNotifier {
   Future<void> getCode() async {
     String? code = this.model.code;
     if (code.isEmpty) {
-      await _updateCode(this.apiAppDataService, this.loginFlowService);
-      updateReferCount();
+      //await _updateCode(this.apiAppDataService, this.loginFlowService);
+      //updateReferCount();
     }
     notifyListeners();
   }

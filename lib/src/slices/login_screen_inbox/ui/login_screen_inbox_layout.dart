@@ -3,8 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/slices/keys_modal/keys_modal_service.dart';
-import 'package:app/src/slices/login_flow/model/login_flow_model_state.dart';
+import '../../keys_modal/keys_modal_service.dart';
+import '../../login_flow/model/login_flow_model_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

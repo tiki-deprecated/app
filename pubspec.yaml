@@ -16,16 +16,22 @@ dependencies:
   android_intent: ^2.0.2
   barcode_scan2: ^4.2.0
   carousel_slider: ^4.0.0
+  data_connection_checker: ^0.3.4
   email_validator: ^2.0.1
   extension_google_sign_in_as_googleapis_auth: ^2.0.4
   firebase_core: ^1.11.0
   firebase_dynamic_links: ^3.0.2 # TODO update breaking changes for onLink
   flutter_appauth: ^2.2.0
+  flutter_html: ^2.2.1
   flutter_lints: ^1.0.4
   flutter_markdown: ^0.6.9
   flutter_secure_storage: ^5.0.2
   googleapis: ^7.0.0
   http: ^0.13.4
+  httpp:
+    git:
+      url: https://github.com/tiki/httpp
+      ref: 0.0.3
   intl_utils: ^2.6.0
   intl: ^0.17.0
   logging: ^1.0.2
@@ -43,11 +49,6 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   url_launcher: ^6.0.18
   uuid: ^3.0.5
-  flutter_html: ^2.2.1
-  httpp:
-    git:
-      url: https://github.com/tiki/httpp
-      ref: 0.0.3
   wallet:
     git:
       url: https://github.com/tiki/wallet
@@ -68,6 +69,7 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   flutter_gen_runner:
+  mockito: ^5.0.17
 
 flutter:
   uses-material-design: true

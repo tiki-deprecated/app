@@ -7,7 +7,6 @@ import 'package:app/src/slices/intro_screen/ui/intro_screen_view_skip_button.dar
 import 'package:app/src/slices/keys_modal/ui/keys_modal_layout.dart';
 import 'package:app/src/slices/keys_modal/ui/keys_modal_view_new_account_create.dart';
 import 'package:app/src/slices/keys_modal/ui/keys_modal_view_new_account_recover.dart';
-import 'package:app/src/slices/keys_modal/ui/keys_modal_view_passphrase.dart';
 import 'package:app/src/slices/keys_modal/ui/keys_modal_view_passphrase_error.dart';
 import 'package:app/src/slices/keys_modal/ui/keys_modal_view_pincode_error.dart';
 import 'package:app/src/slices/login_screen_email/ui/login_screen_email_view_button.dart';
@@ -25,11 +24,10 @@ const String TESTER_REQ_EMAIL = 'testreq@test.com';
 
 /// E-mail used for keys creation and login.
 /// Must be different from [TESTER_REQ_EMAIL] to avoid token resets during test.
-const String TESTER_EMAIL = 'test@test.com';
+const String TESTER_EMAIL = 'ricardolgrj@yahoo.com.br';
 
 /// Access token for Api. Must be manually set before each test.
-const String TESTER_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJjb20ubXl0aWtpLmJvdW5jZXIiLCJleHAiOjE2NDIxMzU5MzEsImlhdCI6MTY0MjEzMjMzMX0.xdt94pGQwEHJZXeQlbAayWJ9ZGAX3xALi17HiPN2ret_V4fdpB3HgMpquiijswcmMYM5eyOhQ-Ak2k3eOQ5axQ';
-
+const String TESTER_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJjb20ubXl0aWtpLmJvdW5jZXIiLCJleHAiOjE2NDMwMjg5NjQsImlhdCI6MTY0MzAyNTM2NH0.TyXmjvVvn4AaC09PSYecyCRq71DEvW3LJyj-vmzjIcw6lhQ5DcKXp0ZG2xTiVxMs02BRypwlIpD-Vk2f607HUg';
 const String CORRECT_PINCODE = '123456';
 const String CYCLE_PINCODE = '000000';
 const String WRONG_PINCODE = '999999';
@@ -39,6 +37,13 @@ const String CYCLE_PASSPHRASE = 'test11111';
 const String WRONG_PASSPHRASE = 'test0000000000';
 const String SHORT_PASSPHRASE = 'test';
 
+/// Test the login flow and its errors.
+///
+/// Before running the tests:
+/// - Manually create the access token.
+/// - Copy the e-mail and token to TESTER_TOKEN and TESTER EMAIL.
+/// - Uninstall the app from the target device
+// @GenerateMocks([TikiBkupService])
 void main() {
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
@@ -112,6 +117,7 @@ void main() {
     final Finder passphraseInput = find.byType(TextField);
     await tester.enterText(passphraseInput, SHORT_PASSPHRASE);
     await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle(Duration(seconds: 2));
     final Finder passError = find.byType(KeysModalViewPassphraseError);
     expect(passError, findsOneWidget);
     await logout(tester);

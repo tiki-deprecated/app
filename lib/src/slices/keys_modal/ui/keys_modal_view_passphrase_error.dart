@@ -9,11 +9,8 @@ class KeysModalViewPassphraseError extends StatelessWidget {
   Widget build(BuildContext context) {
     KeysModalService service = Provider.of<KeysModalService>(context);
     return Column(children: [
-      Text(_getErrorMessage(), style: TextStyle(color: Colors.red)),
+      Text(service.model.errorMessage, style: TextStyle(color: Colors.red)),
     ]);
   }
 
-  String _getErrorMessage() {
-    return "Incorrect passphrase. Please try again";
-  }
 }

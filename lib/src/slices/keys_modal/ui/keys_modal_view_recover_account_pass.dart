@@ -5,8 +5,8 @@ import '../../../config/config_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class KeysModalViewNewAccountCreate extends StatelessWidget {
-  final String _text = "Create a new account";
+class KeysModalViewRecoverAccountPass extends StatelessWidget {
+  final String _text = "I have a pin code and passphrase";
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class KeysModalViewNewAccountCreate extends StatelessWidget {
               color: ConfigColor.tikiPurple,
               fontSize: 14.sp,
               fontWeight: FontWeight.bold)),
-      onPressed: () => service.controller.goToCreateNewKeys(),
+      onPressed: () => service.controller.goToRecoverAccount(),
     );
   }
 }
