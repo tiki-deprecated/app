@@ -18,7 +18,7 @@ class HelperApiRsp<T> {
   //TODO from json -> make generic
   HelperApiRsp.fromJson(Map<String, dynamic>? json, T fromJson(Object? o)) {
     if (json != null) {
-      this.status = json['status'] is String ? json['status'] : int.parse(json['status']);
+      this.status = json['status'] is String ? json['status'] : json['status'].toString();
       this.code = json['code'];
       this.data = fromJson(json['data']);
       this.page = HelperApiRspPage.fromJson(json['page']);

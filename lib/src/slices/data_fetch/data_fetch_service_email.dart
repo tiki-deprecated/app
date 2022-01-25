@@ -181,7 +181,15 @@ ${account.displayName ?? ''}<br />
             save
                 .where((msg) => msg.sender != null && msg.sender?.email != null)
                 .forEach((msg) => senders[msg.sender!.email!] = msg.sender!);
-
+            senders.forEach((email, sender){
+              List<DateTime?> dates = save.map((msg) {
+                if(msg.sender?.email == email) return msg.receivedDate ;
+              }).toList();
+              DateTime? since = dates.reduce((min, date) =>
+                min != null && date != null && date.isBefore(min) ? date : min);
+              sender.emailSince = since;
+              senders[sender.email!] = sender;
+            });
             _log.fine('Saving ${senders.length} senders');
             await _apiEmailSenderService.batchUpsert(List.of(senders.values));
 
