@@ -43,8 +43,9 @@ class ApiGoogleService
 
   @override
   Future<Response> revokeToken(ApiOAuthModelAccount account) async {
-    return await ConfigSentry.http.post(Uri.parse(
+    Response rsp = await ConfigSentry.http.post(Uri.parse(
         'https://oauth2.googleapis.com/revoke?token=' + account.accessToken!));
+    return rsp;
   }
 
   @override

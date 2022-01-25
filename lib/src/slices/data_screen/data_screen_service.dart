@@ -58,9 +58,6 @@ class DataScreenService extends ChangeNotifier {
     if (account != null) {
       try {
         await _apiAuthService.signOut(account);
-        _apiAuthService
-            .interfaceProviders[account
-            .provider] as DataFetchInterfaceProvider?;
       }catch(e){
         _log.warning(e);
       }
