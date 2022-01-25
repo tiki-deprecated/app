@@ -32,18 +32,19 @@ class HomeScreenLayout extends StatelessWidget {
         Provider.of<ApiCompanyService>(context, listen: false);
     ApiOAuthService apiAuthService =
         Provider.of<ApiOAuthService>(context, listen: false);
+    DecisionScreenService decisionScreenService = DecisionScreenService(
+        apiEmailMsgService: apiEmailMsgService,
+        apiEmailSenderService: apiEmailSenderService,
+        apiCompanyService: apiCompanyService,
+        apiAppDataService: appDataService,
+        DataFetchService: dataFetchService,
+        apiAuthService: apiAuthService);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
-          decisionScreenService: DecisionScreenService(
-              apiEmailMsgService: apiEmailMsgService,
-              apiEmailSenderService: apiEmailSenderService,
-              apiCompanyService: apiCompanyService,
-              apiAppDataService: appDataService,
-              DataFetchService: dataFetchService,
-              apiAuthService: apiAuthService),
+          decisionScreenService: decisionScreenService,
           dataScreenService:
-              DataScreenService(dataFetchService, apiAuthService),
+              DataScreenService(dataFetchService, apiAuthService, decisionScreenService),
           walletScreenService: WalletScreenService(),
         ));
   }
