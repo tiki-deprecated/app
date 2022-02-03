@@ -3,17 +3,16 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../json/json_object.dart';
-
-class ApiTikiRspPage extends JsonObject {
+class TikiApiModelRspPage {
   int? size;
   int? totalElements;
   int? totalPages;
   int? page;
 
-  ApiTikiRspPage({this.size, this.totalElements, this.totalPages, this.page});
+  TikiApiModelRspPage(
+      {this.size, this.totalElements, this.totalPages, this.page});
 
-  ApiTikiRspPage fromJson(Map<String, dynamic>? json) {
+  TikiApiModelRspPage fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       this.size = json['size'];
       this.totalElements = json['totalElements'];

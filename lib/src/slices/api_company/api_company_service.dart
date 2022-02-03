@@ -3,62 +3,70 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
+import 'package:login/login.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
-import '../../utils/api/helper_api_auth.dart';
-import '../../utils/api/helper_api_rsp.dart';
 import '../api_company/repository/api_company_repository.dart';
 import '../api_knowledge/api_knowledge_service.dart';
-import '../api_knowledge/model/company/api_knowledge_model_company.dart';
 import 'model/api_company_model.dart';
 
 class ApiCompanyService {
   final _log = Logger('ApiCompanyService');
-  final HelperApiAuth helperApiAuth;
   final ApiCompanyRepository _repositoryLocal;
   final ApiKnowledgeService _apiKnowledgeService;
+  final Login _login;
 
   ApiCompanyService(
       {required Database database,
-      required this.helperApiAuth,
-      required ApiKnowledgeService apiKnowledgeService})
+      required ApiKnowledgeService apiKnowledgeService,
+      required Login login})
       : this._repositoryLocal = ApiCompanyRepository(database),
-        this._apiKnowledgeService = apiKnowledgeService;
+        this._apiKnowledgeService = apiKnowledgeService,
+        this._login = login;
 
-  Future<ApiCompanyModel?> upsert(String domain) async {
+  Future<void> upsert(String domain,
+      {Function(ApiCompanyModel?)? onComplete}) async {
     if (domain.isNotEmpty) {
       ApiCompanyModel? local = await _repositoryLocal.getByDomain(domain);
       if (local == null) {
-        HelperApiRsp<ApiKnowledgeModelCompany> indexRsp =
-            await _apiKnowledgeService.getCompany(domain);
-        if (HttppUtils.is2xx(indexRsp.code))
-          return _repositoryLocal.insert(ApiCompanyModel(
+        await _apiKnowledgeService.getCompany(
+            accessToken: _login.token.bearer,
             domain: domain,
-            logo: indexRsp.data.about?.logo,
-            securityScore: indexRsp.data.score?.securityScore,
-            breachScore: indexRsp.data.score?.breachScore,
-            sensitivityScore: indexRsp.data.score?.sensitivityScore,
-          ));
+            onSuccess: (company) async {
+              ApiCompanyModel saved =
+                  await _repositoryLocal.insert(ApiCompanyModel(
+                domain: domain,
+                logo: company.about?.logo,
+                securityScore: company.score?.securityScore,
+                breachScore: company.score?.breachScore,
+                sensitivityScore: company.score?.sensitivityScore,
+              ));
+              if (onComplete != null) onComplete(saved);
+            },
+            onError: (error) => _log.warning(error));
       } else if (local.modified == null ||
           local.securityScore == null ||
           local.modified!
               .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
-        HelperApiRsp<ApiKnowledgeModelCompany> indexRsp =
-            await _apiKnowledgeService.getCompany(domain);
-        if (HttppUtils.is2xx(indexRsp.code))
-          return _repositoryLocal.update(ApiCompanyModel(
-              companyId: local.companyId,
-              domain: domain,
-              logo: indexRsp.data.about?.logo,
-              securityScore: indexRsp.data.score?.securityScore,
-              breachScore: indexRsp.data.score?.breachScore,
-              sensitivityScore: indexRsp.data.score?.sensitivityScore,
-              created: local.created,
-              modified: local.modified));
-      } else
-        return local;
+        await _apiKnowledgeService.getCompany(
+            accessToken: _login.token.bearer,
+            domain: domain,
+            onSuccess: (company) async {
+              ApiCompanyModel saved = await _repositoryLocal.update(
+                  ApiCompanyModel(
+                      companyId: local.companyId,
+                      domain: domain,
+                      logo: company.about?.logo,
+                      securityScore: company.score?.securityScore,
+                      breachScore: company.score?.breachScore,
+                      sensitivityScore: company.score?.sensitivityScore,
+                      created: local.created,
+                      modified: local.modified));
+              if (onComplete != null) onComplete(saved);
+            },
+            onError: (error) => _log.warning(error));
+      } else if (onComplete != null) onComplete(local);
     }
   }
 

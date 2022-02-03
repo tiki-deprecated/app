@@ -4,10 +4,10 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:login/login.dart';
 import 'package:wallet/wallet.dart';
 
 import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'model/user_account_modal_model.dart';
 import 'user_account_modal_controller.dart';
@@ -17,18 +17,18 @@ class UserAccountModalService extends ChangeNotifier {
   late final UserAccountModalPresenter presenter;
   late final UserAccountModalController controller;
   late final UserAccountModalModel model;
-  late final LoginFlowService loginFlowService;
   late final TikiKeysService _tikiKeysService;
+  final Login _login;
+  final UserReferralService referralService;
 
-  UserReferralService referralService;
-
-
-  UserAccountModalService(this.referralService, this.loginFlowService) {
+  UserAccountModalService(this.referralService, this._login) {
     this.presenter = UserAccountModalPresenter(this);
     this.controller = UserAccountModalController(this);
     this.model = UserAccountModalModel();
     _tikiKeysService = TikiKeysService(secureStorage: FlutterSecureStorage());
   }
+
+  Login get login => _login;
 
   Future<void> updateSignups(ApiSignupService apiSignupService) async {
     int? total = await apiSignupService.getTotal();
@@ -39,9 +39,13 @@ class UserAccountModalService extends ChangeNotifier {
   }
 
   Future<void> showQrCode() async {
-    TikiKeysModel? keys = await _tikiKeysService.get(loginFlowService.model.user!.user!.address!);
-    if(keys != null) {
-      String combinedKey = keys.address + '.' + keys.data.encode() + '.' + keys.sign.privateKey.encode();
+    TikiKeysModel? keys = await _tikiKeysService.get(_login.user!.address!);
+    if (keys != null) {
+      String combinedKey = keys.address +
+          '.' +
+          keys.data.encode() +
+          '.' +
+          keys.sign.privateKey.encode();
       this.model.showQrCode = true;
       this.model.qrCode = combinedKey;
       notifyListeners();

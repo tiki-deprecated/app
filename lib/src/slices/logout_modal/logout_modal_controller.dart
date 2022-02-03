@@ -4,9 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../login_flow/login_flow_service.dart';
 import 'logout_modal_service.dart';
 
 class LogoutModalController {
@@ -14,6 +12,5 @@ class LogoutModalController {
 
   LogoutModalController(this.service);
 
-  void onLogout(BuildContext context) =>
-      Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+  void onLogout(BuildContext context) => service.login.logout();
 }

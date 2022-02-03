@@ -26,7 +26,7 @@ class UserAccountModalController {
 
   void onLogout(BuildContext context) {
     Navigator.of(context).pop();
-    LogoutModalService().presenter.showModal(context);
+    LogoutModalService(service.login).presenter.showModal(context);
   }
 
   Future<void> onShare(UserReferralService userReferralService) async {

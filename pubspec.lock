@@ -294,28 +294,35 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.0"
+    version: "1.12.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.3"
+    version: "4.2.4"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.3"
+    version: "1.5.4"
   firebase_dynamic_links:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_dynamic_links
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "4.0.5"
+  firebase_dynamic_links_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_dynamic_links_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+5"
   fixnum:
     dependency: transitive
     description:
@@ -612,6 +619,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  login:
+    dependency: "direct main"
+    description:
+      path: "../login"
+      relative: true
+    source: path
+    version: "0.0.1"
   lottie:
     dependency: "direct main"
     description:
@@ -1259,12 +1273,10 @@ packages:
   wallet:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.2"
-      resolved-ref: f765ce6a4b2eed05ae3bc305c2bb5148f4632466
-      url: "https://github.com/tiki/wallet"
-    source: git
-    version: "0.0.2"
+      path: "../wallet"
+      relative: true
+    source: path
+    version: "0.0.7"
   watcher:
     dependency: transitive
     description:
