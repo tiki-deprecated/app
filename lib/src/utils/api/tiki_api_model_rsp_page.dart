@@ -3,21 +3,23 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class HelperApiRspPage {
+class TikiApiModelRspPage {
   int? size;
   int? totalElements;
   int? totalPages;
   int? page;
 
-  HelperApiRspPage({this.size, this.totalElements, this.totalPages, this.page});
+  TikiApiModelRspPage(
+      {this.size, this.totalElements, this.totalPages, this.page});
 
-  HelperApiRspPage.fromJson(Map<String, dynamic>? json) {
+  TikiApiModelRspPage fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      size = json['size'];
-      totalElements = json['totalElements'];
-      totalPages = json['totalPages'];
-      page = json['page'];
+      this.size = json['size'];
+      this.totalElements = json['totalElements'];
+      this.totalPages = json['totalPages'];
+      this.page = json['page'];
     }
+    return this;
   }
 
   Map<String, dynamic> toJson() => {

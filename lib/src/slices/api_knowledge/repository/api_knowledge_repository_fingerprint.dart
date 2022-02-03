@@ -3,19 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:convert';
-
-import 'package:http/http.dart';
-import 'package:httpp/httpp.dart';
-
-import '../../../config/config_domain.dart';
-import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_rsp.dart';
-import '../model/fingerprint/api_knowledge_model_fingerprint_req.dart';
-import '../model/fingerprint/api_knowledge_model_fingerprint_rsp.dart';
-
 class ApiKnowledgeRepositoryFingerprint {
-  static final String _path = '/api/latest/fingerprint';
+  /*static final String _path = '/api/latest/fingerprint';
 
   static Future<HelperApiRsp<ApiKnowledgeModelFingerprintRsp>> post(
       String? bearer, ApiKnowledgeModelFingerprintReq req) async {
@@ -28,5 +17,5 @@ class ApiKnowledgeRepositoryFingerprint {
         rspMap as Map<String, dynamic>?,
         (json) => ApiKnowledgeModelFingerprintRsp.fromJson(
             json as Map<String, dynamic>?));
-  }
+  }*/
 }

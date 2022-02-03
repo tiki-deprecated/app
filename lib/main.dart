@@ -80,9 +80,11 @@ Future<List<SingleChildWidget>> provide(
         () async => await apiAppDataService.deleteAllData());
 
     ApiKnowledgeService apiKnowledgeService =
-        ApiKnowledgeService(_helperApiAuth);
+        ApiKnowledgeService(httpp: httpp, refresh: login.refresh);
     DataPushService dataPushService = DataPushService(
-        apiKnowledgeService: apiKnowledgeService, database: database);
+        apiKnowledgeService: apiKnowledgeService,
+        database: database,
+        login: login);
 
     ApiEmailSenderService apiEmailSenderService =
         ApiEmailSenderService(database: database);
@@ -90,7 +92,7 @@ Future<List<SingleChildWidget>> provide(
         ApiEmailMsgService(database: database);
     ApiCompanyService apiCompanyService = ApiCompanyService(
         database: database,
-        helperApiAuth: _helperApiAuth,
+        login: login,
         apiKnowledgeService: apiKnowledgeService);
 
     ApiOAuthService apiAuthService = ApiOAuthService(
@@ -119,6 +121,7 @@ Future<List<SingleChildWidget>> provide(
       Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
       Provider<DataPushService>.value(value: dataPushService),
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
+      Provider<Login>.value(value: login)
     ];
   }
 }

@@ -57,9 +57,8 @@ class DecisionCardSpamService extends ChangeNotifier {
     for (ApiEmailSenderModel sender in senders) {
       if (sender.company?.domain != null &&
           sender.company?.securityScore == null) {
-        _apiCompanyService
-            .upsert(sender.company!.domain!)
-            .then((value) => notifyListeners());
+        _apiCompanyService.upsert(
+            sender.company!.domain!, onComplete: (value) => notifyListeners());
       }
     }
 

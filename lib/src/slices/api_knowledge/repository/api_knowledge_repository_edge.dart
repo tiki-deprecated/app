@@ -5,25 +5,43 @@
 
 import 'dart:convert';
 
-import 'package:http/http.dart';
 import 'package:httpp/httpp.dart';
+import 'package:logging/logging.dart';
 
-import '../../../config/config_domain.dart';
-import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_rsp.dart';
+import '../../../utils/api/tiki_api_model_rsp.dart';
 import '../../../utils/json/json_utils.dart';
 import '../model/edge/api_knowledge_model_edge.dart';
 
 class ApiKnowledgeRepositoryEdge {
-  static final String _path = '/api/latest/edge';
+  final Logger _log = Logger('ApiKnowledgeRepositoryEdge');
+  static final String _path = 'https://knowledge.mytiki.com/api/latest/edge';
 
-  static Future<HelperApiRsp> post(
-      String? bearer, List<ApiKnowledgeModelEdge> edges) async {
-    Response rsp = await ConfigSentry.http.post(
-        ConfigDomain.asUri(ConfigDomain.knowledge, _path),
-        headers: HttppHeaders.typical(bearerToken: bearer).map,
-        body: jsonEncode(JsonUtils.listToJson(edges)));
-    Map? rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(rspMap as Map<String, dynamic>?, (json) => {});
+  Future<void> post(
+      {required HttppClient client,
+      String? accessToken,
+      List<ApiKnowledgeModelEdge>? body,
+      void Function(TikiApiModelRsp)? onSuccess,
+      void Function(Object)? onError}) {
+    HttppRequest request = HttppRequest(
+        uri: Uri.parse(_path),
+        verb: HttppVerb.POST,
+        headers: HttppHeaders.typical(bearerToken: accessToken),
+        body: HttppBody(jsonEncode(JsonUtils.listToJson(body))),
+        timeout: Duration(seconds: 30),
+        onSuccess: (rsp) {
+          if (onSuccess != null) {
+            TikiApiModelRsp body =
+                TikiApiModelRsp.fromJson(rsp.body?.jsonBody, (json) {});
+            onSuccess(body);
+          }
+        },
+        onResult: (rsp) {
+          TikiApiModelRsp body =
+              TikiApiModelRsp.fromJson(rsp.body?.jsonBody, (json) {});
+          if (onError != null) onError(body);
+        },
+        onError: onError);
+    _log.finest('${request.verb.value} — ${request.uri}');
+    return client.request(request);
   }
 }

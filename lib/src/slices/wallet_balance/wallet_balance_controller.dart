@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
 import 'wallet_balance_service.dart';
 
 class WalletBalanceController {
@@ -17,8 +16,6 @@ class WalletBalanceController {
   Future<void> updateBalance(BuildContext context) async {
     ApiSignupService apiSignupService =
         Provider.of<ApiSignupService>(context, listen: false);
-    LoginFlowService loginFlowService =
-        Provider.of<LoginFlowService>(context, listen: false);
-    service.updateBalance(loginFlowService, apiSignupService);
+    service.updateBalance(apiSignupService);
   }
 }
