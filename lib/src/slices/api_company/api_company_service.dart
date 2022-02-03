@@ -31,7 +31,7 @@ class ApiCompanyService {
       ApiCompanyModel? local = await _repositoryLocal.getByDomain(domain);
       if (local == null) {
         await _apiKnowledgeService.getCompany(
-            accessToken: _login.token.bearer,
+            accessToken: _login.token!.bearer!,
             domain: domain,
             onSuccess: (company) async {
               ApiCompanyModel saved =
@@ -50,7 +50,7 @@ class ApiCompanyService {
           local.modified!
               .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
         await _apiKnowledgeService.getCompany(
-            accessToken: _login.token.bearer,
+            accessToken: _login.token!.bearer!,
             domain: domain,
             onSuccess: (company) async {
               ApiCompanyModel saved = await _repositoryLocal.update(

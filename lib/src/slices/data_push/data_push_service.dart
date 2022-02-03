@@ -34,7 +34,7 @@ class DataPushService {
           await _repository.getAll(limit: _pushOn);
       await _apiKnowledgeService.addEdges(
           edges: edgesToPush.map((e) => e.toEdge()).toList(),
-          accessToken: _login.token.bearer,
+          accessToken: _login.token!.bearer!,
           onSuccess: (rsp) async {
             List<int> ids = edgesToPush
                 .where((e) => e.queueId != null)
