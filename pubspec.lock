@@ -622,10 +622,12 @@ packages:
   login:
     dependency: "direct main"
     description:
-      path: "../login"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: ab6162aa349eb3d709ea40233c3974ccbc07bb91
+      url: "https://github.com/tiki/login"
+    source: git
+    version: "0.0.2"
   lottie:
     dependency: "direct main"
     description:
@@ -1273,10 +1275,12 @@ packages:
   wallet:
     dependency: "direct main"
     description:
-      path: "../wallet"
-      relative: true
-    source: path
-    version: "0.0.7"
+      path: "."
+      ref: "0.0.8"
+      resolved-ref: be76019ebf80dffa7c891656e50b7b1a024b2ef2
+      url: "https://github.com/tiki/wallet"
+    source: git
+    version: "0.0.8"
   watcher:
     dependency: transitive
     description:
