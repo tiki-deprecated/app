@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../../config/config_color.dart';
 import 'home_screen_service.dart';
 import 'ui/home_screen_layout.dart';
 
@@ -30,9 +31,12 @@ class HomeScreenPresenter extends Page {
                     ? _provide!()
                     : Future.value(List<SingleChildWidget>.empty()),
                 builder: (BuildContext context,
-                        AsyncSnapshot<List<SingleChildWidget>> snapshot) =>
-                    MultiProvider(
-                        providers: snapshot.data ?? [],
-                        child: HomeScreenLayout()))));
+                    AsyncSnapshot<List<SingleChildWidget>> snapshot) {
+                  if (snapshot.data != null) {
+                    return MultiProvider(
+                        providers: snapshot.data!, child: HomeScreenLayout());
+                  } else
+                    return Container(color: ConfigColor.greyZero);
+                })));
   }
 }

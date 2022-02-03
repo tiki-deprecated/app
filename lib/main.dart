@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,7 +122,8 @@ Future<List<SingleChildWidget>> provide(
       Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
       Provider<DataPushService>.value(value: dataPushService),
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
-      Provider<Login>.value(value: login)
+      Provider<Login>.value(value: login),
+      Provider<ApiSignupService>.value(value: ApiSignupService())
     ];
   }
 }

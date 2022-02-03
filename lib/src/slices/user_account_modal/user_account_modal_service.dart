@@ -7,7 +7,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login/login.dart';
 import 'package:wallet/wallet.dart';
 
-import '../api_signup/api_signup_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'model/user_account_modal_model.dart';
 import 'user_account_modal_controller.dart';
@@ -30,8 +29,8 @@ class UserAccountModalService extends ChangeNotifier {
 
   Login get login => _login;
 
-  Future<void> updateSignups(ApiSignupService apiSignupService) async {
-    int? total = await apiSignupService.getTotal();
+  Future<void> updateSignups() async {
+    int? total = await referralService.apiSignupService.getTotal();
     if (total != null) {
       this.model.signupCount = total;
       notifyListeners();
