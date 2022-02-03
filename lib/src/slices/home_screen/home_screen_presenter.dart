@@ -36,7 +36,8 @@ class HomeScreenPresenter extends Page {
                     return MultiProvider(
                         providers: snapshot.data!, child: HomeScreenLayout());
                   } else
-                    return Container(color: ConfigColor.greyZero);
+                    return Container(
+                        color: ConfigColor.greyZero); //TODO make prettier
                 })));
   }
 }
