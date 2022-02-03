@@ -10,14 +10,12 @@ import 'package:sizer/sizer.dart';
 import 'src/config/config_color.dart';
 import 'src/config/config_font.dart';
 import 'src/config/config_sentry.dart';
-import 'src/slices/login_flow/login_flow_service.dart';
 
 class App extends StatelessWidget {
   static const String _title = "TIKI";
+  final RouterDelegate _routerDelegate;
 
-  final LoginFlowService loginFlowService;
-
-  App(this.loginFlowService);
+  const App(this._routerDelegate);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class App extends StatelessWidget {
                 bodyColor: ConfigColor.tikiBlue,
                 displayColor: ConfigColor.tikiBlue)),
         home: Router(
-            routerDelegate: loginFlowService.delegate,
+            routerDelegate: _routerDelegate,
             backButtonDispatcher: RootBackButtonDispatcher()),
         navigatorObservers: [ConfigSentry.navigatorObserver],
       );
