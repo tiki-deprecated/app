@@ -623,11 +623,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.2"
-      resolved-ref: ab6162aa349eb3d709ea40233c3974ccbc07bb91
+      ref: "0.0.4"
+      resolved-ref: "9f5e6b95b59c60bee955a738b950383dd3122257"
       url: "https://github.com/tiki/login"
     source: git
-    version: "0.0.2"
+    version: "0.0.4"
   lottie:
     dependency: "direct main"
     description:

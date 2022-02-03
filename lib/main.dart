@@ -1,4 +1,3 @@
-import 'package:app/src/slices/api_signup/api_signup_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,10 +24,12 @@ import 'src/slices/api_email_msg/api_email_msg_service.dart';
 import 'src/slices/api_email_sender/api_email_sender_service.dart';
 import 'src/slices/api_knowledge/api_knowledge_service.dart';
 import 'src/slices/api_oauth/api_oauth_service.dart';
+import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/data_fetch/data_fetch_service.dart';
 import 'src/slices/data_push/data_push_service.dart';
 import 'src/slices/home_screen/home_screen_service.dart';
 import 'src/utils/database.dart' as db;
+import 'src/utils/upgrade.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ Future<void> main() async {
       home: home.presenter);
   home.presenter.inject(
       () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+  login.onLogin('Upgrade', () => upgrade(login));
   await login.init();
   return SentryFlutter.init(
       (options) async => options

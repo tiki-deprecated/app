@@ -7,12 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-const String _dbName = 'tiki_enc.db';
 final _log = Logger('DatabaseService');
 
 Future<Database> open(String password,
-    {int version = 7, bool drop = false}) async {
-  String databasePath = await getDatabasesPath() + '/' + _dbName;
+    {int version = 7, bool drop = false, String dbName = 'tiki_app.db'}) async {
+  String databasePath = await getDatabasesPath() + '/' + dbName;
   if (drop) await deleteDatabase(databasePath);
   return await openDatabase(databasePath,
       password: password,
