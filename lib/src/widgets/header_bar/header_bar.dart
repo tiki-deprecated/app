@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:flutter/material.dart';
 import 'package:login/login.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,11 @@ class HeaderBar extends StatelessWidget {
         Provider.of<ApiAppDataService>(context);
     ApiSignupService apiSignupService = Provider.of<ApiSignupService>(context);
     Login login = Provider.of<Login>(context, listen: false);
-    UserReferralService userReferralService =
-        UserReferralService(apiAppDataService, apiSignupService, login);
+    UserReferralService userReferralService = UserReferralService(
+        apiAppDataService,
+        apiSignupService,
+        login,
+        Provider.of<ApiShortCodeService>(context, listen: false));
 
     // TODO fix bottom sheet modal service rebuilds in every tap
     return GestureDetector(

@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,8 @@ class WalletBalanceController {
   Future<void> updateBalance(BuildContext context) async {
     ApiSignupService apiSignupService =
         Provider.of<ApiSignupService>(context, listen: false);
-    service.updateBalance(apiSignupService);
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
+    return service.updateBalance(apiSignupService, apiAppDataService);
   }
 }

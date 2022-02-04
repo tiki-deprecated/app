@@ -1,3 +1,4 @@
+import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,7 @@ Future<void> main() async {
       home: home.presenter);
   home.presenter.inject(
       () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
-  login.onLogin('Upgrade', () => upgrade(login));
+  login.onLogin('Upgrade', () => upgrade(login, httpp));
   await login.init();
   return SentryFlutter.init(
       (options) async => options
@@ -125,7 +126,8 @@ Future<List<SingleChildWidget>> provide(
       Provider<DataPushService>.value(value: dataPushService),
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
       Provider<Login>.value(value: login),
-      Provider<ApiSignupService>.value(value: ApiSignupService())
+      Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+      Provider<ApiShortCodeService>(create: (_) => ApiShortCodeService(httpp: httpp, refresh: login.refresh))
     ];
   }
 }

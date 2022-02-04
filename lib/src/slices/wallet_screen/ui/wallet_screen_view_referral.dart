@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:flutter/material.dart';
 import 'package:login/login.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,9 @@ class WalletScreenViewReferral extends StatelessWidget {
                   child: UserReferralService(
                           apiAppDataService,
                           apiSignupService,
-                          Provider.of<Login>(context, listen: false))
+                          Provider.of<Login>(context, listen: false),
+                          Provider.of<ApiShortCodeService>(context,
+                              listen: false))
                       .presenter
                       .render())
             ],
