@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 import '../api_app_data/api_app_data_service.dart';
@@ -49,26 +48,25 @@ class DecisionCardSpamService extends ChangeNotifier {
     controller = DecisionCardSpamController(this);
   }
 
+  //TODO this really could use a refactor
   Future<List<DecisionCardSpamLayout>?> getCards() async {
     List<ApiEmailSenderModel> senders =
         await _apiEmailSenderService.getUnsubscribed();
     _account = await _apiAuthService.getAccount();
-    List<int> senderIds = List.empty(growable: true);
+
     for (ApiEmailSenderModel sender in senders) {
-      if (sender.senderId != null) senderIds.add(sender.senderId!);
       if (sender.company?.domain != null &&
           sender.company?.securityScore == null) {
-        _apiCompanyService
-            .upsert(sender.company!.domain!)
-            .then((value) => notifyListeners());
+        _apiCompanyService.upsert(
+            sender.company!.domain!, onComplete: (value) => notifyListeners());
       }
     }
 
-    Map<int, List<ApiEmailMsgModel>> messages =
-        await _apiEmailMsgService.getBySenders(senderIds);
+    Map<String, List<ApiEmailMsgModel>> messages =
+        await _apiEmailMsgService.getBySenders(senders);
     List<DecisionCardSpamModel> spamModels = [];
-    for (int senderId in senderIds) {
-      List<ApiEmailMsgModel>? msgs = messages[senderId];
+    for (ApiEmailSenderModel sender in senders) {
+      List<ApiEmailMsgModel>? msgs = messages[sender.email!];
       if (msgs != null && msgs.isNotEmpty) {
         spamModels.add(DecisionCardSpamModel(
           logoUrl: msgs[0].sender?.company?.logo,
@@ -79,7 +77,7 @@ class DecisionCardSpamService extends ChangeNotifier {
           securityScore: msgs[0].sender?.company?.securityScore,
           sensitivityScore: msgs[0].sender?.company?.sensitivityScore,
           hackingScore: msgs[0].sender?.company?.breachScore,
-          senderId: senderId,
+          senderId: sender.senderId!,
           senderEmail: msgs[0].sender?.email,
           totalEmails: msgs.length,
           sinceYear: msgs[0].sender?.emailSince?.year.toString(),

@@ -3,7 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -17,9 +16,9 @@ class UserAccountModalViewLogout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Provider.of<UserAccountModalService>(context).controller;
+    var service = Provider.of<UserAccountModalService>(context);
     return TextButton(
-        onPressed: () => controller.onLogout(context),
+        onPressed: () => service.controller.onLogout(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

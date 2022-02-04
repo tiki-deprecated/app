@@ -2,9 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
-import 'package:provider/single_child_widget.dart';
+import 'package:flutter/material.dart';
 
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
@@ -16,12 +14,11 @@ import 'home_screen_presenter.dart';
 class HomeScreenService extends ChangeNotifier {
   late final HomeScreenController controller;
   late final HomeScreenPresenter presenter;
-  late final HomeScreenModel model;
+  final HomeScreenModel model = HomeScreenModel();
 
-  HomeScreenService({List<SingleChildWidget>? providers}) {
+  HomeScreenService() {
     controller = HomeScreenController(this);
-    presenter = HomeScreenPresenter(service: this, providers: providers);
-    model = HomeScreenModel();
+    presenter = HomeScreenPresenter(this);
   }
 
   void setCurrentScreenIndex(int index) {

@@ -4,31 +4,30 @@
  */
 
 import 'package:flutter/widgets.dart';
+import 'package:logging/logging.dart';
+import 'package:login/login.dart';
 
-import '../../utils/api/helper_api_rsp.dart';
-import '../../utils/api/helper_api_utils.dart';
 import '../api_app_data/api_app_data_key.dart';
 import '../api_app_data/api_app_data_service.dart';
-import '../api_blockchain/api_blockchain_service.dart';
-import '../api_blockchain/model/api_blockchain_model_address_rsp_code.dart';
+import '../api_short_code/api_short_code_service.dart';
 import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
 import 'model/user_referral_model.dart';
 import 'user_referral_controller.dart';
 import 'user_referral_presenter.dart';
 
 class UserReferralService extends ChangeNotifier {
+  final Logger _log = Logger('UserReferralService');
+
   late final UserReferralPresenter presenter;
   late final UserReferralController controller;
   late final UserReferralModel model;
   final ApiAppDataService apiAppDataService;
-  final LoginFlowService loginFlowService;
   final ApiSignupService apiSignupService;
+  final ApiShortCodeService apiShortCodeService;
+  final Login _login;
 
-  final ApiBlockchainService apiBlockchainService;
-
-  UserReferralService(this.apiAppDataService, this.loginFlowService,
-      this.apiSignupService, this.apiBlockchainService) {
+  UserReferralService(this.apiAppDataService, this.apiSignupService,
+      this._login, this.apiShortCodeService) {
     this.presenter = UserReferralPresenter(this);
     this.controller = UserReferralController(this);
     this.model = UserReferralModel();
@@ -38,7 +37,7 @@ class UserReferralService extends ChangeNotifier {
   Future<void> getCode() async {
     String? code = this.model.code;
     if (code.isEmpty) {
-      await _updateCode(this.apiAppDataService, this.loginFlowService);
+      await _updateCode();
       updateReferCount();
     }
     notifyListeners();
@@ -57,21 +56,21 @@ class UserReferralService extends ChangeNotifier {
     }
   }
 
-  Future<void> _updateCode(ApiAppDataService apiAppDataService,
-      LoginFlowService loginFlowService) async {
+  Future<void> _updateCode() async {
     String code =
         (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))
                 ?.value ??
             '';
     if (code.isEmpty) {
-      String address = loginFlowService.model.user!.user!.address!;
-      HelperApiRsp<ApiBlockchainModelAddressRspCode> rsp =
-          await apiBlockchainService.referCode(address);
-      if (HelperApiUtils.isOk(rsp.code)) {
-        ApiBlockchainModelAddressRspCode data = rsp.data;
-        code = data.code ?? '';
-        await apiAppDataService.save(ApiAppDataKey.userReferCode, code);
-      }
+      await apiShortCodeService.get(
+        accessToken: _login.token!.bearer!,
+        address: _login.user!.address!,
+        onSuccess: (rsp) async {
+          code = rsp.code ?? '';
+          await apiAppDataService.save(ApiAppDataKey.userReferCode, code);
+        },
+        onError: (error) => _log.warning(error),
+      );
     }
     this.model.code = code;
     notifyListeners();

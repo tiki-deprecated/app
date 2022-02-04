@@ -2,12 +2,11 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
-import 'package:flutter/widgets.dart';
+import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
 import 'wallet_balance_service.dart';
 
 class WalletBalanceController {
@@ -18,8 +17,8 @@ class WalletBalanceController {
   Future<void> updateBalance(BuildContext context) async {
     ApiSignupService apiSignupService =
         Provider.of<ApiSignupService>(context, listen: false);
-    LoginFlowService loginFlowService =
-        Provider.of<LoginFlowService>(context, listen: false);
-    service.updateBalance(loginFlowService, apiSignupService);
+    ApiAppDataService apiAppDataService =
+        Provider.of<ApiAppDataService>(context, listen: false);
+    return service.updateBalance(apiSignupService, apiAppDataService);
   }
 }

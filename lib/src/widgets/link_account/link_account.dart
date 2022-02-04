@@ -4,7 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'link_account_view_add.dart';
 import 'link_account_view_linked.dart';

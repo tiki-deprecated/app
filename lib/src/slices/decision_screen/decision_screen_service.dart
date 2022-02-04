@@ -94,4 +94,9 @@ class DecisionScreenService extends ChangeNotifier {
       }
     }
   }
+
+  void removeAllCards() {
+    this.model.cards = [];
+    notifyListeners();
+  }
 }

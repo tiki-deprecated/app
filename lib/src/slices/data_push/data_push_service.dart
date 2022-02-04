@@ -3,9 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:app/src/utils/api/helper_api_rsp.dart';
-import 'package:app/src/utils/api/helper_api_utils.dart';
 import 'package:logging/logging.dart';
+import 'package:login/login.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_knowledge/api_knowledge_service.dart';
@@ -17,12 +16,15 @@ class DataPushService {
   static final int _pushOn = 250;
   final DataPushRepository _repository;
   final ApiKnowledgeService _apiKnowledgeService;
+  final Login _login;
 
   DataPushService(
       {required ApiKnowledgeService apiKnowledgeService,
-      required Database database})
+      required Database database,
+      required Login login})
       : this._apiKnowledgeService = apiKnowledgeService,
-        this._repository = DataPushRepository(database);
+        this._repository = DataPushRepository(database),
+        this._login = login;
 
   Future<void> write(List<DataPushModel> edges, {bool force = false}) async {
     await _repository.insert(edges);
@@ -30,15 +32,17 @@ class DataPushService {
     if (size >= _pushOn) {
       List<DataPushModel> edgesToPush =
           await _repository.getAll(limit: _pushOn);
-      HelperApiRsp rsp = await _apiKnowledgeService
-          .addEdges(edgesToPush.map((e) => e.toEdge()).toList());
-      if (HelperApiUtils.is2xx(rsp.code)) {
-        List<int> ids = edgesToPush
-            .where((e) => e.queueId != null)
-            .map((e) => e.queueId!)
-            .toList();
-        await _repository.deleteByIds(ids);
-      }
+      await _apiKnowledgeService.addEdges(
+          edges: edgesToPush.map((e) => e.toEdge()).toList(),
+          accessToken: _login.token!.bearer!,
+          onSuccess: (rsp) async {
+            List<int> ids = edgesToPush
+                .where((e) => e.queueId != null)
+                .map((e) => e.queueId!)
+                .toList();
+            await _repository.deleteByIds(ids);
+          },
+          onError: (error) => _log.warning(error));
     }
   }
 }

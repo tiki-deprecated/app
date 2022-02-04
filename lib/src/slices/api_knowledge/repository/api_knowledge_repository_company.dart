@@ -3,28 +3,42 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'dart:convert';
+import 'package:httpp/httpp.dart';
+import 'package:logging/logging.dart';
 
-import 'package:http/http.dart';
-
-import '../../../config/config_domain.dart';
-import '../../../config/config_sentry.dart';
-import '../../../utils/api/helper_api_headers.dart';
-import '../../../utils/api/helper_api_rsp.dart';
+import '../../../utils/api/tiki_api_model_rsp.dart';
 import '../model/company/api_knowledge_model_company.dart';
 
 class ApiKnowledgeRepositoryCompany {
+  final Logger _log = Logger('ApiKnowledgeRepositoryCompany');
   static final String _path = '/api/latest/vertex/company';
 
-  static Future<HelperApiRsp<ApiKnowledgeModelCompany>> get(
-      String? bearer, String domain) async {
-    Response rsp = await ConfigSentry.http.get(
-        ConfigDomain.asUri(ConfigDomain.knowledge, _path, {"domain": domain}),
-        headers: HelperApiHeaders(auth: bearer).header);
-    Map? rspMap = jsonDecode(rsp.body);
-    return HelperApiRsp.fromJson(
-        rspMap as Map<String, dynamic>?,
-        (json) =>
-            ApiKnowledgeModelCompany.fromJson(json as Map<String, dynamic>?));
+  Future<void> get(
+      {required HttppClient client,
+      String? accessToken,
+      required String domain,
+      void Function(TikiApiModelRsp<ApiKnowledgeModelCompany>)? onSuccess,
+      void Function(Object)? onError}) {
+    HttppRequest request = HttppRequest(
+        uri: Uri.https('knowledge.mytiki.com', _path, {'domain': domain}),
+        verb: HttppVerb.GET,
+        headers: HttppHeaders.typical(bearerToken: accessToken),
+        timeout: Duration(seconds: 30),
+        onSuccess: (rsp) {
+          if (onSuccess != null) {
+            TikiApiModelRsp<ApiKnowledgeModelCompany> body =
+                TikiApiModelRsp.fromJson(rsp.body?.jsonBody,
+                    (json) => ApiKnowledgeModelCompany.fromJson(json));
+            onSuccess(body);
+          }
+        },
+        onResult: (rsp) {
+          TikiApiModelRsp body =
+              TikiApiModelRsp.fromJson(rsp.body?.jsonBody, (json) {});
+          if (onError != null) onError(body);
+        },
+        onError: onError);
+    _log.finest('${request.verb.value} — ${request.uri}');
+    return client.request(request);
   }
 }

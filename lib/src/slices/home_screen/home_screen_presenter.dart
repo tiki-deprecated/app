@@ -7,17 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../../config/config_color.dart';
 import 'home_screen_service.dart';
 import 'ui/home_screen_layout.dart';
 
 class HomeScreenPresenter extends Page {
   final HomeScreenService service;
-  final List<SingleChildWidget> providers;
+  late final Future<List<SingleChildWidget>> Function()? _provide;
 
-  HomeScreenPresenter(
-      {required this.service, List<SingleChildWidget>? providers})
-      : this.providers = providers ?? [],
-        super(key: ValueKey("HomeNav"));
+  HomeScreenPresenter(this.service) : super(key: ValueKey("HomeNav"));
+
+  void inject(Future<List<SingleChildWidget>> Function()? provide) =>
+      _provide = provide;
 
   @override
   Route createRoute(BuildContext context) {
@@ -25,7 +26,18 @@ class HomeScreenPresenter extends Page {
         settings: this,
         builder: (BuildContext context) => ChangeNotifierProvider.value(
             value: service,
-            child: MultiProvider(
-                providers: providers, child: HomeScreenLayout())));
+            child: FutureBuilder(
+                future: _provide != null
+                    ? _provide!()
+                    : Future.value(List<SingleChildWidget>.empty()),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<SingleChildWidget>> snapshot) {
+                  if (snapshot.data != null) {
+                    return MultiProvider(
+                        providers: snapshot.data!, child: HomeScreenLayout());
+                  } else
+                    return Container(
+                        color: ConfigColor.greyZero); //TODO make prettier
+                })));
   }
 }

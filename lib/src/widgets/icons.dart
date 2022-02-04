@@ -1,6 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class _TikiIconsData extends IconData {

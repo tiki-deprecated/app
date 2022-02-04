@@ -4,11 +4,11 @@
  */
 
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../api_signup/api_signup_service.dart';
-import '../login_flow/login_flow_service.dart';
+import '../logout_modal/logout_modal_service.dart';
+import '../support_modal/support_modal_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'user_account_modal_service.dart';
 
@@ -22,8 +22,10 @@ class UserAccountModalController {
 
   UserAccountModalController(this.service);
 
-  void onLogout(BuildContext context) =>
-      Provider.of<LoginFlowService>(context, listen: false).setLoggedOut();
+  void onLogout(BuildContext context) {
+    Navigator.of(context).pop();
+    LogoutModalService(service.login).presenter.showModal(context);
+  }
 
   Future<void> onShare(UserReferralService userReferralService) async {
     await userReferralService.getCode();
@@ -33,9 +35,16 @@ class UserAccountModalController {
     }
   }
 
-  void updateUserCount(BuildContext context) {
-    ApiSignupService apiSignupService =
-        Provider.of<ApiSignupService>(context, listen: false);
-    service.updateSignups(apiSignupService);
+  void updateUserCount() {
+    service.updateSignups();
+  }
+
+  void goToSupport(BuildContext context) {
+    Navigator.of(context).pop();
+    SupportModalService().presenter.showModal(context);
+  }
+
+  void showQrCode(BuildContext context) {
+    this.service.showQrCode();
   }
 }
