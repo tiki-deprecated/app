@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_provider/google_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,40 +13,10 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
     DataScreenService service = Provider.of<DataScreenService>(context);
     ApiOAuthModelAccount? account = service.account;
     return Column(children: [
-      account != null && account.provider != "google"
-          ? Container()
-          : Container(
+          Container(
               margin: EdgeInsets.only(top: 2.h),
-              child: LinkAccount(
-                username: account?.email,
-                type: 'Google',
-                linkedIcon: "account-soon-google",
-                unlinkedIcon: "google-icon",
-                onLink: () => service.controller.linkAccount('google'),
-                onUnlink: () =>
-                    account != null ? service.controller.removeAccount() : null,
-                onSee: () => account != null
-                    ? service.controller
-                        .openGmailCards(context, account.accountId!)
-                    : null,
-              )),
-      account != null && account.provider != "microsoft"
-          ? Container()
-          : Container(
-              margin: EdgeInsets.only(top: 2.h),
-              child: LinkAccount(
-                username: account?.email,
-                type: 'Microsoft',
-                linkedIcon: "windows-logo",
-                unlinkedIcon: "windows-logo",
-                onLink: () => service.controller.linkAccount('microsoft'),
-                onUnlink: () =>
-                    account != null ? service.controller.removeAccount() : null,
-                onSee: () => account != null
-                    ? service.controller
-                        .openGmailCards(context, account.accountId!)
-                    : null,
-              ))
+              child: GoogleProvider().accountWidget(),
+          )
     ]);
   }
 }
