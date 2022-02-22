@@ -490,11 +490,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.2"
-      resolved-ref: "6a8a7247dbe42f2a42b2c31d5d96446e20e67447"
+      ref: "0.0.3"
+      resolved-ref: f9ab36b554a3b2615c4d69bb22ec0457be6eefdd
       url: "https://github.com/tiki/google_provider"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   google_sign_in:
     dependency: transitive
     description:

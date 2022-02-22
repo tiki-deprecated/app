@@ -4,6 +4,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:google_provider/src/model/google_provider_model.dart';
+import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 
 import '../info_carousel/info_carousel_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
@@ -21,11 +23,21 @@ class DataScreenController {
             InfoCarouselService(cards: cards).presenter.render()));
   }
 
+  Future<void> openCards(BuildContext context, List<dynamic> cardsData) async {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            InfoCarouselService(cards: cardsData).presenter.render()));
+  }
+
   linkAccount(String provider) async {
     service.linkAccount(provider);
   }
 
-  removeAccount() {
-    service.removeAccount();
+  removeAccount(String email, String provider) {
+    service.removeAccount(email, provider);
   }
+
+  saveAccount(dynamic data, String provider) => service.saveAccount(data, provider);
+
+
 }

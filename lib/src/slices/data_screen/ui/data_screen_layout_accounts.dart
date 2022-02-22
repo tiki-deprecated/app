@@ -13,10 +13,36 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
     DataScreenService service = Provider.of<DataScreenService>(context);
     ApiOAuthModelAccount? account = service.account;
     return Column(children: [
-          Container(
+      account != null && account.provider != "google"
+          ? Container()
+          : Container(
               margin: EdgeInsets.only(top: 2.h),
-              child: GoogleProvider().accountWidget(),
-          )
+              child: GoogleProvider(
+                onLink: (model) => service.controller.saveAccount(model, 'google'),
+                onUnlink: (email) => account != null ?
+                  service.controller.removeAccount(email!, 'google') :
+                  null,
+                onSee: (cardsData) => service.controller
+                    .openGmailCards(context, 0)
+              ).accountWidget()
+          ),
+      account != null && account.provider != "microsoft"
+          ? Container()
+          : Container(
+              margin: EdgeInsets.only(top: 2.h),
+              child: LinkAccount(
+                username: account?.email,
+                type: 'Microsoft',
+                linkedIcon: "windows-logo",
+                unlinkedIcon: "windows-logo",
+                onLink: () => service.controller.linkAccount('microsoft'),
+                onUnlink: () =>
+                    account != null ? service.controller.removeAccount(account.email!, 'microsoft') : null,
+                onSee: () => account != null
+                    ? service.controller
+                        .openGmailCards(context, account.accountId!)
+                    : null,
+              ))
     ]);
   }
 }

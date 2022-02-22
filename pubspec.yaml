@@ -59,7 +59,7 @@ dependencies:
   google_provider:
     git:
       url: https://github.com/tiki/google_provider
-      ref: 0.0.2
+      ref: 0.0.3
 
 dependency_overrides:
   sqflite:
