@@ -44,6 +44,7 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
         token: account.accessToken,
         refreshToken: account.refreshToken,
         displayName: account.displayName,
+        httpp: _httpp
     ).fetchInbox(
         onResult: (msgIdList) => onResult(
             msgIdList.map((msgId) => ApiEmailMsgModel(extMessageId: msgId)).toList()
@@ -97,163 +98,20 @@ $body
       required List<String> messageIds,
       required Function(ApiEmailMsgModel message) onResult,
       required Function() onFinish}) async {
-    HttppClient client = _httpp.client(onFinish: onFinish);
-    List<Future> futures = [];
-    messageIds.forEach((messageId) => futures.add(_repositoryEmail.message(
-        client: client,
-        accessToken: account.accessToken,
-        messageId: messageId,
-        onSuccess: (response) {
-          ApiGoogleModelMessage message =
-              ApiGoogleModelMessage.fromJson(response.body?.jsonBody);
-          Map<String, String>? from = _from(message.payload?.headers);
-          onResult(ApiEmailMsgModel(
-              extMessageId: message.id,
-              receivedDate: message.internalDate,
-              openedDate: null, //TODO implement open date detection
-              toEmail: _toEmail(message.payload?.headers, account.email!),
-              sender: ApiEmailSenderModel(
-                  email: from?['email'],
-                  name: from?['name'],
-                  category: _category(message.labelIds),
-                  unsubscribeMailTo:
-                      _unsubscribeMailTo(message.payload?.headers),
-                  unsubscribed: false,
-                  company: ApiCompanyModel(
-                      domain:
-                          ApiCompanyService.domainFromEmail(from?['email'])))));
-        },
-        onResult: (response) {
-          _log.warning(
-              'Fetch message ${messageId} failed with statusCode ${response.statusCode}');
-          _handleUnauthorized(client, response, account);
-          _handleTooManyRequests(client, response);
-        },
-        onError: (error) {
-          _log.warning('Fetch message ${messageId} failed with error ${error}');
-        })));
-    await Future.wait(futures);
-  }
-
-  Future<void> _fetchInbox(
-      {required HttppClient client,
-      required ApiOAuthModelAccount account,
-      String? pageToken,
-      DateTime? since,
-      required Function(List<ApiEmailMsgModel> messages) onResult}) {
-    return _repositoryEmail.messageId(
-      client: client,
-      accessToken: account.accessToken,
-      filter: _buildFiler(after: since, maxResults: 500, pageToken: pageToken),
-      onSuccess: (response) {
-        ApiGoogleModelMessages messages =
-            ApiGoogleModelMessages.fromJson(response.body?.jsonBody);
-
-        if (messages.nextPageToken != null)
-          _fetchInbox(
-              client: client,
-              account: account,
-              onResult: onResult,
-              pageToken: messages.nextPageToken,
-              since: since);
-
-        onResult(messages.messages
-                ?.map((m) => ApiEmailMsgModel(extMessageId: m.id))
-                .toList() ??
-            List.empty());
-      },
-      onResult: (response) {
-        _log.warning(
-            'Fetch inbox ${account.username} failed with statusCode ${response.statusCode}');
-        _handleUnauthorized(client, response, account);
-        _handleTooManyRequests(client, response);
-      },
-      onError: (error) => _log.warning(
-          'Fetch inbox ${account.username} failed with error ${error}'),
-    );
-  }
-
-  Map<String, String>? _from(List<ApiGoogleModelHeader>? headers) {
-    if (headers != null) {
-      for (ApiGoogleModelHeader header in headers) {
-        if (header.name?.trim() == 'From') {
-          Map<String, String> rsp = Map();
-          if (header.value != null) {
-            List<String> values = header.value!.split('<');
-            if (values.length == 1)
-              rsp['email'] = values[0].trim();
-            else if (values.length == 2) {
-              rsp['email'] = values[1].trim().replaceAll('>', '');
-              rsp['name'] = values[0].trim().replaceAll("\"", '');
-            }
-          }
-          return rsp;
-        }
-      }
-    }
-  }
-
-  String? _unsubscribeMailTo(List<ApiGoogleModelHeader>? headers) {
-    if (headers != null) {
-      for (ApiGoogleModelHeader header in headers) {
-        if (header.name?.trim() == 'List-Unsubscribe' && header.value != null) {
-          String removeCaret =
-              header.value!.replaceAll('<', '').replaceAll(">", '');
-          List<String> splitMailTo = removeCaret.split('mailto:');
-          if (splitMailTo.length > 1) return splitMailTo[1].split(',')[0];
-        }
-      }
-    }
-  }
-
-  String? _category(List<String>? labelIds) {
-    if (labelIds != null) {
-      String? categoryLabel =
-          labelIds.firstWhereOrNull((label) => label.contains("CATEGORY_"));
-      if (categoryLabel != null)
-        return categoryLabel.replaceFirst('CATEGORY_', '');
-    }
-  }
-
-  String? _toEmail(List<ApiGoogleModelHeader>? headers, String expected) {
-    if (headers != null) {
-      for (ApiGoogleModelHeader header in headers) {
-        if (header.name?.trim() == 'To' && header.value != null) {
-          String headerEmail = header.value!.contains("<")
-              ? header.value!
-                  .split("<")
-                  .toList()[1]
-                  .replaceFirst(">", "")
-                  .trim()
-              : header.value!;
-          return headerEmail.trim().toLowerCase();
-        }
-      }
-    }
-    return expected;
-  }
-
-  String _buildFiler(
-      {DateTime? after, int maxResults = 500, String? pageToken}) {
-    StringBuffer queryBuffer = new StringBuffer();
-
-    _appendQuery(queryBuffer, 'maxResults=$maxResults');
-
-    if (pageToken != null) _appendQuery(queryBuffer, 'pageToken=$pageToken');
-
-    if (after != null) {
-      int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
-      _appendQuery(queryBuffer, 'q=after:' + secondsSinceEpoch.toString());
-    }
-    return queryBuffer.toString();
-  }
-
-  StringBuffer _appendQuery(StringBuffer queryBuffer, String append) {
-    if (queryBuffer.isNotEmpty) {
-      queryBuffer.write('&');
-    }
-    queryBuffer.write(append);
-    return queryBuffer;
+        return GoogleProvider.loggedIn(
+            email: account.email,
+            token: account.accessToken,
+            refreshToken: account.refreshToken,
+            displayName: account.displayName,
+            httpp: _httpp
+        ).fetchMessages(
+            messageIds: messageIds,
+            onResult: (msg) =>
+                onResult(
+                    ApiEmailMsgModel.fromDynamic(msg)
+                ),
+            onFinish: onFinish
+        );
   }
 
   void _handleUnauthorized(HttppClient client, HttppResponse response,
