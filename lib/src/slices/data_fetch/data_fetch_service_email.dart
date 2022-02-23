@@ -64,23 +64,11 @@ class DataFetchServiceEmail {
     String to = uri.path;
     String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
     String body = '''
-<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
-<html xmlns=“https://www.w3.org/1999/xhtml”>
-<head>
-<title>Test Email Sample</title>
-<meta http–equiv=“Content-Type” content=“text/html; charset=UTF-8” />
-<meta http–equiv=“X-UA-Compatible” content=“IE=edge” />
-<meta name=“viewport” content=“width=device-width, initial-scale=1.0 “ />
-</head>
-<body class=“em_body” style=“margin:0px; padding:0px;”> 
 Hello,<br /><br />
 I'd like to stop receiving emails from this email list.<br /><br />
 Thanks,<br /><br />
 ${account.displayName ?? ''}<br />
 <br />
-* Sent via https://mytiki.com. Join the data ownership revolution. *<br />
-</body>
-</html>
 ''';
     bool success = false;
     await interfaceEmail.send(
