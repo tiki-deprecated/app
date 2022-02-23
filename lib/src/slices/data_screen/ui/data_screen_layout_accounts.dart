@@ -25,9 +25,7 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
                   email: account.email,
                   displayName: account.displayName,
                   onLink: (model) => service.controller.saveAccount(model, 'google'),
-                  onUnlink: (email) => account != null ?
-                  service.controller.removeAccount(email!, 'google') :
-                  null,
+                  onUnlink: (email) => service.controller.removeAccount(email!, 'google'),
                   onSee: (cardsData) => service.controller
                       .openGmailCards(context, 0)
               ).accountWidget() :
@@ -51,19 +49,13 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
               email: account.email,
               displayName: account.displayName,
               onLink: (model) => service.controller.saveAccount(model, 'microsoft'),
-              onUnlink: (email) => account != null ?
-              service.controller.removeAccount(email!, 'microsoft') :
-              null,
-              onSee: (cardsData) => service.controller
-                  .openGmailCards(context, 0)
+              onUnlink: (email) => service.controller.removeAccount(email!, 'microsoft'),
+              onSee: (cardsData) => service.controller.openCards(context, cardsData)
           ).accountWidget() :
           MicrosoftProvider(
               onLink: (model) => service.controller.saveAccount(model, 'microsoft'),
-              onUnlink: (email) => account != null ?
-              service.controller.removeAccount(email!, 'microsoft') :
-              null,
-              onSee: (cardsData) => service.controller
-                  .openGmailCards(context, 0)
+              onUnlink: (email) => service.controller.removeAccount(email!, 'microsoft'),
+              onSee: (cardsData) => service.controller.openCards(context, cardsData)
           ).accountWidget()
       ),
 
