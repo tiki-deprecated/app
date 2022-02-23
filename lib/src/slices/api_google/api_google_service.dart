@@ -30,8 +30,7 @@ class ApiGoogleService
       required Httpp httpp})
       : this._apiAuthService = apiAuthService,
         this._apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
-        this._apiGoogleServiceEmail =
-            ApiGoogleServiceEmail(apiAuthService, httpp);
+        this._apiGoogleServiceEmail = ApiGoogleServiceEmail(httpp);
 
   @override
   DataFetchInterfaceEmail? get email => _apiGoogleServiceEmail;
