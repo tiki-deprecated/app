@@ -6,6 +6,7 @@
 import 'dart:convert';
 
 import 'package:collection/src/iterable_extensions.dart';
+import 'package:google_provider/google_provider.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
@@ -38,12 +39,17 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
       DateTime? since,
       required Function(List<ApiEmailMsgModel> messages) onResult,
       required Function() onFinish}) {
-    HttppClient httppClient = _httpp.client(onFinish: onFinish);
-    return _fetchInbox(
-        client: httppClient,
-        account: account,
-        onResult: onResult,
-        since: since);
+    return GoogleProvider.loggedIn(
+        email: account.email,
+        token: account.accessToken,
+        refreshToken: account.refreshToken,
+        displayName: account.displayName,
+    ).fetchInbox(
+        onResult: (msgIdList) => onResult(
+            msgIdList.map((msgId) => ApiEmailMsgModel(extMessageId: msgId)).toList()
+        ),
+        onFinish: onFinish
+    );
   }
 
   @override
