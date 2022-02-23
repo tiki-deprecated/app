@@ -17,7 +17,20 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
           ? Container()
           : Container(
               margin: EdgeInsets.only(top: 2.h),
-              child: GoogleProvider(
+              child: account != null ?
+              GoogleProvider.loggedIn(
+                  token: account.accessToken,
+                  refreshToken: account.refreshToken,
+                  email: account.email,
+                  displayName: account.displayName,
+                  onLink: (model) => service.controller.saveAccount(model, 'google'),
+                  onUnlink: (email) => account != null ?
+                  service.controller.removeAccount(email!, 'google') :
+                  null,
+                  onSee: (cardsData) => service.controller
+                      .openGmailCards(context, 0)
+              ).accountWidget() :
+              GoogleProvider(
                 onLink: (model) => service.controller.saveAccount(model, 'google'),
                 onUnlink: (email) => account != null ?
                   service.controller.removeAccount(email!, 'google') :
