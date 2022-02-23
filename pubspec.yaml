@@ -60,6 +60,8 @@ dependencies:
     git:
       url: https://github.com/tiki/google_provider
       ref: 0.0.3
+  microsoft_provider:
+    path: ../microsoft_provider
 
 dependency_overrides:
   sqflite:

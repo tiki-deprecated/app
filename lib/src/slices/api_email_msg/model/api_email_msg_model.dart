@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/model/email/google_provider_model_email.dart';
-
 import '../../../utils/json/json_object.dart';
 import '../../api_email_sender/model/api_email_sender_model.dart';
 
@@ -67,7 +65,7 @@ class ApiEmailMsgModel extends JsonObject {
     return 'ApiEmailMsgModel{messageId: $messageId, extMessageId: $extMessageId, sender: $sender, receivedDate: $receivedDate, openedDate: $openedDate, toEmail: $toEmail, created: $created, modified: $modified}';
   }
 
-  ApiEmailMsgModel.fromDynamic(GoogleProviderModelEmail msg) {
+  ApiEmailMsgModel.fromDynamic(dynamic msg) {
     messageId = msg.messageId;
     extMessageId = msg.extMessageId;
     sender = ApiEmailSenderModel.fromDynamic(msg.sender);
