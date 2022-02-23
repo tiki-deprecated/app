@@ -31,7 +31,7 @@ class ApiMicrosoftService
       : this._apiAuthService = apiAuthService,
         this._apiMicrosoftRepositoryInfo = ApiMicrosoftRepositoryInfo(),
         this._apiMicrosoftServiceEmail =
-            ApiMicrosoftServiceEmail(apiAuthService, httpp);
+            ApiMicrosoftServiceEmail(httpp);
 
   @override
   DataFetchInterfaceEmail? get email => _apiMicrosoftServiceEmail;

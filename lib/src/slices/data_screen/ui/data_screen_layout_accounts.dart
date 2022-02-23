@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_provider/google_provider.dart';
+import 'package:microsoft_provider/microsoft_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,20 +43,30 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
       account != null && account.provider != "microsoft"
           ? Container()
           : Container(
-              margin: EdgeInsets.only(top: 2.h),
-              child: LinkAccount(
-                username: account?.email,
-                type: 'Microsoft',
-                linkedIcon: "windows-logo",
-                unlinkedIcon: "windows-logo",
-                onLink: () => service.controller.linkAccount('microsoft'),
-                onUnlink: () =>
-                    account != null ? service.controller.removeAccount(account.email!, 'microsoft') : null,
-                onSee: () => account != null
-                    ? service.controller
-                        .openGmailCards(context, account.accountId!)
-                    : null,
-              ))
+          margin: EdgeInsets.only(top: 2.h),
+          child: account != null ?
+          MicrosoftProvider.loggedIn(
+              token: account.accessToken,
+              refreshToken: account.refreshToken,
+              email: account.email,
+              displayName: account.displayName,
+              onLink: (model) => service.controller.saveAccount(model, 'microsoft'),
+              onUnlink: (email) => account != null ?
+              service.controller.removeAccount(email!, 'microsoft') :
+              null,
+              onSee: (cardsData) => service.controller
+                  .openGmailCards(context, 0)
+          ).accountWidget() :
+          MicrosoftProvider(
+              onLink: (model) => service.controller.saveAccount(model, 'microsoft'),
+              onUnlink: (email) => account != null ?
+              service.controller.removeAccount(email!, 'microsoft') :
+              null,
+              onSee: (cardsData) => service.controller
+                  .openGmailCards(context, 0)
+          ).accountWidget()
+      ),
+
     ]);
   }
 }
