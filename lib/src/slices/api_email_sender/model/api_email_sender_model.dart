@@ -3,6 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:google_provider/src/model/email/google_provider_model_sender.dart';
+
 import '../../../utils/json/json_object.dart';
 import '../../api_company/model/api_company_model.dart';
 
@@ -76,5 +78,19 @@ class ApiEmailSenderModel extends JsonObject {
   @override
   String toString() {
     return 'ApiEmailSenderModel{senderId: $senderId, company: $company, name: $name, email: $email, category: $category, unsubscribeMailTo: $unsubscribeMailTo, emailSince: $emailSince, unsubscribed: $unsubscribed, ignoreUntil: $ignoreUntil}';
+  }
+
+  ApiEmailSenderModel.fromDynamic(dynamic sender) {
+    senderId = sender.senderId;
+    company = ApiCompanyModel.fromDynamic(sender.company);
+    name = sender.name;
+    email = sender.email;
+    category = sender.category;
+    unsubscribeMailTo = sender.unsubscribeMailTo;
+    emailSince = sender.emailSince;
+    unsubscribed = sender.unsubscribed;
+    ignoreUntil = sender.ignoreUntil;
+    created = sender.created;
+    modified = sender.modified;
   }
 }
