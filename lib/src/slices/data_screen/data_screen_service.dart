@@ -53,16 +53,15 @@ class DataScreenService extends ChangeNotifier {
     }
   }
 
-  Future<void> removeAccount() async {
-    ApiOAuthModelAccount? account = await _apiAuthService.getAccount();
-    if (account != null) {
-      try {
-        await _apiAuthService.signOut(account);
-      }catch(e){
-        _log.warning(e);
-      }
-      decisionScreenService.removeAllCards();
-    }
+  Future<void> saveAccount(dynamic data, String provider) async {
+    ApiOAuthModelAccount account = await _apiAuthService.save(data, provider);
+    _model.account = account;
+    notifyListeners();
+  }
+
+  Future<void> removeAccount(String email, String provider) async {
+    _apiAuthService.remove(email, provider);
+    decisionScreenService.removeAllCards();
     _model.account = null;
     notifyListeners();
   }
