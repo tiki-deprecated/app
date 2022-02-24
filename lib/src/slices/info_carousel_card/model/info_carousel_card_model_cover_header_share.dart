@@ -20,4 +20,9 @@ class InfoCarouselCardModelCoverHeaderShare extends JsonObject {
 
   @override
   Map<String, dynamic> toJson() => {'message': message, 'image': image};
+
+  InfoCarouselCardModelCoverHeaderShare.fromDynamic(dynamic data) {
+    message = data.message;
+    image = data.image;
+  }
 }

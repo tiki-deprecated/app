@@ -20,4 +20,9 @@ class InfoCarouselCardModelContentText extends JsonObject {
 
   @override
   Map<String, dynamic> toJson() => {'text': text, 'url': url};
+
+  InfoCarouselCardModelContentText.fromDynamic(dynamic data) {
+    text = data.text;
+    url = data.url;
+  }
 }

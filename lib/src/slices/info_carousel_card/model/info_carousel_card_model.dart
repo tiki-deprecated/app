@@ -25,4 +25,9 @@ class InfoCarouselCardModel extends JsonObject {
         'cover': cover!.toJson(),
         'content': content!.toJson(),
       };
+
+  InfoCarouselCardModel.fromDynamic(dynamic data){
+    cover = InfoCarouselCardModelCover.fromDynamic(data.cover);
+    content = InfoCarouselCardModelContent.fromDynamic(data.content);
+  }
 }
