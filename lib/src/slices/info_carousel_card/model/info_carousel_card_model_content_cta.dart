@@ -31,8 +31,11 @@ class InfoCarouselCardModelContentCta extends JsonObject {
         'explain': JsonUtils.listToJson(explain)
       };
 
-  InfoCarouselCardModelContentCta.fromDynamic(dynamic data){
-    explain = data.explain.map((explainData) =>  InfoCarouselCardModelContentText.fromDynamic(explainData)).toList();
+  InfoCarouselCardModelContentCta.fromDynamic(dynamic data) {
+    explain = data.explain
+        .map((explainData) =>
+            InfoCarouselCardModelContentText.fromDynamic(explainData))
+        .toList();
     buttonText = data.buttonText;
     buttonUrl = data.buttonUrl;
   }

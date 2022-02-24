@@ -38,7 +38,6 @@ class TikiApiModelRsp<T> {
     }
   }
 
-  @override
   Map<String, dynamic> toJson() => {
         'status': status,
         'code': code,

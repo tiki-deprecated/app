@@ -34,9 +34,20 @@ class InfoCarouselCardModelContentBody extends JsonObject {
         'explain': JsonUtils.listToJson(explain)
       };
 
-  InfoCarouselCardModelContentBody.fromDynamic(dynamic data){
-    explain = data.explain.map((explainData) => InfoCarouselCardModelContentText.fromDynamic(explainData)).toList();
-    theySay = data.theySay.map((theySayData) => InfoCarouselCardModelContentIcon.fromDynamic(theySayData)).toList(); ;
-    shouldKnow = data.shouldKnow.map((shouldKnowData) => InfoCarouselCardModelContentIcon.fromDynamic(shouldKnowData)).toList(); ;
+  InfoCarouselCardModelContentBody.fromDynamic(dynamic data) {
+    explain = data.explain
+        .map((explainData) =>
+            InfoCarouselCardModelContentText.fromDynamic(explainData))
+        .toList();
+    theySay = data.theySay
+        .map((theySayData) =>
+            InfoCarouselCardModelContentIcon.fromDynamic(theySayData))
+        .toList();
+    ;
+    shouldKnow = data.shouldKnow
+        .map((shouldKnowData) =>
+            InfoCarouselCardModelContentIcon.fromDynamic(shouldKnowData))
+        .toList();
+    ;
   }
 }

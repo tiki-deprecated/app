@@ -2,7 +2,6 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:flutter/material.dart';
 import 'package:login/login.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../config/config_size.dart';
 import '../../slices/api_app_data/api_app_data_service.dart';
+import '../../slices/api_short_code/api_short_code_service.dart';
 import '../../slices/api_signup/api_signup_service.dart';
 import '../../slices/user_account_modal/user_account_modal_service.dart';
 import '../../slices/user_referral/user_referral_service.dart';

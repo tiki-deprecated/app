@@ -22,7 +22,7 @@ class InfoCarouselCardService extends ChangeNotifier {
   late final InfoCarouselCardModel model;
   late final InfoCarouselCardController controller;
 
-  InfoCarouselCardService({dynamic? card}) {
+  InfoCarouselCardService({dynamic card}) {
     presenter = InfoCarouselCardPresenter(this);
     controller = InfoCarouselCardController(this);
     if (card != null)

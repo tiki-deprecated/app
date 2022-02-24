@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/model/email/google_provider_model_sender.dart';
-
 import '../../../utils/json/json_object.dart';
 import '../../api_company/model/api_company_model.dart';
 
