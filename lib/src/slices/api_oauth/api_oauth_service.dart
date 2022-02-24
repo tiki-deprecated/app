@@ -198,8 +198,8 @@ class ApiOAuthService {
   }
 
   save(dynamic account, String provider) async =>
-    await _upsert(ApiOAuthModelAccount.fromDynamic(account, provider));
+      await _upsert(ApiOAuthModelAccount.fromDynamic(account, provider));
 
   remove(String email, String provider) async =>
-    await _apiAuthRepositoryAccount.deleteByEmail(email, provider);
+      await _apiAuthRepositoryAccount.deleteByEmail(email, provider);
 }

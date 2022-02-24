@@ -43,8 +43,8 @@ class HomeScreenLayout extends StatelessWidget {
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
           decisionScreenService: decisionScreenService,
-          dataScreenService:
-              DataScreenService(dataFetchService, apiAuthService, decisionScreenService),
+          dataScreenService: DataScreenService(
+              dataFetchService, apiAuthService, decisionScreenService),
           walletScreenService: WalletScreenService(),
         ));
   }

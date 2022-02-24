@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/google_provider.dart';
-
 import '../../../utils/json/json_object.dart';
 
 class ApiOAuthModelAccount extends JsonObject {
@@ -37,13 +35,14 @@ class ApiOAuthModelAccount extends JsonObject {
       this.refreshTokenExpiration,
       this.shouldReconnect});
 
-  ApiOAuthModelAccount.fromDynamic(dynamic data, String provider){
-        this.email = data.email;
-        this.displayName = data.displayName;
-        this.accessToken = data.token;
-        this.accessTokenExpiration = (data.accessTokenExp as DateTime).millisecondsSinceEpoch;
-        this.refreshToken = data.refreshToken;
-        this.provider = provider;
+  ApiOAuthModelAccount.fromDynamic(dynamic data, String provider) {
+    this.email = data.email;
+    this.displayName = data.displayName;
+    this.accessToken = data.token;
+    this.accessTokenExpiration =
+        (data.accessTokenExp as DateTime).millisecondsSinceEpoch;
+    this.refreshToken = data.refreshToken;
+    this.provider = provider;
   }
 
   ApiOAuthModelAccount.fromJson(Map<String, dynamic>? json) {

@@ -21,7 +21,7 @@ class InfoCarouselCardModelContentIcon extends JsonObject {
   @override
   Map<String, dynamic> toJson() => {'text': text, 'image': image};
 
-  InfoCarouselCardModelContentIcon.fromDynamic(dynamic data){
+  InfoCarouselCardModelContentIcon.fromDynamic(dynamic data) {
     image = data.image;
     text = data.text;
   }

@@ -5,14 +5,14 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_short_code/api_short_code_model_claim.dart';
-import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 import 'package:login/login.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 
+import '../slices/api_short_code/api_short_code_model_claim.dart';
+import '../slices/api_short_code/api_short_code_service.dart';
 import 'database.dart' as db;
 
 const String _prefix = 'com.mytiki.app';

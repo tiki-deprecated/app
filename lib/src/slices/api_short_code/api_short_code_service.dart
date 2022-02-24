@@ -3,11 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'api_short_code_model_claim.dart';
-import 'api_short_code_model_rsp.dart';
 import 'package:httpp/httpp.dart';
 
 import '../../utils/api/tiki_api_model_rsp.dart';
+import 'api_short_code_model_claim.dart';
+import 'api_short_code_model_rsp.dart';
 import 'api_short_code_repository.dart';
 
 class ApiShortCodeService {

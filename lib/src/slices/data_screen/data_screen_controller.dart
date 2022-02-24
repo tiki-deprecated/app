@@ -4,8 +4,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:google_provider/src/model/google_provider_model.dart';
-import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 
 import '../info_carousel/info_carousel_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
@@ -37,7 +35,6 @@ class DataScreenController {
     service.removeAccount(email, provider);
   }
 
-  saveAccount(dynamic data, String provider) => service.saveAccount(data, provider);
-
-
+  saveAccount(dynamic data, String provider) =>
+      service.saveAccount(data, provider);
 }

@@ -11,7 +11,6 @@ import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_email.dart';
 
 class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
-
   final Httpp _httpp;
 
   ApiGoogleServiceEmail(this._httpp);
@@ -23,17 +22,16 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
       required Function(List<ApiEmailMsgModel> messages) onResult,
       required Function() onFinish}) {
     return GoogleProvider.loggedIn(
-        email: account.email,
-        token: account.accessToken,
-        refreshToken: account.refreshToken,
-        displayName: account.displayName,
-        httpp: _httpp
-    ).fetchInbox(
-        onResult: (msgIdList) => onResult(
-            msgIdList.map((msgId) => ApiEmailMsgModel(extMessageId: msgId)).toList()
-        ),
-        onFinish: onFinish
-    );
+            email: account.email,
+            token: account.accessToken,
+            refreshToken: account.refreshToken,
+            displayName: account.displayName,
+            httpp: _httpp)
+        .fetchInbox(
+            onResult: (msgIdList) => onResult(msgIdList
+                .map((msgId) => ApiEmailMsgModel(extMessageId: msgId))
+                .toList()),
+            onFinish: onFinish);
   }
 
   @override
@@ -44,17 +42,12 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
       String? subject,
       Function(bool success)? onResult}) async {
     return GoogleProvider.loggedIn(
-        email: account.email,
-        token: account.accessToken,
-        refreshToken: account.refreshToken,
-        displayName: account.displayName,
-        httpp: _httpp
-    ).sendEmail(
-        body: body,
-        to: to,
-        subject: subject,
-        onResult: onResult
-    );
+            email: account.email,
+            token: account.accessToken,
+            refreshToken: account.refreshToken,
+            displayName: account.displayName,
+            httpp: _httpp)
+        .sendEmail(body: body, to: to, subject: subject, onResult: onResult);
   }
 
   @override
@@ -63,20 +56,15 @@ class ApiGoogleServiceEmail extends DataFetchInterfaceEmail {
       required List<String> messageIds,
       required Function(ApiEmailMsgModel message) onResult,
       required Function() onFinish}) async {
-        return GoogleProvider.loggedIn(
+    return GoogleProvider.loggedIn(
             email: account.email,
             token: account.accessToken,
             refreshToken: account.refreshToken,
             displayName: account.displayName,
-            httpp: _httpp
-        ).fetchMessages(
+            httpp: _httpp)
+        .fetchMessages(
             messageIds: messageIds,
-            onResult: (msg) =>
-                onResult(
-                    ApiEmailMsgModel.fromDynamic(msg)
-                ),
-            onFinish: onFinish
-        );
+            onResult: (msg) => onResult(ApiEmailMsgModel.fromDynamic(msg)),
+            onFinish: onFinish);
   }
-
 }

@@ -2,10 +2,10 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-import 'package:app/src/slices/api_app_data/api_app_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../api_app_data/api_app_data_service.dart';
 import '../api_signup/api_signup_service.dart';
 import 'wallet_balance_service.dart';
 

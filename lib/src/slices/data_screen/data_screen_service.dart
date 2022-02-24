@@ -3,23 +3,21 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-//import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
-import 'package:logging/logging.dart';
-
-import '../decision_screen/decision_screen_service.dart';
 import 'package:flutter/material.dart';
 
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
 import '../data_fetch/data_fetch_service.dart';
+//import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
+
+import '../decision_screen/decision_screen_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
 import 'data_screen_presenter.dart';
 import 'model/data_screen_model.dart';
 
 class DataScreenService extends ChangeNotifier {
-  final _log = Logger('DataScreenService');
   late final DataScreenModel _model;
   late final DataScreenPresenter presenter;
   late final DataScreenController controller;
@@ -30,9 +28,7 @@ class DataScreenService extends ChangeNotifier {
 
   get account => _model.account;
 
-  DataScreenService(
-      this._dataFetchService,
-      this._apiAuthService,
+  DataScreenService(this._dataFetchService, this._apiAuthService,
       this.decisionScreenService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
