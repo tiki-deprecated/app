@@ -1,7 +1,8 @@
-import 'package:app/src/config/config_color.dart';
-import 'package:app/src/widgets/header_bar/header_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:money/money.dart';
+
+import '../../../config/config_color.dart';
+import '../../../widgets/header_bar/header_bar.dart';
 
 class HomeScreenMoneyContainer extends StatelessWidget {
   @override
@@ -11,10 +12,12 @@ class HomeScreenMoneyContainer extends StatelessWidget {
             child: Stack(children: [
       Container(color: ConfigColor.greyOne),
       SafeArea(
-          child: Column(children: [
-        HeaderBar(),
-        Expanded(child: Money().home(example: true))
-      ]))
+          child: Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Column(children: [
+                HeaderBar(),
+                Expanded(child: Money().home(example: true))
+              ])))
     ])));
   }
 }

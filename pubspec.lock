@@ -196,21 +196,21 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.12.0"
+    version: "1.13.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.4"
+    version: "4.2.5"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.4"
+    version: "1.6.1"
   firebase_dynamic_links:
     dependency: transitive
     description:
@@ -243,7 +243,7 @@ packages:
       name: flutter_appauth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.1"
   flutter_appauth_platform_interface:
     dependency: transitive
     description:
@@ -476,6 +476,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -503,8 +510,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: c014913f761279f9b7d15ee9fb9f3b02090a232f
+      ref: "0.0.3"
+      resolved-ref: bc4f114cf31b7268f1e7a0d324c7397f279e85f5
       url: "https://github.com/tiki/money"
     source: git
     version: "0.0.1"
@@ -682,7 +689,7 @@ packages:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -892,7 +899,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.8"
   tuple:
     dependency: transitive
     description:
@@ -1011,7 +1018,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.0"
+    version: "7.5.0"
   wakelock:
     dependency: transitive
     description:
@@ -1136,5 +1143,5 @@ packages:
     source: git
     version: "0.0.1+1"
 sdks:
-  dart: ">=2.15.1 <3.0.0"
-  flutter: ">=2.8.1"
+  dart: ">=2.16.0 <3.0.0"
+  flutter: ">=2.10.2"

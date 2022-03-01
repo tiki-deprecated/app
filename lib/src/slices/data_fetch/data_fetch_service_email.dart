@@ -227,7 +227,7 @@ ${account.displayName ?? ''}<br />
       case ApiOAuthService.PROVIDER_MICROSOFT:
         return DataFetchModelApi.outlook;
       default:
-        break;
+        return null;
     }
   }
 }

@@ -5,6 +5,7 @@
 
 class DataFetchModelApi {
   final String _value;
+
   const DataFetchModelApi._(this._value);
 
   static const gmail = DataFetchModelApi._('gmail');

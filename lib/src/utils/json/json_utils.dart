@@ -17,5 +17,6 @@ class JsonUtils {
       json.forEach((element) => res.add(fromJson(element)));
       return res;
     }
+    return null;
   }
 }
