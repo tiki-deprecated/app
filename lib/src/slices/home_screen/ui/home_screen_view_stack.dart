@@ -3,7 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:app/src/slices/home_screen/ui/home_screen_money_container.dart';
 import 'package:flutter/material.dart';
+import 'package:money/money.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config_color.dart';
@@ -37,7 +39,7 @@ class HomeScreenViewStack extends StatelessWidget {
               child: IndexedStack(index: model.currentScreenIndex, children: [
                 dataScreenService.presenter.render(),
                 decisionScreenService.presenter.render(),
-                walletScreenService.presenter.render(),
+                HomeScreenMoneyContainer(),
               ]))),
       if (model.showOverlay == true && model.currentScreenIndex == 1)
         HomeScreenViewOverlay()
