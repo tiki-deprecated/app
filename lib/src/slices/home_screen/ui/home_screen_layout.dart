@@ -15,7 +15,6 @@ import '../../data_fetch/data_fetch_service.dart';
 import '../../data_screen/data_screen_service.dart';
 import '../../decision_screen/decision_screen_service.dart';
 import '../../home_screen/ui/home_screen_view_stack.dart';
-import '../../wallet_screen/wallet_screen_service.dart';
 
 class HomeScreenLayout extends StatelessWidget {
   @override
@@ -45,7 +44,6 @@ class HomeScreenLayout extends StatelessWidget {
           decisionScreenService: decisionScreenService,
           dataScreenService: DataScreenService(
               dataFetchService, apiAuthService, decisionScreenService),
-          walletScreenService: WalletScreenService(),
         ));
   }
 }

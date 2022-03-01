@@ -160,6 +160,7 @@ class ApiOAuthService {
       print(e.toString());
       account.shouldReconnect = 1;
     }
+    return null;
   }
 
   Future<ApiOAuthModelAccount?> _upsert(ApiOAuthModelAccount account) async {

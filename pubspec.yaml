@@ -1,11 +1,11 @@
 name: app
 description: It's your data. Take back control.
-version: 0.3.0+3
+version: 0.3.1+1
 publish_to: 'none'
 
 environment:
   sdk: '>=2.14.0 <3.0.0'
-  flutter: '>=2.8.1'
+  flutter: '>=2.10.2'
 
 dependencies:
   flutter:
@@ -16,8 +16,8 @@ dependencies:
   android_intent: ^2.0.2
   carousel_slider: ^4.0.0
   data_connection_checker: ^0.3.4
-  firebase_core: ^1.12.0
-  flutter_appauth: ^2.4.0
+  firebase_core: ^1.13.1
+  flutter_appauth: ^2.4.1
   flutter_html: ^2.2.1
   flutter_lints: ^1.0.4
   flutter_markdown: ^0.6.9
@@ -60,6 +60,7 @@ dependencies:
   money:
     git:
       url: https://github.com/tiki/money
+      ref: 0.0.3
   zendesk_flutter:
     git:
       url: https://github.com/tiki/zendesk_flutter

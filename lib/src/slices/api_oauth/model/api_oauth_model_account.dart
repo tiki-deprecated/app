@@ -20,6 +20,7 @@ class ApiOAuthModelAccount extends JsonObject {
   DateTime? created;
 
   String? get username => _username ?? email;
+
   void set username(String? username) {
     _username = username;
   }

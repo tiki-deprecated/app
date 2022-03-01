@@ -84,5 +84,6 @@ class ApiCompanyService {
           "." +
           periodSplit[periodSplit.length - 1];
     }
+    return null;
   }
 }
