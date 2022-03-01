@@ -60,6 +60,10 @@ dependencies:
   money:
     git:
       url: https://github.com/tiki/money
+  zendesk_flutter:
+    git:
+      url: https://github.com/tiki/zendesk_flutter
+      ref: 0.0.2
 
 dependency_overrides:
   sqflite:
