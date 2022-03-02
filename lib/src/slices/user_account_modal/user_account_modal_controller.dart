@@ -3,12 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:zendesk_flutter/src/zendesk_flutter_style.dart';
+import 'package:zendesk_flutter/zendesk_flutter.dart';
 
 import '../logout_modal/logout_modal_service.dart';
-import '../support_modal/support_modal_service.dart';
 import '../user_referral/user_referral_service.dart';
 import 'user_account_modal_service.dart';
 
@@ -41,7 +41,15 @@ class UserAccountModalController {
 
   void goToSupport(BuildContext context) {
     Navigator.of(context).pop();
-    SupportModalService().presenter.showModal(context);
+    ZendeskFlutterStyle style = ZendeskFlutterStyle(
+        cardBackground: Colors.white,
+        modalNavColor: const Color(0xFFF0F0F0),
+        textColor: const Color(0xFF8D8D8D),
+        accentColor: const Color(0xFF1C0000),
+        fontFamily: 'NunitoSans',
+        titleFont: 'Koara',
+        subtitleFont: 'NunitoSans');
+    ZendeskFlutter(style: style).show(context);
   }
 
   void showQrCode(BuildContext context) {

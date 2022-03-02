@@ -1,4 +1,3 @@
-import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +24,7 @@ import 'src/slices/api_email_msg/api_email_msg_service.dart';
 import 'src/slices/api_email_sender/api_email_sender_service.dart';
 import 'src/slices/api_knowledge/api_knowledge_service.dart';
 import 'src/slices/api_oauth/api_oauth_service.dart';
+import 'src/slices/api_short_code/api_short_code_service.dart';
 import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/slices/data_fetch/data_fetch_service.dart';
 import 'src/slices/data_push/data_push_service.dart';
@@ -127,7 +127,9 @@ Future<List<SingleChildWidget>> provide(
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
       Provider<Login>.value(value: login),
       Provider<ApiSignupService>(create: (_) => ApiSignupService()),
-      Provider<ApiShortCodeService>(create: (_) => ApiShortCodeService(httpp: httpp, refresh: login.refresh))
+      Provider<ApiShortCodeService>(
+          create: (_) =>
+              ApiShortCodeService(httpp: httpp, refresh: login.refresh))
     ];
   }
 }

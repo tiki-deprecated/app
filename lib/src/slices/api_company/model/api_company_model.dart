@@ -58,4 +58,15 @@ class ApiCompanyModel extends JsonObject {
   String toString() {
     return 'ApiCompanyModelLocal{companyId: $companyId, logo: $logo, securityScore: $securityScore, breachScore: $breachScore, sensitivityScore: $sensitivityScore, domain: $domain, created: $created, modified: $modified}';
   }
+
+  ApiCompanyModel.fromDynamic(dynamic company) {
+    companyId = company.companyId;
+    logo = company.logo;
+    securityScore = company.securityScore;
+    breachScore = company.breachScore;
+    sensitivityScore = company.sensitivityScore;
+    domain = company.domain;
+    created = company.created;
+    modified = company.modified;
+  }
 }

@@ -160,6 +160,7 @@ class ApiOAuthService {
       print(e.toString());
       account.shouldReconnect = 1;
     }
+    return null;
   }
 
   Future<ApiOAuthModelAccount?> _upsert(ApiOAuthModelAccount account) async {
@@ -196,4 +197,10 @@ class ApiOAuthService {
       }
     });
   }
+
+  save(dynamic account, String provider) async =>
+      await _upsert(ApiOAuthModelAccount.fromDynamic(account, provider));
+
+  remove(String email, String provider) async =>
+      await _apiAuthRepositoryAccount.deleteByEmail(email, provider);
 }

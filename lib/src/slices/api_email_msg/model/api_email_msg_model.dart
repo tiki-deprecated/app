@@ -64,4 +64,15 @@ class ApiEmailMsgModel extends JsonObject {
   String toString() {
     return 'ApiEmailMsgModel{messageId: $messageId, extMessageId: $extMessageId, sender: $sender, receivedDate: $receivedDate, openedDate: $openedDate, toEmail: $toEmail, created: $created, modified: $modified}';
   }
+
+  ApiEmailMsgModel.fromDynamic(dynamic msg) {
+    messageId = msg.messageId;
+    extMessageId = msg.extMessageId;
+    sender = ApiEmailSenderModel.fromDynamic(msg.sender);
+    receivedDate = msg.receivedDate;
+    openedDate = msg.openedDate;
+    toEmail = msg.toEmail;
+    modified = msg.modified;
+    created = msg.created;
+  }
 }

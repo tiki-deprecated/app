@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -50,27 +48,6 @@ class DecisionCardSpamViewCompany extends StatelessWidget {
                     errorBuilder: (context, error, stackTrace) =>
                         _staticAvatar())
                 : _staticAvatar()));
-  }
-
-  Widget _randomAvatar() {
-    String img = 'avatar' + (Random().nextInt(3) + 1).toString();
-    String title = name ?? email ?? "";
-    return Stack(children: [
-      Image(
-        image: AssetImage('res/images/' + img + '.png'),
-        width: 10.h,
-        height: 10.h,
-        fit: BoxFit.fill,
-      ),
-      Center(
-        child: Text(title[0].toUpperCase(),
-            style: TextStyle(
-                color: ConfigColor.tikiBlue,
-                fontSize: 30.sp,
-                fontWeight: FontWeight.bold,
-                fontFamily: ConfigFont.familyNunitoSans)),
-      )
-    ]);
   }
 
   Widget _staticAvatar() {

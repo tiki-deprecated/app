@@ -27,7 +27,8 @@ class UserAccountModalLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserAccountModalService service = Provider.of<UserAccountModalService>(context);
+    UserAccountModalService service =
+        Provider.of<UserAccountModalService>(context);
     return Container(
         height: 85.h,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -59,9 +60,9 @@ class UserAccountModalLayout extends StatelessWidget {
                             child: UserAccountModalViewBadges()),
                         Container(
                             margin: EdgeInsets.only(top: _cardMarginTop.h),
-                            child: service.model.showQrCode ?
-                            UserAccountModalViewQrCodeShow():
-                            UserAccountModalViewQrCodeBtn()),
+                            child: service.model.showQrCode
+                                ? UserAccountModalViewQrCodeShow()
+                                : UserAccountModalViewQrCodeBtn()),
                         Container(
                             margin: EdgeInsets.only(top: _cardMarginTop.h),
                             child: UserAccountModalViewSupport()),

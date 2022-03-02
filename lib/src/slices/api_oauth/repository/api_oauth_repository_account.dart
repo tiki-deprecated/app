@@ -76,4 +76,8 @@ class ApiOAuthRepositoryAccount {
     if (accounts.isEmpty) return null;
     return accounts.first;
   }
+
+  deleteByEmail(String email, String provider) async =>
+      await _database.delete(_table,
+          where: "provider = ? AND email = ?", whereArgs: [provider, email]);
 }

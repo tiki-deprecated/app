@@ -21,11 +21,20 @@ class DataScreenController {
             InfoCarouselService(cards: cards).presenter.render()));
   }
 
+  Future<void> openCards(BuildContext context, List<dynamic> cardsData) async {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            InfoCarouselService(cards: cardsData).presenter.render()));
+  }
+
   linkAccount(String provider) async {
     service.linkAccount(provider);
   }
 
-  removeAccount() {
-    service.removeAccount();
+  removeAccount(String email, String provider) {
+    service.removeAccount(email, provider);
   }
+
+  saveAccount(dynamic data, String provider) =>
+      service.saveAccount(data, provider);
 }

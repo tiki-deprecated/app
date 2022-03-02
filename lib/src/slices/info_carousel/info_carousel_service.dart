@@ -14,7 +14,7 @@ class InfoCarouselService extends ChangeNotifier {
   late final InfoCarouselModel model;
   late final InfoCarouselController controller;
 
-  InfoCarouselService({List<InfoCarouselCardModel>? cards}) {
+  InfoCarouselService({List? cards}) {
     presenter = InfoCarouselPresenter(this);
     model = InfoCarouselModel(cards: cards);
     controller = InfoCarouselController();

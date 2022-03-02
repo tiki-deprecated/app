@@ -5,14 +5,14 @@
 
 import 'dart:convert';
 
-import 'package:app/src/slices/api_short_code/api_short_code_model_claim.dart';
-import 'package:app/src/slices/api_short_code/api_short_code_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 import 'package:login/login.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 
+import '../slices/api_short_code/api_short_code_model_claim.dart';
+import '../slices/api_short_code/api_short_code_service.dart';
 import 'database.dart' as db;
 
 const String _prefix = 'com.mytiki.app';
@@ -58,6 +58,7 @@ Future<String?> getEmail(FlutterSecureStorage secureStorage) async {
     Map<String, dynamic> currentMap = jsonDecode(currentJson);
     return currentMap['email'];
   }
+  return null;
 }
 
 Future<String?> getAddress(
@@ -67,6 +68,7 @@ Future<String?> getAddress(
     Map<String, dynamic> userMap = jsonDecode(userJson);
     return userMap['address'];
   }
+  return null;
 }
 
 Future<String?> getPw(
@@ -76,10 +78,12 @@ Future<String?> getPw(
     Map<String, dynamic> keysMap = jsonDecode(keysJson);
     return keysMap['signPrivateKey'];
   }
+  return null;
 }
 
 Future<String?> getCode(Database database) async {
   List<Map<String, Object?>> rows = await database
       .query('app_data', where: "key = ?", whereArgs: ['user_refer_code']);
   if (rows.isNotEmpty) return rows[0]['value'] as String;
+  return null;
 }

@@ -3,9 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../utils/api/tiki_api_model_rsp.dart';
 import 'package:httpp/httpp.dart';
 
+import '../../utils/api/tiki_api_model_rsp.dart';
 import 'model/api_signup_model_user_rsp.dart';
 import 'repository/api_signup_repository.dart';
 

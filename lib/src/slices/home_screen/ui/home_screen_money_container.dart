@@ -1,15 +1,10 @@
-/*
- * Copyright (c) TIKI Inc.
- * MIT license. See LICENSE file in root directory.
- */
-
 import 'package:flutter/material.dart';
+import 'package:money/money.dart';
 
 import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
-import 'wallet_screen_layout_body.dart';
 
-class WalletScreenLayout extends StatelessWidget {
+class HomeScreenMoneyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +12,12 @@ class WalletScreenLayout extends StatelessWidget {
             child: Stack(children: [
       Container(color: ConfigColor.greyOne),
       SafeArea(
-          child: Column(children: [
-        HeaderBar(),
-        Expanded(child: WalletScreenLayoutBody())
-      ]))
+          child: Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Column(children: [
+                HeaderBar(),
+                Expanded(child: Money().home(example: true))
+              ])))
     ])));
   }
 }
