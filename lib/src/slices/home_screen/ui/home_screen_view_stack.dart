@@ -11,6 +11,7 @@ import '../../data_screen/data_screen_service.dart';
 import '../../decision_screen/decision_screen_service.dart';
 import '../home_screen_service.dart';
 import '../model/home_screen_model.dart';
+import 'home_screen_decision_container.dart';
 import 'home_screen_money_container.dart';
 import 'home_screen_view_nav_bar.dart';
 import 'home_screen_view_overlay.dart';
@@ -33,7 +34,7 @@ class HomeScreenViewStack extends StatelessWidget {
               top: false,
               child: IndexedStack(index: model.currentScreenIndex, children: [
                 dataScreenService.presenter.render(),
-                decisionScreenService.presenter.render(),
+                HomeScreenDecisionContainer(),
                 HomeScreenMoneyContainer(),
               ]))),
       if (model.showOverlay == true && model.currentScreenIndex == 1)
