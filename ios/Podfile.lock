@@ -12,6 +12,8 @@ PODS:
     - Flutter
     - MTBBarcodeScanner
     - SwiftProtobuf
+  - decision_sdk (0.0.1):
+    - Flutter
   - Firebase/CoreOnly (8.11.0):
     - FirebaseCore (= 8.11.0)
   - Firebase/DynamicLinks (8.11.0):
@@ -126,6 +128,7 @@ PODS:
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - barcode_scan2 (from `.symlinks/plugins/barcode_scan2/ios`)
+  - decision_sdk (from `.symlinks/plugins/decision_sdk/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - Flutter (from `Flutter`)
@@ -181,6 +184,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
   barcode_scan2:
     :path: ".symlinks/plugins/barcode_scan2/ios"
+  decision_sdk:
+    :path: ".symlinks/plugins/decision_sdk/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_dynamic_links:
@@ -231,6 +236,7 @@ SPEC CHECKSUMS:
   amplitude_flutter: 8ddb231989e68ed8c005c838d7fc59edbca09833
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
+  decision_sdk: 8878655a54f9ce8c936a67e84c47d4b6a28dc526
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
   firebase_core: 08f6a85f62060111de5e98d6a214810d11365de9
   firebase_dynamic_links: f3436f43908547e9a7aa75fb66889c92fc91ff56
