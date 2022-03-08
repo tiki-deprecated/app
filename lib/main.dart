@@ -1,3 +1,4 @@
+import 'package:decision_sdk/decision.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ import 'src/config/config_color.dart';
 import 'src/config/config_font.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
+import 'src/slices/api_app_data/api_app_data_key.dart';
 import 'src/slices/api_app_data/api_app_data_service.dart';
 import 'src/slices/api_company/api_company_service.dart';
 import 'src/slices/api_email_msg/api_email_msg_service.dart';
@@ -115,7 +117,13 @@ Future<List<SingleChildWidget>> provide(
         apiKnowledgeService: apiKnowledgeService,
         dataPushService: dataPushService,
         database: database);
-
+    bool isTestDone = (await apiAppDataService.getByKey(ApiAppDataKey.testCardsDone))?.value == 1;
+    bool isConnected = (await apiAuthService.getAccount()) != null;
+    DecisionSdk decisionSdk = DecisionSdk(
+        isTestDone : isTestDone,
+        isConnected : isConnected,
+        testDoneCallback: () => apiAppDataService.save(ApiAppDataKey.testCardsDone, '1')
+    );
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
@@ -127,6 +135,7 @@ Future<List<SingleChildWidget>> provide(
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
       Provider<Login>.value(value: login),
       Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+      Provider<DecisionSdk>.value(value: decisionSdk),
       Provider<ApiShortCodeService>(
           create: (_) =>
               ApiShortCodeService(httpp: httpp, refresh: login.refresh))

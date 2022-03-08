@@ -9,9 +9,6 @@ import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
 import '../data_fetch/data_fetch_interface_provider.dart';
 import '../data_fetch/data_fetch_service.dart';
-//import 'package:app/src/slices/data_fetch/model/data_fetch_model_msg.dart';
-
-import '../decision_screen/decision_screen_service.dart';
 import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
 import 'data_screen_presenter.dart';
@@ -24,12 +21,9 @@ class DataScreenService extends ChangeNotifier {
   final DataFetchService _dataFetchService;
   final ApiOAuthService _apiAuthService;
 
-  late final DecisionScreenService decisionScreenService;
-
   get account => _model.account;
 
-  DataScreenService(this._dataFetchService, this._apiAuthService,
-      this.decisionScreenService) {
+  DataScreenService(this._dataFetchService, this._apiAuthService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
@@ -57,7 +51,6 @@ class DataScreenService extends ChangeNotifier {
 
   Future<void> removeAccount(String email, String provider) async {
     _apiAuthService.remove(email, provider);
-    decisionScreenService.removeAllCards();
     _model.account = null;
     notifyListeners();
   }

@@ -37,6 +37,8 @@ dependencies:
   sizer: ^2.0.15
   sqflite_sqlcipher: ^2.1.0
   url_launcher: ^6.0.20
+  decision_sdk:
+    path: ../decision_sdk
   wallet:
     git:
       url: https://github.com/tiki/wallet
