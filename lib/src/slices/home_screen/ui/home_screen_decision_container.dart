@@ -45,17 +45,21 @@ class HomeScreenDecisionContainer extends StatelessWidget {
   }
 
   Future<void> _getCards() async {
-    List<ApiEmailSenderModel> senders = await apiEmailSenderService
-        .getUnsubscribed();
-    Map<String, List<ApiEmailMsgModel>> messages =
-    await apiEmailMsgService.getBySenders(senders);
-    for (ApiEmailSenderModel sender in senders) {
-      List<ApiEmailMsgModel>? msgs = messages[sender.email!];
-      if (msgs != null && msgs.isNotEmpty) {
-        decisionSdk.addSpamCards(
-            messages: msgs,
-            unsubscribeCallback: _unsubscribeCallback,
-            keepCallback: _keepCallback);
+    String? provider = (await apiAuthService.getAccount())?.provider;
+    if(provider != null) {
+      List<ApiEmailSenderModel> senders =
+          await apiEmailSenderService.getUnsubscribed();
+      Map<String, List<ApiEmailMsgModel>> messages =
+          await apiEmailMsgService.getBySenders(senders);
+      for (ApiEmailSenderModel sender in senders) {
+        List<ApiEmailMsgModel>? msgs = messages[sender.email!];
+        if (msgs != null && msgs.isNotEmpty) {
+          decisionSdk.addSpamCards(
+              messages: msgs,
+              provider: provider,
+              unsubscribeCallback: _unsubscribeCallback,
+              keepCallback: _keepCallback);
+        }
       }
     }
   }

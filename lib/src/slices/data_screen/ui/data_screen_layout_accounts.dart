@@ -30,8 +30,10 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
                       onSee: (cardsData) => service.controller
                           .openGmailCards(context, 0)).accountWidget()
                   : GoogleProvider(
-                      onLink: (model) =>
-                          service.controller.saveAccount(model, 'google'),
+                      onLink: (model) {
+                        ApiOAuthModelAccount account = service.controller.saveAccount(model, 'google');
+                        service.fetchInbox(account);
+                      },
                       onUnlink: (email) => account != null
                           ? service.controller.removeAccount(email!, 'google')
                           : null,

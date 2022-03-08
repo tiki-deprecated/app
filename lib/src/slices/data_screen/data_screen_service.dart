@@ -27,6 +27,7 @@ class DataScreenService extends ChangeNotifier {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
+
     _apiAuthService.getAccount().then((account) {
       _model.account = account;
       if (account != null) _dataFetchService.asyncIndex(account);
@@ -63,5 +64,10 @@ class DataScreenService extends ChangeNotifier {
       if (provider?.email != null) return await provider!.getInfoCards(account);
     }
     return List<InfoCarouselCardModel>.empty();
+  }
+
+  fetchInbox(ApiOAuthModelAccount account){
+    _dataFetchService.asyncIndex(account);
+    notifyListeners();
   }
 }
