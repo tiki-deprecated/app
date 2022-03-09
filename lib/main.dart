@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:user_account/user_account.dart';
 import 'package:wallet/wallet.dart';
 
 import 'app.dart';
@@ -49,8 +50,8 @@ Future<void> main() async {
       httpp: httpp,
       secureStorage: secureStorage,
       home: home.presenter);
-  home.presenter.inject(
-      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+  home.presenter.inject(() =>
+      provide(login: login, secureStorage: secureStorage, httpp: httpp));
   login.onLogin('Upgrade', () => upgrade(login, httpp));
   await login.init();
   return SentryFlutter.init(
@@ -64,16 +65,15 @@ Future<void> main() async {
       appRunner: () => runApp(App(login.routerDelegate)));
 }
 
-Future<List<SingleChildWidget>> provide(
-    {FlutterSecureStorage? secureStorage,
-    Httpp? httpp,
-    required Login login}) async {
+Future<List<SingleChildWidget>> provide({
+  FlutterSecureStorage? secureStorage,
+  Httpp? httpp,
+  required Login login
+}) async {
   Logger log = Logger('HomeScreenService.provide');
-  TikiKeysService tikiKeysService =
-      TikiKeysService(secureStorage: secureStorage);
+  TikiKeysService tikiKeysService = TikiKeysService(secureStorage: secureStorage);
   FlowModelUser? user = await login.user;
-  TikiKeysModel? keys =
-      user?.address != null ? await tikiKeysService.get(user!.address!) : null;
+  TikiKeysModel? keys = user?.address != null ? await tikiKeysService.get(user!.address!) : null;
   if (user == null || user.address == null || keys == null) {
     log.severe('Attempting to open home page without a valid user');
     await login.logout();
@@ -117,13 +117,38 @@ Future<List<SingleChildWidget>> provide(
         apiKnowledgeService: apiKnowledgeService,
         dataPushService: dataPushService,
         database: database);
-    bool isTestDone = (await apiAppDataService.getByKey(ApiAppDataKey.testCardsDone))?.value == 1;
-    bool isConnected = (await apiAuthService.getAccount()) != null;
+
+    ApiShortCodeService apiShortCodeService =
+      ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+
+    ApiSignupService apiSignupService = ApiSignupService();
+
     DecisionSdk decisionSdk = DecisionSdk(
-        isTestDone : isTestDone,
-        isConnected : isConnected,
-        testDoneCallback: () => apiAppDataService.save(ApiAppDataKey.testCardsDone, '1')
+        apiAppDataService : apiAppDataService,
+        isConnected : (await apiAuthService.getAccount()) != null,
     );
+
+    String code = (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))?.value ?? '';
+    if (code.isEmpty && (login.token?.bearer != null) && (login.user?.address != null)) {
+      await apiShortCodeService.get(
+        accessToken: login.token!.bearer!,
+        address: login.user!.address!,
+        onSuccess: (rsp) async {
+          code = rsp.code ?? '';
+          await apiAppDataService.save(ApiAppDataKey.userReferCode, code);
+        },
+        onError: (error) => log.warning(error),
+      );
+    }
+
+    UserAccount userAccount = UserAccount(
+        apiAppDataService: apiAppDataService,
+        tikiKeysService: tikiKeysService,
+        referalCode: code,
+        apiSignupService: apiSignupService,
+        login: login
+    );
+
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
@@ -134,11 +159,10 @@ Future<List<SingleChildWidget>> provide(
       Provider<DataPushService>.value(value: dataPushService),
       ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
       Provider<Login>.value(value: login),
-      Provider<ApiSignupService>(create: (_) => ApiSignupService()),
+      Provider<ApiSignupService>.value(value: apiSignupService),
       Provider<DecisionSdk>.value(value: decisionSdk),
-      Provider<ApiShortCodeService>(
-          create: (_) =>
-              ApiShortCodeService(httpp: httpp, refresh: login.refresh))
+      Provider<UserAccount>.value(value: userAccount),
+      Provider<ApiShortCodeService>.value(value: apiShortCodeService)
     ];
   }
 }

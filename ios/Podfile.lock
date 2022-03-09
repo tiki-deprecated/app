@@ -101,6 +101,8 @@ PODS:
   - SwiftProtobuf (1.18.0)
   - url_launcher_ios (0.0.1):
     - Flutter
+  - user_account (0.0.1):
+    - Flutter
   - video_player (0.0.1):
     - Flutter
   - wakelock (0.0.1):
@@ -147,6 +149,7 @@ DEPENDENCIES:
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - sqflite_sqlcipher (from `.symlinks/plugins/sqflite_sqlcipher/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - user_account (from `.symlinks/plugins/user_account/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
@@ -222,6 +225,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite_sqlcipher/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
+  user_account:
+    :path: ".symlinks/plugins/user_account/ios"
   video_player:
     :path: ".symlinks/plugins/video_player/ios"
   wakelock:
@@ -268,6 +273,7 @@ SPEC CHECKSUMS:
   SQLCipher: 1ab0b9486a77d141e72e92ff30681926ed79c07a
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
   url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
+  user_account: a61a1854bfe71559d4d856cb3c1e3e1ed410108f
   video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162

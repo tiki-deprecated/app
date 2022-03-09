@@ -19,7 +19,6 @@ dependencies:
   firebase_core: ^1.13.1
   flutter_appauth: ^2.4.1
   flutter_html: ^2.2.1
-  flutter_lints: ^1.0.4
   flutter_markdown: ^0.6.9
   flutter_secure_storage: ^5.0.2
   http: ^0.13.4
@@ -27,16 +26,16 @@ dependencies:
   intl: ^0.17.0
   logging: ^1.0.2
   lottie: ^1.2.2
-  package_info: ^2.0.2
   path_provider: ^2.0.9
   permission_handler: ^8.3.0 # login for git compat
   provider: ^6.0.2
-  qr_flutter: ^4.0.0
   sentry_flutter: ^6.3.0
   share_plus: ^3.1.0
   sizer: ^2.0.15
   sqflite_sqlcipher: ^2.1.0
   url_launcher: ^6.0.20
+  user_account:
+    path: ../user_account
   decision_sdk:
     path: ../decision_sdk
   wallet:
@@ -63,10 +62,6 @@ dependencies:
     git:
       url: https://github.com/tiki/money
       ref: 0.0.3
-  zendesk_flutter:
-    git:
-      url: https://github.com/tiki/zendesk_flutter
-      ref: 0.0.2
 
 dependency_overrides:
   sqflite:
@@ -80,6 +75,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
 
 flutter:
   uses-material-design: true

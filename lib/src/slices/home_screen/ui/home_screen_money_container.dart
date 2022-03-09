@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money/money.dart';
+import 'package:provider/provider.dart';
+import 'package:user_account/user_account.dart';
 
 import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
@@ -15,7 +17,7 @@ class HomeScreenMoneyContainer extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.only(bottom: 8),
               child: Column(children: [
-                HeaderBar(),
+                HeaderBar(userAccount: Provider.of<UserAccount>(context, listen:false),),
                 Expanded(child: Money().home(example: true))
               ])))
     ])));
