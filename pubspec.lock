@@ -544,7 +544,7 @@ packages:
     source: hosted
     version: "2.0.2"
   package_info:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: package_info
       url: "https://pub.dartlang.org"
@@ -747,7 +747,7 @@ packages:
     source: hosted
     version: "2.1.0"
   qr_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: qr_flutter
       url: "https://pub.dartlang.org"
@@ -984,6 +984,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  user_account:
+    dependency: "direct main"
+    description:
+      path: "../user_account"
+      relative: true
+    source: path
+    version: "0.0.1"
   uuid:
     dependency: transitive
     description:
@@ -1141,7 +1148,7 @@ packages:
     source: hosted
     version: "3.1.0"
   zendesk_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: "0.0.2"
