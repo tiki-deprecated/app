@@ -13,6 +13,10 @@ class ApiAppDataService {
   Future<ApiAppDataModel?> getByKey(ApiAppDataKey key) async =>
       key.value != null ? _repository.getByKey(key.value!) : null;
 
+  Future<String?> getByStringKey(String key) async =>
+      (await _repository.getByKey(key))?.value;
+
+
   Future<ApiAppDataModel?> save(ApiAppDataKey key, String value) async {
     if (key.value == null) return null;
     ApiAppDataModel? data = await this.getByKey(key);
