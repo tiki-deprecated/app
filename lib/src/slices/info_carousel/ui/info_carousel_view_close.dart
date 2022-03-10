@@ -4,6 +4,9 @@ import 'package:sizer/sizer.dart';
 import '../../../config/config_color.dart';
 
 class InfoCarouselViewClose extends StatelessWidget {
+
+  const InfoCarouselViewClose({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

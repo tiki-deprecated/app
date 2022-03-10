@@ -8,6 +8,9 @@ import '../../api_oauth/model/api_oauth_model_account.dart';
 import '../data_screen_service.dart';
 
 class DecisionScreenLayoutAccounts extends StatelessWidget {
+
+  const DecisionScreenLayoutAccounts({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);

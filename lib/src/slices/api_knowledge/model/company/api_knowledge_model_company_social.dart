@@ -14,9 +14,9 @@ class ApiKnowledgeModelCompanySocial extends JsonObject {
 
   ApiKnowledgeModelCompanySocial.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.facebook = json['facebook'];
-      this.twitter = json['twitter'];
-      this.linkedin = json['linkedin'];
+      facebook = json['facebook'];
+      twitter = json['twitter'];
+      linkedin = json['linkedin'];
     }
   }
 

@@ -17,12 +17,15 @@ class DataFetchModelLast {
   DataFetchModelLast.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       fetchId = json['fetch_id'];
-      if (json['account'] != null)
+      if (json['account'] != null) {
         account = ApiOAuthModelAccount.fromJson(json['account']);
-      if (json['api_enum'] != null)
+      }
+      if (json['api_enum'] != null) {
         api = DataFetchModelApi.from(json['api_enum']);
-      if (json['fetched_epoch'] != null)
+      }
+      if (json['fetched_epoch'] != null) {
         fetched = DateTime.fromMillisecondsSinceEpoch(json['fetched_epoch']);
+      }
     }
   }
 }

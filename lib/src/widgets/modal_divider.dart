@@ -9,6 +9,9 @@ import 'package:sizer/sizer.dart';
 import '../config/config_color.dart';
 
 class ModalDivider extends StatelessWidget {
+
+  const ModalDivider({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(

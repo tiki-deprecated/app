@@ -12,7 +12,7 @@ class ApiSignupModelUserRsp extends JsonObject {
 
   ApiSignupModelUserRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.total = json['total'];
+      total = json['total'];
     }
   }
 

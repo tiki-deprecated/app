@@ -15,11 +15,11 @@ class DataScreenViewScore extends StatelessWidget {
   final String description;
   final Color color;
 
-  DataScreenViewScore(
-      {required this.image,
+  const DataScreenViewScore(
+      {Key? key, required this.image,
       required this.summary,
       required this.description,
-      this.color = ConfigColor.blue});
+      this.color = ConfigColor.blue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -26,7 +26,7 @@ class InfoCarouselService extends ChangeNotifier {
   }
 
   void addCard(InfoCarouselCardModel card) {
-    if (model.cards == null) model.cards = [];
+    model.cards ??= [];
     model.cards!.add(card);
     notifyListeners();
   }

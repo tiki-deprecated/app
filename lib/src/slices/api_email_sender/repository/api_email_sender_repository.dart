@@ -48,9 +48,10 @@ class ApiEmailSenderRepository {
   }
 
   Future<int> batchUpsert(List<ApiEmailSenderModel> senders) async {
-    if (senders.length > 0) {
+    if (senders.isNotEmpty) {
       Batch batch = _database.batch();
-      senders.forEach((data) => batch.rawInsert(
+      for (var data in senders) {
+        batch.rawInsert(
             _upsertQuery,
             [
               data.name,
@@ -62,11 +63,13 @@ class ApiEmailSenderRepository {
               data.unsubscribed,
               data.company?.domain
             ],
-          ));
+          );
+      }
       List res = await batch.commit(continueOnError: true);
       return res.length;
-    } else
+    } else {
       return 0;
+    }
   }
 
   Future<ApiEmailSenderModel> upsert(ApiEmailSenderModel data) async {
@@ -138,14 +141,15 @@ class ApiEmailSenderRepository {
         whereArgs);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) {
-      Map<String, Object?> senderMap = Map();
-      Map<String, Object?> companyMap = Map();
-      row.entries.forEach((element) {
-        if (element.key.contains('sender@'))
+      Map<String, Object?> senderMap = {};
+      Map<String, Object?> companyMap = {};
+      for (var element in row.entries) {
+        if (element.key.contains('sender@')) {
           senderMap[element.key.replaceFirst('sender@', '')] = element.value;
-        else if (element.key.contains('company@'))
+        } else if (element.key.contains('company@')) {
           companyMap[element.key.replaceFirst('company@', '')] = element.value;
-      });
+        }
+      }
       senderMap['company'] = companyMap;
       return senderMap;
     }).toList();

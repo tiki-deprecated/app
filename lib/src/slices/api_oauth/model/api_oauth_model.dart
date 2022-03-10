@@ -6,5 +6,5 @@
 import '../api_oauth_interface_provider.dart';
 
 class ApiOauthModel {
-  Map<String, ApiOAuthInterfaceProvider> interfaceProviders = new Map();
+  Map<String, ApiOAuthInterfaceProvider> interfaceProviders = {};
 }

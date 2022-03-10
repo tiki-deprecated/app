@@ -12,7 +12,7 @@ class ApiEmailSenderService {
   final ApiEmailSenderRepository _repository;
 
   ApiEmailSenderService({required Database database})
-      : this._repository = ApiEmailSenderRepository(database);
+      : _repository = ApiEmailSenderRepository(database);
 
   Future<ApiEmailSenderModel> upsert(ApiEmailSenderModel sender) async =>
       await _repository.upsert(sender);
@@ -31,13 +31,13 @@ class ApiEmailSenderService {
 
   Future<void> markAsUnsubscribed(ApiEmailSenderModel sender) async {
     sender.unsubscribed = true;
-    sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
+    sender.ignoreUntil = DateTime.now().add(const Duration(days: 60));
     _repository.update(sender);
   }
 
   Future<void> markAsKept(ApiEmailSenderModel sender) async {
     sender.unsubscribed = false;
-    sender.ignoreUntil = DateTime.now().add(Duration(days: 60));
+    sender.ignoreUntil = DateTime.now().add(const Duration(days: 60));
     _repository.update(sender);
   }
 

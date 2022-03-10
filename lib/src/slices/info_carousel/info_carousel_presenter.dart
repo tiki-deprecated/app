@@ -15,6 +15,6 @@ class InfoCarouselPresenter {
 
   ChangeNotifierProvider<InfoCarouselService> render() {
     return ChangeNotifierProvider.value(
-        value: service, child: InfoCarouselScreen());
+        value: service, child: const InfoCarouselScreen());
   }
 }

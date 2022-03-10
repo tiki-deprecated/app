@@ -13,10 +13,12 @@ class DataFetchModelApi {
 
   static const values = [gmail, outlook];
 
-  String get value => this._value;
+  String get value => _value;
 
   static DataFetchModelApi? from(String s) {
-    for (DataFetchModelApi api in values) if (api.value == s) return api;
+    for (DataFetchModelApi api in values) {
+      if (api.value == s) return api;
+    }
     return null;
   }
 

@@ -13,8 +13,8 @@ class ApiShortCodeModelClaim extends JsonObject {
 
   ApiShortCodeModelClaim.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.code = json['code'];
-      this.address = json['address'];
+      code = json['code'];
+      address = json['address'];
     }
   }
 

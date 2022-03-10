@@ -12,6 +12,9 @@ import '../../data_screen/data_screen_service.dart';
 import '../../home_screen/ui/home_screen_view_stack.dart';
 
 class HomeScreenLayout extends StatelessWidget {
+
+  const HomeScreenLayout({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     DataFetchService dataFetchService =

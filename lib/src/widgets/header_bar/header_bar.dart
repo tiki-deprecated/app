@@ -17,7 +17,6 @@ class HeaderBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // TODO fix bottom sheet modal service rebuilds in every tap
     return GestureDetector(
         onTap: () => userAccount.open(context),
         behavior: HitTestBehavior.opaque,
@@ -32,12 +31,12 @@ class HeaderBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image(
-                image: AssetImage('res/images/badge-beta-avatar.png'),
+                image: const AssetImage('res/images/badge-beta-avatar.png'),
                 height: 4.h,
                 fit: BoxFit.fitHeight,
                 alignment: Alignment.centerLeft,
               ),
-              HeaderBarViewBadge("BETA TESTER")
+              const HeaderBarViewBadge("BETA TESTER")
             ],
           ),
         ));

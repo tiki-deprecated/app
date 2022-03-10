@@ -11,6 +11,9 @@ import '../../../../config/config_color.dart';
 import '../../info_carousel_card_service.dart';
 
 class InfoCarouselCardViewScrollCtaButton extends StatelessWidget {
+
+  const InfoCarouselCardViewScrollCtaButton({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCarouselCardService>(context);

@@ -11,7 +11,7 @@ import 'scroll/info_carousel_card_layout_scroll.dart';
 class InfoCarouselCardLayoutSwipe extends AnimatedWidget {
   final AnimationController _animationController;
 
-  InfoCarouselCardLayoutSwipe(this._animationController, {Key? key})
+  const InfoCarouselCardLayoutSwipe(this._animationController, {Key? key})
       : super(key: key, listenable: _animationController);
 
   Animation<double> get _animationValue => listenable as Animation<double>;

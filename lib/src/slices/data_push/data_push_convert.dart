@@ -15,30 +15,30 @@ class DataPushConvert {
             fromValue: message.sender?.company?.domain,
             toType: "content",
             toValue: "email",
-            fingerprint: Uuid().v4()),
+            fingerprint: const Uuid().v4()),
         DataPushModel(
             fromType: "content",
             fromValue: "email",
             toType: "action",
             toValue: "received",
-            fingerprint: Uuid().v4()),
+            fingerprint: const Uuid().v4()),
         DataPushModel(
             fromType: "action",
             fromValue: "received",
             toType: "day",
             toValue: message.receivedDate?.day.toString(),
-            fingerprint: Uuid().v4()),
+            fingerprint: const Uuid().v4()),
         DataPushModel(
             fromType: "day",
             fromValue: message.receivedDate?.day.toString(),
             toType: "month",
             toValue: message.receivedDate?.month.toString(),
-            fingerprint: Uuid().v4()),
+            fingerprint: const Uuid().v4()),
         DataPushModel(
             fromType: "month",
             fromValue: message.receivedDate?.month.toString(),
             toType: "year",
             toValue: message.receivedDate?.year.toString(),
-            fingerprint: Uuid().v4()),
+            fingerprint: const Uuid().v4()),
       ];
 }

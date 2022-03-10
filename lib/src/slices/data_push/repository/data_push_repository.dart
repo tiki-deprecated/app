@@ -14,7 +14,7 @@ class DataPushRepository {
   DataPushRepository(this._database);
 
   Future<void> insert(List<DataPushModel> data) async {
-    StringBuffer query = new StringBuffer();
+    StringBuffer query = StringBuffer();
     query.write('INSERT INTO ' +
         _table +
         '(from_type, from_value, to_type, to_value, fingerprint, created_epoch) VALUES ');
@@ -49,10 +49,11 @@ class DataPushRepository {
         ],
         offset: 0,
         limit: limit);
-    if (rows.isEmpty)
+    if (rows.isEmpty) {
       return List.empty();
-    else
+    } else {
       return rows.map((row) => DataPushModel.fromMap(row)).toList();
+    }
   }
 
   Future<int> getSize() async {
@@ -66,9 +67,11 @@ class DataPushRepository {
   }
 
   Future<void> deleteByIds(List<int> ids) async {
-    StringBuffer whereBuf = new StringBuffer();
+    StringBuffer whereBuf = StringBuffer();
     whereBuf.write('queue_id IN (');
-    for (int id in ids) whereBuf.write(id.toString() + ",");
+    for (int id in ids) {
+      whereBuf.write(id.toString() + ",");
+    }
     String where = whereBuf.toString().substring(0, whereBuf.length - 1) + ')';
     _database.delete(_table, where: where);
   }

@@ -28,20 +28,25 @@ class DataFetchModelPart<T extends JsonObject> {
       this.modified});
 
   DataFetchModelPart.fromJson(
-      Map<String, dynamic>? json, T fromJson(Map<String, dynamic>? json)) {
+      Map<String, dynamic>? json, T Function(Map<String, dynamic>? json) fromJson) {
     if (json != null) {
       partId = json['part_id'];
       extId = json['ext_id'];
-      if (json['account'] != null)
+      if (json['account'] != null) {
         account = ApiOAuthModelAccount.fromJson(json['account']);
-      if (json['api_enum'] != null)
+      }
+      if (json['api_enum'] != null) {
         api = DataFetchModelApi.from(json['api_enum']);
-      if (json['obj_json'] != null)
+      }
+      if (json['obj_json'] != null) {
         obj = fromJson(jsonDecode(json['obj_json']));
-      if (json['modified_epoch'] != null)
+      }
+      if (json['modified_epoch'] != null) {
         modified = DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
-      if (json['created_epoch'] != null)
+      }
+      if (json['created_epoch'] != null) {
         created = DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+      }
     }
   }
 }

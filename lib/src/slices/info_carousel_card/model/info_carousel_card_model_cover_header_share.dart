@@ -13,8 +13,8 @@ class InfoCarouselCardModelCoverHeaderShare extends JsonObject {
 
   InfoCarouselCardModelCoverHeaderShare.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.message = json['message'];
-      this.image = json['image'];
+      message = json['message'];
+      image = json['image'];
     }
   }
 

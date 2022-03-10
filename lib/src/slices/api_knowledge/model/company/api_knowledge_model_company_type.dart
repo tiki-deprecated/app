@@ -16,10 +16,10 @@ class ApiKnowledgeModelCompanyType extends JsonObject {
 
   ApiKnowledgeModelCompanyType.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.sector = json['sector'];
-      this.industry = json['industry'];
-      this.subIndustry = json['subIndustry'];
-      this.tags = json['tags'] != null ? List.from(json['tags']) : null;
+      sector = json['sector'];
+      industry = json['industry'];
+      subIndustry = json['subIndustry'];
+      tags = json['tags'] != null ? List.from(json['tags']) : null;
     }
   }
 

@@ -18,7 +18,7 @@ class ApiSignupRepository {
 
   static Future<TikiApiModelRsp<ApiSignupModelUserRsp>> total(
       {String? code}) async {
-    var query;
+    Map<String, String>? query;
     if (code != null) query = {"referrer": code};
     Response rsp = await ConfigSentry.http.get(
         ConfigDomain.asUri(ConfigDomain.signup, _path, query),

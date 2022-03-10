@@ -14,7 +14,7 @@ class ApiMicrosoftModelRsp<T extends JsonObject> extends JsonObject {
   ApiMicrosoftModelRsp({this.context, this.nextLink, required this.value});
 
   ApiMicrosoftModelRsp.fromJson(
-      Map<String, dynamic>? json, T fromJson(Map<String, dynamic>? json)) {
+      Map<String, dynamic>? json, T Function(Map<String, dynamic>? json) fromJson) {
     if (json != null) {
       context = json['@odata.context'];
       nextLink = json['@odata.nextLink'];

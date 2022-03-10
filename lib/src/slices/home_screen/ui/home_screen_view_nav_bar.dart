@@ -16,11 +16,13 @@ class HomeScreenViewNavBar extends StatelessWidget {
   static const double _fontSize = 12;
   static const double _radius = 50;
 
+  const HomeScreenViewNavBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     HomeScreenService service = Provider.of<HomeScreenService>(context);
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
           boxShadow: [
             BoxShadow(
@@ -30,7 +32,7 @@ class HomeScreenViewNavBar extends StatelessWidget {
           ],
         ),
         child: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(_radius)),
             child: BottomNavigationBar(
               currentIndex: service.model.currentScreenIndex,
               onTap: (index) => service.controller.onNavTap(index),

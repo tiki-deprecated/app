@@ -13,8 +13,8 @@ class InfoCarouselCardModelContentIcon extends JsonObject {
 
   InfoCarouselCardModelContentIcon.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.image = json['image'];
-      this.text = json['text'];
+      image = json['image'];
+      text = json['text'];
     }
   }
 

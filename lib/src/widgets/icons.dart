@@ -12,7 +12,7 @@ class _TikiIconsData extends IconData {
 
 @immutable
 class TikiIcons {
-  TikiIcons._();
+  const TikiIcons._();
 
   static const IconData choices = _TikiIconsData(0xe000);
   static const IconData eye = _TikiIconsData(0xe001);

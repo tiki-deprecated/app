@@ -39,7 +39,9 @@ class ApiMicrosoftServiceEmailPaginator {
 
   Future<void> fetchInbox() async {
     List<Future> futures = [];
-    for (int i = 0; i < NUM_REQUESTS; i++) futures.add(_fetch());
+    for (int i = 0; i < NUM_REQUESTS; i++) {
+      futures.add(_fetch());
+    }
     await Future.wait(futures);
   }
 
@@ -76,16 +78,17 @@ class ApiMicrosoftServiceEmailPaginator {
   }
 
   void _onError(Object error) {
-    _log.warning('Fetch inbox ${account?.username} failed with error ${error}');
+    _log.warning('Fetch inbox ${account?.username} failed with error $error');
     if (onError != null) onError!(error);
   }
 
   //we dont use from anymore
   String _buildFilter({DateTime? after, int page = 0, int maxResults = 10}) {
-    StringBuffer queryBuffer = new StringBuffer();
-    if (after != null)
+    StringBuffer queryBuffer = StringBuffer();
+    if (after != null) {
       _appendQuery(queryBuffer,
           'receivedDateTime ge ${after.toUtc().toIso8601String()}');
+    }
     int skip = page * maxResults;
     queryBuffer.write('&\$skip=$skip&\$top=$maxResults');
     return queryBuffer.toString();

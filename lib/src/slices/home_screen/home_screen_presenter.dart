@@ -15,7 +15,7 @@ class HomeScreenPresenter extends Page {
   final HomeScreenService service;
   late final Future<List<SingleChildWidget>> Function()? _provide;
 
-  HomeScreenPresenter(this.service) : super(key: ValueKey("HomeNav"));
+  HomeScreenPresenter(this.service) : super(key: const ValueKey("HomeNav"));
 
   void inject(Future<List<SingleChildWidget>> Function()? provide) =>
       _provide = provide;
@@ -34,10 +34,11 @@ class HomeScreenPresenter extends Page {
                     AsyncSnapshot<List<SingleChildWidget>> snapshot) {
                   if (snapshot.data != null) {
                     return MultiProvider(
-                        providers: snapshot.data!, child: HomeScreenLayout());
-                  } else
+                        providers: snapshot.data!, child: const HomeScreenLayout());
+                  } else {
                     return Container(
-                        color: ConfigColor.greyZero); //TODO make prettier
+                        color: ConfigColor.greyZero);
+                  } //TODO make prettier
                 })));
   }
 }

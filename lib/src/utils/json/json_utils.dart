@@ -14,7 +14,9 @@ class JsonUtils {
       List<dynamic>? json, Function(Map<String, dynamic>?) fromJson) {
     if (json != null) {
       List<T> res = [];
-      json.forEach((element) => res.add(fromJson(element)));
+      for (var element in json) {
+        res.add(fromJson(element));
+      }
       return res;
     }
     return null;

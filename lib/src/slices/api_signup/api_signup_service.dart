@@ -19,7 +19,8 @@ class ApiSignupService {
     if (HttppUtils.isOk(rsp.code)) {
       ApiSignupModelUserRsp data = rsp.data;
       return data.total;
-    } else
+    } else {
       return null;
+    }
   }
 }

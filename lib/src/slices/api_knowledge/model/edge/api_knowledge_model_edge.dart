@@ -15,9 +15,9 @@ class ApiKnowledgeModelEdge extends JsonObject {
 
   ApiKnowledgeModelEdge.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.to = ApiKnowledgeModelEdgeVertex.fromJson(json['to']);
-      this.from = ApiKnowledgeModelEdgeVertex.fromJson(json['from']);
-      this.fingerprint = json['fingerprint'];
+      to = ApiKnowledgeModelEdgeVertex.fromJson(json['to']);
+      from = ApiKnowledgeModelEdgeVertex.fromJson(json['from']);
+      fingerprint = json['fingerprint'];
     }
   }
 

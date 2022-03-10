@@ -12,6 +12,9 @@ import '../../info_carousel_card_service.dart';
 import '../../model/info_carousel_card_model_content_icon.dart';
 
 class InfoCarouselCardViewScrollBodyShouldKnow extends StatelessWidget {
+
+  const InfoCarouselCardViewScrollBodyShouldKnow({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCarouselCardService>(context);
@@ -19,12 +22,13 @@ class InfoCarouselCardViewScrollBodyShouldKnow extends StatelessWidget {
         service.model.content!.body!.shouldKnow!;
     List<Widget> shouldKnow = [];
     for (int i = 0; i < shouldKnowData.length; i++) {
-      if (i > 0)
+      if (i > 0) {
         shouldKnow.add(Padding(
             padding: EdgeInsets.symmetric(vertical: 1.h),
-            child: Divider(
+            child: const Divider(
               color: Colors.white,
             )));
+      }
       shouldKnow.add(Row(children: [
         Padding(
             padding: EdgeInsets.only(right: 4.w),
@@ -42,11 +46,10 @@ class InfoCarouselCardViewScrollBodyShouldKnow extends StatelessWidget {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-              child: HelperImage(
+          HelperImage(
             "information",
             width: 7.w,
-          )),
+          ),
           Container(
             margin: EdgeInsets.only(top: 2.h, bottom: 1.h),
             child: Text("You should know",

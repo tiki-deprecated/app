@@ -28,9 +28,9 @@ class ApiMicrosoftService
       {required ApiOAuthService apiAuthService,
       required ApiAppDataService apiAppDataService,
       required Httpp httpp})
-      : this._apiAuthService = apiAuthService,
-        this._apiMicrosoftRepositoryInfo = ApiMicrosoftRepositoryInfo(),
-        this._apiMicrosoftServiceEmail = ApiMicrosoftServiceEmail(httpp);
+      : _apiAuthService = apiAuthService,
+        _apiMicrosoftRepositoryInfo = ApiMicrosoftRepositoryInfo(),
+        _apiMicrosoftServiceEmail = ApiMicrosoftServiceEmail(httpp);
 
   @override
   DataFetchInterfaceEmail? get email => _apiMicrosoftServiceEmail;
@@ -39,6 +39,7 @@ class ApiMicrosoftService
   Future<bool> isConnected(ApiOAuthModelAccount account) async =>
       (await _apiAuthService.getUserInfo(account)) != null;
 
+  @override
   Future<Response> revokeToken(ApiOAuthModelAccount account) async =>
       await ConfigSentry.http.post(Uri.parse(
           'https://oauth2.googleapis.com/v1.0/me/revokeSignInSessions'));

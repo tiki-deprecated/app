@@ -21,7 +21,7 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
   final Animation<double> _animationValue;
   final AnimationController _animationController;
 
-  InfoCarouselCardLayoutScroll(this._animationValue, this._animationController);
+  const InfoCarouselCardLayoutScroll(this._animationValue, this._animationController, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
             onNotification: (notification) => controller.onScrollNotification(
                 notification, _animationController),
             child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               child: Column(
                 children: [
                   Container(
@@ -45,9 +45,9 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
                         Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.w, vertical: 3.h),
-                            child: InfoCarouselCardViewScrollBodyExplain()),
-                        InfoCarouselCardViewScrollBodyTheySay(),
-                        InfoCarouselCardViewScrollBodyShouldKnow(),
+                            child: const InfoCarouselCardViewScrollBodyExplain()),
+                        const InfoCarouselCardViewScrollBodyTheySay(),
+                        const InfoCarouselCardViewScrollBodyShouldKnow(),
                       ])),
                   Container(
                       color: ConfigColor.greyFour,
@@ -55,13 +55,13 @@ class InfoCarouselCardLayoutScroll extends StatelessWidget {
                       child: Column(children: [
                         Container(
                             alignment: Alignment.centerLeft,
-                            child: InfoCarouselCardViewScrollCtaHeading()),
+                            child: const InfoCarouselCardViewScrollCtaHeading()),
                         Container(
                             padding: EdgeInsets.only(top: 2.h),
-                            child: InfoCarouselCardViewScrollCtaExplain()),
+                            child: const InfoCarouselCardViewScrollCtaExplain()),
                         Container(
                             padding: EdgeInsets.symmetric(vertical: 5.h),
-                            child: InfoCarouselCardViewScrollCtaButton()),
+                            child: const InfoCarouselCardViewScrollCtaButton()),
                       ])),
                 ],
               ),

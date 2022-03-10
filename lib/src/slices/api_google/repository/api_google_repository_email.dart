@@ -29,7 +29,7 @@ class ApiGoogleRepositoryEmail {
         uri: Uri.parse(_pathMessages + queryParams),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: onSuccess,
         onResult: onResult,
         onError: onError);
@@ -48,7 +48,7 @@ class ApiGoogleRepositoryEmail {
         uri: Uri.parse(_pathSend),
         verb: HttppVerb.POST,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         body: message,
         onSuccess: onSuccess,
         onResult: onResult,
@@ -65,10 +65,10 @@ class ApiGoogleRepositoryEmail {
       required void Function(HttppResponse) onResult,
       void Function(Object)? onError}) async {
     HttppRequest request = HttppRequest(
-        uri: Uri.parse(_pathMessages + '$messageId'),
+        uri: Uri.parse(_pathMessages + messageId),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: onSuccess,
         onResult: onResult,
         onError: onError);

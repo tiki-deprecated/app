@@ -12,14 +12,14 @@ class HelperImage extends StatelessWidget {
 
   final double? width;
 
-  HelperImage(this.image, {this.width, this.height});
+  const HelperImage(this.image, {Key? key, this.width, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Image(
       image: AssetImage('res/images/' + image + '.png'),
-      width: this.width,
-      height: this.height,
+      width: width,
+      height: height,
     );
   }
 }

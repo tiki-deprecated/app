@@ -15,14 +15,14 @@ class App extends StatelessWidget {
   static const String _title = "TIKI";
   final RouterDelegate _routerDelegate;
 
-  const App(this._routerDelegate);
+  const App(this._routerDelegate, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         title: _title,
-        localizationsDelegates: [
+        localizationsDelegates: const [
           DefaultMaterialLocalizations.delegate,
           DefaultCupertinoLocalizations.delegate,
           DefaultWidgetsLocalizations.delegate,

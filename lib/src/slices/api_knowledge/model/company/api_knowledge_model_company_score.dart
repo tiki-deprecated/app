@@ -15,9 +15,9 @@ class ApiKnowledgeModelCompanyScore extends JsonObject {
 
   ApiKnowledgeModelCompanyScore.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.sensitivityScore = json['sensitivityScore'];
-      this.breachScore = json['breachScore'];
-      this.securityScore = json['securityScore'];
+      sensitivityScore = json['sensitivityScore'];
+      breachScore = json['breachScore'];
+      securityScore = json['securityScore'];
     }
   }
 

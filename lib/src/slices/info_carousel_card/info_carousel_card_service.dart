@@ -25,14 +25,15 @@ class InfoCarouselCardService extends ChangeNotifier {
   InfoCarouselCardService({dynamic card}) {
     presenter = InfoCarouselCardPresenter(this);
     controller = InfoCarouselCardController(this);
-    if (card != null)
+    if (card != null) {
       model = card;
-    else
+    } else {
       model = InfoCarouselCardModel();
+    }
   }
 
   void setCard(InfoCarouselCardModel card) {
-    this.model = card;
+    model = card;
     notifyListeners();
   }
 
@@ -43,12 +44,13 @@ class InfoCarouselCardService extends ChangeNotifier {
       var buffer = bytes.buffer;
       Uint8List pngBytes = buffer.asUint8List();
       Directory directory;
-      if (Platform.isIOS)
+      if (Platform.isIOS) {
         directory = await getApplicationDocumentsDirectory();
-      else
+      } else {
         directory = (await getExternalStorageDirectory())!;
+      }
       String path = directory.path + '/tikishare.png';
-      File imgFile = new File(path);
+      File imgFile = File(path);
       imgFile.writeAsBytesSync(pngBytes, flush: true);
       Share.shareFiles(
         [path],

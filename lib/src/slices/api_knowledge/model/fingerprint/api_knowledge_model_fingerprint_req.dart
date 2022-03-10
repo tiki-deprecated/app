@@ -12,7 +12,7 @@ class ApiKnowledgeModelFingerprintReq extends JsonObject {
 
   ApiKnowledgeModelFingerprintReq.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.fingerprints =
+      fingerprints =
           json['fingerprints'] != null ? Set.from(json['fingerprints']) : null;
     }
   }

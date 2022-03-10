@@ -12,8 +12,8 @@ import 'api_short_code_model_rsp.dart';
 
 class ApiShortCodeRepository {
   final Logger _log = Logger('ApiShortCodeRepository');
-  static final String _authority = 'bouncer.mytiki.com';
-  static final String _path = '/api/latest/short-code';
+  static const String _authority = 'bouncer.mytiki.com';
+  static const String _path = '/api/latest/short-code';
 
   Future<void> post(
       {required HttppClient client,
@@ -26,15 +26,17 @@ class ApiShortCodeRepository {
         verb: HttppVerb.POST,
         body: HttppBody.fromJson(body?.toJson()),
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: (rsp) {
-          if (onSuccess != null)
+          if (onSuccess != null) {
             onSuccess(TikiApiModelRsp.fromJson(rsp.body?.jsonBody,
                 (json) => ApiShortCodeModelRsp.fromJson(json)));
+          }
         },
         onResult: (rsp) {
-          if (onError != null)
+          if (onError != null) {
             onError(TikiApiModelRsp.fromJson(rsp.body?.jsonBody, (json) {}));
+          }
         },
         onError: onError);
     _log.finest('${request.verb.value} — ${request.uri}');
@@ -51,15 +53,17 @@ class ApiShortCodeRepository {
         uri: Uri.https(_authority, _path, {'address': address}),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: (rsp) {
-          if (onSuccess != null)
+          if (onSuccess != null) {
             onSuccess(TikiApiModelRsp.fromJson(rsp.body?.jsonBody,
                 (json) => ApiShortCodeModelRsp.fromJson(json)));
+          }
         },
         onResult: (rsp) {
-          if (onError != null)
+          if (onError != null) {
             onError(TikiApiModelRsp.fromJson(rsp.body?.jsonBody, (json) {}));
+          }
         },
         onError: onError);
     _log.finest('${request.verb.value} — ${request.uri}');
