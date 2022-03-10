@@ -13,8 +13,8 @@ class ApiKnowledgeModelEdgeVertex extends JsonObject {
 
   ApiKnowledgeModelEdgeVertex.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.type = json['type'];
-      this.value = json['value'];
+      type = json['type'];
+      value = json['value'];
     }
   }
 

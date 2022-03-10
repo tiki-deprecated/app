@@ -24,7 +24,7 @@ const String _keysPrefix = _prefix + '.' + 'keys' + '.' + _versionPrefix + '.';
 
 Future<void> upgrade(Login login, Httpp httpp) async {
   Logger log = Logger('upgrade');
-  FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   String? email = await getEmail(secureStorage);
   if (email != null) {
     String? address = await getAddress(secureStorage, email);

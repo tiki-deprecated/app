@@ -11,7 +11,7 @@ import '../model/company/api_knowledge_model_company.dart';
 
 class ApiKnowledgeRepositoryCompany {
   final Logger _log = Logger('ApiKnowledgeRepositoryCompany');
-  static final String _path = '/api/latest/vertex/company';
+  static const String _path = '/api/latest/vertex/company';
 
   Future<void> get(
       {required HttppClient client,
@@ -23,7 +23,7 @@ class ApiKnowledgeRepositoryCompany {
         uri: Uri.https('knowledge.mytiki.com', _path, {'domain': domain}),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: (rsp) {
           if (onSuccess != null) {
             TikiApiModelRsp<ApiKnowledgeModelCompany> body =

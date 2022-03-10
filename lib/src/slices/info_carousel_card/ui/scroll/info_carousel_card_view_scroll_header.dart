@@ -14,14 +14,14 @@ import '../../info_carousel_card_service.dart';
 class InfoCarouselCardViewScrollHeader extends StatelessWidget {
   final Animation<double> _animationValue;
 
-  InfoCarouselCardViewScrollHeader(this._animationValue);
+  const InfoCarouselCardViewScrollHeader(this._animationValue, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var service = Provider.of<InfoCarouselCardService>(context);
     var model = service.model.cover!;
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Container(
+      SizedBox(
           width: 42.w,
           child: RichText(
               textAlign: TextAlign.left,

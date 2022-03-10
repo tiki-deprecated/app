@@ -13,17 +13,17 @@ class HeaderBarViewBadge extends StatelessWidget {
 
   final String label;
 
-  HeaderBarViewBadge(this.label);
+  const HeaderBarViewBadge(this.label, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
       Image(
-        image: AssetImage('res/images/badge-header.png'),
+        image: const AssetImage('res/images/badge-header.png'),
         width: _width.w,
         fit: BoxFit.fitWidth,
       ),
-      Container(
+      SizedBox(
           width: _width.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -40,7 +40,7 @@ class HeaderBarViewBadge extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                   child: Image(
-                    image: AssetImage('res/images/icon-star.png'),
+                    image: const AssetImage('res/images/icon-star.png'),
                     height: 9.1.sp,
                     fit: BoxFit.fitHeight,
                   )),

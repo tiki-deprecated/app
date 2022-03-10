@@ -12,6 +12,9 @@ import '../../../widgets/header_bar/header_bar.dart';
 import 'data_screen_layout_body.dart';
 
 class DataScreenLayout extends StatelessWidget {
+
+  const DataScreenLayout({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class DataScreenLayout extends StatelessWidget {
       SafeArea(
           child: Column(
               children: [
-          HeaderBar(userAccount: Provider.of<UserAccount>(context, listen:false),), Expanded(child: DataScreenLayoutBody())]))
+          HeaderBar(userAccount: Provider.of<UserAccount>(context, listen:false),), const Expanded(child: DataScreenLayoutBody())]))
     ])));
   }
 }

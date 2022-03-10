@@ -11,22 +11,15 @@ import 'data_screen_view_soon_icon.dart';
 class DataScreenViewSoon extends StatelessWidget {
   static const String _title = "COMING SOON";
 
+  const DataScreenViewSoon({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
         padding:
             EdgeInsets.only(top: 2.5.h, bottom: 3.5.h, left: 7.w, right: 7.w),
         decoration: BoxDecoration(
-          //color: ConfigColor.greyTwo,
           borderRadius: BorderRadius.circular(4.w),
-          //border: Border.all(color: ConfigColor.greyThree)
-          /*boxShadow: [
-            BoxShadow(
-              color: Color(0x0D000000),
-              blurRadius: 2.w,
-              offset: Offset(0.75.w, 0.75.w), // Shadow position
-            ),
-          ],*/
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +35,7 @@ class DataScreenViewSoon extends StatelessWidget {
                 margin: EdgeInsets.only(top: 2.5.h),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: const [
                       DataScreenViewSoonIcon(
                           image: "account-soon-apple", label: "Apple Mail"),
                       DataScreenViewSoonIcon(

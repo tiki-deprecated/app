@@ -11,11 +11,11 @@ class DataScreenViewSoonIcon extends StatelessWidget {
   final String image;
   final String label;
 
-  DataScreenViewSoonIcon({required this.image, required this.label});
+  const DataScreenViewSoonIcon({Key? key, required this.image, required this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 16.w,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -29,7 +29,7 @@ class ApiMicrosoftRepositoryEmail {
         uri: Uri.parse(_pathMessages + queryParams),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: onSuccess,
         onResult: onResult,
         onError: onError);
@@ -48,7 +48,7 @@ class ApiMicrosoftRepositoryEmail {
         uri: Uri.parse(_pathSend),
         verb: HttppVerb.POST,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         body: message,
         onSuccess: onSuccess,
         onResult: onResult,
@@ -69,7 +69,7 @@ class ApiMicrosoftRepositoryEmail {
             '/$messageId?\$select=internetMessageHeaders,from,receivedDateTime,toRecipients'),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: onSuccess,
         onResult: onResult,
         onError: onError);

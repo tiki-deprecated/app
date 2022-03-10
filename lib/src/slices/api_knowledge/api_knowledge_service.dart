@@ -35,8 +35,9 @@ class ApiKnowledgeService {
               accessToken: token,
               domain: domain,
               onSuccess: (rsp) {
-                if (onSuccess != null)
+                if (onSuccess != null) {
                   onSuccess(rsp.data as ApiKnowledgeModelCompany);
+                }
               },
               onError: onError));
 
@@ -60,14 +61,16 @@ class ApiKnowledgeService {
     return request(accessToken, (error) async {
       if (error is TikiApiModelRsp && error.code == 401 && refresh != null) {
         await refresh!((token) async {
-          if (token != null)
+          if (token != null) {
             await request(
                 token,
                 (error) async =>
                     onError != null ? onError(error) : throw error);
+          }
         });
-      } else
+      } else {
         onError != null ? onError(error) : throw error;
+      }
     });
   }
 }

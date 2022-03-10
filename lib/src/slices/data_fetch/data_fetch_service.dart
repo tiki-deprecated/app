@@ -21,7 +21,7 @@ class DataFetchService extends ChangeNotifier {
   final DataPushService _dataPushService;
   late final DataFetchServiceEmail email;
 
-  Set<int> _indexMutex = Set();
+  final Set<int> _indexMutex = {};
 
   DataFetchService(
       {required ApiOAuthService apiAuthService,
@@ -32,8 +32,8 @@ class DataFetchService extends ChangeNotifier {
       required ApiKnowledgeService apiKnowledgeService,
       required DataPushService dataPushService,
       required Database database})
-      : this._dataPushService = dataPushService {
-    this.email = DataFetchServiceEmail(
+      : _dataPushService = dataPushService {
+    email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
         apiAppDataService: apiAppDataService,
         apiEmailMsgService: apiEmailMsgService,

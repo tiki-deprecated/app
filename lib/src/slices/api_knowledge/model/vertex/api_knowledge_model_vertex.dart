@@ -14,11 +14,13 @@ class ApiKnowledgeModelVertex extends JsonObject {
 
   ApiKnowledgeModelVertex.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.type = json['type'];
+      type = json['type'];
       List? fields = json['fields'];
-      this.fields = fields != null
-          ? fields.map((f) => ApiKnowledgeModelVertexField.fromJson(f)).toList()
-          : null;
+      if (fields != null) {
+        this.fields = fields.map((f) => ApiKnowledgeModelVertexField.fromJson(f)).toList();
+      } else {
+        this.fields = null;
+      }
     }
   }
 

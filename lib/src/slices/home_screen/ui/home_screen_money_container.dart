@@ -7,6 +7,9 @@ import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
 
 class HomeScreenMoneyContainer extends StatelessWidget {
+
+  const HomeScreenMoneyContainer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +18,7 @@ class HomeScreenMoneyContainer extends StatelessWidget {
       Container(color: ConfigColor.greyOne),
       SafeArea(
           child: Padding(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 8),
               child: Column(children: [
                 HeaderBar(userAccount: Provider.of<UserAccount>(context, listen:false),),
                 Expanded(child: Money().home(example: true))

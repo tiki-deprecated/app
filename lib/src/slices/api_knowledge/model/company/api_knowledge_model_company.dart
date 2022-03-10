@@ -19,10 +19,10 @@ class ApiKnowledgeModelCompany extends JsonObject {
 
   ApiKnowledgeModelCompany.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.about = ApiKnowledgeModelCompanyAbout.fromJson(json['about']);
-      this.score = ApiKnowledgeModelCompanyScore.fromJson(json['score']);
-      this.social = ApiKnowledgeModelCompanySocial.fromJson(json['social']);
-      this.type = ApiKnowledgeModelCompanyType.fromJson(json['type']);
+      about = ApiKnowledgeModelCompanyAbout.fromJson(json['about']);
+      score = ApiKnowledgeModelCompanyScore.fromJson(json['score']);
+      social = ApiKnowledgeModelCompanySocial.fromJson(json['social']);
+      type = ApiKnowledgeModelCompanyType.fromJson(json['type']);
     }
   }
 

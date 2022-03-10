@@ -13,7 +13,7 @@ import 'repository/data_push_repository.dart';
 
 class DataPushService {
   final _log = Logger('DataPushService');
-  static final int _pushOn = 250;
+  static const int _pushOn = 250;
   final DataPushRepository _repository;
   final ApiKnowledgeService _apiKnowledgeService;
   final Login _login;
@@ -22,9 +22,9 @@ class DataPushService {
       {required ApiKnowledgeService apiKnowledgeService,
       required Database database,
       required Login login})
-      : this._apiKnowledgeService = apiKnowledgeService,
-        this._repository = DataPushRepository(database),
-        this._login = login;
+      : _apiKnowledgeService = apiKnowledgeService,
+        _repository = DataPushRepository(database),
+        _login = login;
 
   Future<void> write(List<DataPushModel> edges, {bool force = false}) async {
     await _repository.insert(edges);

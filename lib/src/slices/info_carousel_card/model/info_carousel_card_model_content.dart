@@ -15,8 +15,8 @@ class InfoCarouselCardModelContent extends JsonObject {
 
   InfoCarouselCardModelContent.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.body = InfoCarouselCardModelContentBody.fromJson(json['body']);
-      this.cta = InfoCarouselCardModelContentCta.fromJson(json['cta']);
+      body = InfoCarouselCardModelContentBody.fromJson(json['body']);
+      cta = InfoCarouselCardModelContentCta.fromJson(json['cta']);
     }
   }
 

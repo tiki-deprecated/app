@@ -9,6 +9,9 @@ import 'package:sizer/sizer.dart';
 import 'info_carousel_card_layout_swipe.dart';
 
 class InfoCarouselCardLayout extends StatefulWidget {
+
+  const InfoCarouselCardLayout({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _InfoCarouselCardLayout();
 }
@@ -27,13 +30,13 @@ class _InfoCarouselCardLayout extends State<InfoCarouselCardLayout>
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(3.h)),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0x0D000000),
+                  color: const Color(0x0D000000),
                   blurRadius: 1.w,
                   offset: Offset(0, 0.5.h), // Shadow position
                 ),

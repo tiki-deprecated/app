@@ -22,7 +22,7 @@ import '../model/api_oauth_model_provider.dart';
 class ApiOAuthRepositoryProvider {
   static const _dbAuthProviders = "res/json/auth_providers_db.json";
   final Map<String, ApiOAuthModelProvider> _providers =
-      Map<String, ApiOAuthModelProvider>();
+      <String, ApiOAuthModelProvider>{};
 
   ApiOAuthRepositoryProvider() {
     _loadProviders();

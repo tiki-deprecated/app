@@ -15,8 +15,8 @@ class InfoCarouselCardViewCoverArrow extends StatelessWidget {
   final Animation<double> _animationValue;
   final Animation _animationController;
 
-  InfoCarouselCardViewCoverArrow(
-      this._animationController, this._animationValue);
+  const InfoCarouselCardViewCoverArrow(
+      this._animationController, this._animationValue, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,8 @@ class InfoCarouselCardViewCoverArrow extends StatelessWidget {
     return GestureDetector(
         onTap: () => controller.tapArrowSlideUp(_animationController),
         child: Opacity(
-            opacity: this._animationValue.value * 2 <= 1
-                ? 1 - (this._animationValue.value * 2)
+            opacity: _animationValue.value * 2 <= 1
+                ? 1 - (_animationValue.value * 2)
                 : 0,
             child: HelperImage(
               "arrow-up",

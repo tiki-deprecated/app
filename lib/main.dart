@@ -20,7 +20,6 @@ import 'src/config/config_color.dart';
 import 'src/config/config_font.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
-import 'src/slices/api_app_data/api_app_data_key.dart';
 import 'src/slices/api_app_data/api_app_data_service.dart';
 import 'src/slices/api_company/api_company_service.dart';
 import 'src/slices/api_email_msg/api_email_msg_service.dart';
@@ -42,7 +41,7 @@ Future<void> main() async {
   await ConfigAmplitude.init();
   await Firebase.initializeApp();
 
-  FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   Httpp httpp = Httpp(useClient: () => SentryHttpClient());
   HomeScreenService home = HomeScreenService();
   Login login = Login(
@@ -72,7 +71,7 @@ Future<List<SingleChildWidget>> provide({
 }) async {
   Logger log = Logger('HomeScreenService.provide');
   TikiKeysService tikiKeysService = TikiKeysService(secureStorage: secureStorage);
-  FlowModelUser? user = await login.user;
+  FlowModelUser? user = login.user;
   TikiKeysModel? keys = user?.address != null ? await tikiKeysService.get(user!.address!) : null;
   if (user == null || user.address == null || keys == null) {
     log.severe('Attempting to open home page without a valid user');
@@ -123,31 +122,20 @@ Future<List<SingleChildWidget>> provide({
 
     ApiSignupService apiSignupService = ApiSignupService();
 
-    DecisionSdk decisionSdk = DecisionSdk(
+    DecisionSdk decisionSdk = await DecisionSdk(
         apiAppDataService : apiAppDataService,
-        isConnected : (await apiAuthService.getAccount()) != null,
-    );
+        apiAuthService : apiAuthService,
+        apiEmailSenderService : apiEmailSenderService,
+        apiEmailMsgService : apiEmailMsgService,
+        dataFetchService : dataFetchService,
+    ).init();
 
-    String code = (await apiAppDataService.getByKey(ApiAppDataKey.userReferCode))?.value ?? '';
-    if (code.isEmpty && (login.token?.bearer != null) && (login.user?.address != null)) {
-      await apiShortCodeService.get(
-        accessToken: login.token!.bearer!,
-        address: login.user!.address!,
-        onSuccess: (rsp) async {
-          code = rsp.code ?? '';
-          await apiAppDataService.save(ApiAppDataKey.userReferCode, code);
-        },
-        onError: (error) => log.warning(error),
-      );
-    }
-
-    UserAccount userAccount = UserAccount(
+    UserAccount userAccount = await UserAccount(
         apiAppDataService: apiAppDataService,
         tikiKeysService: tikiKeysService,
-        referalCode: code,
         apiSignupService: apiSignupService,
         login: login
-    );
+    ).init();
 
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

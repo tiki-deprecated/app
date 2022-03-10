@@ -14,6 +14,9 @@ import '../../home_screen/home_screen_controller.dart';
 import '../home_screen_service.dart';
 
 class HomeScreenViewOverlay extends StatelessWidget {
+
+  const HomeScreenViewOverlay({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     HomeScreenController controller =
@@ -22,7 +25,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
         onTap: () async => controller.dismissOverlay(context),
         child: Stack(children: [
           Image(
-            image: AssetImage('res/images/overlay-bg.png'),
+            image: const AssetImage('res/images/overlay-bg.png'),
             width: 100.w,
             fit: BoxFit.cover,
           ),
@@ -46,7 +49,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontFamily: ConfigFont.familyNunitoSans,
                       fontSize: 12.sp),
-                  children: [
+                  children: const [
                     TextSpan(
                         text: 'list by swiping left, or\n',
                         style: TextStyle(fontWeight: FontWeight.w600)),
@@ -68,7 +71,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontFamily: ConfigFont.familyNunitoSans,
                       fontSize: 12.sp),
-                  children: [
+                  children: const [
                     TextSpan(
                         text:
                             'You can always re-subscribe by going back to their website.',

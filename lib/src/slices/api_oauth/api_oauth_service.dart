@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 import 'package:httpp/httpp.dart';
+import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import '../../config/config_sentry.dart';
@@ -22,6 +23,8 @@ import 'repository/api_oauth_repository_account.dart';
 import 'repository/api_oauth_repository_provider.dart';
 
 class ApiOAuthService {
+  final Logger _log = Logger('ApiOAuthService');
+
   late final ApiOauthModel _model;
   final FlutterAppAuth _appAuth;
   final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
@@ -38,13 +41,12 @@ class ApiOAuthService {
   ApiOAuthService(
       {required Database database,
       required ApiAppDataService apiAppDataService,
-      required Httpp httpp})
-      : this._appAuth = FlutterAppAuth(),
-        this._apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
-        this._apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
-        this._model = ApiOauthModel(),
-        this._apiAppDataService = apiAppDataService,
-        this.httpp = httpp {
+      required this.httpp})
+      : _appAuth = FlutterAppAuth(),
+        _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
+        _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
+        _model = ApiOauthModel(),
+        _apiAppDataService = apiAppDataService {
     _getProviders();
   }
 
@@ -60,7 +62,7 @@ class ApiOAuthService {
               .accessTokenExpirationDateTime?.millisecondsSinceEpoch,
           refreshToken: tokenResponse.refreshToken,
           shouldReconnect: 0);
-      Map? userInfo = await this.getUserInfo(apiAuthServiceAccountModel);
+      Map? userInfo = await getUserInfo(apiAuthServiceAccountModel);
       if (userInfo != null) {
         apiAuthServiceAccountModel.displayName = userInfo['name'];
         apiAuthServiceAccountModel.username =
@@ -76,7 +78,9 @@ class ApiOAuthService {
   Future<void> signOutAll() async {
     List<ApiOAuthModelAccount> accounts =
         await _apiAuthRepositoryAccount.getAll();
-    accounts.forEach((account) async => await signOut(account));
+    for (var account in accounts) {
+      await signOut(account);
+    }
   }
 
   Future<void> signOut(ApiOAuthModelAccount account) async {
@@ -145,8 +149,6 @@ class ApiOAuthService {
           (await _apiAuthRepositoryProvider.providers)[account.provider!];
       TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
           provider!.clientId, provider.redirectUri,
-          //discoveryUrl: provider.discoveryUrl,
-          //issuer: 'https://login.microsoftonline.com/common/v2.0',
           serviceConfiguration: AuthorizationServiceConfiguration(
               authorizationEndpoint: provider.authorizationEndpoint,
               tokenEndpoint: provider.tokenEndpoint),
@@ -157,7 +159,7 @@ class ApiOAuthService {
       _upsert(account);
       return account;
     } catch (e) {
-      print(e.toString());
+      _log.warning(e.toString());
       account.shouldReconnect = 1;
     }
     return null;

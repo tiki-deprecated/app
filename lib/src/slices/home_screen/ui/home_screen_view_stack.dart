@@ -18,8 +18,8 @@ import 'home_screen_view_overlay.dart';
 class HomeScreenViewStack extends StatelessWidget {
   final DataScreenService dataScreenService;
 
-  HomeScreenViewStack(
-      {required this.dataScreenService});
+  const HomeScreenViewStack(
+      {Key? key, required this.dataScreenService}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +27,16 @@ class HomeScreenViewStack extends StatelessWidget {
     return Stack(children: [
       Scaffold(
           backgroundColor: ConfigColor.greyOne,
-          bottomNavigationBar: HomeScreenViewNavBar(),
+          bottomNavigationBar: const HomeScreenViewNavBar(),
           body: SafeArea(
               top: false,
               child: IndexedStack(index: model.currentScreenIndex, children: [
                 dataScreenService.presenter.render(),
-                HomeScreenDecisionContainer(),
-                HomeScreenMoneyContainer(),
+                const HomeScreenDecisionContainer(),
+                const HomeScreenMoneyContainer(),
               ]))),
       if (model.showOverlay == true && model.currentScreenIndex == 1)
-        HomeScreenViewOverlay()
+        const HomeScreenViewOverlay()
     ]);
   }
 }

@@ -24,12 +24,12 @@ class InfoCarouselCardModelCover extends JsonObject {
 
   InfoCarouselCardModelCover.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.image = json['image'];
-      this.subtitle = json['subtitle'];
-      this.bigTextDark = json['bigTextDark'];
-      this.bigTextLight = json['bigTextLight'];
-      this.text = json['text'];
-      this.header = InfoCarouselCardModelCoverHeader.fromJson(json['header']);
+      image = json['image'];
+      subtitle = json['subtitle'];
+      bigTextDark = json['bigTextDark'];
+      bigTextLight = json['bigTextLight'];
+      text = json['text'];
+      header = InfoCarouselCardModelCoverHeader.fromJson(json['header']);
     }
   }
 

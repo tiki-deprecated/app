@@ -21,8 +21,8 @@ class ApiAppDataModel extends JsonObject {
 
   @override
   Map<String, dynamic> toJson() => {
-        'id': this.id,
-        'key': this.key,
-        'value': this.value,
+        'id': id,
+        'key': key,
+        'value': value,
       };
 }

@@ -9,6 +9,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'config_environment.dart';
 import 'config_sentry.dart';
 
+//ignore_for_file: avoid_print
 class ConfigLog {
   ConfigLog() {
     Logger.root.level = ConfigEnvironment.isDevelop || ConfigEnvironment.isLocal
@@ -18,11 +19,12 @@ class ConfigLog {
   }
 
   void onRecord(LogRecord record) {
-    if (ConfigEnvironment.isPublic)
+    if (ConfigEnvironment.isPublic) {
       ConfigSentry.message(record.message, level: _toSentryLevel(record.level));
-    else
+    } else {
       print(
           '${_formatTime(record.time)}: ${record.level.name} [${record.loggerName}] ${record.message}');
+    }
   }
 
   String _formatTime(DateTime timestamp) {
@@ -42,15 +44,16 @@ class ConfigLog {
   }
 
   SentryLevel _toSentryLevel(Level level) {
-    if (level == Level.FINEST || level == Level.FINER || level == Level.FINE)
+    if (level == Level.FINEST || level == Level.FINER || level == Level.FINE) {
       return ConfigSentry.levelDebug;
-    else if (level == Level.WARNING)
+    } else if (level == Level.WARNING) {
       return ConfigSentry.levelWarn;
-    else if (level == Level.SEVERE)
+    } else if (level == Level.SEVERE) {
       return ConfigSentry.levelError;
-    else if (level == Level.SHOUT)
+    } else if (level == Level.SHOUT) {
       return ConfigSentry.levelFatal;
-    else
+    } else {
       return ConfigSentry.levelInfo;
+    }
   }
 }

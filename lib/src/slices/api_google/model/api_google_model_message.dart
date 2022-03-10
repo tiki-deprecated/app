@@ -38,9 +38,10 @@ class ApiGoogleModelMessage extends JsonObject {
       snippet = json['snippet'];
       historyId = json['historyId'];
 
-      if (json['internalDate'] != null)
+      if (json['internalDate'] != null) {
         internalDate = DateTime.fromMillisecondsSinceEpoch(
             int.parse(json['internalDate']));
+      }
 
       sizeEstimate = json['sizeEstimate'];
       raw = json['raw'];

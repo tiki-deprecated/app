@@ -17,9 +17,9 @@ class InfoCarouselCardModelContentCta extends JsonObject {
 
   InfoCarouselCardModelContentCta.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.buttonText = json['buttonText'];
-      this.buttonUrl = json['buttonUrl'];
-      this.explain = JsonUtils.listFromJson(
+      buttonText = json['buttonText'];
+      buttonUrl = json['buttonUrl'];
+      explain = JsonUtils.listFromJson(
           json['explain'], (s) => InfoCarouselCardModelContentText.fromJson(s));
     }
   }

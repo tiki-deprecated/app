@@ -25,13 +25,13 @@ class ApiKnowledgeModelCompanyAbout extends JsonObject {
 
   ApiKnowledgeModelCompanyAbout.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.domain = json['domain'];
-      this.name = json['name'];
-      this.description = json['description'];
-      this.logo = json['logo'];
-      this.url = json['url'];
-      this.address = json['address'];
-      this.phone = json['phone'];
+      domain = json['domain'];
+      name = json['name'];
+      description = json['description'];
+      logo = json['logo'];
+      url = json['url'];
+      address = json['address'];
+      phone = json['phone'];
     }
   }
 

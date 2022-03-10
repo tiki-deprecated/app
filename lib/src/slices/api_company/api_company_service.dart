@@ -21,9 +21,9 @@ class ApiCompanyService {
       {required Database database,
       required ApiKnowledgeService apiKnowledgeService,
       required Login login})
-      : this._repositoryLocal = ApiCompanyRepository(database),
-        this._apiKnowledgeService = apiKnowledgeService,
-        this._login = login;
+      : _repositoryLocal = ApiCompanyRepository(database),
+        _apiKnowledgeService = apiKnowledgeService,
+        _login = login;
 
   Future<void> upsert(String domain,
       {Function(ApiCompanyModel?)? onComplete}) async {
@@ -48,7 +48,7 @@ class ApiCompanyService {
       } else if (local.modified == null ||
           local.securityScore == null ||
           local.modified!
-              .isBefore(DateTime.now().subtract(Duration(days: 30)))) {
+              .isBefore(DateTime.now().subtract(const Duration(days: 30)))) {
         await _apiKnowledgeService.getCompany(
             accessToken: _login.token!.bearer!,
             domain: domain,
@@ -66,7 +66,9 @@ class ApiCompanyService {
               if (onComplete != null) onComplete(saved);
             },
             onError: (error) => _log.warning(error));
-      } else if (onComplete != null) onComplete(local);
+      } else if (onComplete != null) {
+        onComplete(local);
+      }
     }
   }
 

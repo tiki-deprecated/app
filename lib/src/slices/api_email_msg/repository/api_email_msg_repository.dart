@@ -52,9 +52,10 @@ class ApiEmailMsgRepository {
   }
 
   Future<int> batchUpsert(List<ApiEmailMsgModel> messages) async {
-    if (messages.length > 0) {
+    if (messages.isNotEmpty) {
       Batch batch = _database.batch();
-      messages.forEach((data) => batch.rawInsert(
+      for (var data in messages) {
+        batch.rawInsert(
             _upsertQuery,
             [
               data.extMessageId,
@@ -63,11 +64,13 @@ class ApiEmailMsgRepository {
               data.openedDate?.millisecondsSinceEpoch,
               data.toEmail
             ],
-          ));
+          );
+      }
       List res = await batch.commit(continueOnError: true);
       return res.length;
-    } else
+    } else {
       return 0;
+    }
   }
 
   Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel data) async {
@@ -145,17 +148,18 @@ class ApiEmailMsgRepository {
         whereArgs);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) {
-      Map<String, Object?> messageMap = Map();
-      Map<String, Object?> senderMap = Map();
-      Map<String, Object?> companyMap = Map();
-      row.entries.forEach((element) {
-        if (element.key.contains('message@'))
+      Map<String, Object?> messageMap = {};
+      Map<String, Object?> senderMap = {};
+      Map<String, Object?> companyMap = {};
+      for (var element in row.entries) {
+        if (element.key.contains('message@')) {
           messageMap[element.key.replaceFirst('message@', '')] = element.value;
-        else if (element.key.contains('sender@'))
+        } else if (element.key.contains('sender@')) {
           senderMap[element.key.replaceFirst('sender@', '')] = element.value;
-        else if (element.key.contains('company@'))
+        } else if (element.key.contains('company@')) {
           companyMap[element.key.replaceFirst('company@', '')] = element.value;
-      });
+        }
+      }
       senderMap['company'] = companyMap;
       messageMap['sender'] = senderMap;
       return messageMap;

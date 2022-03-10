@@ -27,18 +27,20 @@ class ApiCompanyModel extends JsonObject {
 
   ApiCompanyModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.companyId = json['company_id'];
-      this.logo = json['logo'];
-      this.securityScore = json['security_score'];
-      this.breachScore = json['breach_score'];
-      this.sensitivityScore = json['sensitivity_score'];
-      this.domain = json['domain'];
-      if (json['modified_epoch'] != null)
-        this.modified =
+      companyId = json['company_id'];
+      logo = json['logo'];
+      securityScore = json['security_score'];
+      breachScore = json['breach_score'];
+      sensitivityScore = json['sensitivity_score'];
+      domain = json['domain'];
+      if (json['modified_epoch'] != null) {
+        modified =
             DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
-      if (json['created_epoch'] != null)
-        this.created =
+      }
+      if (json['created_epoch'] != null) {
+        created =
             DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+      }
     }
   }
 

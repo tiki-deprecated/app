@@ -19,7 +19,7 @@ class InfoCarouselCardLayoutCover extends StatelessWidget {
   final Animation<double> _animationValue;
   final AnimationController _animationController;
 
-  InfoCarouselCardLayoutCover(this._animationValue, this._animationController);
+  const InfoCarouselCardLayoutCover(this._animationValue, this._animationController, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,27 +34,26 @@ class InfoCarouselCardLayoutCover extends StatelessWidget {
         child: Container(
             color: Colors.white,
             padding: EdgeInsets.only(left: 4.w, top: 1.h, right: 4.w),
-            child: Container(
-                child: Column(
+            child: Column(
               children: [
-                InfoCarouselCardViewCoverHeader(_animationValue),
-                InfoCarouselCardViewCoverImage(_animationValue),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: InfoCarouselCardViewCoverSubtitle(_animationValue)),
-                Container(
-                    padding: EdgeInsets.only(top: 1.25.h),
-                    child: InfoCarouselCardViewCoverBigText(_animationValue)),
-                Container(
-                    padding: EdgeInsets.only(top: 1.25.h),
-                    child: InfoCarouselCardViewCoverText(_animationValue)),
-                Expanded(
-                    child: Container(
-                        alignment: Alignment.bottomCenter,
-                        padding: EdgeInsets.only(bottom: 4.h),
-                        child: InfoCarouselCardViewCoverArrow(
-                            _animationController, _animationValue)))
+            InfoCarouselCardViewCoverHeader(_animationValue),
+            InfoCarouselCardViewCoverImage(_animationValue),
+            Align(
+                alignment: Alignment.topLeft,
+                child: InfoCarouselCardViewCoverSubtitle(_animationValue)),
+            Container(
+                padding: EdgeInsets.only(top: 1.25.h),
+                child: InfoCarouselCardViewCoverBigText(_animationValue)),
+            Container(
+                padding: EdgeInsets.only(top: 1.25.h),
+                child: InfoCarouselCardViewCoverText(_animationValue)),
+            Expanded(
+                child: Container(
+                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.only(bottom: 4.h),
+                    child: InfoCarouselCardViewCoverArrow(
+                        _animationController, _animationValue)))
               ],
-            ))));
+            )));
   }
 }

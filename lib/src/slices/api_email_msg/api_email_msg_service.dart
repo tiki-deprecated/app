@@ -14,7 +14,7 @@ class ApiEmailMsgService {
   final ApiEmailMsgRepository _repository;
 
   ApiEmailMsgService({required Database database})
-      : this._repository = ApiEmailMsgRepository(database);
+      : _repository = ApiEmailMsgRepository(database);
 
   Future<ApiEmailMsgModel> upsert(ApiEmailMsgModel message) async =>
       await _repository.upsert(message);
@@ -52,7 +52,7 @@ class ApiEmailMsgService {
   Future<void> saveList(List<ApiEmailMsgModel> messages) async {
     for (int i = 0; i < messages.length; i++) {
       ApiEmailMsgModel message = messages[i];
-      await this.upsert(message);
+      await upsert(message);
     }
   }
 

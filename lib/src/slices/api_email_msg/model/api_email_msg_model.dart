@@ -28,25 +28,30 @@ class ApiEmailMsgModel extends JsonObject {
 
   ApiEmailMsgModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.messageId = json['message_id'];
-      this.extMessageId = json['ext_message_id'];
-      this.sender = ApiEmailSenderModel.fromJson(json['sender']);
-      this.toEmail = json['to_email'];
-      if (json['received_date_epoch'] != null)
-        this.receivedDate =
+      messageId = json['message_id'];
+      extMessageId = json['ext_message_id'];
+      sender = ApiEmailSenderModel.fromJson(json['sender']);
+      toEmail = json['to_email'];
+      if (json['received_date_epoch'] != null) {
+        receivedDate =
             DateTime.fromMillisecondsSinceEpoch(json['received_date_epoch']);
-      if (json['opened_date_epoch'] != null)
-        this.openedDate =
+      }
+      if (json['opened_date_epoch'] != null) {
+        openedDate =
             DateTime.fromMillisecondsSinceEpoch(json['opened_date_epoch']);
-      if (json['modified_epoch'] != null)
-        this.modified =
+      }
+      if (json['modified_epoch'] != null) {
+        modified =
             DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
-      if (json['created_epoch'] != null)
-        this.created =
+      }
+      if (json['created_epoch'] != null) {
+        created =
             DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+      }
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'message_id': messageId,

@@ -15,6 +15,6 @@ class DataScreenPresenter {
 
   ChangeNotifierProvider<DataScreenService> render() {
     return ChangeNotifierProvider.value(
-        value: service, child: DataScreenLayout());
+        value: service, child: const DataScreenLayout());
   }
 }

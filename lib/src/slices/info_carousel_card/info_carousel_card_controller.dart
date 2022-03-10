@@ -53,15 +53,17 @@ class InfoCarouselCardController {
   }
 
   bool onScrollNotification(scrollNotification, animationController) {
-    if (scrollNotification is ScrollStartNotification)
+    if (scrollNotification is ScrollStartNotification) {
       scrollStartPos = scrollNotification.metrics.pixels;
-    if (scrollNotification is ScrollUpdateNotification)
+    }
+    if (scrollNotification is ScrollUpdateNotification) {
       scrollUpdatePos = scrollNotification.metrics.pixels;
-    else if (scrollNotification is ScrollEndNotification &&
+    } else if (scrollNotification is ScrollEndNotification &&
         scrollStartPos == 0.0 &&
         scrollUpdatePos == 0.0 &&
-        scrollNotification.metrics.atEdge)
+        scrollNotification.metrics.atEdge) {
       animationController.animateTo(0.0, curve: Curves.easeOut);
+    }
     return false;
   }
 
@@ -75,7 +77,8 @@ class InfoCarouselCardController {
   }
 
   tapArrowSlideUp(animationController) {
-    if (service.model.content != null)
+    if (service.model.content != null) {
       animationController.animateTo(1.0, curve: Curves.easeOut);
+    }
   }
 }

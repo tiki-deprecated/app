@@ -15,10 +15,10 @@ class ApiKnowledgeModelFingerprintRsp extends JsonObject {
 
   ApiKnowledgeModelFingerprintRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.fingerprints =
+      fingerprints =
           json['fingerprints'] != null ? Set.from(json['fingerprints']) : null;
-      this.from = ApiKnowledgeModelFingerprintRspEdge.fromJson(json['from']);
-      this.from = ApiKnowledgeModelFingerprintRspEdge.fromJson(json['to']);
+      from = ApiKnowledgeModelFingerprintRspEdge.fromJson(json['from']);
+      from = ApiKnowledgeModelFingerprintRspEdge.fromJson(json['to']);
     }
   }
 

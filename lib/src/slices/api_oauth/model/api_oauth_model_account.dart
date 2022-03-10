@@ -21,7 +21,7 @@ class ApiOAuthModelAccount extends JsonObject {
 
   String? get username => _username ?? email;
 
-  void set username(String? username) {
+  set username(String? username) {
     _username = username;
   }
 
@@ -36,34 +36,35 @@ class ApiOAuthModelAccount extends JsonObject {
       this.refreshTokenExpiration,
       this.shouldReconnect});
 
-  ApiOAuthModelAccount.fromDynamic(dynamic data, String provider) {
-    this.email = data.email;
-    this.displayName = data.displayName;
-    this.accessToken = data.token;
-    this.accessTokenExpiration =
+  ApiOAuthModelAccount.fromDynamic(dynamic data, this.provider) {
+    email = data.email;
+    displayName = data.displayName;
+    accessToken = data.token;
+    accessTokenExpiration =
         (data.accessTokenExp as DateTime).millisecondsSinceEpoch;
-    this.refreshToken = data.refreshToken;
-    this.provider = provider;
+    refreshToken = data.refreshToken;
   }
 
   ApiOAuthModelAccount.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.accountId = json['account_id'];
-      this.username = json['username'];
-      this.displayName = json['display_name'];
-      this.email = json['email'];
-      this.provider = json['provider'];
-      this.accessToken = json['access_token'];
-      this.accessTokenExpiration = json['access_token_expiration'];
-      this.refreshToken = json['refresh_token'];
-      this.refreshTokenExpiration = json['refresh_token_expiration'];
-      this.shouldReconnect = json['should_reconnect'] ?? 0;
-      if (json['modified_epoch'] != null)
-        this.modified =
+      accountId = json['account_id'];
+      username = json['username'];
+      displayName = json['display_name'];
+      email = json['email'];
+      provider = json['provider'];
+      accessToken = json['access_token'];
+      accessTokenExpiration = json['access_token_expiration'];
+      refreshToken = json['refresh_token'];
+      refreshTokenExpiration = json['refresh_token_expiration'];
+      shouldReconnect = json['should_reconnect'] ?? 0;
+      if (json['modified_epoch'] != null) {
+        modified =
             DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
-      if (json['created_epoch'] != null)
-        this.created =
+      }
+      if (json['created_epoch'] != null) {
+        created =
             DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+      }
     }
   }
 

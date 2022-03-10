@@ -13,7 +13,7 @@ import '../../info_carousel_card_service.dart';
 class InfoCarouselCardViewCoverText extends StatelessWidget {
   final Animation<double> _animationValue;
 
-  InfoCarouselCardViewCoverText(this._animationValue);
+  const InfoCarouselCardViewCoverText(this._animationValue, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

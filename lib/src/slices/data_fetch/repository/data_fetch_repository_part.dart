@@ -33,9 +33,10 @@ class DataFetchRepositoryPart {
 
   Future<int> batchUpsert<T extends JsonObject>(
       List<DataFetchModelPart<T>> parts) async {
-    if (parts.length > 0) {
+    if (parts.isNotEmpty) {
       Batch batch = _database.batch();
-      parts.forEach((part) => batch.rawInsert(
+      for (var part in parts) {
+        batch.rawInsert(
             _upsertQuery,
             [
               part.extId,
@@ -43,11 +44,13 @@ class DataFetchRepositoryPart {
               part.api?.value,
               jsonEncode(part.obj?.toJson())
             ],
-          ));
+          );
+      }
       List res = await batch.commit(continueOnError: true);
       return res.length;
-    } else
+    } else {
       return 0;
+    }
   }
 
   Future<DataFetchModelPart<T>> upsert<T extends JsonObject>(
@@ -65,7 +68,7 @@ class DataFetchRepositoryPart {
   Future<DataFetchModelPart<T>?> getByExtIdAndAccount<T extends JsonObject>(
       String extId,
       int accountId,
-      T fromJson(Map<String, dynamic>? json)) async {
+      T Function(Map<String, dynamic>? json) fromJson) async {
     final List<Map<String, Object?>> rows = await _select(
         where: 'part.ext_id = ? AND account.account_id = ?',
         whereArgs: [extId, accountId]);
@@ -76,7 +79,7 @@ class DataFetchRepositoryPart {
   Future<List<DataFetchModelPart<T>>> getByAccountAndApi<T extends JsonObject>(
       int accountId,
       DataFetchModelApi api,
-      T fromJson(Map<String, dynamic>? json),
+      T Function(Map<String, dynamic>? json) fromJson,
       {int? max}) async {
     final List<Map<String, Object?>> rows = await _select(
         where: 'part.api_enum = ? AND account.account_id = ? ',
@@ -118,14 +121,15 @@ class DataFetchRepositoryPart {
         whereArgs);
     if (rows.isEmpty) return List.empty();
     return rows.map((row) {
-      Map<String, Object?> partMap = Map();
-      Map<String, Object?> accountMap = Map();
-      row.entries.forEach((element) {
-        if (element.key.contains('part@'))
+      Map<String, Object?> partMap = {};
+      Map<String, Object?> accountMap = {};
+      for (var element in row.entries) {
+        if (element.key.contains('part@')) {
           partMap[element.key.replaceFirst('part@', '')] = element.value;
-        else if (element.key.contains('account@'))
+        } else if (element.key.contains('account@')) {
           accountMap[element.key.replaceFirst('account@', '')] = element.value;
-      });
+        }
+      }
       partMap['account'] = accountMap;
       return partMap;
     }).toList();
@@ -147,7 +151,7 @@ class DataFetchRepositoryPart {
       List<String> extIds, int accountId) async {
     int count = await _database.delete(_table,
         where: 'account_id = ? AND ext_id IN (' +
-            extIds.map((id) => "\'" + id + "\'").join(",") +
+            extIds.map((id) => "'" + id + "'").join(",") +
             ')',
         whereArgs: [
           accountId,

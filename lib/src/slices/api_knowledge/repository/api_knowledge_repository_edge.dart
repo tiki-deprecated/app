@@ -14,7 +14,7 @@ import '../model/edge/api_knowledge_model_edge.dart';
 
 class ApiKnowledgeRepositoryEdge {
   final Logger _log = Logger('ApiKnowledgeRepositoryEdge');
-  static final String _path = 'https://knowledge.mytiki.com/api/latest/edge';
+  static const String _path = 'https://knowledge.mytiki.com/api/latest/edge';
 
   Future<void> post(
       {required HttppClient client,
@@ -27,7 +27,7 @@ class ApiKnowledgeRepositoryEdge {
         verb: HttppVerb.POST,
         headers: HttppHeaders.typical(bearerToken: accessToken),
         body: HttppBody(jsonEncode(JsonUtils.listToJson(body))),
-        timeout: Duration(seconds: 30),
+        timeout: const Duration(seconds: 30),
         onSuccess: (rsp) {
           if (onSuccess != null) {
             TikiApiModelRsp body =

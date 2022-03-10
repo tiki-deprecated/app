@@ -22,7 +22,7 @@ class HomeScreenService extends ChangeNotifier {
   }
 
   void setCurrentScreenIndex(int index) {
-    this.model.currentScreenIndex = index;
+    model.currentScreenIndex = index;
     notifyListeners();
   }
 

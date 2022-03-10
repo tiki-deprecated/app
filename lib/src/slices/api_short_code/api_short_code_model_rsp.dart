@@ -12,7 +12,7 @@ class ApiShortCodeModelRsp extends JsonObject {
 
   ApiShortCodeModelRsp.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.code = json['code'];
+      code = json['code'];
     }
   }
 

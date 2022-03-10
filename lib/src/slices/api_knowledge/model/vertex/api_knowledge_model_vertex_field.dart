@@ -13,8 +13,8 @@ class ApiKnowledgeModelVertexField extends JsonObject {
 
   ApiKnowledgeModelVertexField.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.name = json['name'];
-      this.dataType = json['dataType'];
+      name = json['name'];
+      dataType = json['dataType'];
     }
   }
 

@@ -31,30 +31,34 @@ class ApiEmailSenderModel extends JsonObject {
       this.unsubscribed = false,
       this.modified,
       this.created})
-      : this.ignoreUntil =
+      : ignoreUntil =
             ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
   ApiEmailSenderModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      this.senderId = json['sender_id'];
-      this.company = ApiCompanyModel.fromJson(json['company']);
-      this.name = json['name'];
-      this.email = json['email'];
-      this.category = json['category'];
-      this.unsubscribeMailTo = json['unsubscribe_mail_to'];
-      this.unsubscribed = json['unsubscribed_bool'] == 1 ? true : false;
-      if (json['ignore_until_epoch'] != null)
-        this.ignoreUntil =
+      senderId = json['sender_id'];
+      company = ApiCompanyModel.fromJson(json['company']);
+      name = json['name'];
+      email = json['email'];
+      category = json['category'];
+      unsubscribeMailTo = json['unsubscribe_mail_to'];
+      unsubscribed = json['unsubscribed_bool'] == 1 ? true : false;
+      if (json['ignore_until_epoch'] != null) {
+        ignoreUntil =
             DateTime.fromMillisecondsSinceEpoch(json['ignore_until_epoch']);
-      if (json['email_since_epoch'] != null)
-        this.emailSince =
+      }
+      if (json['email_since_epoch'] != null) {
+        emailSince =
             DateTime.fromMillisecondsSinceEpoch(json['email_since_epoch']);
-      if (json['modified_epoch'] != null)
-        this.modified =
+      }
+      if (json['modified_epoch'] != null) {
+        modified =
             DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
-      if (json['created_epoch'] != null)
-        this.created =
+      }
+      if (json['created_epoch'] != null) {
+        created =
             DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+      }
     }
   }
 

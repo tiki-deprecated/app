@@ -7,9 +7,9 @@ import 'package:permission_handler/permission_handler.dart';
 
 class HelperPermission {
   static Future<bool> request(Permission permission) async {
-    if (await permission.isGranted)
+    if (await permission.isGranted) {
       return true;
-    else {
+    } else {
       PermissionStatus result = await permission.request();
       if (result.isGranted) return true;
     }

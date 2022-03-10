@@ -14,7 +14,7 @@ import '../../info_carousel_card_service.dart';
 class InfoCarouselCardViewCoverHeader extends StatelessWidget {
   final Animation<double> _animationValue;
 
-  InfoCarouselCardViewCoverHeader(this._animationValue);
+  const InfoCarouselCardViewCoverHeader(this._animationValue, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

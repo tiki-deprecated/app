@@ -14,13 +14,16 @@ import 'data_screen_view_score.dart';
 import 'data_screen_view_soon.dart';
 
 class DataScreenLayoutBody extends StatelessWidget {
+
+  const DataScreenLayoutBody({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     DataScreenService service = Provider.of<DataScreenService>(context);
     bool isLinked = service.account != null;
     return GestureDetector(
         child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Column(
@@ -33,10 +36,10 @@ class DataScreenLayoutBody extends StatelessWidget {
                             ? "Your account is linked now. See what data ${service.account.provider} holds by tapping on the button below."
                             : "Get started by adding an account",
                         color: isLinked ? ConfigColor.green : ConfigColor.blue),
-                    DecisionScreenLayoutAccounts(),
+                    const DecisionScreenLayoutAccounts(),
                     Container(
                         margin: EdgeInsets.only(top: 2.h),
-                        child: DataScreenViewSoon())
+                        child: const DataScreenViewSoon())
                   ],
                 ))));
   }

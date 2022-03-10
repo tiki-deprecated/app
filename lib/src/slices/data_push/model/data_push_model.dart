@@ -25,32 +25,33 @@ class DataPushModel {
       this.created});
 
   DataPushModel.fromMap(Map<String, dynamic> map)
-      : this.queueId = map['queue_id'],
-        this.fromType = map['from_type'],
-        this.fromValue = map['from_value'],
-        this.toType = map['to_type'],
-        this.toValue = map['to_value'],
-        this.fingerprint = map['fingerprint'] {
+      : queueId = map['queue_id'],
+        fromType = map['from_type'],
+        fromValue = map['from_value'],
+        toType = map['to_type'],
+        toValue = map['to_value'],
+        fingerprint = map['fingerprint'] {
     int? createdEpoch = map['created_epoch'];
-    if (createdEpoch != null)
-      this.created = DateTime.fromMillisecondsSinceEpoch(createdEpoch);
+    if (createdEpoch != null) {
+      created = DateTime.fromMillisecondsSinceEpoch(createdEpoch);
+    }
   }
 
   DataPushModel.fromEdge(ApiKnowledgeModelEdge edge)
-      : this.fromValue = edge.from?.value,
-        this.fromType = edge.from?.type,
-        this.toValue = edge.to?.value,
-        this.toType = edge.to?.type,
-        this.fingerprint = edge.fingerprint;
+      : fromValue = edge.from?.value,
+        fromType = edge.from?.type,
+        toValue = edge.to?.value,
+        toType = edge.to?.type,
+        fingerprint = edge.fingerprint;
 
   Map<String, dynamic> toMap() {
     return {
-      'queue_id': this.queueId,
-      'from_type': this.fromType,
-      'from_value': this.fromValue,
-      'to_type': this.toType,
-      'to_value': this.toValue,
-      'fingerprint': this.fingerprint,
+      'queue_id': queueId,
+      'from_type': fromType,
+      'from_value': fromValue,
+      'to_type': toType,
+      'to_value': toValue,
+      'fingerprint': fingerprint,
       'created_epoch': created?.millisecondsSinceEpoch,
     };
   }
@@ -58,13 +59,13 @@ class DataPushModel {
   ApiKnowledgeModelEdge toEdge() {
     return ApiKnowledgeModelEdge(
         from: ApiKnowledgeModelEdgeVertex(
-          type: this.fromType,
-          value: this.fromValue,
+          type: fromType,
+          value: fromValue,
         ),
         to: ApiKnowledgeModelEdgeVertex(
-          type: this.toType,
-          value: this.toValue,
+          type: toType,
+          value: toValue,
         ),
-        fingerprint: this.fingerprint);
+        fingerprint: fingerprint);
   }
 }
