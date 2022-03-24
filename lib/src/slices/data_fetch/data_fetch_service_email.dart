@@ -6,7 +6,6 @@
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
-import '../api_app_data/api_app_data_service.dart';
 import '../api_company/api_company_service.dart';
 import '../api_email_msg/api_email_msg_service.dart';
 import '../api_email_msg/model/api_email_msg_model.dart';
@@ -38,7 +37,6 @@ class DataFetchServiceEmail {
 
   DataFetchServiceEmail(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiCompanyService apiCompanyService,

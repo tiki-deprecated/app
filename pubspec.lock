@@ -378,11 +378,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.3"
-      resolved-ref: f9ab36b554a3b2615c4d69bb22ec0457be6eefdd
+      ref: HEAD
+      resolved-ref: "786c44ca8d733dd0fe95efa6fd6ea989c01fa383"
       url: "https://github.com/tiki/google_provider"
     source: git
-    version: "0.0.3"
+    version: "0.0.4"
   html:
     dependency: transitive
     description:
@@ -408,9 +408,18 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.3"
+      ref: HEAD
       resolved-ref: "1f6a31faaf0d333a1221df9bbb4ef53b870b24b9"
       url: "https://github.com/tiki/httpp"
+    source: git
+    version: "0.0.3"
+  info_carousel:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "303ffbc81631b80559900a70f0f465b2de45d556"
+      url: "https://github.com/tiki/info_carousel"
     source: git
     version: "0.0.3"
   integration_test:
@@ -446,6 +455,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  localchain:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "14f2383d40668af9f70a0a9da4b2790459506d61"
+      url: "https://github.com/tiki/localchain"
+    source: git
+    version: "0.0.2"
   logging:
     dependency: "direct main"
     description:
@@ -456,11 +474,9 @@ packages:
   login:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.7"
-      resolved-ref: "96ef8bc76c1b601a988da7928bf5c602620a7a94"
-      url: "https://github.com/tiki/login"
-    source: git
+      path: "../login"
+      relative: true
+    source: path
     version: "0.0.7"
   lottie:
     dependency: "direct main"
@@ -501,11 +517,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.3"
-      resolved-ref: "6a9bb41791bb700cebba2ebeae7cb535216c2e7e"
+      ref: HEAD
+      resolved-ref: "401284233bce0766bcc38d753c3eb87030bd47de"
       url: "https://github.com/tiki/microsoft_provider"
     source: git
-    version: "0.0.3"
+    version: "0.0.4"
   mime:
     dependency: transitive
     description:
@@ -516,12 +532,10 @@ packages:
   money:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.3"
-      resolved-ref: bc4f114cf31b7268f1e7a0d324c7397f279e85f5
-      url: "https://github.com/tiki/money"
-    source: git
-    version: "0.0.1"
+      path: "../money"
+      relative: true
+    source: path
+    version: "0.0.6"
   nested:
     dependency: transitive
     description:
@@ -710,7 +724,7 @@ packages:
       name: pointycastle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.5.1"
+    version: "3.5.2"
   process:
     dependency: transitive
     description:
@@ -907,6 +921,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  tiki_kv:
+    dependency: "direct main"
+    description:
+      path: "../tiki_kv"
+      relative: true
+    source: path
+    version: "0.0.1"
   tuple:
     dependency: transitive
     description:
@@ -1071,12 +1092,10 @@ packages:
   wallet:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.8"
-      resolved-ref: be76019ebf80dffa7c891656e50b7b1a024b2ef2
-      url: "https://github.com/tiki/wallet"
-    source: git
-    version: "0.0.8"
+      path: "../wallet"
+      relative: true
+    source: path
+    version: "0.0.9"
   watcher:
     dependency: transitive
     description:

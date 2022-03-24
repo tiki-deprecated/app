@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
-import '../data_fetch/data_fetch_interface_provider.dart';
 import '../data_fetch/data_fetch_service.dart';
-import '../info_carousel_card/model/info_carousel_card_model.dart';
 import 'data_screen_controller.dart';
 import 'data_screen_presenter.dart';
 import 'model/data_screen_model.dart';
@@ -56,17 +54,7 @@ class DataScreenService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<InfoCarouselCardModel>?> getInfoCards(int accountId) async {
-    ApiOAuthModelAccount? account = _model.account;
-    if (account != null) {
-      DataFetchInterfaceProvider? provider = _apiAuthService
-          .interfaceProviders[account.provider] as DataFetchInterfaceProvider?;
-      if (provider?.email != null) return await provider!.getInfoCards(account);
-    }
-    return List<InfoCarouselCardModel>.empty();
-  }
-
-  fetchInbox(ApiOAuthModelAccount account){
+  fetchInbox(ApiOAuthModelAccount account) {
     _dataFetchService.asyncIndex(account);
     notifyListeners();
   }

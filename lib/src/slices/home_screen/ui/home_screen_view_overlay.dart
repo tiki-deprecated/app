@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tiki_kv/tiki_kv.dart';
 
 import '../../../config/config_color.dart';
 import '../../../config/config_font.dart';
@@ -14,7 +15,6 @@ import '../../home_screen/home_screen_controller.dart';
 import '../home_screen_service.dart';
 
 class HomeScreenViewOverlay extends StatelessWidget {
-
   const HomeScreenViewOverlay({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +22,8 @@ class HomeScreenViewOverlay extends StatelessWidget {
     HomeScreenController controller =
         Provider.of<HomeScreenService>(context, listen: false).controller;
     return GestureDetector(
-        onTap: () async => controller.dismissOverlay(context),
+        onTap: () async => controller
+            .dismissOverlay(Provider.of<TikiKv>(context, listen: false)),
         child: Stack(children: [
           Image(
             image: const AssetImage('res/images/overlay-bg.png'),
