@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:tiki_kv/tiki_kv.dart';
 import 'package:user_account/user_account.dart';
 import 'package:wallet/wallet.dart';
 
@@ -20,7 +21,6 @@ import 'src/config/config_color.dart';
 import 'src/config/config_font.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
-import 'src/slices/api_app_data/api_app_data_service.dart';
 import 'src/slices/api_company/api_company_service.dart';
 import 'src/slices/api_email_msg/api_email_msg_service.dart';
 import 'src/slices/api_email_sender/api_email_sender_service.dart';
@@ -49,8 +49,8 @@ Future<void> main() async {
       httpp: httpp,
       secureStorage: secureStorage,
       home: home.presenter);
-  home.presenter.inject(() =>
-      provide(login: login, secureStorage: secureStorage, httpp: httpp));
+  home.presenter.inject(
+      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
   login.onLogin('Upgrade', () => upgrade(login, httpp));
   await login.init();
   return SentryFlutter.init(
@@ -64,15 +64,16 @@ Future<void> main() async {
       appRunner: () => runApp(App(login.routerDelegate)));
 }
 
-Future<List<SingleChildWidget>> provide({
-  FlutterSecureStorage? secureStorage,
-  Httpp? httpp,
-  required Login login
-}) async {
+Future<List<SingleChildWidget>> provide(
+    {FlutterSecureStorage? secureStorage,
+    Httpp? httpp,
+    required Login login}) async {
   Logger log = Logger('HomeScreenService.provide');
-  TikiKeysService tikiKeysService = TikiKeysService(secureStorage: secureStorage);
+  TikiKeysService tikiKeysService =
+      TikiKeysService(secureStorage: secureStorage);
   FlowModelUser? user = login.user;
-  TikiKeysModel? keys = user?.address != null ? await tikiKeysService.get(user!.address!) : null;
+  TikiKeysModel? keys =
+      user?.address != null ? await tikiKeysService.get(user!.address!) : null;
   if (user == null || user.address == null || keys == null) {
     log.severe('Attempting to open home page without a valid user');
     await login.logout();
@@ -80,9 +81,8 @@ Future<List<SingleChildWidget>> provide({
   } else {
     Database database = await db.open(keys.data.encode());
 
-    ApiAppDataService apiAppDataService = ApiAppDataService(database: database);
-    login.onLogout('ApiAppDataService',
-        () async => await apiAppDataService.deleteAllData());
+    TikiKv tikiKv = TikiKv(database: database);
+    login.onLogout('TikiKv', () async => await tikiKv.deleteAllData());
 
     ApiKnowledgeService apiKnowledgeService =
         ApiKnowledgeService(httpp: httpp, refresh: login.refresh);
@@ -118,24 +118,17 @@ Future<List<SingleChildWidget>> provide({
         database: database);
 
     ApiShortCodeService apiShortCodeService =
-      ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+        ApiShortCodeService(httpp: httpp, refresh: login.refresh);
 
     ApiSignupService apiSignupService = ApiSignupService();
 
-    DecisionSdk decisionSdk = await DecisionSdk(
-        apiAppDataService : apiAppDataService,
-        apiAuthService : apiAuthService,
-        apiEmailSenderService : apiEmailSenderService,
-        apiEmailMsgService : apiEmailMsgService,
-        dataFetchService : dataFetchService,
-    ).init();
+    bool isConnected = (await apiAuthService.getAccount()) != null;
+    DecisionSdk decisionSdk =
+        await DecisionSdk(tikiKv: tikiKv, isConnected: isConnected).init();
 
     UserAccount userAccount = await UserAccount(
-        apiAppDataService: apiAppDataService,
-        tikiKeysService: tikiKeysService,
-        apiSignupService: apiSignupService,
-        login: login
-    ).init();
+            logout: () => login.logout(), referalCode: '', combinedKeys: '')
+        .init();
 
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

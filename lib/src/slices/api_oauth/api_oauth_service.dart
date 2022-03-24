@@ -29,7 +29,6 @@ class ApiOAuthService {
   final FlutterAppAuth _appAuth;
   final ApiOAuthRepositoryAccount _apiAuthRepositoryAccount;
   final ApiOAuthRepositoryProvider _apiAuthRepositoryProvider;
-  final ApiAppDataService _apiAppDataService;
   final Httpp httpp;
 
   static const String PROVIDER_GOOGLE = 'google';
@@ -40,13 +39,11 @@ class ApiOAuthService {
 
   ApiOAuthService(
       {required Database database,
-      required ApiAppDataService apiAppDataService,
       required this.httpp})
       : _appAuth = FlutterAppAuth(),
         _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
         _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
-        _model = ApiOauthModel(),
-        _apiAppDataService = apiAppDataService {
+        _model = ApiOauthModel(),{
     _getProviders();
   }
 
@@ -187,13 +184,11 @@ class ApiOAuthService {
         case PROVIDER_GOOGLE:
           _model.interfaceProviders[k] = ApiGoogleService(
               apiAuthService: this,
-              apiAppDataService: _apiAppDataService,
               httpp: httpp);
           break;
         case PROVIDER_MICROSOFT:
           _model.interfaceProviders[k] = ApiMicrosoftService(
               apiAuthService: this,
-              apiAppDataService: _apiAppDataService,
               httpp: httpp);
           break;
       }
