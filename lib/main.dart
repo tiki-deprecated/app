@@ -86,7 +86,7 @@ Future<List<SingleChildWidget>> provide(
 
     TikiKv tikiKv = TikiKv(database: database);
 
-    login.onLogout('TikiKv', () async => await tikiKv.deleteAllData());
+    // login.onLogout('TikiKv', () async => await tikiKv.deleteAllData());
 
     ApiKnowledgeService apiKnowledgeService =
         ApiKnowledgeService(httpp: httpp, refresh: login.refresh);
@@ -104,8 +104,8 @@ Future<List<SingleChildWidget>> provide(
         login: login,
         apiKnowledgeService: apiKnowledgeService);
 
-    ApiOAuthService apiAuthService = ApiOAuthService(
-        httpp: httpp ?? Httpp(), database: database, tikiKv: tikiKv);
+    ApiOAuthService apiAuthService =
+        ApiOAuthService(httpp: httpp ?? Httpp(), database: database);
     login.onLogout(
         'ApiAuthService', () async => await apiAuthService.signOutAll());
 
@@ -128,9 +128,21 @@ Future<List<SingleChildWidget>> provide(
     DecisionSdk decisionSdk =
         await DecisionSdk(tikiKv: tikiKv, isConnected: isConnected).init();
 
-    UserAccount userAccount = await UserAccount(
-            logout: () => login.logout(), referalCode: '', combinedKeys: '')
-        .init();
+    String combinedKeys = keys.address +
+        '.' +
+        keys.data.encode() +
+        '.' +
+        keys.sign.privateKey.encode();
+    String code = '';
+    await apiShortCodeService.get(
+        accessToken: login.token!.bearer!,
+        address: login.user!.address!,
+        onSuccess: (rsp) => code = rsp.code!);
+
+    UserAccount userAccount = UserAccount(
+        logout: () => login.logout(),
+        referalCode: code,
+        combinedKeys: combinedKeys);
 
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),

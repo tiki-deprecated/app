@@ -8,7 +8,6 @@ import '../../api_oauth/model/api_oauth_model_account.dart';
 import '../data_screen_service.dart';
 
 class DecisionScreenLayoutAccounts extends StatelessWidget {
-
   const DecisionScreenLayoutAccounts({Key? key}) : super(key: key);
 
   @override
@@ -30,18 +29,17 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
                           service.controller.saveAccount(model, 'google'),
                       onUnlink: (email) =>
                           service.controller.removeAccount(email!, 'google'),
-                      onSee: (cardsData) => service.controller
-                          .openGmailCards(context, 0)).accountWidget()
+                    ).accountWidget()
                   : GoogleProvider(
                       onLink: (model) {
-                        ApiOAuthModelAccount account = service.controller.saveAccount(model, 'google');
+                        ApiOAuthModelAccount account =
+                            service.controller.saveAccount(model, 'google');
                         service.fetchInbox(account);
                       },
                       onUnlink: (email) => account != null
                           ? service.controller.removeAccount(email!, 'google')
                           : null,
-                      onSee: (cardsData) => service.controller
-                          .openGmailCards(context, 0)).accountWidget()),
+                    ).accountWidget()),
       account != null && account.provider != "microsoft"
           ? Container()
           : Container(
@@ -56,15 +54,13 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
                           service.controller.saveAccount(model, 'microsoft'),
                       onUnlink: (email) =>
                           service.controller.removeAccount(email!, 'microsoft'),
-                      onSee: (cardsData) => service.controller
-                          .openCards(context, cardsData)).accountWidget()
+                    ).accountWidget()
                   : MicrosoftProvider(
                       onLink: (model) =>
                           service.controller.saveAccount(model, 'microsoft'),
                       onUnlink: (email) =>
                           service.controller.removeAccount(email!, 'microsoft'),
-                      onSee: (cardsData) => service.controller
-                          .openCards(context, cardsData)).accountWidget()),
+                    ).accountWidget()),
     ]);
   }
 }

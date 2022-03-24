@@ -10,9 +10,9 @@ import 'package:http/http.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:tiki_kv/tiki_kv.dart';
 
 import '../../config/config_sentry.dart';
-import '../api_app_data/api_app_data_service.dart';
 import '../api_google/api_google_service.dart';
 import '../api_microsoft/api_microsoft_service.dart';
 import 'api_oauth_interface_provider.dart';
@@ -34,16 +34,17 @@ class ApiOAuthService {
   static const String PROVIDER_GOOGLE = 'google';
   static const String PROVIDER_MICROSOFT = 'microsoft';
 
+  final TikiKv tikiKv;
+
   Map<String, ApiOAuthInterfaceProvider> get interfaceProviders =>
       _model.interfaceProviders;
 
-  ApiOAuthService(
-      {required Database database,
-      required this.httpp})
+  ApiOAuthService({required Database database, required this.httpp})
       : _appAuth = FlutterAppAuth(),
         _apiAuthRepositoryAccount = ApiOAuthRepositoryAccount(database),
         _apiAuthRepositoryProvider = ApiOAuthRepositoryProvider(),
-        _model = ApiOauthModel(),{
+        _model = ApiOauthModel(),
+        tikiKv = TikiKv(database: database) {
     _getProviders();
   }
 
@@ -183,13 +184,11 @@ class ApiOAuthService {
       switch (k) {
         case PROVIDER_GOOGLE:
           _model.interfaceProviders[k] = ApiGoogleService(
-              apiAuthService: this,
-              httpp: httpp);
+              apiAuthService: this, httpp: httpp, tikiKv: tikiKv);
           break;
         case PROVIDER_MICROSOFT:
           _model.interfaceProviders[k] = ApiMicrosoftService(
-              apiAuthService: this,
-              httpp: httpp);
+              apiAuthService: this, httpp: httpp, tikiKv: tikiKv);
           break;
       }
     });
