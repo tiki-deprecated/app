@@ -38,7 +38,7 @@ class DataFetchServiceEmail {
 
   DataFetchServiceEmail(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService,
+      required TikiKv tikiKv,
       required ApiEmailMsgService apiEmailMsgService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiCompanyService apiCompanyService,

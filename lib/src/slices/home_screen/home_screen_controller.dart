@@ -2,10 +2,8 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:tiki_kv/tiki_kv.dart';
 
-import '../api_app_data/api_app_data_service.dart';
 import 'home_screen_service.dart';
 
 class HomeScreenController {
@@ -15,9 +13,6 @@ class HomeScreenController {
 
   void onNavTap(int index) => service.setCurrentScreenIndex(index);
 
-  Future<void> dismissOverlay(BuildContext context) async {
-    ApiAppDataService apiAppDataService =
-        Provider.of<ApiAppDataService>(context, listen: false);
-    return service.dismissOverlay(apiAppDataService);
-  }
+  Future<void> dismissOverlay(TikiKv tikiKv) async =>
+      service.dismissOverlay(tikiKv);
 }

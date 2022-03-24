@@ -69,9 +69,12 @@ Future<List<SingleChildWidget>> provide(
     Httpp? httpp,
     required Login login}) async {
   Logger log = Logger('HomeScreenService.provide');
+
   TikiKeysService tikiKeysService =
       TikiKeysService(secureStorage: secureStorage);
+
   FlowModelUser? user = login.user;
+
   TikiKeysModel? keys =
       user?.address != null ? await tikiKeysService.get(user!.address!) : null;
   if (user == null || user.address == null || keys == null) {
@@ -82,6 +85,7 @@ Future<List<SingleChildWidget>> provide(
     Database database = await db.open(keys.data.encode());
 
     TikiKv tikiKv = TikiKv(database: database);
+
     login.onLogout('TikiKv', () async => await tikiKv.deleteAllData());
 
     ApiKnowledgeService apiKnowledgeService =
@@ -101,15 +105,13 @@ Future<List<SingleChildWidget>> provide(
         apiKnowledgeService: apiKnowledgeService);
 
     ApiOAuthService apiAuthService = ApiOAuthService(
-        httpp: httpp ?? Httpp(),
-        database: database,
-        apiAppDataService: apiAppDataService);
+        httpp: httpp ?? Httpp(), database: database, tikiKv: tikiKv);
     login.onLogout(
         'ApiAuthService', () async => await apiAuthService.signOutAll());
 
     DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
-        apiAppDataService: apiAppDataService,
+        tikiKv: tikiKv,
         apiCompanyService: apiCompanyService,
         apiEmailSenderService: apiEmailSenderService,
         apiEmailMsgService: apiEmailMsgService,
@@ -134,7 +136,7 @@ Future<List<SingleChildWidget>> provide(
       Provider<ApiCompanyService>.value(value: apiCompanyService),
       Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
       Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
-      Provider<ApiAppDataService>.value(value: apiAppDataService),
+      Provider<TikiKeysService>.value(value: tikiKeysService),
       Provider<ApiOAuthService>.value(value: apiAuthService),
       Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
       Provider<DataPushService>.value(value: dataPushService),

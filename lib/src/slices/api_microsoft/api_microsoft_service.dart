@@ -26,7 +26,7 @@ class ApiMicrosoftService
 
   ApiMicrosoftService(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService,
+      required TikiKv tikiKv,
       required Httpp httpp})
       : _apiAuthService = apiAuthService,
         _apiMicrosoftRepositoryInfo = ApiMicrosoftRepositoryInfo(),

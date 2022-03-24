@@ -25,7 +25,7 @@ class DataFetchService extends ChangeNotifier {
 
   DataFetchService(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService,
+      required TikiKv tikiKv,
       required ApiCompanyService apiCompanyService,
       required ApiEmailSenderService apiEmailSenderService,
       required ApiEmailMsgService apiEmailMsgService,
@@ -35,7 +35,7 @@ class DataFetchService extends ChangeNotifier {
       : _dataPushService = dataPushService {
     email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
-        apiAppDataService: apiAppDataService,
+        tikiKv: tikiKv,
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,

@@ -26,7 +26,7 @@ class ApiGoogleService
 
   ApiGoogleService(
       {required ApiOAuthService apiAuthService,
-      required ApiAppDataService apiAppDataService,
+      required TikiKv tikiKv,
       required Httpp httpp})
       : _apiAuthService = apiAuthService,
         _apiGoogleRepositoryInfo = ApiGoogleRepositoryInfo(),
