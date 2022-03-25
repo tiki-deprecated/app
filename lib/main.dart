@@ -126,14 +126,14 @@ Future<List<SingleChildWidget>> provide(
 
     bool isConnected = (await apiAuthService.getAccount()) != null;
     DecisionSdk decisionSdk =
-        await DecisionSdk(tikiKv: tikiKv, isConnected: isConnected).init();
+        await DecisionSdk(tikiKv: tikiKv, isConnected: isConnected);
 
+    String code = '';
     String combinedKeys = keys.address +
         '.' +
         keys.data.encode() +
         '.' +
         keys.sign.privateKey.encode();
-    String code = '';
     await apiShortCodeService.get(
         accessToken: login.token!.bearer!,
         address: login.user!.address!,

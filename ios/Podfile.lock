@@ -55,6 +55,8 @@ PODS:
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
+  - info_carousel (0.0.1):
+    - Flutter
   - integration_test (0.0.1):
     - Flutter
   - microsoft_provider (0.0.1):
@@ -99,6 +101,8 @@ PODS:
   - SQLCipher/standard (4.4.2):
     - SQLCipher/common
   - SwiftProtobuf (1.18.0)
+  - tiki_kv (0.0.1):
+    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - user_account (0.0.1):
@@ -137,6 +141,7 @@ DEPENDENCIES:
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_provider (from `.symlinks/plugins/google_provider/ios`)
+  - info_carousel (from `.symlinks/plugins/info_carousel/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - microsoft_provider (from `.symlinks/plugins/microsoft_provider/ios`)
   - money (from `.symlinks/plugins/money/ios`)
@@ -148,6 +153,7 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - sqflite_sqlcipher (from `.symlinks/plugins/sqflite_sqlcipher/ios`)
+  - tiki_kv (from `.symlinks/plugins/tiki_kv/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - user_account (from `.symlinks/plugins/user_account/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
@@ -201,6 +207,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_provider:
     :path: ".symlinks/plugins/google_provider/ios"
+  info_carousel:
+    :path: ".symlinks/plugins/info_carousel/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   microsoft_provider:
@@ -223,6 +231,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   sqflite_sqlcipher:
     :path: ".symlinks/plugins/sqflite_sqlcipher/ios"
+  tiki_kv:
+    :path: ".symlinks/plugins/tiki_kv/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   user_account:
@@ -255,6 +265,7 @@ SPEC CHECKSUMS:
   google_provider: ec96de73ab7d7513fdd998c34504cf6312e5add0
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  info_carousel: 0dd2287149072a4e28acaf5923c25b1d5e5b6272
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
   microsoft_provider: 3d753f0eb5389eb49a0ce15e3907051212c8532e
   money: e180a271456350c7761a69e4b45eaf5db0cfae86
@@ -272,6 +283,7 @@ SPEC CHECKSUMS:
   sqflite_sqlcipher: 70eb7fd8d4f0b0352d0bde5cf345b810737f54bb
   SQLCipher: 1ab0b9486a77d141e72e92ff30681926ed79c07a
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
+  tiki_kv: 0c122da8304726ce43fc8a129e7a1babe43bb30c
   url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
   user_account: a61a1854bfe71559d4d856cb3c1e3e1ed410108f
   video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
