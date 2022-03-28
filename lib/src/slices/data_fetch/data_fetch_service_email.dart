@@ -4,6 +4,7 @@
  */
 
 import 'package:logging/logging.dart';
+import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_company/api_company_service.dart';
@@ -31,6 +32,8 @@ class DataFetchServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final DataFetchRepositoryPart _repositoryPart;
   final DataFetchRepositoryLast _repositoryLast;
+  final SpamCards _spamCards;
+
   final Function notifyListeners;
 
   final Set<int> _processMutex = {};
@@ -42,13 +45,15 @@ class DataFetchServiceEmail {
       required ApiCompanyService apiCompanyService,
       required DataPushService dataPushService,
       required Database database,
+      required SpamCards spamCards,
       required this.notifyListeners})
       : _apiAuthService = apiAuthService,
         _apiEmailMsgService = apiEmailMsgService,
         _apiEmailSenderService = apiEmailSenderService,
         _apiCompanyService = apiCompanyService,
         _repositoryPart = DataFetchRepositoryPart(database),
-        _repositoryLast = DataFetchRepositoryLast(database);
+        _repositoryLast = DataFetchRepositoryLast(database),
+        _spamCards = spamCards;
 
   Future<void> asyncIndex(ApiOAuthModelAccount account) async {
     _log.fine('Async index for ' +
@@ -95,18 +100,20 @@ class DataFetchServiceEmail {
     }
   }
 
-  Future<void> asyncProcess(ApiOAuthModelAccount account) async {
+  Future<void> asyncProcess(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     if (!_processMutex.contains(account.accountId!)) {
       _processMutex.add(account.accountId!);
       _log.fine('Async process for ' +
           (account.email ?? '') +
           ' started on: ' +
           DateTime.now().toIso8601String());
-      _asyncProcess(account);
+      _asyncProcess(account, onFinish: onFinish);
     }
   }
 
-  Future<void> _asyncProcess(ApiOAuthModelAccount account) async {
+  Future<void> _asyncProcess(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null) throw 'Invalid email interface';
     if (!await _isConnected(account)) {
@@ -173,6 +180,9 @@ class DataFetchServiceEmail {
                 fetched.map((msg) => msg.extMessageId!).toList(),
                 account.accountId!);
             _log.fine('finished & deleted $count parts');
+            if (onFinish != null) {
+              onFinish(fetched);
+            }
             _asyncProcess(account);
           });
     } else {

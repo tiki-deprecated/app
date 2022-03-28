@@ -10,6 +10,7 @@ import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 import 'package:user_account/user_account.dart';
@@ -109,6 +110,17 @@ Future<List<SingleChildWidget>> provide(
     login.onLogout(
         'ApiAuthService', () async => await apiAuthService.signOutAll());
 
+    ApiShortCodeService apiShortCodeService =
+        ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+
+    ApiSignupService apiSignupService = ApiSignupService();
+
+    bool isConnected = (await apiAuthService.getAccount()) != null;
+
+    DecisionSdk decisionSdk =
+        DecisionSdk(tikiKv: tikiKv, isConnected: isConnected);
+    SpamCards spamCards = SpamCards(decisionSdk: decisionSdk);
+
     DataFetchService dataFetchService = DataFetchService(
         apiAuthService: apiAuthService,
         tikiKv: tikiKv,
@@ -117,16 +129,8 @@ Future<List<SingleChildWidget>> provide(
         apiEmailMsgService: apiEmailMsgService,
         apiKnowledgeService: apiKnowledgeService,
         dataPushService: dataPushService,
-        database: database);
-
-    ApiShortCodeService apiShortCodeService =
-        ApiShortCodeService(httpp: httpp, refresh: login.refresh);
-
-    ApiSignupService apiSignupService = ApiSignupService();
-
-    bool isConnected = (await apiAuthService.getAccount()) != null;
-    DecisionSdk decisionSdk =
-        await DecisionSdk(tikiKv: tikiKv, isConnected: isConnected);
+        database: database,
+        spamCards: spamCards);
 
     String code = '';
     String combinedKeys = keys.address +

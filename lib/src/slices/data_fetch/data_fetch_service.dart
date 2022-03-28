@@ -4,6 +4,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 
@@ -31,7 +32,8 @@ class DataFetchService extends ChangeNotifier {
       required ApiEmailMsgService apiEmailMsgService,
       required ApiKnowledgeService apiKnowledgeService,
       required DataPushService dataPushService,
-      required Database database})
+      required Database database,
+      required SpamCards spamCards})
       : _dataPushService = dataPushService {
     email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
@@ -40,16 +42,18 @@ class DataFetchService extends ChangeNotifier {
         apiCompanyService: apiCompanyService,
         dataPushService: _dataPushService,
         database: database,
+        spamCards: spamCards,
         notifyListeners: notifyListeners);
   }
 
-  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+  Future<void> asyncIndex(ApiOAuthModelAccount account,
+      {Function(List)? onFinishProcces}) async {
     if (!_indexMutex.contains(account.accountId!)) {
       _indexMutex.add(account.accountId!);
       _log.fine(
           'DataFetchService async index for account ${account.accountId}');
       Future f1 = email.asyncIndex(account);
-      Future f2 = email.asyncProcess(account);
+      Future f2 = email.asyncProcess(account, onFinish: onFinishProcces);
       await Future.wait([f1, f2]);
       _indexMutex.remove(account.accountId!);
     }

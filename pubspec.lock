@@ -849,6 +849,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
+  spam_cards:
+    dependency: "direct main"
+    description:
+      path: "../spam_cards"
+      relative: true
+    source: path
+    version: "0.0.1"
   sqflite:
     dependency: "direct overridden"
     description:

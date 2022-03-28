@@ -55,6 +55,8 @@ dependencies:
     path: ../money
   tiki_kv:
     path: ../tiki_kv
+  spam_cards:
+    path: ../spam_cards
 
 dependency_overrides:
   sqflite:
