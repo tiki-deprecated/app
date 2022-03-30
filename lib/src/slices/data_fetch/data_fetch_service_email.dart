@@ -51,7 +51,8 @@ class DataFetchServiceEmail {
         _repositoryPart = DataFetchRepositoryPart(database),
         _repositoryLast = DataFetchRepositoryLast(database);
 
-  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+  Future<void> asyncIndex(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     _log.fine('Async index for ' +
         (account.email ?? '') +
         ' started on: ' +
@@ -84,7 +85,7 @@ class DataFetchServiceEmail {
                 .toList();
             await _repositoryPart.batchUpsert(parts);
             _log.fine('saved ${messages.length} messages');
-            asyncProcess(account);
+            asyncProcess(account, onFinish: onFinish);
           },
           onFinish: () async {
             await _repositoryLast.upsert(DataFetchModelLast(
@@ -177,9 +178,9 @@ class DataFetchServiceEmail {
                 account.accountId!);
             _log.fine('finished & deleted $count parts');
             if (onFinish != null) {
-              onFinish(fetched);
+              onFinish(save);
             }
-            _asyncProcess(account);
+            _asyncProcess(account, onFinish: onFinish);
           });
     } else {
       _processMutex.remove(account.accountId!);

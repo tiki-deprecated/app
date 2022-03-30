@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:decision_sdk/decision.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spam_cards/spam_cards.dart';
@@ -25,11 +26,12 @@ class HomeScreenLayout extends StatelessWidget {
     SpamCards spamCards = Provider.of<SpamCards>(context, listen: false);
     ApiEmailSenderService apiEmailSenderService =
         Provider.of<ApiEmailSenderService>(context, listen: false);
+    DecisionSdk decisionSdk = Provider.of<DecisionSdk>(context, listen: false);
     return WillPopScope(
         onWillPop: () async => !Navigator.of(context).userGestureInProgress,
         child: HomeScreenViewStack(
           dataScreenService: DataScreenService(dataFetchService, apiAuthService,
-              spamCards, apiEmailSenderService),
+              spamCards, decisionSdk, apiEmailSenderService),
         ));
   }
 }

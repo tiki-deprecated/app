@@ -92,8 +92,7 @@ Future<List<SingleChildWidget>> provide(
             '.' +
             keys.data.encode() +
             '.' +
-            keys.sign.privateKey.encode()
-    );
+            keys.sign.privateKey.encode());
 
     return [
       Provider<ApiCompanyService>.value(value: apiCompanyService),
@@ -114,7 +113,8 @@ Future<List<SingleChildWidget>> provide(
   }
 }
 
-Future<String> _getReferCode(Login login, ApiShortCodeService apiShortCodeService) async{
+Future<String> _getReferCode(
+    Login login, ApiShortCodeService apiShortCodeService) async {
   String? code;
   await apiShortCodeService.get(
       accessToken: login.token!.bearer!,

@@ -31,7 +31,7 @@ Future<void> main() async {
       appRunner: () => runApp(App(login.routerDelegate)));
 }
 
-Future<void> _libsInit() async{
+Future<void> _libsInit() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   ConfigLog();
@@ -50,7 +50,7 @@ Future<Login> _initializeLogin() async {
       home: home.presenter);
   login.onLogin('Upgrade', () => upgrade(login, httpp));
   home.presenter.inject(
-          () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }

@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:decision_sdk/decision.dart';
 import 'package:flutter/material.dart';
 import 'package:spam_cards/spam_cards.dart';
 
@@ -25,39 +26,41 @@ class DataScreenService extends ChangeNotifier {
   final DataFetchService _dataFetchService;
   final ApiOAuthService _apiAuthService;
   final SpamCards _spamCards;
+  final DecisionSdk _decisionSdk;
 
   final ApiEmailSenderService _apiEmailSenderService;
 
   get account => _model.account;
 
   DataScreenService(this._dataFetchService, this._apiAuthService,
-      this._spamCards, this._apiEmailSenderService) {
+      this._spamCards, this._decisionSdk, this._apiEmailSenderService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
 
     _apiAuthService.getAccount().then((account) {
       _model.account = account;
-      if (account != null) _dataFetchService.asyncIndex(account);
+      if (account != null) fetchInbox(account);
       notifyListeners();
     });
   }
 
   Future<void> saveAccount(dynamic data, String provider) async {
     ApiOAuthModelAccount account = await _apiAuthService.save(data, provider);
+    _decisionSdk.setLinked(true);
     _model.account = account;
-    _dataFetchService.asyncIndex(account);
-    notifyListeners();
+    fetchInbox(account);
   }
 
   Future<void> removeAccount(String email, String provider) async {
     _apiAuthService.remove(email, provider);
+    _decisionSdk.setLinked(false);
     _model.account = null;
     notifyListeners();
   }
 
   fetchInbox(ApiOAuthModelAccount account) {
-    _dataFetchService.asyncIndex(account, onFinishProcces: _addSpamCards);
+    _dataFetchService.asyncIndex(account, onFinishProccess: _addSpamCards);
     notifyListeners();
   }
 
@@ -69,11 +72,11 @@ class DataScreenService extends ChangeNotifier {
         onKeep: _keepReceiving);
   }
 
-  Future<bool> _unsubscribeFromSpam(int senderId) async {
+  Future<bool> _unsubscribeFromSpam(String senderEmail) async {
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null) throw 'Invalid email interface';
     ApiEmailSenderModel? sender =
-        await _apiEmailSenderService.getById(senderId);
+        await _apiEmailSenderService.getByEmail(senderEmail);
     if (sender == null) throw 'Invalid sender';
     String unsubscribeMailTo = sender.unsubscribeMailTo!;
     Uri uri = Uri.parse(unsubscribeMailTo);
@@ -97,9 +100,9 @@ ${account.displayName ?? ''}<br />
     return success;
   }
 
-  Future<void> _keepReceiving(int senderId) async {
+  Future<void> _keepReceiving(String senderEmail) async {
     ApiEmailSenderModel? sender =
-        await _apiEmailSenderService.getById(senderId);
+        await _apiEmailSenderService.getByEmail(senderEmail);
     if (sender != null) {
       await _apiEmailSenderService.markAsKept(sender);
     }

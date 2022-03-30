@@ -44,13 +44,13 @@ class DataFetchService extends ChangeNotifier {
   }
 
   Future<void> asyncIndex(ApiOAuthModelAccount account,
-      {Function(List)? onFinishProcces}) async {
+      {Function(List)? onFinishProccess}) async {
     if (!_indexMutex.contains(account.accountId!)) {
       _indexMutex.add(account.accountId!);
       _log.fine(
           'DataFetchService async index for account ${account.accountId}');
-      Future f1 = email.asyncIndex(account);
-      Future f2 = email.asyncProcess(account, onFinish: onFinishProcces);
+      Future f1 = email.asyncIndex(account, onFinish: onFinishProccess);
+      Future f2 = email.asyncProcess(account, onFinish: onFinishProccess);
       await Future.wait([f1, f2]);
       _indexMutex.remove(account.accountId!);
     }
