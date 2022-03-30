@@ -4,7 +4,6 @@
  */
 
 import 'package:logging/logging.dart';
-import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 
 import '../api_company/api_company_service.dart';
@@ -32,7 +31,6 @@ class DataFetchServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final DataFetchRepositoryPart _repositoryPart;
   final DataFetchRepositoryLast _repositoryLast;
-  final SpamCards _spamCards;
 
   final Function notifyListeners;
 
@@ -45,15 +43,13 @@ class DataFetchServiceEmail {
       required ApiCompanyService apiCompanyService,
       required DataPushService dataPushService,
       required Database database,
-      required SpamCards spamCards,
       required this.notifyListeners})
       : _apiAuthService = apiAuthService,
         _apiEmailMsgService = apiEmailMsgService,
         _apiEmailSenderService = apiEmailSenderService,
         _apiCompanyService = apiCompanyService,
         _repositoryPart = DataFetchRepositoryPart(database),
-        _repositoryLast = DataFetchRepositoryLast(database),
-        _spamCards = spamCards;
+        _repositoryLast = DataFetchRepositoryLast(database);
 
   Future<void> asyncIndex(ApiOAuthModelAccount account) async {
     _log.fine('Async index for ' +

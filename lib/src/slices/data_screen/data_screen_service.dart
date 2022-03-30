@@ -4,12 +4,15 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:google_provider/google_provider.dart';
-import 'package:microsoft_provider/microsoft_provider.dart';
 import 'package:spam_cards/spam_cards.dart';
 
+import '../api_email_sender/api_email_sender_service.dart';
+import '../api_email_sender/model/api_email_sender_model.dart';
+import '../api_oauth/api_oauth_interface_provider.dart';
 import '../api_oauth/api_oauth_service.dart';
 import '../api_oauth/model/api_oauth_model_account.dart';
+import '../data_fetch/data_fetch_interface_email.dart';
+import '../data_fetch/data_fetch_interface_provider.dart';
 import '../data_fetch/data_fetch_service.dart';
 import 'data_screen_controller.dart';
 import 'data_screen_presenter.dart';
@@ -23,9 +26,12 @@ class DataScreenService extends ChangeNotifier {
   final ApiOAuthService _apiAuthService;
   final SpamCards _spamCards;
 
+  final ApiEmailSenderService _apiEmailSenderService;
+
   get account => _model.account;
 
-  DataScreenService(this._dataFetchService, this._apiAuthService, this._spamCards) {
+  DataScreenService(this._dataFetchService, this._apiAuthService,
+      this._spamCards, this._apiEmailSenderService) {
     _model = DataScreenModel();
     controller = DataScreenController(this);
     presenter = DataScreenPresenter(this);
@@ -57,30 +63,54 @@ class DataScreenService extends ChangeNotifier {
 
   _addSpamCards(List messages) {
     _spamCards.addCards(
-      provider: _model.account!.provider!,
-      messages: messages,
-      onUnsubscribe: _unsubscribeFromSpam,
-      onKeep: _keepSender
-    )
+        provider: _model.account!.provider!,
+        messages: messages,
+        onUnsubscribe: _unsubscribeFromSpam,
+        onKeep: _keepReceiving);
   }
 
-  _unsubscribeFromSpam(int senderId) {
-    switch(_model.account!.provider){
-      case('google') :
-        GoogleProvider.loggedIn(
-            email: email,
-            token: token
-        ).sendEmail(to: to);
-        break;
-      case('microsoft') :
-        MicrosoftProvider.loggedIn(
-            email: email,
-            token: token
-        ).sendEmail(to: to);
-        break;
+  Future<bool> _unsubscribeFromSpam(int senderId) async {
+    DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
+    if (interfaceEmail == null) throw 'Invalid email interface';
+    ApiEmailSenderModel? sender =
+        await _apiEmailSenderService.getById(senderId);
+    if (sender == null) throw 'Invalid sender';
+    String unsubscribeMailTo = sender.unsubscribeMailTo!;
+    Uri uri = Uri.parse(unsubscribeMailTo);
+    String to = uri.path;
+    String list = sender.name ?? sender.email!;
+    String subject = uri.queryParameters['subject'] ?? "Unsubscribe from $list";
+    String body = '''
+Hello,<br /><br />
+I'd like to stop receiving emails from this email list.<br /><br />
+Thanks,<br /><br />
+${account.displayName ?? ''}<br />
+<br />
+''';
+    bool success = false;
+    await interfaceEmail.send(
+        account: account,
+        to: to,
+        body: body,
+        subject: subject,
+        onResult: (res) => success = res);
+    return success;
+  }
+
+  Future<void> _keepReceiving(int senderId) async {
+    ApiEmailSenderModel? sender =
+        await _apiEmailSenderService.getById(senderId);
+    if (sender != null) {
+      await _apiEmailSenderService.markAsKept(sender);
     }
   }
 
-  _keepSender(int senderId) {
+  Future<DataFetchInterfaceEmail?> _getEmailInterface(
+      ApiOAuthModelAccount account) async {
+    ApiOAuthInterfaceProvider? apiOAuthProvider =
+        _apiAuthService.interfaceProviders[account.provider];
+    DataFetchInterfaceProvider? dataFetchProvider =
+        apiOAuthProvider as DataFetchInterfaceProvider?;
+    return dataFetchProvider?.email;
   }
 }

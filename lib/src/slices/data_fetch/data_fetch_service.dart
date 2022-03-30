@@ -4,7 +4,6 @@
  */
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqlite_api.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 
@@ -32,8 +31,7 @@ class DataFetchService extends ChangeNotifier {
       required ApiEmailMsgService apiEmailMsgService,
       required ApiKnowledgeService apiKnowledgeService,
       required DataPushService dataPushService,
-      required Database database,
-      required SpamCards spamCards})
+      required Database database})
       : _dataPushService = dataPushService {
     email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
@@ -42,7 +40,6 @@ class DataFetchService extends ChangeNotifier {
         apiCompanyService: apiCompanyService,
         dataPushService: _dataPushService,
         database: database,
-        spamCards: spamCards,
         notifyListeners: notifyListeners);
   }
 
