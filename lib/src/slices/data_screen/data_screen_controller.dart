@@ -10,13 +10,8 @@ class DataScreenController {
 
   DataScreenController(this.service);
 
-  linkAccount(String provider) async {
-    service.linkAccount(provider);
-  }
-
-  removeAccount(String email, String provider) {
-    service.removeAccount(email, provider);
-  }
+  removeAccount(String email, String provider) =>
+      service.removeAccount(email, provider);
 
   saveAccount(dynamic data, String provider) =>
       service.saveAccount(data, provider);

@@ -31,6 +31,7 @@ class DataFetchServiceEmail {
   final ApiCompanyService _apiCompanyService;
   final DataFetchRepositoryPart _repositoryPart;
   final DataFetchRepositoryLast _repositoryLast;
+
   final Function notifyListeners;
 
   final Set<int> _processMutex = {};
@@ -50,7 +51,8 @@ class DataFetchServiceEmail {
         _repositoryPart = DataFetchRepositoryPart(database),
         _repositoryLast = DataFetchRepositoryLast(database);
 
-  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+  Future<void> asyncIndex(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     _log.fine('Async index for ' +
         (account.email ?? '') +
         ' started on: ' +
@@ -83,7 +85,7 @@ class DataFetchServiceEmail {
                 .toList();
             await _repositoryPart.batchUpsert(parts);
             _log.fine('saved ${messages.length} messages');
-            asyncProcess(account);
+            asyncProcess(account, onFinish: onFinish);
           },
           onFinish: () async {
             await _repositoryLast.upsert(DataFetchModelLast(
@@ -95,18 +97,20 @@ class DataFetchServiceEmail {
     }
   }
 
-  Future<void> asyncProcess(ApiOAuthModelAccount account) async {
+  Future<void> asyncProcess(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     if (!_processMutex.contains(account.accountId!)) {
       _processMutex.add(account.accountId!);
       _log.fine('Async process for ' +
           (account.email ?? '') +
           ' started on: ' +
           DateTime.now().toIso8601String());
-      _asyncProcess(account);
+      _asyncProcess(account, onFinish: onFinish);
     }
   }
 
-  Future<void> _asyncProcess(ApiOAuthModelAccount account) async {
+  Future<void> _asyncProcess(ApiOAuthModelAccount account,
+      {Function(List)? onFinish}) async {
     DataFetchInterfaceEmail? interfaceEmail = await _getEmailInterface(account);
     if (interfaceEmail == null) throw 'Invalid email interface';
     if (!await _isConnected(account)) {
@@ -173,7 +177,10 @@ class DataFetchServiceEmail {
                 fetched.map((msg) => msg.extMessageId!).toList(),
                 account.accountId!);
             _log.fine('finished & deleted $count parts');
-            _asyncProcess(account);
+            if (onFinish != null) {
+              onFinish(save);
+            }
+            _asyncProcess(account, onFinish: onFinish);
           });
     } else {
       _processMutex.remove(account.accountId!);

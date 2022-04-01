@@ -35,7 +35,6 @@ class DataFetchService extends ChangeNotifier {
       : _dataPushService = dataPushService {
     email = DataFetchServiceEmail(
         apiAuthService: apiAuthService,
-        tikiKv: tikiKv,
         apiEmailMsgService: apiEmailMsgService,
         apiEmailSenderService: apiEmailSenderService,
         apiCompanyService: apiCompanyService,
@@ -44,13 +43,14 @@ class DataFetchService extends ChangeNotifier {
         notifyListeners: notifyListeners);
   }
 
-  Future<void> asyncIndex(ApiOAuthModelAccount account) async {
+  Future<void> asyncIndex(ApiOAuthModelAccount account,
+      {Function(List)? onFinishProccess}) async {
     if (!_indexMutex.contains(account.accountId!)) {
       _indexMutex.add(account.accountId!);
       _log.fine(
           'DataFetchService async index for account ${account.accountId}');
-      Future f1 = email.asyncIndex(account);
-      Future f2 = email.asyncProcess(account);
+      Future f1 = email.asyncIndex(account, onFinish: onFinishProccess);
+      Future f2 = email.asyncProcess(account, onFinish: onFinishProccess);
       await Future.wait([f1, f2]);
       _indexMutex.remove(account.accountId!);
     }

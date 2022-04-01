@@ -23,7 +23,7 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       required Function() onFinish}) {
     return MicrosoftProvider.loggedIn(
             email: account.email,
-            token: account.accessToken,
+            token: account.accessToken!,
             refreshToken: account.refreshToken,
             displayName: account.displayName,
             httpp: _httpp)
@@ -43,7 +43,7 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       Function(bool success)? onResult}) async {
     return MicrosoftProvider.loggedIn(
             email: account.email,
-            token: account.accessToken,
+            token: account.accessToken!,
             refreshToken: account.refreshToken,
             displayName: account.displayName,
             httpp: _httpp)
@@ -58,7 +58,7 @@ class ApiMicrosoftServiceEmail extends DataFetchInterfaceEmail {
       required Function() onFinish}) async {
     return MicrosoftProvider.loggedIn(
             email: account.email,
-            token: account.accessToken,
+            token: account.accessToken!,
             refreshToken: account.refreshToken,
             displayName: account.displayName,
             httpp: _httpp)
