@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.0"
-  android_intent:
-    dependency: "direct main"
-    description:
-      name: android_intent
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   archive:
     dependency: transitive
     description:
@@ -65,7 +58,7 @@ packages:
     source: hosted
     version: "2.1.0"
   carousel_slider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: carousel_slider
       url: "https://pub.dartlang.org"
@@ -155,20 +148,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  data_connection_checker:
-    dependency: "direct main"
-    description:
-      name: data_connection_checker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.4"
   decision_sdk:
     dependency: "direct main"
     description:
-      path: "../decision_sdk"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: "0.0.3"
+      resolved-ref: "0a46dffad558f3c46bb44dc9f7eb65d1a6dd48bf"
+      url: "https://github.com/tiki/decision"
+    source: git
+    version: "0.0.3"
   email_validator:
     dependency: transitive
     description:
@@ -245,7 +233,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_appauth:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_appauth
       url: "https://pub.dartlang.org"
@@ -264,7 +252,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_html:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_html
       url: "https://pub.dartlang.org"
@@ -378,11 +366,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "786c44ca8d733dd0fe95efa6fd6ea989c01fa383"
+      ref: "0.0.5"
+      resolved-ref: a9dbb45c9ff050ee5a5c57240f43005cccf6143c
       url: "https://github.com/tiki/google_provider"
     source: git
-    version: "0.0.4"
+    version: "0.0.5"
   html:
     dependency: transitive
     description:
@@ -391,7 +379,7 @@ packages:
     source: hosted
     version: "0.15.0"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -408,7 +396,7 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
+      ref: "0.0.3"
       resolved-ref: "1f6a31faaf0d333a1221df9bbb4ef53b870b24b9"
       url: "https://github.com/tiki/httpp"
     source: git
@@ -455,15 +443,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  localchain:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "14f2383d40668af9f70a0a9da4b2790459506d61"
-      url: "https://github.com/tiki/localchain"
-    source: git
-    version: "0.0.2"
   logging:
     dependency: "direct main"
     description:
@@ -474,12 +453,14 @@ packages:
   login:
     dependency: "direct main"
     description:
-      path: "../login"
-      relative: true
-    source: path
+      path: "."
+      ref: "0.0.7"
+      resolved-ref: "96ef8bc76c1b601a988da7928bf5c602620a7a94"
+      url: "https://github.com/tiki/login"
+    source: git
     version: "0.0.7"
   lottie:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: lottie
       url: "https://pub.dartlang.org"
@@ -517,11 +498,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "401284233bce0766bcc38d753c3eb87030bd47de"
+      ref: "0.0.5"
+      resolved-ref: "99f3c461ca9bd6018ad9595f63a85e9104cc9dbf"
       url: "https://github.com/tiki/microsoft_provider"
     source: git
-    version: "0.0.4"
+    version: "0.0.5"
   mime:
     dependency: transitive
     description:
@@ -532,10 +513,12 @@ packages:
   money:
     dependency: "direct main"
     description:
-      path: "../money"
-      relative: true
-    source: path
-    version: "0.0.6"
+      path: "."
+      ref: "0.0.3"
+      resolved-ref: bc4f114cf31b7268f1e7a0d324c7397f279e85f5
+      url: "https://github.com/tiki/money"
+    source: git
+    version: "0.0.1"
   nested:
     dependency: transitive
     description:
@@ -628,7 +611,7 @@ packages:
     source: hosted
     version: "0.2.1"
   path_provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -684,7 +667,7 @@ packages:
     source: hosted
     version: "1.11.1"
   permission_handler:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: permission_handler
       url: "https://pub.dartlang.org"
@@ -789,7 +772,7 @@ packages:
     source: hosted
     version: "6.3.0"
   share_plus:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: share_plus
       url: "https://pub.dartlang.org"
@@ -852,10 +835,12 @@ packages:
   spam_cards:
     dependency: "direct main"
     description:
-      path: "../spam_cards"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: "49596e9f942995ddf96c341f536b507599f6d2d1"
+      url: "https://github.com/tiki/spam_cards"
+    source: git
+    version: "0.0.2"
   sqflite:
     dependency: "direct overridden"
     description:
@@ -931,10 +916,12 @@ packages:
   tiki_kv:
     dependency: "direct main"
     description:
-      path: "../tiki_kv"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: e40ee68b075de081a7705a075f96324aef6bcefa
+      url: "https://github.com/tiki/tiki_kv"
+    source: git
+    version: "0.0.2"
   tuple:
     dependency: transitive
     description:
@@ -957,7 +944,7 @@ packages:
     source: hosted
     version: "2.0.4"
   url_launcher:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: url_launcher
       url: "https://pub.dartlang.org"
@@ -1015,10 +1002,12 @@ packages:
   user_account:
     dependency: "direct main"
     description:
-      path: "../user_account"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: c218bd0ed4f771ed7a72f5de15d62e9466c515bd
+      url: "https://github.com/tiki/user_account"
+    source: git
+    version: "0.0.2"
   uuid:
     dependency: transitive
     description:
@@ -1099,10 +1088,12 @@ packages:
   wallet:
     dependency: "direct main"
     description:
-      path: "../wallet"
-      relative: true
-    source: path
-    version: "0.0.9"
+      path: "."
+      ref: "0.0.8"
+      resolved-ref: be76019ebf80dffa7c891656e50b7b1a024b2ef2
+      url: "https://github.com/tiki/wallet"
+    source: git
+    version: "0.0.8"
   watcher:
     dependency: transitive
     description:
@@ -1174,7 +1165,7 @@ packages:
     source: hosted
     version: "3.1.0"
   zendesk_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: "0.0.2"

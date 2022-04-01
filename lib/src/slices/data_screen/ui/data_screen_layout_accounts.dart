@@ -46,7 +46,7 @@ class DecisionScreenLayoutAccounts extends StatelessWidget {
               margin: EdgeInsets.only(top: 2.h),
               child: account != null
                   ? MicrosoftProvider.loggedIn(
-                      token: account.accessToken,
+                      token: account.accessToken!,
                       refreshToken: account.refreshToken,
                       email: account.email,
                       displayName: account.displayName,
