@@ -32,7 +32,7 @@ We encourage that you write automated tests to all the code you would like to wr
 Any publicly exposed methods should have integration tests.
 
 ### Documentation guidelines
-
+x`
 ### Pull Requests
 
 ### Styleguides
