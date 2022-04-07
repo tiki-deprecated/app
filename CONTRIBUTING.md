@@ -23,16 +23,39 @@ Before opening an issue with enhancements suggestions, please discuss it with us
 To contribute with code you should follow these steps:
 1. Fork the repository.
 2. Create a branch out of develop. If it is related to a issue from the original repository, start the branch name with the # symbol followed by the issue number.
-3. Write the code, commit and merge into your develop branch and make sure it builds and all tests passes.
+3. Write the code, commit and merge into your develop branch and make sure it builds, all the warnings are resolved and all tests passes.
 4. Create a Pull Request from your branch to the original repository, describing which changes your code did.
 5. Wait for code review and apply any requested changes.
 
 ### Test guidelines
-We encourage that you write automated tests to all the code you would like to write.
-Any publicly exposed methods should have integration tests.
+We encourage you to write automated tests to all the code you write, but it is just required to have automated tests for publicly available APIs.
+
+Before creating a Pull Request you should write at least one test case that describes what the code do and how to test it.
+
+Sometimes the code have too much third party integrations that makes it hard to add automated tests. If that's the case don't bother mocking up code. Use a manual test scenario and add a screencapture of it.
+
+Refer to [Flutter Integration Tests Documentation](https://docs.flutter.dev/testing/integration-tests) for writing integration tests.
 
 ### Documentation guidelines
-x`
-### Pull Requests
+In TIKI we believe that the code should be self explanatory for any tech reader.
+
+Avoid using comments to explain what you are doing. If one can't understand reading the code, it should be rewritten.
+
+But in an open source project, one should not need to read all the code to understand which public APIs to use. That's where we need in-code documentation.
+
+You don't need to document all and every line of code, class, top level methods and properties. If you want, that's ok, but not required.
+
+It is required to document all and every publicly available APIs that will be used by others to interact with the code.
+
+To document the code follow [Dart Documentation Guidelines](https://dart.dev/guides/language/effective-dart/documentation#doc-comments).
 
 ### Styleguides
+- Name all the files, classes, methods, functions and variables in english with a self-explanatory name.
+- For filenames use snake_case.
+- For classes use PascalCase.
+- For variables and functions use camelCase.
+- Use one file for each class. The filename should be the class name.
+- Groups files first by what feature they implement, using the slice architecture. Inside each slice, group the files by role.
+- Avoid creating a folder if it will hold just one or two files.
+- Use local imports always when possible.
+- For Flutter code use [flutter_lints](https://pub.dev/packages/flutter_lints)
