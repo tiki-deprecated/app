@@ -12,7 +12,7 @@ TIKI app is built with [Flutter](https://flutter.dev).
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install)
 2. Clone this repository.
-3. Configure Firebase account
+3. [Configure Firebase in your Flutter Project](https://firebase.google.com/docs/flutter/setup?platform=ios)
 4. Go to app's root directory.
 5. Get pub dependencies - `flutter pub get`.
 6. Run the app  
