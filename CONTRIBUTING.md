@@ -2,7 +2,7 @@
 
 Thanks for contributing with Tiki!
 
-The following is a set of guidelines for contributing to Atom and its packages, which are hosted in the [TIKI Organization](https://github.com/tiki) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to TIKI and its packages, which are hosted in the [TIKI Organization](https://github.com/tiki) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ### Asking questions
 
