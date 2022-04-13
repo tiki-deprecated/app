@@ -1,55 +1,59 @@
-# Tiki App
 
-*We’re all users and in it together.*
+# TIKI App
+The TIKI app is the tool for user data ownership.
 
-**No** secrets.  **Real** transparency. **Open source** by design.
+With TIKI App the users can have insights of who is using their data, manage the access to it, collect their own data, anonymize and sell it (or do whatever they want!).
 
-Everything that we do in our app is here. And you are welcome to explore it and contribute.
+[Why is TIKI open source?](https://blog.mytiki.com/p/real-transparency-is-powerfu)
 
------
-#### Our Mission
+## How to Install
 
-We’re building a fair, user-centric, decentralized system, giving the users control of their data. 
-It’s **your** data; you deserve the right to see, control, and monetize it. Your data does not belong to corporations, **TIKI included**! 
-We build tools to protect users from exploitation, greed, and carelessness. We build tools to **empower** users.
+TIKI app is built with [Flutter](https://flutter.dev).
 
-#### Our values
-- **TRANSPARENCY** helps build trust. Seeing is believing, and nothing is off-limits. No shadowbans or secret algorithms at TIKI.
-- **COMMUNITY** is what connects us. Together, we're an unstoppable force. We expect better. We demand better.
-- **DIVERSITY** is not optional within the walls of TIKI. We're here for our users; we represent our users
-- **SUSTAINABILITY** comes before profit. We work tirelessly to bring lasting positive change to our users' lives.
-- **RELIABILITY** is foundational to trust. We want our users to count on us and aim never to break that trust.
+1. [Install Flutter](https://docs.flutter.dev/get-started/install)
+2. Clone this repository.
+3. [Configure Firebase in your Flutter Project](https://firebase.google.com/docs/flutter/setup?platform=ios)
+4. Go to app's root directory.
+5. Get pub dependencies - `flutter pub get`.
+6. Run the app  
+   -- production mode: `flutter run`.  
+   -- development mode: `flutter run --dart-define=com.mytiki.app.environment=develop`
 
------
-## Contributing
+## Code structure
 
-1. [Join our Discord](https://discord.com/invite/evjYQq48Be), meet the community and help us in giving back people the control of their data.
-2. [Create an issue](https://github.com/tiki/app/issues/new/choose) if you find a bug or would like to ask for a feature,
-3. [Fork this repository](https://github.com/tiki/app/fork) to contribute with code and send us a Pull Request.
+In TIKI we use the [vertical slice architecture](https://jimmybogard.com/vertical-slice-architecture/) to organize the code.
 
-## About Tiki
-### It's **your** data. Get **paid** for it
+Each feature is developed in a [Flutter Package or Plugin](https://docs.flutter.dev/development/packages-and-plugins/using-packages) in its own repository.
 
-Your data is worth thousands a year. Why aren’t you getting your fair share? Take back control. Get paid.
-
-**Tiki’s got your back.**
-
-Why TIKI?
-You think you own your data?
-In 2020 alone, the data on our behaviour and purchases was worth more than $382 billion in advertising revenue.
-
-### How does it work?
-
-Link your accounts to the TIKI app and we'll get you paid your fair share.
+The app code is responsible for initializing the Home Screen, the packages and plugins with the other features, and to implement the Data Slice.
 
 
-1. **See** what data companies are collecting on you, how its used, and how secure it really is.
+Currently TIKI App is made with the following libs.  
+| Library | Description|  
+|--|--|  
+| [login](https://github.com/tiki/login) | Handles user login flow and user keys management.  
+| [money](https://github.com/tiki/money) | Manages the "money" screen.  
+| [decision](https://github.com/tiki/decision) | Manages the "decision" screen.  
+| [user_account](https://github.com/tiki/user_account) | User account menu bottom sheet UI.  
+|  |
+| [spam_cards](https://github.com/tiki/spam_cards) | TIKI Spam Cards UI.  
+| [info_carousel](https://github.com/tiki/info_carousel) | TIKI info cards UI.  
+|  |
+| [tiki_kv](https://github.com/tiki/tiki_kv) | Simple encrypted database Key-value storage.  
+| [style](https://github.com/tiki/style) | TIKI Style library.  
+|  |
+| [httpp](https://github.com/tiki/httpp) | HTTP Parallel requests handling with Dart.  
+| [microsoft_provider](https://github.com/tiki/microsoft_provider) | API for Microsoft (Outlook) data fetching.  
+| [google_provider](https://github.com/tiki/google_provider) | API for Google (Gmail)  data fetching.  
+|  |
+| [localchain](https://github.com/tiki/localchain) | TIKI's localized mobile blockchain (dart native).  
+| [syncchain](https://github.com/tiki/syncchain) | Mobile side implementation of TIKI's sync chain for backing up local chains.  
+| [wallet](https://github.com/tiki/wallet) | Very simple wallet for managing crypto keys.  
+| [localgraph](https://github.com/tiki/localgraph) | Mobile side implementation of Knowledge Graph Service.  
+|   |
+| [zendesk_flutter](https://github.com/tiki/zendesk_flutter) | TIKI Zendesk Help Center inside the app.  
+| [upvoty](https://github.com/tiki/upvoty) | In-app user feedback.
 
-2. **Control** who has access to your data and for what purpose. It’s your decision.
-
-3. **Monetize** Get paid your fair share for granting buyers access to your data.
-
-## Contact Us
-Follow us, tweet us, hit us up. Together we're a revolution. 
-
-[Twitter](https://twitter.com/my_tiki_) - [Instagram](https://www.instagram.com/my.tiki/) - [Facebook](https://www.facebook.com/mytikiapp) - [Tiktok](https://www.tiktok.com/@my.tiki?) - [LinkedIn](https://www.linkedin.com/company/mytiki/) - [Discord](https://discord.com/invite/evjYQq48Be) - [Telegram](https://t.me/mytikiapp) - [Signal](https://signal.group/#CjQKIA66Eq2VHecpcCd-cu-dziozMRSH3EuQdcZJNyMOYNi5EhC0coWtjWzKQ1dDKEjMqhkP)
+## How to contribute
+Thank you for contributing with the data revolution!  
+All the information about contribution can be found in [CONTRIBUTING](https://github.com/tiki/app/CONTRIBUTING.md)
