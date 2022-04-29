@@ -4,6 +4,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tiki_style/tiki_style.dart';
 import 'package:user_account/user_account.dart';
 
 import '../../../../bkp/config_size.dart';
@@ -30,11 +31,14 @@ class HeaderBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image(
-                image: const AssetImage('res/images/badge-beta-avatar.png'),
-                height: 4.h,
-                fit: BoxFit.fitHeight,
+              Container(
                 alignment: Alignment.centerLeft,
+                height: SizeProvider.instance.height(30),
+                width: SizeProvider.instance.width(30),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: ImgProvider.badgeBetaAvatar
+                )
               ),
               const HeaderBarViewBadge("BETA TESTER")
             ],

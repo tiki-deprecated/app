@@ -15,7 +15,7 @@ class HomeScreenMoneyContainer extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Stack(children: [
-      Container(color: ConfigColor.greyOne),
+      Container(color: ColorProvider.greyOne),
       SafeArea(
           child: Padding(
               padding: const EdgeInsets.only(bottom: 8),

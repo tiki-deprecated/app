@@ -41,15 +41,15 @@ class HomeScreenViewNavBar extends StatelessWidget {
                 HomeScreenViewNavBarItem("Choices", "choices-icon"),
                 HomeScreenViewNavBarItem("Money", "money-icon")
               ],
-              backgroundColor: ConfigColor.white,
-              unselectedItemColor: ConfigColor.blue,
+              backgroundColor: ColorProvider.white,
+              unselectedItemColor: ColorProvider.blue,
               unselectedLabelStyle: TextStyle(
-                  fontFamily: ConfigFont.familyNunitoSans,
+                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                   fontWeight: FontWeight.w800,
                   fontSize: _fontSize.sp),
-              selectedItemColor: ConfigColor.orange,
+              selectedItemColor: ColorProvider.orange,
               selectedLabelStyle: TextStyle(
-                  fontFamily: ConfigFont.familyNunitoSans,
+                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                   fontWeight: FontWeight.w800,
                   fontSize: _fontSize.sp),
             )));

@@ -2,22 +2,20 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+
 import 'package:flutter/material.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class HomeScreenViewNavBarItem extends BottomNavigationBarItem {
-  static const double _width = 48;
+  static const double _size = 48;
 
-  HomeScreenViewNavBarItem(String label, String icon)
-      : super(
-            icon: Image(
-              image: AssetImage('res/images/' + icon + '.png'),
-              width: _width,
-              fit: BoxFit.fitWidth,
-            ),
-            label: label,
-            activeIcon: Image(
-              image: AssetImage('res/images/' + icon + '-selected.png'),
-              width: _width,
-              fit: BoxFit.fitWidth,
-            ));
+  HomeScreenViewNavBarItem(String label, IconData icon) : super(
+        icon: Icon(
+            icon,
+            color: ColorProvider.blue, size: SizeProvider.instance.size(_size)),
+        label: label,
+        activeIcon: Icon(
+            icon,
+            color: ColorProvider.orange, size: SizeProvider.instance.size(_size)),
+      );
 }

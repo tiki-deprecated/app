@@ -29,9 +29,9 @@ class App extends StatelessWidget {
         ],
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: ConfigFont.familyNunitoSans,
-                bodyColor: ConfigColor.tikiBlue,
-                displayColor: ConfigColor.tikiBlue)),
+                fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
+                bodyColor: ColorProvider.tikiBlue,
+                displayColor: ColorProvider.tikiBlue)),
         home: Router(
             routerDelegate: _routerDelegate,
             backButtonDispatcher: RootBackButtonDispatcher()),

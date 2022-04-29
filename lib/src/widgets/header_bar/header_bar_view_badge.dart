@@ -4,6 +4,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 import '../../../../bkp/config_color.dart';
 import '../../../../bkp/config_font.dart';
@@ -18,10 +19,12 @@ class HeaderBarViewBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      Image(
-        image: const AssetImage('res/images/badge-header.png'),
-        width: _width.w,
-        fit: BoxFit.fitWidth,
+      SizedBox(
+        width: SizeProvider.instance.width(100),
+        child: FittedBox(
+          child: ImgProvider.badgeHeader,
+          fit: BoxFit.fitWidth,
+        )
       ),
       SizedBox(
           width: _width.w,
@@ -32,17 +35,14 @@ class HeaderBarViewBadge extends StatelessWidget {
                 label,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                    fontFamily: ConfigFont.familyNunitoSans,
+                    fontFamily: TextProvider.familyNunitoSans,
                     fontWeight: FontWeight.w800,
-                    color: ConfigColor.white,
+                    color: ColorProvider.white,
                     fontSize: 9.1.sp),
               ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 2.w),
-                  child: Image(
-                    image: const AssetImage('res/images/icon-star.png'),
-                    height: 9.1.sp,
-                    fit: BoxFit.fitHeight,
+                  child: Icon(IconProvider.star, size: SizeProvider.instance.size(80)
                   )),
             ],
           ))

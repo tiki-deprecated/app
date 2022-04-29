@@ -26,7 +26,7 @@ class HomeScreenViewStack extends StatelessWidget {
     HomeScreenModel model = Provider.of<HomeScreenService>(context).model;
     return Stack(children: [
       Scaffold(
-          backgroundColor: ConfigColor.greyOne,
+          backgroundColor: ColorProvider.greyOne,
           bottomNavigationBar: const HomeScreenViewNavBar(),
           body: SafeArea(
               top: false,

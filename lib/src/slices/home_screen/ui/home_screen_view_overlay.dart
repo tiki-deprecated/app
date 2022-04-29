@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tiki_kv/tiki_kv.dart';
+import 'package:tiki_style/tiki_style.dart';
 
-import '../../../../../bkp/config_color.dart';
-import '../../../../../bkp/config_font.dart';
 import '../../home_screen/home_screen_controller.dart';
 import '../home_screen_service.dart';
 
@@ -45,9 +44,9 @@ class HomeScreenViewOverlay extends StatelessWidget {
               text: TextSpan(
                   text: 'Unsubscribe from an email ',
                   style: TextStyle(
-                      color: ConfigColor.white,
+                      color: ColorProvider.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: ConfigFont.familyNunitoSans,
+                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                       fontSize: 12.sp),
                   children: const [
                     TextSpan(
@@ -67,15 +66,15 @@ class HomeScreenViewOverlay extends StatelessWidget {
               text: TextSpan(
                   text: 'Unsubscribing will remove you from an email list.\n',
                   style: TextStyle(
-                      color: ConfigColor.tikiOrange,
+                      color: ColorProvider.tikiOrange,
                       fontWeight: FontWeight.w600,
-                      fontFamily: ConfigFont.familyNunitoSans,
+                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                       fontSize: 12.sp),
                   children: const [
                     TextSpan(
                         text:
                             'You can always re-subscribe by going back to their website.',
-                        style: TextStyle(color: ConfigColor.white))
+                        style: TextStyle(color: ColorProvider.white))
                   ])))
     ]);
   }
