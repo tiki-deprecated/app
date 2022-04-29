@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../config/config_color.dart';
+import '../../../../../bkp/config_color.dart';
 import '../data_screen_service.dart';
 import 'data_screen_layout_accounts.dart';
 import 'data_screen_view_score.dart';

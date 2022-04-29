@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../config/config_color.dart';
+import '../../../../../bkp/config_color.dart';
 
 class DataScreenViewScore extends StatelessWidget {
   static const String _title = "Your data";

@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 
-import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
-import '../../../utils/helper_image.dart';
+import '../../../../../bkp/config_color.dart';
+import '../../../../../bkp/config_font.dart';
 import '../../home_screen/home_screen_controller.dart';
 import '../home_screen_service.dart';
 
@@ -25,20 +24,20 @@ class HomeScreenViewOverlay extends StatelessWidget {
         onTap: () async => controller
             .dismissOverlay(Provider.of<TikiKv>(context, listen: false)),
         child: Stack(children: [
-          Image(
-            image: const AssetImage('res/images/overlay-bg.png'),
-            width: 100.w,
+          FittedBox(
             fit: BoxFit.cover,
+          child: ImgProvider.overlayBg,
           ),
-          _content()
+          _content(context)
         ]));
   }
 
-  Widget _content() {
+  Widget _content(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       Container(
           margin: EdgeInsets.only(top: 20.h),
-          child: HelperImage("swipe-choices", width: 100.w)),
+          width: MediaQuery.of(context).size.width,
+          child: ImgProvider.swipeChoices),
       Container(
           margin: EdgeInsets.only(top: 4.h, left: 4.w, right: 4.w),
           child: RichText(

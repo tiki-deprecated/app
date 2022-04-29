@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import 'src/config/config_color.dart';
-import 'src/config/config_font.dart';
+import '../bkp/config_color.dart';
+import '../bkp/config_font.dart';
 import 'src/config/config_sentry.dart';
 
 class App extends StatelessWidget {

@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../config/config_color.dart';
-import '../../config/config_font.dart';
+import '../../../../bkp/config_color.dart';
+import '../../../../bkp/config_font.dart';
 
 class HeaderBarViewBadge extends StatelessWidget {
   static const _width = 31;

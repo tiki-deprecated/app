@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:user_account/user_account.dart';
 
-import '../../config/config_size.dart';
+import '../../../../bkp/config_size.dart';
 import 'header_bar_view_badge.dart';
 
 class HeaderBar extends StatelessWidget {

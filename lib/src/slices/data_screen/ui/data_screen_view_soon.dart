@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../config/config_color.dart';
+import '../../../../../bkp/config_color.dart';
 import 'data_screen_view_soon_icon.dart';
 
 class DataScreenViewSoon extends StatelessWidget {

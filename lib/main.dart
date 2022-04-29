@@ -10,8 +10,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app.dart';
 import 'inject.dart';
 import 'src/config/config_amplitude.dart';
-import 'src/config/config_color.dart';
-import 'src/config/config_font.dart';
+import '../bkp/config_color.dart';
+import '../bkp/config_font.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
 import 'src/slices/home_screen/home_screen_service.dart';
@@ -55,52 +55,3 @@ Future<Login> _initializeLogin() async {
   return login;
 }
 
-FlowStyle _style() {
-  return FlowStyle(
-      intro: ScreenIntroStyle(
-          backgroundColor1: ConfigColor.yellow,
-          backgroundColor2: ConfigColor.lightYellow,
-          backgroundColor3: ConfigColor.lightOrange,
-          buttonColor: ConfigColor.tikiPurple,
-          buttonTextColor: ConfigColor.white,
-          textColor: ConfigColor.tikiPurple,
-          skipColor: ConfigColor.tikiBlue,
-          dotColor: ConfigColor.white,
-          dotColorActive: ConfigColor.tikiPurple,
-          textFamily: ConfigFont.familyNunitoSans,
-          titleFamily: ConfigFont.familyKoara),
-      email: ScreenEmailStyle(
-          errorColor: ConfigColor.tikiRed,
-          buttonColor: ConfigColor.tikiPurple,
-          textColor: ConfigColor.greySeven,
-          backgroundColor: ConfigColor.cream,
-          buttonTextColor: ConfigColor.white,
-          hintColor: ConfigColor.greyFive,
-          linkColor: ConfigColor.orange,
-          titleColor: ConfigColor.tikiPurple,
-          textFamily: ConfigFont.familyNunitoSans,
-          titleFamily: ConfigFont.familyKoara),
-      inbox: ScreenInboxStyle(
-          buttonColor: ConfigColor.orange,
-          backgroundColor: ConfigColor.cream,
-          textColor: ConfigColor.greySeven,
-          titleColor: ConfigColor.tikiPurple,
-          textFamily: ConfigFont.familyNunitoSans,
-          titleFamily: ConfigFont.familyNunitoSans),
-      terms: ScreenTermsStyle(
-          backgroundColor: ConfigColor.cream,
-          textColor: ConfigColor.greySeven,
-          headingColor: ConfigColor.tikiPurple,
-          linkColor: ConfigColor.orange,
-          titleFamily: ConfigFont.familyKoara,
-          textFamily: ConfigFont.familyNunitoSans),
-      recover: ModalRecoverStyle(
-        textColor: ConfigColor.tikiPurple,
-        backgroundColor: ConfigColor.white,
-        buttonColor: ConfigColor.orange,
-        errorColor: ConfigColor.tikiRed,
-        buttonTextColor: ConfigColor.white,
-        hintColor: ConfigColor.greySix,
-        fontFamily: ConfigFont.familyNunitoSans,
-      ));
-}

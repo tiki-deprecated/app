@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
+import '../../../../../bkp/config_color.dart';
+import '../../../../../bkp/config_font.dart';
 import '../home_screen_service.dart';
 import 'home_screen_view_nav_bar_item.dart';
 
