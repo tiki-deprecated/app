@@ -33,7 +33,7 @@ dependencies:
   tiki_user_account: 0.0.3
   tiki_login: ^0.0.8
   tiki_money: ^0.0.7
-  tiki_style: ^0.0.11
+  tiki_style: 0.0.12
 
 dependency_overrides:
   sqflite:
