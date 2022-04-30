@@ -4,7 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class ConfigShadow {
   static const Color contentColor = Color(0x0D000000);
@@ -14,7 +14,7 @@ class ConfigShadow {
 
   static BoxShadow content = BoxShadow(
     color: contentColor,
-    blurRadius: contentBlurRadius.w,
+    blurRadius: SizeProvider.instance.contentBlurRadius,
     offset: Offset(contentOffsetX.w, contentOffsetY.w),
   );
 }

@@ -6,8 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../bkp/config_color.dart';
-import '../../data_screen/data_screen_service.dart';
 import '../home_screen_service.dart';
 import '../model/home_screen_model.dart';
 import 'home_screen_decision_container.dart';

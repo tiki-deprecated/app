@@ -4,9 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-
-import '../../../bkp/config_color.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class ModalDivider extends StatelessWidget {
 

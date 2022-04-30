@@ -3,11 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:tiki_style/tiki_style.dart';
-
-import '../../../../bkp/config_color.dart';
-import '../../../../bkp/config_font.dart';
 
 class HeaderBarViewBadge extends StatelessWidget {
   static const _width = 31;
@@ -27,7 +23,7 @@ class HeaderBarViewBadge extends StatelessWidget {
         )
       ),
       SizedBox(
-          width: _width.w,
+          width: SizeProvider.instance.width(100),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -38,10 +34,10 @@ class HeaderBarViewBadge extends StatelessWidget {
                     fontFamily: TextProvider.familyNunitoSans,
                     fontWeight: FontWeight.w800,
                     color: ColorProvider.white,
-                    fontSize: 9.1.sp),
+                    fontSize: SizeProvider.instance.text(9.1)),
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w),
+                  padding: EdgeInsets.symmetric(horizontal: SizeProvider.instance.size(9)),
                   child: Icon(IconProvider.star, size: SizeProvider.instance.size(80)
                   )),
             ],

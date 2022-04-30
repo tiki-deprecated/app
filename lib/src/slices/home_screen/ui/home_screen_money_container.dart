@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money/money.dart';
 import 'package:provider/provider.dart';
-import 'package:user_account/user_account.dart';
 
-import '../../../../../bkp/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
 
 class HomeScreenMoneyContainer extends StatelessWidget {
