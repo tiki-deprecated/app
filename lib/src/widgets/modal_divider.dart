@@ -4,9 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-
-import '../config/config_color.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class ModalDivider extends StatelessWidget {
 
@@ -16,11 +14,11 @@ class ModalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-            height: 0.5.h,
-            width: 17.w,
+            height: SizeProvider.instance.size(4),
+            width: SizeProvider.instance.size(50),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.h)),
-                color: ConfigColor.greyThree)));
+                borderRadius: BorderRadius.all(Radius.circular(SizeProvider.instance.size(8))),
+                color: ColorProvider.greyThree)));
   }
 }

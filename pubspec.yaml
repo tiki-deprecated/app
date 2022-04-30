@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.3.1+1
+version: 0.4.0
 publish_to: 'none'
 
 environment:
@@ -13,60 +13,28 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   amplitude_flutter: ^3.8.1
-  firebase_core: ^1.13.1
-  flutter_markdown: ^0.6.9
+  firebase_core: ^1.15.0
   flutter_secure_storage: ^5.0.2
   intl_utils: ^2.6.1
   intl: ^0.17.0
   logging: ^1.0.2
   provider: ^6.0.2
-  sentry_flutter: ^6.3.0
-  sizer: ^2.0.15
+  sentry_flutter: ^6.5.1
   sqflite_sqlcipher: ^2.1.0
-  user_account:
+  httpp: ^0.0.4
+  google_provider: ^0.0.9
+  microsoft_provider: ^0.0.8
+  tiki_decision: ^0.0.5
+  tiki_wallet: ^0.0.13
+  tiki_kv: 0.1.1
+  tiki_spam_cards: ^0.0.3
+  tiki_user_account: 0.0.3
+  tiki_login: ^0.0.8
+  tiki_money: ^0.0.7
+  tiki_style: 0.0.12
+  tiki_data:
     git:
-      url: https://github.com/tiki/user_account
-      ref: 0.0.2
-  decision_sdk:
-    git:
-      url: https://github.com/tiki/decision
-      ref: 0.0.3
-  wallet:
-    git:
-      url: https://github.com/tiki/wallet
-      ref: 0.0.8
-  httpp:
-    git:
-      url: https://github.com/tiki/httpp
-      ref: 0.0.3
-  login:
-    git:
-      url: https://github.com/tiki/login
-      ref: 0.0.7
-  google_provider:
-    git:
-      url: https://github.com/tiki/google_provider
-      ref: 0.0.5
-  microsoft_provider:
-    git:
-      url: https://github.com/tiki/microsoft_provider
-      ref: 0.0.5
-  tiki_kv:
-    git:
-      url: https://github.com/tiki/tiki_kv
-      ref: 0.0.2
-  spam_cards:
-    git:
-      url: https://github.com/tiki/spam_cards
-      ref: 0.0.2
-  money:
-    git:
-      url: https://github.com/tiki/money
-      ref: 0.0.3
-  zendesk_flutter:
-    git:
-      url: https://github.com/tiki/zendesk_flutter
-      ref: 0.0.2
+      url: https://github.com/tiki/data
 
 dependency_overrides:
   sqflite:
@@ -86,59 +54,5 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - res/images/
-    - res/animation/
     - res/json/
     - res/sql/
-  fonts:
-    - family: Koara
-      fonts:
-        - asset: res/fonts/Koara-Bold.ttf
-          weight: 700
-        - asset: res/fonts/Koara-Regular.ttf
-        - asset: res/fonts/Koara-Light.ttf
-          weight: 300
-    - family: NunitoSans
-      fonts:
-        - asset: res/fonts/NunitoSans-Black.ttf
-          weight: 900
-        - asset: res/fonts/NunitoSans-BlackItalic.ttf
-          weight: 900
-          style: italic
-        - asset: res/fonts/NunitoSans-ExtraBold.ttf
-          weight: 800
-        - asset: res/fonts/NunitoSans-ExtraBoldItalic.ttf
-          weight: 800
-          style: italic
-        - asset: res/fonts/NunitoSans-Bold.ttf
-          weight: 700
-        - asset: res/fonts/NunitoSans-BoldItalic.ttf
-          weight: 700
-          style: italic
-        - asset: res/fonts/NunitoSans-SemiBold.ttf
-          weight: 600
-        - asset: res/fonts/NunitoSans-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
-        - asset: res/fonts/NunitoSans-Regular.ttf
-          weight: 400
-        - asset: res/fonts/NunitoSans-Italic.ttf
-          weight: 400
-          style: italic
-        - asset: res/fonts/NunitoSans-Light.ttf
-          weight: 300
-        - asset: res/fonts/NunitoSans-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: res/fonts/NunitoSans-ExtraLight.ttf
-          weight: 200
-        - asset: res/fonts/NunitoSans-ExtraLightItalic.ttf
-          weight: 200
-          style: italic
-    - family: Roboto
-      fonts:
-        - asset: res/fonts/Roboto-Medium.ttf
-          weight: 500
-    - family: SegoeUI
-      fonts:
-        - asset: res/fonts/Segoe-UI.ttf

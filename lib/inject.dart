@@ -1,32 +1,27 @@
-import 'package:decision_sdk/decision.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
-import 'package:login/login.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:spam_cards/spam_cards.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:tiki_decision/tiki_decision.dart';
 import 'package:tiki_kv/tiki_kv.dart';
-import 'package:user_account/user_account.dart';
-import 'package:wallet/wallet.dart';
+import 'package:tiki_login/tiki_login.dart';
+import 'package:tiki_spam_cards/tiki_spam_cards.dart';
+import 'package:tiki_style/tiki_style.dart';
+import 'package:tiki_user_account/tiki_user_account.dart';
+import 'package:tiki_wallet/tiki_wallet.dart';
 
-import 'src/slices/api_company/api_company_service.dart';
-import 'src/slices/api_email_msg/api_email_msg_service.dart';
-import 'src/slices/api_email_sender/api_email_sender_service.dart';
-import 'src/slices/api_knowledge/api_knowledge_service.dart';
-import 'src/slices/api_oauth/api_oauth_service.dart';
-import 'src/slices/api_short_code/api_short_code_service.dart';
-import 'src/slices/api_signup/api_signup_service.dart';
-import 'src/slices/data_fetch/data_fetch_service.dart';
-import 'src/slices/data_push/data_push_service.dart';
 import 'src/utils/database.dart' as db;
 
-Future<List<SingleChildWidget>> provide(
+Future<List<SingleChildWidget>> provide(BuildContext context,
     {FlutterSecureStorage? secureStorage,
     Httpp? httpp,
-    required Login login}) async {
+    required TikiLogin login}) async {
   Logger log = Logger('HomeScreenService.provide');
+
+  SizeProvider.init(mediaQueryData: MediaQuery.of(context));
 
   TikiKeysService tikiKeysService =
       TikiKeysService(secureStorage: secureStorage);
@@ -40,54 +35,30 @@ Future<List<SingleChildWidget>> provide(
     await login.logout();
     return [];
   } else {
-    ApiSignupService apiSignupService = ApiSignupService();
-
     Database database = await db.open(keys.data.encode());
 
     TikiKv tikiKv = TikiKv(database: database);
-    login.onLogout('TikiKv', () async => await tikiKv.deleteAllData());
+    login.onLogout('TikiKv', () async => await tikiKv.deleteAll());
 
-    ApiKnowledgeService apiKnowledgeService =
-        ApiKnowledgeService(httpp: httpp, refresh: login.refresh);
-    DataPushService dataPushService = DataPushService(
-        apiKnowledgeService: apiKnowledgeService,
-        database: database,
-        login: login);
-    ApiEmailSenderService apiEmailSenderService =
-        ApiEmailSenderService(database: database);
-    ApiEmailMsgService apiEmailMsgService =
-        ApiEmailMsgService(database: database);
-    ApiCompanyService apiCompanyService = ApiCompanyService(
-        database: database,
-        login: login,
-        apiKnowledgeService: apiKnowledgeService);
-    ApiOAuthService apiAuthService =
-        ApiOAuthService(httpp: httpp ?? Httpp(), database: database);
-    login.onLogout(
-        'ApiAuthService', () async => await apiAuthService.signOutAll());
+    // TODO get from data lib
+    // login.onLogout(
+    //     'ApiAuthService', () async => await apiAuthService.signOutAll());
 
-    ApiShortCodeService apiShortCodeService =
-        ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+    // bool isConnected = await apiAuthService.getAccount()) != null
 
-    DecisionSdk decisionSdk = DecisionSdk(
+    var isConnected = false;
+    TikiDecision decision = TikiDecision(
         tikiKv: tikiKv,
-        isConnected: (await apiAuthService.getAccount()) != null);
+        isConnected: isConnected
+    );
 
-    SpamCards spamCards = SpamCards(decisionSdk: decisionSdk);
+    TikiSpamCards spamCards = TikiSpamCards(decision: decision);
 
-    DataFetchService dataFetchService = DataFetchService(
-        apiAuthService: apiAuthService,
-        tikiKv: tikiKv,
-        apiCompanyService: apiCompanyService,
-        apiEmailSenderService: apiEmailSenderService,
-        apiEmailMsgService: apiEmailMsgService,
-        apiKnowledgeService: apiKnowledgeService,
-        dataPushService: dataPushService,
-        database: database);
+    var referCode = "TEST"; //await _getReferCode(login, apiShortCodeService);
 
-    UserAccount userAccount = UserAccount(
+    TikiUserAccount userAccount = TikiUserAccount(
         logout: () => login.logout(),
-        referalCode: await _getReferCode(login, apiShortCodeService),
+        referalCode: referCode,
         combinedKeys: keys.address +
             '.' +
             keys.data.encode() +
@@ -95,30 +66,22 @@ Future<List<SingleChildWidget>> provide(
             keys.sign.privateKey.encode());
 
     return [
-      Provider<ApiCompanyService>.value(value: apiCompanyService),
-      Provider<ApiEmailSenderService>.value(value: apiEmailSenderService),
-      Provider<ApiEmailMsgService>.value(value: apiEmailMsgService),
       Provider<TikiKeysService>.value(value: tikiKeysService),
-      Provider<ApiOAuthService>.value(value: apiAuthService),
-      Provider<ApiKnowledgeService>.value(value: apiKnowledgeService),
-      Provider<DataPushService>.value(value: dataPushService),
-      ChangeNotifierProvider<DataFetchService>.value(value: dataFetchService),
-      Provider<Login>.value(value: login),
-      Provider<ApiSignupService>.value(value: apiSignupService),
-      Provider<DecisionSdk>.value(value: decisionSdk),
-      Provider<UserAccount>.value(value: userAccount),
-      Provider<SpamCards>.value(value: spamCards),
-      Provider<ApiShortCodeService>.value(value: apiShortCodeService)
+      Provider<TikiLogin>.value(value: login),
+      Provider<TikiDecision>.value(value: decision),
+      Provider<TikiUserAccount>.value(value: userAccount),
+      Provider<TikiSpamCards>.value(value: spamCards),
     ];
   }
 }
 
-Future<String> _getReferCode(
-    Login login, ApiShortCodeService apiShortCodeService) async {
-  String? code;
-  await apiShortCodeService.get(
-      accessToken: login.token!.bearer!,
-      address: login.user!.address!,
-      onSuccess: (rsp) => code = rsp.code!);
-  return code ?? '';
-}
+// TODO ApiShortCodeService?
+// Future<String> _getReferCode(
+//     TikiLogin login, ApiShortCodeService apiShortCodeService) async {
+//   String? code;
+//   await apiShortCodeService.get(
+//       accessToken: login.token!.bearer!,
+//       address: login.user!.address!,
+//       onSuccess: (rsp) => code = rsp.code!);
+//   return code ?? '';
+// }

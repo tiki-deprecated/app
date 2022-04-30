@@ -3,13 +3,9 @@
  * MIT license. See LICENSE file in root directory.
  */
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-
-import '../../config/config_color.dart';
-import '../../config/config_font.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class HeaderBarViewBadge extends StatelessWidget {
-  static const _width = 31;
 
   final String label;
 
@@ -18,13 +14,15 @@ class HeaderBarViewBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      Image(
-        image: const AssetImage('res/images/badge-header.png'),
-        width: _width.w,
-        fit: BoxFit.fitWidth,
+      SizedBox(
+        width: SizeProvider.instance.width(100),
+        child: FittedBox(
+          child: ImgProvider.badgeHeader,
+          fit: BoxFit.fitWidth,
+        )
       ),
       SizedBox(
-          width: _width.w,
+          width: SizeProvider.instance.width(100),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -32,17 +30,14 @@ class HeaderBarViewBadge extends StatelessWidget {
                 label,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                    fontFamily: ConfigFont.familyNunitoSans,
+                    fontFamily: TextProvider.familyNunitoSans,
                     fontWeight: FontWeight.w800,
-                    color: ConfigColor.white,
-                    fontSize: 9.1.sp),
+                    color: ColorProvider.white,
+                    fontSize: SizeProvider.instance.text(9.1)),
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w),
-                  child: Image(
-                    image: const AssetImage('res/images/icon-star.png'),
-                    height: 9.1.sp,
-                    fit: BoxFit.fitHeight,
+                  padding: EdgeInsets.symmetric(horizontal: SizeProvider.instance.size(9)),
+                  child: Icon(IconProvider.star, size: SizeProvider.instance.size(80)
                   )),
             ],
           ))

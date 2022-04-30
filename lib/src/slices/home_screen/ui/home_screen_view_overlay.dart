@@ -5,12 +5,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:tiki_kv/tiki_kv.dart';
+import 'package:tiki_style/tiki_style.dart';
 
-import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
-import '../../../utils/helper_image.dart';
 import '../../home_screen/home_screen_controller.dart';
 import '../home_screen_service.dart';
 
@@ -25,31 +22,31 @@ class HomeScreenViewOverlay extends StatelessWidget {
         onTap: () async => controller
             .dismissOverlay(Provider.of<TikiKv>(context, listen: false)),
         child: Stack(children: [
-          Image(
-            image: const AssetImage('res/images/overlay-bg.png'),
-            width: 100.w,
+          FittedBox(
             fit: BoxFit.cover,
+          child: ImgProvider.overlayBg,
           ),
-          _content()
+          _content(context)
         ]));
   }
 
-  Widget _content() {
+  Widget _content(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       Container(
-          margin: EdgeInsets.only(top: 20.h),
-          child: HelperImage("swipe-choices", width: 100.w)),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(160)),
+          width: MediaQuery.of(context).size.width,
+          child: ImgProvider.swipeChoices),
       Container(
-          margin: EdgeInsets.only(top: 4.h, left: 4.w, right: 4.w),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(36), left: SizeProvider.instance.width(15), right: SizeProvider.instance.width(15)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
                   text: 'Unsubscribe from an email ',
                   style: TextStyle(
-                      color: ConfigColor.white,
+                      color: ColorProvider.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: ConfigFont.familyNunitoSans,
-                      fontSize: 12.sp),
+                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
+                      fontSize: SizeProvider.instance.text(12)),
                   children: const [
                     TextSpan(
                         text: 'list by swiping left, or\n',
@@ -62,21 +59,21 @@ class HomeScreenViewOverlay extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w600))
                   ]))),
       Container(
-          margin: EdgeInsets.only(top: 2.h, left: 4.w, right: 4.w),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(16), left: SizeProvider.instance.width(12), right: SizeProvider.instance.width(12)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
                   text: 'Unsubscribing will remove you from an email list.\n',
                   style: TextStyle(
-                      color: ConfigColor.tikiOrange,
+                      color: ColorProvider.tikiOrange,
                       fontWeight: FontWeight.w600,
-                      fontFamily: ConfigFont.familyNunitoSans,
-                      fontSize: 12.sp),
+                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
+                      fontSize: SizeProvider.instance.width(12)),
                   children: const [
                     TextSpan(
                         text:
                             'You can always re-subscribe by going back to their website.',
-                        style: TextStyle(color: ConfigColor.white))
+                        style: TextStyle(color: ColorProvider.white))
                   ])))
     ]);
   }

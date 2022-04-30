@@ -8,11 +8,9 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
-import 'package:login/login.dart';
 import 'package:sqflite_common/sqlite_api.dart';
+import 'package:tiki_login/tiki_login.dart';
 
-import '../slices/api_short_code/api_short_code_model_claim.dart';
-import '../slices/api_short_code/api_short_code_service.dart';
 import 'database.dart' as db;
 
 const String _prefix = 'com.mytiki.app';
@@ -22,7 +20,7 @@ const String _currentPrefix =
 const String _userPrefix = _prefix + '.' + 'user' + '.' + _versionPrefix + '.';
 const String _keysPrefix = _prefix + '.' + 'keys' + '.' + _versionPrefix + '.';
 
-Future<void> upgrade(Login login, Httpp httpp) async {
+Future<void> upgrade(TikiLogin login, Httpp httpp) async {
   Logger log = Logger('upgrade');
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   String? email = await getEmail(secureStorage);
@@ -34,18 +32,19 @@ Future<void> upgrade(Login login, Httpp httpp) async {
         Database database = await db.open(pw, dbName: 'tiki_enc.db');
         String? code = await getCode(database);
         if (code != null) {
-          ApiShortCodeService shortCodeService =
-              ApiShortCodeService(httpp: httpp, refresh: login.refresh);
-          await shortCodeService.claim(
-              accessToken: login.token!.bearer!,
-              claim: ApiShortCodeModelClaim(
-                  code: code, address: login.user!.address!),
-              onSuccess: (rsp) async {
-                await secureStorage.delete(key: _currentPrefix);
-                await secureStorage.delete(key: _userPrefix + email);
-                await secureStorage.delete(key: _keysPrefix + address);
-              },
-              onError: (error) => log.warning(error));
+          // TODO update apiShortcodeservice
+          // ApiShortCodeService shortCodeService =
+          //     ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+          // await shortCodeService.claim(
+          //     accessToken: login.token!.bearer!,
+          //     claim: ApiShortCodeModelClaim(
+          //         code: code, address: login.user!.address!),
+          //     onSuccess: (rsp) async {
+          //       await secureStorage.delete(key: _currentPrefix);
+          //       await secureStorage.delete(key: _userPrefix + email);
+          //       await secureStorage.delete(key: _keysPrefix + address);
+          //     },
+          //     onError: (error) => log.warning(error));
         }
       }
     }

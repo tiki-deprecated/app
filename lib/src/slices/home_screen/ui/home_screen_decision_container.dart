@@ -1,9 +1,9 @@
-import 'package:decision_sdk/decision.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:user_account/user_account.dart';
+import 'package:tiki_decision/tiki_decision.dart';
+import 'package:tiki_style/tiki_style.dart';
+import 'package:tiki_user_account/tiki_user_account.dart';
 
-import '../../../config/config_color.dart';
 import '../../../widgets/header_bar/header_bar.dart';
 
 class HomeScreenDecisionContainer extends StatelessWidget {
@@ -11,17 +11,17 @@ class HomeScreenDecisionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DecisionSdk decisionSdk = Provider.of<DecisionSdk>(context);
+    TikiDecision decisionSdk = Provider.of<TikiDecision>(context);
     return Scaffold(
         body: Center(
             child: Stack(children: [
-      Container(color: ConfigColor.greyOne),
+      Container(color: ColorProvider.greyOne),
       SafeArea(
           child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Column(children: [
                 HeaderBar(
-                  userAccount: Provider.of<UserAccount>(context, listen: false),
+                  userAccount: Provider.of<TikiUserAccount>(context, listen: false),
                 ),
                 Expanded(child: decisionSdk.decisionWidget())
               ])))

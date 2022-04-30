@@ -3,13 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'src/config/config_sentry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:tiki_style/tiki_style.dart';
 
-import 'src/config/config_color.dart';
-import 'src/config/config_font.dart';
-import 'src/config/config_sentry.dart';
 
 class App extends StatelessWidget {
   static const String _title = "TIKI";
@@ -19,8 +17,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
+    return MaterialApp(
         title: _title,
         localizationsDelegates: const [
           DefaultMaterialLocalizations.delegate,
@@ -29,14 +26,13 @@ class App extends StatelessWidget {
         ],
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(
-                fontFamily: ConfigFont.familyNunitoSans,
-                bodyColor: ConfigColor.tikiBlue,
-                displayColor: ConfigColor.tikiBlue)),
+                fontFamily: TextProvider.familyNunitoSans,
+                bodyColor: ColorProvider.tikiBlue,
+                displayColor: ColorProvider.tikiBlue)),
         home: Router(
             routerDelegate: _routerDelegate,
             backButtonDispatcher: RootBackButtonDispatcher()),
         navigatorObservers: [ConfigSentry.navigatorObserver],
       );
-    });
+    }
   }
-}

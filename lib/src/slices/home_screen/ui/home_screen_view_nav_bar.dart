@@ -5,10 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
+import 'package:tiki_style/tiki_style.dart';
 
-import '../../../config/config_color.dart';
-import '../../../config/config_font.dart';
 import '../home_screen_service.dart';
 import 'home_screen_view_nav_bar_item.dart';
 
@@ -37,21 +35,21 @@ class HomeScreenViewNavBar extends StatelessWidget {
               currentIndex: service.model.currentScreenIndex,
               onTap: (index) => service.controller.onNavTap(index),
               items: [
-                HomeScreenViewNavBarItem("Data", "eye-icon"),
-                HomeScreenViewNavBarItem("Choices", "choices-icon"),
-                HomeScreenViewNavBarItem("Money", "money-icon")
+                HomeScreenViewNavBarItem("Data", IconProvider.eye ),
+                HomeScreenViewNavBarItem("Choices", IconProvider.choices_1 ),
+                HomeScreenViewNavBarItem("Money", IconProvider.money)
               ],
-              backgroundColor: ConfigColor.white,
-              unselectedItemColor: ConfigColor.blue,
+              backgroundColor: ColorProvider.white,
+              unselectedItemColor: ColorProvider.blue,
               unselectedLabelStyle: TextStyle(
-                  fontFamily: ConfigFont.familyNunitoSans,
+                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                   fontWeight: FontWeight.w800,
-                  fontSize: _fontSize.sp),
-              selectedItemColor: ConfigColor.orange,
+                  fontSize: SizeProvider.instance.text(_fontSize)),
+              selectedItemColor: ColorProvider.orange,
               selectedLabelStyle: TextStyle(
-                  fontFamily: ConfigFont.familyNunitoSans,
+                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
                   fontWeight: FontWeight.w800,
-                  fontSize: _fontSize.sp),
+                  fontSize: SizeProvider.instance.text(_fontSize)),
             )));
   }
 }
