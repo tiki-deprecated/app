@@ -13,23 +13,23 @@ import 'ui/home_screen_layout.dart';
 
 class HomeScreenPresenter extends Page {
   final HomeScreenService service;
-  late final Future<List<SingleChildWidget>> Function(BuildContext)? _provide;
+  late final Future<List<SingleChildWidget>> Function()? _provide;
 
   HomeScreenPresenter(this.service) : super(key: const ValueKey("HomeNav"));
 
-  void inject(Future<List<SingleChildWidget>> Function(BuildContext)? provide) =>
+  void inject(Future<List<SingleChildWidget>> Function()? provide) =>
       _provide = provide;
 
   @override
   Route createRoute(BuildContext context) {
-
+    TikiStyle.init(context);
     return MaterialPageRoute(
         settings: this,
         builder: (BuildContext context) => ChangeNotifierProvider.value(
             value: service,
             child: FutureBuilder(
                 future: _provide != null
-                    ? _provide!(context)
+                    ? _provide!()
                     : Future.value(List<SingleChildWidget>.empty()),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<SingleChildWidget>> snapshot) {
