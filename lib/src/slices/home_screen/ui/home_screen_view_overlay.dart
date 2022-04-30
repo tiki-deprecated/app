@@ -5,7 +5,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 import 'package:tiki_style/tiki_style.dart';
 
@@ -34,11 +33,11 @@ class HomeScreenViewOverlay extends StatelessWidget {
   Widget _content(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       Container(
-          margin: EdgeInsets.only(top: 20.h),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(160)),
           width: MediaQuery.of(context).size.width,
           child: ImgProvider.swipeChoices),
       Container(
-          margin: EdgeInsets.only(top: 4.h, left: 4.w, right: 4.w),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(36), left: SizeProvider.instance.width(15), right: SizeProvider.instance.width(15)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -47,7 +46,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
                       color: ColorProvider.white,
                       fontWeight: FontWeight.bold,
                       fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
-                      fontSize: 12.sp),
+                      fontSize: SizeProvider.instance.text(12)),
                   children: const [
                     TextSpan(
                         text: 'list by swiping left, or\n',
@@ -60,7 +59,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w600))
                   ]))),
       Container(
-          margin: EdgeInsets.only(top: 2.h, left: 4.w, right: 4.w),
+          margin: EdgeInsets.only(top: SizeProvider.instance.height(16), left: SizeProvider.instance.width(12), right: SizeProvider.instance.width(12)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -69,7 +68,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
                       color: ColorProvider.tikiOrange,
                       fontWeight: FontWeight.w600,
                       fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
-                      fontSize: 12.sp),
+                      fontSize: SizeProvider.instance.width(12)),
                   children: const [
                     TextSpan(
                         text:

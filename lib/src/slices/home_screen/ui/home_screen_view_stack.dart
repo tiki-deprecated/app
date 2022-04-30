@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 import '../home_screen_service.dart';
 import '../model/home_screen_model.dart';
@@ -14,10 +15,8 @@ import 'home_screen_view_nav_bar.dart';
 import 'home_screen_view_overlay.dart';
 
 class HomeScreenViewStack extends StatelessWidget {
-  final DataScreenService dataScreenService;
 
-  const HomeScreenViewStack(
-      {Key? key, required this.dataScreenService}) : super(key: key);
+  const HomeScreenViewStack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class HomeScreenViewStack extends StatelessWidget {
           body: SafeArea(
               top: false,
               child: IndexedStack(index: model.currentScreenIndex, children: [
-                dataScreenService.presenter.render(),
+                //dataScreenService.presenter.render(),
                 const HomeScreenDecisionContainer(),
                 const HomeScreenMoneyContainer(),
               ]))),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tiki_money/tiki_money.dart';
+import 'package:tiki_style/tiki_style.dart';
+import 'package:tiki_user_account/tiki_user_account.dart';
 
 import '../../../widgets/header_bar/header_bar.dart';
 
@@ -17,8 +20,8 @@ class HomeScreenMoneyContainer extends StatelessWidget {
           child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Column(children: [
-                HeaderBar(userAccount: Provider.of<UserAccount>(context, listen:false),),
-                Expanded(child: Money().home(example: true))
+                HeaderBar(userAccount: Provider.of<TikiUserAccount>(context, listen:false),),
+                Expanded(child: TikiMoney().home(example: true))
               ])))
     ])));
   }

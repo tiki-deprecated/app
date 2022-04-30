@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:tiki_style/tiki_style.dart';
 
 class HeaderBarViewBadge extends StatelessWidget {
-  static const _width = 31;
 
   final String label;
 

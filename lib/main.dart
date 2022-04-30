@@ -6,6 +6,7 @@ import 'package:httpp/httpp.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tiki_login/tiki_login.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 import 'app.dart';
 import 'inject.dart';
@@ -47,7 +48,7 @@ Future<TikiLogin> _initializeLogin() async {
       home: home.presenter);
   login.onLogin('Upgrade', () => upgrade(login, httpp));
   home.presenter.inject(
-      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+      (BuildContext context) => provide(context, login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }

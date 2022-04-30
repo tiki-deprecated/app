@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
@@ -8,19 +9,19 @@ import 'package:tiki_decision/tiki_decision.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 import 'package:tiki_login/tiki_login.dart';
 import 'package:tiki_spam_cards/tiki_spam_cards.dart';
+import 'package:tiki_style/tiki_style.dart';
 import 'package:tiki_user_account/tiki_user_account.dart';
 import 'package:tiki_wallet/tiki_wallet.dart';
 
-import 'src/slices/api_oauth/api_oauth_service.dart';
-import 'src/slices/api_short_code/api_short_code_service.dart';
-import 'src/slices/api_signup/api_signup_service.dart';
 import 'src/utils/database.dart' as db;
 
-Future<List<SingleChildWidget>> provide(
+Future<List<SingleChildWidget>> provide(BuildContext context,
     {FlutterSecureStorage? secureStorage,
     Httpp? httpp,
     required TikiLogin login}) async {
   Logger log = Logger('HomeScreenService.provide');
+
+  SizeProvider.init(mediaQueryData: MediaQuery.of(context));
 
   TikiKeysService tikiKeysService =
       TikiKeysService(secureStorage: secureStorage);
@@ -34,30 +35,30 @@ Future<List<SingleChildWidget>> provide(
     await login.logout();
     return [];
   } else {
-    ApiSignupService apiSignupService = ApiSignupService();
-
     Database database = await db.open(keys.data.encode());
 
     TikiKv tikiKv = TikiKv(database: database);
     login.onLogout('TikiKv', () async => await tikiKv.deleteAll());
 
-    ApiOAuthService apiAuthService =
-        ApiOAuthService(httpp: httpp ?? Httpp(), database: database);
-    login.onLogout(
-        'ApiAuthService', () async => await apiAuthService.signOutAll());
+    // TODO get from data lib
+    // login.onLogout(
+    //     'ApiAuthService', () async => await apiAuthService.signOutAll());
 
-    ApiShortCodeService apiShortCodeService =
-        ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+    // bool isConnected = await apiAuthService.getAccount()) != null
 
+    var isConnected = false;
     TikiDecision decision = TikiDecision(
         tikiKv: tikiKv,
-        isConnected: (await apiAuthService.getAccount()) != null);
+        isConnected: isConnected
+    );
 
     TikiSpamCards spamCards = TikiSpamCards(decision: decision);
 
+    var referCode = "TEST"; //await _getReferCode(login, apiShortCodeService);
+
     TikiUserAccount userAccount = TikiUserAccount(
         logout: () => login.logout(),
-        referalCode: await _getReferCode(login, apiShortCodeService),
+        referalCode: referCode,
         combinedKeys: keys.address +
             '.' +
             keys.data.encode() +
@@ -66,23 +67,21 @@ Future<List<SingleChildWidget>> provide(
 
     return [
       Provider<TikiKeysService>.value(value: tikiKeysService),
-      Provider<ApiOAuthService>.value(value: apiAuthService),
       Provider<TikiLogin>.value(value: login),
-      Provider<ApiSignupService>.value(value: apiSignupService),
       Provider<TikiDecision>.value(value: decision),
       Provider<TikiUserAccount>.value(value: userAccount),
       Provider<TikiSpamCards>.value(value: spamCards),
-      Provider<ApiShortCodeService>.value(value: apiShortCodeService)
     ];
   }
 }
 
-Future<String> _getReferCode(
-    TikiLogin login, ApiShortCodeService apiShortCodeService) async {
-  String? code;
-  await apiShortCodeService.get(
-      accessToken: login.token!.bearer!,
-      address: login.user!.address!,
-      onSuccess: (rsp) => code = rsp.code!);
-  return code ?? '';
-}
+// TODO ApiShortCodeService?
+// Future<String> _getReferCode(
+//     TikiLogin login, ApiShortCodeService apiShortCodeService) async {
+//   String? code;
+//   await apiShortCodeService.get(
+//       accessToken: login.token!.bearer!,
+//       address: login.user!.address!,
+//       onSuccess: (rsp) => code = rsp.code!);
+//   return code ?? '';
+// }

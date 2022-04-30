@@ -14,11 +14,11 @@ class ModalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-            height: 0.5.h,
-            width: 17.w,
+            height: SizeProvider.instance.size(4),
+            width: SizeProvider.instance.size(50),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.h)),
+                borderRadius: BorderRadius.all(Radius.circular(SizeProvider.instance.size(8))),
                 color: ColorProvider.greyThree)));
   }
 }

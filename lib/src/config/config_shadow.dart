@@ -8,13 +8,15 @@ import 'package:tiki_style/tiki_style.dart';
 
 class ConfigShadow {
   static const Color contentColor = Color(0x0D000000);
-  static const num contentBlurRadius = 2.67;
-  static const num contentOffsetX = 1.06;
+  static const num contentBlurRadius = 20;
+  static const num contentOffsetX = 9;
   static const num contentOffsetY = contentOffsetX;
 
   static BoxShadow content = BoxShadow(
     color: contentColor,
-    blurRadius: SizeProvider.instance.contentBlurRadius,
-    offset: Offset(contentOffsetX.w, contentOffsetY.w),
+    blurRadius: SizeProvider.instance.size(contentBlurRadius),
+    offset: Offset(
+        SizeProvider.instance.size(contentOffsetX),
+        SizeProvider.instance.size(contentOffsetY)),
   );
 }
