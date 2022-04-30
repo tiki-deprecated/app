@@ -1,0 +1,261 @@
+PODS:
+  - Amplitude (8.5.0)
+  - amplitude_flutter (0.0.1):
+    - Amplitude (= 8.5.0)
+    - Flutter
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
+  - barcode_scan2 (0.0.1):
+    - Flutter
+    - MTBBarcodeScanner
+    - SwiftProtobuf
+  - Firebase/CoreOnly (8.15.0):
+    - FirebaseCore (= 8.15.0)
+  - Firebase/DynamicLinks (8.15.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 8.15.0)
+  - firebase_core (1.15.0):
+    - Firebase/CoreOnly (= 8.15.0)
+    - Flutter
+  - firebase_dynamic_links (4.2.1):
+    - Firebase/DynamicLinks (= 8.15.0)
+    - firebase_core
+    - Flutter
+  - FirebaseCore (8.15.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+  - FirebaseCoreDiagnostics (8.15.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+    - nanopb (~> 2.30908.0)
+  - FirebaseDynamicLinks (8.15.0):
+    - FirebaseCore (~> 8.0)
+  - Flutter (1.0.0)
+  - flutter_appauth (0.0.1):
+    - AppAuth (= 1.4.0)
+    - Flutter
+  - flutter_secure_storage (3.3.1):
+    - Flutter
+  - FMDB/SQLCipher (2.7.5):
+    - SQLCipher
+  - GoogleDataTransport (9.1.2):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
+    - GoogleUtilities/Environment
+  - integration_test (0.0.1):
+    - Flutter
+  - MTBBarcodeScanner (5.0.11)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - package_info (0.0.1):
+    - Flutter
+  - package_info_plus (0.4.5):
+    - Flutter
+  - path_provider_ios (0.0.1):
+    - Flutter
+  - permission_handler_apple (9.0.4):
+    - Flutter
+  - PromisesObjC (2.1.0)
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
+  - sentry_flutter (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - Sentry (~> 7.11.0)
+  - share_plus (0.0.1):
+    - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB/SQLCipher (>= 2.7.5)
+    - SQLCipher (~> 4.4.0)
+  - sqflite_sqlcipher (0.0.1):
+    - Flutter
+    - FMDB/SQLCipher (~> 2.7.5)
+    - SQLCipher (= 4.4.2)
+  - SQLCipher (4.4.2):
+    - SQLCipher/standard (= 4.4.2)
+  - SQLCipher/common (4.4.2)
+  - SQLCipher/standard (4.4.2):
+    - SQLCipher/common
+  - SwiftProtobuf (1.19.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
+    - Flutter
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
+  - zendesk_flutter (0.0.1):
+    - Flutter
+    - ZendeskSupportProvidersSDK
+    - ZendeskSupportSDK
+  - ZendeskCommonUISDK (6.1.4)
+  - ZendeskCoreSDK (2.7.0)
+  - ZendeskMessagingAPISDK (3.8.5):
+    - ZendeskSDKConfigurationsSDK (= 1.1.11)
+  - ZendeskMessagingSDK (3.8.5):
+    - ZendeskCommonUISDK (= 6.1.4)
+    - ZendeskMessagingAPISDK (= 3.8.5)
+  - ZendeskSDKConfigurationsSDK (1.1.11)
+  - ZendeskSupportProvidersSDK (5.5.0):
+    - ZendeskCoreSDK (= 2.7.0)
+  - ZendeskSupportSDK (5.5.0):
+    - ZendeskMessagingSDK (= 3.8.5)
+    - ZendeskSupportProvidersSDK (= 5.5.0)
+
+DEPENDENCIES:
+  - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
+  - barcode_scan2 (from `.symlinks/plugins/barcode_scan2/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - sqflite_sqlcipher (from `.symlinks/plugins/sqflite_sqlcipher/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+  - zendesk_flutter (from `.symlinks/plugins/zendesk_flutter/ios`)
+  - ZendeskSupportProvidersSDK
+  - ZendeskSupportSDK
+
+SPEC REPOS:
+  trunk:
+    - Amplitude
+    - AppAuth
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseDynamicLinks
+    - FMDB
+    - GoogleDataTransport
+    - GoogleUtilities
+    - MTBBarcodeScanner
+    - nanopb
+    - PromisesObjC
+    - Sentry
+    - SQLCipher
+    - SwiftProtobuf
+    - ZendeskCommonUISDK
+    - ZendeskCoreSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskMessagingSDK
+    - ZendeskSDKConfigurationsSDK
+    - ZendeskSupportProvidersSDK
+    - ZendeskSupportSDK
+
+EXTERNAL SOURCES:
+  amplitude_flutter:
+    :path: ".symlinks/plugins/amplitude_flutter/ios"
+  barcode_scan2:
+    :path: ".symlinks/plugins/barcode_scan2/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_dynamic_links:
+    :path: ".symlinks/plugins/firebase_dynamic_links/ios"
+  Flutter:
+    :path: Flutter
+  flutter_appauth:
+    :path: ".symlinks/plugins/flutter_appauth/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  sentry_flutter:
+    :path: ".symlinks/plugins/sentry_flutter/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+  sqflite_sqlcipher:
+    :path: ".symlinks/plugins/sqflite_sqlcipher/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+  zendesk_flutter:
+    :path: ".symlinks/plugins/zendesk_flutter/ios"
+
+SPEC CHECKSUMS:
+  Amplitude: ef9ed339ddd33c9183edf63fa4bbaa86cf873321
+  amplitude_flutter: 8ddb231989e68ed8c005c838d7fc59edbca09833
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
+  Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
+  firebase_core: fa19947d8db1c0a62d8872c45039b3113829cd2e
+  firebase_dynamic_links: 81c625df5b132efdfef57ba46b2cba12e86ee5b8
+  FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
+  FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
+  FirebaseDynamicLinks: 1dc816ef789c5adac6fede0b46d11478175c70e4
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_appauth: 05c3778a1e4ae23364dd2ef37cbae14b244f646b
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
+  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
+  sentry_flutter: efb3df2c203cd03aad255892a8d628a458656d14
+  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
+  sqflite: c0667567fd3e682beb9509976c08bc2325429aab
+  sqflite_sqlcipher: 70eb7fd8d4f0b0352d0bde5cf345b810737f54bb
+  SQLCipher: 1ab0b9486a77d141e72e92ff30681926ed79c07a
+  SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
+  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
+  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
+  zendesk_flutter: 05309cda7bef056d2352fdad933928e281495080
+  ZendeskCommonUISDK: ba160fe413b491af9e7bfcb9808afcd494dc83a5
+  ZendeskCoreSDK: 4236eb56f9386cf0770900df04c857b9b4d79d03
+  ZendeskMessagingAPISDK: 410f9bcf07c79fe98d6f251da102368d6b356c54
+  ZendeskMessagingSDK: 95d396c981dacfab83cc7b9736e8561d51a3052b
+  ZendeskSDKConfigurationsSDK: ebced171fd1f4eb57760e8537d8cfa6a450122be
+  ZendeskSupportProvidersSDK: 77a62fe6bacc05bb10ff20edce75612fa109fd61
+  ZendeskSupportSDK: ba72e90e327635b5fde3d023a3de33242a6ee8ab
+
+PODFILE CHECKSUM: 7b3d467666c90d5476ea094703b54347b27f00f4
+
+COCOAPODS: 1.11.2
