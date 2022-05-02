@@ -11,6 +11,8 @@ import 'package:logging/logging.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tiki_login/tiki_login.dart';
 
+import '../slices/api_short_code/api_short_code_model_claim.dart';
+import '../slices/api_short_code/api_short_code_service.dart';
 import 'database.dart' as db;
 
 const String _prefix = 'com.mytiki.app';
@@ -32,19 +34,18 @@ Future<void> upgrade(TikiLogin login, Httpp httpp) async {
         Database database = await db.open(pw, dbName: 'tiki_enc.db');
         String? code = await getCode(database);
         if (code != null) {
-          // TODO update apiShortcodeservice
-          // ApiShortCodeService shortCodeService =
-          //     ApiShortCodeService(httpp: httpp, refresh: login.refresh);
-          // await shortCodeService.claim(
-          //     accessToken: login.token!.bearer!,
-          //     claim: ApiShortCodeModelClaim(
-          //         code: code, address: login.user!.address!),
-          //     onSuccess: (rsp) async {
-          //       await secureStorage.delete(key: _currentPrefix);
-          //       await secureStorage.delete(key: _userPrefix + email);
-          //       await secureStorage.delete(key: _keysPrefix + address);
-          //     },
-          //     onError: (error) => log.warning(error));
+          ApiShortCodeService shortCodeService =
+              ApiShortCodeService(httpp: httpp, refresh: login.refresh);
+          await shortCodeService.claim(
+              accessToken: login.token!.bearer!,
+              claim: ApiShortCodeModelClaim(
+                  code: code, address: login.user!.address!),
+              onSuccess: (rsp) async {
+                await secureStorage.delete(key: _currentPrefix);
+                await secureStorage.delete(key: _userPrefix + email);
+                await secureStorage.delete(key: _keysPrefix + address);
+              },
+              onError: (error) => log.warning(error));
         }
       }
     }
