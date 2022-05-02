@@ -15,14 +15,14 @@ class HeaderBarViewBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
       SizedBox(
-        width: SizeProvider.instance.width(100),
+        width: SizeProvider.instance.width(120),
         child: FittedBox(
           child: ImgProvider.badgeHeader,
           fit: BoxFit.fitWidth,
         )
       ),
       SizedBox(
-          width: SizeProvider.instance.width(100),
+          width: SizeProvider.instance.width(116),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -33,11 +33,12 @@ class HeaderBarViewBadge extends StatelessWidget {
                     fontFamily: TextProvider.familyNunitoSans,
                     fontWeight: FontWeight.w800,
                     color: ColorProvider.white,
-                    fontSize: SizeProvider.instance.text(9.1)),
+                    fontSize: SizeProvider.instance.text(11)),
               ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: SizeProvider.instance.size(9)),
-                  child: Icon(IconProvider.star, size: SizeProvider.instance.size(80)
+                  child: Icon(IconProvider.star, size: SizeProvider.instance.size(12),
+                    color: ColorProvider.white
                   )),
             ],
           ))
