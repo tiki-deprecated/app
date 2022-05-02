@@ -36,7 +36,7 @@ class HeaderBar extends StatelessWidget {
                 width: SizeProvider.instance.width(30),
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: ImgProvider.badgeBetaAvatar
+                  child: ImgProvider.avatarPineapple
                 )
               ),
               const HeaderBarViewBadge("BETA TESTER")
