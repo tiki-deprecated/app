@@ -112,13 +112,6 @@ jobs:
           track: internal
           status: completed
 
-  sentry_release:
-    name: Sentry Release 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
