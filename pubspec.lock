@@ -940,7 +940,7 @@ packages:
       path: "../style"
       relative: true
     source: path
-    version: "0.0.12"
+    version: "0.0.13"
   tiki_syncchain:
     dependency: transitive
     description:
