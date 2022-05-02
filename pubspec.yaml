@@ -25,15 +25,13 @@ dependencies:
   google_provider: ^0.0.9
   microsoft_provider: ^0.0.8
   tiki_decision: ^0.0.5
-  tiki_wallet:
-    path: ../wallet
+  tiki_wallet: 0.0.14
   tiki_kv: 0.1.1
   tiki_spam_cards: ^0.0.5
   tiki_user_account: 0.0.3
-  tiki_login:
-    path: ../login
+  tiki_login: ^0.0.9
   tiki_money: ^0.0.7
-  tiki_style: 0.0.12
+  tiki_style: ^0.0.13
   tiki_data:
     git:
       url: https://github.com/tiki/data
@@ -44,6 +42,8 @@ dependency_overrides:
       url: https://www.github.com/davidmartos96/sqflite_sqlcipher.git
       path: sqflite
       ref: fmdb_override
+  tiki_style:
+    path: ../style
 
 dev_dependencies:
   flutter_test:

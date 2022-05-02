@@ -902,17 +902,17 @@ packages:
   tiki_localchain:
     dependency: transitive
     description:
-      path: "../localchain"
-      relative: true
-    source: path
+      name: tiki_localchain
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.5"
   tiki_login:
     dependency: "direct main"
     description:
-      path: "../login"
-      relative: true
-    source: path
-    version: "0.0.8"
+      name: tiki_login
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.9"
   tiki_money:
     dependency: "direct main"
     description:
@@ -937,9 +937,9 @@ packages:
   tiki_style:
     dependency: "direct main"
     description:
-      name: tiki_style
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../style"
+      relative: true
+    source: path
     version: "0.0.12"
   tiki_syncchain:
     dependency: transitive
@@ -965,10 +965,10 @@ packages:
   tiki_wallet:
     dependency: "direct main"
     description:
-      path: "../wallet"
-      relative: true
-    source: path
-    version: "0.0.13"
+      name: tiki_wallet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.14"
   tuple:
     dependency: transitive
     description:

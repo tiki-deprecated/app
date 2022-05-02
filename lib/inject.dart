@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:tiki_data/tiki_data.dart';
 import 'package:tiki_decision/tiki_decision.dart';
 import 'package:tiki_kv/tiki_kv.dart';
 import 'package:tiki_login/tiki_login.dart';
 import 'package:tiki_spam_cards/tiki_spam_cards.dart';
-import 'package:tiki_style/tiki_style.dart';
 import 'package:tiki_user_account/tiki_user_account.dart';
 import 'package:tiki_wallet/tiki_wallet.dart';
 
+import 'src/slices/api_short_code/api_short_code_service.dart';
 import 'src/utils/database.dart' as db;
 
 Future<List<SingleChildWidget>> provide(
@@ -51,9 +51,8 @@ Future<List<SingleChildWidget>> provide(
     );
 
     TikiSpamCards spamCards = TikiSpamCards(decision: decision);
-
-    var referCode = "TEST"; //await _getReferCode(login, apiShortCodeService);
-
+    ApiShortCodeService apiShortCodeService = ApiShortCodeService();
+    String referCode = await _getReferCode(login, apiShortCodeService);
     TikiUserAccount userAccount = TikiUserAccount(
         logout: () => login.logout(),
         referalCode: referCode,
@@ -63,23 +62,29 @@ Future<List<SingleChildWidget>> provide(
             '.' +
             keys.sign.privateKey.encode());
 
+    TikiData tikiData = TikiData();
+    await tikiData.init(
+        database: database,
+        spamCards: spamCards,
+        decision: decision);
+
     return [
+      Provider<ApiShortCodeService>.value(value:apiShortCodeService),
       Provider<TikiKeysService>.value(value: tikiKeysService),
       Provider<TikiLogin>.value(value: login),
       Provider<TikiDecision>.value(value: decision),
       Provider<TikiUserAccount>.value(value: userAccount),
-      Provider<TikiSpamCards>.value(value: spamCards),
+      Provider<TikiData>.value(value: tikiData),
     ];
   }
 }
 
-// TODO ApiShortCodeService?
-// Future<String> _getReferCode(
-//     TikiLogin login, ApiShortCodeService apiShortCodeService) async {
-//   String? code;
-//   await apiShortCodeService.get(
-//       accessToken: login.token!.bearer!,
-//       address: login.user!.address!,
-//       onSuccess: (rsp) => code = rsp.code!);
-//   return code ?? '';
-// }
+Future<String> _getReferCode(
+    TikiLogin login, ApiShortCodeService apiShortCodeService) async {
+  String? code;
+  await apiShortCodeService.get(
+      accessToken: login.token!.bearer!,
+      address: login.user!.address!,
+      onSuccess: (rsp) => code = rsp.code!);
+  return code ?? '';
+}
