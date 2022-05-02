@@ -15,8 +15,7 @@ class ConfigShadow {
   static BoxShadow content = BoxShadow(
     color: contentColor,
     blurRadius: SizeProvider.instance.size(contentBlurRadius),
-    offset: Offset(
-        SizeProvider.instance.size(contentOffsetX),
+    offset: Offset(SizeProvider.instance.size(contentOffsetX),
         SizeProvider.instance.size(contentOffsetY)),
   );
 }

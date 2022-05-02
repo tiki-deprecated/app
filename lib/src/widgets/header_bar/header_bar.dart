@@ -15,30 +15,26 @@ class HeaderBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
         onTap: () => userAccount.open(context),
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(
-              left: SizeProvider.instance.size(SizeProvider.marginHeaderH),
-              right: SizeProvider.instance.size(SizeProvider.marginHeaderH),
-              top: SizeProvider.instance.size(SizeProvider.marginHeaderT),
-              bottom: SizeProvider.instance.size(SizeProvider.marginHeaderB),
+            left: SizeProvider.instance.size(SizeProvider.marginHeaderH),
+            right: SizeProvider.instance.size(SizeProvider.marginHeaderH),
+            top: SizeProvider.instance.size(SizeProvider.marginHeaderT),
+            bottom: SizeProvider.instance.size(SizeProvider.marginHeaderB),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                alignment: Alignment.centerLeft,
-                height: SizeProvider.instance.height(30),
-                width: SizeProvider.instance.width(30),
-                child: FittedBox(
-                  fit: BoxFit.fill,
-                  child: ImgProvider.avatarPineapple
-                )
-              ),
+                  alignment: Alignment.centerLeft,
+                  height: SizeProvider.instance.height(30),
+                  width: SizeProvider.instance.width(30),
+                  child: FittedBox(
+                      fit: BoxFit.fill, child: ImgProvider.avatarPineapple)),
               const HeaderBarViewBadge("BETA TESTER")
             ],
           ),

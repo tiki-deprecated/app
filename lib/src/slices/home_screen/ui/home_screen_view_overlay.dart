@@ -24,7 +24,7 @@ class HomeScreenViewOverlay extends StatelessWidget {
         child: Stack(children: [
           FittedBox(
             fit: BoxFit.cover,
-          child: ImgProvider.overlayBg,
+            child: ImgProvider.overlayBg,
           ),
           _content(context)
         ]));
@@ -37,7 +37,10 @@ class HomeScreenViewOverlay extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: ImgProvider.swipeChoices),
       Container(
-          margin: EdgeInsets.only(top: SizeProvider.instance.height(36), left: SizeProvider.instance.width(15), right: SizeProvider.instance.width(15)),
+          margin: EdgeInsets.only(
+              top: SizeProvider.instance.height(36),
+              left: SizeProvider.instance.width(15),
+              right: SizeProvider.instance.width(15)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -45,7 +48,8 @@ class HomeScreenViewOverlay extends StatelessWidget {
                   style: TextStyle(
                       color: ColorProvider.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
+                      fontFamily: TextProvider.familyNunitoSans,
+                      package: 'tiki_style',
                       fontSize: SizeProvider.instance.text(12)),
                   children: const [
                     TextSpan(
@@ -59,7 +63,10 @@ class HomeScreenViewOverlay extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w600))
                   ]))),
       Container(
-          margin: EdgeInsets.only(top: SizeProvider.instance.height(16), left: SizeProvider.instance.width(12), right: SizeProvider.instance.width(12)),
+          margin: EdgeInsets.only(
+              top: SizeProvider.instance.height(16),
+              left: SizeProvider.instance.width(12),
+              right: SizeProvider.instance.width(12)),
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -67,7 +74,8 @@ class HomeScreenViewOverlay extends StatelessWidget {
                   style: TextStyle(
                       color: ColorProvider.tikiOrange,
                       fontWeight: FontWeight.w600,
-                      fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
+                      fontFamily: TextProvider.familyNunitoSans,
+                      package: 'tiki_style',
                       fontSize: SizeProvider.instance.width(12)),
                   children: const [
                     TextSpan(

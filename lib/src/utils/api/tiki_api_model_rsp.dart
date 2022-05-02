@@ -16,8 +16,8 @@ class TikiApiModelRsp<T> {
   TikiApiModelRsp(
       {this.status, this.code, this.data, this.page, this.messages});
 
-  TikiApiModelRsp.fromJson(
-      Map<String, dynamic>? json, T Function(Map<String, dynamic>? json) fromJson) {
+  TikiApiModelRsp.fromJson(Map<String, dynamic>? json,
+      T Function(Map<String, dynamic>? json) fromJson) {
     if (json != null) {
       status = json['status'];
       code = json['code'];
