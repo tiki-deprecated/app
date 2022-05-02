@@ -11,7 +11,7 @@ import '../home_screen_service.dart';
 import 'home_screen_view_nav_bar_item.dart';
 
 class HomeScreenViewNavBar extends StatelessWidget {
-  static const double _fontSize = 12;
+  static const double _fontSize = 15;
   static const double _radius = 50;
 
   const HomeScreenViewNavBar({Key? key}) : super(key: key);
@@ -35,21 +35,13 @@ class HomeScreenViewNavBar extends StatelessWidget {
               currentIndex: service.model.currentScreenIndex,
               onTap: (index) => service.controller.onNavTap(index),
               items: [
-                HomeScreenViewNavBarItem("Data", IconProvider.eye ),
+                HomeScreenViewNavBarItem("Data", IconProvider.eye,  ),
                 HomeScreenViewNavBarItem("Choices", IconProvider.choices_1 ),
                 HomeScreenViewNavBarItem("Money", IconProvider.money)
               ],
               backgroundColor: ColorProvider.white,
-              unselectedItemColor: ColorProvider.blue,
-              unselectedLabelStyle: TextStyle(
-                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
-                  fontWeight: FontWeight.w800,
-                  fontSize: SizeProvider.instance.text(_fontSize)),
-              selectedItemColor: ColorProvider.orange,
-              selectedLabelStyle: TextStyle(
-                  fontFamily: TextProvider.familyNunitoSans, package: 'tiki_style',
-                  fontWeight: FontWeight.w800,
-                  fontSize: SizeProvider.instance.text(_fontSize)),
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
             )));
   }
 }
