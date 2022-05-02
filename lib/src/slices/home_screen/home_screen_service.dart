@@ -27,8 +27,7 @@ class HomeScreenService extends ChangeNotifier {
 
   Future<void> showOverlay(TikiKv tikiKv) async {
     model.showOverlay =
-        (await tikiKv.read(HomeScreenKv.decisionOverlayShown.name)) ==
-            "false";
+        (await tikiKv.read(HomeScreenKv.decisionOverlayShown.name)) == "false";
     notifyListeners();
   }
 

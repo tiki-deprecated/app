@@ -937,10 +937,10 @@ packages:
   tiki_style:
     dependency: "direct main"
     description:
-      path: "../style"
-      relative: true
-    source: path
-    version: "0.0.12"
+      name: tiki_style
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.13"
   tiki_syncchain:
     dependency: transitive
     description:

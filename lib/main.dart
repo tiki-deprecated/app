@@ -42,12 +42,10 @@ Future<TikiLogin> _initializeLogin() async {
   Httpp httpp = Httpp(useClient: () => SentryHttpClient());
   HomeScreenService home = HomeScreenService();
   TikiLogin login = TikiLogin(
-      httpp: httpp,
-      secureStorage: secureStorage,
-      home: home.presenter);
+      httpp: httpp, secureStorage: secureStorage, home: home.presenter);
   login.onLogin('Upgrade', () => upgrade(login, httpp));
-  home.presenter.inject( () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+  home.presenter.inject(
+      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }
-

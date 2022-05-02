@@ -23,7 +23,7 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   httpp: ^0.0.4
   google_provider: ^0.0.9
-  microsoft_provider: ^0.0.8
+  microsoft_provider: ^0.0.9
   tiki_decision: ^0.0.5
   tiki_wallet: 0.0.14
   tiki_kv: 0.1.1
@@ -42,8 +42,6 @@ dependency_overrides:
       url: https://www.github.com/davidmartos96/sqflite_sqlcipher.git
       path: sqflite
       ref: fmdb_override
-  tiki_style:
-    path: ../style
 
 dev_dependencies:
   flutter_test:

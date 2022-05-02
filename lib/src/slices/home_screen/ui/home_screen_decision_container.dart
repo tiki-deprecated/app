@@ -21,7 +21,8 @@ class HomeScreenDecisionContainer extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8),
               child: Column(children: [
                 HeaderBar(
-                  userAccount: Provider.of<TikiUserAccount>(context, listen: false),
+                  userAccount:
+                      Provider.of<TikiUserAccount>(context, listen: false),
                 ),
                 Expanded(child: decisionSdk.decisionWidget())
               ])))

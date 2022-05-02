@@ -30,13 +30,17 @@ class HomeScreenViewNavBar extends StatelessWidget {
           ],
         ),
         child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(_radius)),
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(_radius)),
             child: BottomNavigationBar(
               currentIndex: service.model.currentScreenIndex,
               onTap: (index) => service.controller.onNavTap(index),
               items: [
-                HomeScreenViewNavBarItem("Data", IconProvider.eye,  ),
-                HomeScreenViewNavBarItem("Choices", IconProvider.choices_1 ),
+                HomeScreenViewNavBarItem(
+                  "Data",
+                  IconProvider.eye,
+                ),
+                HomeScreenViewNavBarItem("Choices", IconProvider.choices_1),
                 HomeScreenViewNavBarItem("Money", IconProvider.money)
               ],
               backgroundColor: ColorProvider.white,
