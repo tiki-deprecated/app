@@ -22,7 +22,7 @@ class HomeScreenViewNavBarItem extends BottomNavigationBarItem {
       children:[
         Container(
           margin:  EdgeInsets.only(
-            top:SizeProvider.instance.size(_fontSize)),
+            top:SizeProvider.instance.size(_fontSize*0.75)),
           alignment: Alignment.center,
           child:Icon(icon,
                 color: color,
