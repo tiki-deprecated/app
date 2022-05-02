@@ -16,7 +16,6 @@ import 'home_screen_view_nav_bar.dart';
 import 'home_screen_view_overlay.dart';
 
 class HomeScreenViewStack extends StatelessWidget {
-
   const HomeScreenViewStack({Key? key}) : super(key: key);
 
   @override
@@ -28,12 +27,13 @@ class HomeScreenViewStack extends StatelessWidget {
           bottomNavigationBar: const HomeScreenViewNavBar(),
           body: SafeArea(
               top: false,
-              child: IndexedStack(index: model.currentScreenIndex,
+              child: IndexedStack(
+                  index: model.currentScreenIndex,
                   children: const [
-                 HomeScreenDataContainer(),
-                 HomeScreenDecisionContainer(),
-                 HomeScreenMoneyContainer(),
-              ]))),
+                    HomeScreenDataContainer(),
+                    HomeScreenDecisionContainer(),
+                    HomeScreenMoneyContainer(),
+                  ]))),
       if (model.showOverlay == true && model.currentScreenIndex == 1)
         const HomeScreenViewOverlay()
     ]);

@@ -45,10 +45,8 @@ Future<List<SingleChildWidget>> provide(
     // bool isConnected = await apiAuthService.getAccount()) != null
 
     var isConnected = false;
-    TikiDecision decision = TikiDecision(
-        tikiKv: tikiKv,
-        isConnected: isConnected
-    );
+    TikiDecision decision =
+        TikiDecision(tikiKv: tikiKv, isConnected: isConnected);
 
     TikiSpamCards spamCards = TikiSpamCards(decision: decision);
     ApiShortCodeService apiShortCodeService = ApiShortCodeService();
@@ -64,12 +62,10 @@ Future<List<SingleChildWidget>> provide(
 
     TikiData tikiData = TikiData();
     await tikiData.init(
-        database: database,
-        spamCards: spamCards,
-        decision: decision);
+        database: database, spamCards: spamCards, decision: decision);
 
     return [
-      Provider<ApiShortCodeService>.value(value:apiShortCodeService),
+      Provider<ApiShortCodeService>.value(value: apiShortCodeService),
       Provider<TikiKeysService>.value(value: tikiKeysService),
       Provider<TikiLogin>.value(value: login),
       Provider<TikiDecision>.value(value: decision),

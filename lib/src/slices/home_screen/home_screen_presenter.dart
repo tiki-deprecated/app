@@ -35,10 +35,10 @@ class HomeScreenPresenter extends Page {
                     AsyncSnapshot<List<SingleChildWidget>> snapshot) {
                   if (snapshot.data != null) {
                     return MultiProvider(
-                        providers: snapshot.data!, child: const HomeScreenLayout());
+                        providers: snapshot.data!,
+                        child: const HomeScreenLayout());
                   } else {
-                    return Container(
-                        color: ColorProvider.greyZero);
+                    return Container(color: ColorProvider.greyZero);
                   } //TODO make prettier
                 })));
   }
