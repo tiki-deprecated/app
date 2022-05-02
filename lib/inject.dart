@@ -15,13 +15,11 @@ import 'package:tiki_wallet/tiki_wallet.dart';
 
 import 'src/utils/database.dart' as db;
 
-Future<List<SingleChildWidget>> provide(BuildContext context,
+Future<List<SingleChildWidget>> provide(
     {FlutterSecureStorage? secureStorage,
     Httpp? httpp,
     required TikiLogin login}) async {
   Logger log = Logger('HomeScreenService.provide');
-
-  SizeProvider.init(mediaQueryData: MediaQuery.of(context));
 
   TikiKeysService tikiKeysService =
       TikiKeysService(secureStorage: secureStorage);
