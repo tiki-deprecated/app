@@ -28,13 +28,13 @@ dependencies:
   tiki_wallet: 0.0.14
   tiki_kv: 0.1.1
   tiki_spam_cards: ^0.0.5
-  tiki_user_account: 0.0.3
+  tiki_user_account:
+    path: ../user_account
   tiki_login: ^0.0.9
   tiki_money: ^0.0.7
   tiki_style: ^0.0.13
   tiki_data:
-    git:
-      url: https://github.com/tiki/data
+    path: ../data
 
 dependency_overrides:
   sqflite:

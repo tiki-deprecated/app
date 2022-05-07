@@ -1,3 +1,4 @@
+import 'package:app/src/home/home_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,16 +9,14 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tiki_login/tiki_login.dart';
 
 import 'app.dart';
-import 'inject.dart';
+import 'provide.dart' as provide;
 import 'src/config/config_amplitude.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
-import 'src/slices/home_screen/home_screen_service.dart';
-import 'src/utils/upgrade.dart';
 
 Future<void> main() async {
   await _libsInit();
-  TikiLogin login = await _initializeLogin();
+  TikiLogin login = await _loginInit();
   return SentryFlutter.init(
       (options) async => options
         ..dsn = ConfigSentry.dsn
@@ -37,15 +36,14 @@ Future<void> _libsInit() async {
   await Firebase.initializeApp();
 }
 
-Future<TikiLogin> _initializeLogin() async {
+Future<TikiLogin> _loginInit() async {
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   Httpp httpp = Httpp(useClient: () => SentryHttpClient());
-  HomeScreenService home = HomeScreenService();
+  HomeService home = HomeService();
   TikiLogin login = TikiLogin(
       httpp: httpp, secureStorage: secureStorage, home: home.presenter);
-  login.onLogin('Upgrade', () => upgrade(login, httpp));
-  home.presenter.inject(
-      () => provide(login: login, secureStorage: secureStorage, httpp: httpp));
+  home.presenter.inject(() =>
+      provide.init(login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }
