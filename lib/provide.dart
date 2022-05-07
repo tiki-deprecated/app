@@ -35,7 +35,7 @@ Future<List<SingleChildWidget>> init(
     Database database =
         await openDatabase(dbPath, password: keys.data.encode());
 
-    TikiKv tikiKv = TikiKv(database: database);
+    TikiKv tikiKv = await TikiKv(database: database).init();
     login.onLogout('TikiKv', () async => await tikiKv.deleteAll());
 
     TikiDecision decision = await TikiDecision(tikiKv: tikiKv).init();

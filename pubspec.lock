@@ -353,13 +353,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-  google_provider:
-    dependency: "direct main"
-    description:
-      name: google_provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.9"
   html:
     dependency: transitive
     description:
@@ -470,13 +463,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  microsoft_provider:
-    dependency: "direct main"
-    description:
-      name: microsoft_provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.9"
   mime:
     dependency: transitive
     description:
@@ -879,10 +865,10 @@ packages:
   tiki_data:
     dependency: "direct main"
     description:
-      path: "../data"
-      relative: true
-    source: path
-    version: "0.0.2"
+      name: tiki_data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   tiki_decision:
     dependency: "direct main"
     description:
@@ -963,10 +949,10 @@ packages:
   tiki_user_account:
     dependency: "direct main"
     description:
-      path: "../user_account"
-      relative: true
-    source: path
-    version: "0.0.3"
+      name: tiki_user_account
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   tiki_wallet:
     dependency: "direct main"
     description:
