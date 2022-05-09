@@ -22,7 +22,6 @@ class HomePresenter extends Page {
 
   @override
   Route createRoute(BuildContext context) {
-    TikiStyle.init(context);
     return MaterialPageRoute(
         settings: this,
         builder: (BuildContext context) => ChangeNotifierProvider.value(
