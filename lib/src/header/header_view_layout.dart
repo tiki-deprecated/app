@@ -22,10 +22,10 @@ class HeaderViewLayout extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.only(
-            left: SizeProvider.instance.size(SizeProvider.marginHeaderH),
-            right: SizeProvider.instance.size(SizeProvider.marginHeaderH),
-            top: SizeProvider.instance.size(SizeProvider.marginHeaderT),
-            bottom: SizeProvider.instance.size(SizeProvider.marginHeaderB),
+            left: SizeProvider.instance.width(21),
+            right: SizeProvider.instance.width(11),
+            top: SizeProvider.instance.height(9),
+            bottom: SizeProvider.instance.height(14),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -35,8 +35,10 @@ class HeaderViewLayout extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   height: SizeProvider.instance.height(30),
                   width: SizeProvider.instance.width(30),
-                  child: FittedBox(
-                      fit: BoxFit.fill, child: ImgProvider.avatarPineapple)),
+                  child: SizedBox.expand(
+                      child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: ImgProvider.avatarPineapple))),
               const HeaderViewWidgetBadge("BETA TESTER")
             ],
           ),

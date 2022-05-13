@@ -13,12 +13,9 @@ class HeaderViewWidgetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      SizedBox(
+      Image(
           width: SizeProvider.instance.width(120),
-          child: FittedBox(
-            child: ImgProvider.badgeHeader,
-            fit: BoxFit.fitWidth,
-          )),
+          image: ImgProvider.badgeHeader.image),
       SizedBox(
           width: SizeProvider.instance.width(116),
           child: Row(

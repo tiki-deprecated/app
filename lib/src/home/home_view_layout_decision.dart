@@ -16,7 +16,6 @@ class HomeViewLayoutDecision extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TikiDecision decision = Provider.of<TikiDecision>(context);
     return Scaffold(
         body: Center(
             child: Stack(children: [
@@ -29,7 +28,9 @@ class HomeViewLayoutDecision extends StatelessWidget {
                   userAccount:
                       Provider.of<TikiUserAccount>(context, listen: false),
                 ),
-                Expanded(child: decision.widget)
+                Expanded(
+                    child: Provider.of<TikiDecision>(context, listen: false)
+                        .widget)
               ])))
     ])));
   }

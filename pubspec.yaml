@@ -22,15 +22,16 @@ dependencies:
   sentry_flutter: ^6.5.1
   sqflite_sqlcipher: ^2.1.0
   httpp: ^0.0.4
-  tiki_decision: ^0.0.9
-  tiki_wallet: ^0.0.16
+  tiki_decision: ^0.0.10
+  tiki_wallet: ^0.0.20
   tiki_kv: ^0.1.1
-  tiki_spam_cards: ^0.0.8
-  tiki_user_account: ^0.0.5
-  tiki_login: ^0.0.11
-  tiki_money: ^0.0.8
-  tiki_style: ^0.0.17
-  tiki_data: ^0.0.6
+  tiki_spam_cards: ^0.0.9
+  tiki_user_account: ^0.0.9
+  tiki_login: ^0.0.13
+  tiki_money: ^0.0.9
+  tiki_style: ^0.0.18
+  tiki_localgraph: ^0.0.5
+  tiki_data: ^0.0.8
 
 dependency_overrides:
   sqflite:

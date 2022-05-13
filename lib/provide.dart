@@ -7,6 +7,7 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:tiki_data/tiki_data.dart';
 import 'package:tiki_decision/tiki_decision.dart';
 import 'package:tiki_kv/tiki_kv.dart';
+import 'package:tiki_localgraph/tiki_localgraph.dart';
 import 'package:tiki_login/tiki_login.dart';
 import 'package:tiki_money/tiki_money.dart';
 import 'package:tiki_spam_cards/tiki_spam_cards.dart';
@@ -40,12 +41,25 @@ Future<List<SingleChildWidget>> init(
 
     TikiDecision decision = await TikiDecision(tikiKv: tikiKv).init();
 
+    TikiChainService chainService = await TikiChainService(keys).open(
+        database: database,
+        kv: tikiKv,
+        accessToken: () => login.token?.bearer,
+        httpp: httpp,
+        refresh: login.refresh);
+    TikiLocalGraph localGraph = await TikiLocalGraph(chainService).open(
+        database,
+        httpp: httpp,
+        refresh: login.refresh,
+        accessToken: () => login.token?.bearer);
+
     TikiSpamCards spamCards = TikiSpamCards(decision);
     TikiData data = await TikiData().init(
         database: database,
         spamCards: spamCards,
         decision: decision,
         httpp: httpp,
+        localGraph: localGraph,
         refresh: login.refresh,
         accessToken: () => login.token?.bearer);
 
@@ -61,8 +75,8 @@ Future<List<SingleChildWidget>> init(
             keys.sign.privateKey.encode(),
         accessToken: () => login.token?.bearer);
 
-    TikiMoney money =
-        TikiMoney(httpp: httpp, referalCode: userAccount.referCode);
+    TikiMoney money = TikiMoney(
+        httpp: httpp, referalCount: int.tryParse(userAccount.referCount) ?? 0);
 
     return [
       Provider<TikiKeysService>.value(value: tikiKeysService),

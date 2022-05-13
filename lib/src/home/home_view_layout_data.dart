@@ -15,8 +15,7 @@ class HomeViewLayoutData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TikiData data = Provider.of<TikiData>(context);
-    return data.widget(
+    return Provider.of<TikiData>(context, listen: false).widget(
         headerBar: HeaderViewLayout(
             userAccount: Provider.of<TikiUserAccount>(context, listen: false)));
   }
