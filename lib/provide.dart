@@ -32,9 +32,8 @@ Future<List<SingleChildWidget>> init(
     await login.logout();
     return [];
   } else {
-    String dbPath = await getDatabasesPath() + '/tiki_app.db';
-    Database database =
-        await openDatabase(dbPath, password: keys.data.encode());
+    String dbPath = await getDatabasesPath() + '/tiki_app_${keys.address}.db';
+    Database database = await openDatabase(dbPath, password: keys.data.encode());
 
     TikiKv tikiKv = await TikiKv(database: database).init();
     login.onLogout('TikiKv', () async => await tikiKv.deleteAll());
@@ -47,6 +46,7 @@ Future<List<SingleChildWidget>> init(
         accessToken: () => login.token?.bearer,
         httpp: httpp,
         refresh: login.refresh);
+
     TikiLocalGraph localGraph = await TikiLocalGraph(chainService).open(
         database,
         httpp: httpp,
@@ -54,6 +54,7 @@ Future<List<SingleChildWidget>> init(
         accessToken: () => login.token?.bearer);
 
     TikiSpamCards spamCards = TikiSpamCards(decision);
+
     TikiData data = await TikiData().init(
         database: database,
         spamCards: spamCards,
