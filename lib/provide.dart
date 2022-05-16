@@ -32,7 +32,10 @@ Future<List<SingleChildWidget>> init(
     await login.logout();
     return [];
   } else {
-    String dbPath = await getDatabasesPath() + '/tiki_app_${keys.address}.db';
+    String dbFilename = base64Decode(user.address!)
+        .map((e) => e.toRadixString(16).padLeft(2, '0'))
+        .join() + '.db';
+    String dbPath = await getDatabasesPath() + '/$dbFilename';
     Database database = await openDatabase(dbPath, password: keys.data.encode());
 
     TikiKv tikiKv = await TikiKv(database: database).init();
