@@ -861,14 +861,14 @@ packages:
       name: tiki_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
   tiki_decision:
     dependency: "direct main"
     description:
       name: tiki_decision
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.10"
+    version: "0.0.11"
   tiki_kv:
     dependency: "direct main"
     description:
@@ -889,7 +889,7 @@ packages:
       name: tiki_localgraph
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.7"
   tiki_login:
     dependency: "direct main"
     description:
@@ -903,14 +903,14 @@ packages:
       name: tiki_money
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   tiki_spam_cards:
     dependency: "direct main"
     description:
       name: tiki_spam_cards
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   tiki_strategy_google:
     dependency: transitive
     description:
@@ -931,14 +931,14 @@ packages:
       name: tiki_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.18"
+    version: "0.0.19"
   tiki_syncchain:
     dependency: transitive
     description:
       name: tiki_syncchain
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   tiki_upvoty:
     dependency: transitive
     description:
@@ -959,7 +959,7 @@ packages:
       name: tiki_wallet
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.20"
+    version: "0.0.21"
   tuple:
     dependency: transitive
     description:

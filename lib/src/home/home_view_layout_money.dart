@@ -29,8 +29,8 @@ class HomeViewLayoutMoney extends StatelessWidget {
                       Provider.of<TikiUserAccount>(context, listen: false),
                 ),
                 Expanded(
-                    child: Provider.of<TikiMoney>(context, listen: false)
-                        .screen(example: true))
+                    child:
+                        Provider.of<TikiMoney>(context, listen: false).screen)
               ])))
     ])));
   }

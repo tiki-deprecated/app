@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
@@ -32,11 +39,14 @@ Future<List<SingleChildWidget>> init(
     await login.logout();
     return [];
   } else {
-    String dbFilename = base64Decode(user.address!)
-        .map((e) => e.toRadixString(16).padLeft(2, '0'))
-        .join() + '.db';
+    String dbFilename = 'app-' +
+        base64Decode(user.address!)
+            .map((e) => e.toRadixString(16).padLeft(2, '0'))
+            .join() +
+        '.db';
     String dbPath = await getDatabasesPath() + '/$dbFilename';
-    Database database = await openDatabase(dbPath, password: keys.data.encode());
+    Database database =
+        await openDatabase(dbPath, password: keys.data.encode());
 
     TikiKv tikiKv = await TikiKv(database: database).init();
     login.onLogout('TikiKv', () async => await tikiKv.deleteAll());
@@ -80,7 +90,9 @@ Future<List<SingleChildWidget>> init(
         accessToken: () => login.token?.bearer);
 
     TikiMoney money = TikiMoney(
-        httpp: httpp, referalCount: int.tryParse(userAccount.referCount) ?? 0);
+        localGraph: localGraph,
+        chainService: chainService,
+        referralCount: int.tryParse(userAccount.referCount) ?? 0);
 
     return [
       Provider<TikiKeysService>.value(value: tikiKeysService),
