@@ -26,9 +26,9 @@ dependencies:
   tiki_wallet: ^0.0.22
   tiki_kv: ^0.1.1
   tiki_spam_cards: ^0.0.10
-  tiki_user_account: ^0.0.9
-  tiki_login: ^0.0.13
-  tiki_money: ^0.0.10
+  tiki_user_account: ^0.0.11
+  tiki_login: ^0.0.14
+  tiki_money: ^0.0.11
   tiki_style: ^0.0.19
   tiki_localgraph: ^0.0.7
   tiki_data: ^0.0.9

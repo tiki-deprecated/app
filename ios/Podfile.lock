@@ -17,10 +17,10 @@ PODS:
   - Firebase/DynamicLinks (8.15.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 8.15.0)
-  - firebase_core (1.16.0):
+  - firebase_core (1.17.0):
     - Firebase/CoreOnly (= 8.15.0)
     - Flutter
-  - firebase_dynamic_links (4.2.2):
+  - firebase_dynamic_links (4.2.3):
     - Firebase/DynamicLinks (= 8.15.0)
     - firebase_core
     - Flutter
@@ -217,8 +217,8 @@ SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
-  firebase_core: 6ef152b7d6a361e24105e2cc56ab458f1f8367fe
-  firebase_dynamic_links: 94420fb8abf11dbfc870496b393e895688da4beb
+  firebase_core: aa1b92020533f5c23955e388c347c58fd64f8627
+  firebase_dynamic_links: 7263ea02f9eb9af202173d2ec093120340e38677
   FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
   FirebaseDynamicLinks: 1dc816ef789c5adac6fede0b46d11478175c70e4
