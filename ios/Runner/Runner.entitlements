@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:mytiki.app</string>
+		<string>applinks:mytiki.com</string>
 	</array>
 </dict>
 </plist>
