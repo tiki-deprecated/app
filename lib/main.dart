@@ -43,7 +43,7 @@ Future<TikiLogin> _loginInit() async {
   TikiLogin login = TikiLogin(
       httpp: httpp, secureStorage: secureStorage, home: home.presenter);
   home.presenter.inject(() =>
-      provide.init(login: login, secureStorage: secureStorage, httpp: httpp));
+      provide.init(home, login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }
