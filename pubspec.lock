@@ -28,7 +28,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.6"
+    version: "3.1.11"
   args:
     dependency: transitive
     description:
@@ -105,7 +105,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.0"
+    version: "1.16.0"
   convert:
     dependency: transitive
     description:
@@ -154,7 +154,7 @@ packages:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   ffi:
     dependency: transitive
     description:
@@ -406,7 +406,7 @@ packages:
       name: js
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3"
+    version: "0.6.4"
   lints:
     dependency: transitive
     description:
@@ -448,7 +448,7 @@ packages:
       name: material_color_utilities
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "0.1.4"
   meta:
     dependency: transitive
     description:
@@ -539,7 +539,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   path_drawing:
     dependency: transitive
     description:
@@ -782,7 +782,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.2"
   sqflite:
     dependency: "direct overridden"
     description:
@@ -854,20 +854,20 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.8"
+    version: "0.4.9"
   tiki_data:
     dependency: "direct main"
     description:
-      name: tiki_data
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../data"
+      relative: true
+    source: path
     version: "0.0.9"
   tiki_decision:
     dependency: "direct main"
     description:
-      name: tiki_decision
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../decision"
+      relative: true
+    source: path
     version: "0.0.11"
   tiki_kv:
     dependency: "direct main"
@@ -928,10 +928,10 @@ packages:
   tiki_style:
     dependency: "direct main"
     description:
-      name: tiki_style
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.19"
+      path: "../style"
+      relative: true
+    source: path
+    version: "0.0.20"
   tiki_syncchain:
     dependency: transitive
     description:
@@ -1043,7 +1043,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   very_good_analysis:
     dependency: transitive
     description:
@@ -1092,7 +1092,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.5.0"
+    version: "8.2.2"
   wakelock:
     dependency: transitive
     description:
@@ -1206,5 +1206,5 @@ packages:
     source: hosted
     version: "0.0.7"
 sdks:
-  dart: ">=2.16.1 <3.0.0"
+  dart: ">=2.17.0-0 <3.0.0"
   flutter: ">=2.10.2"

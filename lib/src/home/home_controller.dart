@@ -3,8 +3,6 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:tiki_kv/tiki_kv.dart';
-
 import 'home_service.dart';
 
 class HomeController {
@@ -14,6 +12,4 @@ class HomeController {
 
   void onNavTap(int index) => service.setCurrentScreenIndex(index);
 
-  Future<void> dismissOverlay(TikiKv tikiKv) async =>
-      service.dismissOverlay(tikiKv);
 }

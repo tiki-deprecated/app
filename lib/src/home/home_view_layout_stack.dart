@@ -13,7 +13,6 @@ import 'home_view_layout_data.dart';
 import 'home_view_layout_decision.dart';
 import 'home_view_layout_money.dart';
 import 'home_view_widget_nav_bar.dart';
-import 'home_view_widget_overlay.dart';
 
 class HomeViewLayoutStack extends StatelessWidget {
   const HomeViewLayoutStack({Key? key}) : super(key: key);
@@ -34,8 +33,8 @@ class HomeViewLayoutStack extends StatelessWidget {
                     HomeViewLayoutDecision(),
                     HomeViewLayoutMoney(),
                   ]))),
-      if (model.showOverlay == true && model.currentScreenIndex == 1)
-        const HomeViewWidgetOverlay()
+      if (model.overlay != null && model.overlay!.showOnScreen == model.currentScreenIndex)
+        model.overlay!.content
     ]);
   }
 }
