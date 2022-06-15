@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -18,12 +19,21 @@ class ConfigLog {
     Logger.root.onRecord.listen(onRecord);
   }
 
-  void onRecord(LogRecord record) {
-    if (ConfigEnvironment.isPublic) {
-      ConfigSentry.message(record.message, level: _toSentryLevel(record.level));
-    } else {
-      print(
-          '${_formatTime(record.time)}: ${record.level.name} [${record.loggerName}] ${record.message}');
+  Future<void> onRecord(LogRecord record) async {
+    if(kDebugMode) _print(record);
+    if(record.level > Level.INFO) {
+      await _saveLog(record);
+    }
+    if(ConfigEnvironment.isPublic) {
+      if (record.level > Level.SEVERE) {
+        ConfigSentry.exception(record.message, stackTrace: record.stackTrace);
+        return;
+      }
+      ConfigSentry.message(record.message, level:_toSentryLevel(record.level), params: [
+        record.loggerName,
+        record.error,
+        record.stackTrace
+      ]);
     }
   }
 
@@ -55,5 +65,14 @@ class ConfigLog {
     } else {
       return ConfigSentry.levelInfo;
     }
+  }
+
+  void _print(LogRecord record) {
+    print(
+        '${_formatTime(record.time)}: ${record.level.name} [${record.loggerName}] ${record.message}');
+  }
+
+  Future<void> _saveLog(LogRecord record) async {
+    // TODO create in-device log
   }
 }

@@ -4,10 +4,9 @@
  */
 
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:package_info/package_info.dart';
 
 import 'config_environment.dart';
-
-//TODO setup good exception handling -> https://flutter.dev/docs/testing/errors
 
 class ConfigSentry {
   static const String dsn = ConfigEnvironment.isDevelop ||
@@ -21,7 +20,18 @@ class ConfigSentry {
   static const SentryLevel levelError = SentryLevel.error;
   static const SentryLevel levelFatal = SentryLevel.fatal;
 
-  const ConfigSentry();
+  ConfigSentry();
+
+  static Future<void> init() async{
+    await SentryFlutter.init(
+            (options) async => options
+          ..dsn = ConfigSentry.dsn
+          ..environment = ConfigSentry.environment
+          ..release = (await PackageInfo.fromPlatform()).version
+          ..sendDefaultPii = false
+          ..diagnosticLevel = SentryLevel.info
+          ..sampleRate = 1.0);
+  }
 
   static SentryHttpClient get http => SentryHttpClient();
 
