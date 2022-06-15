@@ -1,10 +1,12 @@
-import 'package:app/src/home/home_service.dart';
+import 'dart:async';
+
+import 'src/home/home_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
-import 'package:package_info/package_info.dart';
+import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tiki_login/tiki_login.dart';
 
@@ -17,15 +19,15 @@ import 'src/config/config_sentry.dart';
 Future<void> main() async {
   await _libsInit();
   TikiLogin login = await _loginInit();
-  return SentryFlutter.init(
-      (options) async => options
-        ..dsn = ConfigSentry.dsn
-        ..environment = ConfigSentry.environment
-        ..release = (await PackageInfo.fromPlatform()).version
-        ..sendDefaultPii = false
-        ..diagnosticLevel = SentryLevel.info
-        ..sampleRate = 1.0,
-      appRunner: () => runApp(App(login.routerDelegate)));
+  runZonedGuarded(() async {
+    await ConfigSentry.init();
+    FlutterError.onError = (FlutterErrorDetails details) {
+      Logger("Flutter Error").severe(details.summary, details.exception, details.stack);
+    };
+    runApp(App(login.routerDelegate));
+  }, (exception, stackTrace) async {
+    Logger("Uncaught Exception").severe("Caught by runZoneGuarded", exception, stackTrace);
+  });
 }
 
 Future<void> _libsInit() async {
