@@ -7,33 +7,29 @@ import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'config_environment.dart';
 import 'config_sentry.dart';
 
 //ignore_for_file: avoid_print
 class ConfigLog {
   ConfigLog() {
-    Logger.root.level = ConfigEnvironment.isDevelop || ConfigEnvironment.isLocal
-        ? Level.ALL
-        : Level.INFO;
+    Logger.root.level = kDebugMode ? Level.INFO : Level.ALL;
     Logger.root.onRecord.listen(onRecord);
   }
 
   Future<void> onRecord(LogRecord record) async {
-    if(kDebugMode) _print(record);
-    if(record.level >= Level.INFO) {
-      await _saveLog(record);
-    }
-    if(ConfigEnvironment.isPublic) {
-      if (record.level >= Level.SEVERE) {
-        ConfigSentry.exception(record.message, stackTrace: record.stackTrace);
-        return;
+    if(kDebugMode){
+      _print(record);
+    }else{
+      if (record.level >= Level.INFO) {
+        await _saveLog(record);
+        if (record.level >= Level.SEVERE) {
+          ConfigSentry.exception(record.message, stackTrace: record.stackTrace);
+        } else if (record.level >= Level.WARNING) {
+          ConfigSentry.message(record.message,
+              level: _toSentryLevel(record.level),
+              params: [record.loggerName, record.error, record.stackTrace]);
+        }
       }
-      ConfigSentry.message(record.message, level:_toSentryLevel(record.level), params: [
-        record.loggerName,
-        record.error,
-        record.stackTrace
-      ]);
     }
   }
 
