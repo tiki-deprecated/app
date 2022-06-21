@@ -14,7 +14,7 @@ packages:
       name: amplitude_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.9.0"
+    version: "3.10.0"
   analyzer:
     dependency: transitive
     description:
@@ -686,7 +686,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.3"
   pub_semver:
     dependency: transitive
     description:
@@ -805,7 +805,7 @@ packages:
       name: sqflite_sqlcipher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   stack_trace:
     dependency: transitive
     description:
@@ -865,9 +865,9 @@ packages:
   tiki_decision:
     dependency: "direct main"
     description:
-      path: "../decision"
-      relative: true
-    source: path
+      name: tiki_decision
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.11"
   tiki_kv:
     dependency: "direct main"
@@ -877,11 +877,11 @@ packages:
     source: hosted
     version: "0.1.1"
   tiki_localchain:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: tiki_localchain
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../localchain"
+      relative: true
+    source: path
     version: "0.0.5"
   tiki_localgraph:
     dependency: "direct main"
@@ -928,10 +928,10 @@ packages:
   tiki_style:
     dependency: "direct main"
     description:
-      path: "../style"
-      relative: true
-    source: path
-    version: "0.0.20"
+      name: tiki_style
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.19"
   tiki_syncchain:
     dependency: transitive
     description:
@@ -956,10 +956,10 @@ packages:
   tiki_wallet:
     dependency: "direct main"
     description:
-      name: tiki_wallet
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.22"
+      path: "../wallet"
+      relative: true
+    source: path
+    version: "0.0.20"
   tuple:
     dependency: transitive
     description:

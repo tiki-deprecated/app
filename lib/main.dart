@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:amplitude_flutter/amplitude.dart';
+
 import 'src/home/home_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +19,9 @@ import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
 
 Future<void> main() async {
-  await _libsInit();
-  TikiLogin login = await _loginInit();
   runZonedGuarded(() async {
-    await ConfigSentry.init();
+    await _libsInit();
+    TikiLogin login = await _loginInit();
     FlutterError.onError = (FlutterErrorDetails details) {
       Logger("Flutter Error").severe(details.summary, details.exception, details.stack);
     };
@@ -34,6 +35,7 @@ Future<void> _libsInit() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   ConfigLog();
+  await ConfigSentry.init();
   await ConfigAmplitude.init();
   await Firebase.initializeApp();
 }

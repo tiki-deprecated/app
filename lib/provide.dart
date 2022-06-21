@@ -21,7 +21,6 @@ import 'package:tiki_spam_cards/tiki_spam_cards.dart';
 import 'package:tiki_user_account/tiki_user_account.dart';
 import 'package:tiki_wallet/tiki_wallet.dart';
 
-import 'src/home/home_model_overlay.dart';
 import 'src/home/home_service.dart';
 
 Future<List<SingleChildWidget>> init(
@@ -55,7 +54,7 @@ Future<List<SingleChildWidget>> init(
     TikiKv tikiKv = await TikiKv(database: database).init();
 
     TikiDecision decision = await TikiDecision(tikiKv: tikiKv).init();
-    homeService.addOverlay(HomeModelOverlay(1, decision.overlay));
+    //homeService.addOverlay(HomeModelOverlay(1, decision.overlay));
 
     TikiChainService chainService = await TikiChainService(keys).open(
         database: database,
