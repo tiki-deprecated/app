@@ -14,14 +14,13 @@ class ConfigAmplitude {
   static const _testApiKey = "6f52993a138d9209786c76a03c4e25cf";
   static const String _project = kDebugMode ? "App-test" : "App";
   static const String _apiKey = kDebugMode ? _testApiKey : _prodApiKey;
-  static Amplitude? instance;
+  static Amplitude get instance => Amplitude.getInstance(instanceName: _project);
 
   static Future<Amplitude> init() async {
-      instance = Amplitude.getInstance(instanceName: _project);
-      await instance!.init(_apiKey);
-      await instance!.enableCoppaControl();
-      await instance!.setUserId(null);
-      await instance!.trackingSessionEvents(true);
-      return instance!;
+      await Amplitude.getInstance(instanceName: _project).init(_apiKey);
+      await Amplitude.getInstance(instanceName: _project).enableCoppaControl();
+      await Amplitude.getInstance(instanceName: _project).setUserId(null);
+      await Amplitude.getInstance(instanceName: _project).trackingSessionEvents(true);
+      return instance;
   }
 }
