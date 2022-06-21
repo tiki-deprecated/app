@@ -21,11 +21,11 @@ class ConfigLog {
 
   Future<void> onRecord(LogRecord record) async {
     if(kDebugMode) _print(record);
-    if(record.level > Level.INFO) {
+    if(record.level >= Level.INFO) {
       await _saveLog(record);
     }
     if(ConfigEnvironment.isPublic) {
-      if (record.level > Level.SEVERE) {
+      if (record.level >= Level.SEVERE) {
         ConfigSentry.exception(record.message, stackTrace: record.stackTrace);
         return;
       }
