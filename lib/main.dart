@@ -37,7 +37,6 @@ Future<void> _libsInit() async {
   ConfigLog();
   await ConfigSentry.init();
   await ConfigAmplitude.init();
-  Amplitude.getInstance(instanceName: ConfigAmplitude.project).logEvent("TEST_EVENT");
   await Firebase.initializeApp();
 }
 
