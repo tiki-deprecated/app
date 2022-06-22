@@ -21,10 +21,11 @@ import 'package:tiki_spam_cards/tiki_spam_cards.dart';
 import 'package:tiki_user_account/tiki_user_account.dart';
 import 'package:tiki_wallet/tiki_wallet.dart';
 
+import 'src/config/config_amplitude.dart';
+import 'src/home/home_model_overlay.dart';
 import 'src/home/home_service.dart';
 
-Future<List<SingleChildWidget>> init(
-    HomeService homeService,
+Future<List<SingleChildWidget>> init(HomeService homeService,
     {FlutterSecureStorage? secureStorage,
     Httpp? httpp,
     required TikiLogin login}) async {
@@ -42,21 +43,19 @@ Future<List<SingleChildWidget>> init(
     await login.logout();
     return [];
   } else {
-    String dbFilename = 'app-' +
-        base64Decode(user.address!)
-            .map((e) => e.toRadixString(16).padLeft(2, '0'))
-            .join() +
-        '.db';
-    String dbPath = await getDatabasesPath() + '/$dbFilename';
+    String dbFilename =
+        'app-${base64Decode(user.address!).map((e) => e.toRadixString(16).padLeft(2, '0')).join()}.db';
+    String dbPath = '${await getDatabasesPath()}/$dbFilename';
     Database database =
         await openDatabase(dbPath, password: keys.data.encode());
 
     TikiKv tikiKv = await TikiKv(database: database).init();
 
     TikiDecision decision = await TikiDecision(tikiKv: tikiKv).init();
-    //homeService.addOverlay(HomeModelOverlay(1, decision.overlay));
+    homeService.addOverlay(HomeModelOverlay(1, decision.overlay));
 
     TikiChainService chainService = await TikiChainService(keys).open(
+        amplitude: ConfigAmplitude.instance,
         database: database,
         kv: tikiKv,
         accessToken: () => login.token?.bearer,
@@ -78,6 +77,7 @@ Future<List<SingleChildWidget>> init(
         httpp: httpp,
         localGraph: localGraph,
         refresh: login.refresh,
+        amplitude: ConfigAmplitude.instance,
         accessToken: () => login.token?.bearer);
 
     TikiUserAccount userAccount = TikiUserAccount(
@@ -85,11 +85,8 @@ Future<List<SingleChildWidget>> init(
         database: database,
         logout: () => login.logout(),
         refresh: login.refresh,
-        combinedKeys: keys.address +
-            '.' +
-            keys.data.encode() +
-            '.' +
-            keys.sign.privateKey.encode(),
+        combinedKeys:
+            '${keys.address}.${keys.data.encode()}.${keys.sign.privateKey.encode()}',
         accessToken: () => login.token?.bearer);
 
     TikiMoney money = TikiMoney(

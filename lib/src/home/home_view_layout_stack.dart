@@ -33,7 +33,8 @@ class HomeViewLayoutStack extends StatelessWidget {
                     HomeViewLayoutDecision(),
                     HomeViewLayoutMoney(),
                   ]))),
-      if (model.overlay != null && model.overlay!.showOnScreen == model.currentScreenIndex)
+      if (model.overlay != null &&
+          model.overlay!.showOnScreen == model.currentScreenIndex)
         model.overlay!.content
     ]);
   }

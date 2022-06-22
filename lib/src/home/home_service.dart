@@ -29,5 +29,4 @@ class HomeService extends ChangeNotifier {
     model.overlay = overlay;
     notifyListeners();
   }
-
 }
