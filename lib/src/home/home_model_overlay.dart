@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class HomeModelOverlay{
+class HomeModelOverlay {
   final int showOnScreen;
   final Widget content;
 

@@ -22,7 +22,7 @@ dependencies:
   sqflite_sqlcipher: ^2.1.1
   httpp: ^0.0.4
   tiki_decision: ^0.0.12
-  tiki_wallet: ^0.0.23
+  tiki_wallet: ^0.0.24
   tiki_kv: ^0.1.1
   tiki_spam_cards: ^0.0.10
   tiki_user_account: ^0.0.12
@@ -40,7 +40,6 @@ dependency_overrides:
       ref: fmdb_override
   crypto: ^3.0.1 # for integration tests compatibility
   xml: ^5.0.0 # flutter_html in zendesk_flutter compatibility
-  share_plus: ^4.0.9 # fix android null safety error
 
 dev_dependencies:
   flutter_test:

@@ -17,9 +17,9 @@ class ConfigLog {
   }
 
   Future<void> onRecord(LogRecord record) async {
-    if(kDebugMode){
+    if (kDebugMode) {
       _print(record);
-    }else{
+    } else {
       if (record.level >= Level.INFO) {
         await _saveLog(record);
         if (record.level >= Level.SEVERE) {
