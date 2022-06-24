@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:amplitude_flutter/amplitude.dart';
-
-import 'src/home/home_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,17 +14,20 @@ import 'provide.dart' as provide;
 import 'src/config/config_amplitude.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
+import 'src/home/home_service.dart';
 
 Future<void> main() async {
   runZonedGuarded(() async {
     await _libsInit();
     TikiLogin login = await _loginInit();
     FlutterError.onError = (FlutterErrorDetails details) {
-      Logger("Flutter Error").severe(details.summary, details.exception, details.stack);
+      Logger("Flutter Error")
+          .severe(details.summary, details.exception, details.stack);
     };
     runApp(App(login.routerDelegate));
   }, (exception, stackTrace) async {
-    Logger("Uncaught Exception").severe("Caught by runZoneGuarded", exception, stackTrace);
+    Logger("Uncaught Exception")
+        .severe("Caught by runZoneGuarded", exception, stackTrace);
   });
 }
 
@@ -46,8 +46,8 @@ Future<TikiLogin> _loginInit() async {
   HomeService home = HomeService();
   TikiLogin login = TikiLogin(
       httpp: httpp, secureStorage: secureStorage, home: home.presenter);
-  home.presenter.inject(() =>
-      provide.init(home, login: login, secureStorage: secureStorage, httpp: httpp));
+  home.presenter.inject(() => provide.init(home,
+      login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();
   return login;
 }

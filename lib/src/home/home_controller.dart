@@ -11,5 +11,4 @@ class HomeController {
   HomeController(this.service);
 
   void onNavTap(int index) => service.setCurrentScreenIndex(index);
-
 }
