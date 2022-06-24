@@ -865,16 +865,16 @@ packages:
   tiki_data:
     dependency: "direct main"
     description:
-      path: "../data"
-      relative: true
-    source: path
+      name: tiki_data
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.12"
   tiki_decision:
     dependency: "direct main"
     description:
-      path: "../decision"
-      relative: true
-    source: path
+      name: tiki_decision
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.13"
   tiki_kv:
     dependency: "direct main"
@@ -900,9 +900,9 @@ packages:
   tiki_login:
     dependency: "direct main"
     description:
-      path: "../login"
-      relative: true
-    source: path
+      name: tiki_login
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.15"
   tiki_money:
     dependency: "direct main"
