@@ -900,9 +900,9 @@ packages:
   tiki_login:
     dependency: "direct main"
     description:
-      name: tiki_login
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../login"
+      relative: true
+    source: path
     version: "0.0.15"
   tiki_money:
     dependency: "direct main"

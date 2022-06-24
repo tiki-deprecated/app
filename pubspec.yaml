@@ -48,6 +48,8 @@ dependency_overrides:
     path: ../data
   tiki_decision:
     path: ../decision
+  tiki_login:
+    path: ../login
 
 dev_dependencies:
   flutter_test:

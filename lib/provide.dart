@@ -36,20 +36,13 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
       TikiKeysService(secureStorage: secureStorage);
 
   FlowModelUser? user = login.user;
+  TikiKeysModel? keys = user?.address != null ? await tikiKeysService.get(user!.address!) : null;
 
-  checkFirstRun(secureStorage ?? const FlutterSecureStorage());
-
-  if (user == null || user.address == null) {
+  if (user == null || user.address == null || keys == null) {
     log.severe('Attempting to open home page without a valid user');
     await login.logout();
     return [];
   } else {
-    TikiKeysModel? keys = user.address != null ? await tikiKeysService.get(user.address!) : null;
-    if(keys == null){
-      log.severe('Attempting to open home page without valid keys');
-      await login.logout();
-      return [];
-    }
     String dbFilename =
         'app-${base64Decode(user.address!).map((e) => e.toRadixString(16).padLeft(2, '0')).join()}.db';
     String dbPath = '${await getDatabasesPath()}/$dbFilename';
