@@ -46,6 +46,9 @@ Future<TikiLogin> _loginInit() async {
   HomeService home = HomeService();
   TikiLogin login = TikiLogin(
       httpp: httpp, secureStorage: secureStorage, home: home.presenter);
+  if(login.user?.isLoggedIn != null ? !login.user!.isLoggedIn! : true){
+    provide.checkFirstRun(secureStorage);
+  }
   home.presenter.inject(() => provide.init(home,
       login: login, secureStorage: secureStorage, httpp: httpp));
   await login.init();

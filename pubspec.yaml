@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.4.1
+version: 0.4.1+1
 publish_to: 'none'
 
 environment:
@@ -18,19 +18,20 @@ dependencies:
   intl: ^0.17.0
   logging: ^1.0.2
   provider: ^6.0.3
-  sentry_flutter: ^6.5.1
+  shared_preferences: ^2.0.15
+  sentry_flutter: ^6.6.0
   sqflite_sqlcipher: ^2.1.1
   httpp: ^0.0.4
-  tiki_decision: ^0.0.12
+  tiki_decision: ^0.0.13
   tiki_wallet: ^0.0.24
   tiki_kv: ^0.1.1
   tiki_spam_cards: ^0.0.10
   tiki_user_account: ^0.0.12
-  tiki_login: ^0.0.14
+  tiki_login: ^0.0.15
   tiki_money: ^0.0.11
   tiki_style: ^0.0.20
   tiki_localgraph: ^0.0.7
-  tiki_data: ^0.0.10
+  tiki_data: ^0.0.12
 
 dependency_overrides:
   sqflite:
@@ -40,6 +41,8 @@ dependency_overrides:
       ref: fmdb_override
   crypto: ^3.0.1 # for integration tests compatibility
   xml: ^5.0.0 # flutter_html in zendesk_flutter compatibility
+  flutter_math_fork: ^0.6.3 # remove errors from console
+  flutter_svg: ^1.0.0 # solve conflict between flutter_math_fork and flutter_html
 
 dev_dependencies:
   flutter_test:

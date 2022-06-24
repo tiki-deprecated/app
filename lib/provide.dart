@@ -10,6 +10,7 @@ import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:tiki_data/tiki_data.dart';
 import 'package:tiki_decision/tiki_decision.dart';
@@ -35,8 +36,7 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
       TikiKeysService(secureStorage: secureStorage);
 
   FlowModelUser? user = login.user;
-  TikiKeysModel? keys =
-      user?.address != null ? await tikiKeysService.get(user!.address!) : null;
+  TikiKeysModel? keys = user?.address != null ? await tikiKeysService.get(user!.address!) : null;
 
   if (user == null || user.address == null || keys == null) {
     log.severe('Attempting to open home page without a valid user');
@@ -102,5 +102,13 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
       Provider<TikiData>.value(value: data),
       Provider<TikiMoney>.value(value: money)
     ];
+  }
+}
+
+void checkFirstRun(FlutterSecureStorage secureStorage) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getBool('tiki_first_run') ?? true) {
+    await secureStorage.deleteAll();
+    prefs.setBool('tiki_first_run', false);
   }
 }
