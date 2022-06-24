@@ -1,11 +1,11 @@
 name: app
 description: It's your data. Take back control.
-version: 0.4.1
+version: 0.4.1+1
 publish_to: 'none'
 
 environment:
-  sdk: '>=2.14.0 <3.0.0'
-  flutter: '>=2.10.2'
+  sdk: '>=2.17.0 <3.0.0'
+  flutter: '>=3.0.0'
 
 dependencies:
   flutter:
@@ -13,25 +13,24 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   amplitude_flutter: ^3.10.0
-  firebase_core: ^1.15.0
+  firebase_core: ^1.18.0
   flutter_secure_storage: ^5.0.2
-  intl_utils: ^2.6.1
   intl: ^0.17.0
   logging: ^1.0.2
   provider: ^6.0.3
   sentry_flutter: ^6.5.1
   sqflite_sqlcipher: ^2.1.1
   httpp: ^0.0.4
-  tiki_decision: ^0.0.11
-  tiki_wallet: ^0.0.22
+  tiki_decision: ^0.0.12
+  tiki_wallet: ^0.0.24
   tiki_kv: ^0.1.1
   tiki_spam_cards: ^0.0.10
-  tiki_user_account: ^0.0.11
+  tiki_user_account: ^0.0.12
   tiki_login: ^0.0.14
   tiki_money: ^0.0.11
-  tiki_style: ^0.0.19
+  tiki_style: ^0.0.20
   tiki_localgraph: ^0.0.7
-  tiki_data: ^0.0.9
+  tiki_data: ^0.0.11
 
 dependency_overrides:
   sqflite:
@@ -39,19 +38,22 @@ dependency_overrides:
       url: https://www.github.com/davidmartos96/sqflite_sqlcipher.git
       path: sqflite
       ref: fmdb_override
+  crypto: ^3.0.1 # for integration tests compatibility
+  xml: ^5.0.0 # flutter_html in zendesk_flutter compatibility
+  flutter_math_fork: ^0.6.3 # remove errors from console
+  flutter_svg: ^1.0.0 # solve conflict between flutter_math_fork and flutter_html
+
   tiki_data:
     path: ../data
-  tiki_localchain:
-    path: ../localchain
-  tiki_wallet:
-    path: ../wallet
+  tiki_decision:
+    path: ../decision
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_lints: 1.0.4
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true

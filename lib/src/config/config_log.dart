@@ -12,7 +12,7 @@ import 'config_sentry.dart';
 //ignore_for_file: avoid_print
 class ConfigLog {
   ConfigLog() {
-    Logger.root.level = kDebugMode ? Level.INFO : Level.ALL;
+    Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     Logger.root.onRecord.listen(onRecord);
   }
 
