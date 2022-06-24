@@ -4,6 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:tiki_style/tiki_style.dart';
@@ -37,6 +38,7 @@ class HomePresenter extends Page {
                         providers: snapshot.data!,
                         child: const HomeViewLayout());
                   } else {
+                    Logger("Home provider error").severe("home provider blackhole", snapshot.stackTrace);
                     return Container(color: ColorProvider.greyZero);
                   } //TODO make prettier
                 })));
