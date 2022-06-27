@@ -3,25 +3,33 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/foundation.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'config_environment.dart';
-
-//TODO setup good exception handling -> https://flutter.dev/docs/testing/errors
-
 class ConfigSentry {
-  static const String dsn = ConfigEnvironment.isDevelop ||
-          ConfigEnvironment.isLocal
+  static const String dsn = kDebugMode
       ? ""
       : "https://8074e92e5fc04829b519f700e3295fd2@o564671.ingest.sentry.io/5705532";
-  static const String environment = ConfigEnvironment.appEnv;
   static const SentryLevel levelDebug = SentryLevel.debug;
   static const SentryLevel levelInfo = SentryLevel.info;
   static const SentryLevel levelWarn = SentryLevel.warning;
   static const SentryLevel levelError = SentryLevel.error;
   static const SentryLevel levelFatal = SentryLevel.fatal;
 
-  const ConfigSentry();
+  static const String environment = kDebugMode ? "development" : "public";
+
+  ConfigSentry();
+
+  static Future<void> init() async {
+    await SentryFlutter.init((options) async => options
+      ..dsn = ConfigSentry.dsn
+      ..environment = environment
+      ..release = (await PackageInfo.fromPlatform()).version
+      ..sendDefaultPii = false
+      ..diagnosticLevel = SentryLevel.info
+      ..sampleRate = 1.0);
+  }
 
   static SentryHttpClient get http => SentryHttpClient();
 

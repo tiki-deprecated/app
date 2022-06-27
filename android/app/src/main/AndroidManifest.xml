@@ -54,9 +54,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="mytiki.com"
-                    android:scheme="https" />
-                <data
                     android:host="mytiki.app"
                     android:scheme="https" />
             </intent-filter>

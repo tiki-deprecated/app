@@ -54,7 +54,6 @@
 	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
 		<string>https://mytiki.app</string>
-		<string>https://mytiki.com</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
@@ -92,5 +91,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>
