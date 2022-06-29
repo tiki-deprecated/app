@@ -94,6 +94,9 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
         chainService: chainService,
         referralCount: int.tryParse(userAccount.referCount) ?? 0);
 
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('tiki_first_run', false);
+
     return [
       Provider<TikiKeysService>.value(value: tikiKeysService),
       Provider<TikiLogin>.value(value: login),
