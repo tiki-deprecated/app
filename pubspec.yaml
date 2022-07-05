@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.4.2
+version: 0.4.2+1
 publish_to: 'none'
 
 environment:
@@ -19,11 +19,11 @@ dependencies:
   logging: ^1.0.2
   provider: ^6.0.3
   shared_preferences: ^2.0.15
-  sentry_flutter: ^6.6.1
+  sentry_flutter: ^6.6.2
   sqflite_sqlcipher: ^2.1.1
-  httpp: ^0.0.5
+  httpp: ^0.0.6
   tiki_decision: ^0.0.13
-  tiki_wallet: ^0.0.25
+  tiki_wallet: ^0.0.26
   tiki_kv: ^0.1.1
   tiki_spam_cards: ^0.0.10
   tiki_user_account: ^0.0.13
