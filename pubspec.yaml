@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.4.2+2
+version: 0.4.3
 publish_to: 'none'
 
 environment:
@@ -33,7 +33,7 @@ dependencies:
   tiki_money: ^0.0.11
   tiki_style: ^0.0.20
   tiki_localgraph: ^0.0.7
-  tiki_data: ^0.0.14
+  tiki_data: ^0.0.15
 
 dependency_overrides:
   sqflite:
@@ -45,8 +45,6 @@ dependency_overrides:
   xml: ^5.0.0 # flutter_html in zendesk_flutter compatibility
   flutter_math_fork: ^0.6.3 # remove errors from console
   flutter_svg: ^1.0.0 # solve conflict between flutter_math_fork and flutter_html
-  tiki_login:
-    path: ../login
 
 dev_dependencies:
   flutter_test:
