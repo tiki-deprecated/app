@@ -33,7 +33,7 @@ dependencies:
   tiki_money: ^0.0.11
   tiki_style: ^0.0.20
   tiki_localgraph: ^0.0.7
-  tiki_data: ^0.0.15
+  tiki_data: ^0.0.16
 
 dependency_overrides:
   sqflite:
