@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -130,42 +129,5 @@ Future<void> _truncateLastPageAndLastRunRepos(Database database) async {
       await database.rawQuery('DROP TABLE IF EXISTS fetch_inbox_page;');
       await prefs.setString('reindexed_inbox_version', '0.4.4');
   }
-}
-
-Future<void> checkVersion() async {
-  Uri uri = Uri.parse('https://api.github.com/repos/tiki/app/releases');
-  await Httpp().client().request(HttppRequest(
-      uri: uri,
-      verb: HttppVerb.GET,
-      timeout: const Duration(seconds: 30),
-      onSuccess: (rsp) async {
-      try {
-        List releases = rsp.body?.jsonBody;
-        Map ver = releases[0];
-        String releaseName = ver['name'].trim();
-        String currentName = (await PackageInfo.fromPlatform()).version;
-        if (releaseName != currentName) {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          List<String> latest = releaseName.split('.');
-          List<String> current = currentName.split('.');
-          int major1 = int.parse(latest[0]);
-          int major2 = int.parse(current[0]);
-          int minor1 = int.parse(latest[1]);
-          int minor2 = int.parse(current[1]);
-          int hot1 = int.parse(latest[2]);
-          int hot2 = int.parse(current[2]);
-          if (major1 > major2 ||
-              (major1 == major2 && minor1 > minor2) ||
-              (minor1 == minor2 && hot1 > hot2)
-          ) {
-            preferences.setString('update_to', releaseName);
-          } else {
-            preferences.setString('update_to', '');
-          }
-        }
-      }catch(e){
-        log.warning("Error with version check", e);
-      }
-      }));
 }
 

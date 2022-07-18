@@ -2,4 +2,7 @@
 
 * reindex all inboxes
 * check for updates
-* update tiki_data to 0.0.17
+* add local updates
+* add version background check
+* update tiki_data to 0.0.18
+* update httpp to 0.0.7
