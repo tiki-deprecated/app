@@ -14,6 +14,7 @@ import 'provide.dart' as provide;
 import 'src/config/config_amplitude.dart';
 import 'src/config/config_log.dart';
 import 'src/config/config_sentry.dart';
+import 'src/config/config_updates.dart';
 import 'src/home/home_service.dart';
 
 Future<void> main() async {
