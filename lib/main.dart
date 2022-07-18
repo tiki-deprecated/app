@@ -52,5 +52,6 @@ Future<TikiLogin> _loginInit() async {
   }
   home.presenter.inject(() => provide.init(home,
       login: login, secureStorage: secureStorage, httpp: httpp));
+  provide.checkVersion();
   return login;
 }

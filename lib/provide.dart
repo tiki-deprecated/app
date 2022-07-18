@@ -26,6 +26,8 @@ import 'src/config/config_amplitude.dart';
 import 'src/home/home_model_overlay.dart';
 import 'src/home/home_service.dart';
 
+Logger log = Logger('provider');
+
 Future<List<SingleChildWidget>> init(HomeService homeService,
     {FlutterSecureStorage? secureStorage,
     Httpp? httpp,
@@ -48,7 +50,7 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
     String dbPath = '${await getDatabasesPath()}/$dbFilename';
     Database database =
         await openDatabase(dbPath, password: keys.data.encode());
-
+    await _truncateLastPageAndLastRunRepos(database);
     TikiKv tikiKv = await TikiKv(database: database).init();
 
     TikiDecision decision = await TikiDecision(tikiKv: tikiKv).init();
@@ -108,10 +110,24 @@ Future<List<SingleChildWidget>> init(HomeService homeService,
   }
 }
 
-void checkFirstRun(FlutterSecureStorage secureStorage) async {
+Future<void> checkFirstRun(FlutterSecureStorage secureStorage) async {
   final prefs = await SharedPreferences.getInstance();
   if (prefs.getBool('tiki_first_run') ?? true) {
     await secureStorage.deleteAll();
     prefs.setBool('tiki_first_run', false);
+  } else {
+    prefs.setString('secureStorage_clear', '0.4.4');
   }
 }
+
+
+Future<void> _truncateLastPageAndLastRunRepos(Database database) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getString('reindexed_inbox_version') != "0.4.4") {
+      await database.rawQuery('DROP TABLE IF EXISTS cmd_mgr_last_run;');
+      await database.rawQuery('DROP TABLE IF EXISTS fetch_inbox_part;');
+      await database.rawQuery('DROP TABLE IF EXISTS fetch_inbox_page;');
+      await prefs.setString('reindexed_inbox_version', '0.4.4');
+  }
+}
+
