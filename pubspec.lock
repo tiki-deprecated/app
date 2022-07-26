@@ -373,7 +373,7 @@ packages:
       name: httpp
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   info_carousel:
     dependency: transitive
     description:
@@ -896,7 +896,7 @@ packages:
       name: tiki_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.17"
+    version: "0.0.19"
   tiki_decision:
     dependency: "direct main"
     description:
@@ -928,9 +928,9 @@ packages:
   tiki_login:
     dependency: "direct main"
     description:
-      path: "../login"
-      relative: true
-    source: path
+      name: tiki_login
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.15"
   tiki_money:
     dependency: "direct main"
@@ -952,7 +952,7 @@ packages:
       name: tiki_strategy_google
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.10"
+    version: "0.1.11"
   tiki_strategy_microsoft:
     dependency: transitive
     description:

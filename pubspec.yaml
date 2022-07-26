@@ -1,6 +1,6 @@
 name: app
 description: It's your data. Take back control.
-version: 0.4.4+1
+version: 0.4.4+2
 publish_to: 'none'
 
 environment:
@@ -33,7 +33,7 @@ dependencies:
   tiki_money: ^0.0.11
   tiki_style: ^0.0.20
   tiki_localgraph: ^0.0.7
-  tiki_data: ^0.0.18
+  tiki_data: ^0.0.19
   flutter_local_notifications: ^9.7.0
   url_launcher: ^6.1.5
 
