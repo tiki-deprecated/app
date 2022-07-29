@@ -35,7 +35,7 @@ Future<void> main() async {
 Future<void> _libsInit() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  ConfigLog();
+  await ConfigLog().init();
   await ConfigSentry.init();
   await ConfigAmplitude.init();
   await Firebase.initializeApp();
