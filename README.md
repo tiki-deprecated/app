@@ -3,4 +3,4 @@
 
 Major overhaul in-flight. 
 
-### [Read the Whitepaper]()
+### [Read the Whitepaper](https://github.com/tiki-bar/app/blob/main/WHITEPAPER.md)
